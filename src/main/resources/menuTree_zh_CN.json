@@ -1,0 +1,11 @@
+[	
+	{
+		"id":1,
+		"text":"用户",
+		"url":"/html/user.jsp"
+	},{
+		"id":8,
+		"text":"更多",
+		"children":[]
+	}
+]

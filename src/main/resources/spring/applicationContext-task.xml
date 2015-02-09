@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+	<!-- 扫描指定package下所有带有如@controller,@services,@resource,并把所注释的注册为Spring Beans,其他路径可以加,号分隔 -->
+	<context:component-scan base-package="com.ai.osapp.remote.task" />
+
+	<!-- <task:scheduled-tasks>   
+    	<task:scheduled ref="lzstoneTimeTask" method="run" cron="0 1 * * * ?" />   
+	</task:scheduled-tasks>   -->
+    
+    <!-- spring定时器 -->	
+	<bean id="taskJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="lzstoneTimeTask"/>
+		<property name="targetMethod" value="run"/>
+	</bean>
+	
+	<bean id="taskRule" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+        <property name="jobDetail" ref="taskJob" />  
+		<property name="startDelay" value="60000"/>    
+		<property name="repeatInterval" value="300000"/>  
+    </bean>  
+    
+    <bean id="taskJobDay" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="lzstoneTimeTask"/>
+		<property name="targetMethod" value="run"/>
+	</bean>
+	
+	<bean id="taskRuleDay" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="taskJobDay">
+		</property>
+		<property name="cronExpression">
+				<value>0 0 1 * * ?</value>	<!-- 每天凌晨1点触发 -->
+		</property>
+	</bean>
+    
+	
+	<!-- 定时列表 -->
+	<bean id="myScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="taskRule"/>
+			</list>
+		</property>
+	</bean>
+    
+</beans>

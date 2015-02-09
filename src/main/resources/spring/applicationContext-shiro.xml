@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+       xmlns:aop="http://www.springframework.org/schema/aop"  
+       xmlns:tx="http://www.springframework.org/schema/tx"  
+       xmlns:util="http://www.springframework.org/schema/util"  
+       xmlns:context="http://www.springframework.org/schema/context"  
+       xsi:schemaLocation="  
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd  
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd  
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd  
+       http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd"> 
+		
+			<!-- 扫描指定package下所有带有如@controller,@services,@resource,并把所注释的注册为Spring Beans,其他路径可以加,号分隔 -->
+    <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />        
+            
+	<!--  
+	<context:component-scan
+		base-package="com.ai.osapp.aop,com.ai.osapp.dao,com.ai.osapp.service,com.ai.osapp.security,com.ai.osapp.remote,com.ai.sysframe,com.ai.upc" />
+	-->	
+	
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
+        <property name="sessionMode" value="native"/>
+        <property name="sessionManager" ref="sessionManager"/>
+        <property name="realm" ref="mappRealm"/>
+        <!-- 
+        <property name="cacheManager" ref="ehCacheManager" />
+         -->
+	</bean>
+	
+    <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
+        <property name="interval" value="300000"/>
+    </bean>
+     
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="globalSessionTimeout" value="300000"/>
+        <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+    </bean>
+    
+    <!--         -->
+    <bean id="manageAuthenticationFilter" class="com.ai.osapp.security.ManageAuthenticationFilter"/>
+
+       
+	<!-- 安全认证过滤器 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/mvc/login" />
+		     <!--         -->
+		 <property name="filters">
+            <map>
+            
+                <entry key="authm" value-ref="manageAuthenticationFilter"/>
+            </map>
+        </property>
+
+		<property name="filterChainDefinitions">
+			<value>
+				${adminPath}/manage = anon
+				${adminPath}/manage/login = anon
+				${adminPath}/manage/** = authm
+				${adminPath}/** = authc
+			<!-- 
+				*${adminPath}/manage/** = anon
+				 ${adminPath}/** = anon
+				 -->
+		 	</value>
+		</property>
+	</bean>
+	
+	 			    
+ 
+	<!--
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">  
+	    <property name="globalSessionTimeout" value="3600000" /> 
+	    <property name="sessionDAO" ref="sessionDAO"/>
+	</bean>
+
+	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean> -->
+	
+	<!-- 用户授权信息Cache, 采用EhCache -->
+	<!-- 	
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="cacheManager"/> 
+	</bean>
+	-->
+    
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+	<!-- AOP式方法级权限检查  -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+	
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    	<property name="securityManager" ref="securityManager"/>
+	</bean>
+    
+    <bean id="mappRealm" class="com.ai.osapp.security.MappRealm">
+    <property name="name" value="mappRealm"/>
+        <property name="credentialsMatcher">
+            <!-- The 'bootstrapDataPopulator' Sha256 hashes the password
+                 (using the username as the salt) then base64 encodes it: -->
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="SHA-256"/>
+                <!-- true means hex encoded, false means base64 encoded -->
+                <property name="storedCredentialsHexEncoded" value="false"/>
+            </bean>
+        </property>
+    </bean>
+    
+</beans>

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!-- 控制台日志 -->
+	<appender name="Console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%t] %d{yyyy-MM-dd HH\:mm\:ss.SSS} %-5p %l- %m%n" />
+			<!-- %d{HH:mm:ss}[%C(%L)-%p] %m%n -->
+		</layout>
+	</appender>
+
+	<!-- 文件日志，（包含日志产生的时间，执行绪，类别等等信息） -->
+	<appender name="TTCC" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${esp.root}/WEB-INF/logs/log_TTCCLayout.log" />
+		<param name="append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.TTCCLayout"></layout>
+	</appender>
+
+	<!-- HTML日志，以html表格的形式布局 -->
+	<appender name="HTML" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${esp.root}/WEB-INF/logs/log_HTMLLayout.html" />
+		<param name="append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.HTMLLayout"></layout>
+	</appender>
+
+	<!-- 文件日志，（包含日志讯息的级别和讯息字符串） -->
+	<appender name="Simple" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${esp.root}/WEB-INF/logs/log_SimpleLayout.log" />
+		<param name="append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.SimpleLayout"></layout>
+	</appender>
+
+	<!-- 文件日志 -->
+	<appender name="Pattern1" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${esp.root}/WEB-INF/logs/log_PatternLayout.log" />
+		<param name="append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%r [%t] %p - %c -%l -%m%n" />
+		</layout>
+	</appender>
+
+	<!-- 文件日志 -->
+	<appender name="Pattern2" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${esp.root}/WEB-INF/logs/log_PatternLayout2.log" />
+		<param name="append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH\:mm\:ss.SSS} %5p] [%l] %m%n" />
+		</layout>
+	</appender>
+
+	<!-- 文件日志，（轮换"日志文件",当日志文件达到指定大小时，该文件就被关闭并备份，然后创建一个新的日志文件）） -->
+	<appender name="Rolling" class="org.apache.log4j.RollingFileAppender">
+		<param name="File" value="${esp.root}/WEB-INF/logs/log_PatternLayout3.log" />
+		<param name="append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<param name="MaxFileSize" value="51200KB" />
+		<param name="MaxBackupIndex" value="3" />
+		<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd hh:mm:ss.SSS}:%5p %t %c - %m%n" />
+		</layout>
+	</appender>
+
+
+	<!-- 文件日志，（每天产生一个日志文件） -->
+	<appender name="DailyRolling" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="${esp.root}/WEB-INF/logs/log.log" />
+		<param name="DatePattern" value="'_'yyyyMMdd'.log'" />
+		<param name="append" value="true" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-4r [%t] %-5p %d{yyyy-MM-dd HH\:mm\:ss.SSS} %x %l- %m%n" />
+		</layout>
+	</appender>
+
+	<!-- Socket -->
+	<appender name="Socket" class="org.apache.log4j.net.SocketAppender">
+		<param name="threshold" value="fatal" />
+		<param name="remoteHost" value="localhost" />
+		<param name="port" value="4445" />
+		<param name="locationInfo" value="true" />
+	</appender>
+	
+	<logger name="com.ai">
+		<level value="debug" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
+	</logger>
+	<logger name="net.sf.ehcache">
+		<level value="debug" />
+		<appender-ref ref="Console" />
+	</logger>
+	<logger name="java.sql.PreparedStatement">
+		<level value="info" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
+	</logger>
+	<logger name="java.sql.Connection">
+		<level value="info" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
+	</logger>
+	<logger name="java.sql.ResultSet">
+		<level value="info" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
+	</logger>
+	<logger name="org.mybatis">
+		<level value="debug" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
+	</logger>
+	<logger name="org.apache.ibatis">
+		<level value="info" />
+		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
+	</logger>
+	<logger name="org.apache.commons">
+		<level value="info" />
+		<appender-ref ref="Console" />
+	</logger>
+	<logger name="org.springframework">
+		<level value="debug" />
+		<appender-ref ref="Console" />
+	</logger>
+    
+<!--     <logger name="org.apache.shiro.authc"> -->
+    <logger name="org.apache.shiro">
+    	<level value="info" />
+        <appender-ref ref="Console" />
+    </logger>
+</log4j:configuration>

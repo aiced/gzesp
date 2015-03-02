@@ -1,4 +1,4 @@
-package com.ai.sysframe.utils.jpush;
+/*package com.ai.sysframe.utils.jpush;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -18,19 +18,19 @@ import cn.jpush.api.push.model.notification.Notification;
 
 public class JpushUtil {
 
-	/**
+	*//**
 	 * @Fields LOGGER : 日志操作类
-	 */
+	 *//*
 	protected static final Logger LOGGER = LoggerFactory
 			.getLogger(JpushUtil.class);
 
-	/**
+	*//**
 	 * 向andriod客户端推送消息
 	 * 
 	 * @param pushMsgInfo
 	 *            推送的消息信息
 	 * @return PushResult 推送结果
-	 */
+	 *//*
 	public static void pushAdriodMSG(PushMsgInfo pushMsgInfo) {
 
 		// 入口参数检验
@@ -91,13 +91,13 @@ public class JpushUtil {
 		}
 	}
 
-	/**
+	*//**
 	 * 构建推荐消息体
 	 * 
 	 * @param pushMsgInfo
 	 *            推送消息信息
 	 * @return PushPayload
-	 */
+	 *//*
 	private static PushPayload buildPushObject_android(PushMsgInfo pushMsgInfo) {
 		return PushPayload.newBuilder().setPlatform(Platform.android())
 				.setAudience(
@@ -108,3 +108,4 @@ public class JpushUtil {
 						Message.content(pushMsgInfo.getMsgContent())).build();
 	}
 }
+*/

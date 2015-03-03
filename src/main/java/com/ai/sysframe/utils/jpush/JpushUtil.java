@@ -1,6 +1,6 @@
-/*package com.ai.sysframe.utils.jpush;
+package com.ai.sysframe.utils.jpush;
 
-import org.apache.commons.lang.StringUtils;
+/*import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,10 +14,10 @@ import cn.jpush.api.push.model.Message;
 import cn.jpush.api.push.model.Platform;
 import cn.jpush.api.push.model.PushPayload;
 import cn.jpush.api.push.model.audience.Audience;
-import cn.jpush.api.push.model.notification.Notification;
+import cn.jpush.api.push.model.notification.Notification;*/
 
 public class JpushUtil {
-
+/*
 	*//**
 	 * @Fields LOGGER : 日志操作类
 	 *//*
@@ -106,6 +106,5 @@ public class JpushUtil {
 						Notification.android(pushMsgInfo.getAlter(),
 								pushMsgInfo.getTitle(), null)).setMessage(
 						Message.content(pushMsgInfo.getMsgContent())).build();
-	}
+	}*/
 }
-*/

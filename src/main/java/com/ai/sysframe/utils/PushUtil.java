@@ -1,6 +1,6 @@
 package com.ai.sysframe.utils;
 
-import java.util.ArrayList;
+/*import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -19,10 +19,10 @@ import javapns.notification.AppleNotificationServerBasicImpl;
 import javapns.notification.Payload;
 import javapns.notification.PushNotificationManager;
 import javapns.notification.PushNotificationPayload;
-import javapns.notification.PushedNotification;
+import javapns.notification.PushedNotification;*/
 
 public class PushUtil {
-
+/*
 	public final static String FROM_ANDROID = "ANDROID";
 	
 	public final static String IOS = "IOS";
@@ -41,14 +41,14 @@ public class PushUtil {
 		}
 	} 
 	
-	/** 
+	*//** 
 	   * 向单个iphone手机推送消息. 
 	   * @param deviceToken iphone手机获取的token 
 	   * @param p12File .p12格式的文件路径 
 	   * @param p12Pass .p12格式的文件密码 
 	   * @param customDictionarys CustomDictionary字典组 
 	   * @param content 推送内容 
-	   */  
+	   *//*  
 	  public static int push2One(String p12File, String p12Pass, String deviceToken, String content) {  
 		  try
 	        {
@@ -84,14 +84,14 @@ public class PushUtil {
 	        }
 	  }
 	  
-	  /** 
+	  *//** 
 	   * 向iphone群组推送消息. 
 	   * @param deviceTokens iphone手机获取的token 
 	   * @param p12File .p12格式的文件路径 
 	   * @param p12Pass .p12格式的文件密码 
 	   * @param customDictionarys CustomDictionary字典 
 	   * @param content 推送内容 
-	   */  
+	   *//*  
 	  public static int push2More(String p12File, String p12Pass, List<String> deviceTokens, String content) {
 		  try
 	        {
@@ -152,5 +152,5 @@ public class PushUtil {
 //			pushMsgInfo.setUserAlias("8145819a7d476190");
 //			pushMsgInfo.setAlter("测试");
 //			JpushUtil.pushAdriodMSG(pushMsgInfo);
-	    }
+	    }*/
 }

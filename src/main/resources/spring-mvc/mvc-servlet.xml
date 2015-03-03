@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
-    <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />
+    <context:property-placeholder ignore-unresolvable="true" location="classpath*:application.properties" />
     <aop:aspectj-autoproxy proxy-target-class="true"/>  
     
     <!-- 激活spring的注解. -->  
@@ -65,7 +65,7 @@
     <mvc:default-servlet-handler/>
     
     <!-- 配置freeMarker视图解析器 -->
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+    <bean id="freemarkerResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
         <!-- <property name="viewNames" value="*.ftl"/> -->
         <property name="contentType" value="text/html; charset=utf-8"/>
@@ -86,14 +86,14 @@
         <property name="templateLoaderPath">
             <value>/WEB-INF/ftl/</value>
         </property>
-        <!--全局变量部分 -->
+        <!-- 全局变量部分 -->
         <property name="freemarkerVariables">
 		    <map>
 				<entry key="xml_escape" value-ref="fmXmlEscape" />
 				<entry key="html_escape" value-ref="fmHtmlEscape" />
-				<entry key="base" value="/esp" />
-				<entry key="resRoot" value="/esp/resources" />
-				<entry key="resVer" value="20150301" />
+				<entry key="base" value="${base}" />
+				<entry key="resRoot" value="${resRoot}" />
+				<entry key="resVer" value="${resVer}" />
 			</map>
         </property>
     </bean>

@@ -15,15 +15,14 @@
   <body>
     <!-- head bar -->
     <div class="container-fluid" style="background-color:#f1791a;padding:5px">
-      <div class="row">
+      <div class="row" style="margin:0px;">     
         <div class="col-xs-4" >
-          <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;">
+          <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
         </div>
         <div class="col-xs-2 col-xs-offset-6">
-          <a herf="#"><img src="${resRoot}/image/weShop/fenxiang.png" class="img-responsive" alt=""></a>
+          <a herf="#"><img src="${resRoot}/image/weShop/fenxiang.png" class="img-responsive" alt="" /></a>
         </div>        
       </div>
-            
     </div>
 
     <!-- Carousel 广告轮播-->	
@@ -35,7 +34,7 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-          <img src="advertise.png" alt="First slide">
+          <img src="${resRoot}/image/banner/banner_iphone6.png" alt="First slide" />
           <div class="container">
             <div class="carousel-caption">
               
@@ -43,7 +42,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="" alt="Second slide">
+          <img src="${resRoot}/image/banner/banner_honer_x1.png" alt="Second slide" />
           <div class="container">
             <div class="carousel-caption">
               
@@ -51,7 +50,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="" alt="Third slide">
+          <img src="${resRoot}/image/banner/banner_sim_46.jpg" alt="Third slide" />
           <div class="container">
             <div class="carousel-caption">
               
@@ -75,8 +74,8 @@
         <div class="col-xs-3 div-text-center" style="background-color:#ffc798;">
     	  <p class="text-center" style="color:#ffffff;font-size:20px;">公告</p> 
     	</div>
-        <div class="col-xs-9" style="padding:4px">
-    	  <img src="${resRoot}/image/weShop/gonggao.png" alt="" class="img-responsive">  
+        <div class="col-xs-6" style="padding:4px;margin:6px;">
+    	  <img src="${resRoot}/image/weShop/gonggao.png" alt="" class="img-responsive" />  
     	</div>    	
       </div>
     </div>
@@ -85,7 +84,7 @@
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-top:5px;">
       <div class="row ">
         <div class="col-xs-3 col-sm-3 col-md-3" style="padding:5px">
-    	  <img src="${resRoot}/image/weShop/touxiang.png" alt="" class="img-circle img-responsive">  
+    	  <img src="${resRoot}/image/weShop/touxiang.png" alt="" class="img-circle img-responsive" />  
     	</div>
     	<div class="col-xs-6 col-sm-6 col-md-6" style="padding:0px;padding-top:10px;">
     	  <ul class="list-unstyled">
@@ -95,47 +94,49 @@
           </ul>  
     	</div>
     	<div class="col-xs-3 col-sm-3 col-md-3" style="padding:5px">
-    	  <img src="${resRoot}/image/weShop/erweima.png" alt="" class="img-responsive">   
+    	  <img src="${resRoot}/image/weShop/erweima.png" alt="" class="img-responsive" />   
     	</div>    		    		
       </div>	            
     </div>
     
     <!--新号入网  合约购机  上网卡  特色流量包  宽带续约-->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;margin-bottom:0px;padding: 5px;">
-      <div class="row">
+      <div class="row" style="margin-top:5px;">
         <div class="col-xs-1" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/xhrw.png" alt="" class="img-rounded img-responsive">  
+    	  <img src="${resRoot}/image/weShop/xhrw.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/hygj.png" alt="" class="img-rounded img-responsive">  
+    	  <img src="${resRoot}/image/weShop/hygj.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/swk.png" alt="" class="img-rounded img-responsive">  
+    	  <img src="${resRoot}/image/weShop/swk.png" alt="" class="img-rounded img-responsive" />  
     	</div>
         <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
       </div>
-      <div class="row">
+      <div class="row" style="margin-top:5px;">
         <div class="col-xs-1" style="padding:0px"></div>
-    	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/tsllb.png" alt="" class="img-rounded img-responsive">  
+    	  <img src="${resRoot}/image/weShop/tsllb.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/kdxy.png" alt="" class="img-rounded img-responsive">  
+    	  <img src="${resRoot}/image/weShop/kdxy.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
+    	<div class="col-xs-2" style="padding:0px">
+    	  <img src="${resRoot}/image/weShop/gd.png" alt="" class="img-rounded img-responsive" />  
+    	</div>
         <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
       </div>     	            
     </div>
     
     <!--店长推荐 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#ffd3d3;">
       <div class="row">
-        <div class="col-xs-4" style="padding-left:10px">
+        <div class="col-xs-12" style="padding-left:10px;">
     	  <img src="${resRoot}/image/weShop/dztj.png" alt="" class="img-responsive">  
     	</div> 		    		
       </div>     	            
@@ -143,79 +144,101 @@
     <div class="container-fluid" style="margin:0px;padding-top:0px;">
       <div class="row">
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_iphone6.png" alt="" class="img-responsive">
+    	  <a href="http://m.10010.com/mobilegoodsdetail/981410108357.html" >
+    	    <img src="${resRoot}/image/dztj/dztj_iphone6.jpg" alt="" class="img-responsive"/>
+    	  </a>
     		<p class="text-left" style="font-size:14px;font-weight:bold;">苹果(Apple)iphone6</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4899</font></p>
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">5999</font></p>
     		<p class="text-left" style="font-size:10px;">销量:68</p>
     	</div>
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_3gsimcard.png" alt="" class="img-responsive">
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">沃3G预付费电话卡</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">50</font></p>
+    	  <a href="http://m.10010.com/mobilegoodsdetail/981409287410.html" >
+    	    <img src="${resRoot}/image/dztj/dztj_note.jpg" alt="" class="img-responsive" />
+    	  </a>
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">三星Note4</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4699</font></p>
     		<p class="text-left" style="font-size:10px;">销量:50</p>
     	</div>    		  		 		    		
       </div>
       <div class="row">
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_iphone6.png" alt="" class="img-responsive">
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">苹果(Apple)iphone6</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4899</font></p>
+    	  <a href="http://m.10010.com/mobilegoodsdetail/851403121719.html" >
+    	    <img src="${resRoot}/image/dztj/dztj_4G.jpg" alt="" class="img-responsive" />
+    	  </a>
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">4G全国套餐</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">让您用的起 用的放心的套餐</font></p>
     		<p class="text-left" style="font-size:10px;">销量:68</p>
     	</div>
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_3gsimcard.png" alt="" class="img-responsive">
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">沃3G预付费电话卡</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">50</font></p>
+    	  <a href="http://m.10010.com/mobilegoodsdetail/851203213262.html" >
+    	    <img src="${resRoot}/image/dztj/dztj_3G_46.jpg" alt="" class="img-responsive" />
+    	  </a>
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">46元3G套餐</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">A/B/C计划预存话费存一得三</font></p>
     		<p class="text-left" style="font-size:10px;">销量:50</p>
     	</div>    		  		 		    		
       </div>            	            
     </div> 
     
-    <!--合约热销 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px">
+    <!--热销合约 -->
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#e6ffd6;">
       <div class="row">
-        <div class="col-xs-4" style="padding-left:10px">
-    	  <img src="${resRoot}/image/weShop/hyrx.png" alt="" class="img-responsive">  
+        <div class="col-xs-12" style="padding-left:10px">
+    	  <img src="${resRoot}/image/weShop/rxhy.png" alt="" class="img-responsive" />  
     	</div> 		    		
       </div>     	            
     </div>
     <div class="container-fluid" style="margin:0px;padding-top:0px;">
       <div class="row">
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_iphone6.png" alt="" class="img-responsive">
+    	  <img src="${resRoot}/image/rxhy/rxhy_iphone6.jpg" alt="" class="img-responsive" />
     		<p class="text-left" style="font-size:14px;font-weight:bold;">苹果(Apple)iphone6</p> 
     		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4899</font></p>
     		<p class="text-left" style="font-size:10px;">销量:68</p>
     	</div>
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_3gsimcard.png" alt="" class="img-responsive">
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">沃3G预付费电话卡</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">50</font></p>
+    	  <img src="${resRoot}/image/rxhy/rxhy_s5.png" alt="" class="img-responsive" />
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">三星S5</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4999</font></p>
     		<p class="text-left" style="font-size:10px;">销量:50</p>
     	</div>    		  		 		    		
-      </div>      	            
+      </div>
+      <div class="row">
+    	<div class="col-xs-6" style="padding:10px">
+    	  <img src="${resRoot}/image/rxhy/rxhy_mi4.png" alt="" class="img-responsive" />
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">小米4</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">1899</font></p>
+    		<p class="text-left" style="font-size:10px;">销量:68</p>
+    	</div>
+    	<div class="col-xs-6" style="padding:10px">
+    	  <img src="${resRoot}/image/rxhy/rxhy_hm_note.png" alt="" class="img-responsive" />
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">红米note</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">999</font></p>
+    		<p class="text-left" style="font-size:10px;">销量:50</p>
+    	</div>    		  		 		    		
+      </div>             	            
     </div>         
 
     <!--热销网卡 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#d3dbff;">
       <div class="row">
-        <div class="col-xs-4" style="padding-left:10px">
-    	  <img src="${resRoot}/image/weShop/rxwk.png" alt="" class="img-responsive">  
+        <div class="col-xs-12" style="padding-left:10px">
+    	  <img src="${resRoot}/image/weShop/rxwk.png" alt="" class="img-responsive" />  
     	</div> 		    		
       </div>     	            
     </div>
     <div class="container-fluid" style="margin:0px;padding-top:0px;">
       <div class="row">
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_iphone6.png" alt="" class="img-responsive">
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">苹果(Apple)iphone6</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4899</font></p>
+    	  <img src="${resRoot}/image/rxwk/rxwk_card.png" alt="" class="img-responsive" />
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">上网卡包年16g</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">499</font></p>
     		<p class="text-left" style="font-size:10px;">销量:68</p>
     	</div>
     	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/weShop/dztj_3gsimcard.png" alt="" class="img-responsive">
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">沃3G预付费电话卡</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">50</font></p>
+    	  <img src="${resRoot}/image/rxwk/rxwk_card.png" alt="" class="img-responsive" />
+    		<p class="text-left" style="font-size:14px;font-weight:bold;">上网卡包年10g</p> 
+    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">500</font></p>
     		<p class="text-left" style="font-size:10px;">销量:50</p>
     	</div>    		  		 		    		
       </div>      	            

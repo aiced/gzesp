@@ -19,7 +19,7 @@
         <div class="col-xs-4" >
           <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
         </div>
-        <div class="col-xs-2 col-xs-offset-6">
+        <div class="col-xs-2 col-xs-offset-6" style="padding-top:2px;">
           <a herf="#"><img src="${resRoot}/image/weShop/fenxiang.png" class="img-responsive" alt="" /></a>
         </div>        
       </div>
@@ -30,7 +30,7 @@
       <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <!--<li data-target="#myCarousel" data-slide-to="2"></li> -->
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
@@ -41,6 +41,7 @@
             </div>
           </div>
         </div>
+        <!--
         <div class="item">
           <img src="${resRoot}/image/banner/banner_honer_x1.png" alt="Second slide" />
           <div class="container">
@@ -49,6 +50,7 @@
             </div>
           </div>
         </div>
+        -->
         <div class="item">
           <img src="${resRoot}/image/banner/banner_sim_46.jpg" alt="Third slide" />
           <div class="container">

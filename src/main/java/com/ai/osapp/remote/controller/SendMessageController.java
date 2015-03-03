@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.sysframe.utils.PushUtil;
-import com.ai.sysframe.utils.jpush.PushMsgInfo;*/
-
+import com.ai.sysframe.utils.jpush.PushMsgInfo;
+*/
 @Controller
 @RequestMapping(value="${adminPath}/sendMessage")
 public class SendMessageController {
-/*	
 	
+/*	
 	@RequestMapping(value="/sendMessageToApp")
 	@ResponseBody
 	public Map<String,Object> sendMessageToApp(@RequestBody Map<String,Object> inputParam)
@@ -59,6 +59,6 @@ public class SendMessageController {
 		}
 		
 		return rspMap;
-	}*/
-	
+	}
+	*/
 }

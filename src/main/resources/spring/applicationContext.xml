@@ -25,8 +25,6 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     
-    <bean class="com.ai.sysframe.exception.MyHandlerExceptionResolver"/>
-     
 	<!-- 激活annotation功能 -->
 	<context:annotation-config />
 	<!-- 激活annotation功能 -->
@@ -130,45 +128,13 @@
 	<!-- ehCacheManager工厂类 -->
 <!-- 	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:config-location="classpath:ehcache.xml" /> -->
 
-    <!-- 配置 JSR303 Bean Validator 定义 -->
-    <!-- <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" /> -->
-
-	<bean id="limitInterceptor" class="com.ai.osapp.security.MappSecurityInterceptor">
-		<!-- 
-		 <property name="whiteListIP">  
-            <list>
-                <value>127.0.0.1</value>  
-                <value>localhost</value>  
-            </list>  
-        </property>
-        
-		 <property name="blackListIP">  
-            <list>  
-                <value>192.168.0.10</value>  
-                <value>192.168.0.11</value>  
-            </list>  
-        </property>  
-         
-		<property name="openingTime" value="9" />
-		<property name="closingTime" value="12" />
-		<property name="mappingURL" value=".*/query.*" />
-		-->
-	</bean>   
-
-	<mvc:interceptors>
+<!-- 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
 			<ref bean="limitInterceptor"/>
 		</mvc:interceptor>
-	</mvc:interceptors>
+	</mvc:interceptors> -->
 	
-	<bean id="pojoMapListMarshaller " name="pojoMapListMarshaller" class="com.ai.sysframe.xml.xstream.converters.PojoMapListMarshaller">
-		<property name="converters">
-			<list>
-				<bean class="com.ai.sysframe.xml.xstream.converters.PojoMapConverter" />
-			</list>
-		</property>
-	</bean>
 	
 	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
         <!-- 设置上传文件的最大尺寸为1024*1024*20MB -->  

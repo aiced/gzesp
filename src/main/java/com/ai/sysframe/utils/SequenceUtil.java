@@ -1,10 +1,10 @@
 package com.ai.sysframe.utils;
 
-import com.ai.osapp.dao.service.CommonDao;
-import com.ai.sysframe.service.SpringBeanService;
+/*import com.ai.osapp.dao.service.CommonDao;
+import com.ai.sysframe.service.SpringBeanService;*/
 
 public class SequenceUtil {
-
+/*
     private static CommonDao commonDao = SpringBeanService.getBean(CommonDao.class);
     
     public static String TD_APP_GUIDE_OPTION = "S_TD_APP_GUIDE_OPTION";
@@ -39,6 +39,6 @@ public class SequenceUtil {
     public static long getLogId(String seqName) 
     {
         return Long.parseLong(commonDao.getLogId(seqName));
-    }
+    }*/
     
 }

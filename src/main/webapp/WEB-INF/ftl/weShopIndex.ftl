@@ -106,18 +106,25 @@
       <div class="row" style="margin-top:5px;">
         <div class="col-xs-1" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/xhrw.png" alt="" class="img-rounded img-responsive" />  
+    	  <a href="http://m.10010.com/mall-mobile/NumList/search">
+    	    <img src="${resRoot}/image/weShop/xhrw.png" alt="" class="img-rounded img-responsive" />
+    	  </a>    
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/hygj.png" alt="" class="img-rounded img-responsive" />  
+    	  <a href="http://m.10010.com/MobileList">
+    	    <img src="${resRoot}/image/weShop/hygj.png" alt="" class="img-rounded img-responsive" />  
+    	  </a>
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/swk.png" alt="" class="img-rounded img-responsive" />  
+    	  <a href="http://m.10010.com/CardList">
+    	    <img src="${resRoot}/image/weShop/swk.png" alt="" class="img-rounded img-responsive" />  
+    	  </a>
     	</div>
         <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
       </div>
+      <!--
       <div class="row" style="margin-top:5px;">
         <div class="col-xs-1" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
@@ -132,7 +139,8 @@
     	  <img src="${resRoot}/image/weShop/gd.png" alt="" class="img-rounded img-responsive" />  
     	</div>
         <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
-      </div>     	            
+      </div> 
+      -->    	            
     </div>
     
     <!--店长推荐 -->

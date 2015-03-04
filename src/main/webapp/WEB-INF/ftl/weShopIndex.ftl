@@ -86,7 +86,7 @@
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-top:5px;">
       <div class="row ">
         <div class="col-xs-3 col-sm-3 col-md-3" style="padding:5px">
-    	  <img src="${resRoot}/image/weShop/touxiang.png" alt="" class="img-circle img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/touxiang_default.png" alt="" class="img-circle img-responsive" />  
     	</div>
     	<div class="col-xs-6 col-sm-6 col-md-6" style="padding:0px;padding-top:10px;">
     	  <ul class="list-unstyled">
@@ -176,7 +176,7 @@
     	    <img src="${resRoot}/image/dztj/dztj_4G.jpg" alt="" class="img-responsive" />
     	  </a>
     		<p class="text-left" style="font-size:14px;font-weight:bold;">4G全国套餐</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">让您用的起 用的放心的套餐</font></p>
+    		<p class="text-left" style="font-size:10px;"><font color="#F70909">用的起 用的放心的套餐</font></p>
     		<p class="text-left" style="font-size:10px;">销量:68</p>
     	</div>
     	<div class="col-xs-6" style="padding:10px">
@@ -184,7 +184,7 @@
     	    <img src="${resRoot}/image/dztj/dztj_3G_46.jpg" alt="" class="img-responsive" />
     	  </a>
     		<p class="text-left" style="font-size:14px;font-weight:bold;">46元3G套餐</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">A/B/C计划预存话费存一得三</font></p>
+    		<p class="text-left" style="font-size:10px;"><font color="#F70909">A/B/C计划预存话费</font></p>
     		<p class="text-left" style="font-size:10px;">销量:50</p>
     	</div>    		  		 		    		
       </div>            	            

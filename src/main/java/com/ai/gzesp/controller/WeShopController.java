@@ -18,9 +18,9 @@ public class WeShopController {
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("weShopIndex.ftl");
         //从数据库获取信息赋值
-        mav.addObject("name", "奚敏辉");
-        mav.addObject("phone", "18612345678"); 
-        mav.addObject("weixin", "ximinhui12345"); 
+        mav.addObject("name", "喻露露");
+        mav.addObject("phone", "18685292522"); 
+        mav.addObject("weixin", "1306520198@qq.com"); 
         return mav;
     }
 

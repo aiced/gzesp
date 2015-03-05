@@ -12,22 +12,65 @@
     <link href="${resRoot}/css/weShopIndex.css?v=${resVer}" rel="stylesheet">
   </head>
 
-  <body>
-    <!-- head bar -->
-    <div class="container-fluid" style="background-color:#f1791a;padding:5px">
-      <div class="row" style="margin:0px;">     
-        <div class="col-xs-4" >
-          <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
-        </div>
-        <div class="col-xs-2 col-xs-offset-6" style="padding-top:2px;">
-          <a herf="#"><img src="${resRoot}/image/weShop/fenxiang.png" class="img-responsive" alt="" /></a>
-        </div>        
-      </div>
-    </div>
+<style type="text/css">	 
+ 	* {margin:0;padding:0;} 
+	
+	html{
+ 		/*background-color:gray;*/
+		}
+	
+	body {
+	/*	默认有个高度 20px */
+		/* background-color:red;*/
+		 }
+     html, body , p ,img{
+	  margin:0; 
+	  padding:0; 
+	  border:0;
+   	  list-style:none;
+	 }
 
-   <div>
-   		goodsAdd!
-   </div>
+</style>
+
+  <body>
+   <!--标题   -->
+    <div style="background-color:#1D2427; width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     	<a style="color:#fff;width:60px;height:44px ;line-height:44px; float:left;display: block;text-align:center;margin-left:1px"> 返回 </a>	
+    	<a style="color:#fff;width:40px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:10px;margin-top:12px;border:1px solid #fff"> 编辑 </a>	
+    	<p style="color:#fff;width:60px;height:44px ;line-height:44px;margin:auto;"> 商品管理 </p> 	
+    </div>
+    <div style="width:100%;overflow:hidden">
+	 <p style="padding-left:20px;width:260px;height:24px ;line-height:24px;display: block;font-size:13px;color:#6A6969;">可选择的不超过四个</p>
+    <!--添加图片  -->
+     <div style="height:270px;margin:20px;position:relative;" >  
+     				<!-- 当没有图片时候，会有边框，表示这里有个图片。  --> 
+     		<div style="width:120px;height:120px;display: block;position:absolute;left:5px;top:5px">
+     		    <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
+     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
+     		 </div> 
+         	<div style="width:120px;height:120px;display: block;position:absolute;right:5px;top:5px">
+         	     		    <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
+         	     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
+         	
+         	</div>           		
+       		<div style="width:120px;height:120px;display: block;position:absolute;left:5px;bottom:5px">
+       		     		    <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
+       		     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
+       		
+       		</div>  
+       		<div style="width:120px;height:120px;display: block;position:absolute;right:5px;bottom:5px">
+       		     	         <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
+       		     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
+       		</div>
+     					
+       	<!-- 	
+       		<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;left:5px;top:5px">  
+         	<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;right:5px;top:5px">           		
+       		<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;left:5px;bottom:5px">  
+       		<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;right:5px;bottom:5px">  
+     	  -->  		
+     </div>
+	</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

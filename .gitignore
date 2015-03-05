@@ -1,1 +1,6 @@
 /target/
+/.settings
+/.DS_Store
+/pom.xml
+/.classpath
+/.gitignore

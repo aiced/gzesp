@@ -23,5 +23,4 @@ public class WeShopController {
         mav.addObject("weixin", "1306520198@qq.com"); 
         return mav;
     }
-
 }

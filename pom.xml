@@ -4,7 +4,6 @@
   <artifactId>esp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
-    <!-- 文辉自己的写的注释，文辉自己会删除掉 -->
   <properties>
 	<spring.version>3.2.4.RELEASE</spring.version>
 	<slf4j.version>1.6.1</slf4j.version>

@@ -186,13 +186,7 @@
 			<artifactId>mybatis-ehcache</artifactId>
 			<version>1.0.0</version>
 		</dependency>
-		<!-- mybatis ehcache 整合jar包 end -->
-		<!-- oracle驱动 -->
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc14</artifactId>
-			<version>10.2.0.4.0</version>
-		</dependency>	
+
 			
        <!-- http请求  -->
 		<dependency>

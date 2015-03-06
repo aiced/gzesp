@@ -107,19 +107,19 @@
         <div class="col-xs-1" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
     	  <a href="http://m.10010.com/mall-mobile/NumList/search">
-    	    <img src="${resRoot}/image/weShop/xhrw.png" alt="" class="img-rounded img-responsive" />
+    	    <img src="${resRoot}/image/weShop/xhrw2.png" alt="" class="img-rounded img-responsive" />
     	  </a>    
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
     	  <a href="http://m.10010.com/MobileList">
-    	    <img src="${resRoot}/image/weShop/hygj.png" alt="" class="img-rounded img-responsive" />  
+    	    <img src="${resRoot}/image/weShop/hygj2.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
     	  <a href="http://m.10010.com/CardList">
-    	    <img src="${resRoot}/image/weShop/swk.png" alt="" class="img-rounded img-responsive" />  
+    	    <img src="${resRoot}/image/weShop/swk2.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
         <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
@@ -128,15 +128,15 @@
       <div class="row" style="margin-top:5px;">
         <div class="col-xs-1" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/tsllb.png" alt="" class="img-rounded img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/tsllb2.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/kdxy.png" alt="" class="img-rounded img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/kdxy2.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/gd.png" alt="" class="img-rounded img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/sjpj2.png" alt="" class="img-rounded img-responsive" />  
     	</div>
         <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
       </div> 
@@ -258,7 +258,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery-1.11.2.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
   </body>
 </html>

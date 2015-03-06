@@ -9,14 +9,14 @@ import com.ai.gzesp.service.WeShopService;
 
 @Controller
 @RequestMapping("/weShop")
-public class GoodsAddController {
+public class goodsManageGoodSelectController {
     
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/index/GoodsAdd")
+    @RequestMapping("/index/goodsManageGoodSelect")
     public ModelAndView index(){
-        ModelAndView mav = new ModelAndView("GoodsAdd.ftl");
+        ModelAndView mav = new ModelAndView("goodsManageGoodSelect.ftl");
         //从数据库获取信息赋值
         mav.addObject("name", "喻露露");
         mav.addObject("phone", "18685292522"); 

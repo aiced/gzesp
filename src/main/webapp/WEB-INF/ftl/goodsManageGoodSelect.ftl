@@ -44,21 +44,21 @@
     <!--添加图片  -->
      <div style="height:270px;margin:20px;position:relative;" >  
      				<!-- 当没有图片时候，会有边框，表示这里有个图片。  --> 
-     		<div style="width:120px;height:120px;display: block;position:absolute;left:5px;top:5px">
+     		<div style="width:40%;height:40%;display: block;position:absolute;left:5px;top:5px">
      		    <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
      			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
      		 </div> 
-         	<div style="width:120px;height:120px;display: block;position:absolute;right:5px;top:5px">
+         	<div style="width:40%;height:40%;display: block;position:absolute;right:5px;top:5px">
          	     		    <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
          	     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
          	
          	</div>           		
-       		<div style="width:120px;height:120px;display: block;position:absolute;left:5px;bottom:5px">
+       		<div style="width:40%;height:40%;display: block;position:absolute;left:5px;bottom:5px">
        		     		    <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
        		     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
        		
        		</div>  
-       		<div style="width:120px;height:120px;display: block;position:absolute;right:5px;bottom:5px">
+       		<div style="width:40%;height:40%;display: block;position:absolute;right:5px;bottom:5px">
        		     	         <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
        		     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
        		</div>

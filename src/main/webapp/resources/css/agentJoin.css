@@ -1,0 +1,28 @@
+body {
+  background-color:#f4f4f4;
+  font-family:微软雅黑;
+}
+
+/*段落样式:margin可以设置P中间间隙，text-indent:2em;每个段落缩进2个字符，line-height设置行间距*/
+p {
+	font-size: 14px;
+	font-weight:bold;
+	color: #a9a9a9; 
+	margin:5px 5px 5px 0;
+	padding:0px;
+} 
+
+/*div内文字水平垂直居中*/
+.div-text-center{
+  text-align:center;
+  height:30px;
+  line-height:30px;
+}
+
+.navbar-p {
+	color:#fff;
+	font-size: 20px;
+	font-weight:bold;
+	margin:0;
+	padding:0px;
+} 

@@ -12,25 +12,17 @@ import com.ai.gzesp.service.WeShopService;
 
 @Controller
 @RequestMapping("/weShop")
-public class WeShopController {
+public class AgentJoinController {
     
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/index")
+    @RequestMapping("/agentJoin")
     public ModelAndView index(){
-        ModelAndView mav = new ModelAndView("weShopIndex.ftl");
+        ModelAndView mav = new ModelAndView("agentJoin.ftl");
         //从数据库获取信息赋值
-        //广告轮播图片的url
-        List<String> banners = new ArrayList<String>();
-        banners.add("banner_iphone6.png");
-        banners.add("banner_honer_x1.png");
-        mav.addObject("banners", banners);
         
-        //店铺名称手机微信
-        mav.addObject("name", "喻露露");
-        mav.addObject("phone", "18685292522"); 
-        mav.addObject("weixin", "1306520198@qq.com"); 
         return mav;
     }
+
 }

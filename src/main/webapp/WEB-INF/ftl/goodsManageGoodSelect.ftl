@@ -9,7 +9,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
-    <link href="${resRoot}/css/weShopIndex.css?v=${resVer}" rel="stylesheet">
   </head>
 
 <style type="text/css">	 
@@ -74,7 +73,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery-1.11.2.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
   </body>
 </html>

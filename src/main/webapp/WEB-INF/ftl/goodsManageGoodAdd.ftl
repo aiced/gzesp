@@ -75,13 +75,13 @@ table{
 			 <img src="${resRoot}/image/goodsManager/xiaLaSanJiao.png" style="width:10px;height:10px;float:left;margin-left:0px;margin-top:10px;"></img>
 		</div>
 		<div style="float:right;width:150px;height:30px">
-			 <a style="width:60px;height:30px;display:block;text-align:center;float:left;line-height:30px;margin-left:20px;font-size:15px;color:#818181">筛选</a>
+			 <a style="width:60px;height:30px;display:block;text-align:center;float:left;line-height:30px;margin-left:20px;font-size:15px;color:#818181" onclick="showFlowView(this); return false;">筛选</a>
 			 <img src="${resRoot}/image/goodsManager/xiaLaSanJiao.png" style="width:10px;height:10px;float:left;margin-left:0px;margin-top:10px;"></img>
 		</div>
 		<div style="background-color:gray;float:left;width:100%;height:1px;margin-top:0px">
 		</div>
 		<!-- 筛选条件 -->
-		<div style="background-color:red;float:left;width:100%;height:180px;top:31px;display:none;position:absolute;margin:auto;z-index:－1;">
+		<div id="searchMark" style="float:left;width:100%;height:180px;top:31px;display:none;position:absolute;margin:auto;z-index:100;">
 			    	<div style="background-color:white;width:260px;height:180px;margin:auto;;border:1px solid #A6A6A6;">
 			    		<p style="width:60px;height:20px;line-height:20px;margin-top:10px;margin-left:5px;float:left;font-size:13px;color:#807E7E">奖励区间 </p> 
 			    	    <input type="text" style ="width:68px;height:20px;margin-top:10px;float:left;margin-left:0px;padding-left:5px;border:1px solid #7A7A7A;font-size:14px">
@@ -103,9 +103,7 @@ table{
 						<a style="background-color:#4171BC;color:white;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;font-size:11px">确定</a>	
 						<a style="background-color:#D0D0D0;color:#808080;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;border:1px solid #7E7D7D;font-size:11px">重置</a>	
 						</div>
-						
-						
-			    	
+
 			    	</div>
 		</div>	
 		
@@ -117,8 +115,14 @@ table{
 			<tbody>
 				<tr style="background-color:red; height:100px;">
 					<td class = "td_first" style="position:relative; height:100px;" onclick="test(1)" >
-					        <img src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px">
-						    <img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px">
+							<a style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px" onclick="showSelectedView(this);return false;">
+								<img id="unSelected" src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;">
+							</a>
+							
+							<a id="itemSelected" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(this);return false;">
+								<img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;" >							
+							</a>
+							
 							
 					</td>
 					<td class = "td_second" onclick="test(2)" >
@@ -226,6 +230,8 @@ table{
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/goodsManager/goodsManagerGoodAdd.js?v=${resVer}"></script>
+    
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
   </body>
 </html>

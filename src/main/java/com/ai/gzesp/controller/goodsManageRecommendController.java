@@ -14,7 +14,7 @@ public class goodsManageRecommendController {
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/index/goodsManageRecommend")
+    @RequestMapping("/goodsMananger/goodsManageRecommend")
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("goodsManageRecommend.ftl");
         //从数据库获取信息赋值

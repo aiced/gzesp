@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>商品管理</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    
- 	 <!-- Bootstrap core CSS -->
- 	 /*
+
+    <title>欢迎来到${name}的微店</title>
+
+    <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
-    */      
   </head>
  <style type="text/css">	 
  	* {margin:0;padding:0;} 
 	
 	html{
- 	/* 	background-color:gray; */
 		}
 	
 	body {
-	/*	默认有个高度 20px */
-/* 		 background-color:red; */
 		 }
      html, body , p ,img{
 	  margin:0; 

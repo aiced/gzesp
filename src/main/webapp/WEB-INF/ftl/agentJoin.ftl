@@ -22,8 +22,8 @@
             <span class="sr-only">back</span>
           </a>
     	</div>
-        <div class="col-xs-7 navbar-p">
-    	  <p class="text-center">能人招募 </p>
+        <div class="col-xs-7">
+    	  <p class="text-center navbar-p">能人招募 </p>
     	</div>    	
       </div>      
     </div> 
@@ -49,7 +49,7 @@
         <p>1、关注"贵州联通xx"微信公众号</p> 
         <p>2、进入"我的微店"， 注册成为大掌柜</p> 
         <p>3、毫不费心，自动生成预装店铺</p>
-        <p>4、分享店铺，即刻开启掌柜人生</p> 
+        <p>4、分享店铺，即刻开启掌柜人生</a> 
       </div>       
     </div>
     

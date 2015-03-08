@@ -10,6 +10,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
 
+/**
+ * 一级功能：wap端<br> 
+ * 二级功能：店铺主页
+ *
+ * @author xmh
+ * @see [相关类/方法]（可选）
+ * @since [产品/模块版本] （可选）
+ */
 @Controller
 @RequestMapping("/weShop")
 public class WeShopController {
@@ -17,6 +25,14 @@ public class WeShopController {
     @Autowired
     private WeShopService weShopService;
     
+    /**
+     * 三级页面：店铺主页 <br>
+     * 〈功能详细描述〉
+     *
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
     @RequestMapping("/index")
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("weShopIndex.ftl");

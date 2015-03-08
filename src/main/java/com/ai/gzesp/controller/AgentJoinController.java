@@ -18,7 +18,7 @@ public class AgentJoinController {
     private WeShopService weShopService;
     
     @RequestMapping("/agentJoin")
-    public ModelAndView index(){
+    public ModelAndView agentJoin(){
         ModelAndView mav = new ModelAndView("agentJoin.ftl");
         //从数据库获取信息赋值
         

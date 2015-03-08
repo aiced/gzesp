@@ -27,7 +27,7 @@
   
     <!-- 分享到弹出框 -->    
     <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-sm">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content" style="padding:5px;height:60px;">
     	    分享到：
           <!-- Baidu Button BEGIN -->
@@ -38,7 +38,7 @@
             <a title="分享到腾讯微博" class="bds_tqq" href="#" data-cmd="tqq"></a>
             <a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a>
             <a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a></div>
-          <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+          <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
           <!-- Baidu Button END -->   
         </div>
       </div>
@@ -105,52 +105,50 @@
             <li style="font-size:12px;">微信：${weixin}</li>
           </ul>  
     	</div>
-    	<div class="col-xs-3 col-sm-3 col-md-3" style="padding:5px">
-    	  <img src="${resRoot}/image/weShop/erweima.png" alt="" class="img-responsive" />   
+    	<div class="col-xs-3 col-sm-3 col-md-3" style="padding:5px" id="qrcodeDiv">
+    	   
     	</div>    		    		
       </div>	            
     </div>
     
     <!--新号入网  合约购机  上网卡  特色流量包  宽带续约-->
-    <div class="container-fluid" style="background-color:#ffffff;margin:10px;margin-bottom:0px;padding: 5px;">
+    <div class="container-fluid" style="background-color:#ffffff;margin:10px 10px 0px 10px;">
       <div class="row" style="margin-top:5px;">
         <div class="col-xs-1" style="padding:0px"></div>
-    	<div class="col-xs-2" style="padding:0px">
+    	<div class="col-xs-2" style="padding:0px;">
     	  <a href="http://m.10010.com/mall-mobile/NumList/search">
-    	    <img src="${resRoot}/image/weShop/xhrw2.png" alt="" class="img-rounded img-responsive" />
+    	    <img src="${resRoot}/image/weShop/xhrw3.png" alt="" class="img-rounded img-responsive" />
     	  </a>    
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
-    	<div class="col-xs-2" style="padding:0px">
+    	<div class="col-xs-2" style="padding:0px;">
     	  <a href="http://m.10010.com/MobileList">
-    	    <img src="${resRoot}/image/weShop/hygj2.png" alt="" class="img-rounded img-responsive" />  
+    	    <img src="${resRoot}/image/weShop/hygj3.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
-    	<div class="col-xs-2" style="padding:0px">
+    	<div class="col-xs-2" style="padding:0px;">
     	  <a href="http://m.10010.com/CardList">
-    	    <img src="${resRoot}/image/weShop/swk2.png" alt="" class="img-rounded img-responsive" />  
+    	    <img src="${resRoot}/image/weShop/swk3.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
-        <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
+    	<div class="col-xs-1" style="padding:0px"></div>
       </div>
-      <!--
       <div class="row" style="margin-top:5px;">
         <div class="col-xs-1" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/tsllb2.png" alt="" class="img-rounded img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/tsllb3.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/kdxy2.png" alt="" class="img-rounded img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/kdxy3.png" alt="" class="img-rounded img-responsive" />  
     	</div>
     	<div class="col-xs-2" style="padding:0px"></div>
     	<div class="col-xs-2" style="padding:0px">
-    	  <img src="${resRoot}/image/weShop/sjpj2.png" alt="" class="img-rounded img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/sjpj3.png" alt="" class="img-rounded img-responsive" />  
     	</div>
         <div class="col-xs-1" style="padding:0px"></div>    	     		   		    		
       </div> 
-      -->    	            
     </div>
     
     <!--店长推荐 -->
@@ -264,11 +262,24 @@
       </div>      	            
     </div>
       
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.qrcode.js"></script>
+    <script src="${resRoot}/js/qrcode.js"></script>
+    
+    <script>
+       //获取当前页面url并生成二维码展示在 xx的微店
+       var thisUrl = window.location.href;
+       $('#qrcodeDiv').qrcode({
+		render:"canvas", //默认canvas方式，性能好
+		text: thisUrl, //设置二维码内容
+		width:76,     //设置宽度  
+        height:76,     //设置高度 
+        typeNumber:-1,  //计算模式 
+        correctLevel:QRErrorCorrectLevel.H,//纠错等级  
+        background:"#ffffff",//背景颜色  
+        foreground:"#000000" //前景颜色
+	});	
+    </script>
   </body>
 </html>

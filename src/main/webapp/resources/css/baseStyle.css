@@ -1,0 +1,36 @@
+#top
+{
+    width: auto;
+    height: 60px;
+    background-color:#21292C;
+    color: #ffffff;
+    vertical-align: middle;
+    text-align: center;
+    line-height: 60px;
+    font-size: 20px
+
+}
+#top_left
+{
+	float:left;
+	width:20%;
+	height:60px;
+	font-size:14px;
+}
+#top_middle
+{
+	float:left;
+	width:60%;
+	height:60px;
+
+}
+#top_right
+{
+	float:left;
+	width:20%;
+	height:60px;
+}
+#dv_clear
+{
+	clear:both;
+}

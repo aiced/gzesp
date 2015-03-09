@@ -73,11 +73,13 @@
         <param-value>true</param-value>
     </init-param>
    </filter>
+	
    
    <filter-mapping>
     <filter-name>shiroFilter</filter-name>
     <url-pattern>/*</url-pattern>
    </filter-mapping>
+  
 	
     <!-- 载入spring上下文,spring mvc rest实现方式 -->
 	<!-- 载入spring上下文,spring mvc rest实现方式 -->

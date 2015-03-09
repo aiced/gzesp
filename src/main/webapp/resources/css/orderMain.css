@@ -1,0 +1,19 @@
+
+
+
+
+/*div内文字水平垂直居中*/
+.div-text-center{
+  text-align:center;
+  height:30px;
+  line-height:30px;
+}
+
+.navbar-p {
+	color:#fff;
+	font-size: 20px;
+	font-weight:bold;
+	margin:0;
+	padding:0px;
+} 
+

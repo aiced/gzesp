@@ -112,18 +112,19 @@ table{
 	<!--列表  -->
 	  <div style="background-color:blue;width:100%;overflow:hidden">
 		<table>
-			<tbody>
+			<tbody>			
+			
+				<#list list as info>			
 				<tr style="background-color:red; height:100px;">
 					<td class = "td_first" style="position:relative; height:100px;" onclick="test(1)" >
-							<a style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px" onclick="showSelectedView(this);return false;">
+							<a style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px" onclick="showSelectedView(${info_index});return false;">
 								<img id="unSelected" src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;">
 							</a>
 							
-							<a id="itemSelected" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(this);return false;">
+							<a id="itemSelected_${info_index}" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index});return false;">
 								<img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;" >							
 							</a>
 							
-							
 					</td>
 					<td class = "td_second" onclick="test(2)" >
 							<div style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
@@ -136,92 +137,8 @@ table{
 							</div>
 					</td>
 				</tr>
-	
-				<tr style="background-color:yellow;height:100px;">
-					<td class = "td_first" style="position:relative; height:100px;" onclick="test(1)" >
-         	     			 <img src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px">
-						    <img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px">
-					</td>
-					<td class = "td_second" onclick="test(2)" >
-							<div style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
-         	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
-								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－合约特惠</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">苹果（Apple）iPhone 6 16G</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:5288 &nbsp<font color="#F70909">商品佣金:1000</font></p> 
-								</div>
-							</div>
-					</td>
-				</tr>
-	
-				<tr style="height: 50px; margin-top:5px;">
-					<td class = "td_first" style="position:relative; height:100px;" onclick="test(1)" >
-         	     			 <img src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px">
-						    <img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px">
-					</td>
-					<td class = "td_second" onclick="test(2)" >
-							<div style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
-         	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
-								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－合约特惠</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">苹果（Apple）iPhone 6 16G</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:5288 &nbsp<font color="#F70909">商品佣金:1000</font></p> 
-								</div>
-							</div>
-					</td>
-				</tr>
-	
-				<tr style="height: 50px; margin-top:5px;">
-					<td class = "td_first" style="position:relative; height:100px;" onclick="test(1)" >
-         	     			 <img src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px">
-						    <img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px">
-					</td>
-					<td class = "td_second" onclick="test(2)" >
-							<div style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
-         	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
-								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－合约特惠</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">苹果（Apple）iPhone 6 16G</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:5288 &nbsp<font color="#F70909">商品佣金:1000</font></p> 
-								</div>
-							</div>
-					</td>
-				</tr>
-				
-				<tr style="height: 50px; margin-top:5px;">
-					<td class = "td_first" style="position:relative; height:100px;" onclick="test(1)" >
-         	     			 <img src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px">
-						    <img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px">
-					</td>
-					<td class = "td_second" onclick="test(2)" >
-							<div style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
-         	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
-								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－合约特惠</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">苹果（Apple）iPhone 6 16G</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:5288 &nbsp<font color="#F70909">商品佣金:1000</font></p> 
-								</div>
-							</div>
-					</td>
-				</tr>
-				
-				<tr style="height: 50px; margin-top:5px;">
-					<td class = "td_first" style="position:relative; height:100px;" onclick="test(1)" >
-         	     			 <img src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px">
-						    <img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px">
-					</td>
-					<td class = "td_second" onclick="test(2)" >
-							<div style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
-         	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
-								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－合约特惠</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">苹果（Apple）iPhone 6 16G</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:5288 &nbsp<font color="#F70909">商品佣金:1000</font></p> 
-								</div>
-							</div>
-					</td>
-				</tr>
-
+				</#list>
+			
 			</tbody>
 		</table>
 	 </div >

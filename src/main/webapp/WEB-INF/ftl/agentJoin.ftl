@@ -30,12 +30,15 @@
     
     <!-- 广告图 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:0px;padding:0px;">
-      <img src="${resRoot}/image/banner/banner_iphone6.png" alt="" class="img-responsive" />      
+      <img src="${resRoot}/image/agentJoin/banner_nrzm.jpg" alt="" class="img-responsive" />      
     </div>     
          
     <!-- 能人定义 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
-    	<div > 
+      <div style="margin:0px;">
+        <img src="${resRoot}/image/agentJoin/nrdy.png" alt="" class="img-responsive">
+      </div>     
+      <div>
         <p>头像+虚拟姓名 王小二</p> 
         <p>归属：贵州联通</p> 
         <p>标签：联通能人、销售达人、店铺掌柜</p>
@@ -45,7 +48,10 @@
     
     <!-- 开店流程 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
-    	<div> 
+      <div style="margin:0px;">
+        <img src="${resRoot}/image/agentJoin/kdlc.png" alt="" class="img-responsive">
+      </div>       
+      <div> 
         <p>1、关注"贵州联通xx"微信公众号</p> 
         <p>2、进入"我的微店"， 注册成为大掌柜</p> 
         <p>3、毫不费心，自动生成预装店铺</p>
@@ -55,14 +61,20 @@
     
     <!-- 佣金政策 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
-    	<div> 
+      <div style="margin:0px;">
+        <img src="${resRoot}/image/agentJoin/yjzc.png" alt="" class="img-responsive">
+      </div>     
+      <div> 
         <p>服务尊享</p>
       </div>       
     </div>
     
     <!-- 互动服务 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
-    	<div> 
+      <div style="margin:0px;">
+        <img src="${resRoot}/image/agentJoin/hdfw.png" alt="" class="img-responsive">
+      </div>     
+      <div> 
         <p>服务尊享</p> 
         <p>1、沟通反馈</p> 
         <p>2、销售辅导</p>

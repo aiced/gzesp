@@ -23,7 +23,7 @@
           </a>
     	  </div>
         <div class="col-xs-7">
-    	    <p class="text-center navbar-p">新号入网</p>
+    	    <p class="text-center navbar-p">选择号码</p>
     	  </div>    	
       </div>      
     </div>
@@ -35,9 +35,9 @@
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-12" style="margin:0px;padding:0px">
     	  <div class="input-group">
-            <input type="text" class="form-control input-sm" placeholder="输入尾号">
+            <input id='weihao' type="text" class="form-control input-sm" placeholder="输入尾号">
             <span class="input-group-btn">
-              <button class="btn btn-default btn-sm" type="button">搜索</button>
+              <button class="btn btn-default btn-sm" type="button" onclick="queryFilter()">搜索</button>
             </span>
           </div>
     	</div>  		
@@ -125,7 +125,7 @@
     </div> 
         
     <!-- 号码展示表格-->
-    <div class="container-fluid" style="background-color:#ffffff;margin:10px;">
+    <div class="container-fluid" style="background-color:#ffffff;margin:10px;" id="datagrid">
       <!--
       <div class="row">
         <div class="col-xs-6 border-td-left" style="padding:0px;">

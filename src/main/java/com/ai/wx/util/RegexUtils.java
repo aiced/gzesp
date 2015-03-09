@@ -189,9 +189,14 @@ public class RegexUtils {
             // 可以修改private
             field.setAccessible(true);
             xsa = field.getAnnotation(XStreamAlias.class);
-            anno = xsa.value();
+            if(xsa != null) {
+            	anno = xsa.value();
+            } else {
+            	anno = field.getName();
+            }
             // 根据注解value获取xml里的节点内容
             attrXml = RegexUtils.getElementBySinglePath(xml, anno);
+            attrXml = XmlUtils.deleteCdataTag(attrXml);
 
             String date = "java.util.Date";
             String time = "java.sql.Time";
@@ -199,6 +204,8 @@ public class RegexUtils {
                 field.set(req, DateUtils.parseDate(RegexUtils.getElementText(attrXml).trim()));
             } else if (field.getType().getName().equals(time)) {
                 field.set(req, DateUtils.parseTime4Sql(RegexUtils.getElementText(attrXml).trim()));
+            } else if (field.getType().getSimpleName().equals("long")) {
+            	field.set(req, Long.parseLong((RegexUtils.getElementText(attrXml).trim())));
             } else {
                 field.set(req, RegexUtils.getElementText(attrXml).trim());
             }

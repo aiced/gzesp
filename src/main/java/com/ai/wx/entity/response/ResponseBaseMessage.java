@@ -1,5 +1,8 @@
 package com.ai.wx.entity.response;
 
+import com.ai.wx.consts.XStreamIgnoreCDATA;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 public class ResponseBaseMessage {
     
     // 接收方帐号（收到的OpenID）
@@ -7,6 +10,7 @@ public class ResponseBaseMessage {
     // 开发者微信号
     private String FromUserName;
     // 消息创建时间 （整型）
+    @XStreamIgnoreCDATA
     private long CreateTime;
     // 消息类型（text/music/news）
     private String MsgType;

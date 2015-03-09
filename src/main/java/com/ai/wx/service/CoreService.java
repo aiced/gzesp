@@ -17,6 +17,7 @@ import com.ai.wx.entity.request.RequestTicketMessage;
 import com.ai.wx.entity.response.Article;
 import com.ai.wx.entity.response.ResponseNewsMessage;
 import com.ai.wx.entity.response.ResponseTextMessage;
+import com.ai.wx.util.MessageUtil;
 import com.ai.wx.util.RegexUtils;
 import com.ai.wx.util.XmlUtils;
 
@@ -37,7 +38,8 @@ public class CoreService {
     public String processRequest(String xml) {
 
         // 获取请求消息类型
-        String reqType = RegexUtils.getElementBySinglePath(xml, MessageType.XML_ATTR_MSG_TYPE);
+        String reqTypeElement = RegexUtils.getElementBySinglePath(xml, MessageType.XML_ATTR_MSG_TYPE);
+        String reqType = RegexUtils.getElementText(XmlUtils.deleteCdataTag(reqTypeElement));
         String respMessage = "消息处理异常";
         
         // 文本消息
@@ -106,7 +108,8 @@ public class CoreService {
         //String respContent = "处理文本类型消息请求异常";
         
         try {
-            Field[] fields = RequestTextMessage.class.getDeclaredFields();
+//        	Field[] fields = RequestTextMessage.class.getDeclaredFields();
+            Field[] fields = MessageUtil.getFields(RequestTextMessage.class);
             // 转换成 RequestTextMessage 文本请求
             RequestTextMessage message = RegexUtils.xml2bean(xml, fields, RequestTextMessage.class);
             //回复文本消息
@@ -116,7 +119,7 @@ public class CoreService {
             resp.setToUserName(message.getFromUserName());
             resp.setCreateTime(new Date().getTime());
             //文本内容可以根据用户输入的内容修改，比如输入1,2,3选项回复不同内容
-            resp.setContent("[难过] /得意  /::D"); 
+            resp.setContent(message.getContent()+"--你好，再见"); 
             resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
             resp.setFuncFlag(0);
             

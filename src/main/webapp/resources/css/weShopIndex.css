@@ -2,9 +2,12 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
+* {
+  font-family: 'Microsoft Yahei','Simsun',Helvetica,Arial,sans-serif;font-weight:100;
+}
 body {
   background-color:#f4f4f4;
-  font-family:微软雅黑;
+  font-family: 'Microsoft Yahei','Simsun',Helvetica,Arial,sans-serif;font-weight:100;
 }
 
 /*段落样式:margin可以设置P中间间隙，text-indent:2em;每个段落缩进2个字符，line-height设置行间距*/

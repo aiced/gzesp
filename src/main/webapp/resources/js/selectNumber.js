@@ -8,3 +8,25 @@ function cityFilter()
 	$('#btnCity').html($(event.srcElement).html() + '<span class="caret"></span>');
 	//ajax刷新筛选结果
 }
+
+//输入尾号点击搜索执行ajax查询刷新
+function queryFilter()
+{
+	var weihao = $('#weihao').val();
+	if(weihao == '' || weihao == null)
+	{
+		return false;
+	}
+	
+	var param = {"weihao":weihao};
+	
+	$.ajax({
+		   type: "POST",
+		   url: "queryNumbersByAjax",
+		   data: param,
+		   success: function(data){
+			   //alert(data);
+		     $('#datagrid').html(data);
+		   }
+		});
+}

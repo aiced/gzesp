@@ -1,8 +1,10 @@
 package com.ai.sysframe.utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: StringUtil
@@ -54,6 +56,20 @@ public class StringUtil {
             list.add(new LinkedHashMap<String, Object>().put(mapKey, record));
         }
         return list;
+    }
+    
+    public static Map<String, String> params2Map(String inputParams) {
+        Map<String, String> map = new HashMap();
+        if(inputParams != null ) {
+        	String tmp[] = inputParams.split("&");
+        	for(String keyValStr : tmp) {
+        		String kv[] = keyValStr.split("=");
+        		if(kv.length == 2) {
+        			map.put(kv[0], kv[1]);
+        		}
+        	}
+        }
+        return map;
     }
 
     // 根据bit值，获取bit位随机数

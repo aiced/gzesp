@@ -14,14 +14,14 @@ import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
 
 @Controller
-@RequestMapping("/weShop")
+@RequestMapping("/shopManage")
 public class goodsManageGoodAddController {
     
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/goodsMananger/goodsManageGoodAdd")
-    public ModelAndView index(){
+    @RequestMapping("/goodsManageGoodAdd")
+    public ModelAndView goodsManageGoodAdd(){
     	
     	List list = new ArrayList();  
     	Map info = new HashMap();   

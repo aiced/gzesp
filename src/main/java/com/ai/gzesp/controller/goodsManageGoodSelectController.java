@@ -8,14 +8,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.service.WeShopService;
 
 @Controller
-@RequestMapping("/weShop")
+@RequestMapping("/shopManage")
 public class goodsManageGoodSelectController {
     
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/goodsMananger/goodsManageGoodSelect")
-    public ModelAndView index(){
+    @RequestMapping("/goodsManageGoodSelect")
+    public ModelAndView goodsManageGoodSelect(){
         ModelAndView mav = new ModelAndView("goodsManageGoodSelect.ftl");
         //从数据库获取信息赋值
         mav.addObject("name", "喻露露");

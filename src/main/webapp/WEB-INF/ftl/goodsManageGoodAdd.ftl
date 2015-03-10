@@ -127,7 +127,7 @@ table{
 							
 					</td>
 					<td class = "td_second" onclick="test(2)" >
-							<div style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
+							<div id="first_row"  style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
          	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－合约特惠</p> 
@@ -150,5 +150,30 @@ table{
      <script src="${resRoot}/js/goodsManager/goodsManagerGoodAdd.js?v=${resVer}"></script>
     
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){  
+		   //[获取验证码]按钮点击
+		  $("#first_row").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodDetail', 
+				data: parms
+     	    });  
+		  }); 
+		   $("#second_row").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodDetail', 
+				data: parms
+     	    });  
+		  }); 
+		  
+		});
+	</script>
+    
+    
   </body>
 </html>

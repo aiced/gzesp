@@ -38,7 +38,7 @@
     	<p style="color:#fff;width:60px;height:44px ;line-height:44px;margin:auto;"> 商品管理 </p> 	
     </div>
     
-     <div style=" width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     <div id="first_row" style=" width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">店长推荐
     		</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
@@ -46,7 +46,7 @@
 			</div>
      </div>
      
-     <div style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     <div id="second_row" style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热约合约
     		</p>
     		
@@ -55,7 +55,7 @@
 			</div>
      </div>
      
-          <div style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+          <div id="third_row" style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热销网卡
     		</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
@@ -67,5 +67,41 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){  
+		   //[获取验证码]按钮点击
+		  $("#first_row").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodSelect', 
+				data: parms
+     	    });  
+		  	
+		  });  
+		   $("#second_row").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodSelect', 
+				data: parms
+     	    });  
+		  	
+		  });  
+		  $("#third_row").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodSelect', 
+				data: parms
+     	    });  
+		  	
+		  }); 
+		  
+		});
+	</script>
+    
+    
   </body>
 </html>

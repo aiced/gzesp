@@ -114,32 +114,32 @@
     
     <!--新号入网  合约购机  上网卡  特色流量包  宽带续约-->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px 10px 0px 10px;">
-      <div class="row" style="margin-top:5px;">
-    	<div class="col-xs-4" style="padding:8px;">
+      <div class="row" style="margin-top:2px;margin-bottom:2px;">
+    	<div class="col-xs-4" style="padding:2px;">
     	  <a href="http://m.10010.com/mall-mobile/NumList/search">
-    	    <img src="${resRoot}/image/weShop/xhrw3.png" alt="" class="img-rounded img-responsive" />
+    	    <img src="${resRoot}/image/weShop/xhrw4.png" alt="" class="img-rounded img-responsive" />
     	  </a>    
     	</div>
-    	<div class="col-xs-4" style="padding:8px;">
+    	<div class="col-xs-4" style="padding:2px;">
     	  <a href="http://m.10010.com/MobileList">
-    	    <img src="${resRoot}/image/weShop/hygj3.png" alt="" class="img-rounded img-responsive" />  
+    	    <img src="${resRoot}/image/weShop/hygj4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
-    	<div class="col-xs-4" style="padding:8px;">
+    	<div class="col-xs-4" style="padding:2px;">
     	  <a href="http://m.10010.com/CardList">
-    	    <img src="${resRoot}/image/weShop/swk3.png" alt="" class="img-rounded img-responsive" />  
+    	    <img src="${resRoot}/image/weShop/swk4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
       </div>
       <div class="row" style="margin-top:0px;">
-    	<div class="col-xs-4" style="padding:8px">
-    	  <img src="${resRoot}/image/weShop/tsllb3.png" alt="" class="img-rounded img-responsive" />  
+    	<div class="col-xs-4" style="padding:2px">
+    	  <img src="${resRoot}/image/weShop/tsllb4.png" alt="" class="img-rounded img-responsive" />  
     	</div>
-    	<div class="col-xs-4" style="padding:8px">
-    	  <img src="${resRoot}/image/weShop/kdxy3.png" alt="" class="img-rounded img-responsive" />  
+    	<div class="col-xs-4" style="padding:2px">
+    	  <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
     	</div>
-    	<div class="col-xs-4" style="padding:8px">
-    	  <img src="${resRoot}/image/weShop/sjpj3.png" alt="" class="img-rounded img-responsive" />  
+    	<div class="col-xs-4" style="padding:2px">
+    	  <img src="${resRoot}/image/weShop/sjpj4.png" alt="" class="img-rounded img-responsive" />  
     	</div>
       </div>
     </div>    

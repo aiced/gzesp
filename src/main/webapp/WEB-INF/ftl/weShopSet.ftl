@@ -93,7 +93,7 @@
 		    	<p class = "cellRightLable"> 店铺二维码 </p>
 		    	
 		    	<img class = "arrow" src="${resRoot}/image/goodsManager/goodSelectArrow.png" > 
-		    	<img class = "qrCode" src="${resRoot}/image/weShop/erweima.png"" > 
+		    	<img class = "qrCode" src="${resRoot}/image/weShop/erweima.png" > 
 		    	<div class = "cellTopLine">
 		    	</div>		
 	    </div>

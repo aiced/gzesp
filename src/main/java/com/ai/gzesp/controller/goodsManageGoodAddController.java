@@ -15,7 +15,7 @@ import com.ai.sysframe.utils.CommonUtil;
 
 @Controller
 @RequestMapping("/shopManage")
-public class goodsManageGoodAddController {
+public class GoodsManageGoodAddController {
     
     @Autowired
     private WeShopService weShopService;

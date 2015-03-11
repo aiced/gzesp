@@ -6,12 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>店铺设置</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    
- 	<link rel="stylesheet" href="/WeiShang/bootstrap-theme.css" type="text/css" media="screen" />  
-    <link rel="stylesheet" href="/WeiShang/bootstrap.css" type="text/css" media="screen" />  
-    <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
-    <script src="/WeiShang/bootstrap.min.js"></script>      
+    <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">      
   </head>
   
   
@@ -37,7 +32,7 @@
     
      <div style="width:100%;height:244px;margin-left:0px;margin-bottom:20px;" >   	
      		<div style="background-color:red;width:200px;height:200px ;line-height:44px;margin:auto;">
-     		     		<img style="background-color:gray; width:100%;height:100%;">
+     		     		<img style="background-color:gray;display:block; width:100%;height:100%;">
      </div>	
      		
      	

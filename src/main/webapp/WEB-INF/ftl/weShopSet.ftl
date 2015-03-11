@@ -72,19 +72,19 @@
    	<!--店铺名称   -->	
 	    <div class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺名称 </p>
-		    	<input id = "storeName" class = "input" value="张三微店" readonly="readonly" autocomplete="off"></input> 
+		    	<input id = "storeName" class = "input" value="张三微店" placeholder="点击输入店名"></input> 
 		    	<div class = "cellTopLine">
 		    	</div>		
 	    </div>
 	<!--联系方式   -->	
 	    <div class = "cellDiv" >
 		    	<p class = "cellRightLable"> 联系方式 </p>
-		    	<input id = "phoneNum" class = "input" value="16601983264" readonly="readonly" autocomplete="off"></input> 
+		    	<input id = "phoneNum" class = "input" value="16601983264" placeholder="点击输入联系方式"></input> 
 		    	<div class = "cellTopLine">
 		    	</div>		
 	    </div>
 	<!--店铺二维码   -->	
-	    <div class = "cellDiv" >
+	    <div id ="qrCode" class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺二维码 </p>
 		    	
 		    	<img class = "arrow" src="${resRoot}/image/goodsManager/goodSelectArrow.png" > 
@@ -102,7 +102,7 @@
 	    </div>
 				
     <div style="width:100%;height:44px;margin-top:20px;">   	
-    	<a class = "ok"> 确定</a>
+    	<a class = "ok" onclick="doneClick(this); return false;"> 确定</a>
     </div>
 
     
@@ -111,6 +111,24 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/weShopSet/weShopSet.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){  
+		   //[获取验证码]按钮点击
+		  $("#qrCode").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/weShopSet/weShopSetQrcode', 
+				data: parms
+     	    });  
+		  	
+		  });  
+		  
+		});
+	</script>
+    
   </body>
 </html>

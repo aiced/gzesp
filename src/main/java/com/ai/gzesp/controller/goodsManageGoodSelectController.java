@@ -9,7 +9,7 @@ import com.ai.gzesp.service.WeShopService;
 
 @Controller
 @RequestMapping("/shopManage")
-public class goodsManageGoodSelectController {
+public class GoodsManageGoodSelectController {
     
     @Autowired
     private WeShopService weShopService;

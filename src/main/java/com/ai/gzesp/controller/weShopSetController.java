@@ -12,7 +12,7 @@ import com.ai.gzesp.service.WeShopService;
 
 @Controller
 @RequestMapping("/shopManage")
-public class weShopSetController {
+public class WeShopSetController {
     
     @Autowired
     private WeShopService weShopService;

@@ -9,7 +9,7 @@ import com.ai.gzesp.service.WeShopService;
 
 @Controller
 @RequestMapping("/order")
-public class picUploadController {
+public class PicUploadController {
     
     @Autowired
     private WeShopService weShopService;

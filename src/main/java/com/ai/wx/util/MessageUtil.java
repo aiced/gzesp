@@ -40,4 +40,15 @@ public class MessageUtil {
       return list.toArray(new Field[list.size()]);
   }
   
+  public static String getUrl(String[][] voice2url, String voiceText) {
+	  String url = "";
+	  for(String[] info : voice2url) {
+		  if(info[0].equalsIgnoreCase(voiceText)) {
+			  url = info[1];
+			  break;
+		  }
+	  }
+	  return url;
+  }
+  
 }

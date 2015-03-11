@@ -30,6 +30,11 @@
 						  <li>
 					 </#if> 
 					  	<h5>${pkg.price}</h5>
+					  	<input type="hidden" id="nationalminutes_hidden" value="${pkg.nationalminutes}">
+					  	<input type="hidden" id="nationalthroughtput_hidden" value="${pkg.nationalthroughtput}">
+					  	<input type="hidden" id="totalFee_hidden" value="${pkg.totalFee}">
+					  	<input type="hidden" id="returnFee_hidden" value="${pkg.returnFee}">
+					  	<input type="hidden" id="monthRtnFee_hidden" value="${pkg.monthRtnFee}">
 					  </li>
 					</#list>   
 				</ul>
@@ -40,11 +45,11 @@
 					  <table class="table table-bordered">
 						  <tr>
 						  	<td style="width:50%">国内语音</td>
-						  	<td></td>
+						  	<td><lable id="nationalminutes"></lable></td>
 						  </tr>
 						  <tr>
 						  	<td>国内流量</td>
-						  	<td></td>
+						  	<td><lable id="nationalthroughtput"></lable></td>
 						  </tr>
 						  <tr>
 						  	<td colspan=2>
@@ -85,21 +90,19 @@
 						  </tr>
 						  <tr>
 						  	<td style="width:50%">合约机总价（折前）</td>
-						  	<td></td>
+						  	<td><lable id="totalFee"></lable></td>
 						  </tr>
 						  <tr>
 						  	<td >返款总金额</td>
-						  	<td></td>
+						  	<td><lable id="returnFee"></lable></td>
 						  </tr>
 						  <tr>
 						  	<td >每月返还金额</td>
-						  	<td></td>
+						  	<td><lable id="monthRtnFee"></lable></td>
 						  </tr>
 				</table>
 	        </div>        
 	      </div>
-    
-    
 	  
     </div>
     
@@ -120,29 +123,6 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
      <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-    <script>
-	    $(function() {
-	    	$('#period-select a').bind("click",function(){
-	    	    	  $(this).addClass("selected").siblings().removeClass("selected");
-	    	    	  return false;
-	    	      });
-	    	
-	    	$('#p-tab li').bind("click",function(){
-	    	    	  $(this).addClass("selected").siblings().removeClass("selected");
-	    	    	  return false;
-	    	      });
-	    })
-	    
-		function nextPage() {
-			var parms = {'name':'leoxu', 'age':'1' };
-			
-			 $.commonFormSubmit({  
-     	        action : '${base}/weShop/index', 
-				data: parms,
-     	        success : function(rtdata, status) { 
-     	        }  
-     	    });  
-		}
-	</script>
+     <script src="${resRoot}/js/selectContract.js?v=${resVer}"></script>
   </body>
 </html>

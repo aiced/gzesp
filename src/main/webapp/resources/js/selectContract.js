@@ -26,7 +26,9 @@ $(function() {
 
 function selectPeriod(selectedPeriod) {
 //	contract.conPeriod = 12;
-	alert($(selectedPeriod).val());
+//	alert($(selectedPeriod).val());
+//	alert($(selectedPeriod).attr("value"));
+	contract.conPeriod = $(selectedPeriod).attr("value");
 }
 
 function showActPkg(selectedTab) {

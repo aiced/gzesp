@@ -7,6 +7,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     
     <style>
     	.info-li{position:relative;overflow:hidden;display:block;padding:10px 0;margin-bottom:-1px;border:1px solid #d4d3d3;border-color:#d4d3d3 transparent;}
@@ -19,17 +20,12 @@
   </head>
 
   <body>
-    <!-- head bar -->
-    <div class="container-fluid" style="background-color:#f1791a;padding:5px">
-      <div class="row" style="margin:0px;">     
-        <div class="col-xs-4" >
-          <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
-        </div>
-        <div class="col-xs-2 col-xs-offset-6" style="padding-top:2px;">
-          <a herf="#"><img src="${resRoot}/image/weShop/fenxiang.png" class="img-responsive" alt="" /></a>
-        </div>        
-      </div>
-    </div>
+    <!-- nav bar -->
+     <div id="top">
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_middle">${title}</div>
+	        	<div id="top_right"></div>
+	        </div>
     
     <div class="container-fluid" style="padding:5px">
 	    <ul class="list-group">
@@ -37,7 +33,7 @@
 		  	<h3>已选手机:<small>${selectedPhone}</small></h3>
 		  </li>
 		  <li class="list-group-item  info-li info-li-on">
-		  	<b class="list-arr">ass</b>
+		  	<b class="list-arr"></b>
 			  <h3>选择合约</br><small>请根据您的月消费，选择一个合适的合约计划</small></h3>
 		  </li>
 		  <li class="list-group-item">

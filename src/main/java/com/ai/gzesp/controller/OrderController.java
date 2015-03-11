@@ -29,6 +29,7 @@ public class OrderController {
         mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
         mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
         mav.addObject("selectedNumber", "1306520198"); 
+        mav.addObject("title", "新号入网"); 
         return mav;
     }
     
@@ -43,6 +44,7 @@ public class OrderController {
     	List<Map<String, String>> pkgList = new ArrayList();
     	Map pkg = new HashMap();
     	pkg.put("price", "106元");
+    	pkg.put("type", "1");
     	pkg.put("nationalminutes", "300分钟");
     	pkg.put("nationalthroughtput", "400MB");
     	pkg.put("period", new int[]{12,24,36});
@@ -57,7 +59,8 @@ public class OrderController {
     	
     	pkg = new HashMap();
     	pkg.put("price", "206元");
-    	pkg.put("nationalminutes", "600分钟");
+    	pkg.put("type", "2");
+    	pkg.put("nationalminutes", "500分钟");
     	pkg.put("nationalthroughtput", "600MB");
     	pkg.put("period", new int[]{12,24,36});
     	pkg.put("returnDesc", new String[]{
@@ -71,6 +74,7 @@ public class OrderController {
     	
     	pkg = new HashMap();
     	pkg.put("price", "306元");
+    	pkg.put("type", "3");
     	pkg.put("nationalminutes", "600分钟");
     	pkg.put("nationalthroughtput", "600MB");
     	pkg.put("period", new int[]{12,24,36});
@@ -85,7 +89,8 @@ public class OrderController {
     	
     	pkg = new HashMap();
     	pkg.put("price", "406元");
-    	pkg.put("nationalminutes", "600分钟");
+    	pkg.put("type", "4");
+    	pkg.put("nationalminutes", "800分钟");
     	pkg.put("nationalthroughtput", "600MB");
     	pkg.put("period", new int[]{12,24,36});
     	pkg.put("returnDesc", new String[]{
@@ -99,7 +104,8 @@ public class OrderController {
     	
     	pkg = new HashMap();
     	pkg.put("price", "506元");
-    	pkg.put("nationalminutes", "600分钟");
+    	pkg.put("type", "5");
+    	pkg.put("nationalminutes", "1600分钟");
     	pkg.put("nationalthroughtput", "600MB");
     	pkg.put("period", new int[]{12,24,36});
     	pkg.put("returnDesc", new String[]{

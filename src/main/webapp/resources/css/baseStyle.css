@@ -35,7 +35,7 @@
 	clear:both;
 }
 
-	#单选按钮
+	/*单选按钮*/
 	.p-list{overflow:hidden;}
 	.p-list a{float:left;width:32%;height:32px;line-height:32px;margin:0 2% 10px 0;text-align:center;border:1px solid #ccc;font-weight:bold;font-size:13px;color:#2f3e46;background:#fff;
 		-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;
@@ -52,7 +52,7 @@
 	.p-list a.disabled:visited{color:#999;}
 	.p-list a.mrg-r-0{margin-right:0;}
 	
-	#菜单按钮
+	/*菜单按钮*/
 	.p-tab li{
 		list-style-type:none; 
 		display: block;

@@ -9,64 +9,25 @@
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
 	
-	<style type="text/css">
-	.p-list{overflow:hidden;}
-	.p-list a{float:left;width:32%;height:32px;line-height:32px;margin:0 2% 10px 0;text-align:center;border:1px solid #ccc;font-weight:bold;font-size:13px;color:#2f3e46;background:#fff;
-		-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;
-		-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;
-		text-decoration:none;
-	}
-	.p-list a:nth-child(3n){margin-right:0;}
-	.p-list a.selected{border:1px solid #ec661b;color:#e8742b;
-		background:url(${resRoot}/image/common/selected.png) no-repeat right bottom #fff;
-		background-size:20px 16px;
-	}
-	.p-list a.disabled{cursor:default;background:#dcdcdc;color:#aaa;}
-	.p-list a:visited{color:#2F3E46;}
-	.p-list a.disabled:visited{color:#999;}
-	.p-list a.mrg-r-0{margin-right:0;}
-	
-	.p-tab li{
-		list-style-type:none; 
-		display: block;
-		width: 55px;
-		height: 40px;
-		line-height: 40px;
-		padding-top: 5px;
-		padding-left: 10px;
-		border-right: 1px solid #DDD;
-		border-bottom: 1px solid #E6E6E6;
-		text-align: left;
-		background: none repeat scroll 0% 0% #FFF4D8;
-		font-size: 15px;
-		color: #333;
-		box-shadow: 0px 1px 1px #DDD;}
-	.p-tab li.selected{
-		border-left: 5px solid #E8742B;
-		border-right-color: #FFF;
-		color: #E8742B;
-		background: none repeat scroll 0% 0% #FFC;
-		box-shadow: -1px 1px 1px #DDD;}
-	</style>
   </head>
 
   <body>
     <!-- nav bar -->
      <div id="top">
-        	<div id="top_left"></div>
-        	<div id="top_middle">${title}</div>
-        	<div id="top_right"></div>
-        </div>
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_middle">${title}</div>
+	        	<div id="top_right"></div>
+	        </div>
     
     <div class="container-fluid" style="padding:5px">
 	    <div class="row" style="margin:0px;">
 	        <div style="float: left;">
-	        	  <ul id="p-tab" class="p-tab list-group">
+	        	  <ul id="p-tab" class="list-group p-tab">
 	        	 	 <#list pkgList as pkg>  
 	        	 	 <#if pkg_index == 0>
 						  <li class="selected">
 					 <#else>
-						  <li >
+						  <li>
 					 </#if> 
 					  	<h5>${pkg.price}</h5>
 					  </li>
@@ -158,6 +119,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script>
 	    $(function() {
 	    	$('#period-select a').bind("click",function(){

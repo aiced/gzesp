@@ -14,6 +14,8 @@
 		.info-li .list-arr{float:none;position:absolute;top:50%;right:3px;margin-top:-5px;}
 		.info-li-on .list-arr{background-image:url(${resRoot}/image/common/arr_2.gif);}
 	</style>
+	
+	
   </head>
 
   <body>
@@ -45,14 +47,27 @@
     </div>
     
      <div class="container-fluid" style="padding:5px">
-     	<button type="button" class="btn btn-warning  btn-lg btn-block">下一步</button>
+     	<button type="button" class="btn btn-warning  btn-lg btn-block" onclick='nextPage()'>下一步</button>
       </div>
       
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery-1.11.2.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    <script>
+		function nextPage() {
+			var parms = {'name':'leoxu', 'age':'1' };
+			
+			 $.commonFormSubmit({  
+     	        action : '${base}/order/selectContract', 
+				data: parms,
+     	        success : function(rtdata, status) { 
+     	        }  
+     	    });  
+		}
+	</script>
   </body>
 </html>

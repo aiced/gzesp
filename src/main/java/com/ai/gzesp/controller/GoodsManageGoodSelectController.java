@@ -1,5 +1,7 @@
 package com.ai.gzesp.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.StringUtil;
 
 @Controller
 @RequestMapping("/shopManage")
@@ -17,8 +20,8 @@ public class GoodsManageGoodSelectController {
     
     @RequestMapping("/goodsManageGoodSelect")
     public ModelAndView goodsManageGoodSelect(@RequestBody String inputParam){
-//    	Mµp<String, String> paramsMap = StringUtil.params2Map(inputParams);
-//    	String name = paramsMap.get("index");
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String name = paramsMap.get("index");
     	
     	//根据index 检索数据库，加载数据。
     	

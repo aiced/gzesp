@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.StringUtil;
 
 @Controller
 @RequestMapping("/shopManage")
@@ -23,8 +24,8 @@ public class GoodsManageGoodAddController {
     
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
-//    	Mµp<String, String> paramsMap = StringUtil.params2Map(inputParams);
-//    	String name = paramsMap.get("index");
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String name = paramsMap.get("index");
     	
     	List list = new ArrayList();  
     	Map info = new HashMap();   

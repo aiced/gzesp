@@ -40,9 +40,10 @@
     <!--图片  -->
      <div style="width:100%;height:150px;margin-bottom:10px;" >  
      				<!-- 当没有图片时候，会有边框，表示这里有个图片。  --> 	
-     	    		<img style="background-color:gray;width:100%;height:98%;display: block;float:left;">  
-     	    		<img style="background-color:red;width:40px;height:40px;display: block;margin-left:20px;margin-top:-95px;float:left;">  
-     	    		<img style="background-color:red;width:40px;height:40px;display: block;margin-right:20px;margin-top:-95px;float:right;">       	    		
+     				
+     	    		<img src="${resRoot}/image/banner/banner_iphone6.png" style="background-color:gray;width:100%;height:98%;display: block;float:left;">  
+     	    		<img src="${resRoot}/image/goodsManager/arrowRight.png" style="width:40px;height:40px;display: block;margin-left:20px;margin-top:-95px;float:left;">  
+     	    		<img src="${resRoot}/image/goodsManager/arrowLeft.png" style="width:40px;height:40px;display: block;margin-right:20px;margin-top:-95px;float:right;">       	    		
      </div>
      <!--文字  -->
      <div style="margin-bottom:0px;padding-top:0px;padding-bottom:15px;" >  

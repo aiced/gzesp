@@ -9,6 +9,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
+         <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    
   </head>
  
  <style type="text/css">	 
@@ -58,13 +60,13 @@ table{
  
  <body >
 	<!--标题   -->
-    <div style="background-color:#1D2427; width:100%;height:44px;margin-left:0px;margin-bottom:0px;" >   	
-     	<a style="color:#fff;width:60px;height:44px ;line-height:44px; float:left;display: block;text-align:center;margin-left:1px"> 返回 </a>	
-    	<a style="color:#fff;width:40px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:10px;margin-top:12px;border:1px solid #fff"> 编辑 </a>	
-    	<p style="color:#fff;width:60px;height:44px ;line-height:44px;margin:auto;"> 商品管理 </p> 	
-    </div>
+ 		   <div id="top">
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_middle">${title}</div>
+	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
+	        </div
     <!--搜索  -->
-    <div style="background-color:white;width:100%;overflow:hidden">
+    <div style="background-color:white;width:100%;overflow:hidden;margin-top:20px;">
   			 <input type="text" placeholder="请输入商品关键字" style ="width:60%;height:30px;margin-top:10px;float:left;margin-bottom:10px;margin-left:20px;padding-left:15px;border:1px solid #A6A6A6;font-size:14px">
  			 <a style="width:60px;height:30px;display:block;text-align:center;float:left;line-height:30px;margin-top:10px;margin-bottom:10px;margin-left:20px;border:1px solid #A6A6A6;font-size:12px">搜索</a>
 	</div >
@@ -121,12 +123,12 @@ table{
 								<img id="unSelected" src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;">
 							</a>
 							
-							<a id="itemSelected_${info_index}" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index});return false;">
+							<a id="leftItemSelected_${info_index}" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index});return false;">
 								<img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;" >							
 							</a>
 							
 					</td>
-					<td class = "td_second" onclick="test(2)" >
+					<td id="itemSelected_${info_index}" class = "td_second" onclick="test(2)" >
 							<div id="first_row"  style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
          	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
@@ -150,6 +152,7 @@ table{
      <script src="${resRoot}/js/goodsManager/goodsManagerGoodAdd.js?v=${resVer}"></script>
     
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script type="text/javascript">
 		$(document).ready(function(){  

@@ -11,8 +11,18 @@ public class RequestVoiceMessage extends RequestBaseMessage {
     private String MediaId;
     // 语音格式
     private String Format;
+    //识别结果
+    private String Recognition;
 
-    public String getMediaId() {
+    public String getRecognition() {
+		return Recognition;
+	}
+
+	public void setRecognition(String recognition) {
+		Recognition = recognition;
+	}
+
+	public String getMediaId() {
         return MediaId;
     }
 

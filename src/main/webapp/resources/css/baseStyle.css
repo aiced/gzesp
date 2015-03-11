@@ -34,3 +34,43 @@
 {
 	clear:both;
 }
+
+	#单选按钮
+	.p-list{overflow:hidden;}
+	.p-list a{float:left;width:32%;height:32px;line-height:32px;margin:0 2% 10px 0;text-align:center;border:1px solid #ccc;font-weight:bold;font-size:13px;color:#2f3e46;background:#fff;
+		-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;
+		-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;
+		text-decoration:none;
+	}
+	.p-list a:nth-child(3n){margin-right:0;}
+	.p-list a.selected{border:1px solid #ec661b;color:#e8742b;
+		background:url(../image/common/selected.png) no-repeat right bottom #fff;
+		background-size:20px 16px;
+	}
+	.p-list a.disabled{cursor:default;background:#dcdcdc;color:#aaa;}
+	.p-list a:visited{color:#2F3E46;}
+	.p-list a.disabled:visited{color:#999;}
+	.p-list a.mrg-r-0{margin-right:0;}
+	
+	#菜单按钮
+	.p-tab li{
+		list-style-type:none; 
+		display: block;
+		width: 55px;
+		height: 40px;
+		line-height: 40px;
+		padding-top: 5px;
+		padding-left: 10px;
+		border-right: 1px solid #DDD;
+		border-bottom: 1px solid #E6E6E6;
+		text-align: left;
+		background: none repeat scroll 0% 0% #FFF4D8;
+		font-size: 15px;
+		color: #333;
+		box-shadow: 0px 1px 1px #DDD;}
+	.p-tab li.selected{
+		border-left: 5px solid #E8742B;
+		border-right-color: #FFF;
+		color: #E8742B;
+		background: none repeat scroll 0% 0% #FFC;
+		box-shadow: -1px 1px 1px #DDD;}

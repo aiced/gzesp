@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gzesp.dao.OrderDao">
+
+	
+	<select id="query1" parameterType="String" resultType="java.util.HashMap">
+	<![CDATA[
+select item,sum(ifnull(d25,0)) 'd25',sum(ifnull(d26,0)) 'd26',sum(ifnull(d27,0)) 'd27',sum(ifnull(d28,0)) 'd28',sum(ifnull(d29,0)) 'd29',sum(ifnull(d30,0)) 'd30',sum(ifnull(d31,0)) 'd31' from (
+   select   case a.venue_id when '10000001' then '羽毛球' when '10000002' then '篮球' when '10000003' then '乒乓球' else '其他' end  item,
+        case when DATE_FORMAT(trade_date,'%d')=25 then real_pay end  d25,
+        case when DATE_FORMAT(trade_date,'%d')=26 then real_pay end  d26,
+        case when DATE_FORMAT(trade_date,'%d')=27 then real_pay end  d27,
+        case when DATE_FORMAT(trade_date,'%d')=28 then real_pay end  d28,
+        case when DATE_FORMAT(trade_date,'%d')=29 then real_pay end  d29,
+        case when DATE_FORMAT(trade_date,'%d')=30 then real_pay end  d30,
+        case when DATE_FORMAT(trade_date,'%d')=31 then real_pay end  d31
+ from trade a,trade_fee b
+ where a.trade_id=b.trade_id
+   and b.trade_date >= str_to_date(#{startMon},'%Y%m')
+   and b.trade_date < str_to_date(#{endMon},'%Y%m')
+   and a.venue_id  is not null
+   ) a
+   group by item 	
+     ]]>
+	</select>
+</mapper>

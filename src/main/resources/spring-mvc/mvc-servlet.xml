@@ -17,16 +17,7 @@
     <!-- 配置注解驱动的Spring MVC Controller 的编程模型.注:次标签只在 Servlet MVC工作! -->  
     <mvc:annotation-driven />
     
-    <context:component-scan base-package="com.ai.gzesp" />
-    
-    <!-- 使用Annotation自动注册Bean,只扫描@Controller -->
-<!--     <context:component-scan base-package="com.ai.osapp.remote">base-package 如果多个，用“,”分隔
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan> -->
-    
-    <context:component-scan base-package="com.ai.wx.controller">
-        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+    <context:component-scan base-package="com.ai" />
     
     <!-- 默认的注解映射的支持，org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping -->
     <!-- 

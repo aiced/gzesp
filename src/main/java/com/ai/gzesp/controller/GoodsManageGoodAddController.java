@@ -43,7 +43,9 @@ public class GoodsManageGoodAddController {
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", list.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-    	rspMap.put("list", list);     
+    	rspMap.put("list", list);  
+    	rspMap.put("title", "选择商品"); 
+
     	return new ModelAndView("goodsManageGoodAdd.ftl", rspMap);
     	
 //        ModelAndView mav = new ModelAndView("goodsManageGoodAdd.ftl");

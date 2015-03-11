@@ -27,6 +27,8 @@ public class GoodsManageGoodSelectController {
         mav.addObject("name", "喻露露");
         mav.addObject("phone", "18685292522"); 
         mav.addObject("weixin", "1306520198@qq.com"); 
+        mav.addObject("title", "选择添加"); 
+
         return mav;
     }
 }

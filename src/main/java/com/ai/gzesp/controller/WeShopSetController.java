@@ -24,6 +24,8 @@ public class WeShopSetController {
         mav.addObject("name", "喻露露");
         mav.addObject("phone", "18685292522"); 
         mav.addObject("weixin", "1306520198@qq.com"); 
+        mav.addObject("title", "店铺设置"); 
+
         return mav;
     }
     
@@ -33,7 +35,10 @@ public class WeShopSetController {
     public ModelAndView weShopSetQrcode(){
         //返回数据表格子页面
         ModelAndView mav = new ModelAndView("weShopSetQrcode.ftl"); 
-        
+        mav.addObject("name", "喻露露");
+        mav.addObject("phone", "18685292522"); 
+        mav.addObject("weixin", "1306520198@qq.com"); 
+        mav.addObject("title", "二维码");
         return mav;
     }
 }

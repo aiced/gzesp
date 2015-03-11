@@ -9,6 +9,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
+     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    
   </head>
 
  <style type="text/css">	 
@@ -32,13 +34,14 @@
 
   <body>
   <!--标题   -->
-    <div style="background-color:#1D2427; width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
-     	<a style="color:#fff;width:60px;height:44px ;line-height:44px; float:left;display: block;text-align:center;margin-left:1px"> 返回 </a>	
-    	<a style="color:#fff;width:40px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:10px;margin-top:12px;border:1px solid #fff"> 编辑 </a>	
-    	<p style="color:#fff;width:60px;height:44px ;line-height:44px;margin:auto;"> 商品管理 </p> 	
-    </div>
+  		   <div id="top">
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_middle">${title}</div>
+	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
+	        </div>        
+	        
     
-     <div id="first_row" style=" width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     <div id="first_row" style=" width:100%;height:44px;margin-left:0px;margin-top:20px;margin-bottom:20px;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">店长推荐
     		</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
@@ -67,6 +70,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script type="text/javascript">
 		$(document).ready(function(){  

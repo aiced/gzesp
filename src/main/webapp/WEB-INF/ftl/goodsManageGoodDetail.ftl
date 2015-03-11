@@ -9,6 +9,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
+         <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    
   </head>
  <style type="text/css">	 
  	* {margin:0;padding:0;} 
@@ -30,11 +32,11 @@
  
  <body >
 	<!--标题   -->
-    <div style="background-color:#1D2427; width:100%;height:44px;margin-left:0px;margin-bottom:0px;" >   	
-     	<a style="color:#fff;width:60px;height:44px ;line-height:44px; float:left;display: block;text-align:center;margin-left:1px"> 返回 </a>	
-    	<a style="color:#fff;width:40px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:10px;margin-top:12px;border:1px solid #fff"> 编辑 </a>	
-    	<p style="color:#fff;width:60px;height:44px ;line-height:44px;margin:auto;"> 商品管理 </p> 	
-    </div>
+ 	<div id="top">
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_middle">${title}</div>
+	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
+	 </div>
     <!--图片  -->
      <div style="width:100%;height:150px;margin-bottom:10px;" >  
      				<!-- 当没有图片时候，会有边框，表示这里有个图片。  --> 	
@@ -67,7 +69,14 @@
        	   			<textarea style="width:70%;height:120px;margin-right:30px;float:right;padding:10px;" > </textarea>     	   			
        	   		</div>    	    		
      </div>
-</body>
-  
-  
+ <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+       <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>  
+     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+
+
+  </body>
 </html>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>新号入网</title>
+    <title>号码选择</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,7 +37,9 @@
     	  <div class="input-group">
             <input id='weihao' type="text" class="form-control input-sm" placeholder="输入尾号">
             <span class="input-group-btn">
-              <button class="btn btn-default btn-sm" type="button" onclick="queryFilter()">搜索</button>
+              <button class="btn btn-default btn-sm" type="button" onclick="queryFilter()">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              </button>
             </span>
           </div>
     	</div>  		

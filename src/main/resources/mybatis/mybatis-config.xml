@@ -32,7 +32,8 @@
 
     <!-- SQL映射文件 -->
     <mappers>
-    	<mapper resource="mybatis/mapper_mysql/common_SqlMap.xml" /> 	 	 		
+    	<mapper resource="mybatis/mapper_mysql/common_SqlMap.xml" />
+    	<mapper resource="mybatis/mapper_mysql/sqlMap_WeShopDao.xml" /> 	 	 		
     </mappers>
     
 </configuration>

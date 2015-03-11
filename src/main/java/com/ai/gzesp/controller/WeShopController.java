@@ -2,6 +2,7 @@ package com.ai.gzesp.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +38,10 @@ public class WeShopController {
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("weShopIndex.ftl");
         //从数据库获取信息赋值
+        //mybatis jndi 方式连oracle数据库test代码
+        List<Map<Object, Object>> list = weShopService.getInfo("201412", "201501");
+        mav.addObject("testList", list);
+        
         //广告轮播图片的url
         List<String> banners = new ArrayList<String>();
         banners.add("banner_iphone6.png");
@@ -47,6 +52,8 @@ public class WeShopController {
         mav.addObject("name", "喻露露");
         mav.addObject("phone", "18685292522"); 
         mav.addObject("weixin", "1306520198@qq.com"); 
+        
+
         return mav;
     }
 }

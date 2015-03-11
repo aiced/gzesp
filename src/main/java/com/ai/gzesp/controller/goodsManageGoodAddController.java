@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,7 +22,9 @@ public class GoodsManageGoodAddController {
     private WeShopService weShopService;
     
     @RequestMapping("/goodsManageGoodAdd")
-    public ModelAndView goodsManageGoodAdd(){
+    public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
+//    	Mµp<String, String> paramsMap = StringUtil.params2Map(inputParams);
+//    	String name = paramsMap.get("index");
     	
     	List list = new ArrayList();  
     	Map info = new HashMap();   

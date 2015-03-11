@@ -81,7 +81,7 @@
 		   //[获取验证码]按钮点击
 		  $("#first_row_left").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  	var parms = {'index':${index}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
@@ -89,7 +89,7 @@
 		  }); 
 		   $("#first_row_right").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  	var parms = {'index':${index}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
@@ -97,7 +97,7 @@
 		  }); 
 		   $("#second_row_left").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  	var parms = {'index':${index}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
@@ -105,7 +105,7 @@
 		  }); 
 		  		  $("#second_row_right").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  	var parms = {''index':${index}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms

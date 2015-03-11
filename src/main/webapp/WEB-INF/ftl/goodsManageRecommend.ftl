@@ -73,7 +73,7 @@
 		   //[获取验证码]按钮点击
 		  $("#first_row").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  	var parms = {'index':'1'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodSelect', 
 				data: parms
@@ -82,7 +82,7 @@
 		  });  
 		   $("#second_row").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  	var parms = {'index':'2'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodSelect', 
 				data: parms
@@ -91,7 +91,7 @@
 		  });  
 		  $("#third_row").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  	var parms = {'index':'3'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodSelect', 
 				data: parms

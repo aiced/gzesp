@@ -17,7 +17,7 @@ function showSelectedView(obj) {
 	//进行数组的元素个数判断，大于4返回。
 	
 	
-	var id = "itemSelected_" + obj;
+	var id = "leftItemSelected_" + obj;
 	var aMark = document.getElementById(id);
 	  if (aMark.style.display == "none"){
 		  aMark.style.display = "block";

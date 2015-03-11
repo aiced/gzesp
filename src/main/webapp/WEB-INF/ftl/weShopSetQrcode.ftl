@@ -36,7 +36,7 @@
     </div>
      <div style="width:100%;height:244px;margin-left:0px;margin-bottom:20px;" >   	
      		<div style="background-color:red;width:200px;height:200px ;line-height:44px;margin:auto;">
-     		     		<img style="background-color:gray;display:block; width:100%;height:100%;">
+     		<img src="${resRoot}/image/weShop/erweima.png"  style="background-color:gray;display:block; width:100%;height:100%;">
      </div>	
      		
      	

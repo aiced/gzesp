@@ -8,19 +8,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.service.WeShopService;
 
 @Controller
-@RequestMapping("/weShop")
-public class goodsManageGoodSelectController {
+@RequestMapping("/shopManage")
+public class GoodsManageRecommendController {
     
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/goodsMananger/goodsManageGoodSelect")
-    public ModelAndView index(){
-        ModelAndView mav = new ModelAndView("goodsManageGoodSelect.ftl");
+    @RequestMapping("/goodsManageRecommend")
+    public ModelAndView goodsManageRecommend(){
+        ModelAndView mav = new ModelAndView("goodsManageRecommend.ftl");
         //从数据库获取信息赋值
         mav.addObject("name", "喻露露");
         mav.addObject("phone", "18685292522"); 
         mav.addObject("weixin", "1306520198@qq.com"); 
+        mav.addObject("title", "店长推荐");
         return mav;
     }
 }

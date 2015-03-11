@@ -8,15 +8,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.service.WeShopService;
 
 @Controller
-@RequestMapping("/weShop")
-public class goodsManageGoodDetailController {
+@RequestMapping("/order")
+public class PicUploadController {
     
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/goodsMananger/goodsManageGoodDetail")
-    public ModelAndView index(){
-        ModelAndView mav = new ModelAndView("goodsManageGoodDetail.ftl");
+    @RequestMapping("/picUpload")
+    public ModelAndView goodsManageGoodDetail(){
+        ModelAndView mav = new ModelAndView("picUpload.ftl");
         //从数据库获取信息赋值
         mav.addObject("name", "喻露露");
         mav.addObject("phone", "18685292522"); 

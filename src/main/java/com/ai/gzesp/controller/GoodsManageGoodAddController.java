@@ -7,21 +7,25 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.StringUtil;
 
 @Controller
-@RequestMapping("/weShop")
-public class goodsManageGoodAddController {
+@RequestMapping("/shopManage")
+public class GoodsManageGoodAddController {
     
     @Autowired
     private WeShopService weShopService;
     
-    @RequestMapping("/goodsMananger/goodsManageGoodAdd")
-    public ModelAndView index(){
+    @RequestMapping("/goodsManageGoodAdd")
+    public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String name = paramsMap.get("index");
     	
     	List list = new ArrayList();  
     	Map info = new HashMap();   
@@ -40,7 +44,9 @@ public class goodsManageGoodAddController {
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", list.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-    	rspMap.put("list", list);     
+    	rspMap.put("list", list);  
+    	rspMap.put("title", "选择商品"); 
+
     	return new ModelAndView("goodsManageGoodAdd.ftl", rspMap);
     	
 //        ModelAndView mav = new ModelAndView("goodsManageGoodAdd.ftl");

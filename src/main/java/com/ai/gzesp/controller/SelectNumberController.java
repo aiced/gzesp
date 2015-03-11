@@ -12,7 +12,7 @@ import com.ai.gzesp.service.OrderService;
 
 @Controller
 @RequestMapping("/order")
-public class selectNumberController {
+public class SelectNumberController {
 
     @Autowired
     private OrderService orderService;

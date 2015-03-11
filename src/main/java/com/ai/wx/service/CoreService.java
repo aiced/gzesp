@@ -14,6 +14,7 @@ import com.ai.wx.entity.request.RequestClickMessage;
 import com.ai.wx.entity.request.RequestEventMessage;
 import com.ai.wx.entity.request.RequestTextMessage;
 import com.ai.wx.entity.request.RequestTicketMessage;
+import com.ai.wx.entity.request.RequestVoiceMessage;
 import com.ai.wx.entity.response.Article;
 import com.ai.wx.entity.response.ResponseNewsMessage;
 import com.ai.wx.entity.response.ResponseTextMessage;
@@ -27,6 +28,14 @@ import com.ai.wx.util.XmlUtils;
 public class CoreService {
     
     private static Logger log = LoggerFactory.getLogger(CoreService.class);
+    
+    private final String[][] voice2url = {
+    		{"手机营业厅","http://wap.10010.com/t/home.htm"},
+    		{"我要开店","http://wap.gz10010.xyz/esp/weShop/index"},
+    		{"店铺管理",""},
+    		{"业绩查询",""},
+    		{"赚钱指南",""},
+    };
     
     /**
      * 请求处理总入口<br>
@@ -60,7 +69,7 @@ public class CoreService {
         }
         // 音频消息
         else if (MessageType.REQ_MESSAGE_TYPE_VOICE.equals(reqType)) {
-
+        	respMessage = processVoiceReq(xml);
         }
         // 事件推送
         else if (MessageType.REQ_MESSAGE_TYPE_EVENT.equals(reqType)) {
@@ -93,6 +102,40 @@ public class CoreService {
             respMessage = "reqType had not found!";
         }
 
+        return respMessage;
+    }
+    
+    /**
+     * 处理语音类型消息<br>
+     * 〈功能详细描述〉
+     *
+     * @param xml
+     * @return
+     */
+    private String processVoiceReq(String xml) {
+        String respMessage = null;
+        
+        try {
+            Field[] fields = MessageUtil.getFields(RequestVoiceMessage.class);
+            // 转换成 RequestTextMessage 文本请求
+            RequestVoiceMessage message = RegexUtils.xml2bean(xml, fields, RequestVoiceMessage.class);
+            //回复文本消息
+            ResponseTextMessage resp = new ResponseTextMessage();
+            
+            resp.setFromUserName(message.getToUserName());
+            resp.setToUserName(message.getFromUserName());
+            resp.setCreateTime(new Date().getTime());
+            //文本内容可以根据用户输入的内容修改，比如输入1,2,3选项回复不同内容
+            resp.setContent(MessageUtil.getUrl(voice2url, message.getRecognition())); 
+            
+            resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
+            resp.setFuncFlag(0);
+            
+            respMessage = XmlUtils.textMessageToXml(resp);
+        } catch (Exception e) {
+            log.error("处理语音类型消息请求异常", e);
+        }
+        
         return respMessage;
     }
     

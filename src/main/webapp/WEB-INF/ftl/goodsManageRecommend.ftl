@@ -70,7 +70,7 @@
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script type="text/javascript">
 		$(document).ready(function(){  
-		   //[获取验证码]按钮点击
+		   //[获取验证码]按钮点击		   
 		  $("#first_row").click(function(){  
 		  //在这里操作获取验证码
 		  	var parms = {'index':'1'};

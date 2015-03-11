@@ -61,13 +61,7 @@
        		     	         <img src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
        		     			<img src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: block;position:absolute;right:-10px;top:-10px">
        		</div>
-     					
-       	<!-- 	
-       		<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;left:5px;top:5px">  
-         	<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;right:5px;top:5px">           		
-       		<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;left:5px;bottom:5px">  
-       		<img style="background-color:gray;width:120px;height:120px;display: block;position:absolute;right:5px;bottom:5px">  
-     	  -->  		
+     							
      </div>
 	</div>
     <!-- Bootstrap core JavaScript
@@ -75,48 +69,52 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script type="text/javascript">
 		$(document).ready(function(){  
-		   //[获取验证码]按钮点击
+		   //[获取验证码]按钮点击		   
 		  $("#first_row_left").click(function(){  
-		  //在这里操作获取验证码
-		  	var parms = {'index':${index}};
+		  //在这里操作获取验证码		  
+		  	var parms = {'index':'1'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
      	    });  
-		  }); 
+		  	
+		  });  
 		   $("#first_row_right").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'index':${index}};
+		  	var parms = {'index':'2'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
      	    });  
-		  }); 
-		   $("#second_row_left").click(function(){  
-		  //在这里操作获取验证码
-		  	var parms = {'index':${index}};
-			 $.commonFormSubmit({  
-     	        action : '${base}/shopManage/goodsManageGoodAdd', 
-				data: parms
-     	    });  
-		  }); 
-		  		  $("#second_row_right").click(function(){  
-		  //在这里操作获取验证码
-		  	var parms = {''index':${index}};
-			 $.commonFormSubmit({  
-     	        action : '${base}/shopManage/goodsManageGoodAdd', 
-				data: parms
-     	    });  
+		  	
 		  });  
+		  $("#second_row_left").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'index':'3'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodAdd', 
+				data: parms
+     	    });  
+		  	
+		  }); 
+		  $("#second_row_right").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'index':'2'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodAdd', 
+				data: parms
+     	    });  
+		  	
+		  }); 
 		  
 		});
+		
 	</script>
-    
-    
-    
-    
+
   </body>
 </html>

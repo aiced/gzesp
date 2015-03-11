@@ -121,12 +121,12 @@ table{
 								<img id="unSelected" src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;">
 							</a>
 							
-							<a id="itemSelected_${info_index}" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index});return false;">
+							<a id="leftItemSelected_${info_index}" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index});return false;">
 								<img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;" >							
 							</a>
 							
 					</td>
-					<td class = "td_second" onclick="test(2)" >
+					<td id="itemSelected_${info_index}" class = "td_second" onclick="test(2)" >
 							<div id="first_row"  style="background-color:white; width:100%;height:70px;margin-top:15px;margin-bottom:15px">
          	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								

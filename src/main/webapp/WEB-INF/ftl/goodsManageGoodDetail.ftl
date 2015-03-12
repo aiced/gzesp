@@ -35,8 +35,9 @@
  	<div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
 	        	<div id="top_middle">${title}</div>
-	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
-	 </div>
+				<div id="top_right">
+	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff" onclick="saveClick(this); return false;"> 确定 </a>	
+	        	</div>	 </div>
     <!--图片  -->
      <div style="width:100%;height:150px;margin-bottom:10px;" >  
      				<!-- 当没有图片时候，会有边框，表示这里有个图片。  --> 	
@@ -62,12 +63,12 @@
        	    	<!--活动标题  -->
        	   		<div style="width:100%;height:50px;margin-bottom:10px;padding-top:10px;">
        	   			<p style="width:60px;height:30px;line-height:30px;margin-left:10px;margin-bottom:10px;float:left;color:#878787">活动标题 </p> 
-       	   			<input style="width:70%;height:30px;margin-right:30px;float:right;padding-left:10px;"  type="tel" placeholder="赠品：虎牌保温杯" data-value="赠品：虎牌保温杯">       	   			
+       	   			<input id="title" style="width:70%;height:30px;margin-right:30px;float:right;padding-left:10px;"  type="tel" placeholder="赠品：虎牌保温杯" data-value="赠品：虎牌保温杯">       	   			
        	   		</div>
        	   		<!--活动详情  -->
        	   		<div style="width:100%;height:150px;margin-bottom:10px;padding-top:10px;padding-bottom:10px;">
        	   			<p style="width:60px;height:20px;margin-left:10px;margin-bottom:10px;float:left;color:#878787">活动详情 </p> 
-       	   			<textarea style="width:70%;height:120px;margin-right:30px;float:right;padding:10px;" > </textarea>     	   			
+       	   			<textarea id="content" style="width:70%;height:120px;margin-right:30px;float:right;padding:10px;" > </textarea>     	   			
        	   		</div>    	    		
      </div>
  <!-- Bootstrap core JavaScript
@@ -75,9 +76,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-       <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>  
+     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>  
+     <script src="${resRoot}/js/goodsManager/goodsManagerGoodDetail.js?v=${resVer}"></script>
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
-
 
   </body>
 </html>

@@ -2,12 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ai.gzesp.dao.WeShopDao">
 
-	<select id="getInfo" parameterType="String" resultType="java.util.HashMap">
+	<select id="getDevloperInfo" parameterType="String" resultType="java.util.HashMap">
 	<![CDATA[
- select t_id, t_name name, t_content content
-   from ximh_test
+       select store_name, phone_number, weixin_id, user_img
+         from AUR_D_AUTHINFO
+        where id = #{developerId}
      ]]>
 	</select>
+	
+	<select id="getBanners" parameterType="String" resultType="java.util.HashMap">
+	<![CDATA[
+       select content
+         from SYS_D_DECORATER
+        where type_id = 'HOME_TOP_BANNAR'
+          and data_key = 'IMG'
+          and status = '1'
+         order by order_seq
+     ]]>
+	</select>	
 	
 	<select id="query2" parameterType="String" resultType="java.util.HashMap">
 	<![CDATA[
@@ -27,9 +39,6 @@ select item,sum(ifnull(d25,0)) 'd25',sum(ifnull(d26,0)) 'd26',sum(ifnull(d27,0))
    and a.venue_id  is not null
    ) a
    group by item 	
-   
- select id, t_name name, t_content content
-   from ximh_test
      ]]>
 	</select>
 </mapper>

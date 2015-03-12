@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${name}的微店</title>
+    <title>欢迎来到${developer.STORE_NAME}的微店</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -63,7 +63,7 @@
           <#else>
             <div class="item">
           </#if>
-              <img src="${resRoot}/image/banner/${item}" alt="" />
+              <img src="${item.banner_url}" alt="" />
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -97,17 +97,16 @@
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-top:5px;">
       <div class="row ">
         <div class="col-xs-3" style="padding:5px">
-    	  <img src="${resRoot}/image/weShop/touxiang_default.png" alt="" class="img-circle img-responsive" />  
+    	  <img src="${imageRoot}${developer.USER_IMG}" alt="" class="img-circle img-responsive" />  
     	</div>
     	<div class="col-xs-6" style="padding:10px 0px 10px 0px;">
     	  <ul class="list-unstyled">
-            <li style="font-size:15px;">${name}的微店</li>
-            <li style="font-size:10px;">手机：${phone}</li>
-            <li style="font-size:10px;">微信：${weixin}</li>
+            <li style="font-size:15px;">${developer.STORE_NAME}的微店</li>
+            <li style="font-size:15px;">手机：${developer.PHONE_NUMBER}</li>
+            <li style="font-size:15px;">微信：${developer.WEIXIN_ID}</li>
           </ul>  
     	</div>
     	<div class="col-xs-3" style="padding:5px" id="qrcodeDiv">
-    	   
     	</div>    		    		
       </div>	            
     </div>

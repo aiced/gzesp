@@ -7,5 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 public interface WeShopDao {
 
-    public List<Map<Object, Object>> getInfo(@Param("startMon") String startMon, @Param("endMon")  String endMon);
+    public List<Map<Object, Object>> getDevloperInfo(@Param("developerId") String developerId);
+    
+    public List<Map<Object, Object>> getBanners();
 }

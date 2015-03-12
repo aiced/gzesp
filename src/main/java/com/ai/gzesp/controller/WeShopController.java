@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,28 +31,23 @@ public class WeShopController {
      * 三级页面：店铺主页 <br>
      * 〈功能详细描述〉
      *
+     * @param shopId 店铺id
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    @RequestMapping("/index")
-    public ModelAndView index(){
+    @RequestMapping("/index/{developerId}")
+    public ModelAndView index(@PathVariable("developerId") String developerId){
         ModelAndView mav = new ModelAndView("weShopIndex.ftl");
-        //从数据库获取信息赋值
-        //mybatis jndi 方式连oracle数据库test代码
-        List<Map<Object, Object>> list = weShopService.getInfo("201412", "201501");
-        mav.addObject("testList", list);
+        //根据shopId获取 能人信息 店铺名称 手机 微信
+        List<Map<Object, Object>> developers = weShopService.getDevloperInfo(developerId);
+        mav.addObject("developer", developers.get(0));
         
-        //广告轮播图片的url
-        List<String> banners = new ArrayList<String>();
-        banners.add("banner_iphone6.png");
-        banners.add("banner_honer_x1.png");
+        //获取广告轮播图片的url
+        List<Map<String, String>> banners = weShopService.getBanners();
         mav.addObject("banners", banners);
         
-        //店铺名称手机微信
-        mav.addObject("name", "喻露露");
-        mav.addObject("phone", "18685292522"); 
-        mav.addObject("weixin", "1306520198@qq.com"); 
+        //获取店长推荐 热销前4的商品 
         
 
         return mav;

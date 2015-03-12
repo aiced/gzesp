@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDPRODMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDPROD" >
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="GOODS_ID" property="goodsId" jdbcType="DECIMAL" />
+    <result column="GOODS_NAME" property="goodsName" jdbcType="VARCHAR" />
+    <result column="UNIT_PRICE" property="unitPrice" jdbcType="DECIMAL" />
+    <result column="SALE_NUM" property="saleNum" jdbcType="DECIMAL" />
+    <result column="TOPAY_FEE" property="topayFee" jdbcType="DECIMAL" />
+    <result column="DERATE_FEE" property="derateFee" jdbcType="DECIMAL" />
+    <result column="DERATE_REASON" property="derateReason" jdbcType="VARCHAR" />
+    <result column="RECV_FEE" property="recvFee" jdbcType="DECIMAL" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, PARTITION_ID, GOODS_ID, GOODS_NAME, UNIT_PRICE, SALE_NUM, TOPAY_FEE, DERATE_FEE, 
+    DERATE_REASON, RECV_FEE, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_D_PROD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_D_PROD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDPROD" >
+    insert into ORD_D_PROD (ORDER_ID, PARTITION_ID, GOODS_ID, 
+      GOODS_NAME, UNIT_PRICE, SALE_NUM, 
+      TOPAY_FEE, DERATE_FEE, DERATE_REASON, 
+      RECV_FEE, VALUES1, VALUES2
+      )
+    values (#{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{goodsId,jdbcType=DECIMAL}, 
+      #{goodsName,jdbcType=VARCHAR}, #{unitPrice,jdbcType=DECIMAL}, #{saleNum,jdbcType=DECIMAL}, 
+      #{topayFee,jdbcType=DECIMAL}, #{derateFee,jdbcType=DECIMAL}, #{derateReason,jdbcType=VARCHAR}, 
+      #{recvFee,jdbcType=DECIMAL}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPROD" >
+    insert into ORD_D_PROD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="goodsId != null" >
+        GOODS_ID,
+      </if>
+      <if test="goodsName != null" >
+        GOODS_NAME,
+      </if>
+      <if test="unitPrice != null" >
+        UNIT_PRICE,
+      </if>
+      <if test="saleNum != null" >
+        SALE_NUM,
+      </if>
+      <if test="topayFee != null" >
+        TOPAY_FEE,
+      </if>
+      <if test="derateFee != null" >
+        DERATE_FEE,
+      </if>
+      <if test="derateReason != null" >
+        DERATE_REASON,
+      </if>
+      <if test="recvFee != null" >
+        RECV_FEE,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null" >
+        #{unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="saleNum != null" >
+        #{saleNum,jdbcType=DECIMAL},
+      </if>
+      <if test="topayFee != null" >
+        #{topayFee,jdbcType=DECIMAL},
+      </if>
+      <if test="derateFee != null" >
+        #{derateFee,jdbcType=DECIMAL},
+      </if>
+      <if test="derateReason != null" >
+        #{derateReason,jdbcType=VARCHAR},
+      </if>
+      <if test="recvFee != null" >
+        #{recvFee,jdbcType=DECIMAL},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_D_PROD
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_D_PROD
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsId != null" >
+        GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsName != null" >
+        GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitPrice != null" >
+        UNIT_PRICE = #{record.unitPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.saleNum != null" >
+        SALE_NUM = #{record.saleNum,jdbcType=DECIMAL},
+      </if>
+      <if test="record.topayFee != null" >
+        TOPAY_FEE = #{record.topayFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.derateFee != null" >
+        DERATE_FEE = #{record.derateFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.derateReason != null" >
+        DERATE_REASON = #{record.derateReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recvFee != null" >
+        RECV_FEE = #{record.recvFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_D_PROD
+    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      UNIT_PRICE = #{record.unitPrice,jdbcType=DECIMAL},
+      SALE_NUM = #{record.saleNum,jdbcType=DECIMAL},
+      TOPAY_FEE = #{record.topayFee,jdbcType=DECIMAL},
+      DERATE_FEE = #{record.derateFee,jdbcType=DECIMAL},
+      DERATE_REASON = #{record.derateReason,jdbcType=VARCHAR},
+      RECV_FEE = #{record.recvFee,jdbcType=DECIMAL},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

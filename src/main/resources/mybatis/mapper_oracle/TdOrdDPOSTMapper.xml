@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDPOSTMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDPOST" >
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="DELIVER_TYPE_CODE" property="deliverTypeCode" jdbcType="CHAR" />
+    <result column="DELIVER_TIME_CODE" property="deliverTimeCode" jdbcType="CHAR" />
+    <result column="RECEIVER_NAME" property="receiverName" jdbcType="VARCHAR" />
+    <result column="RECEIVER_PSPT_TYPE" property="receiverPsptType" jdbcType="VARCHAR" />
+    <result column="RECEIVER_PSPT_NO" property="receiverPsptNo" jdbcType="VARCHAR" />
+    <result column="MOBILE_PHONE" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="FIX_PHONE" property="fixPhone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="CHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="CHAR" />
+    <result column="DISTRICT_CODE" property="districtCode" jdbcType="VARCHAR" />
+    <result column="POST_CODE" property="postCode" jdbcType="CHAR" />
+    <result column="POST_ADDR" property="postAddr" jdbcType="VARCHAR" />
+    <result column="POST_REMARK" property="postRemark" jdbcType="VARCHAR" />
+    <result column="EXPRESS_ID" property="expressId" jdbcType="VARCHAR" />
+    <result column="EXPRESS_COMPNAY" property="expressCompnay" jdbcType="VARCHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, PARTITION_ID, DELIVER_TYPE_CODE, DELIVER_TIME_CODE, RECEIVER_NAME, RECEIVER_PSPT_TYPE, 
+    RECEIVER_PSPT_NO, MOBILE_PHONE, FIX_PHONE, EMAIL, PROVINCE_CODE, CITY_CODE, DISTRICT_CODE, 
+    POST_CODE, POST_ADDR, POST_REMARK, EXPRESS_ID, EXPRESS_COMPNAY, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_D_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_D_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDPOST" >
+    insert into ORD_D_POST (ORDER_ID, PARTITION_ID, DELIVER_TYPE_CODE, 
+      DELIVER_TIME_CODE, RECEIVER_NAME, RECEIVER_PSPT_TYPE, 
+      RECEIVER_PSPT_NO, MOBILE_PHONE, FIX_PHONE, 
+      EMAIL, PROVINCE_CODE, CITY_CODE, 
+      DISTRICT_CODE, POST_CODE, POST_ADDR, 
+      POST_REMARK, EXPRESS_ID, EXPRESS_COMPNAY, 
+      VALUES1, VALUES2)
+    values (#{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{deliverTypeCode,jdbcType=CHAR}, 
+      #{deliverTimeCode,jdbcType=CHAR}, #{receiverName,jdbcType=VARCHAR}, #{receiverPsptType,jdbcType=VARCHAR}, 
+      #{receiverPsptNo,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{fixPhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{provinceCode,jdbcType=CHAR}, #{cityCode,jdbcType=CHAR}, 
+      #{districtCode,jdbcType=VARCHAR}, #{postCode,jdbcType=CHAR}, #{postAddr,jdbcType=VARCHAR}, 
+      #{postRemark,jdbcType=VARCHAR}, #{expressId,jdbcType=VARCHAR}, #{expressCompnay,jdbcType=VARCHAR}, 
+      #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPOST" >
+    insert into ORD_D_POST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="deliverTypeCode != null" >
+        DELIVER_TYPE_CODE,
+      </if>
+      <if test="deliverTimeCode != null" >
+        DELIVER_TIME_CODE,
+      </if>
+      <if test="receiverName != null" >
+        RECEIVER_NAME,
+      </if>
+      <if test="receiverPsptType != null" >
+        RECEIVER_PSPT_TYPE,
+      </if>
+      <if test="receiverPsptNo != null" >
+        RECEIVER_PSPT_NO,
+      </if>
+      <if test="mobilePhone != null" >
+        MOBILE_PHONE,
+      </if>
+      <if test="fixPhone != null" >
+        FIX_PHONE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="districtCode != null" >
+        DISTRICT_CODE,
+      </if>
+      <if test="postCode != null" >
+        POST_CODE,
+      </if>
+      <if test="postAddr != null" >
+        POST_ADDR,
+      </if>
+      <if test="postRemark != null" >
+        POST_REMARK,
+      </if>
+      <if test="expressId != null" >
+        EXPRESS_ID,
+      </if>
+      <if test="expressCompnay != null" >
+        EXPRESS_COMPNAY,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="deliverTypeCode != null" >
+        #{deliverTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="deliverTimeCode != null" >
+        #{deliverTimeCode,jdbcType=CHAR},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPsptType != null" >
+        #{receiverPsptType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPsptNo != null" >
+        #{receiverPsptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fixPhone != null" >
+        #{fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=CHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=CHAR},
+      </if>
+      <if test="districtCode != null" >
+        #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=CHAR},
+      </if>
+      <if test="postAddr != null" >
+        #{postAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="postRemark != null" >
+        #{postRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="expressId != null" >
+        #{expressId,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCompnay != null" >
+        #{expressCompnay,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_D_POST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_D_POST
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliverTypeCode != null" >
+        DELIVER_TYPE_CODE = #{record.deliverTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.deliverTimeCode != null" >
+        DELIVER_TIME_CODE = #{record.deliverTimeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.receiverName != null" >
+        RECEIVER_NAME = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverPsptType != null" >
+        RECEIVER_PSPT_TYPE = #{record.receiverPsptType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverPsptNo != null" >
+        RECEIVER_PSPT_NO = #{record.receiverPsptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null" >
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixPhone != null" >
+        FIX_PHONE = #{record.fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null" >
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=CHAR},
+      </if>
+      <if test="record.cityCode != null" >
+        CITY_CODE = #{record.cityCode,jdbcType=CHAR},
+      </if>
+      <if test="record.districtCode != null" >
+        DISTRICT_CODE = #{record.districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postCode != null" >
+        POST_CODE = #{record.postCode,jdbcType=CHAR},
+      </if>
+      <if test="record.postAddr != null" >
+        POST_ADDR = #{record.postAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postRemark != null" >
+        POST_REMARK = #{record.postRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressId != null" >
+        EXPRESS_ID = #{record.expressId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressCompnay != null" >
+        EXPRESS_COMPNAY = #{record.expressCompnay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_D_POST
+    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      DELIVER_TYPE_CODE = #{record.deliverTypeCode,jdbcType=CHAR},
+      DELIVER_TIME_CODE = #{record.deliverTimeCode,jdbcType=CHAR},
+      RECEIVER_NAME = #{record.receiverName,jdbcType=VARCHAR},
+      RECEIVER_PSPT_TYPE = #{record.receiverPsptType,jdbcType=VARCHAR},
+      RECEIVER_PSPT_NO = #{record.receiverPsptNo,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      FIX_PHONE = #{record.fixPhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{record.provinceCode,jdbcType=CHAR},
+      CITY_CODE = #{record.cityCode,jdbcType=CHAR},
+      DISTRICT_CODE = #{record.districtCode,jdbcType=VARCHAR},
+      POST_CODE = #{record.postCode,jdbcType=CHAR},
+      POST_ADDR = #{record.postAddr,jdbcType=VARCHAR},
+      POST_REMARK = #{record.postRemark,jdbcType=VARCHAR},
+      EXPRESS_ID = #{record.expressId,jdbcType=VARCHAR},
+      EXPRESS_COMPNAY = #{record.expressCompnay,jdbcType=VARCHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

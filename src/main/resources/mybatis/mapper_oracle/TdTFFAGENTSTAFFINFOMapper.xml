@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdTFFAGENTSTAFFINFOMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdTFFAGENTSTAFFINFO" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="USER_TYPE" property="userType" jdbcType="CHAR" />
+    <result column="USER_LEVEL" property="userLevel" jdbcType="CHAR" />
+    <result column="AGENTNAME" property="agentname" jdbcType="VARCHAR" />
+    <result column="SALE_MODE" property="saleMode" jdbcType="CHAR" />
+    <result column="NATURE" property="nature" jdbcType="VARCHAR" />
+    <result column="SUPERIOR_ID" property="superiorId" jdbcType="DECIMAL" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="HIERARCHY" property="hierarchy" jdbcType="VARCHAR" />
+    <result column="AREANO" property="areano" jdbcType="VARCHAR" />
+    <result column="REALNAME" property="realname" jdbcType="VARCHAR" />
+    <result column="IDENTITY_TYPE" property="identityType" jdbcType="CHAR" />
+    <result column="IDENTITY_NUM" property="identityNum" jdbcType="VARCHAR" />
+    <result column="SEX" property="sex" jdbcType="CHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="OPEN_BANK" property="openBank" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_HOLDER" property="accountHolder" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_NUMBER" property="accountNumber" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="CHANNEL_MGR" property="channelMgr" jdbcType="VARCHAR" />
+    <result column="CHANNEL_MGR_PHONE" property="channelMgrPhone" jdbcType="VARCHAR" />
+    <result column="IS_STORE" property="isStore" jdbcType="CHAR" />
+    <result column="REGISTERDATE" property="registerdate" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="AGENTLINK" property="agentlink" jdbcType="VARCHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_OPERATOR" property="updateOperator" jdbcType="VARCHAR" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="OUT_OPERATOR" property="outOperator" jdbcType="VARCHAR" />
+    <result column="OUT_DESC" property="outDesc" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="AUDIT_OPERATOR" property="auditOperator" jdbcType="VARCHAR" />
+    <result column="AUDIT_DESC" property="auditDesc" jdbcType="VARCHAR" />
+    <result column="FILL_FLAG" property="fillFlag" jdbcType="CHAR" />
+    <result column="SMS_FLAG" property="smsFlag" jdbcType="CHAR" />
+    <result column="CHANNEL_TYPE" property="channelType" jdbcType="VARCHAR" />
+    <result column="BELONG_AREA" property="belongArea" jdbcType="VARCHAR" />
+    <result column="IDENTITY_PIC1" property="identityPic1" jdbcType="VARCHAR" />
+    <result column="IDENTITY_PIC2" property="identityPic2" jdbcType="VARCHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_TYPE, USER_LEVEL, AGENTNAME, SALE_MODE, NATURE, SUPERIOR_ID, USERNAME, PASSWORD, 
+    HIERARCHY, AREANO, REALNAME, IDENTITY_TYPE, IDENTITY_NUM, SEX, MOBILE, OPEN_BANK, 
+    ACCOUNT_HOLDER, ACCOUNT_NUMBER, EMAIL, QQ, ADDRESS, CHANNEL_MGR, CHANNEL_MGR_PHONE, 
+    IS_STORE, REGISTERDATE, STATUS, AGENTLINK, SALT, UPDATE_TIME, UPDATE_OPERATOR, OUT_TIME, 
+    OUT_OPERATOR, OUT_DESC, AUDIT_TIME, AUDIT_OPERATOR, AUDIT_DESC, FILL_FLAG, SMS_FLAG, 
+    CHANNEL_TYPE, BELONG_AREA, IDENTITY_PIC1, IDENTITY_PIC2, CHANNEL_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TF_F_AGENT_STAFF_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from TF_F_AGENT_STAFF_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdTFFAGENTSTAFFINFO" >
+    insert into TF_F_AGENT_STAFF_INFO (ID, USER_TYPE, USER_LEVEL, 
+      AGENTNAME, SALE_MODE, NATURE, 
+      SUPERIOR_ID, USERNAME, PASSWORD, 
+      HIERARCHY, AREANO, REALNAME, 
+      IDENTITY_TYPE, IDENTITY_NUM, SEX, 
+      MOBILE, OPEN_BANK, ACCOUNT_HOLDER, 
+      ACCOUNT_NUMBER, EMAIL, QQ, 
+      ADDRESS, CHANNEL_MGR, CHANNEL_MGR_PHONE, 
+      IS_STORE, REGISTERDATE, STATUS, 
+      AGENTLINK, SALT, UPDATE_TIME, 
+      UPDATE_OPERATOR, OUT_TIME, OUT_OPERATOR, 
+      OUT_DESC, AUDIT_TIME, AUDIT_OPERATOR, 
+      AUDIT_DESC, FILL_FLAG, SMS_FLAG, 
+      CHANNEL_TYPE, BELONG_AREA, IDENTITY_PIC1, 
+      IDENTITY_PIC2, CHANNEL_CODE)
+    values (#{id,jdbcType=DECIMAL}, #{userType,jdbcType=CHAR}, #{userLevel,jdbcType=CHAR}, 
+      #{agentname,jdbcType=VARCHAR}, #{saleMode,jdbcType=CHAR}, #{nature,jdbcType=VARCHAR}, 
+      #{superiorId,jdbcType=DECIMAL}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{hierarchy,jdbcType=VARCHAR}, #{areano,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
+      #{identityType,jdbcType=CHAR}, #{identityNum,jdbcType=VARCHAR}, #{sex,jdbcType=CHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{openBank,jdbcType=VARCHAR}, #{accountHolder,jdbcType=VARCHAR}, 
+      #{accountNumber,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{channelMgr,jdbcType=VARCHAR}, #{channelMgrPhone,jdbcType=VARCHAR}, 
+      #{isStore,jdbcType=CHAR}, #{registerdate,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, 
+      #{agentlink,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateOperator,jdbcType=VARCHAR}, #{outTime,jdbcType=TIMESTAMP}, #{outOperator,jdbcType=VARCHAR}, 
+      #{outDesc,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP}, #{auditOperator,jdbcType=VARCHAR}, 
+      #{auditDesc,jdbcType=VARCHAR}, #{fillFlag,jdbcType=CHAR}, #{smsFlag,jdbcType=CHAR}, 
+      #{channelType,jdbcType=VARCHAR}, #{belongArea,jdbcType=VARCHAR}, #{identityPic1,jdbcType=VARCHAR}, 
+      #{identityPic2,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdTFFAGENTSTAFFINFO" >
+    insert into TF_F_AGENT_STAFF_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userType != null" >
+        USER_TYPE,
+      </if>
+      <if test="userLevel != null" >
+        USER_LEVEL,
+      </if>
+      <if test="agentname != null" >
+        AGENTNAME,
+      </if>
+      <if test="saleMode != null" >
+        SALE_MODE,
+      </if>
+      <if test="nature != null" >
+        NATURE,
+      </if>
+      <if test="superiorId != null" >
+        SUPERIOR_ID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="hierarchy != null" >
+        HIERARCHY,
+      </if>
+      <if test="areano != null" >
+        AREANO,
+      </if>
+      <if test="realname != null" >
+        REALNAME,
+      </if>
+      <if test="identityType != null" >
+        IDENTITY_TYPE,
+      </if>
+      <if test="identityNum != null" >
+        IDENTITY_NUM,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="openBank != null" >
+        OPEN_BANK,
+      </if>
+      <if test="accountHolder != null" >
+        ACCOUNT_HOLDER,
+      </if>
+      <if test="accountNumber != null" >
+        ACCOUNT_NUMBER,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="qq != null" >
+        QQ,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="channelMgr != null" >
+        CHANNEL_MGR,
+      </if>
+      <if test="channelMgrPhone != null" >
+        CHANNEL_MGR_PHONE,
+      </if>
+      <if test="isStore != null" >
+        IS_STORE,
+      </if>
+      <if test="registerdate != null" >
+        REGISTERDATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="agentlink != null" >
+        AGENTLINK,
+      </if>
+      <if test="salt != null" >
+        SALT,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateOperator != null" >
+        UPDATE_OPERATOR,
+      </if>
+      <if test="outTime != null" >
+        OUT_TIME,
+      </if>
+      <if test="outOperator != null" >
+        OUT_OPERATOR,
+      </if>
+      <if test="outDesc != null" >
+        OUT_DESC,
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME,
+      </if>
+      <if test="auditOperator != null" >
+        AUDIT_OPERATOR,
+      </if>
+      <if test="auditDesc != null" >
+        AUDIT_DESC,
+      </if>
+      <if test="fillFlag != null" >
+        FILL_FLAG,
+      </if>
+      <if test="smsFlag != null" >
+        SMS_FLAG,
+      </if>
+      <if test="channelType != null" >
+        CHANNEL_TYPE,
+      </if>
+      <if test="belongArea != null" >
+        BELONG_AREA,
+      </if>
+      <if test="identityPic1 != null" >
+        IDENTITY_PIC1,
+      </if>
+      <if test="identityPic2 != null" >
+        IDENTITY_PIC2,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=CHAR},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=CHAR},
+      </if>
+      <if test="agentname != null" >
+        #{agentname,jdbcType=VARCHAR},
+      </if>
+      <if test="saleMode != null" >
+        #{saleMode,jdbcType=CHAR},
+      </if>
+      <if test="nature != null" >
+        #{nature,jdbcType=VARCHAR},
+      </if>
+      <if test="superiorId != null" >
+        #{superiorId,jdbcType=DECIMAL},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="hierarchy != null" >
+        #{hierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="areano != null" >
+        #{areano,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null" >
+        #{identityType,jdbcType=CHAR},
+      </if>
+      <if test="identityNum != null" >
+        #{identityNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="openBank != null" >
+        #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="accountHolder != null" >
+        #{accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNumber != null" >
+        #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="channelMgr != null" >
+        #{channelMgr,jdbcType=VARCHAR},
+      </if>
+      <if test="channelMgrPhone != null" >
+        #{channelMgrPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="isStore != null" >
+        #{isStore,jdbcType=CHAR},
+      </if>
+      <if test="registerdate != null" >
+        #{registerdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="agentlink != null" >
+        #{agentlink,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateOperator != null" >
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outOperator != null" >
+        #{outOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="outDesc != null" >
+        #{outDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditOperator != null" >
+        #{auditOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="auditDesc != null" >
+        #{auditDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="fillFlag != null" >
+        #{fillFlag,jdbcType=CHAR},
+      </if>
+      <if test="smsFlag != null" >
+        #{smsFlag,jdbcType=CHAR},
+      </if>
+      <if test="channelType != null" >
+        #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="belongArea != null" >
+        #{belongArea,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPic1 != null" >
+        #{identityPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="identityPic2 != null" >
+        #{identityPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from TF_F_AGENT_STAFF_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update TF_F_AGENT_STAFF_INFO
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userType != null" >
+        USER_TYPE = #{record.userType,jdbcType=CHAR},
+      </if>
+      <if test="record.userLevel != null" >
+        USER_LEVEL = #{record.userLevel,jdbcType=CHAR},
+      </if>
+      <if test="record.agentname != null" >
+        AGENTNAME = #{record.agentname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleMode != null" >
+        SALE_MODE = #{record.saleMode,jdbcType=CHAR},
+      </if>
+      <if test="record.nature != null" >
+        NATURE = #{record.nature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superiorId != null" >
+        SUPERIOR_ID = #{record.superiorId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.username != null" >
+        USERNAME = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hierarchy != null" >
+        HIERARCHY = #{record.hierarchy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areano != null" >
+        AREANO = #{record.areano,jdbcType=VARCHAR},
+      </if>
+      <if test="record.realname != null" >
+        REALNAME = #{record.realname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityType != null" >
+        IDENTITY_TYPE = #{record.identityType,jdbcType=CHAR},
+      </if>
+      <if test="record.identityNum != null" >
+        IDENTITY_NUM = #{record.identityNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=CHAR},
+      </if>
+      <if test="record.mobile != null" >
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openBank != null" >
+        OPEN_BANK = #{record.openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountHolder != null" >
+        ACCOUNT_HOLDER = #{record.accountHolder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountNumber != null" >
+        ACCOUNT_NUMBER = #{record.accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        QQ = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelMgr != null" >
+        CHANNEL_MGR = #{record.channelMgr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelMgrPhone != null" >
+        CHANNEL_MGR_PHONE = #{record.channelMgrPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isStore != null" >
+        IS_STORE = #{record.isStore,jdbcType=CHAR},
+      </if>
+      <if test="record.registerdate != null" >
+        REGISTERDATE = #{record.registerdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.agentlink != null" >
+        AGENTLINK = #{record.agentlink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salt != null" >
+        SALT = #{record.salt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateOperator != null" >
+        UPDATE_OPERATOR = #{record.updateOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outTime != null" >
+        OUT_TIME = #{record.outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.outOperator != null" >
+        OUT_OPERATOR = #{record.outOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outDesc != null" >
+        OUT_DESC = #{record.outDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditTime != null" >
+        AUDIT_TIME = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditOperator != null" >
+        AUDIT_OPERATOR = #{record.auditOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditDesc != null" >
+        AUDIT_DESC = #{record.auditDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fillFlag != null" >
+        FILL_FLAG = #{record.fillFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.smsFlag != null" >
+        SMS_FLAG = #{record.smsFlag,jdbcType=CHAR},
+      </if>
+      <if test="record.channelType != null" >
+        CHANNEL_TYPE = #{record.channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.belongArea != null" >
+        BELONG_AREA = #{record.belongArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityPic1 != null" >
+        IDENTITY_PIC1 = #{record.identityPic1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityPic2 != null" >
+        IDENTITY_PIC2 = #{record.identityPic2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelCode != null" >
+        CHANNEL_CODE = #{record.channelCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update TF_F_AGENT_STAFF_INFO
+    set ID = #{record.id,jdbcType=DECIMAL},
+      USER_TYPE = #{record.userType,jdbcType=CHAR},
+      USER_LEVEL = #{record.userLevel,jdbcType=CHAR},
+      AGENTNAME = #{record.agentname,jdbcType=VARCHAR},
+      SALE_MODE = #{record.saleMode,jdbcType=CHAR},
+      NATURE = #{record.nature,jdbcType=VARCHAR},
+      SUPERIOR_ID = #{record.superiorId,jdbcType=DECIMAL},
+      USERNAME = #{record.username,jdbcType=VARCHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      HIERARCHY = #{record.hierarchy,jdbcType=VARCHAR},
+      AREANO = #{record.areano,jdbcType=VARCHAR},
+      REALNAME = #{record.realname,jdbcType=VARCHAR},
+      IDENTITY_TYPE = #{record.identityType,jdbcType=CHAR},
+      IDENTITY_NUM = #{record.identityNum,jdbcType=VARCHAR},
+      SEX = #{record.sex,jdbcType=CHAR},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      OPEN_BANK = #{record.openBank,jdbcType=VARCHAR},
+      ACCOUNT_HOLDER = #{record.accountHolder,jdbcType=VARCHAR},
+      ACCOUNT_NUMBER = #{record.accountNumber,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      CHANNEL_MGR = #{record.channelMgr,jdbcType=VARCHAR},
+      CHANNEL_MGR_PHONE = #{record.channelMgrPhone,jdbcType=VARCHAR},
+      IS_STORE = #{record.isStore,jdbcType=CHAR},
+      REGISTERDATE = #{record.registerdate,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=CHAR},
+      AGENTLINK = #{record.agentlink,jdbcType=VARCHAR},
+      SALT = #{record.salt,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      UPDATE_OPERATOR = #{record.updateOperator,jdbcType=VARCHAR},
+      OUT_TIME = #{record.outTime,jdbcType=TIMESTAMP},
+      OUT_OPERATOR = #{record.outOperator,jdbcType=VARCHAR},
+      OUT_DESC = #{record.outDesc,jdbcType=VARCHAR},
+      AUDIT_TIME = #{record.auditTime,jdbcType=TIMESTAMP},
+      AUDIT_OPERATOR = #{record.auditOperator,jdbcType=VARCHAR},
+      AUDIT_DESC = #{record.auditDesc,jdbcType=VARCHAR},
+      FILL_FLAG = #{record.fillFlag,jdbcType=CHAR},
+      SMS_FLAG = #{record.smsFlag,jdbcType=CHAR},
+      CHANNEL_TYPE = #{record.channelType,jdbcType=VARCHAR},
+      BELONG_AREA = #{record.belongArea,jdbcType=VARCHAR},
+      IDENTITY_PIC1 = #{record.identityPic1,jdbcType=VARCHAR},
+      IDENTITY_PIC2 = #{record.identityPic2,jdbcType=VARCHAR},
+      CHANNEL_CODE = #{record.channelCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

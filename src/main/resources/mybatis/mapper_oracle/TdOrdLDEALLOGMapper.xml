@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdLDEALLOGMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdLDEALLOG" >
+    <result column="OPERATE_LOGID" property="operateLogid" jdbcType="DECIMAL" />
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATOR_ID" property="operatorId" jdbcType="VARCHAR" />
+    <result column="OPERATOR_NAME" property="operatorName" jdbcType="VARCHAR" />
+    <result column="DEAL_CONTENT" property="dealContent" jdbcType="VARCHAR" />
+    <result column="RESULT_CODE" property="resultCode" jdbcType="CHAR" />
+    <result column="RESULT_INFO" property="resultInfo" jdbcType="VARCHAR" />
+    <result column="ORIGINAL_STATE" property="originalState" jdbcType="CHAR" />
+    <result column="CURRENT_STATE" property="currentState" jdbcType="CHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OPERATE_LOGID, ORDER_ID, PARTITION_ID, OPERATE_TIME, OPERATOR_ID, OPERATOR_NAME, 
+    DEAL_CONTENT, RESULT_CODE, RESULT_INFO, ORIGINAL_STATE, CURRENT_STATE, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_L_DEALLOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_L_DEALLOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdLDEALLOG" >
+    insert into ORD_L_DEALLOG (OPERATE_LOGID, ORDER_ID, PARTITION_ID, 
+      OPERATE_TIME, OPERATOR_ID, OPERATOR_NAME, 
+      DEAL_CONTENT, RESULT_CODE, RESULT_INFO, 
+      ORIGINAL_STATE, CURRENT_STATE, VALUES1, 
+      VALUES2)
+    values (#{operateLogid,jdbcType=DECIMAL}, #{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, 
+      #{operateTime,jdbcType=TIMESTAMP}, #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 
+      #{dealContent,jdbcType=VARCHAR}, #{resultCode,jdbcType=CHAR}, #{resultInfo,jdbcType=VARCHAR}, 
+      #{originalState,jdbcType=CHAR}, #{currentState,jdbcType=CHAR}, #{values1,jdbcType=VARCHAR}, 
+      #{values2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdLDEALLOG" >
+    insert into ORD_L_DEALLOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="operateLogid != null" >
+        OPERATE_LOGID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="operateTime != null" >
+        OPERATE_TIME,
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID,
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME,
+      </if>
+      <if test="dealContent != null" >
+        DEAL_CONTENT,
+      </if>
+      <if test="resultCode != null" >
+        RESULT_CODE,
+      </if>
+      <if test="resultInfo != null" >
+        RESULT_INFO,
+      </if>
+      <if test="originalState != null" >
+        ORIGINAL_STATE,
+      </if>
+      <if test="currentState != null" >
+        CURRENT_STATE,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="operateLogid != null" >
+        #{operateLogid,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="operateTime != null" >
+        #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealContent != null" >
+        #{dealContent,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        #{resultCode,jdbcType=CHAR},
+      </if>
+      <if test="resultInfo != null" >
+        #{resultInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="originalState != null" >
+        #{originalState,jdbcType=CHAR},
+      </if>
+      <if test="currentState != null" >
+        #{currentState,jdbcType=CHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_L_DEALLOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_L_DEALLOG
+    <set >
+      <if test="record.operateLogid != null" >
+        OPERATE_LOGID = #{record.operateLogid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operateTime != null" >
+        OPERATE_TIME = #{record.operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorId != null" >
+        OPERATOR_ID = #{record.operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorName != null" >
+        OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealContent != null" >
+        DEAL_CONTENT = #{record.dealContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resultCode != null" >
+        RESULT_CODE = #{record.resultCode,jdbcType=CHAR},
+      </if>
+      <if test="record.resultInfo != null" >
+        RESULT_INFO = #{record.resultInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalState != null" >
+        ORIGINAL_STATE = #{record.originalState,jdbcType=CHAR},
+      </if>
+      <if test="record.currentState != null" >
+        CURRENT_STATE = #{record.currentState,jdbcType=CHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_L_DEALLOG
+    set OPERATE_LOGID = #{record.operateLogid,jdbcType=DECIMAL},
+      ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      OPERATE_TIME = #{record.operateTime,jdbcType=TIMESTAMP},
+      OPERATOR_ID = #{record.operatorId,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      DEAL_CONTENT = #{record.dealContent,jdbcType=VARCHAR},
+      RESULT_CODE = #{record.resultCode,jdbcType=CHAR},
+      RESULT_INFO = #{record.resultInfo,jdbcType=VARCHAR},
+      ORIGINAL_STATE = #{record.originalState,jdbcType=CHAR},
+      CURRENT_STATE = #{record.currentState,jdbcType=CHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

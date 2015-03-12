@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdResPRESTYPEMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdResPRESTYPE" >
+    <result column="RESTYPE_CODE" property="restypeCode" jdbcType="CHAR" />
+    <result column="RESTYPE_NAME" property="restypeName" jdbcType="VARCHAR" />
+    <result column="RESTYPE_STATE" property="restypeState" jdbcType="CHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RESTYPE_CODE, RESTYPE_NAME, RESTYPE_STATE, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from RES_P_RESTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from RES_P_RESTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdResPRESTYPE" >
+    insert into RES_P_RESTYPE (RESTYPE_CODE, RESTYPE_NAME, RESTYPE_STATE, 
+      VALUES1, VALUES2)
+    values (#{restypeCode,jdbcType=CHAR}, #{restypeName,jdbcType=VARCHAR}, #{restypeState,jdbcType=CHAR}, 
+      #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdResPRESTYPE" >
+    insert into RES_P_RESTYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="restypeCode != null" >
+        RESTYPE_CODE,
+      </if>
+      <if test="restypeName != null" >
+        RESTYPE_NAME,
+      </if>
+      <if test="restypeState != null" >
+        RESTYPE_STATE,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="restypeCode != null" >
+        #{restypeCode,jdbcType=CHAR},
+      </if>
+      <if test="restypeName != null" >
+        #{restypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="restypeState != null" >
+        #{restypeState,jdbcType=CHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from RES_P_RESTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update RES_P_RESTYPE
+    <set >
+      <if test="record.restypeCode != null" >
+        RESTYPE_CODE = #{record.restypeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.restypeName != null" >
+        RESTYPE_NAME = #{record.restypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.restypeState != null" >
+        RESTYPE_STATE = #{record.restypeState,jdbcType=CHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update RES_P_RESTYPE
+    set RESTYPE_CODE = #{record.restypeCode,jdbcType=CHAR},
+      RESTYPE_NAME = #{record.restypeName,jdbcType=VARCHAR},
+      RESTYPE_STATE = #{record.restypeState,jdbcType=CHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

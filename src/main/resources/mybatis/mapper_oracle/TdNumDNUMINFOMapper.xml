@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdNumDNUMINFOMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdNumDNUMINFO" >
+    <result column="SERIAL_NUMBER" property="serialNumber" jdbcType="VARCHAR" />
+    <result column="NET_TYPE_CODE" property="netTypeCode" jdbcType="CHAR" />
+    <result column="IMSI" property="imsi" jdbcType="VARCHAR" />
+    <result column="SIM_CARD_NO" property="simCardNo" jdbcType="VARCHAR" />
+    <result column="CODE_STATE" property="codeState" jdbcType="CHAR" />
+    <result column="WIRELESS_CARD_TYPE" property="wirelessCardType" jdbcType="CHAR" />
+    <result column="CODE_GRADE" property="codeGrade" jdbcType="DECIMAL" />
+    <result column="LIMIT_ID" property="limitId" jdbcType="DECIMAL" />
+    <result column="NICE_RULE" property="niceRule" jdbcType="VARCHAR" />
+    <result column="NICE_FEE" property="niceFee" jdbcType="DECIMAL" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="CHAR" />
+    <result column="EPARCHY_CODE" property="eparchyCode" jdbcType="CHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="DEPART_ID" property="departId" jdbcType="VARCHAR" />
+    <result column="CHANNEL_ID" property="channelId" jdbcType="VARCHAR" />
+    <result column="STAFF_ID" property="staffId" jdbcType="VARCHAR" />
+    <result column="BATCH_ID" property="batchId" jdbcType="DECIMAL" />
+    <result column="STAFF_IN" property="staffIn" jdbcType="VARCHAR" />
+    <result column="TIME_IN" property="timeIn" jdbcType="TIMESTAMP" />
+    <result column="RSVALUE1" property="rsvalue1" jdbcType="VARCHAR" />
+    <result column="RSVALUE2" property="rsvalue2" jdbcType="VARCHAR" />
+    <result column="RSVALUE3" property="rsvalue3" jdbcType="VARCHAR" />
+    <result column="RSVALUE4" property="rsvalue4" jdbcType="VARCHAR" />
+    <result column="RSVALUE5" property="rsvalue5" jdbcType="VARCHAR" />
+    <result column="RSVALUE6" property="rsvalue6" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SERIAL_NUMBER, NET_TYPE_CODE, IMSI, SIM_CARD_NO, CODE_STATE, WIRELESS_CARD_TYPE, 
+    CODE_GRADE, LIMIT_ID, NICE_RULE, NICE_FEE, PROVINCE_CODE, EPARCHY_CODE, CITY_CODE, 
+    DEPART_ID, CHANNEL_ID, STAFF_ID, BATCH_ID, STAFF_IN, TIME_IN, RSVALUE1, RSVALUE2, 
+    RSVALUE3, RSVALUE4, RSVALUE5, RSVALUE6
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from NUM_D_NUMINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from NUM_D_NUMINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdNumDNUMINFO" >
+    insert into NUM_D_NUMINFO (SERIAL_NUMBER, NET_TYPE_CODE, IMSI, 
+      SIM_CARD_NO, CODE_STATE, WIRELESS_CARD_TYPE, 
+      CODE_GRADE, LIMIT_ID, NICE_RULE, 
+      NICE_FEE, PROVINCE_CODE, EPARCHY_CODE, 
+      CITY_CODE, DEPART_ID, CHANNEL_ID, 
+      STAFF_ID, BATCH_ID, STAFF_IN, 
+      TIME_IN, RSVALUE1, RSVALUE2, 
+      RSVALUE3, RSVALUE4, RSVALUE5, 
+      RSVALUE6)
+    values (#{serialNumber,jdbcType=VARCHAR}, #{netTypeCode,jdbcType=CHAR}, #{imsi,jdbcType=VARCHAR}, 
+      #{simCardNo,jdbcType=VARCHAR}, #{codeState,jdbcType=CHAR}, #{wirelessCardType,jdbcType=CHAR}, 
+      #{codeGrade,jdbcType=DECIMAL}, #{limitId,jdbcType=DECIMAL}, #{niceRule,jdbcType=VARCHAR}, 
+      #{niceFee,jdbcType=DECIMAL}, #{provinceCode,jdbcType=CHAR}, #{eparchyCode,jdbcType=CHAR}, 
+      #{cityCode,jdbcType=VARCHAR}, #{departId,jdbcType=VARCHAR}, #{channelId,jdbcType=VARCHAR}, 
+      #{staffId,jdbcType=VARCHAR}, #{batchId,jdbcType=DECIMAL}, #{staffIn,jdbcType=VARCHAR}, 
+      #{timeIn,jdbcType=TIMESTAMP}, #{rsvalue1,jdbcType=VARCHAR}, #{rsvalue2,jdbcType=VARCHAR}, 
+      #{rsvalue3,jdbcType=VARCHAR}, #{rsvalue4,jdbcType=VARCHAR}, #{rsvalue5,jdbcType=VARCHAR}, 
+      #{rsvalue6,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdNumDNUMINFO" >
+    insert into NUM_D_NUMINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="serialNumber != null" >
+        SERIAL_NUMBER,
+      </if>
+      <if test="netTypeCode != null" >
+        NET_TYPE_CODE,
+      </if>
+      <if test="imsi != null" >
+        IMSI,
+      </if>
+      <if test="simCardNo != null" >
+        SIM_CARD_NO,
+      </if>
+      <if test="codeState != null" >
+        CODE_STATE,
+      </if>
+      <if test="wirelessCardType != null" >
+        WIRELESS_CARD_TYPE,
+      </if>
+      <if test="codeGrade != null" >
+        CODE_GRADE,
+      </if>
+      <if test="limitId != null" >
+        LIMIT_ID,
+      </if>
+      <if test="niceRule != null" >
+        NICE_RULE,
+      </if>
+      <if test="niceFee != null" >
+        NICE_FEE,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="eparchyCode != null" >
+        EPARCHY_CODE,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="departId != null" >
+        DEPART_ID,
+      </if>
+      <if test="channelId != null" >
+        CHANNEL_ID,
+      </if>
+      <if test="staffId != null" >
+        STAFF_ID,
+      </if>
+      <if test="batchId != null" >
+        BATCH_ID,
+      </if>
+      <if test="staffIn != null" >
+        STAFF_IN,
+      </if>
+      <if test="timeIn != null" >
+        TIME_IN,
+      </if>
+      <if test="rsvalue1 != null" >
+        RSVALUE1,
+      </if>
+      <if test="rsvalue2 != null" >
+        RSVALUE2,
+      </if>
+      <if test="rsvalue3 != null" >
+        RSVALUE3,
+      </if>
+      <if test="rsvalue4 != null" >
+        RSVALUE4,
+      </if>
+      <if test="rsvalue5 != null" >
+        RSVALUE5,
+      </if>
+      <if test="rsvalue6 != null" >
+        RSVALUE6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="serialNumber != null" >
+        #{serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="netTypeCode != null" >
+        #{netTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="imsi != null" >
+        #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="simCardNo != null" >
+        #{simCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="codeState != null" >
+        #{codeState,jdbcType=CHAR},
+      </if>
+      <if test="wirelessCardType != null" >
+        #{wirelessCardType,jdbcType=CHAR},
+      </if>
+      <if test="codeGrade != null" >
+        #{codeGrade,jdbcType=DECIMAL},
+      </if>
+      <if test="limitId != null" >
+        #{limitId,jdbcType=DECIMAL},
+      </if>
+      <if test="niceRule != null" >
+        #{niceRule,jdbcType=VARCHAR},
+      </if>
+      <if test="niceFee != null" >
+        #{niceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=CHAR},
+      </if>
+      <if test="eparchyCode != null" >
+        #{eparchyCode,jdbcType=CHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="departId != null" >
+        #{departId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null" >
+        #{staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchId != null" >
+        #{batchId,jdbcType=DECIMAL},
+      </if>
+      <if test="staffIn != null" >
+        #{staffIn,jdbcType=VARCHAR},
+      </if>
+      <if test="timeIn != null" >
+        #{timeIn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rsvalue1 != null" >
+        #{rsvalue1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue2 != null" >
+        #{rsvalue2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue3 != null" >
+        #{rsvalue3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue4 != null" >
+        #{rsvalue4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue5 != null" >
+        #{rsvalue5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue6 != null" >
+        #{rsvalue6,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from NUM_D_NUMINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update NUM_D_NUMINFO
+    <set >
+      <if test="record.serialNumber != null" >
+        SERIAL_NUMBER = #{record.serialNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.netTypeCode != null" >
+        NET_TYPE_CODE = #{record.netTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.imsi != null" >
+        IMSI = #{record.imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.simCardNo != null" >
+        SIM_CARD_NO = #{record.simCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeState != null" >
+        CODE_STATE = #{record.codeState,jdbcType=CHAR},
+      </if>
+      <if test="record.wirelessCardType != null" >
+        WIRELESS_CARD_TYPE = #{record.wirelessCardType,jdbcType=CHAR},
+      </if>
+      <if test="record.codeGrade != null" >
+        CODE_GRADE = #{record.codeGrade,jdbcType=DECIMAL},
+      </if>
+      <if test="record.limitId != null" >
+        LIMIT_ID = #{record.limitId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.niceRule != null" >
+        NICE_RULE = #{record.niceRule,jdbcType=VARCHAR},
+      </if>
+      <if test="record.niceFee != null" >
+        NICE_FEE = #{record.niceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.provinceCode != null" >
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=CHAR},
+      </if>
+      <if test="record.eparchyCode != null" >
+        EPARCHY_CODE = #{record.eparchyCode,jdbcType=CHAR},
+      </if>
+      <if test="record.cityCode != null" >
+        CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.departId != null" >
+        DEPART_ID = #{record.departId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelId != null" >
+        CHANNEL_ID = #{record.channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffId != null" >
+        STAFF_ID = #{record.staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchId != null" >
+        BATCH_ID = #{record.batchId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.staffIn != null" >
+        STAFF_IN = #{record.staffIn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeIn != null" >
+        TIME_IN = #{record.timeIn,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.rsvalue1 != null" >
+        RSVALUE1 = #{record.rsvalue1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue2 != null" >
+        RSVALUE2 = #{record.rsvalue2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue3 != null" >
+        RSVALUE3 = #{record.rsvalue3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue4 != null" >
+        RSVALUE4 = #{record.rsvalue4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue5 != null" >
+        RSVALUE5 = #{record.rsvalue5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue6 != null" >
+        RSVALUE6 = #{record.rsvalue6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update NUM_D_NUMINFO
+    set SERIAL_NUMBER = #{record.serialNumber,jdbcType=VARCHAR},
+      NET_TYPE_CODE = #{record.netTypeCode,jdbcType=CHAR},
+      IMSI = #{record.imsi,jdbcType=VARCHAR},
+      SIM_CARD_NO = #{record.simCardNo,jdbcType=VARCHAR},
+      CODE_STATE = #{record.codeState,jdbcType=CHAR},
+      WIRELESS_CARD_TYPE = #{record.wirelessCardType,jdbcType=CHAR},
+      CODE_GRADE = #{record.codeGrade,jdbcType=DECIMAL},
+      LIMIT_ID = #{record.limitId,jdbcType=DECIMAL},
+      NICE_RULE = #{record.niceRule,jdbcType=VARCHAR},
+      NICE_FEE = #{record.niceFee,jdbcType=DECIMAL},
+      PROVINCE_CODE = #{record.provinceCode,jdbcType=CHAR},
+      EPARCHY_CODE = #{record.eparchyCode,jdbcType=CHAR},
+      CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
+      DEPART_ID = #{record.departId,jdbcType=VARCHAR},
+      CHANNEL_ID = #{record.channelId,jdbcType=VARCHAR},
+      STAFF_ID = #{record.staffId,jdbcType=VARCHAR},
+      BATCH_ID = #{record.batchId,jdbcType=DECIMAL},
+      STAFF_IN = #{record.staffIn,jdbcType=VARCHAR},
+      TIME_IN = #{record.timeIn,jdbcType=TIMESTAMP},
+      RSVALUE1 = #{record.rsvalue1,jdbcType=VARCHAR},
+      RSVALUE2 = #{record.rsvalue2,jdbcType=VARCHAR},
+      RSVALUE3 = #{record.rsvalue3,jdbcType=VARCHAR},
+      RSVALUE4 = #{record.rsvalue4,jdbcType=VARCHAR},
+      RSVALUE5 = #{record.rsvalue5,jdbcType=VARCHAR},
+      RSVALUE6 = #{record.rsvalue6,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

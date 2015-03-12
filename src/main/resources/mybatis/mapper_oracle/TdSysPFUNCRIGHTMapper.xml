@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdSysPFUNCRIGHTMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdSysPFUNCRIGHT" >
+    <result column="RIGHT_CODE" property="rightCode" jdbcType="VARCHAR" />
+    <result column="RIGHT_NAME" property="rightName" jdbcType="VARCHAR" />
+    <result column="RIGHT_DESC" property="rightDesc" jdbcType="VARCHAR" />
+    <result column="RIGHT_STATE" property="rightState" jdbcType="CHAR" />
+    <result column="UPDATE_STAFF" property="updateStaff" jdbcType="DECIMAL" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RIGHT_CODE, RIGHT_NAME, RIGHT_DESC, RIGHT_STATE, UPDATE_STAFF, UPDATE_TIME, VALUES1, 
+    VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_P_FUNCRIGHT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from SYS_P_FUNCRIGHT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdSysPFUNCRIGHT" >
+    insert into SYS_P_FUNCRIGHT (RIGHT_CODE, RIGHT_NAME, RIGHT_DESC, 
+      RIGHT_STATE, UPDATE_STAFF, UPDATE_TIME, 
+      VALUES1, VALUES2)
+    values (#{rightCode,jdbcType=VARCHAR}, #{rightName,jdbcType=VARCHAR}, #{rightDesc,jdbcType=VARCHAR}, 
+      #{rightState,jdbcType=CHAR}, #{updateStaff,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdSysPFUNCRIGHT" >
+    insert into SYS_P_FUNCRIGHT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rightCode != null" >
+        RIGHT_CODE,
+      </if>
+      <if test="rightName != null" >
+        RIGHT_NAME,
+      </if>
+      <if test="rightDesc != null" >
+        RIGHT_DESC,
+      </if>
+      <if test="rightState != null" >
+        RIGHT_STATE,
+      </if>
+      <if test="updateStaff != null" >
+        UPDATE_STAFF,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rightCode != null" >
+        #{rightCode,jdbcType=VARCHAR},
+      </if>
+      <if test="rightName != null" >
+        #{rightName,jdbcType=VARCHAR},
+      </if>
+      <if test="rightDesc != null" >
+        #{rightDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="rightState != null" >
+        #{rightState,jdbcType=CHAR},
+      </if>
+      <if test="updateStaff != null" >
+        #{updateStaff,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from SYS_P_FUNCRIGHT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_P_FUNCRIGHT
+    <set >
+      <if test="record.rightCode != null" >
+        RIGHT_CODE = #{record.rightCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightName != null" >
+        RIGHT_NAME = #{record.rightName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightDesc != null" >
+        RIGHT_DESC = #{record.rightDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightState != null" >
+        RIGHT_STATE = #{record.rightState,jdbcType=CHAR},
+      </if>
+      <if test="record.updateStaff != null" >
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_P_FUNCRIGHT
+    set RIGHT_CODE = #{record.rightCode,jdbcType=VARCHAR},
+      RIGHT_NAME = #{record.rightName,jdbcType=VARCHAR},
+      RIGHT_DESC = #{record.rightDesc,jdbcType=VARCHAR},
+      RIGHT_STATE = #{record.rightState,jdbcType=CHAR},
+      UPDATE_STAFF = #{record.updateStaff,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

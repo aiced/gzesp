@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDCUSTMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDCUST" >
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
+    <result column="PSPT_TYPE_CODE" property="psptTypeCode" jdbcType="VARCHAR" />
+    <result column="PSPT_NO" property="psptNo" jdbcType="VARCHAR" />
+    <result column="PSPT_EXPIRE_DATE" property="psptExpireDate" jdbcType="TIMESTAMP" />
+    <result column="PSPT_IMG1" property="psptImg1" jdbcType="VARCHAR" />
+    <result column="PSPT_IMG2" property="psptImg2" jdbcType="VARCHAR" />
+    <result column="PHONE_NUMBER" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="AUTH_TAG" property="authTag" jdbcType="CHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, PARTITION_ID, CUST_NAME, PSPT_TYPE_CODE, PSPT_NO, PSPT_EXPIRE_DATE, PSPT_IMG1, 
+    PSPT_IMG2, PHONE_NUMBER, AUTH_TAG, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_D_CUST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_D_CUST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDCUST" >
+    insert into ORD_D_CUST (ORDER_ID, PARTITION_ID, CUST_NAME, 
+      PSPT_TYPE_CODE, PSPT_NO, PSPT_EXPIRE_DATE, 
+      PSPT_IMG1, PSPT_IMG2, PHONE_NUMBER, 
+      AUTH_TAG, VALUES1, VALUES2
+      )
+    values (#{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{custName,jdbcType=VARCHAR}, 
+      #{psptTypeCode,jdbcType=VARCHAR}, #{psptNo,jdbcType=VARCHAR}, #{psptExpireDate,jdbcType=TIMESTAMP}, 
+      #{psptImg1,jdbcType=VARCHAR}, #{psptImg2,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{authTag,jdbcType=CHAR}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDCUST" >
+    insert into ORD_D_CUST
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="custName != null" >
+        CUST_NAME,
+      </if>
+      <if test="psptTypeCode != null" >
+        PSPT_TYPE_CODE,
+      </if>
+      <if test="psptNo != null" >
+        PSPT_NO,
+      </if>
+      <if test="psptExpireDate != null" >
+        PSPT_EXPIRE_DATE,
+      </if>
+      <if test="psptImg1 != null" >
+        PSPT_IMG1,
+      </if>
+      <if test="psptImg2 != null" >
+        PSPT_IMG2,
+      </if>
+      <if test="phoneNumber != null" >
+        PHONE_NUMBER,
+      </if>
+      <if test="authTag != null" >
+        AUTH_TAG,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="psptTypeCode != null" >
+        #{psptTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="psptNo != null" >
+        #{psptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="psptExpireDate != null" >
+        #{psptExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="psptImg1 != null" >
+        #{psptImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="psptImg2 != null" >
+        #{psptImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="authTag != null" >
+        #{authTag,jdbcType=CHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_D_CUST
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_D_CUST
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.custName != null" >
+        CUST_NAME = #{record.custName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psptTypeCode != null" >
+        PSPT_TYPE_CODE = #{record.psptTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psptNo != null" >
+        PSPT_NO = #{record.psptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psptExpireDate != null" >
+        PSPT_EXPIRE_DATE = #{record.psptExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.psptImg1 != null" >
+        PSPT_IMG1 = #{record.psptImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.psptImg2 != null" >
+        PSPT_IMG2 = #{record.psptImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authTag != null" >
+        AUTH_TAG = #{record.authTag,jdbcType=CHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_D_CUST
+    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      CUST_NAME = #{record.custName,jdbcType=VARCHAR},
+      PSPT_TYPE_CODE = #{record.psptTypeCode,jdbcType=VARCHAR},
+      PSPT_NO = #{record.psptNo,jdbcType=VARCHAR},
+      PSPT_EXPIRE_DATE = #{record.psptExpireDate,jdbcType=TIMESTAMP},
+      PSPT_IMG1 = #{record.psptImg1,jdbcType=VARCHAR},
+      PSPT_IMG2 = #{record.psptImg2,jdbcType=VARCHAR},
+      PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+      AUTH_TAG = #{record.authTag,jdbcType=CHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

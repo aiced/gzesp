@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdNumDNICERULELIMITMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdNumDNICERULELIMIT" >
+    <result column="LIMIT_ID" property="limitId" jdbcType="DECIMAL" />
+    <result column="NICE_RULE" property="niceRule" jdbcType="DECIMAL" />
+    <result column="NET_TYPE_CODE" property="netTypeCode" jdbcType="CHAR" />
+    <result column="TRADE_CATE" property="tradeCate" jdbcType="CHAR" />
+    <result column="CODE_GRADE" property="codeGrade" jdbcType="DECIMAL" />
+    <result column="PRIORITY" property="priority" jdbcType="DECIMAL" />
+    <result column="LIMIT_STATE" property="limitState" jdbcType="CHAR" />
+    <result column="LIMIT_TYPE" property="limitType" jdbcType="CHAR" />
+    <result column="RANK_MONEY_S" property="rankMoneyS" jdbcType="DECIMAL" />
+    <result column="RANK_MONEY_E" property="rankMoneyE" jdbcType="DECIMAL" />
+    <result column="MONTH_LIMIT" property="monthLimit" jdbcType="DECIMAL" />
+    <result column="ADVANCE_LIMIT" property="advanceLimit" jdbcType="DECIMAL" />
+    <result column="MONTHFEE_LIMIT" property="monthfeeLimit" jdbcType="DECIMAL" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="EPARCHY_CODE" property="eparchyCode" jdbcType="CHAR" />
+    <result column="PROVINCE_ID" property="provinceId" jdbcType="CHAR" />
+    <result column="START_DATE" property="startDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_DEPART_ID" property="updateDepartId" jdbcType="VARCHAR" />
+    <result column="UPDATE_STAFF_ID" property="updateStaffId" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="RSVALUE1" property="rsvalue1" jdbcType="VARCHAR" />
+    <result column="RSVALUE2" property="rsvalue2" jdbcType="VARCHAR" />
+    <result column="RSVALUE3" property="rsvalue3" jdbcType="VARCHAR" />
+    <result column="RSVALUE4" property="rsvalue4" jdbcType="VARCHAR" />
+    <result column="RSVALUE5" property="rsvalue5" jdbcType="VARCHAR" />
+    <result column="RSVALUE6" property="rsvalue6" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LIMIT_ID, NICE_RULE, NET_TYPE_CODE, TRADE_CATE, CODE_GRADE, PRIORITY, LIMIT_STATE, 
+    LIMIT_TYPE, RANK_MONEY_S, RANK_MONEY_E, MONTH_LIMIT, ADVANCE_LIMIT, MONTHFEE_LIMIT, 
+    AREA_CODE, EPARCHY_CODE, PROVINCE_ID, START_DATE, END_DATE, UPDATE_DEPART_ID, UPDATE_STAFF_ID, 
+    UPDATE_TIME, REMARK, RSVALUE1, RSVALUE2, RSVALUE3, RSVALUE4, RSVALUE5, RSVALUE6
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from NUM_D_NICERULE_LIMIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from NUM_D_NICERULE_LIMIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdNumDNICERULELIMIT" >
+    insert into NUM_D_NICERULE_LIMIT (LIMIT_ID, NICE_RULE, NET_TYPE_CODE, 
+      TRADE_CATE, CODE_GRADE, PRIORITY, 
+      LIMIT_STATE, LIMIT_TYPE, RANK_MONEY_S, 
+      RANK_MONEY_E, MONTH_LIMIT, ADVANCE_LIMIT, 
+      MONTHFEE_LIMIT, AREA_CODE, EPARCHY_CODE, 
+      PROVINCE_ID, START_DATE, END_DATE, 
+      UPDATE_DEPART_ID, UPDATE_STAFF_ID, UPDATE_TIME, 
+      REMARK, RSVALUE1, RSVALUE2, 
+      RSVALUE3, RSVALUE4, RSVALUE5, 
+      RSVALUE6)
+    values (#{limitId,jdbcType=DECIMAL}, #{niceRule,jdbcType=DECIMAL}, #{netTypeCode,jdbcType=CHAR}, 
+      #{tradeCate,jdbcType=CHAR}, #{codeGrade,jdbcType=DECIMAL}, #{priority,jdbcType=DECIMAL}, 
+      #{limitState,jdbcType=CHAR}, #{limitType,jdbcType=CHAR}, #{rankMoneyS,jdbcType=DECIMAL}, 
+      #{rankMoneyE,jdbcType=DECIMAL}, #{monthLimit,jdbcType=DECIMAL}, #{advanceLimit,jdbcType=DECIMAL}, 
+      #{monthfeeLimit,jdbcType=DECIMAL}, #{areaCode,jdbcType=VARCHAR}, #{eparchyCode,jdbcType=CHAR}, 
+      #{provinceId,jdbcType=CHAR}, #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, 
+      #{updateDepartId,jdbcType=VARCHAR}, #{updateStaffId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{rsvalue1,jdbcType=VARCHAR}, #{rsvalue2,jdbcType=VARCHAR}, 
+      #{rsvalue3,jdbcType=VARCHAR}, #{rsvalue4,jdbcType=VARCHAR}, #{rsvalue5,jdbcType=VARCHAR}, 
+      #{rsvalue6,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdNumDNICERULELIMIT" >
+    insert into NUM_D_NICERULE_LIMIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="limitId != null" >
+        LIMIT_ID,
+      </if>
+      <if test="niceRule != null" >
+        NICE_RULE,
+      </if>
+      <if test="netTypeCode != null" >
+        NET_TYPE_CODE,
+      </if>
+      <if test="tradeCate != null" >
+        TRADE_CATE,
+      </if>
+      <if test="codeGrade != null" >
+        CODE_GRADE,
+      </if>
+      <if test="priority != null" >
+        PRIORITY,
+      </if>
+      <if test="limitState != null" >
+        LIMIT_STATE,
+      </if>
+      <if test="limitType != null" >
+        LIMIT_TYPE,
+      </if>
+      <if test="rankMoneyS != null" >
+        RANK_MONEY_S,
+      </if>
+      <if test="rankMoneyE != null" >
+        RANK_MONEY_E,
+      </if>
+      <if test="monthLimit != null" >
+        MONTH_LIMIT,
+      </if>
+      <if test="advanceLimit != null" >
+        ADVANCE_LIMIT,
+      </if>
+      <if test="monthfeeLimit != null" >
+        MONTHFEE_LIMIT,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="eparchyCode != null" >
+        EPARCHY_CODE,
+      </if>
+      <if test="provinceId != null" >
+        PROVINCE_ID,
+      </if>
+      <if test="startDate != null" >
+        START_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="updateDepartId != null" >
+        UPDATE_DEPART_ID,
+      </if>
+      <if test="updateStaffId != null" >
+        UPDATE_STAFF_ID,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="rsvalue1 != null" >
+        RSVALUE1,
+      </if>
+      <if test="rsvalue2 != null" >
+        RSVALUE2,
+      </if>
+      <if test="rsvalue3 != null" >
+        RSVALUE3,
+      </if>
+      <if test="rsvalue4 != null" >
+        RSVALUE4,
+      </if>
+      <if test="rsvalue5 != null" >
+        RSVALUE5,
+      </if>
+      <if test="rsvalue6 != null" >
+        RSVALUE6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="limitId != null" >
+        #{limitId,jdbcType=DECIMAL},
+      </if>
+      <if test="niceRule != null" >
+        #{niceRule,jdbcType=DECIMAL},
+      </if>
+      <if test="netTypeCode != null" >
+        #{netTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="tradeCate != null" >
+        #{tradeCate,jdbcType=CHAR},
+      </if>
+      <if test="codeGrade != null" >
+        #{codeGrade,jdbcType=DECIMAL},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=DECIMAL},
+      </if>
+      <if test="limitState != null" >
+        #{limitState,jdbcType=CHAR},
+      </if>
+      <if test="limitType != null" >
+        #{limitType,jdbcType=CHAR},
+      </if>
+      <if test="rankMoneyS != null" >
+        #{rankMoneyS,jdbcType=DECIMAL},
+      </if>
+      <if test="rankMoneyE != null" >
+        #{rankMoneyE,jdbcType=DECIMAL},
+      </if>
+      <if test="monthLimit != null" >
+        #{monthLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="advanceLimit != null" >
+        #{advanceLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="monthfeeLimit != null" >
+        #{monthfeeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="eparchyCode != null" >
+        #{eparchyCode,jdbcType=CHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=CHAR},
+      </if>
+      <if test="startDate != null" >
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDepartId != null" >
+        #{updateDepartId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateStaffId != null" >
+        #{updateStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue1 != null" >
+        #{rsvalue1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue2 != null" >
+        #{rsvalue2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue3 != null" >
+        #{rsvalue3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue4 != null" >
+        #{rsvalue4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue5 != null" >
+        #{rsvalue5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvalue6 != null" >
+        #{rsvalue6,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from NUM_D_NICERULE_LIMIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update NUM_D_NICERULE_LIMIT
+    <set >
+      <if test="record.limitId != null" >
+        LIMIT_ID = #{record.limitId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.niceRule != null" >
+        NICE_RULE = #{record.niceRule,jdbcType=DECIMAL},
+      </if>
+      <if test="record.netTypeCode != null" >
+        NET_TYPE_CODE = #{record.netTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.tradeCate != null" >
+        TRADE_CATE = #{record.tradeCate,jdbcType=CHAR},
+      </if>
+      <if test="record.codeGrade != null" >
+        CODE_GRADE = #{record.codeGrade,jdbcType=DECIMAL},
+      </if>
+      <if test="record.priority != null" >
+        PRIORITY = #{record.priority,jdbcType=DECIMAL},
+      </if>
+      <if test="record.limitState != null" >
+        LIMIT_STATE = #{record.limitState,jdbcType=CHAR},
+      </if>
+      <if test="record.limitType != null" >
+        LIMIT_TYPE = #{record.limitType,jdbcType=CHAR},
+      </if>
+      <if test="record.rankMoneyS != null" >
+        RANK_MONEY_S = #{record.rankMoneyS,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rankMoneyE != null" >
+        RANK_MONEY_E = #{record.rankMoneyE,jdbcType=DECIMAL},
+      </if>
+      <if test="record.monthLimit != null" >
+        MONTH_LIMIT = #{record.monthLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.advanceLimit != null" >
+        ADVANCE_LIMIT = #{record.advanceLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.monthfeeLimit != null" >
+        MONTHFEE_LIMIT = #{record.monthfeeLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.areaCode != null" >
+        AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eparchyCode != null" >
+        EPARCHY_CODE = #{record.eparchyCode,jdbcType=CHAR},
+      </if>
+      <if test="record.provinceId != null" >
+        PROVINCE_ID = #{record.provinceId,jdbcType=CHAR},
+      </if>
+      <if test="record.startDate != null" >
+        START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null" >
+        END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateDepartId != null" >
+        UPDATE_DEPART_ID = #{record.updateDepartId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateStaffId != null" >
+        UPDATE_STAFF_ID = #{record.updateStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue1 != null" >
+        RSVALUE1 = #{record.rsvalue1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue2 != null" >
+        RSVALUE2 = #{record.rsvalue2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue3 != null" >
+        RSVALUE3 = #{record.rsvalue3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue4 != null" >
+        RSVALUE4 = #{record.rsvalue4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue5 != null" >
+        RSVALUE5 = #{record.rsvalue5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rsvalue6 != null" >
+        RSVALUE6 = #{record.rsvalue6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update NUM_D_NICERULE_LIMIT
+    set LIMIT_ID = #{record.limitId,jdbcType=DECIMAL},
+      NICE_RULE = #{record.niceRule,jdbcType=DECIMAL},
+      NET_TYPE_CODE = #{record.netTypeCode,jdbcType=CHAR},
+      TRADE_CATE = #{record.tradeCate,jdbcType=CHAR},
+      CODE_GRADE = #{record.codeGrade,jdbcType=DECIMAL},
+      PRIORITY = #{record.priority,jdbcType=DECIMAL},
+      LIMIT_STATE = #{record.limitState,jdbcType=CHAR},
+      LIMIT_TYPE = #{record.limitType,jdbcType=CHAR},
+      RANK_MONEY_S = #{record.rankMoneyS,jdbcType=DECIMAL},
+      RANK_MONEY_E = #{record.rankMoneyE,jdbcType=DECIMAL},
+      MONTH_LIMIT = #{record.monthLimit,jdbcType=DECIMAL},
+      ADVANCE_LIMIT = #{record.advanceLimit,jdbcType=DECIMAL},
+      MONTHFEE_LIMIT = #{record.monthfeeLimit,jdbcType=DECIMAL},
+      AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      EPARCHY_CODE = #{record.eparchyCode,jdbcType=CHAR},
+      PROVINCE_ID = #{record.provinceId,jdbcType=CHAR},
+      START_DATE = #{record.startDate,jdbcType=TIMESTAMP},
+      END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+      UPDATE_DEPART_ID = #{record.updateDepartId,jdbcType=VARCHAR},
+      UPDATE_STAFF_ID = #{record.updateStaffId,jdbcType=VARCHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      RSVALUE1 = #{record.rsvalue1,jdbcType=VARCHAR},
+      RSVALUE2 = #{record.rsvalue2,jdbcType=VARCHAR},
+      RSVALUE3 = #{record.rsvalue3,jdbcType=VARCHAR},
+      RSVALUE4 = #{record.rsvalue4,jdbcType=VARCHAR},
+      RSVALUE5 = #{record.rsvalue5,jdbcType=VARCHAR},
+      RSVALUE6 = #{record.rsvalue6,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

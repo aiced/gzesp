@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdSysDSTAFFMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdSysDSTAFF" >
+    <result column="STAFF_ID" property="staffId" jdbcType="DECIMAL" />
+    <result column="STAFF_CODE" property="staffCode" jdbcType="VARCHAR" />
+    <result column="MERCHANT_ID" property="merchantId" jdbcType="DECIMAL" />
+    <result column="STAFF_NAME" property="staffName" jdbcType="VARCHAR" />
+    <result column="PASSWD" property="passwd" jdbcType="VARCHAR" />
+    <result column="STAFF_STATUS" property="staffStatus" jdbcType="CHAR" />
+    <result column="LINK_PHONE" property="linkPhone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="ESS_STAFF_ID" property="essStaffId" jdbcType="VARCHAR" />
+    <result column="CHANNEL_CODE" property="channelCode" jdbcType="VARCHAR" />
+    <result column="UPDATE_STAFF" property="updateStaff" jdbcType="DECIMAL" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+    <result column="CHANNEL_TYPE" property="channelType" jdbcType="VARCHAR" />
+    <result column="CHANNEL_DESC" property="channelDesc" jdbcType="VARCHAR" />
+    <result column="INIT_PASSWORD_TAG" property="initPasswordTag" jdbcType="CHAR" />
+    <result column="SYS_CODE" property="sysCode" jdbcType="VARCHAR" />
+    <result column="STAFF_BELONG_DESC" property="staffBelongDesc" jdbcType="VARCHAR" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="STAFF_TYPE" property="staffType" jdbcType="CHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STAFF_ID, STAFF_CODE, MERCHANT_ID, STAFF_NAME, PASSWD, STAFF_STATUS, LINK_PHONE, 
+    EMAIL, PROVINCE_CODE, ESS_STAFF_ID, CHANNEL_CODE, UPDATE_STAFF, UPDATE_TIME, VALUES1, 
+    VALUES2, CHANNEL_TYPE, CHANNEL_DESC, INIT_PASSWORD_TAG, SYS_CODE, STAFF_BELONG_DESC, 
+    AREA_CODE, STAFF_TYPE, SALT
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_D_STAFF
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from SYS_D_STAFF
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdSysDSTAFF" >
+    insert into SYS_D_STAFF (STAFF_ID, STAFF_CODE, MERCHANT_ID, 
+      STAFF_NAME, PASSWD, STAFF_STATUS, 
+      LINK_PHONE, EMAIL, PROVINCE_CODE, 
+      ESS_STAFF_ID, CHANNEL_CODE, UPDATE_STAFF, 
+      UPDATE_TIME, VALUES1, VALUES2, 
+      CHANNEL_TYPE, CHANNEL_DESC, INIT_PASSWORD_TAG, 
+      SYS_CODE, STAFF_BELONG_DESC, AREA_CODE, 
+      STAFF_TYPE, SALT)
+    values (#{staffId,jdbcType=DECIMAL}, #{staffCode,jdbcType=VARCHAR}, #{merchantId,jdbcType=DECIMAL}, 
+      #{staffName,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}, #{staffStatus,jdbcType=CHAR}, 
+      #{linkPhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, 
+      #{essStaffId,jdbcType=VARCHAR}, #{channelCode,jdbcType=VARCHAR}, #{updateStaff,jdbcType=DECIMAL}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}, 
+      #{channelType,jdbcType=VARCHAR}, #{channelDesc,jdbcType=VARCHAR}, #{initPasswordTag,jdbcType=CHAR}, 
+      #{sysCode,jdbcType=VARCHAR}, #{staffBelongDesc,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR}, 
+      #{staffType,jdbcType=CHAR}, #{salt,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdSysDSTAFF" >
+    insert into SYS_D_STAFF
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="staffId != null" >
+        STAFF_ID,
+      </if>
+      <if test="staffCode != null" >
+        STAFF_CODE,
+      </if>
+      <if test="merchantId != null" >
+        MERCHANT_ID,
+      </if>
+      <if test="staffName != null" >
+        STAFF_NAME,
+      </if>
+      <if test="passwd != null" >
+        PASSWD,
+      </if>
+      <if test="staffStatus != null" >
+        STAFF_STATUS,
+      </if>
+      <if test="linkPhone != null" >
+        LINK_PHONE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="essStaffId != null" >
+        ESS_STAFF_ID,
+      </if>
+      <if test="channelCode != null" >
+        CHANNEL_CODE,
+      </if>
+      <if test="updateStaff != null" >
+        UPDATE_STAFF,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+      <if test="channelType != null" >
+        CHANNEL_TYPE,
+      </if>
+      <if test="channelDesc != null" >
+        CHANNEL_DESC,
+      </if>
+      <if test="initPasswordTag != null" >
+        INIT_PASSWORD_TAG,
+      </if>
+      <if test="sysCode != null" >
+        SYS_CODE,
+      </if>
+      <if test="staffBelongDesc != null" >
+        STAFF_BELONG_DESC,
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE,
+      </if>
+      <if test="staffType != null" >
+        STAFF_TYPE,
+      </if>
+      <if test="salt != null" >
+        SALT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="staffId != null" >
+        #{staffId,jdbcType=DECIMAL},
+      </if>
+      <if test="staffCode != null" >
+        #{staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="staffName != null" >
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="staffStatus != null" >
+        #{staffStatus,jdbcType=CHAR},
+      </if>
+      <if test="linkPhone != null" >
+        #{linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="essStaffId != null" >
+        #{essStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelCode != null" >
+        #{channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="updateStaff != null" >
+        #{updateStaff,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+      <if test="channelType != null" >
+        #{channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="channelDesc != null" >
+        #{channelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="initPasswordTag != null" >
+        #{initPasswordTag,jdbcType=CHAR},
+      </if>
+      <if test="sysCode != null" >
+        #{sysCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staffBelongDesc != null" >
+        #{staffBelongDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="staffType != null" >
+        #{staffType,jdbcType=CHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from SYS_D_STAFF
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_D_STAFF
+    <set >
+      <if test="record.staffId != null" >
+        STAFF_ID = #{record.staffId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.staffCode != null" >
+        STAFF_CODE = #{record.staffCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantId != null" >
+        MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.staffName != null" >
+        STAFF_NAME = #{record.staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passwd != null" >
+        PASSWD = #{record.passwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffStatus != null" >
+        STAFF_STATUS = #{record.staffStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.linkPhone != null" >
+        LINK_PHONE = #{record.linkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null" >
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.essStaffId != null" >
+        ESS_STAFF_ID = #{record.essStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelCode != null" >
+        CHANNEL_CODE = #{record.channelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateStaff != null" >
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelType != null" >
+        CHANNEL_TYPE = #{record.channelType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelDesc != null" >
+        CHANNEL_DESC = #{record.channelDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.initPasswordTag != null" >
+        INIT_PASSWORD_TAG = #{record.initPasswordTag,jdbcType=CHAR},
+      </if>
+      <if test="record.sysCode != null" >
+        SYS_CODE = #{record.sysCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffBelongDesc != null" >
+        STAFF_BELONG_DESC = #{record.staffBelongDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null" >
+        AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.staffType != null" >
+        STAFF_TYPE = #{record.staffType,jdbcType=CHAR},
+      </if>
+      <if test="record.salt != null" >
+        SALT = #{record.salt,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_D_STAFF
+    set STAFF_ID = #{record.staffId,jdbcType=DECIMAL},
+      STAFF_CODE = #{record.staffCode,jdbcType=VARCHAR},
+      MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      STAFF_NAME = #{record.staffName,jdbcType=VARCHAR},
+      PASSWD = #{record.passwd,jdbcType=VARCHAR},
+      STAFF_STATUS = #{record.staffStatus,jdbcType=CHAR},
+      LINK_PHONE = #{record.linkPhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      ESS_STAFF_ID = #{record.essStaffId,jdbcType=VARCHAR},
+      CHANNEL_CODE = #{record.channelCode,jdbcType=VARCHAR},
+      UPDATE_STAFF = #{record.updateStaff,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      CHANNEL_TYPE = #{record.channelType,jdbcType=VARCHAR},
+      CHANNEL_DESC = #{record.channelDesc,jdbcType=VARCHAR},
+      INIT_PASSWORD_TAG = #{record.initPasswordTag,jdbcType=CHAR},
+      SYS_CODE = #{record.sysCode,jdbcType=VARCHAR},
+      STAFF_BELONG_DESC = #{record.staffBelongDesc,jdbcType=VARCHAR},
+      AREA_CODE = #{record.areaCode,jdbcType=VARCHAR},
+      STAFF_TYPE = #{record.staffType,jdbcType=CHAR},
+      SALT = #{record.salt,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

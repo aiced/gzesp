@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdAurDBASEINFOMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdAurDBASEINFO" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="CHANNEL_TYPE" property="channelType" jdbcType="CHAR" />
+    <result column="CHANNEL_LEVEL" property="channelLevel" jdbcType="CHAR" />
+    <result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="EPARCHY_CODE" property="eparchyCode" jdbcType="VARCHAR" />
+    <result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="SALES_AREA" property="salesArea" jdbcType="VARCHAR" />
+    <result column="USER_DESC" property="userDesc" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_STAFF" property="updateStaff" jdbcType="VARCHAR" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="OUT_DESC" property="outDesc" jdbcType="VARCHAR" />
+    <result column="OUT_STAFF" property="outStaff" jdbcType="VARCHAR" />
+    <result column="MANAGER_ID" property="managerId" jdbcType="VARCHAR" />
+    <result column="MANAGER_NAME" property="managerName" jdbcType="VARCHAR" />
+    <result column="MANAGER_CONTACT" property="managerContact" jdbcType="VARCHAR" />
+    <result column="IDENTITY_TYPE" property="identityType" jdbcType="CHAR" />
+    <result column="IDENTITY_NUM" property="identityNum" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="FIX_PHONE" property="fixPhone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="CONTACT_QQ" property="contactQq" jdbcType="VARCHAR" />
+    <result column="POST_CODE" property="postCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="BANK_ACCT" property="bankAcct" jdbcType="VARCHAR" />
+    <result column="RESERVED1" property="reserved1" jdbcType="VARCHAR" />
+    <result column="RESERVED2" property="reserved2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, USER_ID, USER_NAME, ADDRESS, CHANNEL_TYPE, CHANNEL_LEVEL, PROVINCE_CODE, EPARCHY_CODE, 
+    CITY_CODE, SALES_AREA, USER_DESC, CREATE_DATE, STATUS, UPDATE_TIME, UPDATE_STAFF, 
+    OUT_TIME, OUT_DESC, OUT_STAFF, MANAGER_ID, MANAGER_NAME, MANAGER_CONTACT, IDENTITY_TYPE, 
+    IDENTITY_NUM, MOBILE, FIX_PHONE, EMAIL, CONTACT_QQ, POST_CODE, BANK_NAME, BANK_ACCT, 
+    RESERVED1, RESERVED2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from AUR_D_BASEINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from AUR_D_BASEINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdAurDBASEINFO" >
+    insert into AUR_D_BASEINFO (ID, USER_ID, USER_NAME, 
+      ADDRESS, CHANNEL_TYPE, CHANNEL_LEVEL, 
+      PROVINCE_CODE, EPARCHY_CODE, CITY_CODE, 
+      SALES_AREA, USER_DESC, CREATE_DATE, 
+      STATUS, UPDATE_TIME, UPDATE_STAFF, 
+      OUT_TIME, OUT_DESC, OUT_STAFF, 
+      MANAGER_ID, MANAGER_NAME, MANAGER_CONTACT, 
+      IDENTITY_TYPE, IDENTITY_NUM, MOBILE, 
+      FIX_PHONE, EMAIL, CONTACT_QQ, 
+      POST_CODE, BANK_NAME, BANK_ACCT, 
+      RESERVED1, RESERVED2)
+    values (#{id,jdbcType=DECIMAL}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{channelType,jdbcType=CHAR}, #{channelLevel,jdbcType=CHAR}, 
+      #{provinceCode,jdbcType=VARCHAR}, #{eparchyCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{salesArea,jdbcType=VARCHAR}, #{userDesc,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{updateStaff,jdbcType=VARCHAR}, 
+      #{outTime,jdbcType=TIMESTAMP}, #{outDesc,jdbcType=VARCHAR}, #{outStaff,jdbcType=VARCHAR}, 
+      #{managerId,jdbcType=VARCHAR}, #{managerName,jdbcType=VARCHAR}, #{managerContact,jdbcType=VARCHAR}, 
+      #{identityType,jdbcType=CHAR}, #{identityNum,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{fixPhone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{contactQq,jdbcType=VARCHAR}, 
+      #{postCode,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankAcct,jdbcType=VARCHAR}, 
+      #{reserved1,jdbcType=VARCHAR}, #{reserved2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdAurDBASEINFO" >
+    insert into AUR_D_BASEINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="channelType != null" >
+        CHANNEL_TYPE,
+      </if>
+      <if test="channelLevel != null" >
+        CHANNEL_LEVEL,
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE,
+      </if>
+      <if test="eparchyCode != null" >
+        EPARCHY_CODE,
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE,
+      </if>
+      <if test="salesArea != null" >
+        SALES_AREA,
+      </if>
+      <if test="userDesc != null" >
+        USER_DESC,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="updateStaff != null" >
+        UPDATE_STAFF,
+      </if>
+      <if test="outTime != null" >
+        OUT_TIME,
+      </if>
+      <if test="outDesc != null" >
+        OUT_DESC,
+      </if>
+      <if test="outStaff != null" >
+        OUT_STAFF,
+      </if>
+      <if test="managerId != null" >
+        MANAGER_ID,
+      </if>
+      <if test="managerName != null" >
+        MANAGER_NAME,
+      </if>
+      <if test="managerContact != null" >
+        MANAGER_CONTACT,
+      </if>
+      <if test="identityType != null" >
+        IDENTITY_TYPE,
+      </if>
+      <if test="identityNum != null" >
+        IDENTITY_NUM,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="fixPhone != null" >
+        FIX_PHONE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="contactQq != null" >
+        CONTACT_QQ,
+      </if>
+      <if test="postCode != null" >
+        POST_CODE,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="bankAcct != null" >
+        BANK_ACCT,
+      </if>
+      <if test="reserved1 != null" >
+        RESERVED1,
+      </if>
+      <if test="reserved2 != null" >
+        RESERVED2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="channelType != null" >
+        #{channelType,jdbcType=CHAR},
+      </if>
+      <if test="channelLevel != null" >
+        #{channelLevel,jdbcType=CHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="eparchyCode != null" >
+        #{eparchyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salesArea != null" >
+        #{salesArea,jdbcType=VARCHAR},
+      </if>
+      <if test="userDesc != null" >
+        #{userDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateStaff != null" >
+        #{updateStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outDesc != null" >
+        #{outDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="outStaff != null" >
+        #{outStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="managerId != null" >
+        #{managerId,jdbcType=VARCHAR},
+      </if>
+      <if test="managerName != null" >
+        #{managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="managerContact != null" >
+        #{managerContact,jdbcType=VARCHAR},
+      </if>
+      <if test="identityType != null" >
+        #{identityType,jdbcType=CHAR},
+      </if>
+      <if test="identityNum != null" >
+        #{identityNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="fixPhone != null" >
+        #{fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contactQq != null" >
+        #{contactQq,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcct != null" >
+        #{bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved1 != null" >
+        #{reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="reserved2 != null" >
+        #{reserved2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from AUR_D_BASEINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update AUR_D_BASEINFO
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        ADDRESS = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelType != null" >
+        CHANNEL_TYPE = #{record.channelType,jdbcType=CHAR},
+      </if>
+      <if test="record.channelLevel != null" >
+        CHANNEL_LEVEL = #{record.channelLevel,jdbcType=CHAR},
+      </if>
+      <if test="record.provinceCode != null" >
+        PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eparchyCode != null" >
+        EPARCHY_CODE = #{record.eparchyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null" >
+        CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesArea != null" >
+        SALES_AREA = #{record.salesArea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userDesc != null" >
+        USER_DESC = #{record.userDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateStaff != null" >
+        UPDATE_STAFF = #{record.updateStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outTime != null" >
+        OUT_TIME = #{record.outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.outDesc != null" >
+        OUT_DESC = #{record.outDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outStaff != null" >
+        OUT_STAFF = #{record.outStaff,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerId != null" >
+        MANAGER_ID = #{record.managerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerName != null" >
+        MANAGER_NAME = #{record.managerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.managerContact != null" >
+        MANAGER_CONTACT = #{record.managerContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identityType != null" >
+        IDENTITY_TYPE = #{record.identityType,jdbcType=CHAR},
+      </if>
+      <if test="record.identityNum != null" >
+        IDENTITY_NUM = #{record.identityNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fixPhone != null" >
+        FIX_PHONE = #{record.fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        EMAIL = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactQq != null" >
+        CONTACT_QQ = #{record.contactQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postCode != null" >
+        POST_CODE = #{record.postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null" >
+        BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAcct != null" >
+        BANK_ACCT = #{record.bankAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved1 != null" >
+        RESERVED1 = #{record.reserved1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reserved2 != null" >
+        RESERVED2 = #{record.reserved2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update AUR_D_BASEINFO
+    set ID = #{record.id,jdbcType=DECIMAL},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      USER_NAME = #{record.userName,jdbcType=VARCHAR},
+      ADDRESS = #{record.address,jdbcType=VARCHAR},
+      CHANNEL_TYPE = #{record.channelType,jdbcType=CHAR},
+      CHANNEL_LEVEL = #{record.channelLevel,jdbcType=CHAR},
+      PROVINCE_CODE = #{record.provinceCode,jdbcType=VARCHAR},
+      EPARCHY_CODE = #{record.eparchyCode,jdbcType=VARCHAR},
+      CITY_CODE = #{record.cityCode,jdbcType=VARCHAR},
+      SALES_AREA = #{record.salesArea,jdbcType=VARCHAR},
+      USER_DESC = #{record.userDesc,jdbcType=VARCHAR},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=CHAR},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      UPDATE_STAFF = #{record.updateStaff,jdbcType=VARCHAR},
+      OUT_TIME = #{record.outTime,jdbcType=TIMESTAMP},
+      OUT_DESC = #{record.outDesc,jdbcType=VARCHAR},
+      OUT_STAFF = #{record.outStaff,jdbcType=VARCHAR},
+      MANAGER_ID = #{record.managerId,jdbcType=VARCHAR},
+      MANAGER_NAME = #{record.managerName,jdbcType=VARCHAR},
+      MANAGER_CONTACT = #{record.managerContact,jdbcType=VARCHAR},
+      IDENTITY_TYPE = #{record.identityType,jdbcType=CHAR},
+      IDENTITY_NUM = #{record.identityNum,jdbcType=VARCHAR},
+      MOBILE = #{record.mobile,jdbcType=VARCHAR},
+      FIX_PHONE = #{record.fixPhone,jdbcType=VARCHAR},
+      EMAIL = #{record.email,jdbcType=VARCHAR},
+      CONTACT_QQ = #{record.contactQq,jdbcType=VARCHAR},
+      POST_CODE = #{record.postCode,jdbcType=VARCHAR},
+      BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      BANK_ACCT = #{record.bankAcct,jdbcType=VARCHAR},
+      RESERVED1 = #{record.reserved1,jdbcType=VARCHAR},
+      RESERVED2 = #{record.reserved2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdSysPMENUMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdSysPMENU" >
+    <result column="MENU_ID" property="menuId" jdbcType="VARCHAR" />
+    <result column="PARENT_MENU_ID" property="parentMenuId" jdbcType="VARCHAR" />
+    <result column="RIGHT_CODE" property="rightCode" jdbcType="VARCHAR" />
+    <result column="MENU_NAME" property="menuName" jdbcType="VARCHAR" />
+    <result column="MENU_URL" property="menuUrl" jdbcType="VARCHAR" />
+    <result column="MENU_SORT" property="menuSort" jdbcType="DECIMAL" />
+    <result column="MENU_CODE" property="menuCode" jdbcType="VARCHAR" />
+    <result column="TARGET_ATTR" property="targetAttr" jdbcType="VARCHAR" />
+    <result column="AUTHKEY_TAG" property="authkeyTag" jdbcType="CHAR" />
+    <result column="PROJECT_CODE" property="projectCode" jdbcType="VARCHAR" />
+    <result column="PROJECT_TYPE" property="projectType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    MENU_ID, PARENT_MENU_ID, RIGHT_CODE, MENU_NAME, MENU_URL, MENU_SORT, MENU_CODE, TARGET_ATTR, 
+    AUTHKEY_TAG, PROJECT_CODE, PROJECT_TYPE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from SYS_P_MENU
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from SYS_P_MENU
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdSysPMENU" >
+    insert into SYS_P_MENU (MENU_ID, PARENT_MENU_ID, RIGHT_CODE, 
+      MENU_NAME, MENU_URL, MENU_SORT, 
+      MENU_CODE, TARGET_ATTR, AUTHKEY_TAG, 
+      PROJECT_CODE, PROJECT_TYPE)
+    values (#{menuId,jdbcType=VARCHAR}, #{parentMenuId,jdbcType=VARCHAR}, #{rightCode,jdbcType=VARCHAR}, 
+      #{menuName,jdbcType=VARCHAR}, #{menuUrl,jdbcType=VARCHAR}, #{menuSort,jdbcType=DECIMAL}, 
+      #{menuCode,jdbcType=VARCHAR}, #{targetAttr,jdbcType=VARCHAR}, #{authkeyTag,jdbcType=CHAR}, 
+      #{projectCode,jdbcType=VARCHAR}, #{projectType,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdSysPMENU" >
+    insert into SYS_P_MENU
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        MENU_ID,
+      </if>
+      <if test="parentMenuId != null" >
+        PARENT_MENU_ID,
+      </if>
+      <if test="rightCode != null" >
+        RIGHT_CODE,
+      </if>
+      <if test="menuName != null" >
+        MENU_NAME,
+      </if>
+      <if test="menuUrl != null" >
+        MENU_URL,
+      </if>
+      <if test="menuSort != null" >
+        MENU_SORT,
+      </if>
+      <if test="menuCode != null" >
+        MENU_CODE,
+      </if>
+      <if test="targetAttr != null" >
+        TARGET_ATTR,
+      </if>
+      <if test="authkeyTag != null" >
+        AUTHKEY_TAG,
+      </if>
+      <if test="projectCode != null" >
+        PROJECT_CODE,
+      </if>
+      <if test="projectType != null" >
+        PROJECT_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="menuId != null" >
+        #{menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMenuId != null" >
+        #{parentMenuId,jdbcType=VARCHAR},
+      </if>
+      <if test="rightCode != null" >
+        #{rightCode,jdbcType=VARCHAR},
+      </if>
+      <if test="menuName != null" >
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="menuUrl != null" >
+        #{menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="menuSort != null" >
+        #{menuSort,jdbcType=DECIMAL},
+      </if>
+      <if test="menuCode != null" >
+        #{menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="targetAttr != null" >
+        #{targetAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="authkeyTag != null" >
+        #{authkeyTag,jdbcType=CHAR},
+      </if>
+      <if test="projectCode != null" >
+        #{projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        #{projectType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from SYS_P_MENU
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update SYS_P_MENU
+    <set >
+      <if test="record.menuId != null" >
+        MENU_ID = #{record.menuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentMenuId != null" >
+        PARENT_MENU_ID = #{record.parentMenuId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightCode != null" >
+        RIGHT_CODE = #{record.rightCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuName != null" >
+        MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuUrl != null" >
+        MENU_URL = #{record.menuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuSort != null" >
+        MENU_SORT = #{record.menuSort,jdbcType=DECIMAL},
+      </if>
+      <if test="record.menuCode != null" >
+        MENU_CODE = #{record.menuCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.targetAttr != null" >
+        TARGET_ATTR = #{record.targetAttr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authkeyTag != null" >
+        AUTHKEY_TAG = #{record.authkeyTag,jdbcType=CHAR},
+      </if>
+      <if test="record.projectCode != null" >
+        PROJECT_CODE = #{record.projectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectType != null" >
+        PROJECT_TYPE = #{record.projectType,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update SYS_P_MENU
+    set MENU_ID = #{record.menuId,jdbcType=VARCHAR},
+      PARENT_MENU_ID = #{record.parentMenuId,jdbcType=VARCHAR},
+      RIGHT_CODE = #{record.rightCode,jdbcType=VARCHAR},
+      MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      MENU_URL = #{record.menuUrl,jdbcType=VARCHAR},
+      MENU_SORT = #{record.menuSort,jdbcType=DECIMAL},
+      MENU_CODE = #{record.menuCode,jdbcType=VARCHAR},
+      TARGET_ATTR = #{record.targetAttr,jdbcType=VARCHAR},
+      AUTHKEY_TAG = #{record.authkeyTag,jdbcType=CHAR},
+      PROJECT_CODE = #{record.projectCode,jdbcType=VARCHAR},
+      PROJECT_TYPE = #{record.projectType,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

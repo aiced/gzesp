@@ -32,11 +32,11 @@
 		  <li class="list-group-item">
 		  	<h3>已选手机:<small>${selectedPhone}</small></h3>
 		  </li>
-		  <li class="list-group-item  info-li info-li-on">
+		  <li class="list-group-item  info-li info-li-on" onclick="alert('123')">
 		  	<b class="list-arr"></b>
 			  <h3>选择合约</br><small>请根据您的月消费，选择一个合适的合约计划</small></h3>
 		  </li>
-		  <li class="list-group-item">
+		  <li class="list-group-item" onclick="alert('567')">
 		  	<h3>选择号码</br><small>请选择一个入网号码，如果您选择的是靓号，需要预存靓号预存款</small></h3>
 		  </li>
 		</ul>
@@ -53,17 +53,10 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/newNumberJoin.js?v=${resVer}"></script>
     <script>
-		function nextPage() {
-			var parms = {'name':'leoxu', 'age':'1' };
-			
-			 $.commonFormSubmit({  
-     	        action : '${base}/order/selectContract', 
-				data: parms,
-     	        success : function(rtdata, status) { 
-     	        }  
-     	    });  
-		}
+    
+    	
 	</script>
   </body>
 </html>

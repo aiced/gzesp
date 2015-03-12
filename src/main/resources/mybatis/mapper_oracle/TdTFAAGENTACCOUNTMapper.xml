@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdTFAAGENTACCOUNTMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdTFAAGENTACCOUNT" >
+    <id column="AGENT_ID" property="agentId" jdbcType="DECIMAL" />
+    <result column="TOTAL_BALANCE" property="totalBalance" jdbcType="DECIMAL" />
+    <result column="AVAILABLE_BALANCE" property="availableBalance" jdbcType="DECIMAL" />
+    <result column="FREEZE_MONEY" property="freezeMoney" jdbcType="DECIMAL" />
+    <result column="REFUND_FREEZE_MONEY" property="refundFreezeMoney" jdbcType="DECIMAL" />
+    <result column="CREDIT_LIMIT" property="creditLimit" jdbcType="DECIMAL" />
+    <result column="USED_LIMIT" property="usedLimit" jdbcType="DECIMAL" />
+    <result column="PAYMENT_CODE" property="paymentCode" jdbcType="VARCHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+    <result column="ADD_DATE" property="addDate" jdbcType="TIMESTAMP" />
+    <result column="ACCOUNT_NATURE" property="accountNature" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AGENT_ID, TOTAL_BALANCE, AVAILABLE_BALANCE, FREEZE_MONEY, REFUND_FREEZE_MONEY, CREDIT_LIMIT, 
+    USED_LIMIT, PAYMENT_CODE, SALT, ADD_DATE, ACCOUNT_NATURE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from TF_A_AGENT_ACCOUNT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from TF_A_AGENT_ACCOUNT
+    where AGENT_ID = #{agentId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from TF_A_AGENT_ACCOUNT
+    where AGENT_ID = #{agentId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from TF_A_AGENT_ACCOUNT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdTFAAGENTACCOUNT" >
+    insert into TF_A_AGENT_ACCOUNT (AGENT_ID, TOTAL_BALANCE, AVAILABLE_BALANCE, 
+      FREEZE_MONEY, REFUND_FREEZE_MONEY, CREDIT_LIMIT, 
+      USED_LIMIT, PAYMENT_CODE, SALT, 
+      ADD_DATE, ACCOUNT_NATURE)
+    values (#{agentId,jdbcType=DECIMAL}, #{totalBalance,jdbcType=DECIMAL}, #{availableBalance,jdbcType=DECIMAL}, 
+      #{freezeMoney,jdbcType=DECIMAL}, #{refundFreezeMoney,jdbcType=DECIMAL}, #{creditLimit,jdbcType=DECIMAL}, 
+      #{usedLimit,jdbcType=DECIMAL}, #{paymentCode,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, 
+      #{addDate,jdbcType=TIMESTAMP}, #{accountNature,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdTFAAGENTACCOUNT" >
+    insert into TF_A_AGENT_ACCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agentId != null" >
+        AGENT_ID,
+      </if>
+      <if test="totalBalance != null" >
+        TOTAL_BALANCE,
+      </if>
+      <if test="availableBalance != null" >
+        AVAILABLE_BALANCE,
+      </if>
+      <if test="freezeMoney != null" >
+        FREEZE_MONEY,
+      </if>
+      <if test="refundFreezeMoney != null" >
+        REFUND_FREEZE_MONEY,
+      </if>
+      <if test="creditLimit != null" >
+        CREDIT_LIMIT,
+      </if>
+      <if test="usedLimit != null" >
+        USED_LIMIT,
+      </if>
+      <if test="paymentCode != null" >
+        PAYMENT_CODE,
+      </if>
+      <if test="salt != null" >
+        SALT,
+      </if>
+      <if test="addDate != null" >
+        ADD_DATE,
+      </if>
+      <if test="accountNature != null" >
+        ACCOUNT_NATURE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agentId != null" >
+        #{agentId,jdbcType=DECIMAL},
+      </if>
+      <if test="totalBalance != null" >
+        #{totalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="availableBalance != null" >
+        #{availableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeMoney != null" >
+        #{freezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundFreezeMoney != null" >
+        #{refundFreezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimit != null" >
+        #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="usedLimit != null" >
+        #{usedLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentCode != null" >
+        #{paymentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="addDate != null" >
+        #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountNature != null" >
+        #{accountNature,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from TF_A_AGENT_ACCOUNT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update TF_A_AGENT_ACCOUNT
+    <set >
+      <if test="record.agentId != null" >
+        AGENT_ID = #{record.agentId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalBalance != null" >
+        TOTAL_BALANCE = #{record.totalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.availableBalance != null" >
+        AVAILABLE_BALANCE = #{record.availableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.freezeMoney != null" >
+        FREEZE_MONEY = #{record.freezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundFreezeMoney != null" >
+        REFUND_FREEZE_MONEY = #{record.refundFreezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.creditLimit != null" >
+        CREDIT_LIMIT = #{record.creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.usedLimit != null" >
+        USED_LIMIT = #{record.usedLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="record.paymentCode != null" >
+        PAYMENT_CODE = #{record.paymentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salt != null" >
+        SALT = #{record.salt,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addDate != null" >
+        ADD_DATE = #{record.addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.accountNature != null" >
+        ACCOUNT_NATURE = #{record.accountNature,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update TF_A_AGENT_ACCOUNT
+    set AGENT_ID = #{record.agentId,jdbcType=DECIMAL},
+      TOTAL_BALANCE = #{record.totalBalance,jdbcType=DECIMAL},
+      AVAILABLE_BALANCE = #{record.availableBalance,jdbcType=DECIMAL},
+      FREEZE_MONEY = #{record.freezeMoney,jdbcType=DECIMAL},
+      REFUND_FREEZE_MONEY = #{record.refundFreezeMoney,jdbcType=DECIMAL},
+      CREDIT_LIMIT = #{record.creditLimit,jdbcType=DECIMAL},
+      USED_LIMIT = #{record.usedLimit,jdbcType=DECIMAL},
+      PAYMENT_CODE = #{record.paymentCode,jdbcType=VARCHAR},
+      SALT = #{record.salt,jdbcType=VARCHAR},
+      ADD_DATE = #{record.addDate,jdbcType=TIMESTAMP},
+      ACCOUNT_NATURE = #{record.accountNature,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdTFAAGENTACCOUNT" >
+    update TF_A_AGENT_ACCOUNT
+    <set >
+      <if test="totalBalance != null" >
+        TOTAL_BALANCE = #{totalBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="availableBalance != null" >
+        AVAILABLE_BALANCE = #{availableBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="freezeMoney != null" >
+        FREEZE_MONEY = #{freezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="refundFreezeMoney != null" >
+        REFUND_FREEZE_MONEY = #{refundFreezeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="creditLimit != null" >
+        CREDIT_LIMIT = #{creditLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="usedLimit != null" >
+        USED_LIMIT = #{usedLimit,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentCode != null" >
+        PAYMENT_CODE = #{paymentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null" >
+        SALT = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="addDate != null" >
+        ADD_DATE = #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountNature != null" >
+        ACCOUNT_NATURE = #{accountNature,jdbcType=CHAR},
+      </if>
+    </set>
+    where AGENT_ID = #{agentId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdTFAAGENTACCOUNT" >
+    update TF_A_AGENT_ACCOUNT
+    set TOTAL_BALANCE = #{totalBalance,jdbcType=DECIMAL},
+      AVAILABLE_BALANCE = #{availableBalance,jdbcType=DECIMAL},
+      FREEZE_MONEY = #{freezeMoney,jdbcType=DECIMAL},
+      REFUND_FREEZE_MONEY = #{refundFreezeMoney,jdbcType=DECIMAL},
+      CREDIT_LIMIT = #{creditLimit,jdbcType=DECIMAL},
+      USED_LIMIT = #{usedLimit,jdbcType=DECIMAL},
+      PAYMENT_CODE = #{paymentCode,jdbcType=VARCHAR},
+      SALT = #{salt,jdbcType=VARCHAR},
+      ADD_DATE = #{addDate,jdbcType=TIMESTAMP},
+      ACCOUNT_NATURE = #{accountNature,jdbcType=CHAR}
+    where AGENT_ID = #{agentId,jdbcType=DECIMAL}
+  </update>
+</mapper>

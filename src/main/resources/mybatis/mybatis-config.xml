@@ -32,8 +32,9 @@
 
     <!-- SQL映射文件 -->
     <mappers>
-    	<mapper resource="mybatis/mapper_mysql/common_SqlMap.xml" />
-    	<mapper resource="mybatis/mapper_mysql/sqlMap_WeShopDao.xml" /> 	 	 		
+    	<mapper resource="mybatis/mapper_oracle/common_SqlMap.xml" />
+    	<mapper resource="mybatis/mapper_oracle/TdAurDAUTHINFOMapper.xml" /> 	 	 		
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDBASEMapper.xml" /> 	 	 		
     </mappers>
     
 </configuration>

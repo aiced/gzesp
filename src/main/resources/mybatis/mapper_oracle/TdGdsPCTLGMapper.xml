@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdGdsPCTLGMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdGdsPCTLG" >
+    <result column="GOODS_CTLG_CODE" property="goodsCtlgCode" jdbcType="DECIMAL" />
+    <result column="GOODS_CTLG_NAME" property="goodsCtlgName" jdbcType="VARCHAR" />
+    <result column="GOODS_CTLG_EXPLAIN" property="goodsCtlgExplain" jdbcType="VARCHAR" />
+    <result column="PARENT_CTLG_CODE" property="parentCtlgCode" jdbcType="DECIMAL" />
+    <result column="CTLG_ATTR_TAG" property="ctlgAttrTag" jdbcType="CHAR" />
+    <result column="REDIRECT_CODE" property="redirectCode" jdbcType="VARCHAR" />
+    <result column="SHOW_ORDER" property="showOrder" jdbcType="DECIMAL" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    GOODS_CTLG_CODE, GOODS_CTLG_NAME, GOODS_CTLG_EXPLAIN, PARENT_CTLG_CODE, CTLG_ATTR_TAG, 
+    REDIRECT_CODE, SHOW_ORDER, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from GDS_P_CTLG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from GDS_P_CTLG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdGdsPCTLG" >
+    insert into GDS_P_CTLG (GOODS_CTLG_CODE, GOODS_CTLG_NAME, GOODS_CTLG_EXPLAIN, 
+      PARENT_CTLG_CODE, CTLG_ATTR_TAG, REDIRECT_CODE, 
+      SHOW_ORDER, VALUES1, VALUES2
+      )
+    values (#{goodsCtlgCode,jdbcType=DECIMAL}, #{goodsCtlgName,jdbcType=VARCHAR}, #{goodsCtlgExplain,jdbcType=VARCHAR}, 
+      #{parentCtlgCode,jdbcType=DECIMAL}, #{ctlgAttrTag,jdbcType=CHAR}, #{redirectCode,jdbcType=VARCHAR}, 
+      #{showOrder,jdbcType=DECIMAL}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdGdsPCTLG" >
+    insert into GDS_P_CTLG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsCtlgCode != null" >
+        GOODS_CTLG_CODE,
+      </if>
+      <if test="goodsCtlgName != null" >
+        GOODS_CTLG_NAME,
+      </if>
+      <if test="goodsCtlgExplain != null" >
+        GOODS_CTLG_EXPLAIN,
+      </if>
+      <if test="parentCtlgCode != null" >
+        PARENT_CTLG_CODE,
+      </if>
+      <if test="ctlgAttrTag != null" >
+        CTLG_ATTR_TAG,
+      </if>
+      <if test="redirectCode != null" >
+        REDIRECT_CODE,
+      </if>
+      <if test="showOrder != null" >
+        SHOW_ORDER,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsCtlgCode != null" >
+        #{goodsCtlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsCtlgName != null" >
+        #{goodsCtlgName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsCtlgExplain != null" >
+        #{goodsCtlgExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCtlgCode != null" >
+        #{parentCtlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="ctlgAttrTag != null" >
+        #{ctlgAttrTag,jdbcType=CHAR},
+      </if>
+      <if test="redirectCode != null" >
+        #{redirectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="showOrder != null" >
+        #{showOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from GDS_P_CTLG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update GDS_P_CTLG
+    <set >
+      <if test="record.goodsCtlgCode != null" >
+        GOODS_CTLG_CODE = #{record.goodsCtlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsCtlgName != null" >
+        GOODS_CTLG_NAME = #{record.goodsCtlgName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsCtlgExplain != null" >
+        GOODS_CTLG_EXPLAIN = #{record.goodsCtlgExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentCtlgCode != null" >
+        PARENT_CTLG_CODE = #{record.parentCtlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ctlgAttrTag != null" >
+        CTLG_ATTR_TAG = #{record.ctlgAttrTag,jdbcType=CHAR},
+      </if>
+      <if test="record.redirectCode != null" >
+        REDIRECT_CODE = #{record.redirectCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showOrder != null" >
+        SHOW_ORDER = #{record.showOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update GDS_P_CTLG
+    set GOODS_CTLG_CODE = #{record.goodsCtlgCode,jdbcType=DECIMAL},
+      GOODS_CTLG_NAME = #{record.goodsCtlgName,jdbcType=VARCHAR},
+      GOODS_CTLG_EXPLAIN = #{record.goodsCtlgExplain,jdbcType=VARCHAR},
+      PARENT_CTLG_CODE = #{record.parentCtlgCode,jdbcType=DECIMAL},
+      CTLG_ATTR_TAG = #{record.ctlgAttrTag,jdbcType=CHAR},
+      REDIRECT_CODE = #{record.redirectCode,jdbcType=VARCHAR},
+      SHOW_ORDER = #{record.showOrder,jdbcType=DECIMAL},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdGdsPATTRTYPEMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdGdsPATTRTYPE" >
+    <result column="ATTR_CODE" property="attrCode" jdbcType="CHAR" />
+    <result column="ATTR_NAME" property="attrName" jdbcType="VARCHAR" />
+    <result column="RESTYPE_CODE" property="restypeCode" jdbcType="CHAR" />
+    <result column="ATTR_DESC" property="attrDesc" jdbcType="VARCHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ATTR_CODE, ATTR_NAME, RESTYPE_CODE, ATTR_DESC, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from GDS_P_ATTRTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from GDS_P_ATTRTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdGdsPATTRTYPE" >
+    insert into GDS_P_ATTRTYPE (ATTR_CODE, ATTR_NAME, RESTYPE_CODE, 
+      ATTR_DESC, VALUES1, VALUES2
+      )
+    values (#{attrCode,jdbcType=CHAR}, #{attrName,jdbcType=VARCHAR}, #{restypeCode,jdbcType=CHAR}, 
+      #{attrDesc,jdbcType=VARCHAR}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdGdsPATTRTYPE" >
+    insert into GDS_P_ATTRTYPE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attrCode != null" >
+        ATTR_CODE,
+      </if>
+      <if test="attrName != null" >
+        ATTR_NAME,
+      </if>
+      <if test="restypeCode != null" >
+        RESTYPE_CODE,
+      </if>
+      <if test="attrDesc != null" >
+        ATTR_DESC,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attrCode != null" >
+        #{attrCode,jdbcType=CHAR},
+      </if>
+      <if test="attrName != null" >
+        #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="restypeCode != null" >
+        #{restypeCode,jdbcType=CHAR},
+      </if>
+      <if test="attrDesc != null" >
+        #{attrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from GDS_P_ATTRTYPE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update GDS_P_ATTRTYPE
+    <set >
+      <if test="record.attrCode != null" >
+        ATTR_CODE = #{record.attrCode,jdbcType=CHAR},
+      </if>
+      <if test="record.attrName != null" >
+        ATTR_NAME = #{record.attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.restypeCode != null" >
+        RESTYPE_CODE = #{record.restypeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.attrDesc != null" >
+        ATTR_DESC = #{record.attrDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update GDS_P_ATTRTYPE
+    set ATTR_CODE = #{record.attrCode,jdbcType=CHAR},
+      ATTR_NAME = #{record.attrName,jdbcType=VARCHAR},
+      RESTYPE_CODE = #{record.restypeCode,jdbcType=CHAR},
+      ATTR_DESC = #{record.attrDesc,jdbcType=VARCHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

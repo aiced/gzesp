@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDPAYLOGMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="PAY_LOGID" property="payLogid" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
+    <result column="PAY_MODE" property="payMode" jdbcType="VARCHAR" />
+    <result column="PAY_ASK_TIME" property="payAskTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_COMPLETE_TIME" property="payCompleteTime" jdbcType="TIMESTAMP" />
+    <result column="LOCAL_COMPLETE_TIME" property="localCompleteTime" jdbcType="TIMESTAMP" />
+    <result column="CURRENCY_TYPE" property="currencyType" jdbcType="CHAR" />
+    <result column="PAY_MONEY" property="payMoney" jdbcType="DECIMAL" />
+    <result column="PAY_STATE" property="payState" jdbcType="CHAR" />
+    <result column="PAY_REMARK" property="payRemark" jdbcType="VARCHAR" />
+    <result column="HALT_TAG" property="haltTag" jdbcType="CHAR" />
+    <result column="HALT_TIME" property="haltTime" jdbcType="TIMESTAMP" />
+    <result column="REFUND_TAG" property="refundTag" jdbcType="CHAR" />
+    <result column="REFUND_TIME" property="refundTime" jdbcType="TIMESTAMP" />
+    <result column="REFUND_LOGID" property="refundLogid" jdbcType="DECIMAL" />
+    <result column="UDP_ORDER" property="udpOrder" jdbcType="VARCHAR" />
+    <result column="PAY_ORG_CODE" property="payOrgCode" jdbcType="CHAR" />
+    <result column="PAY_ORG_LOGID" property="payOrgLogid" jdbcType="VARCHAR" />
+    <result column="PAY_CHNL_CODE" property="payChnlCode" jdbcType="VARCHAR" />
+    <result column="PAY_CHNL_ORDER" property="payChnlOrder" jdbcType="VARCHAR" />
+    <result column="PAY_ACUNT_NO" property="payAcuntNo" jdbcType="VARCHAR" />
+    <result column="PAY_ACUNT_NAME" property="payAcuntName" jdbcType="VARCHAR" />
+    <result column="NOTIFY_TYPE" property="notifyType" jdbcType="CHAR" />
+    <result column="SIGN_HMAC" property="signHmac" jdbcType="VARCHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, PAY_LOGID, PARTITION_ID, PAY_TYPE, PAY_MODE, PAY_ASK_TIME, PAY_COMPLETE_TIME, 
+    LOCAL_COMPLETE_TIME, CURRENCY_TYPE, PAY_MONEY, PAY_STATE, PAY_REMARK, HALT_TAG, HALT_TIME, 
+    REFUND_TAG, REFUND_TIME, REFUND_LOGID, UDP_ORDER, PAY_ORG_CODE, PAY_ORG_LOGID, PAY_CHNL_CODE, 
+    PAY_CHNL_ORDER, PAY_ACUNT_NO, PAY_ACUNT_NAME, NOTIFY_TYPE, SIGN_HMAC, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_D_PAYLOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_D_PAYLOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
+    insert into ORD_D_PAYLOG (ORDER_ID, PAY_LOGID, PARTITION_ID, 
+      PAY_TYPE, PAY_MODE, PAY_ASK_TIME, 
+      PAY_COMPLETE_TIME, LOCAL_COMPLETE_TIME, 
+      CURRENCY_TYPE, PAY_MONEY, PAY_STATE, 
+      PAY_REMARK, HALT_TAG, HALT_TIME, 
+      REFUND_TAG, REFUND_TIME, REFUND_LOGID, 
+      UDP_ORDER, PAY_ORG_CODE, PAY_ORG_LOGID, 
+      PAY_CHNL_CODE, PAY_CHNL_ORDER, PAY_ACUNT_NO, 
+      PAY_ACUNT_NAME, NOTIFY_TYPE, SIGN_HMAC, 
+      VALUES1, VALUES2)
+    values (#{orderId,jdbcType=DECIMAL}, #{payLogid,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, 
+      #{payType,jdbcType=CHAR}, #{payMode,jdbcType=VARCHAR}, #{payAskTime,jdbcType=TIMESTAMP}, 
+      #{payCompleteTime,jdbcType=TIMESTAMP}, #{localCompleteTime,jdbcType=TIMESTAMP}, 
+      #{currencyType,jdbcType=CHAR}, #{payMoney,jdbcType=DECIMAL}, #{payState,jdbcType=CHAR}, 
+      #{payRemark,jdbcType=VARCHAR}, #{haltTag,jdbcType=CHAR}, #{haltTime,jdbcType=TIMESTAMP}, 
+      #{refundTag,jdbcType=CHAR}, #{refundTime,jdbcType=TIMESTAMP}, #{refundLogid,jdbcType=DECIMAL}, 
+      #{udpOrder,jdbcType=VARCHAR}, #{payOrgCode,jdbcType=CHAR}, #{payOrgLogid,jdbcType=VARCHAR}, 
+      #{payChnlCode,jdbcType=VARCHAR}, #{payChnlOrder,jdbcType=VARCHAR}, #{payAcuntNo,jdbcType=VARCHAR}, 
+      #{payAcuntName,jdbcType=VARCHAR}, #{notifyType,jdbcType=CHAR}, #{signHmac,jdbcType=VARCHAR}, 
+      #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
+    insert into ORD_D_PAYLOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="payLogid != null" >
+        PAY_LOGID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="payMode != null" >
+        PAY_MODE,
+      </if>
+      <if test="payAskTime != null" >
+        PAY_ASK_TIME,
+      </if>
+      <if test="payCompleteTime != null" >
+        PAY_COMPLETE_TIME,
+      </if>
+      <if test="localCompleteTime != null" >
+        LOCAL_COMPLETE_TIME,
+      </if>
+      <if test="currencyType != null" >
+        CURRENCY_TYPE,
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY,
+      </if>
+      <if test="payState != null" >
+        PAY_STATE,
+      </if>
+      <if test="payRemark != null" >
+        PAY_REMARK,
+      </if>
+      <if test="haltTag != null" >
+        HALT_TAG,
+      </if>
+      <if test="haltTime != null" >
+        HALT_TIME,
+      </if>
+      <if test="refundTag != null" >
+        REFUND_TAG,
+      </if>
+      <if test="refundTime != null" >
+        REFUND_TIME,
+      </if>
+      <if test="refundLogid != null" >
+        REFUND_LOGID,
+      </if>
+      <if test="udpOrder != null" >
+        UDP_ORDER,
+      </if>
+      <if test="payOrgCode != null" >
+        PAY_ORG_CODE,
+      </if>
+      <if test="payOrgLogid != null" >
+        PAY_ORG_LOGID,
+      </if>
+      <if test="payChnlCode != null" >
+        PAY_CHNL_CODE,
+      </if>
+      <if test="payChnlOrder != null" >
+        PAY_CHNL_ORDER,
+      </if>
+      <if test="payAcuntNo != null" >
+        PAY_ACUNT_NO,
+      </if>
+      <if test="payAcuntName != null" >
+        PAY_ACUNT_NAME,
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE,
+      </if>
+      <if test="signHmac != null" >
+        SIGN_HMAC,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="payLogid != null" >
+        #{payLogid,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="payMode != null" >
+        #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="payAskTime != null" >
+        #{payAskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCompleteTime != null" >
+        #{payCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="localCompleteTime != null" >
+        #{localCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currencyType != null" >
+        #{currencyType,jdbcType=CHAR},
+      </if>
+      <if test="payMoney != null" >
+        #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=CHAR},
+      </if>
+      <if test="payRemark != null" >
+        #{payRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="haltTag != null" >
+        #{haltTag,jdbcType=CHAR},
+      </if>
+      <if test="haltTime != null" >
+        #{haltTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTag != null" >
+        #{refundTag,jdbcType=CHAR},
+      </if>
+      <if test="refundTime != null" >
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundLogid != null" >
+        #{refundLogid,jdbcType=DECIMAL},
+      </if>
+      <if test="udpOrder != null" >
+        #{udpOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrgCode != null" >
+        #{payOrgCode,jdbcType=CHAR},
+      </if>
+      <if test="payOrgLogid != null" >
+        #{payOrgLogid,jdbcType=VARCHAR},
+      </if>
+      <if test="payChnlCode != null" >
+        #{payChnlCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payChnlOrder != null" >
+        #{payChnlOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="payAcuntNo != null" >
+        #{payAcuntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payAcuntName != null" >
+        #{payAcuntName,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null" >
+        #{notifyType,jdbcType=CHAR},
+      </if>
+      <if test="signHmac != null" >
+        #{signHmac,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_D_PAYLOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_D_PAYLOG
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payLogid != null" >
+        PAY_LOGID = #{record.payLogid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payType != null" >
+        PAY_TYPE = #{record.payType,jdbcType=CHAR},
+      </if>
+      <if test="record.payMode != null" >
+        PAY_MODE = #{record.payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payAskTime != null" >
+        PAY_ASK_TIME = #{record.payAskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payCompleteTime != null" >
+        PAY_COMPLETE_TIME = #{record.payCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.localCompleteTime != null" >
+        LOCAL_COMPLETE_TIME = #{record.localCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.currencyType != null" >
+        CURRENCY_TYPE = #{record.currencyType,jdbcType=CHAR},
+      </if>
+      <if test="record.payMoney != null" >
+        PAY_MONEY = #{record.payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payState != null" >
+        PAY_STATE = #{record.payState,jdbcType=CHAR},
+      </if>
+      <if test="record.payRemark != null" >
+        PAY_REMARK = #{record.payRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.haltTag != null" >
+        HALT_TAG = #{record.haltTag,jdbcType=CHAR},
+      </if>
+      <if test="record.haltTime != null" >
+        HALT_TIME = #{record.haltTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundTag != null" >
+        REFUND_TAG = #{record.refundTag,jdbcType=CHAR},
+      </if>
+      <if test="record.refundTime != null" >
+        REFUND_TIME = #{record.refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundLogid != null" >
+        REFUND_LOGID = #{record.refundLogid,jdbcType=DECIMAL},
+      </if>
+      <if test="record.udpOrder != null" >
+        UDP_ORDER = #{record.udpOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payOrgCode != null" >
+        PAY_ORG_CODE = #{record.payOrgCode,jdbcType=CHAR},
+      </if>
+      <if test="record.payOrgLogid != null" >
+        PAY_ORG_LOGID = #{record.payOrgLogid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payChnlCode != null" >
+        PAY_CHNL_CODE = #{record.payChnlCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payChnlOrder != null" >
+        PAY_CHNL_ORDER = #{record.payChnlOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payAcuntNo != null" >
+        PAY_ACUNT_NO = #{record.payAcuntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payAcuntName != null" >
+        PAY_ACUNT_NAME = #{record.payAcuntName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyType != null" >
+        NOTIFY_TYPE = #{record.notifyType,jdbcType=CHAR},
+      </if>
+      <if test="record.signHmac != null" >
+        SIGN_HMAC = #{record.signHmac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_D_PAYLOG
+    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PAY_LOGID = #{record.payLogid,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      PAY_TYPE = #{record.payType,jdbcType=CHAR},
+      PAY_MODE = #{record.payMode,jdbcType=VARCHAR},
+      PAY_ASK_TIME = #{record.payAskTime,jdbcType=TIMESTAMP},
+      PAY_COMPLETE_TIME = #{record.payCompleteTime,jdbcType=TIMESTAMP},
+      LOCAL_COMPLETE_TIME = #{record.localCompleteTime,jdbcType=TIMESTAMP},
+      CURRENCY_TYPE = #{record.currencyType,jdbcType=CHAR},
+      PAY_MONEY = #{record.payMoney,jdbcType=DECIMAL},
+      PAY_STATE = #{record.payState,jdbcType=CHAR},
+      PAY_REMARK = #{record.payRemark,jdbcType=VARCHAR},
+      HALT_TAG = #{record.haltTag,jdbcType=CHAR},
+      HALT_TIME = #{record.haltTime,jdbcType=TIMESTAMP},
+      REFUND_TAG = #{record.refundTag,jdbcType=CHAR},
+      REFUND_TIME = #{record.refundTime,jdbcType=TIMESTAMP},
+      REFUND_LOGID = #{record.refundLogid,jdbcType=DECIMAL},
+      UDP_ORDER = #{record.udpOrder,jdbcType=VARCHAR},
+      PAY_ORG_CODE = #{record.payOrgCode,jdbcType=CHAR},
+      PAY_ORG_LOGID = #{record.payOrgLogid,jdbcType=VARCHAR},
+      PAY_CHNL_CODE = #{record.payChnlCode,jdbcType=VARCHAR},
+      PAY_CHNL_ORDER = #{record.payChnlOrder,jdbcType=VARCHAR},
+      PAY_ACUNT_NO = #{record.payAcuntNo,jdbcType=VARCHAR},
+      PAY_ACUNT_NAME = #{record.payAcuntName,jdbcType=VARCHAR},
+      NOTIFY_TYPE = #{record.notifyType,jdbcType=CHAR},
+      SIGN_HMAC = #{record.signHmac,jdbcType=VARCHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

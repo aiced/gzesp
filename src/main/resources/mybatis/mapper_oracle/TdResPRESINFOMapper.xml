@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdResPRESINFOMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdResPRESINFO" >
+    <result column="RES_ID" property="resId" jdbcType="DECIMAL" />
+    <result column="RES_NAME" property="resName" jdbcType="VARCHAR" />
+    <result column="RESTYPE_CODE" property="restypeCode" jdbcType="CHAR" />
+    <result column="CREATE_STAFF_ID" property="createStaffId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="VERIFY_TAG" property="verifyTag" jdbcType="CHAR" />
+    <result column="VERIFY_STAFF_ID" property="verifyStaffId" jdbcType="VARCHAR" />
+    <result column="VERIFY_TIME" property="verifyTime" jdbcType="TIMESTAMP" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RES_ID, RES_NAME, RESTYPE_CODE, CREATE_STAFF_ID, CREATE_TIME, VERIFY_TAG, VERIFY_STAFF_ID, 
+    VERIFY_TIME, VALUES1, VALUES2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from RES_P_RESINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from RES_P_RESINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdResPRESINFO" >
+    insert into RES_P_RESINFO (RES_ID, RES_NAME, RESTYPE_CODE, 
+      CREATE_STAFF_ID, CREATE_TIME, VERIFY_TAG, 
+      VERIFY_STAFF_ID, VERIFY_TIME, VALUES1, 
+      VALUES2)
+    values (#{resId,jdbcType=DECIMAL}, #{resName,jdbcType=VARCHAR}, #{restypeCode,jdbcType=CHAR}, 
+      #{createStaffId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{verifyTag,jdbcType=CHAR}, 
+      #{verifyStaffId,jdbcType=VARCHAR}, #{verifyTime,jdbcType=TIMESTAMP}, #{values1,jdbcType=VARCHAR}, 
+      #{values2,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdResPRESINFO" >
+    insert into RES_P_RESINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        RES_ID,
+      </if>
+      <if test="resName != null" >
+        RES_NAME,
+      </if>
+      <if test="restypeCode != null" >
+        RESTYPE_CODE,
+      </if>
+      <if test="createStaffId != null" >
+        CREATE_STAFF_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="verifyTag != null" >
+        VERIFY_TAG,
+      </if>
+      <if test="verifyStaffId != null" >
+        VERIFY_STAFF_ID,
+      </if>
+      <if test="verifyTime != null" >
+        VERIFY_TIME,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="resId != null" >
+        #{resId,jdbcType=DECIMAL},
+      </if>
+      <if test="resName != null" >
+        #{resName,jdbcType=VARCHAR},
+      </if>
+      <if test="restypeCode != null" >
+        #{restypeCode,jdbcType=CHAR},
+      </if>
+      <if test="createStaffId != null" >
+        #{createStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="verifyTag != null" >
+        #{verifyTag,jdbcType=CHAR},
+      </if>
+      <if test="verifyStaffId != null" >
+        #{verifyStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyTime != null" >
+        #{verifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from RES_P_RESINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update RES_P_RESINFO
+    <set >
+      <if test="record.resId != null" >
+        RES_ID = #{record.resId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.resName != null" >
+        RES_NAME = #{record.resName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.restypeCode != null" >
+        RESTYPE_CODE = #{record.restypeCode,jdbcType=CHAR},
+      </if>
+      <if test="record.createStaffId != null" >
+        CREATE_STAFF_ID = #{record.createStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.verifyTag != null" >
+        VERIFY_TAG = #{record.verifyTag,jdbcType=CHAR},
+      </if>
+      <if test="record.verifyStaffId != null" >
+        VERIFY_STAFF_ID = #{record.verifyStaffId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyTime != null" >
+        VERIFY_TIME = #{record.verifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update RES_P_RESINFO
+    set RES_ID = #{record.resId,jdbcType=DECIMAL},
+      RES_NAME = #{record.resName,jdbcType=VARCHAR},
+      RESTYPE_CODE = #{record.restypeCode,jdbcType=CHAR},
+      CREATE_STAFF_ID = #{record.createStaffId,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      VERIFY_TAG = #{record.verifyTag,jdbcType=CHAR},
+      VERIFY_STAFF_ID = #{record.verifyStaffId,jdbcType=VARCHAR},
+      VERIFY_TIME = #{record.verifyTime,jdbcType=TIMESTAMP},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

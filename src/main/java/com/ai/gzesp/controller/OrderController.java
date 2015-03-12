@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,15 +14,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
     
-    @Autowired
+    @Resource
     private WeShopService weShopService;
+    
+    @Resource 
+    TdOrdDBASEDao tdOrdDBASEDao;
     
     @RequestMapping("/newNumberJoin")
     public ModelAndView newNumberJoin(@RequestBody String inputParam){
@@ -35,11 +44,20 @@ public class OrderController {
     
     @RequestMapping(value="/selectContract")
     public ModelAndView selectContract(@RequestBody String inputParams){
-    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
-    	String name = paramsMap.get("name");
+//    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+//    	String name = paramsMap.get("name");
+//    	
+//    	TdOrdDBASE record = new TdOrdDBASE();
+//    	record.setOrderId(123456l);
+//    	record.setCreateTime(DateUtil.getNow());
+//    	tdOrdDBASEDao.insertSelective(record);
+//    
+//    	Criteria example = new Criteria();
+//    	example.createConditon().andEqualTo("ORDER_ID", "123456");
+//    	List<TdOrdDBASE> list = tdOrdDBASEDao.selectByExample(example);
+//    	
+//    	tdOrdDBASEDao.updateByExampleSelective(record, example);
     	
-    
-    
     	
     	List<Map<String, String>> pkgList = new ArrayList();
     	Map pkg = new HashMap();

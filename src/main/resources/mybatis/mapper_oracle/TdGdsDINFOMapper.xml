@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdGdsDINFOMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdGdsDINFO" >
+    <result column="GOODS_ID" property="goodsId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="CTLG_CODE" property="ctlgCode" jdbcType="DECIMAL" />
+    <result column="GOODS_NAME" property="goodsName" jdbcType="VARCHAR" />
+    <result column="VER_NO" property="verNo" jdbcType="DECIMAL" />
+    <result column="MERCHANT_ID" property="merchantId" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_STAFF_ID" property="createStaffId" jdbcType="DECIMAL" />
+    <result column="GOODS_STATE" property="goodsState" jdbcType="CHAR" />
+    <result column="RECOM_TAG" property="recomTag" jdbcType="CHAR" />
+    <result column="PRICE_RULE" property="priceRule" jdbcType="CHAR" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="SIMP_DESC" property="simpDesc" jdbcType="VARCHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ai.gzesp.dao.beans.TdGdsDINFO" extends="BaseResultMap" >
+    <result column="CONTENT" property="content" jdbcType="BLOB" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    GOODS_ID, PARTITION_ID, CTLG_CODE, GOODS_NAME, VER_NO, MERCHANT_ID, CREATE_TIME, 
+    CREATE_STAFF_ID, GOODS_STATE, RECOM_TAG, PRICE_RULE, BEGIN_TIME, END_TIME, SIMP_DESC, 
+    VALUES1, VALUES2
+  </sql>
+  <sql id="Blob_Column_List" >
+    CONTENT
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from GDS_D_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from GDS_D_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from GDS_D_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFO" >
+    insert into GDS_D_INFO (GOODS_ID, PARTITION_ID, CTLG_CODE, 
+      GOODS_NAME, VER_NO, MERCHANT_ID, 
+      CREATE_TIME, CREATE_STAFF_ID, GOODS_STATE, 
+      RECOM_TAG, PRICE_RULE, BEGIN_TIME, 
+      END_TIME, SIMP_DESC, VALUES1, 
+      VALUES2, CONTENT)
+    values (#{goodsId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{ctlgCode,jdbcType=DECIMAL}, 
+      #{goodsName,jdbcType=VARCHAR}, #{verNo,jdbcType=DECIMAL}, #{merchantId,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createStaffId,jdbcType=DECIMAL}, #{goodsState,jdbcType=CHAR}, 
+      #{recomTag,jdbcType=CHAR}, #{priceRule,jdbcType=CHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{simpDesc,jdbcType=VARCHAR}, #{values1,jdbcType=VARCHAR}, 
+      #{values2,jdbcType=VARCHAR}, #{content,jdbcType=BLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFO" >
+    insert into GDS_D_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        GOODS_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="ctlgCode != null" >
+        CTLG_CODE,
+      </if>
+      <if test="goodsName != null" >
+        GOODS_NAME,
+      </if>
+      <if test="verNo != null" >
+        VER_NO,
+      </if>
+      <if test="merchantId != null" >
+        MERCHANT_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createStaffId != null" >
+        CREATE_STAFF_ID,
+      </if>
+      <if test="goodsState != null" >
+        GOODS_STATE,
+      </if>
+      <if test="recomTag != null" >
+        RECOM_TAG,
+      </if>
+      <if test="priceRule != null" >
+        PRICE_RULE,
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="simpDesc != null" >
+        SIMP_DESC,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+      <if test="content != null" >
+        CONTENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="ctlgCode != null" >
+        #{ctlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="verNo != null" >
+        #{verNo,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaffId != null" >
+        #{createStaffId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsState != null" >
+        #{goodsState,jdbcType=CHAR},
+      </if>
+      <if test="recomTag != null" >
+        #{recomTag,jdbcType=CHAR},
+      </if>
+      <if test="priceRule != null" >
+        #{priceRule,jdbcType=CHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="simpDesc != null" >
+        #{simpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=BLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from GDS_D_INFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update GDS_D_INFO
+    <set >
+      <if test="record.goodsId != null" >
+        GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ctlgCode != null" >
+        CTLG_CODE = #{record.ctlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsName != null" >
+        GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verNo != null" >
+        VER_NO = #{record.verNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantId != null" >
+        MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaffId != null" >
+        CREATE_STAFF_ID = #{record.createStaffId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsState != null" >
+        GOODS_STATE = #{record.goodsState,jdbcType=CHAR},
+      </if>
+      <if test="record.recomTag != null" >
+        RECOM_TAG = #{record.recomTag,jdbcType=CHAR},
+      </if>
+      <if test="record.priceRule != null" >
+        PRICE_RULE = #{record.priceRule,jdbcType=CHAR},
+      </if>
+      <if test="record.beginTime != null" >
+        BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.simpDesc != null" >
+        SIMP_DESC = #{record.simpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        CONTENT = #{record.content,jdbcType=BLOB},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update GDS_D_INFO
+    set GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      CTLG_CODE = #{record.ctlgCode,jdbcType=DECIMAL},
+      GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      VER_NO = #{record.verNo,jdbcType=DECIMAL},
+      MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_STAFF_ID = #{record.createStaffId,jdbcType=DECIMAL},
+      GOODS_STATE = #{record.goodsState,jdbcType=CHAR},
+      RECOM_TAG = #{record.recomTag,jdbcType=CHAR},
+      PRICE_RULE = #{record.priceRule,jdbcType=CHAR},
+      BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      SIMP_DESC = #{record.simpDesc,jdbcType=VARCHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      CONTENT = #{record.content,jdbcType=BLOB}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update GDS_D_INFO
+    set GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      CTLG_CODE = #{record.ctlgCode,jdbcType=DECIMAL},
+      GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      VER_NO = #{record.verNo,jdbcType=DECIMAL},
+      MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_STAFF_ID = #{record.createStaffId,jdbcType=DECIMAL},
+      GOODS_STATE = #{record.goodsState,jdbcType=CHAR},
+      RECOM_TAG = #{record.recomTag,jdbcType=CHAR},
+      PRICE_RULE = #{record.priceRule,jdbcType=CHAR},
+      BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      SIMP_DESC = #{record.simpDesc,jdbcType=VARCHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

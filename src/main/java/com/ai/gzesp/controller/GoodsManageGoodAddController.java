@@ -31,33 +31,15 @@ public class GoodsManageGoodAddController {
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String name = paramsMap.get("index");
-    	
-    	List list = new ArrayList();  
-    	Map info = new HashMap();   
-    	Map rspMap = new HashMap();    
 
-    	info.put("num", "1111");   
-    	info.put("amount", "1111");
-    	info.put("time", "2104.5.6");  
-    	list.add(info);    
-    	info = new HashMap();   
-    	info.put("num", "2222");   
-    	info.put("amount", "2222");     
-    	info.put("time", "2104.5.8");    
-    	list.add(info);     	    
+    	List<Map<String, Object>> list = goodsSql.getGoodsList();    	
+    	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", list.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
     	rspMap.put("list", list);  
     	rspMap.put("title", "选择商品"); 
-    	
-    	
-    	
-    	List<Map<String, Object>> list = goodsSql.getGoodsList();
-    	
-    	
-
     	return new ModelAndView("goodsManageGoodAdd.ftl", rspMap);
     	
 //        ModelAndView mav = new ModelAndView("goodsManageGoodAdd.ftl");

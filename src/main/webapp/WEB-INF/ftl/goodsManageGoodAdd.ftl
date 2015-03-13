@@ -134,9 +134,9 @@ table{
 							<a id="itemSelected_${info_index}" style="background-color:white;display:block; width:100%;height:70px;margin-top:15px;margin-bottom:15px" onclick='itemClick(${info_index})'>
          	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－合约特惠</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">苹果（Apple）iPhone 6 16G</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:5288 &nbsp<font color="#F70909">商品佣金:1000</font></p> 
+									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－${info.goodsCtlgName}</p> 
+									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">${info.goodsName}</p> 
+									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:${info.addPrice} &nbsp<font color="#F70909">商品佣金:1000</font></p> 
 								</div>
 							</a>
 					</td>

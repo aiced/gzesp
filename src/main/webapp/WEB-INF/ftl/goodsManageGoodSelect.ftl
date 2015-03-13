@@ -39,7 +39,7 @@
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
 	        	<div id="top_middle">${title}</div>
 	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
-	 </div
+	 </div>
     <div style="width:100%;height:24px ;margin-top:20px;">
 	 <p style="padding-left:20px;width:260px;height:24px ;line-height:24px;display: block;font-size:13px;color:#6A6969;margin-top:20px;">可选择的不超过四个</p>
     <!--添加图片  -->

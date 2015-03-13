@@ -1,11 +1,17 @@
 package com.ai.gzesp.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.StringUtil;
 
 
 @Controller
@@ -22,7 +28,15 @@ public class WeShopRegist2Controller {
         mav.addObject("title", "注册微店");
 //        mav.addObject("phone", "18685292522"); 
 //        mav.addObject("weixin", "1306520198@qq.com"); 
-        
         return mav;
+    }
+    
+    @RequestMapping("/register/checkBankCard")
+    @ResponseBody
+    public Boolean checkBankCard(@RequestBody String strBankCard)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(strBankCard);
+    	String BankCard = paramsMap.get("BankCard");
+    	return CommonUtil.checkBankCard(BankCard);
     }
 }

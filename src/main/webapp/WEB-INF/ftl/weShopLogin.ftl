@@ -47,7 +47,7 @@
 		<div id="dv_clear"></div>
 		<!--top_end-->
         <div class="container">
-            <form class="form-signin">
+            <form class="form-signin" action="../shopManage/weShopHome" method="post">
                 <br/>
                 <br/>
                 <label for="inputMobile" class="sr-only">输入手机号</label>
@@ -77,14 +77,33 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    	<script type="text/javascript">
+    <script type="text/javascript">
+    	//判断输入的是否是手机号
+    	function isPhoneNum(strPhoneNum)
+    	{
+			if(strPhoneNum && /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/.test(strPhoneNum)){
+			    return true;//是手机号
+			} else{
+			    return false; //不是手机号
+			}
+    	}
+    
 		$(document).ready(function(){  
+		
+		
 		   //[登录]按钮点击
 		  $("#btnSubmit").click(function(){  
-		  //在这里操作登录按钮逻辑
-		  	//alert("点击登录");
-		  	///shopManage/weShopHome
-		  	location.href = "../shopManage/weShopHome";
+		  	//在这里操作登录按钮逻辑
+			var bRet=isPhoneNum($("#inputMobile").val());
+			if(!bRet)
+			{
+				alert("手机号格式不对，请重新输入。");
+				return false
+			}
+			else
+			{
+				return true;
+			}
 		  });  
 		});
 	</script>

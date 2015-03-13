@@ -16,7 +16,7 @@ function saveClick(obj) {
     	alert("身份证号不能为空");   	
     	return;
     }
-	alert($("card01").attr("src").length);   	
+	alert($("firstCard").attr("src").length);   	
 
 //    if(card01.attr("src").length==0){
 //    	alert("证件照片不能为空");   	

@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
@@ -21,6 +24,8 @@ public class GoodsManageGoodAddController {
     
     @Autowired
     private WeShopService weShopService;
+    @Resource 
+    GoodsSql goodsSql;
     
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
@@ -46,6 +51,12 @@ public class GoodsManageGoodAddController {
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
     	rspMap.put("list", list);  
     	rspMap.put("title", "选择商品"); 
+    	
+    	
+    	
+    	List<Map<String, Object>> list = goodsSql.getGoodsList();
+    	
+    	
 
     	return new ModelAndView("goodsManageGoodAdd.ftl", rspMap);
     	

@@ -30,7 +30,7 @@
 		<div id="dv_clear"></div>
 		<!--top_end-->
 	    <div class="container">
-	        <form>
+	        <form action="#">
 	            <br>
 	            <br>
 	            <!--输入密码-->
@@ -44,7 +44,7 @@
 	                <input type="password" class="form-control" id="txtrepassword" placeholder="请再次设置登录密码"  required>
 	            </div>
 	            <br/>
-	            <button class="btn btn-warning btn-block " type="submit">确认</button>
+	            <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">确认</button>
 	        </form>
 	    </div> <!-- /container -->
 	</div>
@@ -56,5 +56,54 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
 
+	<script type="text/javascript">
+		//判断输入的是否是手机号
+    	function isPhoneNum(strPhoneNum)
+    	{
+			if(strPhoneNum && /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/.test(strPhoneNum)){
+			    return true;//是手机号
+			} else{
+			    return false; //不是手机号
+			}
+    	}
+    	//校验输入数值是否正确
+		function checkData()
+		{
+		  	if(!$("#txtpassword").val())
+		  	{
+				alert("请设置登录密码");
+				return false;
+		  	}
+		  	if(!$("#txtrepassword").val())
+		  	{
+				alert("请在再次设设置登录密码");
+				return false;
+		  	}
+		  	if($("#txtpassword").val()!=$("#txtrepassword").val())
+		  	{
+		  		alert("两次输入的密码不相同");
+		  		return false;
+		  	}
+			return true;
+		}
+	
+		$(document).ready(function(){  
+		   //[提交]按钮点击
+		  $("#btnSubmit").click(function(){  
+			  //在这里操作提交
+			  if(!checkData())
+			  {
+				  //
+				  return false;
+			  }
+			  else
+			  {
+				  //提交操作
+			  }
+
+		  });
+
+		});
+	</script>
 </body>
 </html>

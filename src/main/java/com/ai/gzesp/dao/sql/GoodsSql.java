@@ -64,4 +64,16 @@ public class GoodsSql {
 		List goodsList = commonDao.queryForList(sb.toString());
 		return goodsList;
 	}
+	
+	public List GetRcdList() {
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("select distinct "
+				+ "t1.GOODS_ID as goodsId"
+				);
+		sb.append(" from GDS_D_ABLE_RCD t1");
+		
+		List rcdList = commonDao.queryForList(sb.toString());
+		return rcdList;
+	}
 }

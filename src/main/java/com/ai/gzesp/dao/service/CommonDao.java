@@ -1,6 +1,7 @@
 package com.ai.gzesp.dao.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -26,6 +27,14 @@ public class CommonDao extends ITableDao {
     
     public List query(String sql, RowMapper mapping) {
     	return jdbcTemplate.query(sql, mapping);
+    }
+    
+    public List<Map<String, Object>> queryForList(String sql) {
+    	return jdbcTemplate.queryForList(sql);
+    }
+    
+    public Map<String, Object> queryForMap(String sql) {
+    	return jdbcTemplate.queryForMap(sql);
     }
     
     public void execute(String sql) {

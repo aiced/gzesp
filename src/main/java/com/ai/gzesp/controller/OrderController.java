@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
+import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
@@ -30,6 +31,9 @@ public class OrderController {
     
     @Resource 
     TdOrdDBASEDao tdOrdDBASEDao;
+    
+    @Resource 
+    GoodsSql goodsSql;
     
     @RequestMapping("/newNumberJoin")
     public ModelAndView newNumberJoin(@RequestBody String inputParam){
@@ -57,6 +61,8 @@ public class OrderController {
 //    	List<TdOrdDBASE> list = tdOrdDBASEDao.selectByExample(example);
 //    	
 //    	tdOrdDBASEDao.updateByExampleSelective(record, example);
+//    	
+//    	List<Map<String, Object>> list = goodsSql.getGoodsList();
     	
     	
     	List<Map<String, String>> pkgList = new ArrayList();

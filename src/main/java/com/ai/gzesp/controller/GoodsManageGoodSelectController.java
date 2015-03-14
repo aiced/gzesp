@@ -34,13 +34,15 @@ public class GoodsManageGoodSelectController {
     	//根据index 检索数据库，加载数据。
     	
     	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
-        Map rspMap = new HashMap();    
+
+    	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
-    	rspMap.put("total", rcdlist.size());     	
+    	rspMap.put("total", rcdlist.size());   
+    	rspMap.put("title", "选择商品"); 
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
     	rspMap.put("rcdlist", rcdlist);  
-    	rspMap.put("title", "选择添加"); 
     	return new ModelAndView("goodsManageGoodSelect.ftl", rspMap);
+
     }
 }

@@ -82,29 +82,43 @@
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script type="text/javascript">
 		$(document).ready(function(){  
-		   //[获取验证码]按钮点击		   
-		  $("#image0").click(function(){  
-		  //在这里操作获取验证码		  
-		  	var parms = {'index':'1'};
+				    <#if (rcdlist?size>=0) > 
+		    var index = ${rcdlist?size};
+		    alert(index);
+		    if(index > 0){
+		    	index = index;
+		    }else{
+		    	index = 0;
+		    }
+		   $("#image0").click(function(){  
+		  //在这里操作获取验证码		
+		  if(index<=0){
+			var parms = {'index':'1'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
-     	    });  
-		  	
+     	    });
+     	    } 		 
 		  }); 
 		  //删除
 		   $("#image00").click(function(){  
-		  //在这里操作获取验证码		  
-		  	alert('111');	  	
+		  //在这里操作获取验证码		
+		   	 <#list rcdlist as info>	
+		   	 	 if(${info_index}<=0){
+		  		  		  	   	alert(${info.goodsId});										   	  
+		  		  }	
+			</#list>
 		  }); 
 		   
 		   $("#image1").click(function(){  
 		  //在这里操作获取验证码
+		  if(index<=1){	  
 		  	var parms = {'index':'2'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
-     	    });  
+     	    }); 
+     	    } 
 		  });  
 		  //删除
 		   $("#image01").click(function(){  
@@ -113,11 +127,13 @@
 		  }); 
 		  $("#second_row_left").click(function(){  
 		  //在这里操作获取验证码
+		 if(index<=2){	  
 		  	var parms = {'index':'3'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
      	    }); 
+     	    }
 		  }); 
 		  //删除
 		   $("#image02").click(function(){  
@@ -127,19 +143,28 @@
 		  
 		  $("#second_row_right").click(function(){  
 		  //在这里操作获取验证码
-		  	var parms = {'index':'2'};
+		 if(index<=3){	  
+		  	var parms = {'index':'4'};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
      	    });  
-		  	
+		  	}
 		  }); 
 		  //删除
 		   $("#image03").click(function(){  
 		  //在这里操作获取验证码		  
 		  	alert('111');	  	
 		  }); 
-		  
+		   	</#if>
+		
+		
+		
+			
+	    <#list rcdlist as info>	
+	    		alert(${info_index});	
+				document.getElementById('image${info_index}').src='${info.photoLinks}';
+		</#list>
 		});
 		
 	</script>
@@ -164,15 +189,6 @@
 			}
 		}
 	</script>
-
-	<script type="text/javascript"> 
-	$(document).ready(function(){ 
-	<#list rcdlist as info>		
-		document.getElementById('image${info_index}').src='${info.photoLinks}';
-	</#list>
-	}); 
-	</script>
-
 
 
 

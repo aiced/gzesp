@@ -118,7 +118,7 @@ table{
 		<table>
 			<tbody>			
 			
-				<#list list as info>			
+				<#list goodsList as info>			
 				<tr style="background-color:red; height:100px;">
 					<td class = "td_first" style="position:relative; height:100px;" >
 							<a style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px" onclick="showSelectedView(${info_index});return false;">

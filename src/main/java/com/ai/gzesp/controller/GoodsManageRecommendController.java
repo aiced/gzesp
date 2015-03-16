@@ -11,9 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.DateUtil;
 
 @Controller
 @RequestMapping("/shopManage")
@@ -21,11 +24,16 @@ public class GoodsManageRecommendController {
     
     @Autowired
     private WeShopService weShopService;
+    
+    @Resource 
+    TdOrdDBASEDao tdOrdDBASEDao;
+    
     @Resource 
     GoodsSql goodsSql;
     
     @RequestMapping("/goodsManageRecommend")
     public ModelAndView goodsManageRecommend(){
+    	
         Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   

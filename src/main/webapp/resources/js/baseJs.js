@@ -170,7 +170,7 @@ function checkBankCard(strBankCard)
 		   data: param,
 		   async: false,
 		   success: function(bRet){
-			   alert(bRet);
+			   //alert(bRet);
 			   if (!bRet) {
 				   alert("银行卡号格式不正确，请重新输入");
 				   bReturn=false;
@@ -212,7 +212,7 @@ function sendMessage(strPhone,btnName) {
     var phone=strPhone;//手机号码  
     m_btnName=btnName;
     //产生验证码  
-    for (var i = 0; i < codeLength; i++) {  
+    for (var i = 0; i < 4; i++) {  
         code += parseInt(Math.random() * 9).toString();  
     }
     //设置button效果，开始计时  

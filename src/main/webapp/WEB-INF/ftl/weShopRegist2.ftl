@@ -54,12 +54,12 @@
 			  //alert(!checkData());
 			if(!checkData())
 			{
-				alert("有错误不可以提交");
+				//alert("有错误不可以提交");
 				return false;
 			}
 			else
 			{
-				alert("可以提交了！");
+				//alert("可以提交了！");
 				return true;
 			}
 		  });		
@@ -96,11 +96,11 @@
 		<!--top_end-->
 	
 	    <div class="container-fluid">
-	        <form action="#">
+	        <form action="reg_step2_postdata" method="post">
 	            <!--姓名-->
 	            <div class="form-group">
 	                <label for="txtname" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtname" placeholder="请输入姓名">
+	                <input type="text" class="form-control" id="txtname" name="txtname" placeholder="请输入姓名">
 	            </div>
 	            <!--性别-->
 	            <div class="form-group">
@@ -114,25 +114,30 @@
 	            <!--身份证号-->
 	            <div class="form-group">
 	                <label for="txtpersonalid" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtpersonalid" placeholder="请输入身份证号">
+	                <input type="text" class="form-control" id="txtpersonalid" name="txtpersonalid" placeholder="请输入身份证号">
 	            </div>
 	            <!--开户银行-->
 	            <div class="form-group">
-	                <select class="form-control">
-	                    <option>贵州银行1</option>
-	                    <option>贵州银行2</option>
-	                    <option>贵州银行3</option>
-	                    <option>贵州银行4</option>
-	                    <option>贵州银行5</option>
+	                <select class="form-control" name="selBank">
+	                    <option value="贵州银行1">贵州银行1</option>
+	                    <option value="贵州银行2">贵州银行2</option>
+	                    <option value="贵州银行3">贵州银行3</option>
+	                    <option value="贵州银行4">贵州银行4</option>
+	                    <option value="贵州银行5">贵州银行5</option>
 	                </select>
 	            </div>
 	            <!--银行卡号-->
 	            <div class="form-group">
 	                <label for="txtbankcardid" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtbankcardid" placeholder="请输入银行卡号">
+	                <input type="text" class="form-control" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
 	            </div>
 	            <br/>
 	            <button class="btn-sm btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">提交</button>
+	        	
+	        	<input type="hidden" name="selArea" value="${area}" />
+	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />
+	        	<input type="hidden" name="txtwechataccount" value="${weixin}" />
+	        	<input type="hidden" name="txtpassword" value="${pwd}" />
 	        </form>
 	    </div>
 	</div>

@@ -9,20 +9,20 @@ function cityFilter()
 	//ajax刷新筛选结果
 }
 
-//输入尾号点击搜索执行ajax查询刷新
+//输入关键字点击搜索执行ajax查询刷新
 function queryFilter()
 {
-	var weihao = $('#weihao').val();
-	if(weihao == '' || weihao == null)
+	var keyword = $('#keyword').val();
+	if(keyword == '' || keyword == null)
 	{
 		return false;
 	}
 	
-	var param = {"weihao":weihao};
+	var param = {"keyword":keyword};
 	
 	$.ajax({
 		   type: "POST",
-		   url: "queryNumbersByAjax",
+		   url: $('#baseRoot').val() + "/weShop/queryGoodListAjax",
 		   data: param,
 		   success: function(data){
 			   //alert(data);

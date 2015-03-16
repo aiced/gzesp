@@ -70,7 +70,7 @@
           <#else>
             <div class="item">
           </#if>
-              <img src="${resRoot}/image/banner/${item}" alt="" />
+              <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" />
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -94,13 +94,13 @@
             <li class="goods-info">
                 <i class="collect"></i>
                 <!--<a id="onlineChat" class="service mrg-t-0" href="javascript:void();"><i></i>导购</a> -->
-                <p class="goods-desp" style="padding:0px;margin:0px;">iPhone 6/iPhone 6 Plus 现货库存 先购先得 支持货到付款  限湖南省内配送  <strong class="cf60">一个身份证号码只能办理一次本业务（微店，电子沃店不参与本活动）</strong></p>
-                <p class="goods-desp" style="padding:0px;margin:0px;"><strong class="cf60">自定义活动标题</strong></p>
+                <p class="goods-desp" style="padding:0px;margin:0px;">${detail.GOODS_NAME}</p>
+                <p class="goods-desp" style="padding:0px;margin:0px;"><strong class="cf60">${detail.ATY_TITLE}</strong></p>
                 <p style="padding:0px;margin:0px;">
                     <label>合&nbsp;&nbsp;约&nbsp;&nbsp;价：</label>
                     <span>
-                        <del style="display:none" class="prime-price">￥5288</del>
-                        <strong class="current-price">￥7099</strong>（最高返<strong>7099</strong>元话费）
+                        <!--<del style="display:none" class="prime-price">￥${detail.GOODS_PRICE}</del>-->
+                        <strong class="current-price">￥${detail.GOODS_PRICE}</strong>
                     </span>
                 </p>
             </li>
@@ -118,21 +118,12 @@
                 <p>
                     <label class="fl">商品归属：</label>
                     <span class="select-w">
-                        <select class="select-style" id="numberBelong" provinceCode="74">
-                                        <option value="741">长沙</option>
-                                        <option value="744">衡阳</option>
-                                        <option value="742">株洲</option>
-                                        <option value="743">湘潭</option>
-                                        <option value="745">岳阳</option>
-                                        <option value="792">邵阳</option>
-                                        <option value="748">郴州</option>
-                                        <option value="749">常德</option>
-                                        <option value="747">益阳</option>
-                                        <option value="795">怀化</option>
-                                        <option value="796">永州</option>
-                                        <option value="791">娄底</option>
-                                        <option value="793">湘西</option>
-                                        <option value="794">张家界</option>
+                        <select class="select-style" id="numberBelong" provinceCode="">
+                          <#if citys??>
+                            <#list citys as item>
+                              <option value="${item.CITY_CODE}">${item.CITY_NAME}</option>
+                            </#list>
+                          </#if>
                         </select>
                     </span>
                     <em id="amountChange_id" class="store in-store">有货</em>
@@ -140,42 +131,79 @@
                 </p>
                 <p id="articleInfo" class="s-tip"></p>
             </li>
-            <li id="machineVersionList" class="num-info-li bdr-b-none" >
-                <p style="margin-bottom: 0px;"><label>版本</label></p>
-                <div class="tabs-box">
-                    <ul class="tabslist tabslist-long">
-                        <li class="tab-on" machineVersion="iP6Plus" >iPhone6 Plus (5.5英寸)</li>
-                        <li class="mrg-r-0" machineVersion="iP6" >iPhone6 (4.7英寸)</li>
-                    </ul>
-                </div>
-            </li>
-            <li id="colorList" class="num-info-li">
-                <p style="margin-bottom: 0px;"><label>颜色</label></p>
-                <div class="tabs-box">
-                    <ul class="tabslist">
-                      <li colorcode="9809120800036797" class="tab-on">深空灰色</li>
-                      <li colorcode="9810072100598994">金色</li>
-                      <li class="mrg-r-0" colorcode="9809120800036795">银色</li>
-                    </ul>
-                </div>
-            </li>
-            <li id="romList" class="num-info-li">
-                <p style="margin-bottom: 0px;"><label>内存</label></p>
-                <div class="tabs-box">
-                    <ul class="tabslist">
-                      <li romsize="16" modelcode="iP6P16G" class="tab-on">16G</li>
-                      <li romsize="64" modelcode="iP6P64G">64G</li>
-                    </ul>
-                </div>
-            </li>
-            <li class="num-info-li" id="activityType">
-                <p style="margin-bottom: 0px;"><label>优惠活动</label></p>
-                <div class="tabs-box">
-                    <ul class="tabslist">
-                            <li class="tab-on" activityType="4">预存话费送手机</li>
-                    </ul>
-                </div>
-            </li>
+            <#if attrs.SIZERES??>
+              <li id="machineVersionList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>版本</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.SIZERES as item>
+                          <#if item_index==0>
+                            <li class="tab-on" machineVersion="${item}" >${item}</li>
+                          <#elseif item_index%2==1>
+                            <li class="mrg-r-0" machineVersion="${item}" >${item}</li>
+                          <#else>
+                            <li machineVersion="${item}" >${item}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>
+            <#if attrs.COLORRS??>
+              <li id="colorList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>颜色</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.COLORRS as item>
+                          <#if item_index==0>
+                            <li class="tab-on" colorcode="${item}" >${item}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" colorcode="9809120800036795">${item}</li>
+                          <#else>
+                            <li colorcode="${item}" >${item}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>
+            <#if attrs.CAPTYRS??>
+              <li id="romList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>内存</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.CAPTYRS as item>
+                          <#if item_index==0>
+                            <li class="tab-on" romsize="${item}" >${item}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" romsize="9809120800036795">${item}</li>
+                          <#else>
+                            <li romsize="${item}" >${item}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>
+            <#if attrs.xx??>
+              <li id="activityType" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>优惠活动</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist tabslist-long">
+                        <#list attrs.xx as item>
+                          <#if item_index==0>
+                            <li class="tab-on" activityType="${item}" >${item}</li>
+                          <#elseif item_index%2==1>
+                            <li class="mrg-r-0" activityType="${item}" >${item}</li>
+                          <#else>
+                            <li activityType="${item}" >${item}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>            
+
         </ul>
     </div>
 
@@ -212,19 +240,5 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/orderMain.js"></script>
     
-    <script>
-       //获取当前页面url并生成二维码展示在 xx的微店
-       var thisUrl = window.location.href;
-       $('#qrcodeDiv').qrcode({
-		render:"canvas", //默认canvas方式，性能好
-		text: thisUrl, //设置二维码内容
-		width:76,     //设置宽度  
-        height:76,     //设置高度 
-        typeNumber:-1,  //计算模式 
-        correctLevel:QRErrorCorrectLevel.H,//纠错等级  
-        background:"#ffffff",//背景颜色  
-        foreground:"#000000" //前景颜色
-	});	
-    </script>
   </body>
 </html>

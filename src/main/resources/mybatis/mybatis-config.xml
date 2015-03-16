@@ -21,6 +21,8 @@
         <setting name="defaultExecutorType" value="SIMPLE" />
         <!-- 数据库超过600秒仍未响应则超时 -->
         <setting name="defaultStatementTimeout" value="600" />
+        <!-- 如果返回字段值是空，将null值映射到map中 -->
+        <setting name="callSettersOnNulls" value="true"/>
     </settings>
 
     <typeHandlers>
@@ -32,11 +34,61 @@
 
     <!-- SQL映射文件 -->
     <mappers>
-    	<mapper resource="mybatis/mapper_oracle/common_SqlMap.xml" />
+		<mapper resource="mybatis/mapper_oracle/common_SqlMap.xml" />
+     	<mapper resource="mybatis/mapper_oracle/CommonMapper.xml" />    	
     	<mapper resource="mybatis/mapper_oracle/sqlMap_WeShopDao.xml" />
     	<mapper resource="mybatis/mapper_oracle/sqlMap_OrderDao.xml" />
-    	<mapper resource="mybatis/mapper_oracle/TdAurDAUTHINFOMapper.xml" /> 	 	 		
-    	<mapper resource="mybatis/mapper_oracle/TdOrdDBASEMapper.xml" /> 	 	 		
+    	<mapper resource="mybatis/mapper_oracle/TdAurDAUTHINFOMapper.xml" /> 
+        <mapper resource="mybatis/mapper_oracle/TdAurDBASEINFOMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdAurDRELINFOMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDABLEACTIVITYMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDABLERCDMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDALBUMMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDAMOUNTMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDATTRMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDATTRMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDINFOMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDPHOTOMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsDPRICEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsPATTRTYPEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdGdsPCTLGMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdNumDNICERULELIMITMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdNumDNUMINFOMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDBASEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDCUSTMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDDEALMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDPAYLOGMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDPOSTMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDPRODMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdLDEALLOGMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdRelGOODSRESMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdResDATTRMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdResDATTRVALMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdResPATTRTYPEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdResPRESINFOMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdResPRESTYPEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDDECORATERMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDFUNCROLEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDNOTICEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDROLEFUNCRIGHTMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDSTAFFBUSIAREARESMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDSTAFFFUNCRIGHTMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDSTAFFMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDSTAFFROLEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDSTFGRMBRMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysDSTFGRPMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysPCITYMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysPCOUNTYMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysPEPARCHYMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysPFUNCRIGHTMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysPMENUMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysPPROVINCEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdSysPSTATICMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdTFAAGENTACCOUNTMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdTFFAGENTSTAFFINFOMapper.xml" />  
+    	
+    	
+    		 		
     </mappers>
     
 </configuration>

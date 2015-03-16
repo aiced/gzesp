@@ -9,8 +9,14 @@ function cityFilter()
 	//ajax刷新筛选结果
 }
 
-//输入关键字点击搜索执行ajax查询刷新
-function queryFilter()
+//查询合约购机选择列表
+function queryPhoneList(){
+	queryFilterPublic("phone");
+}
+
+//输入关键字点击搜索执行ajax查询刷新 
+//公共方法 套餐选择 合约购机选择 上网卡选择 宽带选择 流量包选择 共用
+function queryFilterPublic(goodType)
 {
 	var keyword = $('#keyword').val();
 	if(keyword == '' || keyword == null)
@@ -18,15 +24,24 @@ function queryFilter()
 		return false;
 	}
 	
-	var param = {"keyword":keyword};
+	var param = {"keyword":keyword, "goodType":goodType};
 	
 	$.ajax({
 		   type: "POST",
+		   contentType:"application/json",
 		   url: $('#baseRoot').val() + "/weShop/queryGoodListAjax",
-		   data: param,
+		   dataType:"json",
+		   data: JSON.stringify(param),
 		   success: function(data){
 			   //alert(data);
 		     $('#datagrid').html(data);
 		   }
 		});
+}
+
+//点击 商品列表里某一个商品，跳转到商品详情页
+function gotoGoodDetail(ctlg_code, goods_id){
+	var href = $('#baseRoot').val() + "/weShop/goodDetail/"+ $('#user_id').val() +"/"+ ctlg_code + "/" + goods_id;
+	alert(href);
+	window.location.href = href;            
 }

@@ -14,6 +14,7 @@
 
   <body>
     <input type="hidden" id="baseRoot" value="${base}"></input>
+    <input type="hidden" id="user_id" value="${user_id}"></input>
   	<!-- nav bar -->
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
@@ -38,7 +39,7 @@
     	  <div class="input-group">
             <input id='keyword' type="text" class="form-control input-sm" placeholder="输入关键字">
             <span class="input-group-btn">
-              <button class="btn btn-default btn-sm" type="button" onclick="queryFilter()">
+              <button class="btn btn-default btn-sm" type="button" onclick="queryPhoneList()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
               </button>
             </span>
@@ -89,7 +90,7 @@
       </#if>
       <!-- 有数据时展示 -->
       <#list goodList as item>
-        <div class="row" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;">
+        <div class="row" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;" onclick="gotoGoodDetail(${item.CTLG_CODE}, ${item.GOODS_ID});">
           <div class="col-xs-4" style="padding:1px;">
       	    <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" /> 
       	  </div>

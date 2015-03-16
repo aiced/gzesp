@@ -167,7 +167,7 @@ public class WeShopService {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public List<Map<Object, Object>> queryPlanListByPage(String[] ctlgArray, int pageNum, int pageSize){
-        return weShopDao.queryPlanListByPage(ctlgArray, pageNum, pageSize);
+    public List<Map<Object, Object>> queryGoodListByPage(String[] ctlgArray, int pageNum, int pageSize){
+        return weShopDao.queryGoodListByPage(ctlgArray, pageNum, pageSize);
     }
 }

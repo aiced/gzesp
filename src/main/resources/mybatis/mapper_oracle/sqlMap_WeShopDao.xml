@@ -116,7 +116,7 @@
                 b.ctlg_code ctlg_code, 
                 b.goods_name goods_name, 
                 c.add_price goods_price,
-                e.aty_title aty_title  
+                nvl(e.aty_title,'') aty_title  
            from GDS_D_INFO b,
                 GDS_D_PRICE c,
                 (select * from GDS_D_ABLE_ACTIVITY where user_id=${user_id}) e
@@ -152,7 +152,7 @@
      ]]>
 	</select>		
 	
-	<select id="queryPlanListByPage" resultType="java.util.HashMap">
+	<select id="queryGoodListByPage" resultType="java.util.HashMap">
       select *
         from (	
          select a.goods_id  goods_id, 

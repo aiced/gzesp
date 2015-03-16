@@ -7,7 +7,7 @@
       <!-- 有数据时展示 -->    
     <#if goodList??>  
       <#list goodList as item>
-        <div class="row" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;">
+        <div class="row" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;" onclick="gotoGoodDetail(${item.CTLG_CODE}, ${item.GOODS_ID});">
           <div class="col-xs-4" style="padding:1px;">
       	    <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" /> 
       	  </div>

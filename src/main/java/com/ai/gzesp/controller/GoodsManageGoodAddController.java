@@ -27,6 +27,8 @@ public class GoodsManageGoodAddController {
     @Resource 
     GoodsSql goodsSql;
     
+    
+    
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);

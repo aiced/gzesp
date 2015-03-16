@@ -82,9 +82,8 @@
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script type="text/javascript">
 		$(document).ready(function(){  
-				    <#if (rcdlist?size>=0) > 
+		 <#if (rcdlist?size>=0) > 
 		    var index = ${rcdlist?size};
-		    alert(index);
 		    if(index > 0){
 		    	index = index;
 		    }else{
@@ -105,7 +104,12 @@
 		  //在这里操作获取验证码		
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}<=0){
-		  		  		  	   	alert(${info.goodsId});										   	  
+		  		  		  	   	var parms = {'goodsId':${info.goodsId}};
+							    $.commonFormSubmit({  
+     	        					 action : '${base}/shopManage/goodsManageGoodSelect', 
+								   	data: parms
+     	  						  }); 	  		  		  	  		  		  		  	   	
+		  		  		  	   										   	  
 		  		  }	
 			</#list>
 		  }); 
@@ -162,7 +166,6 @@
 		
 			
 	    <#list rcdlist as info>	
-	    		alert(${info_index});	
 				document.getElementById('image${info_index}').src='${info.photoLinks}';
 		</#list>
 		});

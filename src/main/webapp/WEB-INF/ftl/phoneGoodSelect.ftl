@@ -37,7 +37,7 @@
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-12" style="margin:0px;padding:0px">
     	  <div class="input-group">
-            <input id='keyword' type="text" class="form-control input-sm" placeholder="输入关键字">
+            <input id='keyword' type="text" class="form-control input-sm" placeholder="输入商品名称关键字">
             <span class="input-group-btn">
               <button class="btn btn-default btn-sm" type="button" onclick="queryPhoneList()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>

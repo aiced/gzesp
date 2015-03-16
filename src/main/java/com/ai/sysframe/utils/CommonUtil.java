@@ -2,11 +2,13 @@ package com.ai.sysframe.utils;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import com.alibaba.fastjson.JSON;
@@ -231,20 +233,37 @@ public class CommonUtil {
         return appResource.getString(key);
     }
     
-    public static Map<String, Object> parseUrlParams2Map(String param) {  
-        Map<String, Object> map = new HashMap();  
-        
-        if( param == null ||  "".equals(param)) {
-        	return map;
-        }
-        
-        String[] params = param.split("&");  
-        for (int i = 0; i < params.length; i++) {  
-            String[] p = params[i].split("=");  
-            if (p.length == 2) {  
-                map.put(p[0], p[1]);  
-            }  
-        }  
-        return map;  
-    } 
+//    public static Map<String, Object> parseUrlParams2Map(String param) {  
+//        Map<String, Object> map = new HashMap();  
+//        
+//        if( param == null ||  "".equals(param)) {
+//        	return map;
+//        }
+//        
+//        String[] params = param.split("&");  
+//        for (int i = 0; i < params.length; i++) {  
+//            String[] p = params[i].split("=");  
+//            if (p.length == 2) {  
+//                map.put(p[0], p[1]);  
+//            }  
+//        }  
+//        return map;  
+//    } 
+    
+    public static String generateOrderId() {
+    	String idType = "1";
+    	long time =  System.currentTimeMillis();
+    	Random r = new Random();
+    	int rint = r.nextInt(99);
+    	String rStr = StringUtil.paddingLeft(String.valueOf(rint), '0', 2);
+    	return idType + rStr + time;
+    }
+    
+    public static String getPartitionId(String str) { 
+    	if(str == null || str.length() < 2) {
+    		return str;
+    	}
+    	String partitionId = str.substring(str.length()-2);
+    	return partitionId;
+    }
 }

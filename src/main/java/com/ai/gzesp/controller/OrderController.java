@@ -12,12 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
+import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
@@ -26,6 +28,10 @@ import com.ai.sysframe.utils.StringUtil;
 @RequestMapping("/order")
 public class OrderController {
     
+	private static String pageName1 = "";
+	private static String pageName2 = "selectContract";
+	private static String pageName3 = "selectNumber";
+	
     @Resource
     private WeShopService weShopService;
     
@@ -35,13 +41,35 @@ public class OrderController {
     @Resource 
     GoodsSql goodsSql;
     
+    @Resource 
+    OrderService orderService;
+    
     @RequestMapping("/newNumberJoin")
-    public ModelAndView newNumberJoin(@RequestBody String inputParam){
-        ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
+    public ModelAndView newNumberJoin(@RequestBody String inputParams){
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+    	String goods_id = paramsMap.containsKey("goods_id")?paramsMap.get("goods_id"):"";
+    	String goods_name = paramsMap.containsKey("goods_name")?paramsMap.get("goods_name"):"";
+    	String goods_price = paramsMap.containsKey("goods_price")?paramsMap.get("goods_price"):"";
+    	String user_id = paramsMap.containsKey("user_id")?paramsMap.get("user_id"):"";
+//    	String selectState = paramsMap.containsKey("selectState")?paramsMap.get("selectState"):"0";
+    	String fromPage = paramsMap.containsKey("fromPage")?paramsMap.get("fromPage"):"";
+    	
+    	  ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
+    	  
+    	int selectState = 0;
+    	if(pageName2.equalsIgnoreCase(fromPage)) {
+    		selectState = 1;
+    	} else if(pageName3.equalsIgnoreCase(fromPage)) {
+    		selectState = 2;
+    	}
+    	
+      
         //从数据库获取信息赋值
-        mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
+        mav.addObject("selectedPhone", goods_name);
         mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
         mav.addObject("selectedNumber", "1306520198"); 
+        mav.addObject("goods_price", goods_price); 
+        mav.addObject("selectState", selectState); 
         mav.addObject("title", "新号入网"); 
         return mav;
     }
@@ -149,6 +177,26 @@ public class OrderController {
     	mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
     	mav.addObject("selectedNumber", "1306520198"); 
     	mav.addObject("title", "选择合约"); 
+    	return mav;
+    }
+    
+    @RequestMapping("/fillOrderMain")
+    public ModelAndView index(){
+        ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
+        //从数据库获取信息赋值
+        mav.addObject("title", "订单填写");
+        return mav;
+    }
+    
+    @RequestMapping("/submitFilledOrder")
+    public ModelAndView submitFilledOrder(@RequestBody String inputParams){
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+    	orderService.insertOrder(paramsMap);
+    	
+    	ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
+    	//从数据库获取信息赋值
+    	mav.addObject("title", "订单填写");
+    	
     	return mav;
     }
 }

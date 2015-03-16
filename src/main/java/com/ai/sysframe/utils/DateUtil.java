@@ -921,4 +921,9 @@ public class DateUtil {
         }
         return targetFormat;
     }
+    
+    public static int getCurrentMonth()
+    {
+    	return Calendar.getInstance().get(Calendar.MONTH);
+    }
 }

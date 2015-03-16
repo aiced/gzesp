@@ -138,7 +138,7 @@ public class WeShopRegist2Controller {
     	//ModelAndView mav = new ModelAndView("weShopLogin.ftl");
     	ModelAndView mav = new ModelAndView("redirect:/auth/login");
     	
-    	mav.addObject("title", "注册微店");
+    	mav.addObject("title", "登录微店账号");
     	return mav;
     	
     } 

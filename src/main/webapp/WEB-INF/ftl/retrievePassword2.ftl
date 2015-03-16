@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -30,21 +31,23 @@
 		<div id="dv_clear"></div>
 		<!--top_end-->
 	    <div class="container">
-	        <form action="#">
+	        <form action="findpwd_step2_postdata" method="post">
 	            <br>
 	            <br>
 	            <!--输入密码-->
 	            <div class="form-group">
 	                <label for="txtpassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtpassword" placeholder="请设置登录密码" required autofocus>
+	                <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="请设置登录密码" required autofocus>
 	            </div>
 	            <!--再次输入验证码-->
 	            <div class="form-group">
 	                <label for="txtrepassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtrepassword" placeholder="请再次设置登录密码"  required>
+	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码"  required>
 	            </div>
 	            <br/>
 	            <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">确认</button>
+	        
+	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />
 	        </form>
 	    </div> <!-- /container -->
 	</div>

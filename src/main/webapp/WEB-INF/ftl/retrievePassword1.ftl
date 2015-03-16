@@ -39,12 +39,12 @@
 		<div id="dv_clear"></div>
 		<!--top_end-->
 	    <div class="container">
-	        <form>
+	        <form action="findpwd_step1_postdata" method="post">
 	            <br>
 	            <br>
 	            <div class="row">
 	                <div class="col-xs-8 col-sm-8">
-	                    <input type="text" class="form-control" id="txtphonenum"aria-describedby="txtnum" placeholder="请输入联通手机号"  required autofocus>
+	                    <input type="text" class="form-control" id="txtphonenum" name="txtphonenum" aria-describedby="txtnum" placeholder="请输入联通手机号"  required autofocus>
 	                </div>
 	                <div class="col-xs-4 col-sm-4">
 	                    <button class="btn btn-primary btn-block form-control" type="button" name="btnCode" id="btnCode">获取验证码</button>
@@ -57,7 +57,7 @@
 	                <input type="text" class="form-control" id="txtyanzhengma" placeholder="请输入验证码"  required>
 	            </div>
 	            <br/>
-	            <button class="btn-sm btn-warning btn-block" type="button" id="btnStep1">下一步</button>
+	            <button class="btn-sm btn-warning btn-block" type="submit" id="btnStep1">下一步</button>
 	        </form>
 	    </div> <!-- /container -->
 	</div>
@@ -139,7 +139,7 @@
 				else 
 				{
 					//数据校验正确
-					location.href='step2';
+					//location.href='step2';
 					return true;
 				}	
 		 	}); 

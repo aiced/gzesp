@@ -115,8 +115,8 @@
 			}
 			else 
 			{
-				//数据校验正确
-				location.href='step2';
+				////数据校验正确
+				//location.href='step2';
 				return true;
 			}	
 		  });

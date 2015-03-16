@@ -1,6 +1,5 @@
 package com.ai.gzesp.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -31,25 +30,35 @@ public class WeShopController {
      * 三级页面：店铺主页 <br>
      * 〈功能详细描述〉
      *
-     * @param shopId 店铺id
+     * @param user_id 能人id
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    @RequestMapping("/index/{developerId}")
-    public ModelAndView index(@PathVariable("developerId") String developerId){
+    @RequestMapping("/index/{user_id}")
+    public ModelAndView index(@PathVariable("user_id") String user_id){
         ModelAndView mav = new ModelAndView("weShopIndex.ftl");
         //根据shopId获取 能人信息 店铺名称 手机 微信
-        List<Map<Object, Object>> developers = weShopService.getDevloperInfo(developerId);
-        mav.addObject("developer", developers.get(0));
+        Map<Object, Object> developer = weShopService.getDevloperInfo(user_id);
+        mav.addObject("developer", developer);
         
         //获取广告轮播图片的url
         List<Map<String, String>> banners = weShopService.getBanners();
         mav.addObject("banners", banners);
         
         //获取店长推荐 热销前4的商品 
+        List<Map<Object, Object>> dztj = weShopService.getDztj(user_id);
+        mav.addObject("dztj", dztj);
         
+        //获取热销合约商品
+        List<Map<Object, Object>> rxhy = weShopService.getRxhy();
+        mav.addObject("rxhy", rxhy);
+        
+        //获取热销网卡商品
+        List<Map<Object, Object>> rxwk = weShopService.getRxwk();
+        mav.addObject("rxwk", rxwk);
 
+        mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
         return mav;
     }
 }

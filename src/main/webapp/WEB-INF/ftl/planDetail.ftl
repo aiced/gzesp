@@ -39,7 +39,6 @@
         <div class="modal-content" style="padding:5px;height:80px;">
     	    分享到：
           <!-- Baidu Button BEGIN -->
-          <!-- Baidu Button BEGIN -->
           <div class="bdsharebuttonbox">
             <a class="bds_more" href="#" data-cmd="more"></a>
             <a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a>
@@ -72,7 +71,7 @@
           <#else>
             <div class="item">
           </#if>
-              <img src="${resRoot}/image/banner/${item}" alt="" />
+              <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" />
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -96,12 +95,13 @@
             <li class="goods-info">
                 <i class="collect"></i>
                 <!--<a id="onlineChat" class="service mrg-t-0" href="javascript:void();"><i></i>导购</a> -->
-                <p class="goods-desp">iPhone 6/iPhone 6 Plus 现货库存 先购先得 支持货到付款  限湖南省内配送  <strong class="cf60">一个身份证号码只能办理一次本业务（微店，电子沃店不参与本活动）</strong></p>
+                <p class="goods-desp">${detail.GOODS_NAME}</p>
+                <p class="goods-desp" style="padding:0px;margin:0px;"><strong class="cf60">${detail.ATY_TITLE}</strong></p>
                 <p>
                     <label>价格：</label>
                     <span>
-                        <del style="display:none" class="prime-price">￥5288</del>
-                        <strong class="current-price">￥7099</strong>（最高返<strong>7099</strong>元话费）
+                        <!--<del style="display:none" class="prime-price">￥${detail.GOODS_PRICE}</del>-->
+                        <strong class="current-price">￥${detail.GOODS_PRICE}</strong>
                     </span>
                 </p>
                 <p><span>1200元话费长沙新用户专享(新用户专享)；语音包(合约24个月专享）(新用户专享)</span></p>
@@ -120,7 +120,7 @@
                 <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">请选择号码</span><label color="#F70909">选择号码</label></a>
             </li>
             <li id="planList" class="num-info-li">
-                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">46元 存费送费</span><label>套餐</label></a>
+                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a>
                 <div class="tabs-box">
                     <ul class="tabslist">
                         <li class="tab-on" planVersion="planA" >A计划</li>

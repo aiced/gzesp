@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ai.gzesp.dao.WeShopDao">
 
-	<select id="getDevloperInfo" parameterType="String" resultType="java.util.HashMap">
+	<select id="getDevloperInfo" resultType="java.util.HashMap">
 	<![CDATA[
        select store_name, phone_number, weixin_id, user_img
          from AUR_D_AUTHINFO
-        where id = #{developerId}
+        where user_id = ${user_id}
      ]]>
 	</select>
 	
-	<select id="getBanners" parameterType="String" resultType="java.util.HashMap">
+	<select id="getBanners" resultType="java.util.HashMap">
 	<![CDATA[
        select content
          from SYS_D_DECORATER
@@ -21,24 +21,166 @@
      ]]>
 	</select>	
 	
-	<select id="query2" parameterType="String" resultType="java.util.HashMap">
+	<select id="getDztj" resultType="java.util.HashMap">
 	<![CDATA[
-select item,sum(ifnull(d25,0)) 'd25',sum(ifnull(d26,0)) 'd26',sum(ifnull(d27,0)) 'd27',sum(ifnull(d28,0)) 'd28',sum(ifnull(d29,0)) 'd29',sum(ifnull(d30,0)) 'd30',sum(ifnull(d31,0)) 'd31' from (
-   select   case a.venue_id when '10000001' then '羽毛球' when '10000002' then '篮球' when '10000003' then '乒乓球' else '其他' end  item,
-        case when DATE_FORMAT(trade_date,'%d')=25 then real_pay end  d25,
-        case when DATE_FORMAT(trade_date,'%d')=26 then real_pay end  d26,
-        case when DATE_FORMAT(trade_date,'%d')=27 then real_pay end  d27,
-        case when DATE_FORMAT(trade_date,'%d')=28 then real_pay end  d28,
-        case when DATE_FORMAT(trade_date,'%d')=29 then real_pay end  d29,
-        case when DATE_FORMAT(trade_date,'%d')=30 then real_pay end  d30,
-        case when DATE_FORMAT(trade_date,'%d')=31 then real_pay end  d31
- from trade a,trade_fee b
- where a.trade_id=b.trade_id
-   and b.trade_date >= str_to_date(#{startMon},'%Y%m')
-   and b.trade_date < str_to_date(#{endMon},'%Y%m')
-   and a.venue_id  is not null
-   ) a
-   group by item 	
+          select a.user_id user_id,  
+                 a.goods_id  goods_id, 
+                 b.ctlg_code ctlg_code, 
+                 b.goods_name goods_name, 
+                 c.add_price goods_price, 
+                 d.goods_amount goods_amount,  
+                 f.photo_links photo_links  
+            from GDS_D_ABLE_RCD a,
+                 GDS_D_INFO b,
+                 GDS_D_PRICE c,
+                 GDS_D_AMOUNT d,
+                 GDS_D_PHOTO f
+           where a.user_id = ${user_id}
+             and a.goods_id = b.goods_id
+             and a.goods_id = c.goods_id
+             and a.goods_id = d.goods_id
+             and d.amount_type = '2' 
+             and b.album_id = f.album_id
+             and f.default_tag = '0'  
+           order by a.seq_num 
      ]]>
 	</select>
+	
+	<select id="getRxhy" resultType="java.util.HashMap">
+	<![CDATA[
+        select *
+        from (
+         select a.goods_id  goods_id, 
+                b.ctlg_code ctlg_code, 
+                b.goods_name goods_name, 
+                c.add_price goods_price, 
+                a.goods_amount goods_amount,  
+                f.photo_links photo_links  
+           from GDS_D_AMOUNT a,
+                GDS_D_INFO b,
+                GDS_D_PRICE c,
+                GDS_D_PHOTO f
+          where a.amount_type = '2' 
+            and a.goods_id = b.goods_id
+            and b.ctlg_code in (4, 9) 
+            and a.goods_id = c.goods_id
+            and b.album_id = f.album_id
+            and f.default_tag = '0'  
+          order by a.goods_amount desc
+          ) m
+        where rownum <= 4
+     ]]>
+	</select>
+	
+	<select id="getRxwk" resultType="java.util.HashMap">
+	<![CDATA[
+        select *
+        from (	
+         select a.goods_id  goods_id, 
+                b.ctlg_code ctlg_code, 
+                b.goods_name goods_name, 
+                c.add_price goods_price, 
+                a.goods_amount goods_amount,  
+                f.photo_links photo_links  
+           from GDS_D_AMOUNT a,
+                GDS_D_INFO b,
+                GDS_D_PRICE c,
+                GDS_D_PHOTO f
+          where a.amount_type = '2' 
+            and a.goods_id = b.goods_id
+            and b.ctlg_code in (6, 11) 
+            and a.goods_id = c.goods_id
+            and b.album_id = f.album_id
+            and f.default_tag = '0'  
+          order by a.goods_amount desc
+          ) m
+        where rownum <= 4          
+     ]]>
+	</select>
+	
+	<select id="getGoodPhotos" parameterType="String" resultType="java.util.HashMap">
+	<![CDATA[
+         select b.goods_id  goods_id,
+                f.photo_links photo_links
+           from GDS_D_INFO b,
+                GDS_D_PHOTO f
+          where b.goods_id = ${goods_id}
+            and b.album_id = f.album_id
+           order by f.photo_no
+     ]]>
+	</select>						
+
+	<select id="getGoodDetail" resultType="java.util.HashMap">
+	<![CDATA[
+         select b.goods_id  goods_id, 
+                b.ctlg_code ctlg_code, 
+                b.goods_name goods_name, 
+                c.add_price goods_price,
+                e.aty_title aty_title  
+           from GDS_D_INFO b,
+                GDS_D_PRICE c,
+                (select * from GDS_D_ABLE_ACTIVITY where user_id=${user_id}) e
+          where b.goods_id = ${goods_id}
+            and b.goods_id = c.goods_id
+            and b.goods_id = e.goods_id(+)
+     ]]>
+	</select>
+	
+	<select id="getCitys" resultType="java.util.HashMap">
+	<![CDATA[
+         select city_code, city_name, province_code
+           from sys_p_city 
+          where province_code='85'
+          order by order_number
+     ]]>
+	</select>
+	
+	<select id="getAttrs" parameterType="String" resultType="java.util.HashMap">
+	<![CDATA[
+     select a.goods_id ,
+            b.res_id,
+            c.attr_code,
+            c.attr_val_name,
+            c.attr_val_code
+       from GDS_D_INFO a ,
+            REL_GOODS_RES b,
+            RES_D_ATTRVAL c
+      where a.goods_id = ${goods_id}
+        and a.goods_id = b.goods_id
+        and b.res_id = c.res_id
+      order by b.res_id,c.attr_code,c.seq_num
+     ]]>
+	</select>		
+	
+	<select id="queryPlanListByPage" resultType="java.util.HashMap">
+      select *
+        from (	
+         select a.goods_id  goods_id, 
+                a.ctlg_code ctlg_code, 
+                a.goods_name goods_name, 
+                c.add_price goods_price, 
+                b.goods_amount goods_amount,  
+                f.photo_links photo_links  
+           from GDS_D_INFO a,
+                GDS_D_AMOUNT b,
+                GDS_D_PRICE c,
+                GDS_D_PHOTO f
+          where a.ctlg_code in 
+                <foreach collection="ctlgArray" item="ctlg_code" index="index"
+                  open="(" close=")" separator=",">
+                   ${ctlg_code}
+                </foreach>
+            and a.goods_id = b.goods_id
+            and b.amount_type = '2' 
+            and a.goods_id = c.goods_id
+            and a.album_id = f.album_id
+            and f.default_tag = '0'  
+          order by b.goods_amount desc
+          ) m
+	<![CDATA[
+        where rownum > (${pageNum}-1)*${pageSize}
+          and rownum <= ${pageNum}*${pageSize}       
+     ]]>
+	</select>				
+
 </mapper>

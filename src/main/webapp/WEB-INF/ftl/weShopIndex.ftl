@@ -115,30 +115,36 @@
     <div class="container-fluid" style="background-color:#ffffff;margin:10px 10px 0px 10px;">
       <div class="row" style="margin-top:2px;margin-bottom:2px;">
     	<div class="col-xs-4" style="padding:2px;">
-    	  <a href="http://m.10010.com/mall-mobile/NumList/search">
+    	  <a href="${base}/weShop/goodSelect/plan/${user_id}">
     	    <img src="${resRoot}/image/weShop/xhrw4.png" alt="" class="img-rounded img-responsive" />
     	  </a>    
     	</div>
     	<div class="col-xs-4" style="padding:2px;">
-    	  <a href="http://m.10010.com/MobileList">
+    	  <a href="${base}/weShop/goodSelect/phone/${user_id}">
     	    <img src="${resRoot}/image/weShop/hygj4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
     	<div class="col-xs-4" style="padding:2px;">
-    	  <a href="http://m.10010.com/CardList">
+    	  <a href="${base}/weShop/goodSelect/card/${user_id}">
     	    <img src="${resRoot}/image/weShop/swk4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>
     	</div>
       </div>
       <div class="row" style="margin-top:0px;">
     	<div class="col-xs-4" style="padding:2px">
-    	  <img src="${resRoot}/image/weShop/tsllb4.png" alt="" class="img-rounded img-responsive" />  
+    	  <a href="${base}/weShop/goodSelect/flow/${user_id}">
+    	    <img src="${resRoot}/image/weShop/tsllb4.png" alt="" class="img-rounded img-responsive" />
+    	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	  <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
+    	  <a href="${base}/weShop/goodSelect/band/${user_id}">
+    	    <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
+    	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	  <img src="${resRoot}/image/weShop/sjpj4.png" alt="" class="img-rounded img-responsive" />  
+    	  <a href="#">
+    	    <img src="${resRoot}/image/weShop/sjpj4.png" alt="" class="img-rounded img-responsive" />
+    	  </a>    
     	</div>
       </div>
     </div>    
@@ -152,42 +158,26 @@
       </div>     	            
     </div>
     <div class="container-fluid" style="margin:0px;padding-top:0px;">
-      <div class="row">
-    	<div class="col-xs-6" style="padding:10px">
-    	  <a href="http://m.10010.com/mobilegoodsdetail/981410108357.html" >
-    	    <img src="${resRoot}/image/dztj/dztj_iphone6.jpg" alt="" class="img-responsive"/>
-    	  </a>
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">苹果(Apple)iphone6</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">5999</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:68</p>
-    	</div>
-    	<div class="col-xs-6" style="padding:10px">
-    	  <a href="http://m.10010.com/mobilegoodsdetail/981409287410.html" >
-    	    <img src="${resRoot}/image/dztj/dztj_note.jpg" alt="" class="img-responsive" />
-    	  </a>
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">三星Note4</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4699</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:50</p>
-    	</div>    		  		 		    		
-      </div>
-      <div class="row">
-    	<div class="col-xs-6" style="padding:10px">
-    	  <a href="http://m.10010.com/mobilegoodsdetail/851403121719.html" >
-    	    <img src="${resRoot}/image/dztj/dztj_4G.jpg" alt="" class="img-responsive" />
-    	  </a>
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">4G全国套餐</p> 
-    		<p class="text-left" style="font-size:10px;"><font color="#F70909">用的起 用的放心的套餐</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:68</p>
-    	</div>
-    	<div class="col-xs-6" style="padding:10px">
-    	  <a href="http://m.10010.com/mobilegoodsdetail/851203213262.html" >
-    	    <img src="${resRoot}/image/dztj/dztj_3G_46.jpg" alt="" class="img-responsive" />
-    	  </a>
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">46元3G套餐</p> 
-    		<p class="text-left" style="font-size:10px;"><font color="#F70909">A/B/C计划预存话费</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:50</p>
-    	</div>    		  		 		    		
-      </div>            	            
+      <#if (dztj?? && dztj?size>0)>
+        <#list dztj as item>  
+          <#if item_index%2==0>
+            <div class="row">
+              <div class="col-xs-6" style="padding:10px">
+          <#else>
+              <div class="col-xs-6" style="padding:10px">
+          </#if>
+    	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
+    	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
+    	        </a>
+    	  	  <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> 
+    	  	  <p style="font-size:14px;">合约价:<font color="#F70909">${item.GOODS_PRICE}</font></p>
+    	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
+    	      </div>
+          <#if (item_index%2==1 || !item_has_next)>
+            </div> 
+          </#if>
+        </#list>                   	            
+      </#if>
     </div> 
     
     <!--热销合约 -->
@@ -199,34 +189,26 @@
       </div>     	            
     </div>
     <div class="container-fluid" style="margin:0px;padding-top:0px;">
-      <div class="row">
-    	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/rxhy/rxhy_iphone6.jpg" alt="" class="img-responsive" />
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">苹果(Apple)iphone6</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4899</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:68</p>
-    	</div>
-    	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/rxhy/rxhy_s5.png" alt="" class="img-responsive" />
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">三星S5</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">4999</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:50</p>
-    	</div>    		  		 		    		
-      </div>
-      <div class="row">
-    	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/rxhy/rxhy_mi4.png" alt="" class="img-responsive" />
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">小米4</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">1899</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:68</p>
-    	</div>
-    	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/rxhy/rxhy_hm_note.png" alt="" class="img-responsive" />
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">红米note</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">999</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:50</p>
-    	</div>    		  		 		    		
-      </div>             	            
+      <#if (rxhy?? && rxhy?size>0)>
+        <#list rxhy as item>  
+          <#if item_index%2==0>
+            <div class="row">
+              <div class="col-xs-6" style="padding:10px">
+          <#else>
+              <div class="col-xs-6" style="padding:10px">
+          </#if>
+    	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
+    	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
+    	        </a>
+    	  	  <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> 
+    	  	  <p style="font-size:10px;">合约价:<font color="#F70909">${item.GOODS_PRICE}</font></p>
+    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	      </div>
+          <#if (item_index%2==1 || !item_has_next)>
+            </div> 
+          </#if>
+        </#list>                   	            
+      </#if>                  	            
     </div>         
 
     <!--热销网卡 -->
@@ -238,26 +220,32 @@
       </div>     	            
     </div>
     <div class="container-fluid" style="margin:0px;padding-top:0px;">
-      <div class="row">
-    	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/rxwk/rxwk_card.png" alt="" class="img-responsive" />
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">上网卡包年16g</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">499</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:68</p>
-    	</div>
-    	<div class="col-xs-6" style="padding:10px">
-    	  <img src="${resRoot}/image/rxwk/rxwk_card.png" alt="" class="img-responsive" />
-    		<p class="text-left" style="font-size:14px;font-weight:bold;">上网卡包年10g</p> 
-    		<p class="text-left" style="font-size:10px;">合约价:<font color="#F70909">500</font></p>
-    		<p class="text-left" style="font-size:10px;">销量:50</p>
-    	</div>    		  		 		    		
-      </div>      	            
+      <#if (rxwk?? && rxwk?size>0)>
+        <#list rxwk as item>  
+          <#if item_index%2==0>
+            <div class="row">
+              <div class="col-xs-6" style="padding:10px">
+          <#else>
+              <div class="col-xs-6" style="padding:10px">
+          </#if>
+    	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
+    	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
+    	        </a>
+    	  	  <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> 
+    	  	  <p style="font-size:10px;">合约价:<font color="#F70909">${item.GOODS_PRICE}</font></p>
+    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	      </div>
+          <#if (item_index%2==1 || !item_has_next)>
+            </div> 
+          </#if>
+        </#list>                   	            
+      </#if>           	            
     </div>
       
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/jquery.qrcode.js"></script>
-    <script src="${resRoot}/js/qrcode.js"></script>
+    <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/qrcode.js?v=${resVer}"></script>
     
     <script>
        //获取当前页面url并生成二维码展示在 xx的微店

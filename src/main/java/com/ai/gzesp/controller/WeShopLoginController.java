@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -58,16 +59,22 @@ public class WeShopLoginController {
     	
     	Criteria myCriteria = new Criteria();
     	myCriteria.createConditon().andEqualTo("PHONE_NUMBER", strPhoneNum).andEqualTo("USER_PASSWORD", strPwd);
-    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+ 
+    	List<TdAurDAUTHINFO> list = tdAurDAUTHINFODao.selectByExample(myCriteria);
     	ModelAndView mav = null;
-    	if(count == 1) {
-    		mav = new ModelAndView("weShopHome.ftl");
+    	ModelMap mmap=null;
+    	if(list.size() >= 1) 
+    	{
+    		//mav = new ModelAndView("weShopHome.ftl");
+    		mmap=new ModelMap();
             //从数据库获取信息赋值
-            mav.addObject("title", "我的微店");
-            mav.addObject("name", "喻露露");
-            mav.addObject("phone", "18685292522"); 
-            mav.addObject("weixin", "1306520198@qq.com"); 
-            
+    		mmap.addAttribute("title", "我的微店");
+    		mmap.addAttribute("id", list.get(0).getId());
+    		mmap.addAttribute("userid",list.get(0).getUserId());
+    		mmap.addAttribute("name", list.get(0).getUserName());//姓名
+    		mmap.addAttribute("phone", list.get(0).getPhoneNumber()); //手机号
+    		mmap.addAttribute("weixin", list.get(0).getWeixinId()); //微信
+    		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);            
     	} else {
     		ret="账号或密码不存在";
     		mav = new ModelAndView("redirect:/auth/login");

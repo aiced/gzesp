@@ -222,7 +222,7 @@
 		  //[进入店铺]按钮点击
 		  $("#btnGoIntoShop").click(function(){  
 		  //在这里操作进入店铺操作
-		  	location.href = "../weShop/index";
+		  	location.href = "../weShop/index/"+${userid};
 		  });  
 		});
 	</script>

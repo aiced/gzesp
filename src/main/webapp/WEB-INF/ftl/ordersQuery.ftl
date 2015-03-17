@@ -36,6 +36,53 @@
         $(function(){
             $('#beginTime').date();
             $('#endTime').date();
+            //检验输入数值是否正确
+            function checkData()
+            {
+            	if(!$("#beginTime").val())
+            	{
+            		alert("请输入起始日期");
+            		return false;
+            	}
+            	if(!$("#endTime").val())
+            	{
+            		alert("请输入截至日期");
+            		return false;
+            	}
+            	if(!CompareDate($("#beginTime").val(),$("#endTime").val()))
+            	{
+            		alert("截至日期不能大于等于起始日期");
+            		return false;
+            	}
+            	return true;
+            }
+            
+            //[查询]按钮点击
+            $("#btnselect").click(function(){
+            	if(!checkData())
+            	{
+            		return false;
+            	}
+            	else
+            	{
+            		//在这里操作数据库查询的
+            		var bRetrun=false;
+            		var param = {"startDate":$("#beginTime").val(),"endDate":$("#endTime").val()};
+            		
+            		$.ajax({
+            			   type: "POST",
+            			   url: "selectOrders",
+            			   data: param,
+            			   async: false,
+            			   success: function(bRet){
+            				   //alert(bRet);
+            				   $("#order_middle_info").html(bRet);
+            			   }
+            			});
+            	}
+            });
+            
+            
         });
     </script>
 
@@ -179,26 +226,27 @@
             <div class="order_top_middle">
                 <div class="order_top_middle1">
                     <!--<input type="text" id="txtdatefrom" class="form-control">-->
-                    <input  id="beginTime" class="kbtn" />
+                    <input  id="beginTime" class="kbtn" name="beginTime"/>
                 </div>
                 <div class="order_top_middle2">
                     —
                 </div>
                 <div class="order_top_middle3">
                     <!--<input type="text" id="txtdateto" class="form-control">-->
-                    <input  id="endTime" class="kbtn" />
+                    <input  id="endTime" class="kbtn" name="endTime"/>
                 </div>
                 <div id="datePlugin"></div>
             </div>
             <div class="order_top_right">
-                <button class="btn btn-warning btn-block" type="submit">查询</button>
+                <button class="btn btn-warning btn-block" type="button" name="btnselect" id="btnselect">查询</button>
             </div>
             <div class="div_clear"></div>
             <div class="div_line"></div>
         </div>
         <div class="div_clear"></div>
 
-        <div order_queryinfo>
+        <div id="order_middle_info">
+
             <div class="order_middle">
                 <div class="order_contain">
                     <div class="order_contain_top">
@@ -216,89 +264,14 @@
                             <div>订单金额：5288元</div>
                             <div>下单时间：2015.2.8 15：00</div>
                         </div>
-
                         <div class="order_contain_middle_right">
                             <img src="${resRoot}/image/orderQuery/jiantou.png" width="9" height="15">
                         </div>
                         <div class="div_clear"></div>
                     </div>
                 </div>
-            </div>
-            <div class="order_middle">
-                <div class="order_contain">
-                    <div class="order_contain_top">
-                        <div class="order_contain_title">苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器</div>
-                        <div class="order_contain_statue">已处理</div>
-                    </div>
-                    <div class="div_clear"></div>
-                    <div class="order_line"></div>
-                    <div class="order_contain_middle">
-                        <div class="order_contain_middle_left">
-                            <img src="wo_logo.png" width="50" height="65">
-                        </div>
-                        <div class="order_contain_middle_middle">
-                            <div>订单编号：20101010101010100000</div>
-                            <div>订单金额：5288元</div>
-                            <div>下单时间：2015.2.8 15：00</div>
-                        </div>
-
-                        <div class="order_contain_middle_right">
-                            <img src="${resRoot}/image/orderQuery/jiantou.png" width="9" height="15">
-                        </div>
-                        <div class="div_clear"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="order_middle">
-                <div class="order_contain">
-                    <div class="order_contain_top">
-                        <div class="order_contain_title">苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器</div>
-                        <div class="order_contain_statue">已处理</div>
-                    </div>
-                    <div class="div_clear"></div>
-                    <div class="order_line"></div>
-                    <div class="order_contain_middle">
-                        <div class="order_contain_middle_left">
-                            <img src="wo_logo.png" width="50" height="65">
-                        </div>
-                        <div class="order_contain_middle_middle">
-                            <div>订单编号：20101010101010100000</div>
-                            <div>订单金额：5288元</div>
-                            <div>下单时间：2015.2.8 15：00</div>
-                        </div>
-
-                        <div class="order_contain_middle_right">
-                            <img src="${resRoot}/image/orderQuery/jiantou.png" width="9" height="15">
-                        </div>
-                        <div class="div_clear"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="order_middle">
-                <div class="order_contain">
-                    <div class="order_contain_top">
-                        <div class="order_contain_title">苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器</div>
-                        <div class="order_contain_statue">已处理</div>
-                    </div>
-                    <div class="div_clear"></div>
-                    <div class="order_line"></div>
-                    <div class="order_contain_middle">
-                        <div class="order_contain_middle_left">
-                            <img src="wo_logo.png" width="50" height="65">
-                        </div>
-                        <div class="order_contain_middle_middle">
-                            <div>订单编号：20101010101010100000</div>
-                            <div>订单金额：5288元</div>
-                            <div>下单时间：2015.2.8 15：00</div>
-                        </div>
-
-                        <div class="order_contain_middle_right">
-                            <img src="${resRoot}/image/orderQuery/jiantou.png" width="9" height="15">
-                        </div>
-                        <div class="div_clear"></div>
-                    </div>
-                </div>
-            </div>
+            </div><!-- order_middle_end -->
+ 
         </div>
     </div>
 </body>

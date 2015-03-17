@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdGdsDABLEACTIVITY;
 import com.ai.gzesp.dao.beans.TdGdsDABLERCD;
 import com.ai.gzesp.dao.beans.TdGdsDINFO;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.service.TdGdsDABLEACTIVITYDao;
 import com.ai.gzesp.dao.service.TdGdsDABLERCDDao;
 import com.ai.gzesp.dao.service.TdGdsDINFODao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
 @Controller
@@ -33,6 +36,8 @@ public class GoodsManageGoodDetailController {
 
     @Resource 
     GoodsSql goodsSql;
+    @Resource 
+    TdGdsDABLEACTIVITYDao tdGdsDABLEACTIVITYDao;
     
     @RequestMapping("/goodsManageGoodDetail")
     public ModelAndView goodsManageGoodDetail(@RequestBody String inputParam){
@@ -40,15 +45,16 @@ public class GoodsManageGoodDetailController {
     	String goodsIdStr = paramsMap.get("goodsId");
     	
     	String goodsId = paramsMap.get("goodsId");
-    	List<Map<String, Object>> goodsList = goodsSql.getGoodsList();   
+    	    	
+    	List<Map<String, Object>> goodsDetaiList = goodsSql.GetGoodsDetail(goodsId);   
 
     	
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
-    	rspMap.put("total", infolist.size());     	
+    	rspMap.put("total", goodsDetaiList.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-    	rspMap.put("list", infolist);  
+    	rspMap.put("goodsDetaiList", goodsDetaiList);  
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodDetail.ftl", rspMap);
 
@@ -61,31 +67,24 @@ public class GoodsManageGoodDetailController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String goodsIdStr = paramsMap.get("goodsId");
     	Long goodsId = Long.parseLong(goodsIdStr);
-    	Short seqNum = 1;
-    	Short userId = 1;
-    	TdGdsDINFO tdGdsDINFO = new TdGdsDINFO();
-    	tdGdsDINFO.setGoodsId(goodsId);
-    	tdGdsDINFO.setPartitionId(userId);
-    	tdGdsDINFO.setSimpDesc("1");
-    	tdGdsDINFO.setSeqNum(seqNum);
+    	String titleStr = paramsMap.get("title");
+    	String contentStr = paramsMap.get("content");
+    	
+    	
+    	TdGdsDABLEACTIVITY tdGdsDABLEACTIVITY = new TdGdsDABLEACTIVITY();
+    	tdGdsDABLEACTIVITY.setGoodsId(goodsId);
+    	tdGdsDABLEACTIVITY.setAtyTitle(titleStr);
+    	tdGdsDABLEACTIVITY.setAtyContent(contentStr);
     	
     	Criteria example = new Criteria();
     	example.createConditon().andEqualTo("GOODS_ID", goodsId);
-    	
-    	tdGdsDINFODao.updateByExample(tdGdsDINFO,example);
-    	
-    	
-
-//    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
-//    	Map rspMap = new HashMap();    
-//    	rspMap.put("rspCode", "0000");   
-//    	rspMap.put("name", "weidian");   
-//    	rspMap.put("total", rcdlist.size());   
-//    	rspMap.put("title", "选择商品"); 
-//    	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-//    	rspMap.put("rcdlist", rcdlist);  
-//    	return new ModelAndView("goodsManageGoodSelect.ftl", rspMap);
-    	
-    	
+    	List<TdGdsDABLEACTIVITY> list = tdGdsDABLEACTIVITYDao.selectByExample(example);
+    	if(list.size()==0){
+        	tdGdsDABLEACTIVITYDao.insertSelective(tdGdsDABLEACTIVITY);
+    	}else{
+    		tdGdsDABLEACTIVITYDao.updateByExampleSelective(tdGdsDABLEACTIVITY, example);
+    	}
+    
     }
+    
 }

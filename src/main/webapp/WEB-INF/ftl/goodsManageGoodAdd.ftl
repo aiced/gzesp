@@ -200,7 +200,7 @@ table{
 			}
 			
 			
-		    //ajax 操作，刷新本界面数据     	  		
+		     //ajax 操作，刷新本界面数据     	  		
 		  	 	var parms = {'goodsId':goodsId};
 				$.ajax({
 		  			 type: "POST",
@@ -213,12 +213,6 @@ table{
 		  			   
 		 		  }
 				});		
-     	      
-			
-
-
-     			
-     	
 		}
 	 </script>
 

@@ -85,6 +85,10 @@
 			  	alert("手机号格式不对，请重新输入。");
 			  	return false;
 			  }
+			  else if(!checkPhoneNum($("#txtphonenum").val()))
+			  {
+				  return false;
+			  }
 			  else
 			  {
 			  	//这里开始做验证码操作

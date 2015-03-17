@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,14 +17,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.epfl.lamp.fjbg.Main;
 
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
+import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
 
 @Controller
 @RequestMapping("/auth")
 public class WeShopRegist1Controller {
-    @Autowired
+
+    @Resource
+    TdAurDAUTHINFODao tdAurDAUTHINFODao;
+    
+	@Autowired
     private WeShopService weShopService;
+
 
     @RequestMapping("/register/step1")
     public ModelAndView index(){
@@ -33,6 +44,24 @@ public class WeShopRegist1Controller {
 //        mav.addObject("weixin", "1306520198@qq.com"); 
         
         return mav;
+    }
+    @RequestMapping("/register/checkPhoneNum")
+    @ResponseBody
+    public Boolean checkPhoneNum(@RequestBody String strPhoneNum)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(strPhoneNum);
+    	String PhoneNum = paramsMap.get("PhoneNum");
+    	System.out.println(PhoneNum);
+    	Criteria myCriteria = new Criteria();
+    	myCriteria.createConditon().andEqualTo("PHONE_NUMBER", PhoneNum);
+    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+    	System.out.println(count);
+    	if(count >= 1) {
+    		return false; //该账户已经注册了
+            
+    	} else {
+    		return true;//没有注册过
+    	}
     }
     @RequestMapping("/register/reg_step1_postdata")
     @ResponseBody

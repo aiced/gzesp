@@ -69,8 +69,8 @@ public class WeShopRegist2Controller {
     {
     	///插入数据需要用事务来处理：因为涉及到多表插入
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
-    	Long LId=getID();
     	
+    	Long LId=getID();
     	String strArea=paramsMap.get("selArea");//地区
     	String strPhoneNum = paramsMap.get("txtphonenum");//手机号
     	//String stryanzhengma=paramsMap.get("txtyanzhengma");//验证码
@@ -94,6 +94,8 @@ public class WeShopRegist2Controller {
     	System.out.println(strPersonalId);
     	System.out.println(strBank);
     	System.out.println(strBankCardId);
+    	
+    	
     	
     	//插入能人登录信息表
     	TdAurDAUTHINFO record_aurdauthinfo = new TdAurDAUTHINFO();

@@ -184,6 +184,30 @@ function checkBankCard(strBankCard)
 		});
 	return bReturn;
 }
+//判断手机号是否已经注册过
+function  checkPhoneNum(strPhoneNum)
+{
+	var bRetrun=false;
+	var param = {"PhoneNum":strPhoneNum};
+	$.ajax({
+		   type: "POST",
+		   url: "checkPhoneNum",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   //alert(bRet);
+			   if (!bRet) {
+				   alert("该手机号已经注册过");
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   bReturn=true;
+			   }
+		   }
+		});
+	return bReturn;
+}
 //倒计时发送验证码
 /*-------------------------------------------*/  
 var InterValObj; //timer变量，控制时间  

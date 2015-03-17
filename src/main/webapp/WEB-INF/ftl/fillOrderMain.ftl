@@ -11,6 +11,7 @@
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/weShopLoginIndex.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -25,7 +26,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/orderFill.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/order/netProfile.js?v=${resVer}"></script>
 
 
     <style type="text/css">
@@ -50,7 +55,9 @@
     </style>
 </head>
 <body>
-	<div>
+	
+	<!-- 订单填写主页 -->
+	<div id="orderMain">
     	<!--top_start-->
         <div id="top">
         	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
@@ -77,42 +84,42 @@
 	        <br/>
 	        <ul class="list-group">
 	            <!--入网资料-->
-	            <a href="#" class="list-group-item">
+	            <a id="netInfoTab" href="#" class="list-group-item">
 	                <label>入网资料</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--配送方式-->
-	            <a href="#" class="list-group-item">
+	            <a id="deliverInfoTab" href="#" class="list-group-item">
 	                <label>配送方式</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--物流公司-->
-	            <a href="#" class="list-group-item">
+	            <a id="postInfoTab" href="#" class="list-group-item">
 	                <label>物流公司</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--收获信息-->
-	            <a href="#" class="list-group-item">
+	            <a id="receiveInfoTab" href="#" class="list-group-item">
 	                <label>收货信息</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--支付方式-->
-	            <a href="#" class="list-group-item">
+	            <a id="payInfoTab" href="#" class="list-group-item">
 	                <label>支付方式</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--其他-->
-	            <a href="#" class="list-group-item">
+	            <a id="otherInfoTab" href="#" class="list-group-item">
 	                <label>其他</label><label class="label-sm">发票 代金券 备注 推荐人</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	        </ul>
 	
 	        <div class="list-group">
-	            <a href="#" class="list-group-item">
+	            <a href="javascript:void(0)" class="list-group-item">
 	                <label class="label-sm">商品金额</label><span class="list_gou">￥199.00</span>
 	            </a>
-	            <a href="#" class="list-group-item">
+	            <a href="javascript:void(0)" class="list-group-item">
 	                <label class="label-sm">运费</label><span class="list_gou">+ ￥00.00</span>
 	            </a>
-	            <a href="#" class="list-group-item">
+	            <a href="javascript:void(0)" class="list-group-item">
 	                <label class="label-sm">代金券</label><span class="list_gou">- ￥00.00</span>
 	            </a>
-	            <a href="#" class="list-group-item">
+	            <a href="javascript:void(0)" class="list-group-item">
 	                <label class="label-sm">应付总额</label><span class="list_gou">￥199.00</span>
 	            </a>
 	        </div>
@@ -124,8 +131,28 @@
 	        <br/>
 	        <br/>
 	        <br/>
-	        <button class="btn btn-warning btn-block " type="submit">提交订单</button>
+	        <button class="btn btn-warning btn-block " type="button" onclick="nextPage()">提交订单</button>
 	    </div>
+	</div>
+	
+	<!-- 入网资料页 -->
+	<div id="netInfo" style="display:none" >
+		<#include "picUpload.ftl"> 
+	</div>
+	
+	<!-- 收货信息页 -->
+	<div id="receiveInfo" style="display:none" >
+		<#include "newReceiveAddress.ftl"> 
+	</div>
+		
+	<!-- 支付信息页 -->
+	<div id="payInfo" style="display:none" >
+		<#include "selectPayMode.ftl"> 
+	</div>
+	
+	<!-- 其他信息页 -->
+	<div id="otherInfo" style="display:none" >
+		<#include "otherOrderInfo.ftl"> 
 	</div>
 </body>
 </html>

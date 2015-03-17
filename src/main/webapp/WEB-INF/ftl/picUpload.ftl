@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${name}的微店</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
   </head>
   
   
@@ -50,9 +43,26 @@
 	margin:2px auto;
 	display: block;
 	}
-  	    
-  	    
 	
+	.img-w {
+	    position: relative;
+	    overflow: hidden;
+	    width: 100%;
+	    padding: 15px 0px;
+	    margin-bottom: 15px;
+	    background-color: #F0F0F0;
+	    text-align: center;
+	}
+	.file-input {
+	    opacity: 0;
+	    width: 100%;
+	    height: 100%;
+	    position: absolute;
+	    bottom: 0px;
+	    left: 0px;
+	    z-index: 2;
+	}
+  	    
 </style>
 
   <body >
@@ -86,27 +96,21 @@
       <!--上传图片  -->
        
       <div style="width:100%;height:250px;text-align:center;" >
-     		     <img id ="firstCard" src="${resRoot}/image/order/card01.png" style="display:block;width:175px;height:110px;margin:0px auto;">     			
-     			      <div style="width:100%;height:15px" >
-     			    	</div>
-     	         <img id ="secondCard" src="${resRoot}/image/order/card02.png" style="display:block;width:175px;height:110px;margin:0px auto;">
-       		 		  <div style="width:100%;height:40px" >
-     			    	</div>
-       		     <a style="background-color:#FD8E4D;color:#fff;width:90%;height:35px ;line-height:35px;display: block;text-align:center;margin:0px auto;" onclick="saveClick(this); return false;"> 同意协议并确定 </a>	
+      			<div class="img-w">
+	     		     <img id ="firstCard" src="${resRoot}/image/order/card01.png" style="display:block;width:175px;height:110px;margin:0px auto;">
+	     		     <input class="file-input select-file" type="file" id="file-font" name="files[]" accept="image/*"/>     			
+	     			  <div style="width:100%;height:15px" >	</div>
+     			  </div>
+     			     
+     			 <div class="img-w"> 
+     	        	 <img id ="secondCard" src="${resRoot}/image/order/card02.png" style="display:block;width:175px;height:110px;margin:0px auto;">
+     	         	<input class="file-input select-file" type="file" id="file-back" name="files[]" accept="image/*"/>
+       		 		  <div style="width:100%;height:40px" >	</div>
+       		 	</div>
+       		     <a id="netInfoBtn" style="background-color:#FD8E4D;color:#fff;width:90%;height:35px ;line-height:35px;display: block;text-align:center;margin:0px auto;" onclick="saveClick(this); return false;"> 同意协议并确定 </a>	
     	</div>
      	
         </div>
     
-
-    
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/goodsManager/goodsManagerGoodAdd.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/order/netProfile.js?v=${resVer}"></script>
-    
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
   </body>
 </html>

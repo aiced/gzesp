@@ -21,6 +21,7 @@ import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -181,7 +182,7 @@ public class OrderController {
     }
     
     @RequestMapping("/fillOrderMain")
-    public ModelAndView index(){
+    public ModelAndView fillOrderMain(){
         ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "订单填写");
@@ -191,11 +192,15 @@ public class OrderController {
     @RequestMapping("/submitFilledOrder")
     public ModelAndView submitFilledOrder(@RequestBody String inputParams){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+    	
+    	String orderId = CommonUtil.generateOrderId();
+    	paramsMap.put("orderId", orderId);
+    	
     	orderService.insertOrder(paramsMap);
     	
-    	ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
+    	ModelAndView mav = new ModelAndView("payFee.ftl");
     	//从数据库获取信息赋值
-    	mav.addObject("title", "订单填写");
+    	mav.addObject("title", "订单支付");
     	
     	return mav;
     }

@@ -64,4 +64,32 @@ public class GoodsSql {
 		List goodsList = commonDao.queryForList(sb.toString());
 		return goodsList;
 	}
+	
+	public List GetRcdList() {
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("select distinct "
+				+ "t1.GOODS_ID as goodsId,"
+				+ "t4.PHOTO_LINKS as photoLinks"
+				);
+		sb.append(" from GDS_D_INFO t1,GDS_D_ABLE_RCD t2, GDS_D_ALBUM t3, GDS_D_PHOTO t4");
+		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
+				+ " and t1.GOODS_ID = t3.GOODS_ID"
+				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.GOODS_STATE = '1'"
+				+ " order by t1.GOODS_ID");
+		List rcdList = commonDao.queryForList(sb.toString());
+		return rcdList;
+	}
+	
+	public List DeleteRcdList(String goodId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("delete distinct ");
+		sb.append(" from GDS_D_ABLE_RCD t1");
+		sb.append("	where t1.GOODS_ID = goodId");
+		List rcdList = commonDao.queryForList(sb.toString());
+		return rcdList;
+	}
+	
+	
 }

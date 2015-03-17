@@ -13,6 +13,8 @@
   </head>
 
   <body>
+    <input type="hidden" id="baseRoot" value="${base}"></input>
+    <input type="hidden" id="user_id" value="${user_id}"></input>
   	<!-- nav bar -->
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
@@ -35,9 +37,9 @@
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-12" style="margin:0px;padding:0px">
     	  <div class="input-group">
-            <input id='weihao' type="text" class="form-control input-sm" placeholder="">
+            <input id='keyword' type="text" class="form-control input-sm" placeholder="输入商品名称关键字">
             <span class="input-group-btn">
-              <button class="btn btn-default btn-sm" type="button" onclick="queryFilter()">
+              <button class="btn btn-default btn-sm" type="button" onclick="queryPhoneList()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
               </button>
             </span>
@@ -72,37 +74,33 @@
     </div>
     
     <!-- 查询结果无数据或者异常时展示提示信息-->
-    <div class="container-fluid" style="background-color:#ffffff;margin:10px;display:none;">
+    <div class="container-fluid" style="background-color:#ffffff;margin:10px;display:none;" id="nullresult">
       <div class="row"> 
         <p class="p-td-price">查询无结果</p>  	
       </div>            
     </div>   
     
     <!-- 套餐展示表格-->
-    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding:2px" id="datagrid">
-      <div class="row" style="margin:0px;padding:0px;">
-        <div class="col-xs-4" style="padding:1px;">
-    	  <img src="${resRoot}/image/weShop/hygj.png" alt="" class="img-responsive" /> 
-    	</div>
-        <div class="col-xs-8" style="padding:0px;">
-    	  <p class="p-td">46元3G套餐 AB计划 <font color="#F70909">预存话费一得三 超大流量免费送</font></p>
-    	  <p class="p-td">得252话费</p>
-    	  <p class="p-td-price">￥84</p>
-    	</div>    	
-      </div> 
+    <div class="container-fluid" style="margin:10px;padding:0px" id="datagrid">
+      <!-- 查询结果无数据或者异常时展示提示信息-->
+      <#if  (!goodList?exists || goodList?size=0)>
+        <div class="row" id="nullresult" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;"> 
+          <p class="p-td-price">查询无结果</p>  	
+        </div>
+      </#if>
+      <!-- 有数据时展示 -->
+      <#list goodList as item>
+        <div class="row" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;" onclick="gotoGoodDetail(${item.CTLG_CODE}, ${item.GOODS_ID});">
+          <div class="col-xs-4" style="padding:1px;">
+      	    <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" /> 
+      	  </div>
+          <div class="col-xs-8" style="padding:0px;">
+      	    <p class="p-td">${item.GOODS_NAME}</p>
+      	    <p class="p-td-price">￥${item.GOODS_PRICE}</p>
+      	  </div>    	
+        </div>
+      </#list>
     </div> 
-    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding:2px" id="datagrid">
-      <div class="row" style="margin:0px;padding:0px;">
-        <div class="col-xs-4" style="padding:0px;">
-    	  <img src="${resRoot}/image/dztj/dztj_iphone6.jpg" alt="" class="img-responsive" /> 
-    	</div>
-        <div class="col-xs-8" style="padding:0px;">
-    	  <p class="p-td">46元3G套餐 AB计划 <font color="#F70909">预存话费一得三 超大流量免费送</font></p>
-    	  <p class="p-td">得252话费</p>
-    	  <p class="p-td-price">￥84</p>
-    	</div>    	
-      </div> 
-    </div>  
     
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>

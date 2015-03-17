@@ -92,6 +92,7 @@ public class OrderController {
 //    	tdOrdDBASEDao.updateByExampleSelective(record, example);
 //    	
 //    	List<Map<String, Object>> list = goodsSql.getGoodsList();
+
     	
     	
     	List<Map<String, String>> pkgList = new ArrayList();

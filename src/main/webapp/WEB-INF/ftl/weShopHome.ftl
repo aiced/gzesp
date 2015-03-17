@@ -194,8 +194,8 @@
 	            </table>
 	        </div>
 	        <div class="list-group">
-	            <a href="goodsManagePublish" class="list-group-item">商品管理 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
-	            <a href="orderQuery" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="goodsManageRecommend" class="list-group-item">商品管理 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="ordersQuery" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	            <a href="commissionQuery" class="list-group-item">佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	        </div>
 	        <div class="list-group">
@@ -222,7 +222,7 @@
 		  //[进入店铺]按钮点击
 		  $("#btnGoIntoShop").click(function(){  
 		  //在这里操作进入店铺操作
-		  	location.href = "../weShop/index";
+		  	location.href = "../weShop/index/"+${userid};
 		  });  
 		});
 	</script>

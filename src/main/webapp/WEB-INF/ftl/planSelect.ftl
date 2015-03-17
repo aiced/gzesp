@@ -35,7 +35,7 @@
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-12" style="margin:0px;padding:0px">
     	  <div class="input-group">
-            <input id='weihao' type="text" class="form-control input-sm" placeholder="">
+            <input id='weihao' type="text" class="form-control input-sm" placeholder="输入关键字">
             <span class="input-group-btn">
               <button class="btn btn-default btn-sm" type="button" onclick="queryFilter()">
                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>

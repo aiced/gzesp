@@ -266,4 +266,45 @@ public class CommonUtil {
     	String partitionId = str.substring(str.length()-2);
     	return partitionId;
     }
+    
+    /*
+     * @author wenhui 
+     * @param strBankCard 银行卡号
+     * @decs 判断银行卡号是否正确
+     * @date 2015_3_12 11:25看
+     */
+    public static Boolean checkBankCard(String strBankCard)
+    {	  
+  	  int sumOdd = 0;
+  	  int sumEven = 0;
+	  int length = strBankCard.length();
+	  System.out.println(strBankCard);
+	  System.out.println(length);
+	  int[] wei = new int[length];
+	  for (int i = 0; i < strBankCard.length(); i++) {
+    	  wei[i] = Integer.parseInt(strBankCard.substring(length - i - 1, length- i));// 从最末一位开始提取，每一位上的数值
+    	  System.out.println("第" + i + "位数字是：" + wei[i]);
+	  }
+	  for (int i = 0; i < length / 2; i++) {
+    	  sumOdd += wei[2 * i];
+    	  if ((wei[2 * i + 1] * 2) > 9)
+    		  wei[2 * i + 1] = wei[2 * i + 1] * 2 - 9;
+    	  else
+    		  wei[2 * i + 1] *= 2;
+    	  sumEven += wei[2 * i + 1];
+	  }
+	  System.out.println("奇数位的和是：" + sumOdd);
+	  System.out.println("偶数位的和是：" + sumEven);
+	  if ((sumOdd + sumEven) % 10 == 0)
+	  {
+       	  System.out.println("Recept.");
+       	  return true;
+	  }
+
+	  else
+	  {
+    	  System.out.println("Can not recept.");
+    	  return false; 
+	  }
+    }
 }

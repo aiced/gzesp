@@ -80,16 +80,19 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
      <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
-    <script type="text/javascript">
+    
+     <script type="text/javascript">
 		$(document).ready(function(){  
-		 <#if (rcdlist?size>=0) > 
+		<#if (rcdlist?size>=0) > 
 		    var index = ${rcdlist?size};
 		    if(index > 0){
 		    	index = index;
 		    }else{
 		    	index = 0;
 		    }
-		   $("#image0").click(function(){  
+
+		//点击第一件商品	
+		$("#image0").click(function(){  
 		  //在这里操作获取验证码		
 		  if(index<=0){
 			var parms = {'index':'1'};
@@ -99,81 +102,142 @@
      	    });
      	    } 		 
 		  }); 
-		  //删除
+		  
+		  //删除第一件商品
 		   $("#image00").click(function(){  
-		  //在这里操作获取验证码		
 		   	 <#list rcdlist as info>	
-		   	 	 if(${info_index}<=0){
-		  		  		  	   	var parms = {'goodsId':${info.goodsId}};
-							    $.commonFormSubmit({  
-     	        					 action : '${base}/shopManage/goodsManageGoodSelect', 
-								   	data: parms
-     	  						  }); 	  		  		  	  		  		  		  	   	
-		  		  		  	   										   	  
+		   	 	 if(${info_index}==0){
+		   	 	 //ajax 操作，刷新本界面数据     	  		
+		  	 	var parms = {'goodsId':${info.goodsId}};
+				$.ajax({
+		  			 type: "POST",
+		  			 url: "goodsManageGoodSelectDelete",
+		  			 data: parms,
+		 			 success: function(data){
+		  			   window.location.reload(); 
+		 		  }
+				});				  
 		  		  }	
 			</#list>
-		  }); 
-		   
-		   $("#image1").click(function(){  
-		  //在这里操作获取验证码
-		  if(index<=1){	  
-		  	var parms = {'index':'2'};
+			});	
+			
+			
+		//点击第二件商品	
+		$("#image1").click(function(){  
+		  //在这里操作获取验证码		
+		  if(index<=1){
+			var parms = null;
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
-     	    }); 
-     	    } 
-		  });  
-		  //删除
-		   $("#image01").click(function(){  
-		  //在这里操作获取验证码		  
-		  	alert('111');	  	
-		  }); 
-		  $("#second_row_left").click(function(){  
-		  //在这里操作获取验证码
-		 if(index<=2){	  
-		  	var parms = {'index':'3'};
-			 $.commonFormSubmit({  
-     	        action : '${base}/shopManage/goodsManageGoodAdd', 
-				data: parms
-     	    }); 
-     	    }
-		  }); 
-		  //删除
-		   $("#image02").click(function(){  
-		  //在这里操作获取验证码		  
-		  	alert('111');	  	
+     	    });
+     	    } 		 
 		  }); 
 		  
-		  $("#second_row_right").click(function(){  
-		  //在这里操作获取验证码
-		 if(index<=3){	  
-		  	var parms = {'index':'4'};
+		  //删除第二件商品
+		   $("#image01").click(function(){  
+		   	 <#list rcdlist as info>	
+		   	 	 if(${info_index}==1){
+		   	 	 //ajax 操作，刷新本界面数据     	  		
+		  	 	var parms = {'goodsId':${info.goodsId}};
+				$.ajax({
+		  			 type: "POST",
+		  			 url: "goodsManageGoodSelectDelete",
+		  			 data: parms,
+		 			 success: function(data){
+		  			   window.location.reload(); 
+		 		  }
+				});				  
+		  		  }	
+			</#list>
+			});	
+			
+		  //点击第三件商品	
+		$("#image2").click(function(){  
+		  //在这里操作获取验证码		
+		  if(index<=2){
+			var parms = null;
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
-     	    });  
-		  	}
+     	    });
+     	    } 		 
 		  }); 
-		  //删除
+		  
+		  //删除第三件商品
+		   $("#image02").click(function(){  
+		   	 <#list rcdlist as info>	
+		   	 	 if(${info_index}==2){
+		   	 	 //ajax 操作，刷新本界面数据     	  		
+		  	 	var parms = {'goodsId':${info.goodsId}};
+				$.ajax({
+		  			 type: "POST",
+		  			 url: "goodsManageGoodSelectDelete",
+		  			 data: parms,
+		 			 success: function(data){
+		  			   window.location.reload(); 
+		 		  }
+				});				  
+		  		  }	
+			</#list>
+			});	
+
+
+ 		//点击第四件商品	
+		$("#image3").click(function(){  
+		  //在这里操作获取验证码		
+		  if(index<=3){
+			var parms = null;
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodAdd', 
+				data: parms
+     	    });
+     	    } 		 
+		  }); 
+		  
+		  //删除第四件商品
 		   $("#image03").click(function(){  
-		  //在这里操作获取验证码		  
-		  	alert('111');	  	
-		  }); 
-		   	</#if>
-		
-		
-		
-			
-	    <#list rcdlist as info>	
+		   	 <#list rcdlist as info>	
+		   	 	 if(${info_index}==3){
+		   	 	 //ajax 操作，刷新本界面数据     	  		
+		  	 	var parms = {'goodsId':${info.goodsId}};
+				$.ajax({
+		  			 type: "POST",
+		  			 url: "goodsManageGoodSelectDelete",
+		  			 data: parms,
+		 			 success: function(data){
+		  			   window.location.reload(); 
+		 		  }
+				});				  
+		  		  }	
+			</#list>
+			});	
+		    
+		    
+		    
+		    
+		    
+		    
+		    <#list rcdlist as info>	
 				document.getElementById('image${info_index}').src='${info.photoLinks}';
-		</#list>
+			</#list>
+		    
+		   			
+	 	</#if>
+
+
+
+
+
+
+		  
 		});
-		
 	</script>
+    
 
 
 	<script type="text/javascript"> 
+	// 点击管理
  	function get_t(obj){
 		if(obj.innerText=="管理"){
 		obj.innerText="取消"
@@ -190,10 +254,9 @@
 		 aMark.style.display = "none";
 		</#list>
 			}
+			
 		}
 	</script>
-
-
 
   </body>
   

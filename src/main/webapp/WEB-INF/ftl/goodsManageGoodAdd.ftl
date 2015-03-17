@@ -10,7 +10,7 @@
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
          <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
-    
+         
   </head>
  
  <style type="text/css">	 
@@ -64,7 +64,13 @@ table{
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
 	        	<div id="top_middle">${title}</div>
 	        	<div id="top_right">
-	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff" onclick="saveClick(this); return false;"> 确定 </a>	
+	        			<#list goodsList as info>
+						 <#if (info_index<=0) > 
+						   <a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff" onclick="saveClick(${goodsList?size}); return false;"> 确定 </a>	
+						 </#if>
+
+	        			</#list>
+	        
 	        	</div>
 	        </div
     <!--搜索  -->
@@ -121,18 +127,18 @@ table{
 				<#list goodsList as info>			
 				<tr style="background-color:red; height:100px;">
 					<td class = "td_first" style="position:relative; height:100px;" >
-							<a style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px" onclick="showSelectedView(${info_index});return false;">
+							<a style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px" onclick="showSelectedView(${info_index},${goodsList?size});return false;">
 								<img id="unSelected" src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;">
 							</a>
 							
-							<a id="leftItemSelected_${info_index}" style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index});return false;">
-								<img src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display: block;position:absolute;" >							
+							<a  style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index},${goodsList?size});return false;">
+								<img id="leftItemSelected_${info_index}" src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display:block;visibility:hidden; position:absolute;" >							
 							</a>
 							
 					</td>
 					<td class = "td_second">
-							<a id="itemSelected_${info_index}" style="background-color:white;display:block; width:100%;height:70px;margin-top:15px;margin-bottom:15px" onclick='itemClick(${info_index})'>
-         	     				<img src="${resRoot}/image/dztj/dztj_iphone6.jpg" style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
+							<a id="itemSelected_${info_index}" style="background-color:white;display:block; width:100%;height:70px;margin-top:15px;margin-bottom:15px" onclick='itemClick(${info.goodsId})'>
+         	     				<img src='${info.photoLinks}' style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－${info.goodsCtlgName}</p> 
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">${info.goodsName}</p> 
@@ -158,7 +164,7 @@ table{
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
 	 <script>
 		function itemClick(obj) {
-			var parms = {'index':obj, 'age':'1' };
+			var parms = {'goodsId':obj};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodDetail', 
 				data: parms,
@@ -167,6 +173,55 @@ table{
      	    });  
 		}
 	</script>
+	
+	 <script>
+		function saveClick(obj) {
+			var goodsIndex = null;
+			var goodsId = null;
+			for(var i = 0;i<obj;i++){
+				var id = "leftItemSelected_" + i;
+				if (getComputedStyle(document.getElementById(id)).visibility == "visible"){
+					  goodsIndex = i;
+					  break;
+				}
+			}	
+			
+	      	<#list goodsList as info>
+	      		if(${info_index}==goodsIndex){
+	      				goodsId = ${info.goodsId};
+	      				alert("===="+goodsId);   
+	      				
+		  		  }	
+			</#list>
+
+			if(goodsId == null){
+				alert("数据为空:返回"); 
+				history.back();
+			}
+			
+			
+		    //ajax 操作，刷新本界面数据     	  		
+		  	 	var parms = {'goodsId':goodsId};
+				$.ajax({
+		  			 type: "POST",
+		  			 url: "goodsManageGoodAddInsert",
+		  			 data: parms,
+		 			 success: function(data){
+		  		//	   window.location.reload(); 
+		  	 	//   parent.location.reload();
+		  			   history.back();
+		  			   
+		 		  }
+				});		
+     	      
+			
+
+
+     			
+     	
+		}
+	 </script>
+
     
     
   </body>

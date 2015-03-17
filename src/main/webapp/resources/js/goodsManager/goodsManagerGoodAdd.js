@@ -30,24 +30,32 @@ function multipleSoft(obj) {
 
 
 // 是否选择对号
-function showSelectedView(obj) {
-	//清空所有的数据列表
-	
+function showSelectedView(obj,list_size) {
 	var id = "leftItemSelected_" + obj;
-	var aMark = document.getElementById(id);
-	  if (aMark.style.display == "none"){
-		  aMark.style.display = "block";
-	   }else{
-		   aMark.style.display = "none";
-	  }
+	if(getComputedStyle(document.getElementById(id)).visibility == "hidden"){
+        document.getElementById(id).style.visibility = "visible";
+	}else{
+        document.getElementById(id).style.visibility = "hidden";		
+	}
+	
+	//清空所有的数据列表
+//	alert('obj'+obj + 'list_size'+list_size);
+	for(var i = 0;i<list_size;i++){
+		if(i== obj){
+			continue;
+		}
+		var id = "leftItemSelected_" + i;
+		if (getComputedStyle(document.getElementById(id)).visibility == "visible"){
+			document.getElementById(id).style.visibility = "hidden";
+		   }
+	}	
+	
+
+
 	 //  从新设置数组元素，没有加入，有删除。
 	  
 }
-function saveClick(obj) {
-	alert("点击保存");   	
-	//检索style.display = "block";的数据，入库。
-	//弹出去，重新加载数据库。
-}
+
 
 
 

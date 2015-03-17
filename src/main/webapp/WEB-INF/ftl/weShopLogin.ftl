@@ -19,6 +19,46 @@
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![end if]-->
     
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script type="text/javascript">
+    	//判断输入的是否是手机号
+    	function isPhoneNum(strPhoneNum)
+    	{
+			if(strPhoneNum && /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/.test(strPhoneNum)){
+			    return true;//是手机号
+			} else{
+			    return false; //不是手机号
+			}
+    	}
+    
+		$(document).ready(function(){  
+		  if($("#hideRet").val()!="")
+		  {
+			 alert($("#hideRet").val()); 
+		  }
+
+		
+		   //[登录]按钮点击
+		  $("#btnSubmit").click(function(){  
+		  	//在这里操作登录按钮逻辑
+			var bRet=isPhoneNum($("#inputMobile").val());
+			if(!bRet)
+			{
+				alert("手机号格式不对，请重新输入。");
+				return false
+			}
+			else
+			{
+				return true;
+			}
+		  }); 
+		});
+	</script>
+    
     <style type="text/css">
         .forget_pwd{
             width: auto;
@@ -47,19 +87,20 @@
 		<div id="dv_clear"></div>
 		<!--top_end-->
         <div class="container">
-            <form class="form-signin" action="../shopManage/weShopHome" method="post">
+            <form class="form-signin" action="checklogin" method="post">
                 <br/>
                 <br/>
                 <label for="inputMobile" class="sr-only">输入手机号</label>
-                <input type="text"  id="inputMobile"  class="form-control" placeholder="输入手机号"  required autofocus>
+                <input type="text"  id="inputMobile" name="inputMobile" class="form-control" placeholder="输入手机号"  required autofocus>
                 <br/>
                 <label for="inputPassword" class="sr-only">输入密码</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="输入密码" required>
+                <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="输入密码" required>
                 <br/>
                 <br/>
                 <button class="btn btn-default btn-block" type="button" name="btnReg" id="btnReg" onClick="location.href='register/step1'">注册</button>
                 <br/>
                 <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">登录</button>
+                
             </form>
             <br/>
             <div class="forget_pwd">
@@ -69,44 +110,11 @@
         <div class="login_bottom">
            <img src="${resRoot}/image/login/wo_logo.png" width="128px" height="128px">
         </div>
+		<input type="hidden" name="hideRet" id="hideRet" value="${ret}" />  
     </div>
     
     
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script type="text/javascript">
-    	//判断输入的是否是手机号
-    	function isPhoneNum(strPhoneNum)
-    	{
-			if(strPhoneNum && /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/.test(strPhoneNum)){
-			    return true;//是手机号
-			} else{
-			    return false; //不是手机号
-			}
-    	}
-    
-		$(document).ready(function(){  
-		
-		
-		   //[登录]按钮点击
-		  $("#btnSubmit").click(function(){  
-		  	//在这里操作登录按钮逻辑
-			var bRet=isPhoneNum($("#inputMobile").val());
-			if(!bRet)
-			{
-				alert("手机号格式不对，请重新输入。");
-				return false
-			}
-			else
-			{
-				return true;
-			}
-		  });  
-		});
-	</script>
+
     
 </body>
 </html>

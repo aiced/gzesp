@@ -151,4 +151,17 @@ public class StringUtil {
         }
         return sb.toString();
     }
+    
+    public static String paddingLeft(String src, char c, int len) {
+    	if(src == null ) {
+    		src = "";
+    	}
+    	
+    	if(src.length() < len) {
+    		do {
+    			src = c + src;
+    		} while(src.length() < len);
+    	}
+    	return src;
+    }
 }

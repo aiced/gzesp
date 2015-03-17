@@ -170,7 +170,7 @@ function checkBankCard(strBankCard)
 		   data: param,
 		   async: false,
 		   success: function(bRet){
-			   alert(bRet);
+			   //alert(bRet);
 			   if (!bRet) {
 				   alert("银行卡号格式不正确，请重新输入");
 				   bReturn=false;
@@ -180,6 +180,30 @@ function checkBankCard(strBankCard)
 				   bReturn=true;
 			   }
 		     //$('#datagrid').html(data);
+		   }
+		});
+	return bReturn;
+}
+//判断手机号是否已经注册过
+function  checkPhoneNum(strPhoneNum)
+{
+	var bRetrun=false;
+	var param = {"PhoneNum":strPhoneNum};
+	$.ajax({
+		   type: "POST",
+		   url: "checkPhoneNum",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   //alert(bRet);
+			   if (!bRet) {
+				   alert("该手机号已经注册过");
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   bReturn=true;
+			   }
 		   }
 		});
 	return bReturn;
@@ -206,13 +230,30 @@ function SetRemainTime() {
         $(m_btnName).text(curCount + "秒内输入验证码");  
     }  
 }  
+//js日期比较(yyyy-mm-dd)
+function CompareDate(startDate,endDate) {
+    var arr = startDate.split("-");
+    var starttime = new Date(arr[0], arr[1], arr[2]);
+    var starttimes = starttime.getTime();
 
+    var arrs = endDate.split("-");
+    var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+    var lktimes = lktime.getTime();
+
+    if (starttimes >= lktimes) {
+        return false;
+    }
+    else
+        return true;
+
+}
+//发送验证码
 function sendMessage(strPhone,btnName) {  
     curCount = count;  
     var phone=strPhone;//手机号码  
     m_btnName=btnName;
     //产生验证码  
-    for (var i = 0; i < codeLength; i++) {  
+    for (var i = 0; i < 4; i++) {  
         code += parseInt(Math.random() * 9).toString();  
     }
     //设置button效果，开始计时  

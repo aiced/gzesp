@@ -25,5 +25,5 @@ public interface WeShopDao {
     
     public List<Map<Object, Object>> getAttrs(@Param("goods_id") String goods_id);
     
-    public List<Map<Object, Object>> queryPlanListByPage(@Param("ctlgArray") String[] ctlgArray, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+    public List<Map<Object, Object>> queryGoodListByPage(@Param("ctlgArray") String[] ctlgArray, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
 }

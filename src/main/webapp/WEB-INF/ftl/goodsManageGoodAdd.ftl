@@ -72,7 +72,7 @@ table{
 	        			</#list>
 	        
 	        	</div>
-	        </div
+	        </div>
     <!--搜索  -->
     <div style="background-color:white;width:100%;overflow:hidden;margin-top:20px;">
   			 <input id = "searchInput" type="text" placeholder="请输入商品关键字" style ="width:60%;height:30px;margin-top:10px;float:left;margin-bottom:10px;margin-left:20px;padding-left:15px;border:1px solid #A6A6A6;font-size:14px">

@@ -1,5 +1,5 @@
 var contract = {
-    	    actType : "",
+			contractType : "",
     	    conPeriod : "",
     	    proValue : "",
     	    proType : "4GMain",
@@ -39,7 +39,7 @@ function showActPkg(selectedTab) {
 // 	alert($(selectedTab).find('#returnFee_hidden').val());
 // 	alert($(selectedTab).find('#monthRtnFee_hidden').val());
 	var pkgType_val = $(selectedTab).find('#pkgType_hidden').val()
-	contract.actType = pkgType_val;
+	contract.contractType = pkgType_val;
 	
 	var nationalminutes_val = $(selectedTab).find('#nationalminutes_hidden').val()
 	$('#nationalminutes').html(nationalminutes_val);
@@ -54,11 +54,13 @@ function showActPkg(selectedTab) {
 }
 
 function nextPage() {
-//	var parms = {'name':'leoxu', 'age':'1' };
+	var tmp = {'fromPage':'selectContract' };
+	
+    var parms = $.extend({}, tmp, contract);
 	
 	 $.commonFormSubmit({  
 	        action : 'newNumberJoin', 
-	        data: contract,
+	        data: parms,
 	        success : function(rtdata, status) { 
 	        }  
 	    });  

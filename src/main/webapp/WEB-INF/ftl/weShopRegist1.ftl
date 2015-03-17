@@ -85,6 +85,10 @@
 			  	alert("手机号格式不对，请重新输入。");
 			  	return false;
 			  }
+			  else if(!checkPhoneNum($("#txtphonenum").val()))
+			  {
+				  return false;
+			  }
 			  else
 			  {
 			  	//这里开始做验证码操作
@@ -115,8 +119,8 @@
 			}
 			else 
 			{
-				//数据校验正确
-				location.href='step2';
+				////数据校验正确
+				//location.href='step2';
 				return true;
 			}	
 		  });
@@ -154,15 +158,15 @@
 		<div id="dv_clear"></div>
 		<!--top_end-->
 	    <div class="container-fluid">
-	        <form>
+	        <form action="reg_step1_postdata" method="post">
 	            <div class="input-group">
 	                <span class="input-group-addon" id="sizing-addon2">地区</span>
-	                <select class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon2">
-	                    <option>贵州</option>
-	                    <option>2</option>
-	                    <option>3</option>
-	                    <option>4</option>
-	                    <option>5</option>
+	                <select name="selArea" id="selArea" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon2">
+	                    <option value="贵州">贵州</option>
+	                    <option value="2">2</option>
+	                    <option value="3">3</option>
+	                    <option value="4">4</option>
+	                    <option value="5">5</option>
 	                </select>
 	            </div>
 	            <br/>
@@ -170,7 +174,7 @@
 	                <div class="col-xs-8 col-sm-8">
 	                    <div class="input-group">
 	                        <span class="input-group-addon" id="txtnum">+86</span>
-	                        <input type="text" class="form-control" id="txtphonenum" aria-describedby="txtnum" placeholder="请输入联通手机号">
+	                        <input type="text" class="form-control" id="txtphonenum" name="txtphonenum" aria-describedby="txtnum" placeholder="请输入联通手机号">
 	                    </div><!-- /input-group -->
 	                </div>
 	                <div class="col-xs-4 col-sm-4">
@@ -181,24 +185,24 @@
 	            <!--输入验证码-->
 	            <div class="form-group">
 	                <label for="txtyanzhengma" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtyanzhengma" placeholder="请输入验证码">
+	                <input type="text" class="form-control" id="txtyanzhengma" name="txtyanzhengma" placeholder="请输入验证码">
 	            </div>
 	            <!--输入微信号-->
 	            <div class="form-group">
 	                <label for="txtwechataccount" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtwechataccount" placeholder="请输入微信号">
+	                <input type="text" class="form-control" id="txtwechataccount" name="txtwechataccount" placeholder="请输入微信号">
 	            </div>
 	            <!--输入密码-->
 	            <div class="form-group">
 	                <label for="txtpassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtpassword" placeholder="请设置登录密码">
+	                <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="请设置登录密码">
 	            </div>
 	            <!--再次输入验证码-->
 	            <div class="form-group">
 	                <label for="txtrepassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtrepassword" placeholder="请再次设置登录密码">
+	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码">
 	            </div>
-	            <button class="btn-sm btn-warning btn-block " type="button" id="btnStep1" name="btnStep1">下一步</button>
+	            <button class="btn-sm btn-warning btn-block " type="submit" id="btnStep1" name="btnStep1">下一步</button>
 	        </form>
 	    </div>
 	</div>

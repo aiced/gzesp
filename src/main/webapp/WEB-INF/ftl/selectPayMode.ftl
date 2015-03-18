@@ -6,8 +6,6 @@
         .container-fluid
         {
             margin: 15px;
-            border: 1px solid #000000;
-            height: 200px;
         }
         .div_clear
         {

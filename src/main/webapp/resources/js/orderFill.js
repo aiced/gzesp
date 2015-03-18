@@ -153,6 +153,71 @@ $(function() {
 	    //读取文件的缓冲数组流，读取完毕后执行onload
 	    reader.readAsDataURL(f);
 	});
+	
+	//wenhui_newReceiveAddress_数值校验
+	function addres_checkData()
+	{
+		if(!$("#txtname").val())
+		{
+			alert("请填写收件人姓名");
+			return false;
+		}
+		if(!$("#txtphone").val())
+		{
+			alert("请输入手机号码");
+			return false;
+		}
+		if(!$("#txtaddress").val())
+		{
+			alert("请填写详细地址");
+		}
+		return true;
+	}
+	//wenhui_newReceiveAddress_确定按钮
+	$("#receiveInfoBtn").click(function(){
+		if(!addres_checkData())
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
+	});
+	//wenhui_otherOrderInfo_数据校验
+	function otherOrder_checkData() 
+	{
+		if(!$("#txtbilltitle").val())
+		{
+			alert("请输入发票抬头");
+			return false;
+		}
+		if(!$("#txtcash").val())
+		{
+			alert("请输入代金券");
+			return false;
+		}
+		if(!$("#txtreferences").val())
+		{
+			alert("请输入推荐人姓名");
+			return false;
+		}
+		if(!$("#txtrecommphone").val())
+		{
+			alert("请输入推荐人手机号");
+			return false
+		}
+		return true;
+	}
+	//wenhui_otherOrderInfo_确定按钮
+	$("#otherInfoBtn").click(function(){
+		if(!otherOrder_checkData())
+		{
+			return false;
+		}
+		else {
+			return true;
+		}
+	});
 })
 
 function getParams(selectedTab) {

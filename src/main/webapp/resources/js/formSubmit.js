@@ -33,7 +33,23 @@ jQuery.extend({
 		{
 			for(var i in data)
 			{
-				jQuery('<input type="hidden" name="' + i + '" value="' + data[i] + '" />').appendTo(form);
+				if((typeof data[i]=='object') && data[i].constructor == Array) {
+//					var len = data[i].length;
+//					for(var j=0; j<len; j++) {
+////						jQuery('<input type="hidden" name="' + i +'['+j+']' + '" value="' + data[i][j] + '" />').appendTo(form);
+//						if(typeof data[i][j]=='object') {
+//							for(var k in data[i][j]) {
+//								jQuery('<input type="hidden" name="' + i +'['+j+'].'+ k + '" value="' + data[i][j][k] + '" />').appendTo(form);
+//							}
+//						} else {
+//							jQuery('<input type="hidden" name="' + i +'[]'+ '" value="' + encodeURI(data[i][j]) + '" />').appendTo(form);
+//						}
+//					}
+					jQuery('<input type="hidden" name="' + i +'[]'+ '" value="' + encodeURI($.toJSON(data[i])) + '" />').appendTo(form);
+				} else if(((typeof data[i]=='number') && data[i].constructor == Number)
+					 || ((typeof data[i]=='string') && data[i].constructor == String)) {
+					jQuery('<input type="hidden" name="' + i + '" value="' + data[i] + '" />').appendTo(form);
+				}
 			}			
 		}		
 

@@ -2,15 +2,22 @@ package com.ai.gzesp.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import scala.annotation.meta.param;
+
+import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -21,15 +28,23 @@ public class WeShopOrdersQueryController {
 
     @Autowired
     private WeShopService weShopService;
+	@Resource 
+	OrdersSql ordersSql;
+	
+
     
     @RequestMapping("/ordersQuery")
-    public ModelAndView index(){
+    public ModelAndView index(@RequestParam(value = "userid", required = true)String strUserID){
+    	
+    	System.out.println(strUserID);
+    	List<Map<String, Object>> orderList=ordersSql.getOrdersListbyUserID(strUserID);
+    	
+    	
         ModelAndView mav = new ModelAndView("ordersQuery.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "我的订单");
-//        mav.addObject("phone", "18685292522"); 
-//        mav.addObject("weixin", "1306520198@qq.com"); 
-        
+        mav.addObject("orderList", orderList);
+   
         return mav;
     }
     @RequestMapping("/selectOrders")

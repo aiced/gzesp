@@ -25,6 +25,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.json.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
@@ -88,13 +89,26 @@
 	                <label>入网资料</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--配送方式-->
-	            <a id="deliverInfoTab" href="#" class="list-group-item">
-	                <label>配送方式</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
-	            </a>
+	            <div id="deliverInfoTab" class="list-group-item">
+	                <label>配送方式</label>
+	                <div id="deliver-select" class="p-list">
+                        <a href="javascript:void(0);"  value="01"  class="selected">快递配送</a>
+                        <a href="javascript:void(0);"  value="02"   >自提</a>
+                    </div>
+<!--                     <div> -->
+<!--                         <p style="display: none;" id="express-tip" class="line">中国联通免费为您配送</p> -->
+<!--                         <p id="fetch-tip" class="line" style="display: block;">请等待客户经理通知自提</p> -->
+<!--                     </div> -->
+	            </div>
 	            <!--物流公司-->
-	            <a id="postInfoTab" href="#" class="list-group-item">
-	                <label>物流公司</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
-	            </a>
+	            <div id="postInfoTab" class="list-group-item">
+	                <label>物流公司</label>
+	                <div id="post-select" class="p-list">
+                        <a href="javascript:void(0);"  value="nomal"  class="selected">不限物流</a>
+                        <a href="javascript:void(0);"  value="sf"   >顺丰速运</a>
+                    </div>
+	            </div>
+	            
 	            <!--收获信息-->
 	            <a id="receiveInfoTab" href="#" class="list-group-item">
 	                <label>收货信息</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>

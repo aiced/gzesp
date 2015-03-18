@@ -1,5 +1,7 @@
 package com.ai.gzesp.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,9 @@ import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 @Controller
 @RequestMapping("/order")
@@ -191,7 +196,8 @@ public class OrderController {
     }
     
     @RequestMapping("/submitFilledOrder")
-    public ModelAndView submitFilledOrder(@RequestBody String inputParams){
+    public ModelAndView submitFilledOrder(@RequestBody String inputParams) throws UnsupportedEncodingException{
+//    	inputParams = URLDecoder.decode(inputParams);		
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
     	String orderId = CommonUtil.generateOrderId();

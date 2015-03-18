@@ -12,14 +12,19 @@ import com.ai.gzesp.dao.beans.TdOrdDDEAL;
 import com.ai.gzesp.dao.beans.TdOrdDPAYLOG;
 import com.ai.gzesp.dao.beans.TdOrdDPOST;
 import com.ai.gzesp.dao.beans.TdOrdDPROD;
+import com.ai.gzesp.dao.beans.TdOrdDRES;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.service.TdOrdDCUSTDao;
 import com.ai.gzesp.dao.service.TdOrdDDEALDao;
 import com.ai.gzesp.dao.service.TdOrdDPAYLOGDao;
 import com.ai.gzesp.dao.service.TdOrdDPOSTDao;
+import com.ai.gzesp.dao.service.TdOrdDRESDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 @Service
 public class OrderService {
@@ -40,6 +45,9 @@ public class OrderService {
     TdOrdDPOSTDao tdOrdDPOSTDao;
     
     @Resource 
+    TdOrdDRESDao tdOrdDRESDao;
+    
+    @Resource 
     GoodsSql goodsSql;
     
     public void insertOrder(Map<String, String> paramsMap) {
@@ -49,7 +57,9 @@ public class OrderService {
     	insertOrderPayLogInfo(paramsMap);
     	insertOrderPostInfo(paramsMap);
     	insertOrderProdInfo(paramsMap);
+    	insertOrderResInfo(paramsMap);
     }
+    
     
     private void insertOrderBaseInfo(Map<String, String> paramsMap) {
     	String orderId = paramsMap.get("orderId");
@@ -199,6 +209,27 @@ public class OrderService {
     	record.setDerateFee(Long.parseLong(derateFee));
     	record.setDerateReason(derateReason);
     	record.setRecvFee(Long.parseLong(recvFee));
+    }
+    
+    private void insertOrderResInfo(Map<String, String> paramsMap) {
+    	String ordAttrStr = paramsMap.get("ordAttr");
+    	JSONArray ordAttrJson =  JSON.parseArray(ordAttrStr);
+    	String orderId = paramsMap.get("orderId");
+    	
+    	for(int i=0; i<ordAttrJson.size(); i++) {
+    		JSONObject jsonObj = ordAttrJson.getJSONObject(i);
+    		String resId = jsonObj.getString("resId");
+    		String resAttrCode = jsonObj.getString("resAttrCode");
+    		String resAttrVal = jsonObj.getString("resAttrVal");
+    		
+    		TdOrdDRES record = new TdOrdDRES();
+    		record.setOrderId(Long.parseLong(orderId));
+        	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+        	record.setResId(Long.parseLong(resId));
+        	record.setResAttrCode(resAttrCode);
+        	record.setResAttrVal(resAttrVal);
+    		tdOrdDRESDao.insertSelective(record);
+    	}
     }
     
 }

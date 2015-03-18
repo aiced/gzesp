@@ -21,6 +21,26 @@ public class GoodSelectQueryCon {
      */
     private String keyword;
     
+    /**
+     * 页数
+     */
+    private int pageNum;
+    
+    /**
+     * 每页条目数
+     */
+    private int pageSize;
+    
+    /**
+     * 排序升序asc还是降序 desc
+     */
+    private String sort;
+    
+    /**
+     * 排序字段
+     */
+    private String sortCol;
+    
 
     public String getGoodType() {
         return goodType;
@@ -36,6 +56,39 @@ public class GoodSelectQueryCon {
 
     public void setKeyword(String keyword) {
         this.keyword = keyword;
+    }
+    
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+    
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getSortCol() {
+        return sortCol;
+    }
+
+    public void setSortCol(String sortCol) {
+        this.sortCol = sortCol;
     }
 
     public GoodSelectQueryCon(){

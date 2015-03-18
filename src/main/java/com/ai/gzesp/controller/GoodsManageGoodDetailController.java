@@ -1,5 +1,6 @@
 package com.ai.gzesp.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +50,19 @@ public class GoodsManageGoodDetailController {
     	List<Map<String, Object>> goodsDetaiList = goodsSql.GetGoodsDetail(goodsId);   
 
     	
+        List<String> banners = new ArrayList<String>();
+        banners.add("banner_iphone6.png");
+        banners.add("banner_honer_x1.png");
+
+    	
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", goodsDetaiList.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-    	rspMap.put("goodsDetaiList", goodsDetaiList);  
+    	rspMap.put("goodsDetaiList", goodsDetaiList); 
+    	rspMap.put("banners", banners);  
+
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodDetail.ftl", rspMap);
 

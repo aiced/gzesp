@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdGdsDINFOMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdGdsDINFO" >
-    <result column="GOODS_ID" property="goodsId" jdbcType="DECIMAL" />
-    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <id column="GOODS_ID" property="goodsId" jdbcType="DECIMAL" />
+    <id column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
     <result column="CTLG_CODE" property="ctlgCode" jdbcType="DECIMAL" />
     <result column="GOODS_NAME" property="goodsName" jdbcType="VARCHAR" />
+    <result column="ALBUM_ID" property="albumId" jdbcType="DECIMAL" />
     <result column="VER_NO" property="verNo" jdbcType="DECIMAL" />
     <result column="MERCHANT_ID" property="merchantId" jdbcType="DECIMAL" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
@@ -87,7 +88,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    GOODS_ID, PARTITION_ID, CTLG_CODE, GOODS_NAME, VER_NO, MERCHANT_ID, CREATE_TIME, 
+    GOODS_ID, PARTITION_ID, CTLG_CODE, GOODS_NAME, ALBUM_ID, VER_NO, MERCHANT_ID, CREATE_TIME, 
     CREATE_STAFF_ID, GOODS_STATE, RECOM_TAG, PRICE_RULE, BEGIN_TIME, END_TIME, SIMP_DESC, 
     VALUES1, VALUES2
   </sql>
@@ -128,6 +129,20 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFOKey" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from GDS_D_INFO
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFOKey" >
+    delete from GDS_D_INFO
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from GDS_D_INFO
     <if test="_parameter != null" >
@@ -136,17 +151,19 @@
   </delete>
   <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFO" >
     insert into GDS_D_INFO (GOODS_ID, PARTITION_ID, CTLG_CODE, 
-      GOODS_NAME, VER_NO, MERCHANT_ID, 
-      CREATE_TIME, CREATE_STAFF_ID, GOODS_STATE, 
-      RECOM_TAG, PRICE_RULE, BEGIN_TIME, 
-      END_TIME, SIMP_DESC, VALUES1, 
-      VALUES2, CONTENT)
+      GOODS_NAME, ALBUM_ID, VER_NO, 
+      MERCHANT_ID, CREATE_TIME, CREATE_STAFF_ID, 
+      GOODS_STATE, RECOM_TAG, PRICE_RULE, 
+      BEGIN_TIME, END_TIME, SIMP_DESC, 
+      VALUES1, VALUES2, CONTENT
+      )
     values (#{goodsId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{ctlgCode,jdbcType=DECIMAL}, 
-      #{goodsName,jdbcType=VARCHAR}, #{verNo,jdbcType=DECIMAL}, #{merchantId,jdbcType=DECIMAL}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createStaffId,jdbcType=DECIMAL}, #{goodsState,jdbcType=CHAR}, 
-      #{recomTag,jdbcType=CHAR}, #{priceRule,jdbcType=CHAR}, #{beginTime,jdbcType=TIMESTAMP}, 
-      #{endTime,jdbcType=TIMESTAMP}, #{simpDesc,jdbcType=VARCHAR}, #{values1,jdbcType=VARCHAR}, 
-      #{values2,jdbcType=VARCHAR}, #{content,jdbcType=BLOB})
+      #{goodsName,jdbcType=VARCHAR}, #{albumId,jdbcType=DECIMAL}, #{verNo,jdbcType=DECIMAL}, 
+      #{merchantId,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createStaffId,jdbcType=DECIMAL}, 
+      #{goodsState,jdbcType=CHAR}, #{recomTag,jdbcType=CHAR}, #{priceRule,jdbcType=CHAR}, 
+      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{simpDesc,jdbcType=VARCHAR}, 
+      #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}, #{content,jdbcType=BLOB}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFO" >
     insert into GDS_D_INFO
@@ -162,6 +179,9 @@
       </if>
       <if test="goodsName != null" >
         GOODS_NAME,
+      </if>
+      <if test="albumId != null" >
+        ALBUM_ID,
       </if>
       <if test="verNo != null" >
         VER_NO,
@@ -215,6 +235,9 @@
       </if>
       <if test="goodsName != null" >
         #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="albumId != null" >
+        #{albumId,jdbcType=DECIMAL},
       </if>
       <if test="verNo != null" >
         #{verNo,jdbcType=DECIMAL},
@@ -278,6 +301,9 @@
       <if test="record.goodsName != null" >
         GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
       </if>
+      <if test="record.albumId != null" >
+        ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
+      </if>
       <if test="record.verNo != null" >
         VER_NO = #{record.verNo,jdbcType=DECIMAL},
       </if>
@@ -328,6 +354,7 @@
       PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
       CTLG_CODE = #{record.ctlgCode,jdbcType=DECIMAL},
       GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
       VER_NO = #{record.verNo,jdbcType=DECIMAL},
       MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
@@ -351,6 +378,7 @@
       PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
       CTLG_CODE = #{record.ctlgCode,jdbcType=DECIMAL},
       GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
       VER_NO = #{record.verNo,jdbcType=DECIMAL},
       MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
@@ -366,5 +394,101 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFO" >
+    update GDS_D_INFO
+    <set >
+      <if test="ctlgCode != null" >
+        CTLG_CODE = #{ctlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsName != null" >
+        GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="albumId != null" >
+        ALBUM_ID = #{albumId,jdbcType=DECIMAL},
+      </if>
+      <if test="verNo != null" >
+        VER_NO = #{verNo,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null" >
+        MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaffId != null" >
+        CREATE_STAFF_ID = #{createStaffId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsState != null" >
+        GOODS_STATE = #{goodsState,jdbcType=CHAR},
+      </if>
+      <if test="recomTag != null" >
+        RECOM_TAG = #{recomTag,jdbcType=CHAR},
+      </if>
+      <if test="priceRule != null" >
+        PRICE_RULE = #{priceRule,jdbcType=CHAR},
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="simpDesc != null" >
+        SIMP_DESC = #{simpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        VALUES1 = #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        VALUES2 = #{values2,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        CONTENT = #{content,jdbcType=BLOB},
+      </if>
+    </set>
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFO" >
+    update GDS_D_INFO
+    set CTLG_CODE = #{ctlgCode,jdbcType=DECIMAL},
+      GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
+      ALBUM_ID = #{albumId,jdbcType=DECIMAL},
+      VER_NO = #{verNo,jdbcType=DECIMAL},
+      MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_STAFF_ID = #{createStaffId,jdbcType=DECIMAL},
+      GOODS_STATE = #{goodsState,jdbcType=CHAR},
+      RECOM_TAG = #{recomTag,jdbcType=CHAR},
+      PRICE_RULE = #{priceRule,jdbcType=CHAR},
+      BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      SIMP_DESC = #{simpDesc,jdbcType=VARCHAR},
+      VALUES1 = #{values1,jdbcType=VARCHAR},
+      VALUES2 = #{values2,jdbcType=VARCHAR},
+      CONTENT = #{content,jdbcType=BLOB}
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdGdsDINFO" >
+    update GDS_D_INFO
+    set CTLG_CODE = #{ctlgCode,jdbcType=DECIMAL},
+      GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
+      ALBUM_ID = #{albumId,jdbcType=DECIMAL},
+      VER_NO = #{verNo,jdbcType=DECIMAL},
+      MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_STAFF_ID = #{createStaffId,jdbcType=DECIMAL},
+      GOODS_STATE = #{goodsState,jdbcType=CHAR},
+      RECOM_TAG = #{recomTag,jdbcType=CHAR},
+      PRICE_RULE = #{priceRule,jdbcType=CHAR},
+      BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      SIMP_DESC = #{simpDesc,jdbcType=VARCHAR},
+      VALUES1 = #{values1,jdbcType=VARCHAR},
+      VALUES2 = #{values2,jdbcType=VARCHAR}
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
   </update>
 </mapper>

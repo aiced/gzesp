@@ -41,6 +41,7 @@
     	<mapper resource="mybatis/mapper_oracle/TdAurDAUTHINFOMapper.xml" /> 
         <mapper resource="mybatis/mapper_oracle/TdAurDBASEINFOMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdAurDRELINFOMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdAurDCOUNTMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdGdsDABLEACTIVITYMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdGdsDABLERCDMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdGdsDALBUMMapper.xml" /> 
@@ -60,6 +61,7 @@
     	<mapper resource="mybatis/mapper_oracle/TdOrdDPAYLOGMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDPOSTMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDPRODMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDRESMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdLDEALLOGMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdRelGOODSRESMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdResDATTRMapper.xml" /> 

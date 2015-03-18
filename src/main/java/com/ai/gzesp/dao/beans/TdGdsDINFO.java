@@ -11,27 +11,11 @@ import java.util.Date;
 * @Description: GDS_D_INFO表对应的java bean类
 * @author: linyl linyuliang.85@gmail.com
  */
-public class TdGdsDINFO implements Serializable {
+public class TdGdsDINFO extends TdGdsDINFOKey implements Serializable {
     /**
      * @Fields serialVersionUID : 自动生成默认序列化ID
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 商品标识
-     */
-    /**
-     * @Fields GDS_D_INFO.GOODS_ID :商品标识
-     */
-    private Long goodsId;
-
-    /**
-     * 分区标识
-     */
-    /**
-     * @Fields GDS_D_INFO.PARTITION_ID :分区标识
-     */
-    private Short partitionId;
 
     /**
      * 目录编码
@@ -48,6 +32,14 @@ public class TdGdsDINFO implements Serializable {
      * @Fields GDS_D_INFO.GOODS_NAME :商品名称
      */
     private String goodsName;
+
+    /**
+     * 相册标识
+     */
+    /**
+     * @Fields GDS_D_INFO.ALBUM_ID :相册标识
+     */
+    private Long albumId;
 
     /**
      * 版本号
@@ -162,48 +154,6 @@ public class TdGdsDINFO implements Serializable {
     private byte[] content;
 
     /**
-     * @return 商品标识
-     */
-    /**
-     * @return GDS_D_INFO.GOODS_ID : 返回 商品标识
-     */
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    /**
-     * @param goodsId 
-	 *            商品标识
-     */
-    /**
-     * @param goodsId of GDS_D_INFO : 设置 商品标识
-     */
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
-    }
-
-    /**
-     * @return 分区标识
-     */
-    /**
-     * @return GDS_D_INFO.PARTITION_ID : 返回 分区标识
-     */
-    public Short getPartitionId() {
-        return partitionId;
-    }
-
-    /**
-     * @param partitionId 
-	 *            分区标识
-     */
-    /**
-     * @param partitionId of GDS_D_INFO : 设置 分区标识
-     */
-    public void setPartitionId(Short partitionId) {
-        this.partitionId = partitionId;
-    }
-
-    /**
      * @return 目录编码
      */
     /**
@@ -243,6 +193,27 @@ public class TdGdsDINFO implements Serializable {
      */
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName == null ? null : goodsName.trim();
+    }
+
+    /**
+     * @return 相册标识
+     */
+    /**
+     * @return GDS_D_INFO.ALBUM_ID : 返回 相册标识
+     */
+    public Long getAlbumId() {
+        return albumId;
+    }
+
+    /**
+     * @param albumId 
+	 *            相册标识
+     */
+    /**
+     * @param albumId of GDS_D_INFO : 设置 相册标识
+     */
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
     }
 
     /**

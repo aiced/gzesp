@@ -34,6 +34,17 @@ public interface TdGdsDALBUMMapper {
     int deleteByExample(Criteria example);
 
     /**
+     * 根据主键删除记录
+     */
+    /**
+    * @Title TdGdsDALBUMMapper.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除GDS_D_ALBUM
+    * @param albumId albumId
+    * @return int  删除个数
+     */
+    int deleteByPrimaryKey(Long albumId);
+
+    /**
      * 保存记录,不管记录里面的属性是否为空
      */
     /**
@@ -67,6 +78,17 @@ public interface TdGdsDALBUMMapper {
     List<TdGdsDALBUM> selectByExample(Criteria example);
 
     /**
+     * 根据主键查询记录
+     */
+    /**
+    * @Title TdGdsDALBUMMapper.selectByPrimaryKey
+    * @Description: 根据主键类，返回GDS_D_ALBUM
+    * @param albumId albumId
+    * @return TdGdsDALBUM bean对象
+     */
+    TdGdsDALBUM selectByPrimaryKey(Long albumId);
+
+    /**
      * 根据条件更新属性不为空的记录
      */
     /**
@@ -89,4 +111,26 @@ public interface TdGdsDALBUMMapper {
     * @return int 更新记录数
      */
     int updateByExample(@Param("record") TdGdsDALBUM record, @Param("example") Criteria criteria);
+
+    /**
+     * 根据主键更新属性不为空的记录
+     */
+    /**
+    * @Title TdGdsDALBUMMapper.updateByPrimaryKeySelective
+    * @Description: 根据主键更新GDS_D_ALBUM部分字段
+    * @param record 要更新成为的TdGdsDALBUM对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKeySelective(TdGdsDALBUM record);
+
+    /**
+     * 根据主键更新记录
+     */
+    /**
+    * @Title TdGdsDALBUMMapper.updateByPrimaryKey
+    * @Description: 根据主键更新GDS_D_ALBUM全部字段
+    * @param record 要更新成为的TdGdsDALBUM对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKey(TdGdsDALBUM record);
 }

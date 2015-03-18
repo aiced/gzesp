@@ -4,9 +4,7 @@ function saveClick(obj) {
 //	card01    第一张
 //	card02	  第二张	
 	var userName = document.getElementById('userName');
-	var userCard = document.getElementById('userCard');  
-	var card01 = document.getElementById('card01');   
-	var card02 = document.getElementById('card02');   
+	var userCard = document.getElementById('userCard');    
 
     if (userName.value.length == 0){
     	alert("姓名不能为空");   	
@@ -16,19 +14,20 @@ function saveClick(obj) {
     	alert("身份证号不能为空");   	
     	return;
     }
-	alert($("firstCard").attr("src").length);   	
-
-//    if(card01.attr("src").length==0){
-//    	alert("证件照片不能为空");   	
-//    	return;
-//    }else if(card02.attr("src").length==0){
-//    	alert("证件照片不能为空");   	
-//    	return;
-//    }
+    if(isCardNo(userCard.value) === false)
+	 {
+		 alert("您输入的身份证号码不正确，请重新输入");
+		 return false;
+	 }
     
-	alert("111");   	
+//	alert( $('#firstCard').attr("src"));   	
+//	alert( $('#secondCard').attr("src"));   	
 
-//	alert("姓名:"+userName.value + "卡号"+ userCard.value ); 	
-	
-	//弹出去，重新加载数据库。
+    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
+    	alert("证件照片不能为空");   	
+    	return;
+    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+    	alert("证件照片不能为空");   	
+    	return;
+    }
 }

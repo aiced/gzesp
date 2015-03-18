@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
-
+		    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    		<script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+  		    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+  		    <script src="${resRoot}/js/order/netProfile.js?v=${resVer}"></script>
+  		    
   </head>
   
   
@@ -15,34 +19,6 @@
 	  padding:0; 
    	  list-style:none;
 	 }
-	 
-	.cellDiv {background:white;width:100%;height:44px;}
-	.cellRightLable{color:#545454;margin-left:10px;width:150px;height:42px;line-height:42px;float:left;display: block;}
-	.cellTopLine{background-color:#E8E9E8;width:95%;height:0.5px;margin:auto;}
-	.avartar{width:36px;height:36px ;float:right;display: block;margin-right:10px;margin-top:4px;}
-	.input{width:140px;height:40px ;float:right;display: block;margin-right:10px;margin-top:2px; text-align:right;
-		border-left: 0;
-   		border-right: 0;
-  		border-top: 0;
-  	    border-bottom:0px;
-  	    color:#BABABA;
-  	    }
-  	 .arrow{width:10px;height:15px ;float:right;display: block;margin-right:10px;margin-top:15px;background-color:#E8E9E8;}
-  	 .qrCode{width:20px;height:20px ;float:right;display: block;margin-right:5px;margin-top:12px;background-color:#E8E9E8;}
-  	 .skin{width:20px;height:20px ;float:right;display: block;margin-right:5px;margin-top:12px;background-color:#E8E9E8;}
-  	 
-   .ok{
-    background-color:#F7A837;
-    width : 90%;
-	height : 40px;
-	line-height: 40px;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-	margin:2px auto;
-	display: block;
-	}
 	
 	.img-w {
 	    position: relative;
@@ -107,7 +83,7 @@
      	         	<input class="file-input select-file" type="file" id="file-back" name="files[]" accept="image/*"/>
        		 		  <div style="width:100%;height:40px" >	</div>
        		 	</div>
-       		     <a id="netInfoBtn" style="background-color:#FD8E4D;color:#fff;width:90%;height:35px ;line-height:35px;display: block;text-align:center;margin:0px auto;" onclick="saveClick(this); return false;"> 同意协议并确定 </a>	
+       		     <a id="netInfoBtn" style="background-color:#FD8E4D;color:#fff;width:90%;height:35px ;line-height:35px;display: block;text-align:center;margin:0px auto;" > 同意协议并确定 </a>	
     	</div>
      	
         </div>

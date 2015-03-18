@@ -49,7 +49,6 @@ $(function() {
 	
 	$('#netInfoTab').bind("click",function(){
   	  $('#netInfo').css({ "display":"block" }).siblings().css({ "display":"none" });
-  	  alert('111');
   	  return false;
     });
 	$('#receiveInfoTab').bind("click",function(){
@@ -66,6 +65,7 @@ $(function() {
 	});
 	
 	$('#netInfoBtn').bind("click",function(){
+		saveClick(null);
 		$('#netInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
 		return false;

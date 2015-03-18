@@ -253,7 +253,10 @@ $(function() {
 function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
-	
+//	orderFormParams.idCardPicUp = $('#firstCard').attr("src").val();
+//	orderFormParams.idCardPicDown = $('#secondCard').attr("src").val();
+
+	 
 	
 	var ordResArr=new Array();
 	var ordResInfo = new Object();

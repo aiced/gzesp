@@ -41,15 +41,15 @@ public class GoodSelectController {
         ModelAndView mav = null;
         String[] ctlgArray = null;
         if(Constants.GOOD_TYPE_PLAN.equals(goodType)){
-            mav = new ModelAndView("planSelect.ftl"); //新号入网套餐选择页面
+            mav = new ModelAndView("goodSelect.ftl"); //新号入网套餐选择页面
             ctlgArray = new String[]{Constants.CTLG_CODE_XHRW_5, Constants.CTLG_CODE_XHRW_10};
         }
         else if(Constants.GOOD_TYPE_PHONE.equals(goodType)){
-            mav = new ModelAndView("phoneGoodSelect.ftl"); //合约购机选择页面
+            mav = new ModelAndView("goodSelect.ftl"); //合约购机选择页面
             ctlgArray = new String[]{Constants.CTLG_CODE_HYGJ_4, Constants.CTLG_CODE_HYGJ_9};
         }
         else if(Constants.GOOD_TYPE_CARD.equals(goodType)){
-            mav = new ModelAndView("cardGoodSelect.ftl"); //上网卡选择页面
+            mav = new ModelAndView("goodSelect.ftl"); //上网卡选择页面
             ctlgArray = new String[]{Constants.CTLG_CODE_SWK_6, Constants.CTLG_CODE_SWK_11};
         }
         else if(Constants.GOOD_TYPE_FLOW.equals(goodType)){
@@ -63,11 +63,11 @@ public class GoodSelectController {
         else{
         }
         
-        //从数据库按分页查询，默认第一页,一页5个
-        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 5);
+        //从数据库按分页查询，默认第一页,一页10个
+        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 10, null, null, null);
         mav.addObject("goodList", goodList);
 
-
+        mav.addObject("good_type", goodType); //能人id赋给页面,后面一路传下去至订单完成
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
         return mav;
     }
@@ -85,15 +85,15 @@ public class GoodSelectController {
         ModelAndView mav = null;
         String[] ctlgArray = null;
         if(Constants.GOOD_TYPE_PLAN.equals(con.getGoodType())){
-            mav = new ModelAndView("planSelect.ftl"); //新号入网套餐选择页面
+            mav = new ModelAndView("goodSelectSub.ftl"); //新号入网套餐选择页面
             ctlgArray = new String[]{Constants.CTLG_CODE_XHRW_5, Constants.CTLG_CODE_XHRW_10};
         }
         else if(Constants.GOOD_TYPE_PHONE.equals(con.getGoodType())){
-            mav = new ModelAndView("phoneGoodSelectSub.ftl"); //合约购机选择页面
+            mav = new ModelAndView("goodSelectSub.ftl"); //合约购机选择页面
             ctlgArray = new String[]{Constants.CTLG_CODE_HYGJ_4, Constants.CTLG_CODE_HYGJ_9};
         }
         else if(Constants.GOOD_TYPE_CARD.equals(con.getGoodType())){
-            mav = new ModelAndView("cardGoodSelect.ftl"); //上网卡选择页面
+            mav = new ModelAndView("goodSelectSub.ftl"); //上网卡选择页面
             ctlgArray = new String[]{Constants.CTLG_CODE_SWK_6, Constants.CTLG_CODE_SWK_11};
         }
         else if(Constants.GOOD_TYPE_FLOW.equals(con.getGoodType())){
@@ -107,11 +107,11 @@ public class GoodSelectController {
         else{
         }   
         
-        //从数据库按分页查询，默认第一页,一页5个
-        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 5);
+        //从数据库按分页查询，默认第一页,一页5个 注意参数转成了小写
+        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, con.getPageNum(),
+                con.getPageSize(), con.getKeyword().toLowerCase(), con.getSort(), con.getSortCol());
         mav.addObject("goodList", goodList);
 
-        mav.addObject("goodList", null); 
         return mav;
     }
 

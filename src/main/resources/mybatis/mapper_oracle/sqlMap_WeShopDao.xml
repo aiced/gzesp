@@ -170,12 +170,31 @@
                   open="(" close=")" separator=",">
                    ${ctlg_code}
                 </foreach>
+            <if test="keyword != null">
+               and lower(a.goods_name) like '%'||#{keyword}||'%'
+            </if>
             and a.goods_id = b.goods_id
             and b.amount_type = '2' 
             and a.goods_id = c.goods_id
             and a.album_id = f.album_id
             and f.default_tag = '0'  
-          order by b.goods_amount desc
+          order by 
+          <choose>
+		    <when test="sortCol != null">
+			  ${sortCol}
+			</when>  
+		    <otherwise>
+			  b.goods_amount 
+		    </otherwise>
+	      </choose>          
+          <choose>
+		    <when test="sort != null">
+			  ${sort}
+			</when>  
+		    <otherwise>
+			  desc
+		    </otherwise>
+	      </choose>
           ) m
 	<![CDATA[
         where rownum > (${pageNum}-1)*${pageSize}

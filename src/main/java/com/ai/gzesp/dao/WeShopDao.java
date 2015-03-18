@@ -18,12 +18,14 @@ public interface WeShopDao {
     public List<Map<Object, Object>> getRxwk();
 
     public List<Map<Object, Object>> getGoodPhotos(@Param("goods_id") String goods_id);
-    
+
     public Map<Object, Object> getGoodDetail(@Param("goods_id") String goods_id, @Param("user_id") String user_id);
-    
+
     public List<Map<Object, Object>> getCitys();
-    
+
     public List<Map<Object, Object>> getAttrs(@Param("goods_id") String goods_id);
-    
-    public List<Map<Object, Object>> queryGoodListByPage(@Param("ctlgArray") String[] ctlgArray, @Param("pageNum") int pageNum, @Param("pageSize") int pageSize);
+
+    public List<Map<Object, Object>> queryGoodListByPage(@Param("ctlgArray") String[] ctlgArray,
+            @Param("pageNum") int pageNum, @Param("pageSize") int pageSize, @Param("keyword") String keyword,
+            @Param("sort") String sort, @Param("sortCol") String sortCol);
 }

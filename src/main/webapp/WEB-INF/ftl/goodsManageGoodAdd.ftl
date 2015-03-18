@@ -9,7 +9,8 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
-         <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+      <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+
          
   </head>
  
@@ -125,7 +126,7 @@ table{
 			<tbody>			
 			
 				<#list goodsList as info>			
-				<tr style="background-color:red; height:100px;">
+				<tr style=" height:100px;">
 					<td class = "td_first" style="position:relative; height:100px;" >
 							<a style="width:15px;height:15px;display: block;position:absolute;;left:10px;top:35px" onclick="showSelectedView(${info_index},${goodsList?size});return false;">
 								<img id="unSelected" src=${resRoot}/image/goodsManager/unSelected.png style="width:15px;height:15px;display: block;position:absolute;">
@@ -138,7 +139,7 @@ table{
 					</td>
 					<td class = "td_second">
 							<a id="itemSelected_${info_index}" style="background-color:white;display:block; width:100%;height:70px;margin-top:15px;margin-bottom:15px" onclick='itemClick(${info.goodsId})'>
-         	     				<img src='${info.photoLinks}' style="background-color:red;display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
+         	     				<img src='${info.photoLinks}' style="display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－${info.goodsCtlgName}</p> 
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">${info.goodsName}</p> 
@@ -176,6 +177,8 @@ table{
 	
 	 <script>
 		function saveClick(obj) {
+		
+			alert('000000');
 			var goodsIndex = null;
 			var goodsId = null;
 			for(var i = 0;i<obj;i++){
@@ -207,9 +210,8 @@ table{
 		  			 url: "goodsManageGoodAddInsert",
 		  			 data: parms,
 		 			 success: function(data){
-		  		//	   window.location.reload(); 
-		  	 	//   parent.location.reload();
-		  			   history.back();
+				   	window.history.go(-1);
+					window.location.reload()
 		  			   
 		 		  }
 				});		

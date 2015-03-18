@@ -10,7 +10,6 @@
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
      <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
-    
 
     
   </head>
@@ -82,7 +81,7 @@
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
      <script type="text/javascript">
-		$(document).ready(function(){  
+		$(document).ready(function(){ 
 		<#if (rcdlist?size>=0) > 
 		    var index = ${rcdlist?size};
 		    if(index > 0){
@@ -212,25 +211,13 @@
 		  		  }	
 			</#list>
 			});	
-		    
-		    
-		    
-		    
-		    
-		    
+
 		    <#list rcdlist as info>	
 				document.getElementById('image${info_index}').src='${info.photoLinks}';
 			</#list>
-		    
-		   			
+		
 	 	</#if>
-
-
-
-
-
-
-		  
+  
 		});
 	</script>
     

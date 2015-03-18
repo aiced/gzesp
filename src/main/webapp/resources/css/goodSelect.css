@@ -62,7 +62,11 @@ p {
 .p-td-price {
 	font-size: 14px;
 	font-weight:normal;
-	color: #F70909; 
+	color: #000000; 
 	margin:5px 5px 5px 5px;
 	padding:0px;
+}
+
+.p-td-price font{
+	color: #F70909; 
 }

@@ -23,9 +23,9 @@ body{background:#fff;}
 .goods-info > p:first-child span,.goods-info > p:first-child strong{font-weight:bold;}
 .num-info-li{padding:0 10px;border-bottom:1px solid #ddd;background:#fdfbfa;}
 .num-info .num-info-li:last-child{border-bottom:none;}
-.num-info-li > a,.num-info-li > p{display:block;line-height:20px;padding:10px 0;font-size:14px;font-weight:600;color:#000;}
+.num-info-li > a,.num-info-li > p{display:block;line-height:20px;padding:5px 0;font-size:14px;font-weight:600;color:#000;}
 .num-info-li .tabs-box{padding-bottom:10px;}
-.num-info-li label,.goods-info label{color:#999;vertical-align:middle;}
+.num-info-li label,.goods-info label{color:#999;vertical-align:middle;font-weight: 100;}
 .num-info-li .tabslist label{color:#333;}
 .num-info-li label.cf60{color:#f60;}
 .goods-info span,.num-info-li span{vertical-align:middle;}

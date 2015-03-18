@@ -104,7 +104,6 @@
                         <strong class="current-price">￥${detail.GOODS_PRICE}</strong>
                     </span>
                 </p>
-                <p><span>1200元话费长沙新用户专享(新用户专享)；语音包(合约24个月专享）(新用户专享)</span></p>
             </li>
             <li class="num-info-li">
                 <a id="goodsAssess" href="javascript:void();">
@@ -114,7 +113,7 @@
                 </a>
             </li>
             <li class="num-info-li">
-                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
+                <a href="#imageAndTextDetail" id="btn_iat"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
             <li class="num-info-li city-li">
                 <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">请选择号码</span><label color="#F70909">选择号码</label></a>

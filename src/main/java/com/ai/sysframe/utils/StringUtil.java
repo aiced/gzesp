@@ -1,5 +1,7 @@
 package com.ai.sysframe.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -58,17 +60,27 @@ public class StringUtil {
         return list;
     }
     
-    public static Map<String, String> params2Map(String inputParams) {
-        Map<String, String> map = new HashMap();
-        if(inputParams != null ) {
-        	String tmp[] = inputParams.split("&");
-        	for(String keyValStr : tmp) {
-        		String kv[] = keyValStr.split("=");
-        		if(kv.length == 2) {
-        			map.put(kv[0], kv[1]);
-        		}
-        	}
-        }
+    public static Map<String, String> params2Map(String inputParams)  {
+    	Map<String, String> map = new HashMap();
+    	try {
+			inputParams = URLDecoder.decode(inputParams, "UTF8");
+		
+	        if(inputParams != null ) {
+	        	String tmp[] = inputParams.split("&");
+	        	for(String keyValStr : tmp) {
+	        		String kv[] = keyValStr.split("=");
+	        		if(kv.length == 2) {
+	        			if(kv[0].endsWith("[]")) {
+	        				kv[0] = kv[0].substring(0, kv[0].length()-2);
+	        				kv[1] = URLDecoder.decode(kv[1], "UTF8");
+	        			}
+	        			map.put(kv[0], kv[1]);
+	        		}
+	        	}
+	        }
+    	} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
         return map;
     }
 

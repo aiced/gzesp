@@ -1,5 +1,20 @@
+
+//var ordResInfo = {
+//		resId:"",
+//		resAttrCode:"",
+//		resAttrVal:""
+//}
+
+//var ordResArr=new Array();
+
+//var ordResInfo = new Object();
+//ordResInfo.resId = "";
+//ordResInfo.resAttrCode = "";
+//ordResInfo.resAttrVal = "";
+//ordResArr.push(ordResInfo);
+
 var orderFormParams = {
-		orderFrom:"weixin",
+		orderFrom:"weixin微信",
 		originalPrice:"",
 		couponMoney:"",
 		manMadeMoney:"",
@@ -43,7 +58,10 @@ var orderFormParams = {
 		derateFee:"",
 		derateReason:"",
 		recvFee:"",
-    	};
+		
+		resAttr:""
+};
+
 
 $(function() {
 	
@@ -82,6 +100,18 @@ $(function() {
 	$('#otherInfoBtn').bind("click",function(){
 		$('#otherInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
+		return false;
+	});
+	
+	//配送方式
+	$('#deliver-select a').bind("click",function(){
+  	  $(this).addClass("selected").siblings().removeClass("selected");
+  	  return false;
+    });
+	
+	//物流选择
+	$('#post-select a').bind("click",function(){
+		$(this).addClass("selected").siblings().removeClass("selected");
 		return false;
 	});
 	
@@ -154,34 +184,37 @@ $(function() {
 	});
 })
 
-function getParams(selectedTab) {
-//	var pkgType_val = $(selectedTab).find('#pkgType_hidden').val()
-//	contract.contractType = pkgType_val;
-//	
-//	var nationalminutes_val = $(selectedTab).find('#nationalminutes_hidden').val()
-//	$('#nationalminutes').html(nationalminutes_val);
-//	var nationalthroughtput_val = $(selectedTab).find('#nationalthroughtput_hidden').val()
-//	$('#nationalthroughtput').html(nationalthroughtput_val);
-//	var totalFee_val = $(selectedTab).find('#totalFee_hidden').val()
-//	$('#totalFee').html(totalFee_val);
-//	var returnFee_val = $(selectedTab).find('#returnFee_hidden').val()
-//	$('#returnFee').html(returnFee_val);
-//	var monthRtnFee_val = $(selectedTab).find('#monthRtnFee_hidden').val()
-//	$('#monthRtnFee').html(monthRtnFee_val);
-	
+function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
+	
+	
+	var ordResArr=new Array();
+	var ordResInfo = new Object();
+	ordResInfo.resId = "1";
+	ordResInfo.resAttrCode = "颜色";
+	ordResInfo.resAttrVal = "红色";
+//	ordResArr.push($.toJSON(ordResInfo));
+	ordResArr.push(ordResInfo);
+	
+	ordResInfo = new Object();
+	ordResInfo.resId = "2";
+	ordResInfo.resAttrCode = "重量";
+	ordResInfo.resAttrVal = "100g";
+	ordResArr.push(ordResInfo);
+	
+	orderFormParams.resAttr = ordResArr;
 }
 
 
 function nextPage() {
 	var tmp = {'fromPage':'orderFill' };
-	
+	getParams();
     var parms = $.extend({}, tmp, orderFormParams);
 	
 	 $.commonFormSubmit({
 	        action : 'submitFilledOrder', 
-	        data: parms,
+	        data:  parms,
 	        success : function(rtdata, status) { 
 	        }
 	    });  

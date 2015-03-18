@@ -78,19 +78,66 @@ public class GoodsManageGoodAddController {
     	tdGdsDABLERCD.setSeqNum(seqNum);    	
     	tdGdsDABLERCDDao.insertSelective(tdGdsDABLERCD);
     	
-    	
-
-//    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
-//    	Map rspMap = new HashMap();    
-//    	rspMap.put("rspCode", "0000");   
-//    	rspMap.put("name", "weidian");   
-//    	rspMap.put("total", rcdlist.size());   
-//    	rspMap.put("title", "选择商品"); 
-//    	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-//    	rspMap.put("rcdlist", rcdlist);  
-//    	return new ModelAndView("goodsManageGoodSelect.ftl", rspMap);
-    	
-    	
     }
     
+    
+    @RequestMapping("/queryGoodsByAjax")
+	public ModelAndView queryGoodsByAjax(@RequestBody String inputParam){
+		//返回数据表格子页面
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String searchKey = paramsMap.get("searchKey");
+    	
+    	String searchType = paramsMap.get("searchType");
+    	String searchLowPrice = paramsMap.get("searchLowPrice");
+    	String searchHightPrice = paramsMap.get("searchHightPrice");
+
+    	Map rspMap = new HashMap();  
+
+    	if(searchKey!=null){
+    		rspMap.put("searchKey",searchKey);
+    	}else if(searchType!=null ||searchLowPrice !=null){
+    		if(searchType !=null){
+        		rspMap.put("searchType",searchType);    			
+    		}
+    		if(searchLowPrice!=null){
+        		rspMap.put("searchLowPrice",searchLowPrice);
+        		rspMap.put("searchHightPrice",searchHightPrice);
+    		}
+    	}  
+    	
+    	List<Map<String, Object>>goodsList = goodsSql.getGoodsListWithCondition(rspMap); 
+    	
+    	rspMap.put("rspCode", "0000");   
+    	rspMap.put("name", "weidian");   
+    	rspMap.put("total", goodsList.size());     	
+    	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
+    	rspMap.put("goodsList", goodsList);  
+    	rspMap.put("title", "选择商品"); 
+    	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
+
+//		ModelAndView mav = new ModelAndView("goodsManageGoodAddSub.ftl"); 
+		//从数据库获取信息赋值
+		//数据库分页获取号码列表 默认第一页
+//		ArrayList<HashMap<String, String>> numbers = new ArrayList<HashMap<String, String>>();
+//		HashMap<String, String> number1 = new HashMap<String, String>();
+//		number1.put("number", "13851885061");
+//		number1.put("fee", "0");
+//		HashMap<String, String> number2 = new HashMap<String, String>();
+//		number2.put("number", "13851885062");
+//		number2.put("fee", "0");
+//		HashMap<String, String> number3 = new HashMap<String, String>();
+//		number3.put("number", "13851885063");
+//		number3.put("fee", "100");
+//		numbers.add(number1);
+//		numbers.add(number2);
+//		numbers.add(number3);
+//		mav.addObject("numbers", numbers);
+//		return mav;
 }
+    
+    
+}
+
+	
+
+

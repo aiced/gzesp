@@ -92,8 +92,8 @@ table{
 		<div style="background-color:gray;float:left;width:100%;height:1px;margin-top:0px">
 		</div>
 		<!-- 筛选条件 -->
-		<div id="searchMark" style="float:left;width:100%;height:180px;top:31px;display:none;position:absolute;margin:auto;z-index:100;">
-			    	<div style="background-color:white;width:260px;height:180px;margin:auto;;border:1px solid #A6A6A6;">
+		<div id="searchMark" style="float:left;width:100%;height:600px;top:31px;display:none;position:absolute;margin:auto;z-index:100;">
+			    	<div id="searchMarkSub" style="background-color:white;width:260px;height:180px;margin:auto;;border:1px solid #A6A6A6;">
 			    		<p style="width:60px;height:20px;line-height:20px;margin-top:10px;margin-left:5px;float:left;font-size:13px;color:#807E7E">奖励区间 </p> 
 			    	    <input id="startInput" type="text" style ="width:68px;height:20px;margin-top:10px;float:left;margin-left:0px;padding-left:5px;border:1px solid #7A7A7A;font-size:14px">
 			    		<div style="background-color:#C7C7C7;float:left;width:15px;float:left;height:1px;margin-left:10px;margin-top:19px">
@@ -103,13 +103,11 @@ table{
 			    		<p style="width:100%;height:20px;line-height:20px;margin-top:10px;margin-left:5px;float:left;font-size:13px;color:#807E7E">商品类型 </p> 
 			    		<div style="background-color:#C2C2C2;float:left;width:100%;float:left;height:1px;margin-left:0px;margin-top:1px">
 						</div>
-						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(1); return false;">新网入号</a>	
-						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display:block;text-align:center;margin:auto;margin-top:10px;margin-left:35px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(2); return false;">合约购机</a>	
-						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(3); return false;">上网卡</a>	
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(1); return false;">合约购机</a>	
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display:block;text-align:center;margin:auto;margin-top:10px;margin-left:35px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(2); return false;">上网卡</a>	
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(3); return false;">宽带续约</a>	
 						
-						<a style="color:#7E7D7D;width:65px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:20px;border:1px solid #7E7D7D;font-size:2px;" onclick="setTagCondition(4); return false;">特色流量包</a>	
-						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display:block;text-align:center;margin:auto;margin-top:20px;margin-left:30px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(5); return false;">宽带续约</a>	
-						
+						<a style="color:#7E7D7D;width:65px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:20px;border:1px solid #7E7D7D;font-size:2px;" onclick="setTagCondition(4); return false;">特色流量包</a>							
 						<div style="float:left;margin-top:20px;width:100%;float:left;height:20px;margin-left:0px">
 						<a style="background-color:#4171BC;color:white;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;font-size:11px " onclick="searchPrice(this); return false;">确定</a>	
 						<a style="background-color:#D0D0D0;color:#808080;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;border:1px solid #7E7D7D;font-size:11px;resetPrice(this)" onclick="resetPrice(this); return false;">重置</a>	
@@ -123,7 +121,7 @@ table{
 	<!--列表  -->
 	  <div style="background-color:blue;width:100%;overflow:hidden">
 		<table>
-			<tbody>			
+			<tbody id = "datagrid">			
 			
 				<#list goodsList as info>			
 				<tr style=" height:100px;">
@@ -163,6 +161,14 @@ table{
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
      <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+	    <script type="text/javascript">
+		$(document).ready(function(){  
+		   //[获取验证码]按钮点击	
+		});
+	</script>
+	
+	
+	
 	 <script>
 		function itemClick(obj) {
 			var parms = {'goodsId':obj};
@@ -175,10 +181,10 @@ table{
 		}
 	</script>
 	
+	
 	 <script>
 		function saveClick(obj) {
 		
-			alert('000000');
 			var goodsIndex = null;
 			var goodsId = null;
 			for(var i = 0;i<obj;i++){
@@ -192,7 +198,6 @@ table{
 	      	<#list goodsList as info>
 	      		if(${info_index}==goodsIndex){
 	      				goodsId = ${info.goodsId};
-	      				alert("===="+goodsId);   
 	      				
 		  		  }	
 			</#list>

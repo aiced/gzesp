@@ -14,6 +14,7 @@
         }
 
     </style>
+
 </head>
 <body>
 
@@ -31,12 +32,12 @@
                 <!--输入收件人-->
                 <div class="form-group">
                     <label for="txtname" class="sr-only"></label>
-                    <input type="text" class="form-control" id="txtname" placeholder="收件人">
+                    <input type="text" class="form-control" id="txtname" name="txtname" placeholder="收件人">
                 </div>
                 <!--输入手机号-->
                 <div class="form-group">
                     <label for="txtphone" class="sr-only"></label>
-                    <input type="text" class="form-control" id="txtphone" placeholder="请输入手机号">
+                    <input type="text" class="form-control" id="txtphone" name="txtphone" placeholder="请输入手机号">
                 </div>
                 <div class="row">
                     <div class="col-xs-4 col-sm-4">
@@ -80,7 +81,7 @@
 
                 </div>
                 <br/>
-                <button id="receiveInfoBtn" class="btn btn-warning btn-block " type="submit">确定</button>
+                <button id="receiveInfoBtn" class="btn btn-warning btn-block " type="button" name="receiveInfoBtn" >确定</button>
             </form>
         </div>
     </div>

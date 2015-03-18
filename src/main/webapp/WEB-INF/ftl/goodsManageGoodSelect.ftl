@@ -10,7 +10,6 @@
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
      <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
-    
 
     
   </head>
@@ -70,9 +69,13 @@
        		     	         <img id = "image3" src="${resRoot}/image/goodsManager/addGoods.png", style="width:100%;height:100%;display: block;position:absolute;">
        		     			 <img id = "image03" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
        		</div>
+       		
+       		<input id = "hideTag" type = "hidden" name = 'hideTag' value = ${hideTag}>
+       		
      							
      </div>
 	</div>
+	
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -82,7 +85,16 @@
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
      <script type="text/javascript">
-		$(document).ready(function(){  
+     
+     	var checkboxval = $("#hideTag").val();
+		if(checkboxval == 0){
+		
+		}else{
+				 window.location.reload(); 
+		}
+     
+		$(document).ready(function(){ 
+		
 		<#if (rcdlist?size>=0) > 
 		    var index = ${rcdlist?size};
 		    if(index > 0){
@@ -95,12 +107,13 @@
 		$("#image0").click(function(){  
 		  //在这里操作获取验证码		
 		  if(index<=0){
-			var parms = {'index':'1'};
+		  $("#hideTag").attr("value",'1');
+  			var parms = null;
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
      	    });
-     	    } 		 
+     	    } 
 		  }); 
 		  
 		  //删除第一件商品
@@ -126,6 +139,7 @@
 		$("#image1").click(function(){  
 		  //在这里操作获取验证码		
 		  if(index<=1){
+		  	 $("#hideTag").attr("value",'1');
 			var parms = null;
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
@@ -156,6 +170,7 @@
 		$("#image2").click(function(){  
 		  //在这里操作获取验证码		
 		  if(index<=2){
+		  	 $("#hideTag").attr("value",'1');
 			var parms = null;
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
@@ -187,6 +202,7 @@
 		$("#image3").click(function(){  
 		  //在这里操作获取验证码		
 		  if(index<=3){
+		  	 $("#hideTag").attr("value",'1');
 			var parms = null;
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
@@ -212,26 +228,17 @@
 		  		  }	
 			</#list>
 			});	
-		    
-		    
-		    
-		    
-		    
-		    
+
 		    <#list rcdlist as info>	
 				document.getElementById('image${info_index}').src='${info.photoLinks}';
 			</#list>
-		    
-		   			
+		
 	 	</#if>
-
-
-
-
-
-
-		  
+  
 		});
+		
+		
+		
 	</script>
     
 

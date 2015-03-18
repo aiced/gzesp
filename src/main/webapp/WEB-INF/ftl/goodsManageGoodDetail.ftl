@@ -9,7 +9,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
-         <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/orderMain.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/orderMain2.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/orderMain3.css?v=${resVer}" rel="stylesheet">
     
   </head>
  <style type="text/css">	 
@@ -37,22 +40,41 @@
 	        	<div id="top_middle">${title}</div>
 				<div id="top_right">
 	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff" onclick="saveClick(this); return false;"> 确定 </a>	
-	        	</div>	 </div>
+	        	</div>	
+	</div>
     <!--图片  -->
-     <div style="width:100%;height:150px;margin-bottom:10px;" >  
-     				<!-- 当没有图片时候，会有边框，表示这里有个图片。  --> 	
-     				 <#list goodsDetaiList as info>	
-     				 	 <#if (info_index<=0) > 
-		  	 				<img src='${info.photoLinks}' style="background-color:gray;width:100%;height:98%;display: block;float:left;">  
-						 </#if>
-					</#list>
-					
-					
-     	    		<img src="${resRoot}/image/goodsManager/arrowRight.png" style="width:40px;height:40px;display: block;margin-left:20px;margin-top:-95px;float:left;">  
-     	    		<img src="${resRoot}/image/goodsManager/arrowLeft.png" style="width:40px;height:40px;display: block;margin-right:20px;margin-top:-95px;float:right;">       	    		
-     </div>
+    
+     <!-- Carousel 广告轮播-->	
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a">
+      <ol class="carousel-indicators">
+        <#list banners as item>  
+          <#if item_index=0>
+            <li data-target="#myCarousel" data-slide-to="${item_index}" class="active"></li>
+          <#else>
+            <li data-target="#myCarousel" data-slide-to="${item_index}"></li>
+          </#if>  
+        </#list>  
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <#list banners as item>
+          <#if item_index=0>
+            <div class="item active">
+          <#else>
+            <div class="item">
+          </#if>
+              <img src="${resRoot}/image/banner/${item}" alt="" />
+              <div class="container">
+                <div class="carousel-caption">
+              </div>
+            </div>
+        </div>
+        </#list>
+      </div>
+      </div>
+    
+
      <!--文字  -->
-     <div style="margin-bottom:0px;padding-top:0px;padding-bottom:15px;" > 
+     <div style="margin-bottom:0px;padding-top:10px;padding-bottom:30px;" > 
      	 <#list goodsDetaiList as info>	
      	  	 <#if (info_index<=0) > 
 							<p style="margin-left:5px;margin-right:5px;margin-bottom:5px;font-size:16px;color:#33333">套餐名称：${info.goodsName}</p>
@@ -117,9 +139,7 @@
 		 			  }
 					});		
 					}	
-	  </script>
-}
-     
+	  </script>     
 
   </body>
 </html>

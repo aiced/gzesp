@@ -3,6 +3,7 @@ package com.ai.gzesp.dao.sql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -62,6 +63,27 @@ public class GoodsSql {
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
 		
+		List goodsList = commonDao.queryForList(sb.toString());
+		return goodsList;
+	}
+	
+	public List getGoodsListWithCondition(Map rspMap) {
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("select distinct "
+				+ "t1.GOODS_ID as goodsId,"
+				+ "t1.GOODS_NAME as goodsName, "
+				+ "t2.ADD_PRICE as addPrice, "
+				+ "t4.PHOTO_LINKS as photoLinks,"
+				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
+				);
+		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
+				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
+				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
+				+ " and t1.GOODS_STATE = '1'"
+				+ " order by t1.GOODS_ID");
 		List goodsList = commonDao.queryForList(sb.toString());
 		return goodsList;
 	}

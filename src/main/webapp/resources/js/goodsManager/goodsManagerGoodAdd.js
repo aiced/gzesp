@@ -1,12 +1,24 @@
 // 点击关键字搜索按钮
 function searchWord(obj) {
 //	搜索框：searchInput
-	var aMark = document.getElementById('searchInput');
-    if (aMark.value.length == 0){
+	var searchKey = document.getElementById('searchInput');
+    if (searchKey.value.length == 0){
     	alert("请输入搜索条件");   	
     	return;
-    }    
-	alert("正在搜索关键字" + aMark.value);   	
+    }   
+	var searchKey = $('#searchInput').val();
+	var param = {"searchKey":searchKey};
+
+	$.ajax({
+		   type: "POST",
+		   url: "queryGoodsByAjax",
+		   data: param,
+		   success: function(data){
+			   //alert(data);
+		     $('#datagrid').html(data);
+		   }
+		});	
+
 }
 
 
@@ -19,6 +31,8 @@ function showFlowView(whichpic) {
 	  aMark.style.display = "block";
    }else{
 	   aMark.style.display = "none";
+	   var startInput = document.getElementById('searchInput');
+	   startInput.value = null;
   }  
 }
 
@@ -75,9 +89,25 @@ function searchPrice(obj) {
     	alert("起始价格 要小于 终止价格");   	
     	return;
     }
-	alert("起始价格:"+startInput.value + "终止价格："+ endInput.value );   	
+	var searchLowPrice = startInput.value;
+	var searchHightPrice = endInput.value;
+ 	alert("起始价格:"+searchLowPrice + "终止价格："+ searchHightPrice );   	
+
+    var param = {"searchLowPrice":searchLowPrice,"searchHightPrice":searchHightPrice};
+	$.ajax({
+		   type: "POST",
+		   url: "queryGoodsByAjax",
+		   data: param,
+		   success: function(data){
+		     $('#datagrid').html(data);
+		     showFlowView(obj);
+		   }
+		});
+	
 
 }
+
+
 
 function resetPrice(obj) {
 	var startInput = document.getElementById('startInput');
@@ -87,13 +117,24 @@ function resetPrice(obj) {
 }
 
 //  选择类型：
-//1:新网入号;
-//2:合约购机
-//3:上网卡
+//1:合约购机
+//2:上网卡
+//3:宽带预约
 //4:特色流量包
-//5:宽带预约
 function setTagCondition(obj) {
-	alert('点击了'+ obj);   	
+	
+	var searchKey = obj;
+	alert('点击了'+ searchKey);   
+    var param = {"searchKey":searchKey};
+	$.ajax({
+		   type: "POST",
+		   url: "queryGoodsByAjax",
+		   data: param,
+		   success: function(data){
+		     $('#datagrid').html(data);
+		     showFlowView(obj);
+		   }
+		});
 }
 
 

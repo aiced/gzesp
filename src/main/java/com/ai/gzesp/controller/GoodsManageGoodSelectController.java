@@ -51,9 +51,10 @@ public class GoodsManageGoodSelectController {
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", rcdlist.size());   
-    	rspMap.put("title", "选择商品"); 
+    	rspMap.put("title", "选择商品");
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
     	rspMap.put("rcdlist", rcdlist);  
+    	rspMap.put("hideTag", 0);      	
     	return new ModelAndView("goodsManageGoodSelect.ftl", rspMap);
 
     }

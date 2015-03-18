@@ -86,4 +86,11 @@ public class StringTypeHandler extends BaseTypeHandler<Object> {
     public void setNonNullParameter(final PreparedStatement ps, final int i, final Object parameter, final JdbcType jdbcType) throws SQLException {
         ps.setString(i, parameter.toString());
     }
+
+	@Override
+	public Object getNullableResult(ResultSet rs, int columnIndex)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -2,6 +2,7 @@ package com.ai.gzesp.dao.persistence;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdGdsDINFO;
+import com.ai.gzesp.dao.beans.TdGdsDINFOKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,6 +33,17 @@ public interface TdGdsDINFOMapper {
     * @return int  删除个数
      */
     int deleteByExample(Criteria example);
+
+    /**
+     * 根据主键删除记录
+     */
+    /**
+    * @Title TdGdsDINFOMapper.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除GDS_D_INFO
+    * @param key key
+    * @return int  删除个数
+     */
+    int deleteByPrimaryKey(TdGdsDINFOKey key);
 
     /**
      * 保存记录,不管记录里面的属性是否为空
@@ -72,6 +84,17 @@ public interface TdGdsDINFOMapper {
     List<TdGdsDINFO> selectByExample(Criteria example);
 
     /**
+     * 根据主键查询记录
+     */
+    /**
+    * @Title TdGdsDINFOMapper.selectByPrimaryKey
+    * @Description: 根据主键类，返回GDS_D_INFO
+    * @param key key
+    * @return TdGdsDINFO bean对象
+     */
+    TdGdsDINFO selectByPrimaryKey(TdGdsDINFOKey key);
+
+    /**
      * 根据条件更新属性不为空的记录
      */
     /**
@@ -99,4 +122,31 @@ public interface TdGdsDINFOMapper {
     * @return int 更新记录数
      */
     int updateByExample(@Param("record") TdGdsDINFO record, @Param("example") Criteria criteria);
+
+    /**
+     * 根据主键更新属性不为空的记录
+     */
+    /**
+    * @Title TdGdsDINFOMapper.updateByPrimaryKeySelective
+    * @Description: 根据主键更新GDS_D_INFO部分字段
+    * @param record 要更新成为的TdGdsDINFO对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKeySelective(TdGdsDINFO record);
+
+    /**
+     * 根据主键更新记录
+     */
+    int updateByPrimaryKeyWithBLOBs(TdGdsDINFO record);
+
+    /**
+     * 根据主键更新记录
+     */
+    /**
+    * @Title TdGdsDINFOMapper.updateByPrimaryKey
+    * @Description: 根据主键更新GDS_D_INFO全部字段
+    * @param record 要更新成为的TdGdsDINFO对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKey(TdGdsDINFO record);
 }

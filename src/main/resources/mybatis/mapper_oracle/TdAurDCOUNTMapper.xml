@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ai.gzesp.dao.persistence.TdGdsDALBUMMapper" >
-  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    <id column="ALBUM_ID" property="albumId" jdbcType="DECIMAL" />
-    <result column="VER_NO" property="verNo" jdbcType="DECIMAL" />
-    <result column="ALBUM_EXPLAIN" property="albumExplain" jdbcType="VARCHAR" />
-    <result column="USED_CHANNEL" property="usedChannel" jdbcType="CHAR" />
-    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
-    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+<mapper namespace="com.ai.gzesp.dao.persistence.TdAurDCOUNTMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdAurDCOUNT" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="STORE_ID" property="storeId" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="VISIT_DAY" property="visitDay" jdbcType="DECIMAL" />
+    <result column="VISIT_MONTH" property="visitMonth" jdbcType="DECIMAL" />
+    <result column="VISIT_TOTAL" property="visitTotal" jdbcType="DECIMAL" />
+    <result column="VERSION_NO" property="versionNo" jdbcType="DECIMAL" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -74,7 +76,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ALBUM_ID, VER_NO, ALBUM_EXPLAIN, USED_CHANNEL, VALUES1, VALUES2
+    ID, STORE_ID, USER_ID, VISIT_DAY, VISIT_MONTH, VISIT_TOTAL, VERSION_NO, UPDATE_TIME
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -83,7 +85,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from GDS_D_ALBUM
+    from AUR_D_COUNT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,99 +94,107 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from GDS_D_ALBUM
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from GDS_D_ALBUM
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
-  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
-    delete from GDS_D_ALBUM
+    delete from AUR_D_COUNT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    insert into GDS_D_ALBUM (ALBUM_ID, VER_NO, ALBUM_EXPLAIN, 
-      USED_CHANNEL, VALUES1, VALUES2
-      )
-    values (#{albumId,jdbcType=DECIMAL}, #{verNo,jdbcType=DECIMAL}, #{albumExplain,jdbcType=VARCHAR}, 
-      #{usedChannel,jdbcType=CHAR}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdAurDCOUNT" >
+    insert into AUR_D_COUNT (ID, STORE_ID, USER_ID, 
+      VISIT_DAY, VISIT_MONTH, VISIT_TOTAL, 
+      VERSION_NO, UPDATE_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{storeId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{visitDay,jdbcType=DECIMAL}, #{visitMonth,jdbcType=DECIMAL}, #{visitTotal,jdbcType=DECIMAL}, 
+      #{versionNo,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    insert into GDS_D_ALBUM
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdAurDCOUNT" >
+    insert into AUR_D_COUNT
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="albumId != null" >
-        ALBUM_ID,
+      <if test="id != null" >
+        ID,
       </if>
-      <if test="verNo != null" >
-        VER_NO,
+      <if test="storeId != null" >
+        STORE_ID,
       </if>
-      <if test="albumExplain != null" >
-        ALBUM_EXPLAIN,
+      <if test="userId != null" >
+        USER_ID,
       </if>
-      <if test="usedChannel != null" >
-        USED_CHANNEL,
+      <if test="visitDay != null" >
+        VISIT_DAY,
       </if>
-      <if test="values1 != null" >
-        VALUES1,
+      <if test="visitMonth != null" >
+        VISIT_MONTH,
       </if>
-      <if test="values2 != null" >
-        VALUES2,
+      <if test="visitTotal != null" >
+        VISIT_TOTAL,
+      </if>
+      <if test="versionNo != null" >
+        VERSION_NO,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="albumId != null" >
-        #{albumId,jdbcType=DECIMAL},
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
       </if>
-      <if test="verNo != null" >
-        #{verNo,jdbcType=DECIMAL},
+      <if test="storeId != null" >
+        #{storeId,jdbcType=VARCHAR},
       </if>
-      <if test="albumExplain != null" >
-        #{albumExplain,jdbcType=VARCHAR},
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
       </if>
-      <if test="usedChannel != null" >
-        #{usedChannel,jdbcType=CHAR},
+      <if test="visitDay != null" >
+        #{visitDay,jdbcType=DECIMAL},
       </if>
-      <if test="values1 != null" >
-        #{values1,jdbcType=VARCHAR},
+      <if test="visitMonth != null" >
+        #{visitMonth,jdbcType=DECIMAL},
       </if>
-      <if test="values2 != null" >
-        #{values2,jdbcType=VARCHAR},
+      <if test="visitTotal != null" >
+        #{visitTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="versionNo != null" >
+        #{versionNo,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
-    select count(*) from GDS_D_ALBUM
+    select count(*) from AUR_D_COUNT
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update GDS_D_ALBUM
+    update AUR_D_COUNT
     <set >
-      <if test="record.albumId != null" >
-        ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=DECIMAL},
       </if>
-      <if test="record.verNo != null" >
-        VER_NO = #{record.verNo,jdbcType=DECIMAL},
+      <if test="record.storeId != null" >
+        STORE_ID = #{record.storeId,jdbcType=VARCHAR},
       </if>
-      <if test="record.albumExplain != null" >
-        ALBUM_EXPLAIN = #{record.albumExplain,jdbcType=VARCHAR},
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
       </if>
-      <if test="record.usedChannel != null" >
-        USED_CHANNEL = #{record.usedChannel,jdbcType=CHAR},
+      <if test="record.visitDay != null" >
+        VISIT_DAY = #{record.visitDay,jdbcType=DECIMAL},
       </if>
-      <if test="record.values1 != null" >
-        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      <if test="record.visitMonth != null" >
+        VISIT_MONTH = #{record.visitMonth,jdbcType=DECIMAL},
       </if>
-      <if test="record.values2 != null" >
-        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      <if test="record.visitTotal != null" >
+        VISIT_TOTAL = #{record.visitTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="record.versionNo != null" >
+        VERSION_NO = #{record.versionNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -192,45 +202,17 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update GDS_D_ALBUM
-    set ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
-      VER_NO = #{record.verNo,jdbcType=DECIMAL},
-      ALBUM_EXPLAIN = #{record.albumExplain,jdbcType=VARCHAR},
-      USED_CHANNEL = #{record.usedChannel,jdbcType=CHAR},
-      VALUES1 = #{record.values1,jdbcType=VARCHAR},
-      VALUES2 = #{record.values2,jdbcType=VARCHAR}
+    update AUR_D_COUNT
+    set ID = #{record.id,jdbcType=DECIMAL},
+      STORE_ID = #{record.storeId,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      VISIT_DAY = #{record.visitDay,jdbcType=DECIMAL},
+      VISIT_MONTH = #{record.visitMonth,jdbcType=DECIMAL},
+      VISIT_TOTAL = #{record.visitTotal,jdbcType=DECIMAL},
+      VERSION_NO = #{record.versionNo,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    update GDS_D_ALBUM
-    <set >
-      <if test="verNo != null" >
-        VER_NO = #{verNo,jdbcType=DECIMAL},
-      </if>
-      <if test="albumExplain != null" >
-        ALBUM_EXPLAIN = #{albumExplain,jdbcType=VARCHAR},
-      </if>
-      <if test="usedChannel != null" >
-        USED_CHANNEL = #{usedChannel,jdbcType=CHAR},
-      </if>
-      <if test="values1 != null" >
-        VALUES1 = #{values1,jdbcType=VARCHAR},
-      </if>
-      <if test="values2 != null" >
-        VALUES2 = #{values2,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    update GDS_D_ALBUM
-    set VER_NO = #{verNo,jdbcType=DECIMAL},
-      ALBUM_EXPLAIN = #{albumExplain,jdbcType=VARCHAR},
-      USED_CHANNEL = #{usedChannel,jdbcType=CHAR},
-      VALUES1 = #{values1,jdbcType=VARCHAR},
-      VALUES2 = #{values2,jdbcType=VARCHAR}
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
   </update>
 </mapper>

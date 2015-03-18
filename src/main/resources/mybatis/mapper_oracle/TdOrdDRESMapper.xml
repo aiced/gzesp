@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ai.gzesp.dao.persistence.TdGdsDALBUMMapper" >
-  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    <id column="ALBUM_ID" property="albumId" jdbcType="DECIMAL" />
-    <result column="VER_NO" property="verNo" jdbcType="DECIMAL" />
-    <result column="ALBUM_EXPLAIN" property="albumExplain" jdbcType="VARCHAR" />
-    <result column="USED_CHANNEL" property="usedChannel" jdbcType="CHAR" />
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDRESMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDRES" >
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="RES_ID" property="resId" jdbcType="DECIMAL" />
+    <result column="RES_ATTR_CODE" property="resAttrCode" jdbcType="CHAR" />
+    <result column="RES_ATTR_VAL" property="resAttrVal" jdbcType="VARCHAR" />
     <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
     <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
   </resultMap>
@@ -74,7 +75,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ALBUM_ID, VER_NO, ALBUM_EXPLAIN, USED_CHANNEL, VALUES1, VALUES2
+    ORDER_ID, PARTITION_ID, RES_ID, RES_ATTR_CODE, RES_ATTR_VAL, VALUES1, VALUES2
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -83,7 +84,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from GDS_D_ALBUM
+    from ORD_D_RES
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -92,44 +93,37 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from GDS_D_ALBUM
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from GDS_D_ALBUM
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
-  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
-    delete from GDS_D_ALBUM
+    delete from ORD_D_RES
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    insert into GDS_D_ALBUM (ALBUM_ID, VER_NO, ALBUM_EXPLAIN, 
-      USED_CHANNEL, VALUES1, VALUES2
-      )
-    values (#{albumId,jdbcType=DECIMAL}, #{verNo,jdbcType=DECIMAL}, #{albumExplain,jdbcType=VARCHAR}, 
-      #{usedChannel,jdbcType=CHAR}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}
-      )
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDRES" >
+    insert into ORD_D_RES (ORDER_ID, PARTITION_ID, RES_ID, 
+      RES_ATTR_CODE, RES_ATTR_VAL, VALUES1, 
+      VALUES2)
+    values (#{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{resId,jdbcType=DECIMAL}, 
+      #{resAttrCode,jdbcType=CHAR}, #{resAttrVal,jdbcType=VARCHAR}, #{values1,jdbcType=VARCHAR}, 
+      #{values2,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    insert into GDS_D_ALBUM
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDRES" >
+    insert into ORD_D_RES
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="albumId != null" >
-        ALBUM_ID,
+      <if test="orderId != null" >
+        ORDER_ID,
       </if>
-      <if test="verNo != null" >
-        VER_NO,
+      <if test="partitionId != null" >
+        PARTITION_ID,
       </if>
-      <if test="albumExplain != null" >
-        ALBUM_EXPLAIN,
+      <if test="resId != null" >
+        RES_ID,
       </if>
-      <if test="usedChannel != null" >
-        USED_CHANNEL,
+      <if test="resAttrCode != null" >
+        RES_ATTR_CODE,
+      </if>
+      <if test="resAttrVal != null" >
+        RES_ATTR_VAL,
       </if>
       <if test="values1 != null" >
         VALUES1,
@@ -139,17 +133,20 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="albumId != null" >
-        #{albumId,jdbcType=DECIMAL},
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
       </if>
-      <if test="verNo != null" >
-        #{verNo,jdbcType=DECIMAL},
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
       </if>
-      <if test="albumExplain != null" >
-        #{albumExplain,jdbcType=VARCHAR},
+      <if test="resId != null" >
+        #{resId,jdbcType=DECIMAL},
       </if>
-      <if test="usedChannel != null" >
-        #{usedChannel,jdbcType=CHAR},
+      <if test="resAttrCode != null" >
+        #{resAttrCode,jdbcType=CHAR},
+      </if>
+      <if test="resAttrVal != null" >
+        #{resAttrVal,jdbcType=VARCHAR},
       </if>
       <if test="values1 != null" >
         #{values1,jdbcType=VARCHAR},
@@ -160,25 +157,28 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
-    select count(*) from GDS_D_ALBUM
+    select count(*) from ORD_D_RES
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update GDS_D_ALBUM
+    update ORD_D_RES
     <set >
-      <if test="record.albumId != null" >
-        ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
       </if>
-      <if test="record.verNo != null" >
-        VER_NO = #{record.verNo,jdbcType=DECIMAL},
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
       </if>
-      <if test="record.albumExplain != null" >
-        ALBUM_EXPLAIN = #{record.albumExplain,jdbcType=VARCHAR},
+      <if test="record.resId != null" >
+        RES_ID = #{record.resId,jdbcType=DECIMAL},
       </if>
-      <if test="record.usedChannel != null" >
-        USED_CHANNEL = #{record.usedChannel,jdbcType=CHAR},
+      <if test="record.resAttrCode != null" >
+        RES_ATTR_CODE = #{record.resAttrCode,jdbcType=CHAR},
+      </if>
+      <if test="record.resAttrVal != null" >
+        RES_ATTR_VAL = #{record.resAttrVal,jdbcType=VARCHAR},
       </if>
       <if test="record.values1 != null" >
         VALUES1 = #{record.values1,jdbcType=VARCHAR},
@@ -192,45 +192,16 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update GDS_D_ALBUM
-    set ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
-      VER_NO = #{record.verNo,jdbcType=DECIMAL},
-      ALBUM_EXPLAIN = #{record.albumExplain,jdbcType=VARCHAR},
-      USED_CHANNEL = #{record.usedChannel,jdbcType=CHAR},
+    update ORD_D_RES
+    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      RES_ID = #{record.resId,jdbcType=DECIMAL},
+      RES_ATTR_CODE = #{record.resAttrCode,jdbcType=CHAR},
+      RES_ATTR_VAL = #{record.resAttrVal,jdbcType=VARCHAR},
       VALUES1 = #{record.values1,jdbcType=VARCHAR},
       VALUES2 = #{record.values2,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    update GDS_D_ALBUM
-    <set >
-      <if test="verNo != null" >
-        VER_NO = #{verNo,jdbcType=DECIMAL},
-      </if>
-      <if test="albumExplain != null" >
-        ALBUM_EXPLAIN = #{albumExplain,jdbcType=VARCHAR},
-      </if>
-      <if test="usedChannel != null" >
-        USED_CHANNEL = #{usedChannel,jdbcType=CHAR},
-      </if>
-      <if test="values1 != null" >
-        VALUES1 = #{values1,jdbcType=VARCHAR},
-      </if>
-      <if test="values2 != null" >
-        VALUES2 = #{values2,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdGdsDALBUM" >
-    update GDS_D_ALBUM
-    set VER_NO = #{verNo,jdbcType=DECIMAL},
-      ALBUM_EXPLAIN = #{albumExplain,jdbcType=VARCHAR},
-      USED_CHANNEL = #{usedChannel,jdbcType=CHAR},
-      VALUES1 = #{values1,jdbcType=VARCHAR},
-      VALUES2 = #{values2,jdbcType=VARCHAR}
-    where ALBUM_ID = #{albumId,jdbcType=DECIMAL}
   </update>
 </mapper>

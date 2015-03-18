@@ -40,6 +40,16 @@ public class TdGdsDALBUMDao extends ITableDao {
     }
 
     /**
+    * @Title TdGdsDALBUMDao.selectByPrimaryKey
+    * @Description: 根据主键类，返回GDS_D_ALBUM
+    * @param albumId albumId
+    * @return TdGdsDALBUM bean对象
+     */
+    public TdGdsDALBUM selectByPrimaryKey(Long albumId) {
+        return this.tdGdsDALBUMMapper.selectByPrimaryKey(albumId);
+    }
+
+    /**
     * @Title TdGdsDALBUMDao.selectByExample
     * @Description: 根据查询条件类，返回GDS_D_ALBUM结果集
     * @param example 通用查询条件类
@@ -47,6 +57,36 @@ public class TdGdsDALBUMDao extends ITableDao {
      */
     public List<TdGdsDALBUM> selectByExample(Criteria example) {
         return this.tdGdsDALBUMMapper.selectByExample(example);
+    }
+
+    /**
+    * @Title TdGdsDALBUMDao.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除GDS_D_ALBUM
+    * @param albumId albumId
+    * @return int  删除个数
+     */
+    public int deleteByPrimaryKey(Long albumId) {
+        return this.tdGdsDALBUMMapper.deleteByPrimaryKey(albumId);
+    }
+
+    /**
+    * @Title TdGdsDALBUMDao.updateByPrimaryKeySelective
+    * @Description: 根据主键更新GDS_D_ALBUM部分字段
+    * @param record 要更新成为的TdGdsDALBUM对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKeySelective(TdGdsDALBUM record) {
+        return this.tdGdsDALBUMMapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+    * @Title TdGdsDALBUMDao.updateByPrimaryKey
+    * @Description: 根据主键更新GDS_D_ALBUM全部字段
+    * @param record 要更新成为的TdGdsDALBUM对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKey(TdGdsDALBUM record) {
+        return this.tdGdsDALBUMMapper.updateByPrimaryKey(record);
     }
 
     /**

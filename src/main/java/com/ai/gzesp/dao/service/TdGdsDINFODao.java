@@ -2,6 +2,7 @@ package com.ai.gzesp.dao.service;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdGdsDINFO;
+import com.ai.gzesp.dao.beans.TdGdsDINFOKey;
 import com.ai.gzesp.dao.persistence.TdGdsDINFOMapper;
 import java.util.List;
 import javax.annotation.Resource;
@@ -40,6 +41,16 @@ public class TdGdsDINFODao extends ITableDao {
     }
 
     /**
+    * @Title TdGdsDINFODao.selectByPrimaryKey
+    * @Description: 根据主键类，返回GDS_D_INFO
+    * @param key key
+    * @return TdGdsDINFO bean对象
+     */
+    public TdGdsDINFO selectByPrimaryKey(TdGdsDINFOKey key) {
+        return this.tdGdsDINFOMapper.selectByPrimaryKey(key);
+    }
+
+    /**
     * @Title TdGdsDINFODao.selectByExample
     * @Description: 根据查询条件类，返回GDS_D_INFO结果集
     * @param example 通用查询条件类
@@ -47,6 +58,36 @@ public class TdGdsDINFODao extends ITableDao {
      */
     public List<TdGdsDINFO> selectByExample(Criteria example) {
         return this.tdGdsDINFOMapper.selectByExampleWithBLOBs(example);
+    }
+
+    /**
+    * @Title TdGdsDINFODao.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除GDS_D_INFO
+    * @param key key
+    * @return int  删除个数
+     */
+    public int deleteByPrimaryKey(TdGdsDINFOKey key) {
+        return this.tdGdsDINFOMapper.deleteByPrimaryKey(key);
+    }
+
+    /**
+    * @Title TdGdsDINFODao.updateByPrimaryKeySelective
+    * @Description: 根据主键更新GDS_D_INFO部分字段
+    * @param record 要更新成为的TdGdsDINFO对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKeySelective(TdGdsDINFO record) {
+        return this.tdGdsDINFOMapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+    * @Title TdGdsDINFODao.updateByPrimaryKey
+    * @Description: 根据主键更新GDS_D_INFO全部字段
+    * @param record 要更新成为的TdGdsDINFO对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKey(TdGdsDINFO record) {
+        return this.tdGdsDINFOMapper.updateByPrimaryKeyWithBLOBs(record);
     }
 
     /**

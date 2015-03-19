@@ -14,11 +14,10 @@
 //ordResArr.push(ordResInfo);
 
 var orderStat = {
-		netInfo:0,
-		netInfo:0,
-		netInfo:0,
-		netInfo:0,
-		netInfo:0
+		netInfoStat:0,
+		receiveInfoStat:0,
+		payInfoStat:0,
+		otherInfoStat:0
 }
 
 var orderFormParams = {
@@ -92,7 +91,7 @@ $(function() {
 	
 	//子页确认事件
 	$('#netInfoBtn').bind("click",function(){
-		if(saveClick()) {
+		if(netInfo_checkData()) {
 			$('#netInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -226,6 +225,42 @@ function otherOrder_checkData()
 		return false
 	}
 	return true;
+}
+
+//入网信息验证
+function netInfo_checkData() {
+//	userName  姓名
+//	userCard  身份证号
+//	card01    第一张
+//	card02	  第二张	
+	var userName = document.getElementById('userName');
+	var userCard = document.getElementById('userCard');    
+
+    if (userName.value.length == 0){
+    	alert("姓名不能为空");   	
+    	return false;
+    }else if(userCard.value.length == 0){
+//    	身份证验证
+    	alert("身份证号不能为空");   	
+    	return false;
+    }
+    if(isCardNo(userCard.value) === false)
+	 {
+		 alert("您输入的身份证号码不正确，请重新输入");
+		 return false;
+	 }
+    
+//	alert( $('#firstCard').attr("src"));   	
+//	alert( $('#secondCard').attr("src"));   	
+
+    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }
+    return ture;
 }
 
 function getParams() {

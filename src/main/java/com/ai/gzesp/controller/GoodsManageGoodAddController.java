@@ -106,7 +106,6 @@ public class GoodsManageGoodAddController {
     	}  
     	
     	List<Map<String, Object>>goodsList = goodsSql.getGoodsListWithCondition(rspMap); 
-    	
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", goodsList.size());     	

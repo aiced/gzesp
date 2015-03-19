@@ -2,6 +2,7 @@ package com.ai.gzesp.dao.sql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -68,6 +69,31 @@ public class GoodsSql {
 	}
 	
 	public List getGoodsListWithCondition(Map rspMap) {
+		
+//		Iterator it= rspMap.keySet().iterator();    
+//		while(it.hasNext()){    
+//		     String key;    
+//		     String value;    
+//		     key=it.next().toString();    
+//		     value= rspMap.get(key);    
+//		     System.out.println(key+"--"+value);    
+//		}  
+//		
+//		for(Map.Entry<String, String> entry:rspMap.entrySet()){    
+//		     System.out.println(entry.getKey()+"--->"+entry.getValue());    
+//		}   
+		
+		Iterator it=rspMap.entrySet().iterator();           
+		System.out.println( rspMap.entrySet().size());    
+		String key;           
+		String value;    
+		while(it.hasNext()){    
+		        Map.Entry entry = (Map.Entry)it.next();           
+		        key=entry.getKey().toString();           
+		        value=entry.getValue().toString();           
+		        System.out.println(key+"===="+value);                     
+		}   
+		
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("select distinct "

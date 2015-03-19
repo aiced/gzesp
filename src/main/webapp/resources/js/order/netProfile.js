@@ -8,11 +8,11 @@ function saveClick(obj) {
 
     if (userName.value.length == 0){
     	alert("姓名不能为空");   	
-    	return;
+    	return false;
     }else if(userCard.value.length == 0){
 //    	身份证验证
     	alert("身份证号不能为空");   	
-    	return;
+    	return false;
     }
     if(isCardNo(userCard.value) === false)
 	 {
@@ -25,9 +25,11 @@ function saveClick(obj) {
 
     if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
     	alert("证件照片不能为空");   	
-    	return;
+    	return false;
     }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
     	alert("证件照片不能为空");   	
-    	return;
+    	return false;
     }
+    return ture;
+    
 }

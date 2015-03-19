@@ -1,13 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <head>
-		    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    		<script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-  		    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-  		    <script src="${resRoot}/js/order/netProfile.js?v=${resVer}"></script>
-  		    
-  </head>
-  
   
  <style type="text/css">	 
  	 * {margin:0;padding:0;} 
@@ -43,11 +35,12 @@
 
   <body >
 <!--标题   -->
-    <div style="background-color:#1D2427; width:100%;height:44px;margin-left:0px;margin-bottom:0px;" >   	
-     	<a style="color:#fff;width:60px;height:44px ;line-height:44px; float:left;display: block;text-align:center;margin-left:1px"> 返回 </a>	
-    	<a style="color:#fff;width:40px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:10px;margin-top:12px;border:1px solid #fff"> 编辑 </a>	
-    	<p style="color:#fff;width:60px;height:44px ;line-height:44px;margin:auto;"> 店铺设置 </p> 	
+   	<div id="top">
+       	<div id="netInfoBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div></div>
+       	<div id="top_middle">${title}</div>
+       	<div id="top_right"></div>
     </div>
+	<div id="dv_clear"></div>
     <!-- 主机号，身份证号 -->
     <div style="background-color:white;height:110px;padding-top:25px;text-align:center;">
       	 	 <div  style ="width:100%;height:25px;font-size:14px;">

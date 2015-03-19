@@ -13,6 +13,13 @@
 //ordResInfo.resAttrVal = "";
 //ordResArr.push(ordResInfo);
 
+var orderStat = {
+		netInfoStat:0,
+		receiveInfoStat:0,
+		payInfoStat:0,
+		otherInfoStat:0
+}
+
 var orderFormParams = {
 		orderFrom:"weixin微信",
 		originalPrice:"",
@@ -82,13 +89,30 @@ $(function() {
 		return false;
 	});
 	
+	//子页确认事件
 	$('#netInfoBtn').bind("click",function(){
-		saveClick(null);
+		if(netInfo_checkData()) {
+			$('#netInfo').css({ "display":"none" });
+			$('#orderMain').css({ "display":"block" });
+		}
+		
+		return false;
+	});
+	//子页面返回按钮
+	$('#netInfoBackBtn').bind("click",function(){
 		$('#netInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
 		return false;
 	});
 	$('#receiveInfoBtn').bind("click",function(){
+		if(addres_checkData()) {
+			$('#receiveInfo').css({ "display":"none" });
+			$('#orderMain').css({ "display":"block" });
+		}
+		
+		return false;
+	});
+	$('#receiveInfoBackBtn').bind("click",function(){
 		$('#receiveInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
 		return false;
@@ -98,7 +122,19 @@ $(function() {
 		$('#orderMain').css({ "display":"block" });
 		return false;
 	});
+	$('#payInfoBackBtn').bind("click",function(){
+		$('#payInfo').css({ "display":"none" });
+		$('#orderMain').css({ "display":"block" });
+		return false;
+	});
 	$('#otherInfoBtn').bind("click",function(){
+		if(otherOrder_checkData()) {
+			$('#otherInfo').css({ "display":"none" });
+			$('#orderMain').css({ "display":"block" });
+		}
+		return false;
+	});
+	$('#otherInfoBackBtn').bind("click",function(){
 		$('#otherInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
 		return false;
@@ -116,6 +152,7 @@ $(function() {
 		return false;
 	});
 	
+	
 	//选择文件
 	$("input[type='file']").change(function(evt){
 	    if(evt.target.files.length == 0){
@@ -130,13 +167,6 @@ $(function() {
 	    }
 	    //选择的图片非bmp、jpg、jpeg时，清空文件选择，展示提示框
 	    if(!(type == ".jpg" || type == ".bmp" || /^image\/(jpeg|jpg|bmp)$/.test(type2))){
-//	        $(".mask").show().height($(document).height());
-//	        $(".upload-wrongImg").show().vCenter();
-//	        //清空file
-//	        $this.wrap('<form>').closest('form').get(0).reset();
-//	        $this.unwrap();
-
-//	        inputFile = $this;
 	        return;
 	    }
 	    var reader = new FileReader();
@@ -145,110 +175,93 @@ $(function() {
 	    	 var preview = $this.siblings("img");
 	    	 preview.attr("src", dataURL);
 	    });
-//	    reader.onload = (function (f) {
-//	        return function (e) {
-//
-//	            //获取照片的URL对象（base64）
-//	            var dataURL = e.target.result;
-//	            var preview = $this.siblings("img.upload-imgs");
-//
-//	            //创建Image对象
-//	            var image = new Image();
-//	            image.src = dataURL;
-//
-//	            image.onload = function() {
-//	                var resized = resizeMe(image);
-//	                //删除原来的图片
-//	                $this.siblings(".upload-files").remove();
-//	                var newinput = $("<input>");
-//	                //将canvas的返回结果(base64的图片数据)放到新建的input中
-//	                newinput.attr("type", "text").attr("style","display:none")
-//	                    .attr("value", resized).attr("class", "upload-files")
-//	                    .attr("id", $this.attr("id")+"2");
-//	                $this.parent().append(newinput);
-//	                //预览图片
-//	                preview.attr("src", resized);
-//
-////	                var imgIcon = $this.parent(".img-w");
-////	                imgIcon.find(".camera").hide();
-////	                imgIcon.find(".camera-edit").show();
-////	                imgIcon.find(".watermark").show();
-////	                $this.attr("suc",true);
-////	                $(".mask").hide();
-////	                $this.wrap('<form>').closest('form').get(0).reset();
-////	                $this.unwrap();
-//	            }
-//	        };
-//	    })(f);
 	    //读取文件的缓冲数组流，读取完毕后执行onload
 	    reader.readAsDataURL(f);
 	});
 	
-	//wenhui_newReceiveAddress_数值校验
-	function addres_checkData()
-	{
-		if(!$("#txtname").val())
-		{
-			alert("请填写收件人姓名");
-			return false;
-		}
-		if(!$("#txtphone").val())
-		{
-			alert("请输入手机号码");
-			return false;
-		}
-		if(!$("#txtaddress").val())
-		{
-			alert("请填写详细地址");
-		}
-		return true;
-	}
-	//wenhui_newReceiveAddress_确定按钮
-	$("#receiveInfoBtn").click(function(){
-		if(!addres_checkData())
-		{
-			return false;
-		}
-		else {
-			return true;
-		}
-	});
-	//wenhui_otherOrderInfo_数据校验
-	function otherOrder_checkData() 
-	{
-		if(!$("#txtbilltitle").val())
-		{
-			alert("请输入发票抬头");
-			return false;
-		}
-		if(!$("#txtcash").val())
-		{
-			alert("请输入代金券");
-			return false;
-		}
-		if(!$("#txtreferences").val())
-		{
-			alert("请输入推荐人姓名");
-			return false;
-		}
-		if(!$("#txtrecommphone").val())
-		{
-			alert("请输入推荐人手机号");
-			return false
-		}
-		return true;
-	}
-	//wenhui_otherOrderInfo_确定按钮
-	$("#otherInfoBtn").click(function(){
-		if(!otherOrder_checkData())
-		{
-			return false;
-		}
-		else {
-			return true;
-		}
-	});
+	
 })
+
+//wenhui_newReceiveAddress_数值校验
+function addres_checkData()
+{
+	if(!$("#txtname").val())
+	{
+		alert("请填写收件人姓名");
+		return false;
+	}
+	if(!$("#txtphone").val())
+	{
+		alert("请输入手机号码");
+		return false;
+	}
+	if(!$("#txtaddress").val())
+	{
+		alert("请填写详细地址");
+	}
+	return true;
+}
+//wenhui_otherOrderInfo_数据校验
+function otherOrder_checkData() 
+{
+	if(!$("#txtbilltitle").val())
+	{
+		alert("请输入发票抬头");
+		return false;
+	}
+	if(!$("#txtcash").val())
+	{
+		alert("请输入代金券");
+		return false;
+	}
+	if(!$("#txtreferences").val())
+	{
+		alert("请输入推荐人姓名");
+		return false;
+	}
+	if(!$("#txtrecommphone").val())
+	{
+		alert("请输入推荐人手机号");
+		return false
+	}
+	return true;
+}
+
+//入网信息验证
+function netInfo_checkData() {
+//	userName  姓名
+//	userCard  身份证号
+//	card01    第一张
+//	card02	  第二张	
+	var userName = document.getElementById('userName');
+	var userCard = document.getElementById('userCard');    
+
+    if (userName.value.length == 0){
+    	alert("姓名不能为空");   	
+    	return false;
+    }else if(userCard.value.length == 0){
+//    	身份证验证
+    	alert("身份证号不能为空");   	
+    	return false;
+    }
+    if(isCardNo(userCard.value) === false)
+	 {
+		 alert("您输入的身份证号码不正确，请重新输入");
+		 return false;
+	 }
+    
+//	alert( $('#firstCard').attr("src"));   	
+//	alert( $('#secondCard').attr("src"));   	
+
+    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }
+    return ture;
+}
 
 function getParams() {
 	orderFormParams.custName = $('#userName').val();

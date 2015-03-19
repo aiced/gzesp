@@ -2,20 +2,28 @@ package com.ai.gzesp.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.gzesp.service.OrderService;
+import com.ai.gzesp.dto.SelectNumberQueryCon;
+import com.ai.gzesp.service.SelectNumberService;
+import com.ai.gzesp.service.WeShopService;
 
 @Controller
 @RequestMapping("/order")
 public class SelectNumberController {
 
     @Autowired
-    private OrderService orderService;
+    private SelectNumberService selectNumberService;
+    
+    @Autowired
+    private WeShopService weShopService;
     
     /**
      * 三级页面：新号入网-选择号码 <br>
@@ -28,33 +36,17 @@ public class SelectNumberController {
     @RequestMapping("/selectNumber")
     public ModelAndView selectNumber(){
         ModelAndView mav = new ModelAndView("selectNumber.ftl");
-        //从数据库获取信息赋值
-        //数据库获取地市
-        ArrayList<HashMap<String, String>> citys = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> city1 = new HashMap<String, String>();
-        city1.put("city_code", "0510");
-        city1.put("city_name", "贵阳");
-        HashMap<String, String> city2 = new HashMap<String, String>();
-        city2.put("city_code", "0511");
-        city2.put("city_name", "遵义");  
-        citys.add(city1);
-        citys.add(city2);
+        
+        //商品归属地市下拉框  
+        List<Map<Object, Object>> citys = weShopService.getCitys();
         mav.addObject("citys", citys);
         
-        //数据库分页获取号码列表 默认第一页
-        ArrayList<HashMap<String, String>> numbers = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> number1 = new HashMap<String, String>();
-        number1.put("number", "18651885061");
-        number1.put("fee", "0");
-        HashMap<String, String> number2 = new HashMap<String, String>();
-        number2.put("number", "18651885062");
-        number2.put("fee", "0");
-        HashMap<String, String> number3 = new HashMap<String, String>();
-        number3.put("number", "18651885063");
-        number3.put("fee", "100");
-        numbers.add(number1);
-        numbers.add(number2);
-        numbers.add(number3);
+        //获取靓号规则下拉框
+        List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
+        mav.addObject("rules", rules);
+        
+        //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
+        List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null);
         mav.addObject("numbers", numbers);
         
         return mav;
@@ -69,26 +61,15 @@ public class SelectNumberController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("/queryNumbersByAjax")
-    public ModelAndView queryNumbersByAjax(){
-        //返回数据表格子页面
-        ModelAndView mav = new ModelAndView("selectNumberSub.ftl"); 
-        //从数据库获取信息赋值
-        //数据库分页获取号码列表 默认第一页
-        ArrayList<HashMap<String, String>> numbers = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> number1 = new HashMap<String, String>();
-        number1.put("number", "13851885061");
-        number1.put("fee", "0");
-        HashMap<String, String> number2 = new HashMap<String, String>();
-        number2.put("number", "13851885062");
-        number2.put("fee", "0");
-        HashMap<String, String> number3 = new HashMap<String, String>();
-        number3.put("number", "13851885063");
-        number3.put("fee", "100");
-        numbers.add(number1);
-        numbers.add(number2);
-        numbers.add(number3);
+    public ModelAndView queryNumbersByAjax(@RequestBody SelectNumberQueryCon con){
+        // 返回数据表格子页面
+        ModelAndView mav = new ModelAndView("selectNumberSub.ftl");
+        // 从数据库按分页查询，默认第一页,一页5个 注意参数转成了小写
+        List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(con.getEparchy_code(),
+                con.getNice_rule(), con.getNice_fee_start(), con.getNice_fee_end(), con.getPageNum(),
+                con.getPageSize(), con.getKeyword(), con.getSort(), con.getSortCol());
         mav.addObject("numbers", numbers);
-        
+
         return mav;
     }
 }

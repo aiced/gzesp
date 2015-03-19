@@ -12,9 +12,12 @@
     <link href="${resRoot}/css/orderMain.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain2.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain3.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/selectNumber.css?v=${resVer}" rel="stylesheet">    
   </head>
 
   <body>
+  <!-- 第一页 商品详情主页start --> 
+  <div id="page_main">   
   	<!-- nav bar -->
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
@@ -113,34 +116,53 @@
                 </a>
             </li>
             <li class="num-info-li">
-                <a href="#imageAndTextDetail" id="btn_iat"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
+                <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
             <li class="num-info-li city-li">
-                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">请选择号码</span><label color="#F70909">选择号码</label></a>
+                <a href="#subpage_3" onclick="showSubpage('subpage_3')"><b class="list-arr"></b><span class="detail-info" id="serial_number">请选择号码</span><label color="#F70909">选择号码</label></a>
             </li>
-            <li id="planList" class="num-info-li">
-                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a>
-                <div class="tabs-box">
-                    <ul class="tabslist">
-                        <li class="tab-on" planVersion="planA" >A计划</li>
-                        <li planVersion="planC" >B计划</li>
-                        <li class="mrg-r-0" planVersion="planC" >C计划</li>
-                    </ul>
-                </div>
-                <p style="margin-bottom: 0px;color:#999;">电话300分钟 短信0条 流量800MB</p>            
-            </li>                        
-            <li id="simTypeList" class="num-info-li" >
-                <p style="margin-bottom: 0px;"><label>卡类型</label></p>
-                <div class="tabs-box">
-                    <ul class="tabslist">
-                        <li class="tab-on" simType="normal" >普通卡</li>
-                        <li simType="micro" >微卡</li>
-                        <li class="mrg-r-0" simType="nano" >Nano卡</li>
-                    </ul>
-                </div>
-            </li>
-            <li id="simTypeList" class="num-info-li" >
-                <p style="margin-bottom: 0px;color:#999;">商品金额：<strong class="current-price">￥7099</strong> 其中预存0元</p> 
+            <!-- A/B/C 套餐 -->
+            <#if attrs.PACKRES??>
+              <li id="planList" class="num-info-li" >
+                  <!--<a href="#subpage_4" onclick="showSubpage('subpage_4')"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a> -->
+                  <p style="margin-bottom: 0px;"><label>套餐</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.CAPTYRS as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+                  <p style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>  
+              </li>              
+            </#if>    
+            <!-- 普通卡/微卡/Nano卡-->        
+            <#if attrs.SIMSIZE??>
+              <li id="simTypeList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>卡类型</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.CAPTYRS as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>                     
+            <li id="price" class="num-info-li" >
+                <p style="margin-bottom: 0px;color:#999;">商品金额：<strong class="current-price">￥${detail.GOODS_PRICE}</strong></p> 
             </li>            
         </ul>
     </div>
@@ -148,11 +170,218 @@
     <div class="btns-box userType">
         <a id="new-user" class="org-btn w-full fl" href="javascript:void(0)">立即购买</a>
     </div>
+  </div>    
+  <!-- 第一页 商品详情主页end -->
+  
+  <!-- 第二页 图文详情页start -->   
+  <div id="subpage_2" class="bg-white" data-role="page" style="display:none;">
+  	<!-- nav bar -->
+    <div class="container-fluid" style="background-color:#21292c;height:38px;">
+      <div class="row" style="margin-top:8px;margin-left:5px;">
+        <div class="col-xs-2" style="margin-top:5px;padding:0px;">
+    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">back</span>
+          </a>
+    	</div>
+        <div class="col-xs-7">
+    	  <p class="text-center navbar-p">图文详情 </p>
+    	</div>    	
+      </div>      
+    </div> 
+    
+    <!-- tab页-->
+    <div class="container-fluid" >
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+          <li role="presentation" class="active"><a href="#tabPane1" aria-controls="tabPane1" role="tab" data-toggle="tab">手机参数</a></li>
+          <li role="presentation"><a href="#tabPane2" aria-controls="tab2" role="tabPane2" data-toggle="tab">商品信息</a></li>
+          <li role="presentation"><a href="#tabPane3" aria-controls="tab3" role="tabPane3" data-toggle="tab">活动信息</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+        ${detail.CONTENT}
 
+        </div>
+      </div>
+    </div>  
+  </div>    
+  <!-- 第二页 图文详情页end -->   
+  
+  <!-- 第三页 选择号码start -->
+  <div id="subpage_3" class="bg-white" data-role="page" style="display:none;"> 
+    <input type="hidden" id="baseRoot" value="${base}"></input>
+  	<!-- nav bar -->
+    <div class="container-fluid" style="background-color:#21292c;height:38px;">
+      <div class="row" style="margin-top:8px;margin-left:5px;">
+        <div class="col-xs-2" style="margin-top:5px;padding:0px;">
+    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">back</span>
+          </a>
+    	  </div>
+        <div class="col-xs-7">
+    	    <p class="text-center navbar-p">选择号码</p>
+    	  </div>    	
+      </div>      
+    </div>
+
+  
+    <!-- 号码筛选，排序 -->
+    <div class="container-fluid" style="background-color:#ffffff;margin:10px;">
+      <!-- 输入尾号筛选-->
+      <div class="row" style="margin:5px 0px 5px 0px;">
+    	<div class="col-xs-12" style="margin:0px;padding:0px">
+    	  <div class="input-group">
+            <input id='keyword' type="text" class="form-control input-sm" placeholder="输入尾号">
+            <span class="input-group-btn">
+              <button class="btn btn-default btn-sm" type="button" onclick="queryNumberList()">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+              </button>
+            </span>
+          </div>
+    	</div>  		
+      </div>
+      <hr align="center"  color="#f4f4f4" size="1" style="margin:0" noShade>
+      <!-- 地市筛选 尾号筛选 预存款筛选-->           	
+      <div class="row" style="margin:5px 0px 5px 0px;">
+    	<div class="col-xs-3" style="padding:0px;margin:0px;text-align:center">
+    	  <div class="dropdown">
+            <button id="btnCity" type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" eparchy_code="850">
+                        贵阳
+            <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <#list citys as item>  
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="eparchyFilter();" city_code="${item.CITY_CODE}">${item.CITY_NAME}</a></li> 
+              </#list>
+            </ul>
+          </div>
+    	</div>  	
+    	<div class="col-xs-1">
+    	  <div class="shuxian"></div> 
+    	</div>
+    	<div class="col-xs-3" style="padding:0px;text-align:center">
+    	  <div class="dropdown">
+            <button id="dLabel" type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             尾号规律
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+              <#list rules as item>  
+                <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="ruleFilter()">${item.NICE_RULE}</a></li> 
+              </#list>
+            </ul>
+          </div>  
+    	</div>
+    	<div class="col-xs-1">
+    	  <div class="shuxian"></div> 
+    	</div>
+    	<div class="col-xs-3" style="padding:0px;text-align:center">
+    	  <div class="dropdown">
+            <button id="dLabel" type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             预存款
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-center" role="menu" aria-labelledby="dLabel">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="feeFilter()" nice_fee="0-0">0</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="feeFilter()" nice_fee="1-100">1-100</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="feeFilter()" nice_fee="101-200">101-200</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="feeFilter()" nice_fee="201-500">201-500</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="feeFilter()" nice_fee="501-1000">501-1000</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="feeFilter()" nice_fee="1000-10000">1000以上</a></li>
+            </ul>
+          </div>    	  
+        </div>   		    		
+      </div>
+      <hr align="center"  color="#f4f4f4" size="a" style="margin:0" noShade>
+      <!-- 号码排序 价格排序-->
+      <div class="row" style="margin:5px 0px 5px 0px;">
+    	<div class="col-xs-5" style="padding:0px;margin:0px;text-align:center">
+    	  <button type="button" id="serial_number" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortNumberList('serial_number')">
+                        号码 <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+          </button>
+    	</div>  	
+    	<div class="col-xs-1">
+    	  <div class="shuxian"></div> 
+    	</div>
+    	<div class="col-xs-5" style="padding:0px;text-align:center">
+    	  <button type="button" id="nice_fee" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortNumberList('nice_fee')">
+                        价格 <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
+          </button>    	  
+    	</div>  		    		
+      </div>
+    </div>
+
+    <!-- 号码展示表格-->
+    <div class="container-fluid" style="background-color:#ffffff;margin:10px;" id="datagrid" pageNum="1">
+      <!-- 查询结果无数据或者异常时展示提示信息-->
+      <#if  (!numbers?exists || numbers?size=0)>
+        <div class="row"> 
+          <p class="p-td-price">查询无结果</p>  	
+        </div>     
+      </#if>
+      <!-- 有数据时展示 -->       
+      <#list numbers as item>  
+        <#if item_index%2==0>
+          <div class="row">
+            <div class="col-xs-6 border-td-left" style="padding:0px;" onclick="clickOneNumber()">
+        <#else>
+            <div class="col-xs-6 border-td-right" style="padding:0px;" onclick="clickOneNumber()">
+        </#if>
+    	      <p class="p-td-number">${item.SERIAL_NUMBER[0..2]} ${item.SERIAL_NUMBER[3..6]} ${item.SERIAL_NUMBER[7..10]}</p>
+    	      <p class="p-td-price">预存话费:${item.NICE_FEE}</p>
+    	    </div>
+        <#if (item_index%2==1 || !item_has_next)>
+          </div> 
+        </#if>
+      </#list>            
+    </div>      
+  </div>       
+  <!-- 第三页 选择号码end -->     
+  
+  <!-- 第四页 ABC套餐详情start 暂定作废 -->
+  <div id="subpage_4" class="bg-white" data-role="page" style="display:none;"> 
+  <!--
+  	<!-- nav bar -->
+    <div class="container-fluid" style="background-color:#21292c;height:38px;">
+      <div class="row" style="margin-top:8px;margin-left:5px;">
+        <div class="col-xs-2" style="margin-top:5px;padding:0px;">
+    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">back</span>
+          </a>
+    	</div>
+        <div class="col-xs-7">
+    	  <p class="text-center navbar-p">套餐详情 </p>
+    	</div>    	
+      </div>      
+    </div> 
+    
+    <!-- 广告图 -->
+    <div class="container-fluid" style="margin:15px;padding:0px;">
+      <p class="p-plan-title">A计划</p> 
+      <div style="margin:0px;">
+        <img src="${resRoot}/image/banner/banner_iphone6.png" alt="" class="img-responsive">
+      </div>
+      <p class="p-plan-title">B计划</p> 
+      <div style="margin:0px;">
+        <img src="${resRoot}/image/banner/banner_iphone6.png" alt="" class="img-responsive">
+      </div>
+      <p class="p-plan-title">C计划</p> 
+      <div style="margin:0px;">
+        <img src="${resRoot}/image/banner/banner_iphone6.png" alt="" class="img-responsive">
+      </div>                  
+    </div>
+   -->  
+  </div>       
+  <!-- 第四页 ABC套餐详情end -->  
          
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/selectPlan.js"></script>
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>
     
   </body>
 </html>

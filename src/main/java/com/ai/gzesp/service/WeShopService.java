@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dao.WeShopDao;
+import com.ai.gzesp.dto.GoodsDetailResult;
 
 @Service
 public class WeShopService {
@@ -110,7 +111,7 @@ public class WeShopService {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public Map<Object, Object> getGoodDetail(String goods_id, String user_id){
+    public GoodsDetailResult getGoodDetail(String goods_id, String user_id){
         return weShopDao.getGoodDetail(goods_id, user_id);
     }
     
@@ -135,21 +136,21 @@ public class WeShopService {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public Map<Object, List<Object>> getAttrs(String goods_id){
+    public Map<Object, List<Map<Object, Object>>> getAttrs(String goods_id){
         List<Map<Object, Object>> rows = weShopDao.getAttrs(goods_id);
         //attrs是个map，map里含n个list，每个list都是一组属性，比如各种颜色是一组list，各种内存容量是一组list
-        Map<Object, List<Object>> attrs = new HashMap<Object, List<Object>>();
+        Map<Object, List<Map<Object, Object>>> attrs = new HashMap<Object, List<Map<Object, Object>>>();
         
         for(Map<Object, Object> row: rows){
             //如果map里已经存在该属性的list，就直接list里面add一行
             if(attrs.containsKey(row.get(Constants.COL_ATTR_CODE))){
-                //韦文泱确认 属性描述取 ATTR_VAL_CODE字段，ATTR_VAL_NAME字段长度不够
-                attrs.get(row.get(Constants.COL_ATTR_CODE)).add(row.get(Constants.COL_ATTR_VAL_CODE));
+                //属性描述取values字段， ATTR_VAL_CODE字段，ATTR_VAL_NAME字段，最终订单里需要这3个字段信息
+                attrs.get(row.get(Constants.COL_ATTR_CODE)).add(row);
             }
             //如果map里不存在该属性的list,先new一个list
             else{
-                List<Object> attr = new ArrayList<Object>();
-                attr.add(row.get(Constants.COL_ATTR_VAL_CODE));
+                List<Map<Object, Object>> attr = new ArrayList<Map<Object, Object>>();
+                attr.add(row);
                 attrs.put(row.get(Constants.COL_ATTR_CODE), attr);
             }
         }

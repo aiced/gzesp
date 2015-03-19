@@ -40,9 +40,30 @@ public class GoodsManageGoodAddController {
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String name = paramsMap.get("index");
-    	List<Map<String, Object>> goodsList = goodsSql.getGoodsList();   
     	
-    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
+    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList(); 
+    	List<Map<String, Object>> goodsList = null;
+		StringBuffer sb = new StringBuffer();
+
+		if(rcdlist.size() != 0){
+			sb.append("(");
+			for(Map<String, Object> map : rcdlist){ 
+				for (String k : map.keySet())  
+			      {  
+			        if(k.equals("GOODSID")){
+						sb.append(","+map.get(k));
+				        System.out.println(k + " : " + map.get(k));  
+			        }
+			      }  
+	        }
+			sb.append(")");
+			sb.deleteCharAt(1);
+			goodsList = goodsSql.getGoodsListNotIn(sb.toString());   
+		}else{
+			goodsList = goodsSql.getGoodsList();   			
+		}
+    	
+    	
 
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   

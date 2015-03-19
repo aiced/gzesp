@@ -20,6 +20,45 @@ public class GoodsSql {
 	private CommonDao commonDao;
 	
 	/*
+	 * 得到个人信息数据
+	 */
+	public List GetProfileList(String userId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("select distinct "
+				+ "t1.USER_ID as userId,"
+				+ "t1.STORE_NAME as storeName,"
+				+ "t1.USER_IMG as avatar,"
+				+ "t1.PHONE_NUMBER as phoneNumber"
+				);
+		sb.append(" from AUR_D_AUTHINFO t1");
+		sb.append("	where t1.USER_ID ="+ userId);
+		List userList = commonDao.queryForList(sb.toString());
+		return userList;
+	}
+	
+	
+	/*
+	 * 得到推荐列表数据
+	 */
+	public List GetRcdList() {
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("select distinct "
+				+ "t1.GOODS_ID as goodsId,"
+				+ "t4.PHOTO_LINKS as photoLinks"
+				);
+		sb.append(" from GDS_D_INFO t1,GDS_D_ABLE_RCD t2, GDS_D_ALBUM t3, GDS_D_PHOTO t4");
+		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
+				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
+				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.GOODS_STATE = '1'"
+				+ " order by t1.GOODS_ID");
+		List rcdList = commonDao.queryForList(sb.toString());
+		return rcdList;
+	}
+	
+	
+	/*
 	 * 获取商品列表
 	 */
 	public List getGoodsList() {
@@ -68,6 +107,9 @@ public class GoodsSql {
 		return goodsList;
 	}
 	
+	/*
+	 * 带有筛选条件的所有商品列表
+	 */
 	public List getGoodsListWithCondition(Map rspMap) {
 		
 //		Iterator it= rspMap.keySet().iterator();    
@@ -113,24 +155,12 @@ public class GoodsSql {
 		List goodsList = commonDao.queryForList(sb.toString());
 		return goodsList;
 	}
-	
-	public List GetRcdList() {
-		
-		StringBuffer sb = new StringBuffer();
-		sb.append("select distinct "
-				+ "t1.GOODS_ID as goodsId,"
-				+ "t4.PHOTO_LINKS as photoLinks"
-				);
-		sb.append(" from GDS_D_INFO t1,GDS_D_ABLE_RCD t2, GDS_D_ALBUM t3, GDS_D_PHOTO t4");
-		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
-				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
-				+ " and t1.GOODS_STATE = '1'"
-				+ " order by t1.GOODS_ID");
-		List rcdList = commonDao.queryForList(sb.toString());
-		return rcdList;
-	}
-	
+
+
+
+	/*
+	 * 得到商品详情数据
+	 */
 	public List GetGoodsDetail(String goodsId) {
 		StringBuffer sb = new StringBuffer();
 		

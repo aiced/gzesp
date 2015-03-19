@@ -1,13 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <head>
-		    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    		<script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-  		    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-  		    <script src="${resRoot}/js/order/netProfile.js?v=${resVer}"></script>
-  		    
-  </head>
-  
   
  <style type="text/css">	 
  	 * {margin:0;padding:0;} 
@@ -44,7 +36,7 @@
   <body >
 <!--标题   -->
     <div style="background-color:#1D2427; width:100%;height:44px;margin-left:0px;margin-bottom:0px;" >   	
-     	<a style="color:#fff;width:60px;height:44px ;line-height:44px; float:left;display: block;text-align:center;margin-left:1px"> 返回 </a>	
+     	<a id="netInfoBackBtn" style="color:#fff;width:60px;height:44px ;line-height:44px; float:left;display: block;text-align:center;margin-left:1px"> 返回 </a>	
     	<a style="color:#fff;width:40px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:10px;margin-top:12px;border:1px solid #fff"> 编辑 </a>	
     	<p style="color:#fff;width:60px;height:44px ;line-height:44px;margin:auto;"> 店铺设置 </p> 	
     </div>

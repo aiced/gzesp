@@ -31,7 +31,6 @@
     
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/orderFill.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/order/netProfile.js?v=${resVer}"></script>
 
 	
     <style type="text/css">

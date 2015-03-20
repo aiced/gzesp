@@ -180,37 +180,7 @@
   
   <!-- 第二页 图文详情页start -->   
   <div id="subpage_2" class="bg-white" data-role="page" style="display:none;">
-  	<!-- nav bar -->
-    <div class="container-fluid" style="background-color:#21292c;height:38px;">
-      <div class="row" style="margin-top:8px;margin-left:5px;">
-        <div class="col-xs-2" style="margin-top:5px;padding:0px;">
-    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">back</span>
-          </a>
-    	</div>
-        <div class="col-xs-7">
-    	  <p class="text-center navbar-p">图文详情 </p>
-    	</div>    	
-      </div>      
-    </div> 
-    
-    <!-- tab页-->
-    <div class="container-fluid" >
-      <div role="tabpanel">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist" id="myTab">
-          <li role="presentation" class="active"><a href="#tabPane1" aria-controls="tabPane1" role="tab" data-toggle="tab">手机参数</a></li>
-          <li role="presentation"><a href="#tabPane2" aria-controls="tab2" role="tabPane2" data-toggle="tab">商品信息</a></li>
-          <li role="presentation"><a href="#tabPane3" aria-controls="tab3" role="tabPane3" data-toggle="tab">活动信息</a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-        ${detail.CONTENT}
-
-        </div>
-      </div>
-    </div>  
+    <#include "imageAndTextDetail.ftl"> 
   </div>    
   <!-- 第二页 图文详情页end -->   
   
@@ -222,38 +192,6 @@
   
   <!-- 第四页 ABC套餐详情start 暂定作废 -->
   <div id="subpage_4" class="bg-white" data-role="page" style="display:none;"> 
-  <!--
-  	<!-- nav bar -->
-    <div class="container-fluid" style="background-color:#21292c;height:38px;">
-      <div class="row" style="margin-top:8px;margin-left:5px;">
-        <div class="col-xs-2" style="margin-top:5px;padding:0px;">
-    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">back</span>
-          </a>
-    	</div>
-        <div class="col-xs-7">
-    	  <p class="text-center navbar-p">套餐详情 </p>
-    	</div>    	
-      </div>      
-    </div> 
-    
-    <!-- 广告图 -->
-    <div class="container-fluid" style="margin:15px;padding:0px;">
-      <p class="p-plan-title">A计划</p> 
-      <div style="margin:0px;">
-        <img src="${resRoot}/image/banner/banner_iphone6.png" alt="" class="img-responsive">
-      </div>
-      <p class="p-plan-title">B计划</p> 
-      <div style="margin:0px;">
-        <img src="${resRoot}/image/banner/banner_iphone6.png" alt="" class="img-responsive">
-      </div>
-      <p class="p-plan-title">C计划</p> 
-      <div style="margin:0px;">
-        <img src="${resRoot}/image/banner/banner_iphone6.png" alt="" class="img-responsive">
-      </div>                  
-    </div>
-   -->  
   </div>       
   <!-- 第四页 ABC套餐详情end -->  
          

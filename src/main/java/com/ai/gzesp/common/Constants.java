@@ -96,6 +96,14 @@ public class Constants {
      */
     public static final String COL_ATTR_VAL_CODE = "ATTR_VAL_CODE";
     
-
+    /**
+     * 状态-成功
+     */
+    public static final String STATUS_SUCCESS = "SUCCESS";
+    
+    /**
+     * 状态-失败
+     */
+    public static final String STATUS_FAILD = "FAILD";
 
 }

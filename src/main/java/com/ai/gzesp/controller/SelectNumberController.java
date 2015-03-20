@@ -1,7 +1,5 @@
 package com.ai.gzesp.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.common.Constants;
+import com.ai.gzesp.dto.NumberConResult;
 import com.ai.gzesp.dto.SelectNumberQueryCon;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
@@ -71,5 +72,26 @@ public class SelectNumberController {
         mav.addObject("numbers", numbers);
 
         return mav;
+    }
+    
+    /**
+     * 功能描述: 选择号码页面点击号码后，需要预占号码，变更号码状态<br>
+     *
+     * @param con
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    @RequestMapping("/updateNumberState")
+    @ResponseBody
+    public NumberConResult updateNumberState(@RequestBody NumberConResult con){
+        // 号码预占
+        String status = Constants.STATUS_SUCCESS;
+        //String status = Constants.STATUS_FAILD;
+        
+        NumberConResult result = new NumberConResult();
+        result.setSerial_number(con.getSerial_number());
+        result.setStatus(status);
+        return result;
     }
 }

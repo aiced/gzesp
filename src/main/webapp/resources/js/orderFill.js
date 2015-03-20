@@ -276,17 +276,19 @@ function netInfo_checkData() {
 }
 //	
 function checkPostSelect() {
-    if($('#deliver-select-post').hasClass("selected") && $('#deliver-select').hasClass("selected")){
+//	快递配送
+	if($('#deliver-select-post').hasClass("selected")){
     	if($('#post-select-none').hasClass("selected")){
-    		return 0;
-    	}else if($('#post-select-shunfeng').hasClass("selected")){
-    		return 1;
+        	alert('###'+$('#post-select-none').attr("value"));
+    		return $('#post-select-none').attr("value");
+       	}else if($('#post-select-shunfeng').hasClass("selected")){
+    		return $('#post-select-shunfeng').attr("value");
     	}
-    	alert("请选择配运方式️");   	
-    	return -1;
     }else{
+//   自提
     	
     }
+
 }
 
 
@@ -349,7 +351,11 @@ function nextPage() {
 //		alert('请完整其他信息');
 //		return;
 //	}
-	
+	var postStyle = checkPostSelect();
+	if(postStyle !=null ){
+		alert(postStyle);
+		return;
+	}
 	var tmp = {'fromPage':'orderFill' };
 	getParams();
     var parms = $.extend({}, tmp, orderFormParams);

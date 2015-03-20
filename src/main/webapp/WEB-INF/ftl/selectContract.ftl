@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    <!-- Bootstrap core CSS -->
-    <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
-    <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
 	
   </head>
 
@@ -30,6 +23,7 @@
 						  <li>
 					 </#if> 
 					  	<h5>${pkg.price}</h5>
+					  	<input type="hidden" id="pkgType_hidden" value="${pkg.price}">
 					  	<input type="hidden" id="nationalminutes_hidden" value="${pkg.nationalminutes}">
 					  	<input type="hidden" id="nationalthroughtput_hidden" value="${pkg.nationalthroughtput}">
 					  	<input type="hidden" id="totalFee_hidden" value="${pkg.totalFee}">
@@ -112,17 +106,13 @@
       </div>
       
      <div class="container-fluid" style="padding:5px">
-     	<button type="button" class="btn btn-warning  btn-lg btn-block" onclick='nextPage()'>确定合约</button>
+     	<button id="selectConOkBtn" type="button" class="btn btn-warning  btn-lg btn-block" >确定合约</button>
       </div>
       
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
      <script src="${resRoot}/js/selectContract.js?v=${resVer}"></script>
   </body>
 </html>

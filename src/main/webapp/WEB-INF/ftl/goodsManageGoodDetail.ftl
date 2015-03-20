@@ -47,7 +47,7 @@
      <!-- Carousel 广告轮播-->	
     <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a">
       <ol class="carousel-indicators">
-        <#list banners as item>  
+        <#list goodsDetailPhotosList as item>  
           <#if item_index=0>
             <li data-target="#myCarousel" data-slide-to="${item_index}" class="active"></li>
           <#else>
@@ -56,13 +56,13 @@
         </#list>  
       </ol>
       <div class="carousel-inner" role="listbox">
-        <#list banners as item>
+        <#list goodsDetailPhotosList as item>
           <#if item_index=0>
             <div class="item active">
           <#else>
             <div class="item">
           </#if>
-              <img src="${resRoot}/image/banner/${item}" alt="" />
+              <img src='${item.photoLinks}' alt="" />
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -85,7 +85,7 @@
 
      <!--文字  -->
      <div style="margin-bottom:0px;padding-top:10px;padding-bottom:30px;" > 
-     	 <#list goodsDetaiList as info>	
+     	 <#list goodsDetailList as info>	
      	  	 <#if (info_index<=0) > 
 							<p style="margin-left:5px;margin-right:5px;margin-bottom:5px;font-size:16px;color:#33333">套餐名称：${info.goodsName}</p>
      						<div style=" width:100%;height:25px;float:none;margin-bottom:10px;">
@@ -104,7 +104,7 @@
      	    	<p style="background-color:gray; width:100%;height:1px ;margin:auto;"> </p> 
        	    	<p style="margin:10px;font-size:17px;color:#484848">自定义活动 </p> 
        	    	<!--活动标题  -->
-       	 <#list goodsDetaiList as info>	
+       	 <#list goodsDetailList as info>	
        	    <#if (info_index<=0) > 
 							<div style="width:100%;height:50px;margin-bottom:10px;padding-top:10px;">
        	   						<p style="width:60px;height:30px;line-height:30px;margin-left:10px;margin-bottom:10px;float:left;color:#878787">活动标题 </p> 

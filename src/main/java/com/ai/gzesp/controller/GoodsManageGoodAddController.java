@@ -112,7 +112,7 @@ public class GoodsManageGoodAddController {
     	String searchLowPrice = paramsMap.get("searchLowPrice");
     	String searchHightPrice = paramsMap.get("searchHightPrice");
 
-    	Map rspMap = new HashMap();  
+    	Map<String, Object> rspMap = new HashMap<String, Object>();  
 
     	if(searchKey!=null){
     		rspMap.put("searchKey",searchKey);
@@ -134,25 +134,6 @@ public class GoodsManageGoodAddController {
     	rspMap.put("goodsList", goodsList);  
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
-
-//		ModelAndView mav = new ModelAndView("goodsManageGoodAddSub.ftl"); 
-		//从数据库获取信息赋值
-		//数据库分页获取号码列表 默认第一页
-//		ArrayList<HashMap<String, String>> numbers = new ArrayList<HashMap<String, String>>();
-//		HashMap<String, String> number1 = new HashMap<String, String>();
-//		number1.put("number", "13851885061");
-//		number1.put("fee", "0");
-//		HashMap<String, String> number2 = new HashMap<String, String>();
-//		number2.put("number", "13851885062");
-//		number2.put("fee", "0");
-//		HashMap<String, String> number3 = new HashMap<String, String>();
-//		number3.put("number", "13851885063");
-//		number3.put("fee", "100");
-//		numbers.add(number1);
-//		numbers.add(number2);
-//		numbers.add(number3);
-//		mav.addObject("numbers", numbers);
-//		return mav;
 }
     
     

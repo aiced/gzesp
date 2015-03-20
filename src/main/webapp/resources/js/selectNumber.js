@@ -132,8 +132,8 @@ function queryNumbersPublicAppend(eparchy_code, nice_rule, nice_fee_start, nice_
 }
 
 //点击 某个号码，选中 可以根据大家的页面自定义修改
-function clickOneNumber(){
-   var serial_number = $(event.srcElement).html().replace(/[ ]/g,""); //获取点击选中的号码并去除空格
+function clickOneNumber(obj){
+   var serial_number = $(obj).html().replace(/[ ]/g,""); //获取点击选中的号码并去除空格
    //alert(serial_number);	
    //$('#serial_number').html(serial_number); //赋值给父页面里的某个 标签属性
    

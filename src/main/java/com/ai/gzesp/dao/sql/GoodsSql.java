@@ -52,6 +52,7 @@ public class GoodsSql {
 		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
 		List rcdList = commonDao.queryForList(sb.toString());
@@ -76,6 +77,7 @@ public class GoodsSql {
 		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
@@ -99,6 +101,7 @@ public class GoodsSql {
 				+ " and t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
@@ -109,49 +112,99 @@ public class GoodsSql {
 	/*
 	 * 带有筛选条件的所有商品列表
 	 */
-	public List getGoodsListWithCondition(Map rspMap) {
-		
-//		Iterator it= rspMap.keySet().iterator();    
-//		while(it.hasNext()){    
-//		     String key;    
-//		     String value;    
-//		     key=it.next().toString();    
-//		     value= rspMap.get(key);    
-//		     System.out.println(key+"--"+value);    
-//		}  
-//		
-//		for(Map.Entry<String, String> entry:rspMap.entrySet()){    
-//		     System.out.println(entry.getKey()+"--->"+entry.getValue());    
-//		}   
-		
-		Iterator it=rspMap.entrySet().iterator();           
-		System.out.println( rspMap.entrySet().size());    
+	public List<Map<String, Object>> getGoodsListWithCondition(Map rspMap) {
+		String searchKey = null;           
+		String searchType= null;           
+		String searchLowPrice= null;          
+		String searchHightPrice= null;          
 		String key;           
-		String value;    
+		String value;  
+		Iterator it=rspMap.entrySet().iterator();           
 		while(it.hasNext()){    
-		        Map.Entry entry = (Map.Entry)it.next();           
-		        key=entry.getKey().toString();           
+		        Map.Entry entry = (Map.Entry)it.next();
+		        key=entry.getKey().toString();  
 		        value=entry.getValue().toString();           
+		        if(key.equals("searchKey")){
+		        	searchKey = value;
+		        }else if(key.equals("searchType")){
+		        	searchType = value;
+		        }else if(key.equals("searchLowPrice")){
+		        	searchLowPrice = value;
+		        }else if(key.equals("searchHightPrice")){
+		        	searchHightPrice = value;
+		        }
 		        System.out.println(key+"===="+value);                     
 		}   
-		
-		
+		StringBuffer quarySb = new StringBuffer();
 		StringBuffer sb = new StringBuffer();
-		sb.append("select distinct "
-				+ "t1.GOODS_ID as goodsId,"
-				+ "t1.GOODS_NAME as goodsName, "
-				+ "t2.ADD_PRICE as addPrice, "
-				+ "t4.PHOTO_LINKS as photoLinks,"
-				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
-				);
-		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
-		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
-				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
-				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
-				+ " and t1.GOODS_STATE = '1'"
-				+ " order by t1.GOODS_ID");
-		List goodsList = commonDao.queryForList(sb.toString());
+		String sbStr = null;
+
+		sb.append("'%");
+		if(searchKey !=null){
+			sb.append(searchKey);
+			sb.append("%'");
+			sbStr = sb.toString();
+			quarySb.append("select distinct "
+					+ "t1.GOODS_ID as goodsId,"
+					+ "t1.GOODS_NAME as goodsName, "
+					+ "t2.ADD_PRICE as addPrice, "
+					+ "t4.PHOTO_LINKS as photoLinks,"
+					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
+					);
+			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+			quarySb.append("	where t1.GOODS_NAME like" +sbStr
+					+ " and t1.GOODS_ID = t2.GOODS_ID "
+					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
+					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t4.DEFAULT_TAG = '0'"
+					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
+					+ " and t1.GOODS_STATE = '1'"
+					+ " order by t1.GOODS_ID");
+			
+		}else if(searchType != null){
+			quarySb.append("select distinct "
+					+ "t1.GOODS_ID as goodsId,"
+					+ "t1.GOODS_NAME as goodsName, "
+					+ "t2.ADD_PRICE as addPrice, "
+					+ "t4.PHOTO_LINKS as photoLinks,"
+					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
+					);
+			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+			quarySb.append("	where t1.CTLG_CODE =" +searchType
+					+ " and t1.GOODS_ID = t2.GOODS_ID "
+					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
+					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t4.DEFAULT_TAG = '0'"
+					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
+					+ " and t1.GOODS_STATE = '1'"
+					+ " order by t1.GOODS_ID");
+			
+		}else if((searchLowPrice != null) && (searchHightPrice != null)){
+//			 if(Long.parseLong(searchLowPrice) < Long.parseLong(searchHightPrice)){
+//				 return;
+//			 }
+			
+			
+			quarySb.append("select distinct "
+					+ "t1.GOODS_ID as goodsId,"
+					+ "t1.GOODS_NAME as goodsName, "
+					+ "t2.ADD_PRICE as addPrice, "
+					+ "t4.PHOTO_LINKS as photoLinks,"
+					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
+					);
+			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+			quarySb.append("	where t2.ADD_PRICE <=" + searchHightPrice 
+					+ " and t2.ADD_PRICE >= "+ searchLowPrice
+					+ " and t1.GOODS_ID = t2.GOODS_ID "
+					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
+					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t4.DEFAULT_TAG = '0'"
+					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
+					+ " and t1.GOODS_STATE = '1'"
+					+ " order by t1.GOODS_ID");
+			
+		}
+		List<Map<String, Object>>goodsList = commonDao.queryForList(quarySb.toString());
 		return goodsList;
 	}
 
@@ -178,6 +231,7 @@ public class GoodsSql {
 				+ "	and t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " and t1.GOODS_ID = t6.GOODS_ID"
@@ -185,6 +239,24 @@ public class GoodsSql {
 
 		List rcdList = commonDao.queryForList(sb.toString());
 		return rcdList;
+	}
+	
+	public List GetGoodsDetailPhotos(String goodsId) {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("select distinct "
+				+ "t1.GOODS_ID as goodsId,"
+				+ "t4.PHOTO_LINKS as photoLinks"
+				);
+		sb.append(" from GDS_D_INFO t1, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 ");
+		sb.append(" where t1.GOODS_ID = " + goodsId
+				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
+				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.GOODS_STATE = '1'"
+				+ " order by t1.GOODS_ID");
+
+		List goodsDatailPhotoList = commonDao.queryForList(sb.toString());
+		return goodsDatailPhotoList;
 	}
 
 }

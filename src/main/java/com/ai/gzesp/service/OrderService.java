@@ -185,6 +185,8 @@ public class OrderService {
     	record.setCityCode(cityCode);
     	record.setDistrictCode(districtCode);
     	record.setPostRemark(postRemark);
+    	
+    	tdOrdDPOSTDao.insertSelective(record);
     }
     
     private void insertOrderProdInfo(Map<String, String> paramsMap) {

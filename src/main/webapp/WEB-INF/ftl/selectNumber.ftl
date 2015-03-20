@@ -126,7 +126,7 @@
         <#else>
             <div class="col-xs-6 border-td-right" style="padding:0px;">
         </#if>
-    	      <p class="p-td-number" onclick="clickOneNumber()">${item.SERIAL_NUMBER[0..2]} ${item.SERIAL_NUMBER[3..6]} ${item.SERIAL_NUMBER[7..10]}</p>
+    	      <p class="p-td-number" onclick="clickOneNumber(this)">${item.SERIAL_NUMBER[0..2]} ${item.SERIAL_NUMBER[3..6]} ${item.SERIAL_NUMBER[7..10]}</p>
     	      <p class="p-td-price">预存话费:${item.NICE_FEE}</p>
     	    </div>
         <#if (item_index%2==1 || !item_has_next)>

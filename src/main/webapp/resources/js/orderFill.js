@@ -150,6 +150,11 @@ $(function() {
 	//配送方式
 	$('#deliver-select a').bind("click",function(){
   	  $(this).addClass("selected").siblings().removeClass("selected");
+		if($('#deliver-select-post').hasClass("selected")){
+			$('#postInfoTab').css({ "display":"block" });
+    	}else{
+    		$('#postInfoTab').css({ "display":"none" });
+    	}
   	  return false;
     });
 	
@@ -269,6 +274,23 @@ function netInfo_checkData() {
     }
     return true;
 }
+//	
+function checkPostSelect() {
+//	快递配送
+	if($('#deliver-select-post').hasClass("selected")){
+    	if($('#post-select-none').hasClass("selected")){
+        	alert('###'+$('#post-select-none').attr("value"));
+    		return $('#post-select-none').attr("value");
+       	}else if($('#post-select-shunfeng').hasClass("selected")){
+    		return $('#post-select-shunfeng').attr("value");
+    	}
+    }else{
+//   自提
+    	
+    }
+
+}
+
 
 function getParams() {
 	orderFormParams.custName = $('#userName').val();
@@ -329,7 +351,11 @@ function nextPage() {
 //		alert('请完整其他信息');
 //		return;
 //	}
-	
+	var postStyle = checkPostSelect();
+	if(postStyle !=null ){
+		alert(postStyle);
+		return;
+	}
 	var tmp = {'fromPage':'orderFill' };
 	getParams();
     var parms = $.extend({}, tmp, orderFormParams);

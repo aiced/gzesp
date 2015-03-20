@@ -91,7 +91,7 @@
 	            <div id="deliverInfoTab" class="list-group-item">
 	                <label>配送方式</label>
 	                <div id="deliver-select" class="p-list">
-                        <a href="javascript:void(0);"  value="01"  class="selected">快递配送</a>
+                        <a id="deliver-select-post" href="javascript:void(0);"  value="01"  class="selected">快递配送</a>
                         <a href="javascript:void(0);"  value="02"   >自提</a>
                     </div>
 <!--                     <div> -->
@@ -103,8 +103,8 @@
 	            <div id="postInfoTab" class="list-group-item">
 	                <label>物流公司</label>
 	                <div id="post-select" class="p-list">
-                        <a href="javascript:void(0);"  value="nomal"  class="selected">不限物流</a>
-                        <a href="javascript:void(0);"  value="sf"   >顺丰速运</a>
+                        <a id="post-select-none" href="javascript:void(0);"  value="nomal"  class="selected">不限物流</a>
+                        <a id="post-select-shunfeng" href="javascript:void(0);"  value="sf"   >顺丰速运</a>
                     </div>
 	            </div>
 	            

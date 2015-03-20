@@ -3,7 +3,7 @@ function searchWord(obj) {
 //	搜索框：searchInput
 	var searchKey = document.getElementById('searchInput');
     if (searchKey.value.length == 0){
-    	alert("请输入搜索条件");   	
+		window.location.reload(); 
     	return;
     }   
 	var searchKey = $('#searchInput').val();
@@ -114,6 +114,8 @@ function resetPrice(obj) {
 	startInput.value = null;
 	var endInput = document.getElementById('endInput');
 	endInput.value = null;
+	window.location.reload(); 
+
 }
 
 //  选择类型：
@@ -123,9 +125,8 @@ function resetPrice(obj) {
 //4:特色流量包
 function setTagCondition(obj) {
 	
-	var searchKey = obj;
-	alert('点击了'+ searchKey);   
-    var param = {"searchKey":searchKey};
+	var searchType = obj;
+    var param = {"searchType":searchType};
 	$.ajax({
 		   type: "POST",
 		   url: "queryGoodsByAjax",

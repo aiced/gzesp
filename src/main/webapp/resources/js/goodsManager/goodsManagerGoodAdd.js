@@ -114,6 +114,8 @@ function resetPrice(obj) {
 	startInput.value = null;
 	var endInput = document.getElementById('endInput');
 	endInput.value = null;
+	window.location.reload(); 
+
 }
 
 //  选择类型：

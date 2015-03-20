@@ -21,7 +21,7 @@ var orderStat = {
 }
 
 var orderFormParams = {
-		orderFrom:"weixin微信",
+		orderFrom:"01",
 		originalPrice:"",
 		couponMoney:"",
 		manMadeMoney:"",
@@ -37,8 +37,8 @@ var orderFormParams = {
 		
 		userId:"",
 		userName:"",
-		devlpId:"",
-		devlpName:"",
+		devlpId:"123456",
+		devlpName:"asiainfo_ced",
 		phoneNum:"",
 		invoiceTitle:"",
 		
@@ -92,6 +92,7 @@ $(function() {
 	//子页确认事件
 	$('#netInfoBtn').bind("click",function(){
 		if(netInfo_checkData()) {
+			orderStat.netInfoStat = 1;
 			$('#netInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -104,8 +105,10 @@ $(function() {
 		$('#orderMain').css({ "display":"block" });
 		return false;
 	});
+	
 	$('#receiveInfoBtn').bind("click",function(){
 		if(addres_checkData()) {
+			orderStat.receiveInfoStat = 1;
 			$('#receiveInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -117,7 +120,9 @@ $(function() {
 		$('#orderMain').css({ "display":"block" });
 		return false;
 	});
+	
 	$('#payInfoBtn').bind("click",function(){
+		orderStat.payInfoStat = 1;
 		$('#payInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
 		return false;
@@ -127,8 +132,10 @@ $(function() {
 		$('#orderMain').css({ "display":"block" });
 		return false;
 	});
+	
 	$('#otherInfoBtn').bind("click",function(){
 		if(otherOrder_checkData()) {
+			orderStat.otherInfoStat = 1;
 			$('#otherInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -260,16 +267,31 @@ function netInfo_checkData() {
     	alert("证件照片不能为空");   	
     	return false;
     }
-    return ture;
+    return true;
 }
 
 function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
-//	orderFormParams.idCardPicUp = $('#firstCard').attr("src").val();
-//	orderFormParams.idCardPicDown = $('#secondCard').attr("src").val();
-
-	 
+	
+	orderFormParams.originalPrice = $('#originalPrice').val();
+	orderFormParams.couponMoney = $('#couponMoney').val();
+	orderFormParams.manMadeMoney = orderFormParams.originalPrice;
+	orderFormParams.topayMoney = orderFormParams.originalPrice;
+	
+	orderFormParams.userId = $('#userId').val();
+	
+	orderFormParams.payType = $('input[name="pay_mode"]:checked').val();
+	switch ($("input[name=pay_mode]:checked").attr("id"))  {
+         case "pay_mode_1":
+        	 orderFormParams.payMode = $('input[name="pay_mode_style"]:checked').val();
+        	 break;
+         case "pay_mode_2":
+        	 orderFormParams.payMode = $('#paySelector').val();
+        	 break;
+    }
+	
+	
 	
 	var ordResArr=new Array();
 	var ordResInfo = new Object();
@@ -290,6 +312,24 @@ function getParams() {
 
 
 function nextPage() {
+	
+//	if(orderStat.netInfoStat==0) {
+//		alert('请完整入网资料');
+//		return;
+//	}
+//	if(orderStat.receiveInfoStat==0) {
+//		alert('请完整收货信息');
+//		return;
+//	}
+//	if(orderStat.payInfoStat==0) {
+//		alert('请完整支付信息');
+//		return;
+//	}
+//	if(orderStat.otherInfoStat==0) {
+//		alert('请完整其他信息');
+//		return;
+//	}
+	
 	var tmp = {'fromPage':'orderFill' };
 	getParams();
     var parms = $.extend({}, tmp, orderFormParams);

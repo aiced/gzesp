@@ -259,12 +259,47 @@ public class CommonUtil {
     	return idType + rStr + time;
     }
     
+    public static String generatePayLogId() {
+    	String idType = "2";
+    	long time =  System.currentTimeMillis();
+    	Random r = new Random();
+    	int rint = r.nextInt(99);
+    	String rStr = StringUtil.paddingLeft(String.valueOf(rint), '0', 2);
+    	return idType + rStr + time;
+    }
+    
     public static String getPartitionId(String str) { 
     	if(str == null || str.length() < 2) {
     		return str;
     	}
     	String partitionId = str.substring(str.length()-2);
     	return partitionId;
+    }
+    
+    public static Long string2Long(String str) {
+    	if(str == null || "".equals(str.trim())) {
+    		return null;
+    	}
+    	Long l;
+    	try {
+    		l = Long.parseLong(str);
+    	} catch(NumberFormatException e) {
+    		l = null;
+    	}
+    	return l;
+    }
+    
+    public static Integer string2Int(String str) {
+    	if(str == null || "".equals(str.trim())) {
+    		return null;
+    	}
+    	Integer i;
+    	try {
+    		i = Integer.parseInt(str);
+    	} catch(NumberFormatException e) {
+    		i = null;
+    	}
+    	return i;
     }
     
     /*

@@ -4,7 +4,7 @@
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
         <div class="col-xs-2" style="margin-top:5px;padding:0px;">
-    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
+    	  <a class="left carousel-control" onclick="back2Main()" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             <span class="sr-only">back</span>
           </a>
@@ -100,6 +100,14 @@
           </button>    	  
     	</div>  		    		
       </div>
+    </div>
+    
+    <!-- 如果号码占用失败 弹出警告框-->
+    <div class="alert alert-warning alert-dismissible " role="alert" id="alert_div" style="display:none;">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <strong>警告!</strong> 号码占用失败，请选择其他号码
     </div>
 
     <!-- 号码展示表格-->

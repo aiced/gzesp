@@ -56,3 +56,13 @@ function back2Main(){
 function planGotoOrderMain(){
 	//var param = {"user_id":};
 }
+
+//选择号码页面 点击号码 预占号码后的 自定义回调函数
+function afterUpdateNumber(data){
+	if(data.status == 'SUCCESS'){
+		back2Main(); //回到主页面 隐藏子页面
+	}
+	else{
+		
+	}
+}

@@ -52,6 +52,7 @@ public class GoodsSql {
 		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
 		List rcdList = commonDao.queryForList(sb.toString());
@@ -76,6 +77,7 @@ public class GoodsSql {
 		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
@@ -99,6 +101,7 @@ public class GoodsSql {
 				+ " and t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
@@ -109,7 +112,7 @@ public class GoodsSql {
 	/*
 	 * 带有筛选条件的所有商品列表
 	 */
-	public List getGoodsListWithCondition(Map rspMap) {
+	public List<Map<String, Object>> getGoodsListWithCondition(Map rspMap) {
 		String searchKey = null;           
 		String searchType= null;           
 		String searchLowPrice= null;          
@@ -153,6 +156,7 @@ public class GoodsSql {
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
 					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t4.DEFAULT_TAG = '0'"
 					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 					+ " and t1.GOODS_STATE = '1'"
 					+ " order by t1.GOODS_ID");
@@ -170,6 +174,7 @@ public class GoodsSql {
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
 					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t4.DEFAULT_TAG = '0'"
 					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 					+ " and t1.GOODS_STATE = '1'"
 					+ " order by t1.GOODS_ID");
@@ -193,12 +198,13 @@ public class GoodsSql {
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
 					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t4.DEFAULT_TAG = '0'"
 					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 					+ " and t1.GOODS_STATE = '1'"
 					+ " order by t1.GOODS_ID");
 			
 		}
-		List goodsList = commonDao.queryForList(quarySb.toString());
+		List<Map<String, Object>>goodsList = commonDao.queryForList(quarySb.toString());
 		return goodsList;
 	}
 
@@ -225,6 +231,7 @@ public class GoodsSql {
 				+ "	and t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
 				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " and t1.GOODS_ID = t6.GOODS_ID"
@@ -232,6 +239,24 @@ public class GoodsSql {
 
 		List rcdList = commonDao.queryForList(sb.toString());
 		return rcdList;
+	}
+	
+	public List GetGoodsDetailPhotos(String goodsId) {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("select distinct "
+				+ "t1.GOODS_ID as goodsId,"
+				+ "t4.PHOTO_LINKS as photoLinks"
+				);
+		sb.append(" from GDS_D_INFO t1, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 ");
+		sb.append(" where t1.GOODS_ID = " + goodsId
+				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
+				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.GOODS_STATE = '1'"
+				+ " order by t1.GOODS_ID");
+
+		List goodsDatailPhotoList = commonDao.queryForList(sb.toString());
+		return goodsDatailPhotoList;
 	}
 
 }

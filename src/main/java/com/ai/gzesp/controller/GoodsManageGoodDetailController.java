@@ -42,13 +42,12 @@ public class GoodsManageGoodDetailController {
     
     @RequestMapping("/goodsManageGoodDetail")
     public ModelAndView goodsManageGoodDetail(@RequestBody String inputParam){
-    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    	String goodsIdStr = paramsMap.get("goodsId");
-    	
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);    	
     	String goodsId = paramsMap.get("goodsId");
-    	    	
-    	List<Map<String, Object>> goodsDetaiList = goodsSql.GetGoodsDetail(goodsId);   
-
+    	List<Map<String, Object>> goodsDetailList = goodsSql.GetGoodsDetail(goodsId);  
+    	List<Map<String, Object>> goodsDetailPhotosList = goodsSql.GetGoodsDetailPhotos(goodsId);       	
+    	
+    	
     	
         List<String> banners = new ArrayList<String>();
         banners.add("banner_iphone6.png");
@@ -58,10 +57,11 @@ public class GoodsManageGoodDetailController {
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
-    	rspMap.put("total", goodsDetaiList.size());     	
+    	rspMap.put("total", goodsDetailPhotosList.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-    	rspMap.put("goodsDetaiList", goodsDetaiList); 
-    	rspMap.put("banners", banners);  
+    	rspMap.put("goodsDetailList", goodsDetailList); 
+    	rspMap.put("goodsDetailPhotosList", goodsDetailPhotosList); 
+//    	rspMap.put("banners", banners);  
 
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodDetail.ftl", rspMap);

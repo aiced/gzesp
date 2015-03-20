@@ -21,7 +21,7 @@
     <div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+        	<div id="receiveInfoBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
         </div>

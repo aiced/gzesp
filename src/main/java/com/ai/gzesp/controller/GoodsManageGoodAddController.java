@@ -40,9 +40,30 @@ public class GoodsManageGoodAddController {
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String name = paramsMap.get("index");
-    	List<Map<String, Object>> goodsList = goodsSql.getGoodsList();   
     	
-    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
+    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList(); 
+    	List<Map<String, Object>> goodsList = null;
+		StringBuffer sb = new StringBuffer();
+
+		if(rcdlist.size() != 0){
+			sb.append("(");
+			for(Map<String, Object> map : rcdlist){ 
+				for (String k : map.keySet())  
+			      {  
+			        if(k.equals("GOODSID")){
+						sb.append(","+map.get(k));
+				        System.out.println(k + " : " + map.get(k));  
+			        }
+			      }  
+	        }
+			sb.append(")");
+			sb.deleteCharAt(1);
+			goodsList = goodsSql.getGoodsListNotIn(sb.toString());   
+		}else{
+			goodsList = goodsSql.getGoodsList();   			
+		}
+    	
+    	
 
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
@@ -91,7 +112,7 @@ public class GoodsManageGoodAddController {
     	String searchLowPrice = paramsMap.get("searchLowPrice");
     	String searchHightPrice = paramsMap.get("searchHightPrice");
 
-    	Map rspMap = new HashMap();  
+    	Map<String, Object> rspMap = new HashMap<String, Object>();  
 
     	if(searchKey!=null){
     		rspMap.put("searchKey",searchKey);
@@ -106,7 +127,6 @@ public class GoodsManageGoodAddController {
     	}  
     	
     	List<Map<String, Object>>goodsList = goodsSql.getGoodsListWithCondition(rspMap); 
-    	
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", goodsList.size());     	
@@ -114,25 +134,6 @@ public class GoodsManageGoodAddController {
     	rspMap.put("goodsList", goodsList);  
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
-
-//		ModelAndView mav = new ModelAndView("goodsManageGoodAddSub.ftl"); 
-		//从数据库获取信息赋值
-		//数据库分页获取号码列表 默认第一页
-//		ArrayList<HashMap<String, String>> numbers = new ArrayList<HashMap<String, String>>();
-//		HashMap<String, String> number1 = new HashMap<String, String>();
-//		number1.put("number", "13851885061");
-//		number1.put("fee", "0");
-//		HashMap<String, String> number2 = new HashMap<String, String>();
-//		number2.put("number", "13851885062");
-//		number2.put("fee", "0");
-//		HashMap<String, String> number3 = new HashMap<String, String>();
-//		number3.put("number", "13851885063");
-//		number3.put("fee", "100");
-//		numbers.add(number1);
-//		numbers.add(number2);
-//		numbers.add(number3);
-//		mav.addObject("numbers", numbers);
-//		return mav;
 }
     
     

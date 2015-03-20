@@ -12,9 +12,22 @@
     <link href="${resRoot}/css/orderMain.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain2.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain3.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/selectNumber.css?v=${resVer}" rel="stylesheet">    
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>    
+    
   </head>
 
   <body>
+  <!-- -->
+  <form id="form1" action="${base}/order/newNumberJoin" style="display:none;">
+    <input id="user_id" value="${user_id}"></input>
+
+  </form>
+  <!-- 第一页 商品详情主页start --> 
+  <div id="page_main">   
   	<!-- nav bar -->
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
@@ -113,34 +126,53 @@
                 </a>
             </li>
             <li class="num-info-li">
-                <a href="#imageAndTextDetail" id="btn_iat"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
+                <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
             <li class="num-info-li city-li">
-                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">请选择号码</span><label color="#F70909">选择号码</label></a>
+                <a href="#subpage_3" onclick="showSubpage('subpage_3')"><b class="list-arr"></b><span class="detail-info" id="serial_number">请选择号码</span><label color="#F70909">选择号码</label></a>
             </li>
-            <li id="planList" class="num-info-li">
-                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a>
-                <div class="tabs-box">
-                    <ul class="tabslist">
-                        <li class="tab-on" planVersion="planA" >A计划</li>
-                        <li planVersion="planC" >B计划</li>
-                        <li class="mrg-r-0" planVersion="planC" >C计划</li>
-                    </ul>
-                </div>
-                <p style="margin-bottom: 0px;color:#999;">电话300分钟 短信0条 流量800MB</p>            
-            </li>                        
-            <li id="simTypeList" class="num-info-li" >
-                <p style="margin-bottom: 0px;"><label>卡类型</label></p>
-                <div class="tabs-box">
-                    <ul class="tabslist">
-                        <li class="tab-on" simType="normal" >普通卡</li>
-                        <li simType="micro" >微卡</li>
-                        <li class="mrg-r-0" simType="nano" >Nano卡</li>
-                    </ul>
-                </div>
-            </li>
-            <li id="simTypeList" class="num-info-li" >
-                <p style="margin-bottom: 0px;color:#999;">商品金额：<strong class="current-price">￥7099</strong> 其中预存0元</p> 
+            <!-- A/B/C 套餐 -->
+            <#if attrs.PACKRES??>
+              <li id="planList" class="num-info-li" >
+                  <!--<a href="#subpage_4" onclick="showSubpage('subpage_4')"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a> -->
+                  <p style="margin-bottom: 0px;"><label>套餐</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.CAPTYRS as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+                  <p style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>  
+              </li>              
+            </#if>    
+            <!-- 普通卡/微卡/Nano卡-->        
+            <#if attrs.SIMSIZE??>
+              <li id="simTypeList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>卡类型</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.CAPTYRS as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>                     
+            <li id="price" class="num-info-li" >
+                <p style="margin-bottom: 0px;color:#999;">商品金额：<strong class="current-price">￥${detail.GOODS_PRICE}</strong></p> 
             </li>            
         </ul>
     </div>
@@ -148,11 +180,27 @@
     <div class="btns-box userType">
         <a id="new-user" class="org-btn w-full fl" href="javascript:void(0)">立即购买</a>
     </div>
-
+  </div>    
+  <!-- 第一页 商品详情主页end -->
+  
+  <!-- 第二页 图文详情页start -->   
+  <div id="subpage_2" class="bg-white" data-role="page" style="display:none;">
+    <#include "imageAndTextDetail.ftl"> 
+  </div>    
+  <!-- 第二页 图文详情页end -->   
+  
+  <!-- 第三页 选择号码start -->
+  <div id="subpage_3" class="bg-gray" data-role="page" style="display:none;"> 
+    <#include "selectNumber.ftl">
+  </div>    
+  <!-- 第三页 选择号码end -->     
+  
+  <!-- 第四页 ABC套餐详情start 暂定作废 -->
+  <div id="subpage_4" class="bg-white" data-role="page" style="display:none;"> 
+  </div>       
+  <!-- 第四页 ABC套餐详情end -->  
          
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/selectPlan.js"></script>
+
     
   </body>
 </html>

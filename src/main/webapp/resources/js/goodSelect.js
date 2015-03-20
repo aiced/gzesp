@@ -48,8 +48,8 @@ function sortPhoneList(sortCol){
 	sortListPublic(good_type, sortCol);
 }
 
-//输入关键字点击搜索执行ajax查询刷新 
-//公共方法 套餐选择 合约购机选择 上网卡选择 宽带选择 流量包选择 共用
+//ajax查询刷新 
+//公共入口方法 套餐选择 合约购机选择 上网卡选择 宽带选择 流量包选择 共用
 function queryFilterPublic(goodType, pageNum, pageSize, keyword, sort, sortCol)
 {
 	var param = {"keyword":keyword, "goodType":goodType, "pageNum":pageNum, "pageSize":pageSize, "sort":sort, "sortCol":sortCol};

@@ -27,7 +27,7 @@
                  a.goods_id  goods_id, 
                  b.ctlg_code ctlg_code, 
                  b.goods_name goods_name, 
-                 c.add_price goods_price, 
+                 c.add_price/1000 goods_price, 
                  d.goods_amount goods_amount,  
                  f.photo_links photo_links  
             from GDS_D_ABLE_RCD a,
@@ -37,6 +37,7 @@
                  GDS_D_PHOTO f
            where a.user_id = ${user_id}
              and a.goods_id = b.goods_id
+             and b.goods_state = '1'
              and a.goods_id = c.goods_id
              and a.goods_id = d.goods_id
              and d.amount_type = '2' 
@@ -53,7 +54,7 @@
          select a.goods_id  goods_id, 
                 b.ctlg_code ctlg_code, 
                 b.goods_name goods_name, 
-                c.add_price goods_price, 
+                c.add_price/1000 goods_price, 
                 a.goods_amount goods_amount,  
                 f.photo_links photo_links  
            from GDS_D_AMOUNT a,
@@ -62,6 +63,7 @@
                 GDS_D_PHOTO f
           where a.amount_type = '2' 
             and a.goods_id = b.goods_id
+            and b.goods_state = '1'
             and b.ctlg_code in (4, 9) 
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
@@ -79,7 +81,7 @@
          select a.goods_id  goods_id, 
                 b.ctlg_code ctlg_code, 
                 b.goods_name goods_name, 
-                c.add_price goods_price, 
+                c.add_price/1000 goods_price, 
                 a.goods_amount goods_amount,  
                 f.photo_links photo_links  
            from GDS_D_AMOUNT a,
@@ -88,6 +90,7 @@
                 GDS_D_PHOTO f
           where a.amount_type = '2' 
             and a.goods_id = b.goods_id
+            and b.goods_state = '1'
             and b.ctlg_code in (6, 11) 
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
@@ -108,14 +111,24 @@
             and b.album_id = f.album_id
            order by f.photo_no
      ]]>
-	</select>						
+	</select>	
+	
+    <resultMap type="com.ai.gzesp.dto.GoodsDetailResult" id="detailResult">  
+        <id column="goods_id" property="GOODS_ID"/>  
+        <result column="ctlg_code" property="CTLG_CODE"/>  
+        <result column="goods_name" property="GOODS_NAME"/>
+        <result column="content" property="CONTENT" typeHandler="com.ai.sysframe.mybatis.typehandler.BlobTypeHandler"/> 
+        <result column="goods_price" property="GOODS_PRICE"/>   
+        <result column="aty_title" property="ATY_TITLE"/>  
+    </resultMap>  				
 
-	<select id="getGoodDetail" resultType="java.util.HashMap">
+	<select id="getGoodDetail" resultMap="detailResult" >
 	<![CDATA[
          select b.goods_id  goods_id, 
                 b.ctlg_code ctlg_code, 
                 b.goods_name goods_name, 
-                c.add_price goods_price,
+                b.content  content,
+                c.add_price/1000 goods_price,
                 nvl(e.aty_title,'') aty_title  
            from GDS_D_INFO b,
                 GDS_D_PRICE c,
@@ -141,7 +154,8 @@
             b.res_id,
             c.attr_code,
             c.attr_val_name,
-            c.attr_val_code
+            c.attr_val_code,
+            c.values1
        from GDS_D_INFO a ,
             REL_GOODS_RES b,
             RES_D_ATTRVAL c
@@ -158,7 +172,7 @@
          select a.goods_id  goods_id, 
                 a.ctlg_code ctlg_code, 
                 a.goods_name goods_name, 
-                c.add_price goods_price, 
+                c.add_price/1000 goods_price, 
                 b.goods_amount goods_amount,  
                 f.photo_links photo_links  
            from GDS_D_INFO a,
@@ -200,6 +214,8 @@
         where rownum > (${pageNum}-1)*${pageSize}
           and rownum <= ${pageNum}*${pageSize}       
      ]]>
-	</select>				
+	</select>
+	
+				
 
 </mapper>

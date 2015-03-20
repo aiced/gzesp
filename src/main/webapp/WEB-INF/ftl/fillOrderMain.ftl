@@ -31,7 +31,6 @@
     
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/orderFill.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/order/netProfile.js?v=${resVer}"></script>
 
 	
     <style type="text/css">
@@ -125,15 +124,19 @@
 	
 	        <div class="list-group">
 	            <a href="javascript:void(0)" class="list-group-item">
+	            	<input id="originalPrice" type="hidden" value="${originalPrice}">
 	                <label class="label-sm">商品金额</label><span class="list_gou">￥199.00</span>
 	            </a>
 	            <a href="javascript:void(0)" class="list-group-item">
+	            	<input id="postFee" type="hidden" value="0">
 	                <label class="label-sm">运费</label><span class="list_gou">+ ￥00.00</span>
 	            </a>
 	            <a href="javascript:void(0)" class="list-group-item">
+	            	<input id="couponMoney" type="hidden" value="0">
 	                <label class="label-sm">代金券</label><span class="list_gou">- ￥00.00</span>
 	            </a>
 	            <a href="javascript:void(0)" class="list-group-item">
+	            	<input id="topayMoney" type="hidden" value="">
 	                <label class="label-sm">应付总额</label><span class="list_gou">￥199.00</span>
 	            </a>
 	        </div>
@@ -147,6 +150,8 @@
 	        <br/>
 	        <button class="btn btn-warning btn-block " type="button" onclick="nextPage()">提交订单</button>
 	    </div>
+	    
+	    <input id="userId" type="hidden" value="${userId}">
 	</div>
 	
 	<!-- 入网资料页 -->

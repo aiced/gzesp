@@ -39,15 +39,21 @@
             //检验输入数值是否正确
             function checkData()
             {
-            	if(!$("#beginTime").val())
+            	if($("#beginTime").val())
+				{
+            		if(!$("#endTime").val())
+            		{
+            			alert("请输入截至日期");
+            			return false;
+            		}
+				}
+            	if($("#endTime").val())
             	{
-            		alert("请输入起始日期");
-            		return false;
-            	}
-            	if(!$("#endTime").val())
-            	{
-            		alert("请输入截至日期");
-            		return false;
+            		if(!$("#beginTime").val())
+            		{
+            			alert("请输入起始日期");
+            			return false;
+            		}
             	}
             	if(!CompareDate($("#beginTime").val(),$("#endTime").val()))
             	{
@@ -67,7 +73,7 @@
             	{
             		//在这里操作数据库查询的
             		var bRetrun=false;
-            		var param = {"startDate":$("#beginTime").val(),"endDate":$("#endTime").val()};
+            		var param = {"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"orderID":$("#txtorderid").val(),"userID":$("#hideuserid").val()};
             		
             		$.ajax({
             			   type: "POST",
@@ -103,7 +109,7 @@
         .order_top_middle
         {
             float: left;
-            width: 55%;
+            width: 70%;
             text-align: center;
             margin-left: 5px;
             margin-right: 5px;
@@ -223,41 +229,61 @@
 		<!--top_end-->
         <div  class="order_top">
             <div class="order_top_left"><label>订单时间</label></div>
+            
             <div class="order_top_middle">
                 <div class="order_top_middle1">
                     <!--<input type="text" id="txtdatefrom" class="form-control">-->
-                    <input  id="beginTime" class="kbtn" name="beginTime"/>
+                    <input  id="beginTime" class="kbtn" name="beginTime" value=""/>
                 </div>
                 <div class="order_top_middle2">
                     —
                 </div>
                 <div class="order_top_middle3">
                     <!--<input type="text" id="txtdateto" class="form-control">-->
-                    <input  id="endTime" class="kbtn" name="endTime"/>
+                    <input  id="endTime" class="kbtn" name="endTime" value=""/>
                 </div>
                 <div id="datePlugin"></div>
             </div>
-            <div class="order_top_right">
-                <button class="btn btn-warning btn-block" type="button" name="btnselect" id="btnselect">查询</button>
-            </div>
+            
+            <!-- <div class="order_top_right"> -->
+            <!--    <button class="btn btn-warning btn-block" type="button" name="btnselect" id="btnselect">查询</button>-->
+            <!--</div>-->
             <div class="div_clear"></div>
-            <div class="div_line"></div>
         </div>
+        <div  class="order_top">
+            <div class="order_top_left"><label>订单号</label></div>
+            
+            <div class="order_top_middle">
+				<input type="text" name="txtorderid" id="txtorderid" style="width:200px;" value=""/>
+            </div>
+            
+            <!-- <div class="order_top_right"> -->
+            <!--    <button class="btn btn-warning btn-block" type="button" name="btnselect" id="btnselect">查询</button>-->
+            <!--</div>-->
+			<div class="div_clear"></div>
+            <div class="div_line"></div>
+            <br/>
+            <button class="btn btn-warning btn-block" type="button" name="btnselect" id="btnselect">查询</button>
+            <!-- 隐藏控件用于保存userid -->
+            <input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
+        </div>        
         <div class="div_clear"></div>
-
+        <br/>
+        <br/>
+		<br/>
         <div id="order_middle_info">
         
-        	<#if orderList?size==0>
-        	<div class="order_middle">
-        	您还没有订单
-        	</div>
-        		
+        	<#if (orderList?size==0)>
+	        	<div class="order_middle">
+	        		您还没有订单
+	        	</div>
         	<#else>
 				<#list orderList as item>
 		           <div class="order_middle">
 		               <div class="order_contain">
 		                   <div class="order_contain_top">
-		                       <div class="order_contain_title">苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器</div>
+		                   	   <!-- ,苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器 -->
+		                       <div class="order_contain_title">item.ORD_D_PROD.GOODS_NAME</div>
 		                       <div class="order_contain_statue">已处理</div>
 		                   </div>
 		                   <div class="div_clear"></div>

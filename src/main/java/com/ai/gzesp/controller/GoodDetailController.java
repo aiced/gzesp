@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.common.Constants;
+import com.ai.gzesp.dto.GoodsDetailResult;
+import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
 
 @Controller
@@ -18,6 +20,9 @@ public class GoodDetailController {
 
     @Autowired
     private WeShopService weShopService;
+    
+    @Autowired
+    private SelectNumberService selectNumberService;
     
     /**
      * 三级页面：商品详情 公共controller入口，根据传进来的商品目录，跳转到不同的商品详情页面<br>
@@ -34,6 +39,14 @@ public class GoodDetailController {
         ModelAndView mav = null;
         if(Constants.CTLG_CODE_XHRW_5.equals(ctlg_code) || Constants.CTLG_CODE_XHRW_10.equals(ctlg_code)){
             mav = new ModelAndView("planDetail.ftl"); //新号入网
+            
+            //获取靓号规则下拉框
+            List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
+            mav.addObject("rules", rules);
+            
+            //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
+            List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null);
+            mav.addObject("numbers", numbers);
         }
         else if(Constants.CTLG_CODE_HYGJ_4.equals(ctlg_code) || Constants.CTLG_CODE_HYGJ_9.equals(ctlg_code)){
             mav = new ModelAndView("phoneGoodDetail.ftl"); //合约购机
@@ -56,7 +69,7 @@ public class GoodDetailController {
         mav.addObject("banners", banners);
         
         //查询商品的 名称 价格 自定义活动
-        Map<Object, Object> goodDetail = weShopService.getGoodDetail(goods_id, user_id);
+        GoodsDetailResult goodDetail = weShopService.getGoodDetail(goods_id, user_id);
         mav.addObject("detail", goodDetail);
         
         //商品评价条数  暂不考虑
@@ -68,7 +81,7 @@ public class GoodDetailController {
         //默认都有货
         
         //版本 颜色 内存 优惠活动    这些都是通过商品关联物品获取物品属性
-        Map<Object, List<Object>> attrs = weShopService.getAttrs(goods_id);
+        Map<Object, List<Map<Object, Object>>> attrs = weShopService.getAttrs(goods_id);
         mav.addObject("attrs", attrs);
         
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成

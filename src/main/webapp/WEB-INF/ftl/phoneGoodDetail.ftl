@@ -114,7 +114,7 @@
                 </a>
             </li>
             <li class="num-info-li">
-                <a href="#imageAndTextDetail" id="btn_iat"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
+                <a href="#subpage_3" onclick="showSubpage('subpage_3')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
             <li class="num-info-li city-li"  style="height:50px;">
                 <p>
@@ -140,11 +140,11 @@
                       <ul class="tabslist">
                         <#list attrs.SIZERES as item>
                           <#if item_index==0>
-                            <li class="tab-on" machineVersion="${item}" >${item}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%2==1>
-                            <li class="mrg-r-0" machineVersion="${item}" >${item}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li machineVersion="${item}" >${item}</li>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -158,11 +158,11 @@
                       <ul class="tabslist">
                         <#list attrs.COLORRS as item>
                           <#if item_index==0>
-                            <li class="tab-on" colorcode="${item}" >${item}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" colorcode="9809120800036795">${item}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li colorcode="${item}" >${item}</li>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -176,11 +176,11 @@
                       <ul class="tabslist">
                         <#list attrs.CAPTYRS as item>
                           <#if item_index==0>
-                            <li class="tab-on" romsize="${item}" >${item}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" romsize="9809120800036795">${item}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li romsize="${item}" >${item}</li>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -194,11 +194,11 @@
                       <ul class="tabslist tabslist-long">
                         <#list attrs.xx as item>
                           <#if item_index==0>
-                            <li class="tab-on" activityType="${item}" >${item}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%2==1>
-                            <li class="mrg-r-0" activityType="${item}" >${item}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li activityType="${item}" >${item}</li>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -269,129 +269,8 @@
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabPane1">
-            <!-- 4g -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">4G支持</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:15px;">是</p> 
-    	          </div>    	
-              </div>
-            </div>
-            <!-- 是否双卡双待 -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">单卡/双卡双待</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:15px;">单卡</p> 
-    	          </div>    	
-              </div>
-            </div> 
-            <!-- cpu -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">CPU</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:15px;">64位架构A8芯片</p> 
-    	          </div>    	
-              </div>
-            </div>
-            <!-- sim卡类型 -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">SIM卡类型</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:15px;">nano卡</p> 
-    	          </div>    	
-              </div>
-            </div>
-            <!-- 分辨率 -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">分辨率</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:15px;">1344x750像素</p> 
-    	          </div>    	
-              </div>
-            </div>            
-            <!-- 屏幕尺寸 -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">屏幕尺寸</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:15px;">5.5寸</p> 
-    	          </div>    	
-              </div>
-            </div>
-            <!-- 摄像头 -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">摄像头</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:10px;">主800万像素，副120万像素</p> 
-    	          </div>    	
-              </div>
-            </div>
-            <!-- 操作系统 -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">操作系统</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:10px;">IOS</p> 
-    	          </div>    	
-              </div>
-            </div>
-            <!-- 内存ROM -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">内存ROM</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:10px;">128G</p> 
-    	          </div>    	
-              </div>
-            </div>
-            <!-- 运行内存RAM -->
-            <div class="container-fluid" style="margin:10px 0px 0px 0px;background-color:#ffffff;">
-              <div class="row" >
-                <div class="col-xs-5 div-text-center" style="background-color:#ffc798;">
-    	            <p class="text-center" style="color:#ffffff;font-size:15px;">运行内存RAM</p> 
-    	          </div>
-                <div class="col-xs-7 div-text-center" style="">
-    	            <p class="text-center" style="font-size:10px;">1G</p> 
-    	          </div>    	
-              </div>
-            </div>                                                                                                              
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabPane2">
-            <!-- 广告图 -->
-            <div class="container-fluid" style="background-color:#ffffff;margin:0px;padding:0px;">
-              <img src="${resRoot}/image/imageAndTextDetail/banner_honer_x1.png" alt="" class="img-responsive" />      
-            </div>
-            <div class="container-fluid" style="background-color:#ffffff;margin:0px;padding:0px;">
-              <img src="${resRoot}/image/imageAndTextDetail/banner_iphone6.png" alt="" class="img-responsive" />      
-            </div>  
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabPane3">
-          </div>
+        ${detail.CONTENT}
+
         </div>
       </div>
     </div>   
@@ -400,50 +279,7 @@
            
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/orderMain.js"></script>
+    <script src="${resRoot}/js/goodDetail.js"></script>
 
-    <script>
-       //激活图文详情页面tab导航
-       $('#myTab a').click(function (e) {
-          e.preventDefault();
-          $(this).tab('show');
-	    });	
-	    
-	    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-          e.target // newly activated tab
-          e.relatedTarget // previous active tab
-          //$(this).css('background-color', '#ffa200');
-          //$(e.relatedTarget).css('background-color', '#f4f4f4');
-        });
-    </script>  
-    
-    <script>
-     $(document).ready(function(){
-       //控制图文详情div 隐藏与显示 
-       $('#btn_iat').click(function(){
-         $('#subpage_3').show(); //图文详情页展示
-         $('#page_main').hide(); //主页面隐藏
-       });
-       
-       //添加tabslist 选项的点击事件
-       $('.tabslist li').click(function(){
-         if( $(this).hasClass('tab-on') ){
-           //如果该选项已经被选中，返回
-           return false;
-         }
-         //如果没被选中，则更改为选中的样式 ,其他兄弟元素更改为没选项中样式 
-         $(this).addClass('tab-on'); 
-         $(this).siblings().removeClass('tab-on');
-       });
-     });
-    </script>
-    
-    <script>
-     function back2Main(){
-         $('#page_main').show(); //主页面显示
-         $('div[id *= subpage_]').hide(); //subpage_ 开头的id的div页面隐藏
-      }
-    </script>
-      
   </body>
 </html>

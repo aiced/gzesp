@@ -8,8 +8,8 @@
     <title>商品选择</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="${resRoot}/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${resRoot}/css/goodSelect.css" rel="stylesheet">
+    <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/goodSelect.css?v=${resVer}" rel="stylesheet">
   </head>
 
   <body>

@@ -62,7 +62,6 @@
  	<div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
 	        	<div id="top_middle">${title}</div>
-	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
 	 </div>
     
     <div style="width:100%;height:20px;">
@@ -70,21 +69,23 @@
     
     <!--列表   -->
 	<!--店铺图标   -->	
-		<div class = "cellDiv" >
+	<#list userlist as info>			
+			 <#if (info_index<=0) > 
+	<div class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺图标 </p>
- 		    	<img class = "avartar img-circle" src="${resRoot}/image/weShop/touxiang.png" > 
+ 		    	<img class = "avartar img-circle" src='${info.avatar}' > 
 		    	</div>	
    	<!--店铺名称   -->	
 	    <div class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺名称 </p>
-		    	<input id = "storeName" class = "input" value="张三微店" placeholder="点击输入店名"></input> 
+		    	<input id = "storeName" class = "input" value=${info.storeName} placeholder="点击输入店名"></input> 
 		    	<div class = "cellTopLine">
 		    	</div>		
 	    </div>
 	<!--联系方式   -->	
 	    <div class = "cellDiv" >
 		    	<p class = "cellRightLable"> 联系方式 </p>
-		    	<input id = "phoneNum" class = "input" value="16601983264" placeholder="点击输入联系方式"></input> 
+		    	<input id = "phoneNum" class = "input" value=${info.phoneNumber} placeholder="点击输入联系方式"></input> 
 		    	<div class = "cellTopLine">
 		    	</div>		
 	    </div>
@@ -109,8 +110,13 @@
     <div style="width:100%;height:44px;margin-top:20px;">   	
     	<a class = "ok" onclick="doneClick(this); return false;"> 确定</a>
     </div>
-
     
+    <input id = "hideTag" type = "hidden" name = 'hideTag' value = ${info.userId}>
+    
+				
+ 			 </#if>
+	</#list>
+	
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -134,6 +140,38 @@
 		  
 		});
 	</script>
+	
+	 <script type="text/javascript">
+    function doneClick(obj) {
+ 		 var storeName = document.getElementById("storeName");
+ 		if (storeName.value.length !== 0){
+		 }else{
+	 		alert("店名不能为空");
+		    return;
+ 		}
+ 
+ 		var phoneNum  = document.getElementById("phoneNum");
+ 		alert(phoneNum.value);
+ 		var re = /^1\d{10}$/;
+  		  if (re.test(phoneNum.value)) {
+  		  } else {
+ 			 alert("请输入正确的手机号");
+ 			 return;
+   		 }
+	    var userId = $("#hideTag").val();;	
+    	//ajax 操作，刷新本界面数据   
+		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':userId};
+		$.ajax({
+		 type: "POST",
+		 url: "weShopSetUpdate",
+		 data: parms,
+		 success: function(data){
+			 window.location.reload(); 
+		 }
+		});			
+}
+     </script>
+	
     
   </body>
 </html>

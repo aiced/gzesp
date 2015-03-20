@@ -136,7 +136,6 @@
 					var content = document.getElementById('content');  
 					var goodsId = 1;
 					 //ajax 操作，刷新本界面数据   
-		  	 		alert("id:"+ goodsId + "标题:"+title.value + "内容"+ content.value );   
 		  	 		var parms = {'goodsId':goodsId,'title':title.value,'content':content.value};
 				
 					//ajax 操作，刷新本界面数据     	  		

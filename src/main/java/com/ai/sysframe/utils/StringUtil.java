@@ -75,6 +75,8 @@ public class StringUtil {
 	        				kv[1] = URLDecoder.decode(kv[1], "UTF8");
 	        			}
 	        			map.put(kv[0], kv[1]);
+	        		} else if(kv.length == 1) {
+	        			map.put(kv[0], "");
 	        		}
 	        	}
 	        }

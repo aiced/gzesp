@@ -98,10 +98,10 @@
                     <!--</li>-->
                 <!--</ul>-->
                 <label class="radio-inline">
-                    <input type="radio" name="pay_mode" id="pay_mode_1" value="pay_mode_1" checked="checked">在线支付
+                    <input type="radio" name="pay_mode" id="pay_mode_1" value="00" checked="checked">在线支付
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="pay_mode" id="pay_mode_2" value="pay_mode_2">货到付款
+                    <input type="radio" name="pay_mode" id="pay_mode_2" value="01">货到付款
                 </label>
             </div>
             <div id="pay_mode_1_detail">
@@ -113,11 +113,11 @@
                 <div>
                     <div class="mode_1">
                             <img src="${resRoot}/image/selectPayMode/zhifubao.png" width="45" height="30"/>&nbsp;&nbsp;支付宝快捷支付&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pay_mode_style" id="zhifubao" value="zhifubao" checked>
+                            <input type="radio" name="pay_mode_style" id="zhifubao" value="支付宝" checked>
                     </div>
                     <div class="mode_1">
                             <img src="${resRoot}/image/selectPayMode/unionpay.png" width="45" height="30"/>&nbsp;&nbsp;财付通快捷支付&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pay_mode_style" id="caifutong" value="caifutong">
+                            <input type="radio" name="pay_mode_style" id="caifutong" value="财付通">
                     </div>
                 </div>
             </div>
@@ -133,9 +133,9 @@
                         <label style="height: 34px;line-height: 34px">付款方式</label>
                     </div>
                     <div class="col-xs-7 col-sm-7">
-                        <select class="form-control">
-                            <option>现金支付</option>
-                            <option>POS刷卡</option>
+                        <select id="paySelector" class="form-control">
+                            <option value="cash">现金支付</option>
+                            <option value="POS">POS刷卡</option>
                         </select>
                     </div>
                 </div>

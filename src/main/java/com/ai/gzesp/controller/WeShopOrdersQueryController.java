@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import scala.annotation.meta.param;
 
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.WeShopService;

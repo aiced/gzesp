@@ -192,6 +192,8 @@ public class OrderController {
         ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "订单填写");
+        mav.addObject("originalPrice", "998");
+        mav.addObject("userId", "1234567890");
         return mav;
     }
     
@@ -201,13 +203,16 @@ public class OrderController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
     	String orderId = CommonUtil.generateOrderId();
+    	String payLogId = CommonUtil.generatePayLogId();
     	paramsMap.put("orderId", orderId);
+    	paramsMap.put("payLogId", payLogId);
     	
     	orderService.insertOrder(paramsMap);
     	
-    	ModelAndView mav = new ModelAndView("payFee.ftl");
+    	ModelAndView mav = new ModelAndView("redirect:/shopManage/ordersQuery");
     	//从数据库获取信息赋值
     	mav.addObject("title", "订单支付");
+    	mav.addObject("userid", paramsMap.get("userId"));
     	
     	return mav;
     }

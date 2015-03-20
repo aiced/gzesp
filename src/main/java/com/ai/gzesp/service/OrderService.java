@@ -72,15 +72,15 @@ public class OrderService {
     	String sellerRemark = paramsMap.get("sellerRemark");
     	
     	TdOrdDBASE record = new TdOrdDBASE();
-    	record.setOrderId(Long.parseLong(orderId));
+    	record.setOrderId(CommonUtil.string2Long(orderId));
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
     	record.setCreateTime(DateUtil.getNow());
     	record.setOrderFrom(orderFrom);
     	record.setOrderTime(DateUtil.getNow());
-    	record.setOriginalPrice(Long.parseLong(originalPrice));
-    	record.setCouponMoney(Long.parseLong(couponMoney));
-    	record.setManMadeMoney(Long.parseLong(manMadeMoney));
-    	record.setTopayMoney(Long.parseLong(topayMoney));
+    	record.setOriginalPrice(CommonUtil.string2Long(originalPrice));
+    	record.setCouponMoney(CommonUtil.string2Long(couponMoney));
+    	record.setManMadeMoney(CommonUtil.string2Long(manMadeMoney));
+    	record.setTopayMoney(CommonUtil.string2Long(topayMoney));
     	record.setIncomeMoney(0l);
     	record.setOrderState("00");
     	record.setCustRemark(custRemark);
@@ -99,7 +99,7 @@ public class OrderService {
     	String cardPic2 = paramsMap.get("cardPic2");
     	
     	TdOrdDCUST record = new TdOrdDCUST();
-    	record.setOrderId(Long.parseLong(orderId));
+    	record.setOrderId(CommonUtil.string2Long(orderId));
     	record.setCustName(custName);
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
     	record.setPhoneNumber(phoneNum);
@@ -122,8 +122,8 @@ public class OrderService {
     	String invoiceTitle = paramsMap.get("invoiceTitle");
     	
     	TdOrdDDEAL record = new TdOrdDDEAL();
-    	record.setOrderId(Long.parseLong(orderId));
-    	record.setUserId(Long.parseLong(userId));
+    	record.setOrderId(CommonUtil.string2Long(orderId));
+    	record.setUserId(CommonUtil.string2Long(userId));
 //    	record.setPartitionId((short)DateUtil.getCurrentMonth());
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
     	record.setUserName(userName);
@@ -145,12 +145,12 @@ public class OrderService {
     	
     	
     	TdOrdDPAYLOG record = new TdOrdDPAYLOG();
-    	record.setOrderId(Long.parseLong(orderId));
+    	record.setOrderId(CommonUtil.string2Long(orderId));
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
-    	record.setPayLogid(Long.parseLong(payLogId));
+    	record.setPayLogid(CommonUtil.string2Long(payLogId));
     	record.setPayType(payType);
     	record.setPayMode(payMode);
-//    	record.setPayMoney(Long.parseLong(payMoney));
+//    	record.setPayMoney(CommonUtil.string2Long(payMoney));
     	record.setPayAskTime(DateUtil.getNow());
     	record.setPayState("0");
 
@@ -172,7 +172,7 @@ public class OrderService {
     	String postRemark = paramsMap.get("postRemark");
     	
     	TdOrdDPOST record = new TdOrdDPOST();
-    	record.setOrderId(Long.parseLong(orderId));
+    	record.setOrderId(CommonUtil.string2Long(orderId));
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
     	record.setDeliverTypeCode(deliverTypeCode);
     	record.setDeliverTimeCode(deliverTimeCode);
@@ -199,33 +199,33 @@ public class OrderService {
     	String recvFee = paramsMap.get("recvFee");
     	
     	TdOrdDPROD record = new TdOrdDPROD();
-    	record.setOrderId(Long.parseLong(orderId));
+    	record.setOrderId(CommonUtil.string2Long(orderId));
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
-    	record.setGoodsId(Long.parseLong(goodsId));
+    	record.setGoodsId(CommonUtil.string2Long(goodsId));
     	record.setGoodsName(goodsName);
-    	record.setUnitPrice(Long.parseLong(unitPrice));
-    	record.setSaleNum(Integer.parseInt(saleNum));
-    	record.setTopayFee(Long.parseLong(topayFee));
-    	record.setDerateFee(Long.parseLong(derateFee));
+    	record.setUnitPrice(CommonUtil.string2Long(unitPrice));
+    	record.setSaleNum(CommonUtil.string2Int(saleNum));
+    	record.setTopayFee(CommonUtil.string2Long(topayFee));
+    	record.setDerateFee(CommonUtil.string2Long(derateFee));
     	record.setDerateReason(derateReason);
-    	record.setRecvFee(Long.parseLong(recvFee));
+    	record.setRecvFee(CommonUtil.string2Long(recvFee));
     }
     
     private void insertOrderResInfo(Map<String, String> paramsMap) {
-    	String ordAttrStr = paramsMap.get("ordAttr");
-    	JSONArray ordAttrJson =  JSON.parseArray(ordAttrStr);
+    	String resAttrStr = paramsMap.get("resAttr");
+    	JSONArray resAttrJson =  JSON.parseArray(resAttrStr);
     	String orderId = paramsMap.get("orderId");
     	
-    	for(int i=0; i<ordAttrJson.size(); i++) {
-    		JSONObject jsonObj = ordAttrJson.getJSONObject(i);
+    	for(int i=0; i<resAttrJson.size(); i++) {
+    		JSONObject jsonObj = resAttrJson.getJSONObject(i);
     		String resId = jsonObj.getString("resId");
     		String resAttrCode = jsonObj.getString("resAttrCode");
     		String resAttrVal = jsonObj.getString("resAttrVal");
     		
     		TdOrdDRES record = new TdOrdDRES();
-    		record.setOrderId(Long.parseLong(orderId));
+    		record.setOrderId(CommonUtil.string2Long(orderId));
         	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
-        	record.setResId(Long.parseLong(resId));
+        	record.setResId(CommonUtil.string2Long(resId));
         	record.setResAttrCode(resAttrCode);
         	record.setResAttrVal(resAttrVal);
     		tdOrdDRESDao.insertSelective(record);

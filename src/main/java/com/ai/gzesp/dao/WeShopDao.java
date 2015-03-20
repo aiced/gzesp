@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.ai.gzesp.dto.GoodsDetailResult;
+
 public interface WeShopDao {
 
     public Map<Object, Object> getDevloperInfo(@Param("user_id") String user_id);
@@ -19,7 +21,7 @@ public interface WeShopDao {
 
     public List<Map<Object, Object>> getGoodPhotos(@Param("goods_id") String goods_id);
 
-    public Map<Object, Object> getGoodDetail(@Param("goods_id") String goods_id, @Param("user_id") String user_id);
+    public GoodsDetailResult getGoodDetail(@Param("goods_id") String goods_id, @Param("user_id") String user_id);
 
     public List<Map<Object, Object>> getCitys();
 

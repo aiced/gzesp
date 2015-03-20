@@ -150,6 +150,11 @@ $(function() {
 	//配送方式
 	$('#deliver-select a').bind("click",function(){
   	  $(this).addClass("selected").siblings().removeClass("selected");
+		if($('#deliver-select-post').hasClass("selected")){
+			$('#postInfoTab').css({ "display":"block" });
+    	}else{
+    		$('#postInfoTab').css({ "display":"none" });
+    	}
   	  return false;
     });
 	
@@ -269,6 +274,21 @@ function netInfo_checkData() {
     }
     return true;
 }
+//	
+function checkPostSelect() {
+    if($('#deliver-select-post').hasClass("selected") && $('#deliver-select').hasClass("selected")){
+    	if($('#post-select-none').hasClass("selected")){
+    		return 0;
+    	}else if($('#post-select-shunfeng').hasClass("selected")){
+    		return 1;
+    	}
+    	alert("请选择配运方式️");   	
+    	return -1;
+    }else{
+    	
+    }
+}
+
 
 function getParams() {
 	orderFormParams.custName = $('#userName').val();

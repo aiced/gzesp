@@ -1,6 +1,7 @@
 var contract = {
-			contractType : "",
-    	    conPeriod : "",
+			goodsName: "",
+			conType : "",
+    	    conPeriod : "12",
     	    proValue : "",
     	    proType : "4GMain",
     	    brand : "",
@@ -19,7 +20,13 @@ $(function() {
 	    	  $(this).addClass("selected").siblings().removeClass("selected");
 	    	  showActPkg(this);
 	    	  return false;
-	      });
+	});
+	
+	$('#selectConOkBtn').bind("click",function(){
+		var tmp = {'fromPage':'selectContract' };
+	    var parms = $.extend({}, tmp, contract);
+	    selConBack2Main(parms);
+    });
 	
 	showActPkg($('#p-tab li:first'));
 })
@@ -39,7 +46,7 @@ function showActPkg(selectedTab) {
 // 	alert($(selectedTab).find('#returnFee_hidden').val());
 // 	alert($(selectedTab).find('#monthRtnFee_hidden').val());
 	var pkgType_val = $(selectedTab).find('#pkgType_hidden').val()
-	contract.contractType = pkgType_val;
+	contract.conType = pkgType_val;
 	
 	var nationalminutes_val = $(selectedTab).find('#nationalminutes_hidden').val()
 	$('#nationalminutes').html(nationalminutes_val);
@@ -53,15 +60,16 @@ function showActPkg(selectedTab) {
 	$('#monthRtnFee').html(monthRtnFee_val);
 }
 
-function nextPage() {
-	var tmp = {'fromPage':'selectContract' };
-	
-    var parms = $.extend({}, tmp, contract);
-	
-	 $.commonFormSubmit({  
-	        action : 'newNumberJoin', 
-	        data: parms,
-	        success : function(rtdata, status) { 
-	        }  
-	    });  
-}
+//function nextPage() {
+//	var tmp = {'fromPage':'selectContract' };
+//	
+//    var parms = $.extend({}, tmp, contract);
+//	
+////	 $.commonFormSubmit({  
+////	        action : 'newNumberJoin', 
+////	        data: parms,
+////	        success : function(rtdata, status) { 
+////	        }  
+////	    });  
+//    selConBack2Main(parms);
+//}

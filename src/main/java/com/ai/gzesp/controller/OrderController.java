@@ -22,6 +22,7 @@ import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.OrderService;
+import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
@@ -40,6 +41,9 @@ public class OrderController {
 	
     @Resource
     private WeShopService weShopService;
+    
+    @Resource
+    private SelectNumberService selectNumberService;
     
     @Resource 
     TdOrdDBASEDao tdOrdDBASEDao;
@@ -60,7 +64,7 @@ public class OrderController {
 //    	String selectState = paramsMap.containsKey("selectState")?paramsMap.get("selectState"):"0";
     	String fromPage = paramsMap.containsKey("fromPage")?paramsMap.get("fromPage"):"";
     	
-    	  ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
+    	 
     	  
     	int selectState = 0;
     	if(pageName2.equalsIgnoreCase(fromPage)) {
@@ -68,8 +72,8 @@ public class OrderController {
     	} else if(pageName3.equalsIgnoreCase(fromPage)) {
     		selectState = 2;
     	}
-    	
       
+    	 ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
         //从数据库获取信息赋值
         mav.addObject("selectedPhone", goods_name);
         mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
@@ -77,11 +81,28 @@ public class OrderController {
         mav.addObject("goods_price", goods_price); 
         mav.addObject("selectState", selectState); 
         mav.addObject("title", "新号入网"); 
+        
+        selectNumberData(mav);
+        selectContractData(mav);
+        
         return mav;
     }
     
-    @RequestMapping(value="/selectContract")
-    public ModelAndView selectContract(@RequestBody String inputParams){
+    private void selectNumberData(ModelAndView mav){
+    	 //商品归属地市下拉框  
+        List<Map<Object, Object>> citys = weShopService.getCitys();
+        mav.addObject("citys", citys);
+        
+        //获取靓号规则下拉框
+        List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
+        mav.addObject("rules", rules);
+        
+        //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
+        List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null);
+        mav.addObject("numbers", numbers);	
+    }
+    
+    private void selectContractData(ModelAndView mav){
 //    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
 //    	String name = paramsMap.get("name");
 //    	
@@ -176,15 +197,10 @@ public class OrderController {
     	pkg.put("monthRtnFee", "25元");
     	pkgList.add(pkg);
     	
-    	Map model = new HashMap();
-    	model.put("pkgList", pkgList);
-    	ModelAndView mav = new ModelAndView("selectContract.ftl", model);
-    	//从数据库获取信息赋值
-    	mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
-    	mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
-    	mav.addObject("selectedNumber", "1306520198"); 
-    	mav.addObject("title", "选择合约"); 
-    	return mav;
+    	mav.addObject("pkgList", pkgList); 
+     	mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
+     	mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
+     	mav.addObject("selectedNumber", "1306520198"); 
     }
     
     @RequestMapping("/fillOrderMain")

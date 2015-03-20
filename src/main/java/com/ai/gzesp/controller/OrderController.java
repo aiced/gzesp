@@ -66,12 +66,12 @@ public class OrderController {
     	
     	 
     	  
-    	int selectState = 0;
-    	if(pageName2.equalsIgnoreCase(fromPage)) {
-    		selectState = 1;
-    	} else if(pageName3.equalsIgnoreCase(fromPage)) {
-    		selectState = 2;
-    	}
+//    	int selectState = 0;
+//    	if(pageName2.equalsIgnoreCase(fromPage)) {
+//    		selectState = 1;
+//    	} else if(pageName3.equalsIgnoreCase(fromPage)) {
+//    		selectState = 2;
+//    	}
       
     	 ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
         //从数据库获取信息赋值
@@ -79,7 +79,7 @@ public class OrderController {
         mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
         mav.addObject("selectedNumber", "1306520198"); 
         mav.addObject("goods_price", goods_price); 
-        mav.addObject("selectState", selectState); 
+//        mav.addObject("selectState", selectState); 
         mav.addObject("title", "新号入网"); 
         
         selectNumberData(mav);
@@ -204,12 +204,15 @@ public class OrderController {
     }
     
     @RequestMapping("/fillOrderMain")
-    public ModelAndView fillOrderMain(){
+    public ModelAndView fillOrderMain(@RequestBody String inputParams){
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+    	
         ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "订单填写");
         mav.addObject("originalPrice", "998");
         mav.addObject("userId", "1234567890");
+        mav.getModel().putAll(paramsMap);
         return mav;
     }
     

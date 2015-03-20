@@ -134,9 +134,37 @@ function queryNumbersPublicAppend(eparchy_code, nice_rule, nice_fee_start, nice_
 //点击 某个号码，选中 可以根据大家的页面自定义修改
 function clickOneNumber(obj){
    var serial_number = $(obj).html().replace(/[ ]/g,""); //获取点击选中的号码并去除空格
-   alert(serial_number);	
-   $('#serial_number').html(serial_number); //赋值给父页面里的某个 标签属性
-   back2Main(); //子页面隐藏，主页面展示
+   //alert(serial_number);	
+   //$('#serial_number').html(serial_number); //赋值给父页面里的某个 标签属性
+   
+   updateNumberState(serial_number); //预占号码
+   //back2Main(); //子页面隐藏，主页面展示
+}
+
+//预占号码 变更号码状态
+function updateNumberState(serial_number){
+	if(serial_number == null || serial_number==''){
+		return false;
+	}
+	var param = {"serial_number":serial_number};
+	$.ajax({
+		   type: "POST",
+		   contentType:"application/json", //发送给服务器的内容编码类型
+		   url: $('#baseRoot').val() + "/order/updateNumberState",
+		   dataType:"json", //预期服务器返回的数据类型
+		   data: JSON.stringify(param), //服务器只能接收json字符串
+		   success: function(data){
+			   //alert(data);
+			   //$('#datagrid').append(data);
+			   if(data.status == 'SUCCESS'){
+					$('#alert_div').hide();
+				}
+				else{
+					$('#alert_div').show();
+				}
+			   afterUpdateNumber(data); //回调函数，函数名字参数固定，内容可以自定义，此函数可以写在自己的js文件里
+		   }
+		});	
 }
 
 

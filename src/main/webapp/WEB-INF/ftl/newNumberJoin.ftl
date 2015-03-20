@@ -143,8 +143,5 @@
 		<#include "selectNumber.ftl"> 
 	</div>
       
-      <input type="hidden" id="selectState" value=${selectState}>
-      
-
   </body>
 </html>

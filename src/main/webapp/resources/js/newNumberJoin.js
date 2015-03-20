@@ -2,15 +2,7 @@
 //selectState--0:selectedNone, 1:selectedCon, 2:selectedNum
 var selectState = 0;
 
-var contract = {
-		contractType : "",
-	    conPeriod : "",
-	    proValue : "",
-	    proType : "4GMain",
-	    brand : "",
-	    model : "",
-	    color : ""
-	};
+var params;
 
 $(function() {
 	changeSatate();
@@ -49,15 +41,28 @@ function selConBack2Main(data) {
 	$('#conType').text(data.conType);
 	$('#conPeriod').text(data.conPeriod);
 	
+	var tmp = {
+			goodsName:data.goodsName,
+			conType:data.conType,
+			conPeriod:data.conPeriod,
+			};
+	params = $.extend({}, params, tmp );
+	
 	$('#selectContractPage').css({ "display":"none" });
 	$('#mianPage').css({ "display":"block" });
 	$('#ctrct-unchoose').css({ "display":"none" });
 	$('#ctrct-choosed').css({ "display":"block" });
 }
 
-function back2Main() {
+function afterUpdateNumber(data) {
 	selectState = 2;
 	changeSatate();
+	$('#serial_number').html(data.serial_number);
+	
+	var tmp = {serial_number:data.serial_number};
+	params = $.extend({}, params, tmp );
+	
+	
 	$('#selectNumberPage').css({ "display":"none" });
 	$('#mianPage').css({ "display":"block" });
 	$('#new-num').css({ "display":"none" });
@@ -77,11 +82,12 @@ function toSelectContractPage() {
 }
 
 function nextPage() {
-	var parms = {'fromPage':'newNumberJoin' };
+	var tmp = {'fromPage':'newNumberJoin' };
 	
+	params = $.extend({}, params, tmp );
 	 $.commonFormSubmit({  
         action : 'fillOrderMain', 
-		data: parms,
+		data: params,
         success : function(rtdata, status) { 
         }  
     });  

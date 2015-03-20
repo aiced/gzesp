@@ -3,7 +3,7 @@
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
         <div class="col-xs-2" style="margin-top:5px;padding:0px;">
-    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
+    	  <a class="left carousel-control" onclick="back2Main()" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
             <span class="sr-only">back</span>
           </a>

@@ -45,7 +45,14 @@ function showSubpage(pageId){
       $('#' + pageId).siblings().hide();//隐藏其他兄弟页面包括主页面
 }
 
+//回到主页面 隐藏子页面
 function back2Main(){
     $('#page_main').show(); //主页面显示
     $('div[id *= subpage_]').hide(); //subpage_ 开头的id的div页面隐藏
  }
+
+
+//新号入网 商品详情页面 立即购买 按钮跳转到订单填写页面
+function planGotoOrderMain(){
+	//var param = {"user_id":};
+}

@@ -40,6 +40,7 @@ public class GoodDetailController {
         if(Constants.CTLG_CODE_XHRW_5.equals(ctlg_code) || Constants.CTLG_CODE_XHRW_10.equals(ctlg_code)){
             mav = new ModelAndView("planDetail.ftl"); //新号入网
             
+            //号码选择子页面需要下面 靓号规则和号码列表
             //获取靓号规则下拉框
             List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
             mav.addObject("rules", rules);

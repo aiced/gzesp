@@ -15,6 +15,8 @@
   </head>
 
   <body>
+  <!-- 第一页 商品详情主页start -->
+  <div id="page_main">  
   	<!-- nav bar -->
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
@@ -70,7 +72,7 @@
           <#else>
             <div class="item">
           </#if>
-              <img src="${resRoot}/image/banner/${item}" alt="" />
+              <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" />
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -94,13 +96,13 @@
             <li class="goods-info">
                 <i class="collect"></i>
                 <!--<a id="onlineChat" class="service mrg-t-0" href="javascript:void();"><i></i>导购</a> -->
-                <p class="goods-desp" style="padding:0px;margin:0px;">iPhone 6/iPhone 6 Plus 现货库存 先购先得 支持货到付款  限湖南省内配送  <strong class="cf60">一个身份证号码只能办理一次本业务（微店，电子沃店不参与本活动）</strong></p>
-                <p class="goods-desp" style="padding:0px;margin:0px;"><strong class="cf60">自定义活动标题</strong></p>
+                <p class="goods-desp" style="padding:0px;margin:0px;">${detail.GOODS_NAME}</p>
+                <p class="goods-desp" style="padding:0px;margin:0px;"><strong class="cf60">${detail.ATY_TITLE}</strong></p>
                 <p style="padding:0px;margin:0px;">
                     <label>合&nbsp;&nbsp;约&nbsp;&nbsp;价：</label>
                     <span>
-                        <del style="display:none" class="prime-price">￥5288</del>
-                        <strong class="current-price">￥7099</strong>（最高返<strong>7099</strong>元话费）
+                        <del style="display:none" class="prime-price">￥${detail.GOODS_PRICE}</del>
+                        <strong class="current-price">￥${detail.GOODS_PRICE}</strong>
                     </span>
                 </p>
             </li>
@@ -112,27 +114,18 @@
                 </a>
             </li>
             <li class="num-info-li">
-                <a href="#sub-detail"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
+                <a href="#subpage_3" onclick="showSubpage('subpage_3')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
             <li class="num-info-li city-li"  style="height:50px;">
                 <p>
                     <label class="fl">商品归属：</label>
                     <span class="select-w">
-                        <select class="select-style" id="numberBelong" provinceCode="74">
-                                        <option value="741">长沙</option>
-                                        <option value="744">衡阳</option>
-                                        <option value="742">株洲</option>
-                                        <option value="743">湘潭</option>
-                                        <option value="745">岳阳</option>
-                                        <option value="792">邵阳</option>
-                                        <option value="748">郴州</option>
-                                        <option value="749">常德</option>
-                                        <option value="747">益阳</option>
-                                        <option value="795">怀化</option>
-                                        <option value="796">永州</option>
-                                        <option value="791">娄底</option>
-                                        <option value="793">湘西</option>
-                                        <option value="794">张家界</option>
+                        <select class="select-style" id="numberBelong" provinceCode="">
+                          <#if citys??>
+                            <#list citys as item>
+                              <option value="${item.CITY_CODE}">${item.CITY_NAME}</option>
+                            </#list>
+                          </#if>
                         </select>
                     </span>
                     <em id="amountChange_id" class="store in-store">有货</em>
@@ -140,14 +133,24 @@
                 </p>
                 <p id="articleInfo" class="s-tip"></p>
             </li>
-            <li id="machineVersionList" class="num-info-li bdr-b-none" >
-                <p style="margin-bottom: 0px;"><label>版本</label></p>
-                <div class="tabs-box">
-                    <ul class="tabslist tabslist-long">
-                        <li class="tab-on" machineVersion="iP6Plus" >12G省内年卡</li>
-                    </ul>
-                </div>
-            </li>
+            <#if attrs.xx??>
+              <li id="activityType" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>优惠活动</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist tabslist-long">
+                        <#list attrs.xx as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%2==1>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>
 
         </ul>
     </div>
@@ -155,14 +158,52 @@
     <div class="btns-box userType">
         <a id="new-user" class="org-btn w-full fl" href="javascript:void(0)">立即购买</a>
     </div>
+  </div>    
+  <!-- 第一页 商品详情主页end -->
 
+  <!-- 第二页 商品评价start -->   
+  <!-- 第二页 商品评价end --> 
+  
+  <!-- 第三页 图文详情start -->  
+  <div id="subpage_3" class="bg-white" data-role="page" style="display:none;">
+  	<!-- nav bar -->
+    <div class="container-fluid" style="background-color:#21292c;height:38px;">
+      <div class="row" style="margin-top:8px;margin-left:5px;">
+        <div class="col-xs-2" style="margin-top:5px;padding:0px;">
+    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">back</span>
+          </a>
+    	</div>
+        <div class="col-xs-7">
+    	  <p class="text-center navbar-p">图文详情 </p>
+    	</div>    	
+      </div>      
+    </div> 
+    
+    <!-- tab页-->
+    <div class="container-fluid" >
+      <div role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTab">
+          <li role="presentation" class="active"><a href="#tabPane1" aria-controls="tabPane1" role="tab" data-toggle="tab">商品参数</a></li>
+          <li role="presentation"><a href="#tabPane2" aria-controls="tab2" role="tabPane2" data-toggle="tab">商品信息</a></li>
+          <li role="presentation"><a href="#tabPane3" aria-controls="tab3" role="tabPane3" data-toggle="tab">活动信息</a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+        ${detail.CONTENT}
 
+        </div>
+      </div>
+    </div>   
+  </div>  
+  <!-- 第三页 图文详情end -->
     
          
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/orderMain.js"></script>
-    
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>   
     </script>
   </body>
 </html>

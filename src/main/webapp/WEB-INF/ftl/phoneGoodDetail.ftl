@@ -187,12 +187,12 @@
                   </div>
               </li>              
             </#if>
-            <#if attrs.xx??>
-              <li id="activityType" class="num-info-li" >
+            <#if attrs.PACKRES??>
+              <li id="packageList" class="num-info-li" >
                   <p style="margin-bottom: 0px;"><label>优惠活动</label></p>
                   <div class="tabs-box">
                       <ul class="tabslist tabslist-long">
-                        <#list attrs.xx as item>
+                        <#list attrs.PACKRES as item>
                           <#if item_index==0>
                             <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%2==1>
@@ -279,7 +279,7 @@
            
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/goodDetail.js"></script>
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
 
   </body>
 </html>

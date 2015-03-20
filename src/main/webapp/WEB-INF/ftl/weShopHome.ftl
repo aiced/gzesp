@@ -90,6 +90,7 @@
         }
         .month_sale
         {
+        	font-size:5px;
             color:#DB9A5F;
         }
         .total_sale
@@ -186,10 +187,45 @@
 	        <div class="detail_info">
 	            <table class="table table-striped table-condensed">
 	                <tr>
-	                    <td class="yesterday_view">昨日访问：20</td>
-	                    <td class="month_view">本月访问：200</td>
-	                    <td class="total_view">累计访问：2000</td>
-	                </tr>
+	                	<#if viewcountlist?size==0>
+		                    <td class="yesterday_view">昨日访问：0></td>
+		                    <td class="month_view">本月访问：0</td>
+		                    <td class="total_view">累计访问：0</td>	                		
+		                <#else>
+	                		<#list viewcountlist as item>
+	                	    	<td class="yesterday_view">昨日访问：${item.visitDay}</td>
+	                    		<td class="month_view">本月访问：${item.visitMonth}</td>
+	                    		<td class="total_view">累计访问：${item.visitTotal}</td>
+	                		</#list>
+	                	</#if>
+					</tr>
+
+	                <tr>
+	                	<#if saleList?size==0>
+		                    <td class="yesterday_sale">昨日销售：0></td>
+		                    <td class="month_sale">本月销售：0</td>
+		                    <td class="total_sale">累计销售：0</td>	                		
+		                <#else>
+	                		<#list saleList as item>
+	                	    	<td class="yesterday_sale">昨日销售：${item.yesterday_count}</td>
+	                    		<td class="month_sale">本月销售：${item.month_count}</td>
+	                    		<td class="total_sale">累计销售：${item.total_count}</td>
+	                		</#list>
+	                	</#if>
+					</tr>
+					<tr>
+	                	<#if viewcountlist?size==0>
+		                    <td class="yesterday_view">昨日佣金：0></td>
+		                    <td class="month_view">本月佣金：0</td>
+		                    <td class="total_view">累计佣金：0</td>	                		
+		                <#else>
+	                		<#list viewcountlist as item>
+	                	    	<td class="yesterday_money">昨日佣金：${item.visitDay}</td>
+	                    		<td class="month_money">本月佣金：${item.visitMonth}</td>
+	                    		<td class="total_money">累计佣金：${item.visitTotal}</td>
+	                		</#list>
+	                	</#if>
+					</tr>
 	
 	            </table>
 	        </div>

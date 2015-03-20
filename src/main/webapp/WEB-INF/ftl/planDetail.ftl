@@ -21,11 +21,16 @@
   </head>
 
   <body>
-  <!-- -->
-  <form id="form1" action="${base}/order/newNumberJoin" style="display:none;">
+  <!-- 传给订单填写主页面 -->
+  <form id="form1" action="${base}/order/fillOrderMain" style="display:none;">
     <input id="user_id" value="${user_id}"></input>
-
+    <input id="goods_id" value="${detail.GOODS_ID}"></input>
+    <input id="goods_name" value="${detail.GOODS_NAME}"></input>
+    <input id="goods_price" value="${detail.GOODS_PRICE}"></input>
+    <input id="goods_disc" value="IPHONE6，64G，黑色，5.5寸 ，5999，18651885060，贵阳"></input>
+    <input id="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
   </form>
+  
   <!-- 第一页 商品详情主页start --> 
   <div id="page_main">   
   	<!-- nav bar -->
@@ -137,14 +142,14 @@
                   <!--<a href="#subpage_4" onclick="showSubpage('subpage_4')"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a> -->
                   <p style="margin-bottom: 0px;"><label>套餐</label></p>
                   <div class="tabs-box">
-                      <ul class="tabslist">
-                        <#list attrs.CAPTYRS as item>
+                      <ul class="tabslist" attr_val="">
+                        <#list attrs.PACKRES as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -158,13 +163,13 @@
                   <p style="margin-bottom: 0px;"><label>卡类型</label></p>
                   <div class="tabs-box">
                       <ul class="tabslist">
-                        <#list attrs.CAPTYRS as item>
+                        <#list attrs.SIMSIZE as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -178,7 +183,7 @@
     </div>
 
     <div class="btns-box userType">
-        <a id="new-user" class="org-btn w-full fl" href="javascript:void(0)">立即购买</a>
+        <a id="new-user" class="org-btn w-full fl" onclick="planGotoOrderMain()">立即购买</a>
     </div>
   </div>    
   <!-- 第一页 商品详情主页end -->

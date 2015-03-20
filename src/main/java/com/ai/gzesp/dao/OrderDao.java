@@ -13,4 +13,6 @@ public interface OrderDao {
             @Param("keyword") String keyword, @Param("sort") String sort, @Param("sortCol") String sortCol);
     
     public List<Map<Object, Object>> getNumberRules(); 
+    
+    public int updateNumberState(@Param("serial_number") String serial_number); 
 }

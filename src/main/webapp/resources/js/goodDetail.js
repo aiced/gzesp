@@ -54,7 +54,40 @@ function back2Main(){
 
 //新号入网 商品详情页面 立即购买 按钮跳转到订单填写页面
 function planGotoOrderMain(){
-	//var param = {"user_id":};
+    var attr_val = getAttrVal();
+	$('#attrs').val(attr_val); 
+	$('#form1').submit();
+	//alert($('#attrs').val());
+}
+
+//合约购机 商品详情页面 新号入网 按钮跳转到订单填写页面
+function phoneGotoOrderMainNew(){
+    var attr_val = getAttrVal();
+	$('#attrs').val(attr_val); 
+	$('#form1').attr('action', $('#form1').attr('url1')); //替换action路径，新号和老用户跳转路径不一样
+	$('#form1').submit();
+	//alert($('#attrs').val());
+}
+
+//合约购机 商品详情页面 老用户办理 按钮跳转到订单填写页面
+function phoneGotoOrderMainOld(){
+	var attr_val = getAttrVal();
+	$('#attrs').val(attr_val); 
+	$('#form1').attr('action', $('#form1').attr('url2')); //替换action路径，新号和老用户跳转路径不一样
+	$('#form1').submit();
+	//alert($('#attrs').val());
+}
+
+//获取所有被选中的属性的值，拼串 
+function getAttrVal(){
+	var attr_val = "";
+	$('.tab-on').each(function(i){
+		 attr_val += $(this).attr('attr_val'); //^分割,|分割
+		 if(i < $('.tab-on').length -1){
+				attr_val += '^'; //^分割,|分割
+			}
+		});
+    return attr_val;
 }
 
 //选择号码页面 点击号码 预占号码后的 自定义回调函数

@@ -12,9 +12,22 @@
     <link href="${resRoot}/css/orderMain.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain2.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain3.css?v=${resVer}" rel="stylesheet">
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>    
   </head>
 
   <body>
+  <!-- 传给订单填写主页面 -->
+  <form id="form1" action="${base}/order/newNumberJoin" url1="${base}/order/newNumberJoin" url2="${base}/order/oldNumberDeal" style="display:none;">
+    <input id="user_id" value="${user_id}"></input>
+    <input id="goods_id" value="${detail.GOODS_ID}"></input>
+    <input id="goods_name" value="${detail.GOODS_NAME}"></input>
+    <input id="goods_price" value="${detail.GOODS_PRICE}"></input>
+    <input id="goods_disc" value="IPHONE6，64G，黑色，5.5寸 ，5999，18651885060，贵阳"></input>
+    <input id="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
+  </form>
+    
   <!-- 第一页 商品详情主页start -->
   <div id="page_main">
   	<!-- nav bar -->
@@ -114,7 +127,7 @@
                 </a>
             </li>
             <li class="num-info-li">
-                <a href="#subpage_3" onclick="showSubpage('subpage_3')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
+                <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
             <li class="num-info-li city-li"  style="height:50px;">
                 <p>
@@ -140,11 +153,11 @@
                       <ul class="tabslist">
                         <#list attrs.SIZERES as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%2==1>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -158,11 +171,11 @@
                       <ul class="tabslist">
                         <#list attrs.COLORRS as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -176,11 +189,11 @@
                       <ul class="tabslist">
                         <#list attrs.CAPTYRS as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -194,11 +207,11 @@
                       <ul class="tabslist tabslist-long">
                         <#list attrs.PACKRES as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%2==1>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE} attr_val="${item.ATTR_VAL_CODE}" >${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -210,8 +223,8 @@
     </div>
 
     <div class="btns-box userType">
-        <a id="new-user" class="org-btn w-49p fl" href="javascript:void(0)">新号入网</a>
-        <a id="old-user" class="blue-btn w-49p fr" href="javascript:void(0)">老用户办理</a>
+        <a id="new-user" onclick="phoneGotoOrderMainNew()" class="org-btn w-49p fl" href="javascript:void(0)">新号入网</a>
+        <a id="old-user" onclick="phoneGotoOrderMainOld()" class="blue-btn w-49p fr" href="javascript:void(0)">老用户办理</a>
     </div>
 
     <div class="btns-box noAmount" style="display:none">
@@ -237,49 +250,13 @@
     </div>
   </div>
   <!-- 第一页 商品详情主页end -->
- 
-  <!-- 第二页 商品评价start -->   
-  <!-- 第二页 商品评价end --> 
   
-  <!-- 第三页 图文详情start -->  
-  <div id="subpage_3" class="bg-white" data-role="page" style="display:none;">
-  	<!-- nav bar -->
-    <div class="container-fluid" style="background-color:#21292c;height:38px;">
-      <div class="row" style="margin-top:8px;margin-left:5px;">
-        <div class="col-xs-2" style="margin-top:5px;padding:0px;">
-    	  <a class="left carousel-control" href="javascript:void(0);" onclick="back2Main()" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">back</span>
-          </a>
-    	</div>
-        <div class="col-xs-7">
-    	  <p class="text-center navbar-p">图文详情 </p>
-    	</div>    	
-      </div>      
-    </div> 
-    
-    <!-- tab页-->
-    <div class="container-fluid" >
-      <div role="tabpanel">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" role="tablist" id="myTab">
-          <li role="presentation" class="active"><a href="#tabPane1" aria-controls="tabPane1" role="tab" data-toggle="tab">手机参数</a></li>
-          <li role="presentation"><a href="#tabPane2" aria-controls="tab2" role="tabPane2" data-toggle="tab">商品信息</a></li>
-          <li role="presentation"><a href="#tabPane3" aria-controls="tab3" role="tabPane3" data-toggle="tab">活动信息</a></li>
-        </ul>
-        <!-- Tab panes -->
-        <div class="tab-content">
-        ${detail.CONTENT}
-
-        </div>
-      </div>
-    </div>   
+  <!-- 第二页 图文详情start -->  
+  <div id="subpage_2" class="bg-white" data-role="page" style="display:none;">
+    <#include "imageAndTextDetail.ftl">   
   </div>  
-  <!-- 第三页 图文详情end -->
-           
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
+  <!-- 第二页 图文详情end -->
+
 
   </body>
 </html>

@@ -86,8 +86,11 @@ public class SelectNumberController {
     @ResponseBody
     public NumberConResult updateNumberState(@RequestBody NumberConResult con){
         // 号码预占
-        String status = Constants.STATUS_SUCCESS;
-        //String status = Constants.STATUS_FAILD;
+        String status = Constants.STATUS_FAILD;
+        int i = selectNumberService.updateNumberState(con.getSerial_number()); //更新成功的记录数
+        if(i > 0){
+            status = Constants.STATUS_SUCCESS;
+        }
         
         NumberConResult result = new NumberConResult();
         result.setSerial_number(con.getSerial_number());

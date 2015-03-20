@@ -64,4 +64,11 @@
        from NUM_D_NICERULE_LIMIT 
 	</select>	
 	
+	<update id="updateNumberState" >
+	   update num_d_numinfo a
+          set a.code_state = '2'
+        where serial_number = #{serial_number}
+          and a.code_state = '1'
+	</update>
+	
 </mapper>

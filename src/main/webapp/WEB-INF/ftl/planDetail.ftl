@@ -13,6 +13,11 @@
     <link href="${resRoot}/css/orderMain2.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain3.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/selectNumber.css?v=${resVer}" rel="stylesheet">    
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>    
+    
   </head>
 
   <body>
@@ -195,10 +200,7 @@
   </div>       
   <!-- 第四页 ABC套餐详情end -->  
          
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>
+
     
   </body>
 </html>

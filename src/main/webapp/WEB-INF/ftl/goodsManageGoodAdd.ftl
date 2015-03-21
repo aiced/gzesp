@@ -202,7 +202,6 @@ table{
 			</#list>
 
 			if(goodsId == null){
-				alert("数据为空:返回"); 
 				history.back();
 			}
 			

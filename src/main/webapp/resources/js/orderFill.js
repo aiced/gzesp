@@ -296,7 +296,7 @@ function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
 	
-	orderFormParams.originalPrice = $('#originalPrice').val();
+	orderFormParams.originalPrice = $('#goodsPrice').val();
 	orderFormParams.couponMoney = $('#couponMoney').val();
 	orderFormParams.manMadeMoney = orderFormParams.originalPrice;
 	orderFormParams.topayMoney = orderFormParams.originalPrice;

@@ -37,12 +37,10 @@ function toSelectNumberPage() {
 function selConBack2Main(data) {
 	selectState = 1;
 	changeSatate();
-    $('#goodsName').text(data.goodsName);
 	$('#conType').text(data.conType);
 	$('#conPeriod').text(data.conPeriod);
 	
 	var tmp = {
-			goodsName:data.goodsName,
 			conType:data.conType,
 			conPeriod:data.conPeriod,
 			};
@@ -59,7 +57,7 @@ function afterUpdateNumber(data) {
 	changeSatate();
 	$('#serial_number').html(data.serial_number);
 	
-	var tmp = {serial_number:data.serial_number};
+	var tmp = {serialNumber:data.serial_number};
 	params = $.extend({}, params, tmp );
 	
 	
@@ -82,7 +80,14 @@ function toSelectContractPage() {
 }
 
 function nextPage() {
-	var tmp = {'fromPage':'newNumberJoin' };
+//	var tmp = {'fromPage':'newNumberJoin' };
+	var tmp = new Object();
+	tmp.fromPage = 'newNumberJoin' ;
+	tmp.userId = $('#user_id').val();
+	tmp.goodsId = $('#goods_id').val();
+	tmp.goodsName = $('#goods_name').val();
+	tmp.goodsDisc = $('#goods_disc').val();
+	tmp.attrVal = $('#attr_val').val();
 	
 	params = $.extend({}, params, tmp );
 	 $.commonFormSubmit({  

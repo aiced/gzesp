@@ -18,6 +18,7 @@ import com.ai.gzesp.dao.service.TdOrdDCUSTDao;
 import com.ai.gzesp.dao.service.TdOrdDDEALDao;
 import com.ai.gzesp.dao.service.TdOrdDPAYLOGDao;
 import com.ai.gzesp.dao.service.TdOrdDPOSTDao;
+import com.ai.gzesp.dao.service.TdOrdDPRODDao;
 import com.ai.gzesp.dao.service.TdOrdDRESDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.sysframe.utils.CommonUtil;
@@ -43,6 +44,9 @@ public class OrderService {
     
     @Resource 
     TdOrdDPOSTDao tdOrdDPOSTDao;
+    
+    @Resource 
+    TdOrdDPRODDao tdOrdDPRODDao;
     
     @Resource 
     TdOrdDRESDao tdOrdDRESDao;
@@ -211,6 +215,8 @@ public class OrderService {
     	record.setDerateFee(CommonUtil.string2Long(derateFee));
     	record.setDerateReason(derateReason);
     	record.setRecvFee(CommonUtil.string2Long(recvFee));
+    	
+    	tdOrdDPRODDao.insertSelective(record);
     }
     
     private void insertOrderResInfo(Map<String, String> paramsMap) {

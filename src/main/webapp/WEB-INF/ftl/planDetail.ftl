@@ -136,11 +136,15 @@
             <!-- 选择号码 -->
             <li class="num-info-li city-li">
               <#if attrs.NUMBERS??>
-                <a href="#subpage_3" onclick="showSubpage('subpage_3')">
-                  <b class="list-arr"></b>
-                  <span class="detail-info" id="serial_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}>请选择号码</span>
-                  <label color="#F70909">选择号码</label>
-                </a>
+                <#list attrs.NUMBERS as item>
+                  <#if item_index==0>
+                    <a href="#subpage_3" onclick="showSubpage('subpage_3')">
+                      <b class="list-arr"></b>
+                      <span class="detail-info" id="serial_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|">请选择号码</span>
+                      <label color="#F70909">选择号码</label>
+                    </a>
+                  </#if>
+                </#list>
               </#if>
             </li>
             <!-- A/B/C 套餐 -->

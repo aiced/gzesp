@@ -55,7 +55,7 @@ function back2Main(){
 //新号入网 商品详情页面 立即购买 按钮跳转到订单填写页面
 function planGotoOrderMain(){
     var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
-    attr_val += '^' + $('#serial_number').attr('attr_val'); //再加上号码属性
+    attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
 	$('#attrs').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
@@ -100,6 +100,7 @@ function getAttrVal(){
 //拼串 ,获取商品名称型号价格颜色尺寸等简单描述，并且获取所有被选中的属性的值
 function getGoodsDisc(){
 	var goods_disc = $('#goods_name').val();
+	goods_disc += ',商品价格'+$('#goods_price').val() + ',靓号费'+$('#nice_fee').val() + ',订单总费用'+$('#total_price').val();
 	$('.tab-on').each(function(i){
 		goods_disc += ',' + $(this).html(); //拼上选中的选项内容
 		 
@@ -110,8 +111,9 @@ function getGoodsDisc(){
 //选择号码页面 点击号码 预占号码后的 自定义回调函数
 function afterUpdateNumber(data){
 	if(data.status == 'SUCCESS'){
-		$('#serial_number').html(data.serial_number); //赋值给父页面里的某个 标签属性
-		$('#serial_number').attr('attr_val',  $('#serial_number').attr('attr_val') + data.serial_number + '|' + data.serial_number);//修改号码的属性
+		$('#serial_number').val(data.serial_number);
+		$('#phone_number').html(data.serial_number); //赋值给父页面里的某个 标签属性
+		$('#phone_number').attr('attr_val',  $('#phone_number').attr('attr_val') + data.serial_number + '|' + data.serial_number);//修改号码的属性
 		
 		$('#nice_fee').val(data.nice_fee); //靓号预存款
 		$('#total_price').val( parseInt($('#goods_price').val()) + parseInt($('#nice_fee').val()) ); //订单总价=商品价格+靓号预存款

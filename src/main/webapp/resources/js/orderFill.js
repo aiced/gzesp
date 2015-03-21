@@ -65,6 +65,7 @@ var orderFormParams = {
 		derateFee:"",
 		derateReason:"",
 		recvFee:"",
+		goodsDisc:"",
 		
 		resAttr:""
 };
@@ -319,25 +320,29 @@ function getParams() {
 	orderFormParams.postAddr = $('#txtaddress').val();
 	
 	
-	var ordResArr=new Array();
-	var ordResInfo = new Object();
-	ordResInfo.resId = "1";
-	ordResInfo.resAttrCode = "颜色";
-	ordResInfo.resAttrVal = "红色";
-//	ordResArr.push($.toJSON(ordResInfo));
-	ordResArr.push(ordResInfo);
-	
-	ordResInfo = new Object();
-	ordResInfo.resId = "2";
-	ordResInfo.resAttrCode = "重量";
-	ordResInfo.resAttrVal = "100g";
-	ordResArr.push(ordResInfo);
+//	var ordResArr=new Array();
+//	var ordResInfo = new Object();
+//	ordResInfo.resId = "1";
+//	ordResInfo.resAttrCode = "颜色";
+//	ordResInfo.resAttrVal = "红色";
+////	ordResArr.push($.toJSON(ordResInfo));
+//	ordResArr.push(ordResInfo);
+//	
+//	ordResInfo = new Object();
+//	ordResInfo.resId = "2";
+//	ordResInfo.resAttrCode = "重量";
+//	ordResInfo.resAttrVal = "100g";
+//	ordResArr.push(ordResInfo);
 	
 //	orderFormParams.resAttr = ordResArr;
 	orderFormParams.resAttr = $('#attrVal').val();
 	
 	orderFormParams.goodsId= $('#goodsId').val();
 	orderFormParams.goodsName= $('#goodsName').val();
+	orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
+		+ $('#serialNumber').val() + ',' 
+		+ $('#conPeriod').val() + ',' 
+		+ $('#conType').val();
 	orderFormParams.unitPrice = orderFormParams.originalPrice;
 	orderFormParams.topayFee= orderFormParams.originalPrice;
 }

@@ -203,6 +203,7 @@ public class OrderService {
     	String derateFee = paramsMap.get("derateFee");
     	String derateReason = paramsMap.get("derateReason");
     	String recvFee = paramsMap.get("recvFee");
+    	String goodsDisc = paramsMap.get("goodsDisc");
     	
     	TdOrdDPROD record = new TdOrdDPROD();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -215,6 +216,7 @@ public class OrderService {
     	record.setDerateFee(CommonUtil.string2Long(derateFee));
     	record.setDerateReason(derateReason);
     	record.setRecvFee(CommonUtil.string2Long(recvFee));
+    	record.setValues1(goodsDisc);
     	
     	tdOrdDPRODDao.insertSelective(record);
     }

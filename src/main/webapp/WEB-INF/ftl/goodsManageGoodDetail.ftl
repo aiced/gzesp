@@ -61,7 +61,7 @@
           <#else>
             <div class="item">
           </#if>
-              <img src='${item.photoLinks}' onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'" alt="" />
+              <img src='${imageRoot}${item.photoLinks}' onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'" alt="" />
               <div class="container">
                 <div class="carousel-caption">
               </div>

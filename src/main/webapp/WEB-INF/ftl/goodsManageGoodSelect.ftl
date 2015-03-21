@@ -230,7 +230,7 @@
 			});	
 
 		    <#list rcdlist as info>	
-				document.getElementById('image${info_index}').src='${info.photoLinks}';
+				document.getElementById('image${info_index}').src='${imageRoot}${info.photoLinks}';
 			</#list>
 		
 	 	</#if>

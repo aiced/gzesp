@@ -151,7 +151,14 @@
 	        <button class="btn btn-warning btn-block " type="button" onclick="nextPage()">提交订单</button>
 	    </div>
 	    
-	    <input id="userId" type="hidden" value="${userId}">
+	    <input type="hidden" id="userId"  value="${userId}">
+		<input type="hidden" id="goodsId" value="${goodsId}">
+		<input type="hidden" id="goodsName" value="${goodsName}">
+	    <input type="hidden" id="goodsDisc" value="${goodsDisc}">
+	    <input type="hidden" id="attrVal" value="${attrVal}">
+	    <input type="hidden" id="conPeriod" value="${conPeriod}">
+	    <input type="hidden" id="conType" value="${conType}">
+	    <input type="hidden" id="serialNumber" value="${serialNumber}">
 	</div>
 	
 	<!-- 入网资料页 -->

@@ -119,6 +119,10 @@ public class StringUtil {
      * @author tz
      */
     public static String camelize(final String source) {
+    	
+    	if(source.indexOf('_') == -1) {
+    		return source;
+    	}
 
         String the = new String(source);
         the = the.toLowerCase();

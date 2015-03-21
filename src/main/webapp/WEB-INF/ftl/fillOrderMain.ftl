@@ -74,11 +74,7 @@
 	                </a>
 	            </div>
 	            <div class="media-body">
-	                <h4 class="media-heading">46元3G套餐 A/B计划</h4>
-				                号码：13814023390(南京)<br/>
-				                套餐：A类3G基本套餐64元挡<br/>
-				                合约：存费送费<br/>
-				                协议期：12<br/>
+	                <h4 class="media-heading">${goodsDisc}</h4>
 	            </div>
 	        </div>
 	        <br/>
@@ -124,8 +120,7 @@
 	
 	        <div class="list-group">
 	            <a href="javascript:void(0)" class="list-group-item">
-	            	<input id="originalPrice" type="hidden" value="${originalPrice}">
-	                <label class="label-sm">商品金额</label><span class="list_gou">￥199.00</span>
+	                <label class="label-sm">商品金额</label><span class="list_gou">￥ ${goodsPrice}</span>
 	            </a>
 	            <a href="javascript:void(0)" class="list-group-item">
 	            	<input id="postFee" type="hidden" value="0">
@@ -137,7 +132,7 @@
 	            </a>
 	            <a href="javascript:void(0)" class="list-group-item">
 	            	<input id="topayMoney" type="hidden" value="">
-	                <label class="label-sm">应付总额</label><span class="list_gou">￥199.00</span>
+	                <label class="label-sm">应付总额</label><span class="list_gou">￥ ${goodsPrice}</span>
 	            </a>
 	        </div>
 	        <br/>
@@ -155,10 +150,20 @@
 		<input type="hidden" id="goodsId" value="${goodsId}">
 		<input type="hidden" id="goodsName" value="${goodsName}">
 	    <input type="hidden" id="goodsDisc" value="${goodsDisc}">
+	    <input type="hidden" id="goodsPrice" value="${goodsPrice}">
 	    <input type="hidden" id="attrVal" value="${attrVal}">
-	    <input type="hidden" id="conPeriod" value="${conPeriod}">
-	    <input type="hidden" id="conType" value="${conType}">
 	    <input type="hidden" id="serialNumber" value="${serialNumber}">
+	    <#if conPeriod?exists>
+	    	<input type="hidden" id="conPeriod" value="${conPeriod}">
+    	<#else>
+	    	<input type="hidden" id="conPeriod" value="">
+	    </#if>
+	    
+	    <#if conType?exists>
+	   		 <input type="hidden" id="conType" value="${conType}">
+	    <#else>
+	    	<input type="hidden" id="conType" value="">
+	    </#if>
 	</div>
 	
 	<!-- 入网资料页 -->

@@ -60,11 +60,12 @@ var orderFormParams = {
 		goodsId:"",
 		goodsName:"",
 		unitPrice:"",
-		saleNum:"",
+		saleNum:"1",
 		topayFee:"",
 		derateFee:"",
 		derateReason:"",
 		recvFee:"",
+		goodsDisc:"",
 		
 		resAttr:""
 };
@@ -279,7 +280,7 @@ function checkPostSelect() {
 //	快递配送
 	if($('#deliver-select-post').hasClass("selected")){
     	if($('#post-select-none').hasClass("selected")){
-        	alert('###'+$('#post-select-none').attr("value"));
+//        	alert('###'+$('#post-select-none').attr("value"));
     		return $('#post-select-none').attr("value");
        	}else if($('#post-select-shunfeng').hasClass("selected")){
     		return $('#post-select-shunfeng').attr("value");
@@ -313,23 +314,37 @@ function getParams() {
         	 break;
     }
 	
+	orderFormParams.deliverTypeCode = $('#deliver-select').find('a.selected').attr("value");
+	orderFormParams.receiverName = $('#txtname').val();
+	orderFormParams.phoneNum = $('#txtphone').val();
+	orderFormParams.postAddr = $('#txtaddress').val();
 	
 	
-	var ordResArr=new Array();
-	var ordResInfo = new Object();
-	ordResInfo.resId = "1";
-	ordResInfo.resAttrCode = "颜色";
-	ordResInfo.resAttrVal = "红色";
-//	ordResArr.push($.toJSON(ordResInfo));
-	ordResArr.push(ordResInfo);
+//	var ordResArr=new Array();
+//	var ordResInfo = new Object();
+//	ordResInfo.resId = "1";
+//	ordResInfo.resAttrCode = "颜色";
+//	ordResInfo.resAttrVal = "红色";
+////	ordResArr.push($.toJSON(ordResInfo));
+//	ordResArr.push(ordResInfo);
+//	
+//	ordResInfo = new Object();
+//	ordResInfo.resId = "2";
+//	ordResInfo.resAttrCode = "重量";
+//	ordResInfo.resAttrVal = "100g";
+//	ordResArr.push(ordResInfo);
 	
-	ordResInfo = new Object();
-	ordResInfo.resId = "2";
-	ordResInfo.resAttrCode = "重量";
-	ordResInfo.resAttrVal = "100g";
-	ordResArr.push(ordResInfo);
+//	orderFormParams.resAttr = ordResArr;
+	orderFormParams.resAttr = $('#attrVal').val();
 	
-	orderFormParams.resAttr = ordResArr;
+	orderFormParams.goodsId= $('#goodsId').val();
+	orderFormParams.goodsName= $('#goodsName').val();
+	orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
+		+ $('#serialNumber').val() + ',' 
+		+ $('#conPeriod').val() + ',' 
+		+ $('#conType').val();
+	orderFormParams.unitPrice = orderFormParams.originalPrice;
+	orderFormParams.topayFee= orderFormParams.originalPrice;
 }
 
 
@@ -351,11 +366,11 @@ function nextPage() {
 //		alert('请完整其他信息');
 //		return;
 //	}
-	var postStyle = checkPostSelect();
-	if(postStyle !=null ){
-		alert(postStyle);
-		return;
-	}
+//	var postStyle = checkPostSelect();
+//	if(postStyle !=null ){
+////		alert(postStyle);
+//		return;
+//	}
 	var tmp = {'fromPage':'orderFill' };
 	getParams();
     var parms = $.extend({}, tmp, orderFormParams);

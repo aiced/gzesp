@@ -203,6 +203,7 @@ public class OrderService {
     	String derateFee = paramsMap.get("derateFee");
     	String derateReason = paramsMap.get("derateReason");
     	String recvFee = paramsMap.get("recvFee");
+    	String goodsDisc = paramsMap.get("goodsDisc");
     	
     	TdOrdDPROD record = new TdOrdDPROD();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -215,20 +216,30 @@ public class OrderService {
     	record.setDerateFee(CommonUtil.string2Long(derateFee));
     	record.setDerateReason(derateReason);
     	record.setRecvFee(CommonUtil.string2Long(recvFee));
+    	record.setValues1(goodsDisc);
     	
     	tdOrdDPRODDao.insertSelective(record);
     }
     
     private void insertOrderResInfo(Map<String, String> paramsMap) {
     	String resAttrStr = paramsMap.get("resAttr");
-    	JSONArray resAttrJson =  JSON.parseArray(resAttrStr);
     	String orderId = paramsMap.get("orderId");
     	
-    	for(int i=0; i<resAttrJson.size(); i++) {
-    		JSONObject jsonObj = resAttrJson.getJSONObject(i);
-    		String resId = jsonObj.getString("resId");
-    		String resAttrCode = jsonObj.getString("resAttrCode");
-    		String resAttrVal = jsonObj.getString("resAttrVal");
+    	if(resAttrStr == null) {
+    		return;
+    	}
+    	
+    	String[] rows = resAttrStr.split("\\^");
+    	for(String row : rows) {
+    		String[] col = row.split("\\|");
+    		if(col.length != 4) {
+    			continue;
+    		}
+    		
+    		String resId = col[0];
+    		String resAttrCode = col[1];
+    		String resAttrVal = col[2];
+    		String values1 = col[3];
     		
     		TdOrdDRES record = new TdOrdDRES();
     		record.setOrderId(CommonUtil.string2Long(orderId));
@@ -236,8 +247,25 @@ public class OrderService {
         	record.setResId(CommonUtil.string2Long(resId));
         	record.setResAttrCode(resAttrCode);
         	record.setResAttrVal(resAttrVal);
+        	record.setValues1(values1);
     		tdOrdDRESDao.insertSelective(record);
     	}
+    	
+//    	JSONArray resAttrJson =  JSON.parseArray(resAttrStr);
+//    	for(int i=0; i<resAttrJson.size(); i++) {
+//    		JSONObject jsonObj = resAttrJson.getJSONObject(i);
+//    		String resId = jsonObj.getString("resId");
+//    		String resAttrCode = jsonObj.getString("resAttrCode");
+//    		String resAttrVal = jsonObj.getString("resAttrVal");
+//    		
+//    		TdOrdDRES record = new TdOrdDRES();
+//    		record.setOrderId(CommonUtil.string2Long(orderId));
+//        	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+//        	record.setResId(CommonUtil.string2Long(resId));
+//        	record.setResAttrCode(resAttrCode);
+//        	record.setResAttrVal(resAttrVal);
+//    		tdOrdDRESDao.insertSelective(record);
+//    	}
     }
     
 }

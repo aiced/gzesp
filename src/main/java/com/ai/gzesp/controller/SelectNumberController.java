@@ -95,6 +95,7 @@ public class SelectNumberController {
         NumberConResult result = new NumberConResult();
         result.setSerial_number(con.getSerial_number());
         result.setStatus(status);
+        result.setNice_fee(con.getNice_fee());
         return result;
     }
 }

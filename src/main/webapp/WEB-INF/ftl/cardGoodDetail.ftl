@@ -19,13 +19,17 @@
 
   <body>
   <!-- 传给订单填写主页面 -->
-  <form id="form1" action="${base}/order/fillOrderMain" style="display:none;">
-    <input id="user_id" value="${user_id}"></input>
-    <input id="goods_id" value="${detail.GOODS_ID}"></input>
-    <input id="goods_name" value="${detail.GOODS_NAME}"></input>
-    <input id="goods_price" value="${detail.GOODS_PRICE}"></input>
-    <input id="goods_disc" value="IPHONE6，64G，黑色，5.5寸 ，5999，18651885060，贵阳"></input>
-    <input id="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
+  <form id="form1" method="post" action="${base}/order/fillOrderMain" style="display:none;">
+    <input id="user_id" name="user_id" value="${user_id}"></input>
+    <input id="goods_id" name="goods_id" value="${detail.GOODS_ID}"></input>
+    <input id="goods_name" name="goods_name" value="${detail.GOODS_NAME}"></input>
+    <input id="goods_price" name="goods_price" value="${detail.GOODS_PRICE}"></input>
+    <input id="nice_fee" name="nice_fee" value="0"></input>
+    <input id="total_price" name="total_price" value="${detail.GOODS_PRICE}"></input>  
+    <input id="serial_number" name="serial_number" value=""></input>     
+    <input id="goods_disc" name="goods_disc" value="IPHONE6，64G，黑色，5.5寸 ，5999，18651885060，贵阳"></input>
+    <input id="attr_val" name="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
+    <input id="fromPage" name="fromPage" value="cardGoodDetail"></input>
   </form>
     
   <!-- 第一页 商品详情主页start -->
@@ -68,7 +72,7 @@
     </div>  
 
     <!-- Carousel 广告轮播-->	
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <#list banners as item>  
           <#if item_index=0>

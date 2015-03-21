@@ -19,6 +19,11 @@ public class NumberConResult {
      * 号码预占 是否成功 SUCCESS FAILD
      */
     private String status;
+    
+    /**
+     * 靓号预存
+     */
+    private String nice_fee;
 
     public String getSerial_number() {
         return serial_number;
@@ -34,6 +39,14 @@ public class NumberConResult {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getNice_fee() {
+        return nice_fee;
+    }
+
+    public void setNice_fee(String nice_fee) {
+        this.nice_fee = nice_fee;
     }
     
 

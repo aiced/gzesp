@@ -1,5 +1,4 @@
 var contract = {
-			goodsName: "",
 			conType : "",
     	    conPeriod : "12",
     	    proValue : "",

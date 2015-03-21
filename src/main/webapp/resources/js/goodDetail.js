@@ -57,6 +57,8 @@ function planGotoOrderMain(){
     var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
     attr_val += '^' + $('#serial_number').attr('attr_val'); //再加上号码属性
 	$('#attrs').val(attr_val); 
+    var goods_disc = getGoodsDisc();
+    $('#goods_disc').val(goods_disc); 	
 	$('#form1').submit();
 	//alert($('#attrs').val());
 }
@@ -64,7 +66,9 @@ function planGotoOrderMain(){
 //合约购机 商品详情页面 新号入网 按钮跳转到订单填写页面
 function phoneGotoOrderMainNew(){
     var attr_val = getAttrVal();
-	$('#attrs').val(attr_val); 
+    $('#attrs').val(attr_val); 
+    var goods_disc = getGoodsDisc();
+    $('#goods_disc').val(goods_disc);     
 	$('#form1').attr('action', $('#form1').attr('url1')); //替换action路径，新号和老用户跳转路径不一样
 	$('#form1').submit();
 	//alert($('#attrs').val());
@@ -74,6 +78,8 @@ function phoneGotoOrderMainNew(){
 function phoneGotoOrderMainOld(){
 	var attr_val = getAttrVal();
 	$('#attrs').val(attr_val); 
+    var goods_disc = getGoodsDisc();
+    $('#goods_disc').val(goods_disc); 	
 	$('#form1').attr('action', $('#form1').attr('url2')); //替换action路径，新号和老用户跳转路径不一样
 	$('#form1').submit();
 	//alert($('#attrs').val());
@@ -91,14 +97,28 @@ function getAttrVal(){
     return attr_val;
 }
 
+//拼串 ,获取商品名称型号价格颜色尺寸等简单描述，并且获取所有被选中的属性的值
+function getGoodsDisc(){
+	var goods_disc = $('#goods_name').val();
+	$('.tab-on').each(function(i){
+		goods_disc += ',' + $(this).html(); //拼上选中的选项内容
+		 
+		});
+    return goods_disc;
+}
+
 //选择号码页面 点击号码 预占号码后的 自定义回调函数
 function afterUpdateNumber(data){
 	if(data.status == 'SUCCESS'){
 		$('#serial_number').html(data.serial_number); //赋值给父页面里的某个 标签属性
-		$('#serial_number').attr('attr_val',  $('#serial_number').attr('attr_val') + data.serial_number + '|' + data.serial_number);
+		$('#serial_number').attr('attr_val',  $('#serial_number').attr('attr_val') + data.serial_number + '|' + data.serial_number);//修改号码的属性
+		
+		$('#nice_fee').val(data.nice_fee); //靓号预存款
+		$('#total_price').val( parseInt($('#goods_price').val()) + parseInt($('#nice_fee').val()) ); //订单总价=商品价格+靓号预存款
+
 		back2Main(); //回到主页面 隐藏子页面
 	}
 	else{
-		
+		//如果号码预占失败，停留在号码选择页面
 	}
 }

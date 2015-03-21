@@ -60,7 +60,7 @@ var orderFormParams = {
 		goodsId:"",
 		goodsName:"",
 		unitPrice:"",
-		saleNum:"",
+		saleNum:"1",
 		topayFee:"",
 		derateFee:"",
 		derateReason:"",
@@ -279,7 +279,7 @@ function checkPostSelect() {
 //	快递配送
 	if($('#deliver-select-post').hasClass("selected")){
     	if($('#post-select-none').hasClass("selected")){
-        	alert('###'+$('#post-select-none').attr("value"));
+//        	alert('###'+$('#post-select-none').attr("value"));
     		return $('#post-select-none').attr("value");
        	}else if($('#post-select-shunfeng').hasClass("selected")){
     		return $('#post-select-shunfeng').attr("value");
@@ -313,6 +313,10 @@ function getParams() {
         	 break;
     }
 	
+	orderFormParams.deliverTypeCode = $('#deliver-select').find('a.selected').attr("value");
+	orderFormParams.receiverName = $('#txtname').val();
+	orderFormParams.phoneNum = $('#txtphone').val();
+	orderFormParams.postAddr = $('#txtaddress').val();
 	
 	
 	var ordResArr=new Array();
@@ -329,7 +333,13 @@ function getParams() {
 	ordResInfo.resAttrVal = "100g";
 	ordResArr.push(ordResInfo);
 	
-	orderFormParams.resAttr = ordResArr;
+//	orderFormParams.resAttr = ordResArr;
+	orderFormParams.resAttr = $('#attrVal').val();
+	
+	orderFormParams.goodsId= $('#goodsId').val();
+	orderFormParams.goodsName= $('#goodsName').val();
+	orderFormParams.unitPrice = orderFormParams.originalPrice;
+	orderFormParams.topayFee= orderFormParams.originalPrice;
 }
 
 
@@ -351,11 +361,11 @@ function nextPage() {
 //		alert('请完整其他信息');
 //		return;
 //	}
-	var postStyle = checkPostSelect();
-	if(postStyle !=null ){
-		alert(postStyle);
-		return;
-	}
+//	var postStyle = checkPostSelect();
+//	if(postStyle !=null ){
+////		alert(postStyle);
+//		return;
+//	}
 	var tmp = {'fromPage':'orderFill' };
 	getParams();
     var parms = $.extend({}, tmp, orderFormParams);

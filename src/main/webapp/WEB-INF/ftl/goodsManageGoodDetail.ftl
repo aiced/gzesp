@@ -83,16 +83,19 @@
     
 
      <!--文字  -->
-     <div style="margin-bottom:0px;padding-top:10px;padding-bottom:30px;" > 
+     <div style="margin-bottom:0px;padding-top:10px;padding-bottom:20px;" > 
      	 <#list goodsDetailList as info>	
      	  	 <#if (info_index<=0) > 
 							<p style="margin-left:5px;margin-right:5px;margin-bottom:5px;font-size:16px;color:#33333">套餐名称：${info.goodsName}</p>
      						<div style=" width:100%;height:25px;float:none;margin-bottom:10px;">
      		     				<p style="padding:5px;margin-bottom:0px;font-size:15px;color:#717171;float:left;">合约价:</p>	<p style="padding:5px;margin-bottom:0px;float:left; font-size:17px;color:red">¥${info.goodsPrice}（最高返5900）</p>	  
      						</div>
+     						<!--
      						<div style=" width:100%;height:25px;float:none;">
      		     				<p style="padding:5px;margin-bottom:0px;font-size:15px;color:#717171;float:left;">商品佣金:</p> <p style="padding:5px;margin-bottom:0px;float:left; font-size:17px;color:red">¥${info.goodsPrice}</p>	    	    		
-     						</div>  		
+     						</div>  
+     						 -->
+     								
      					  <input id = "hideTag" type = "hidden" name = 'hideTag' value = ${info.goodsId}>
      							
  			 </#if>
@@ -101,7 +104,7 @@
      			    		
      </div>
      <!-- 自定义活动 -->
-      <div style="width:100%;margin-bottom:20px;padding-top:20px;padding-bottom:20px;" >  
+      <div style="width:100%;margin-bottom:20px;padding-top:0px;padding-bottom:20px;" >  
      	    	<p style="background-color:gray; width:100%;height:1px ;margin:auto;"> </p> 
        	    	<p style="margin:10px;font-size:17px;color:#484848">自定义活动 </p> 
        	    		<#if (goodsActivityList?size>0) > 

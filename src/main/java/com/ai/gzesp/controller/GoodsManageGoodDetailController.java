@@ -32,11 +32,14 @@ import com.ai.sysframe.utils.StringUtil;
 @RequestMapping("/shopManage")
 public class GoodsManageGoodDetailController {
     
-    @Autowired
-    private WeShopService weShopService;
+    private static final String TdGdsDABLEACTIVITY = null;
 
+	@Autowired
+    private WeShopService weShopService;
+	
     @Resource 
     GoodsSql goodsSql;
+    
     @Resource 
     TdGdsDABLEACTIVITYDao tdGdsDABLEACTIVITYDao;
     
@@ -44,10 +47,11 @@ public class GoodsManageGoodDetailController {
     public ModelAndView goodsManageGoodDetail(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);    	
     	String goodsId = paramsMap.get("goodsId");
+    	
     	List<Map<String, Object>> goodsDetailList = goodsSql.GetGoodsDetail(goodsId);  
     	List<Map<String, Object>> goodsDetailPhotosList = goodsSql.GetGoodsDetailPhotos(goodsId);       	
-    	
-    	
+    	List<Map<String, Object>> goodsActivityList = goodsSql.GetGoodsDetailActivity(goodsId);  
+
     	
         List<String> banners = new ArrayList<String>();
         banners.add("banner_iphone6.png");
@@ -61,6 +65,9 @@ public class GoodsManageGoodDetailController {
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
     	rspMap.put("goodsDetailList", goodsDetailList); 
     	rspMap.put("goodsDetailPhotosList", goodsDetailPhotosList); 
+    	rspMap.put("goodsActivityList", goodsActivityList); 
+
+    	
 //    	rspMap.put("banners", banners);  
 
     	rspMap.put("title", "选择商品"); 
@@ -77,12 +84,16 @@ public class GoodsManageGoodDetailController {
     	Long goodsId = Long.parseLong(goodsIdStr);
     	String titleStr = paramsMap.get("title");
     	String contentStr = paramsMap.get("content");
-    	
+    	String partitionIdStr = CommonUtil.getPartitionId(goodsIdStr);
+    	Short partitionId = (short) Integer.parseInt(partitionIdStr);
     	
     	TdGdsDABLEACTIVITY tdGdsDABLEACTIVITY = new TdGdsDABLEACTIVITY();
     	tdGdsDABLEACTIVITY.setGoodsId(goodsId);
     	tdGdsDABLEACTIVITY.setAtyTitle(titleStr);
     	tdGdsDABLEACTIVITY.setAtyContent(contentStr);
+    	tdGdsDABLEACTIVITY.setPartitionId(partitionId);
+    	tdGdsDABLEACTIVITY.setUserId(goodsIdStr);
+
     	
     	Criteria example = new Criteria();
     	example.createConditon().andEqualTo("GOODS_ID", goodsId);

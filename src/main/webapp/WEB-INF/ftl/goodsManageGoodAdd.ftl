@@ -137,10 +137,10 @@ table{
 					</td>
 					<td class = "td_second">
 							<a id="itemSelected_${info_index}" style="background-color:white;display:block; width:100%;height:70px;margin-top:15px;margin-bottom:15px" onclick='itemClick(${info.goodsId})'>
-         	     				<img src='${info.photoLinks}' style="display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
-								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px">								
+         	     				<img src='${imageRoot}${info.photoLinks}' onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'"   style="display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">
+								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px;text-overflow:clip | ellipsis">								
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">总部商品－${info.goodsCtlgName}</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">${info.goodsName}</p> 
+									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${info.goodsName}</p> 
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">合约机:${info.addPrice}</p> 									
 								</div>
 							</a>
@@ -161,11 +161,10 @@ table{
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
      <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
-	    <script type="text/javascript">
+	 <script type="text/javascript">
 		$(document).ready(function(){  
-		   //[获取验证码]按钮点击	
 		});
-	</script>
+   	</script>
 	
 	
 	
@@ -203,7 +202,6 @@ table{
 			</#list>
 
 			if(goodsId == null){
-				alert("数据为空:返回"); 
 				history.back();
 			}
 			

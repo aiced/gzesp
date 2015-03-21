@@ -48,10 +48,9 @@ public class GoodsSql {
 				+ "t1.GOODS_ID as goodsId,"
 				+ "t4.PHOTO_LINKS as photoLinks"
 				);
-		sb.append(" from GDS_D_INFO t1,GDS_D_ABLE_RCD t2, GDS_D_ALBUM t3, GDS_D_PHOTO t4");
+		sb.append(" from GDS_D_INFO t1,GDS_D_ABLE_RCD t2, GDS_D_PHOTO t4");
 		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
-				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
@@ -73,10 +72,9 @@ public class GoodsSql {
 				+ "t4.PHOTO_LINKS as photoLinks,"
 				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 				);
-		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_PHOTO t4 , GDS_P_CTLG t5");
 		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
-				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
@@ -96,11 +94,10 @@ public class GoodsSql {
 				+ "t4.PHOTO_LINKS as photoLinks,"
 				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 				);
-		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_PHOTO t4 , GDS_P_CTLG t5");
 		sb.append("	where t1.GOODS_ID not in" + sbStr
 				+ " and t1.GOODS_ID = t2.GOODS_ID "
-				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
@@ -151,11 +148,10 @@ public class GoodsSql {
 					+ "t4.PHOTO_LINKS as photoLinks,"
 					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 					);
-			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_PHOTO t4 , GDS_P_CTLG t5");
 			quarySb.append("	where t1.GOODS_NAME like" +sbStr
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
-					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 					+ " and t4.DEFAULT_TAG = '0'"
 					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 					+ " and t1.GOODS_STATE = '1'"
@@ -169,11 +165,10 @@ public class GoodsSql {
 					+ "t4.PHOTO_LINKS as photoLinks,"
 					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 					);
-			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2,  GDS_D_PHOTO t4 , GDS_P_CTLG t5");
 			quarySb.append("	where t1.CTLG_CODE =" +searchType
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
-					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 					+ " and t4.DEFAULT_TAG = '0'"
 					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 					+ " and t1.GOODS_STATE = '1'"
@@ -192,12 +187,11 @@ public class GoodsSql {
 					+ "t4.PHOTO_LINKS as photoLinks,"
 					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 					);
-			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5");
+			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2,  GDS_D_PHOTO t4 , GDS_P_CTLG t5");
 			quarySb.append("	where t2.ADD_PRICE <=" + searchHightPrice 
 					+ " and t2.ADD_PRICE >= "+ searchLowPrice
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
-					+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-					+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+					+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 					+ " and t4.DEFAULT_TAG = '0'"
 					+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 					+ " and t1.GOODS_STATE = '1'"
@@ -221,20 +215,15 @@ public class GoodsSql {
 				+ "t1.GOODS_NAME as goodsName, "
 				+ "t2.ADD_PRICE as goodsPrice, "
 				+ "t4.PHOTO_LINKS as photoLinks,"
-				+ "t5.GOODS_CTLG_NAME as goodsCtlgName,"
-				+ "t6.ATY_TITLE as atyTitle,"
-				+ "t6.ATY_CONTENT as atyContent"
-
+				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 				);
-		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 , GDS_P_CTLG t5, GDS_D_ABLE_ACTIVITY t6");
+		sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2,  GDS_D_PHOTO t4 , GDS_P_CTLG t5");
 		sb.append(" where t1.GOODS_ID = " + goodsId
 				+ "	and t1.GOODS_ID = t2.GOODS_ID "
-				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'"
-				+ " and t1.GOODS_ID = t6.GOODS_ID"
 				+ " order by t1.GOODS_ID");
 
 		List rcdList = commonDao.queryForList(sb.toString());
@@ -248,15 +237,28 @@ public class GoodsSql {
 				+ "t1.GOODS_ID as goodsId,"
 				+ "t4.PHOTO_LINKS as photoLinks"
 				);
-		sb.append(" from GDS_D_INFO t1, GDS_D_ALBUM t3 , GDS_D_PHOTO t4 ");
+		sb.append(" from GDS_D_INFO t1, GDS_D_PHOTO t4 ");
 		sb.append(" where t1.GOODS_ID = " + goodsId
-				+ " and t1.ALBUM_ID = t3.ALBUM_ID"
-				+ " and t3.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t1.GOODS_STATE = '1'"
 				+ " order by t1.GOODS_ID");
 
 		List goodsDatailPhotoList = commonDao.queryForList(sb.toString());
 		return goodsDatailPhotoList;
+	}
+	
+	public List GetGoodsDetailActivity(String goodsId) {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("select distinct "
+				+ "t6.ATY_TITLE as atyTitle,"
+				+ "t6.ATY_CONTENT as atyContent"				);
+		sb.append(" from GDS_D_INFO t1, GDS_D_ABLE_ACTIVITY t6 ");
+		sb.append(" where t1.GOODS_ID = " + goodsId
+				+ " and t1.GOODS_ID = t6.GOODS_ID"
+				);
+		List goodsActivityList = commonDao.queryForList(sb.toString());
+		return goodsActivityList;
 	}
 
 }

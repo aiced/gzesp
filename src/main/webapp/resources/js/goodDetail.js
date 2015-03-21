@@ -54,7 +54,7 @@ function back2Main(){
 
 //新号入网 商品详情页面 立即购买 按钮跳转到订单填写页面
 function planGotoOrderMain(){
-    var attr_val = getAttrVal();
+    var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
 	$('#attrs').val(attr_val); 
 	$('#form1').submit();
 	//alert($('#attrs').val());
@@ -93,6 +93,7 @@ function getAttrVal(){
 //选择号码页面 点击号码 预占号码后的 自定义回调函数
 function afterUpdateNumber(data){
 	if(data.status == 'SUCCESS'){
+		$('#serial_number').html(serial_number); //赋值给父页面里的某个 标签属性
 		back2Main(); //回到主页面 隐藏子页面
 	}
 	else{

@@ -134,19 +134,20 @@ function queryNumbersPublicAppend(eparchy_code, nice_rule, nice_fee_start, nice_
 //点击 某个号码，选中 可以根据大家的页面自定义修改
 function clickOneNumber(obj){
    var serial_number = $(obj).html().replace(/[ ]/g,""); //获取点击选中的号码并去除空格
+   var nice_fee = $(obj).next('p').attr('nice_fee');
    //alert(serial_number);	
    //$('#serial_number').html(serial_number); //赋值给父页面里的某个 标签属性
    
-   updateNumberState(serial_number); //预占号码
+   updateNumberState(serial_number, nice_fee); //预占号码
    //back2Main(); //子页面隐藏，主页面展示
 }
 
 //预占号码 变更号码状态
-function updateNumberState(serial_number){
+function updateNumberState(serial_number, nice_fee){
 	if(serial_number == null || serial_number==''){
 		return false;
 	}
-	var param = {"serial_number":serial_number};
+	var param = {"serial_number":serial_number, "nice_fee":nice_fee}; //号码和 靓号预存款，最后订单价格要加上预存
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型

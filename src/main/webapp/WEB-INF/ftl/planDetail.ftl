@@ -22,13 +22,13 @@
 
   <body>
   <!-- 传给订单填写主页面 -->
-  <form id="form1" action="${base}/order/fillOrderMain" style="display:none;">
-    <input id="user_id" value="${user_id}"></input>
-    <input id="goods_id" value="${detail.GOODS_ID}"></input>
-    <input id="goods_name" value="${detail.GOODS_NAME}"></input>
-    <input id="goods_price" value="${detail.GOODS_PRICE}"></input>
-    <input id="goods_disc" value="IPHONE6，64G，黑色，5.5寸 ，5999，18651885060，贵阳"></input>
-    <input id="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
+  <form id="form1" method="post" action="${base}/order/fillOrderMain" style="display:none;">
+    <input id="user_id" name="user_id" value="${user_id}"></input>
+    <input id="goods_id" name="goods_id" value="${detail.GOODS_ID}"></input>
+    <input id="goods_name" name="goods_name" value="${detail.GOODS_NAME}"></input>
+    <input id="goods_price" name="goods_price" value="${detail.GOODS_PRICE}"></input>
+    <input id="goods_disc" name="goods_disc" value="IPHONE6，64G，黑色，5.5寸 ，5999，18651885060，贵阳"></input>
+    <input id="attr_val" name="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
   </form>
   
   <!-- 第一页 商品详情主页start --> 
@@ -72,7 +72,7 @@
     </div>  
 
     <!-- Carousel 广告轮播-->	
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <#list banners as item>  
           <#if item_index=0>
@@ -133,8 +133,15 @@
             <li class="num-info-li">
                 <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
+            <!-- 选择号码 -->
             <li class="num-info-li city-li">
-                <a href="#subpage_3" onclick="showSubpage('subpage_3')"><b class="list-arr"></b><span class="detail-info" id="serial_number">请选择号码</span><label color="#F70909">选择号码</label></a>
+              <#if attrs.NUMBERS??>
+                <a href="#subpage_3" onclick="showSubpage('subpage_3')">
+                  <b class="list-arr"></b>
+                  <span class="detail-info" id="serial_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}>请选择号码</span>
+                  <label color="#F70909">选择号码</label>
+                </a>
+              </#if>
             </li>
             <!-- A/B/C 套餐 -->
             <#if attrs.PACKRES??>

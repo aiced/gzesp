@@ -90,7 +90,7 @@
 		    <ul class="list-group">
 			  <li class="list-group-item">
 			  	 <div id="process-one" class="ctct-info">
-	                <p>已选手机:<span class="selected-info">${goods_disc}</span></p>
+	                <p>已选手机:<span class="selected-info">${goods_name}</span></p>
 	            </div>
 			  </li>
 			  <li id="selectContractTab" class="list-group-item" onclick="toSelectContractPage()">
@@ -98,7 +98,7 @@
 					   <label>选择合约</label>
 		               <p id="ctrct-unchoose" >根据您的月消费，选择一个合适的合约计划</p>
 		               <div id="ctrct-choosed" style="display:none">
-		               		<p><div ><span>${goods_name}</span> <span id="conType"></span>套餐  <span id="conPeriod"></span>月合约</div></p>
+		               		<p><div > <span id="conType"></span>套餐  <span id="conPeriod"></span>月合约</div></p>
 		                   <div class="pack-detail" id="packageDetail">
 		                       <span class="pack-call"><i></i></span><span>50分钟</span><span></span>
 		                       <span class="pack-msg"><i></i></span><span>0条</span><span></span>
@@ -119,7 +119,7 @@
 			  </li>
 			  <li id="amountTab" class="list-group-item">
 			  	 	<strong class="order-fee">商品金额：${goods_price}</strong>
-	                <p class="fee-detail">（其中：合约机4699元+预存话费1200元）</p>
+<!-- 	                <p class="fee-detail">（其中：合约机4699元+预存话费1200元）</p> -->
 			  </li>
 			</ul>
 	    </div>
@@ -146,6 +146,8 @@
 	<input type="hidden" id="user_id" value="${user_id}"></input>
 	<input type="hidden" id="goods_id" value="${goods_id}"></input>
     <input type="hidden" id="goods_disc" value="${goods_disc}"></input>
+    <input type="hidden" id="goods_name" value="${goods_name}"></input>
+    <input type="hidden" id="goods_price" value="${goods_price}"></input>
     <input type="hidden" id="attr_val" value="${attr_val}"></input>
       
   </body>

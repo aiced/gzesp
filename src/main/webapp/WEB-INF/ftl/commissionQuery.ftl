@@ -12,12 +12,53 @@
     <link href="${resRoot}/css/weShopLoginIndex.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
 
+
+    <!--日历控件css-->
+	<link href="${resRoot}/css/date_common.css?v=${resVer}" rel="stylesheet">
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![end if]-->
+    
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+
+    
+    <!--日历控件js-->
+    <script src="${resRoot}/js/date.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
+    <script type="text/javascript">
+    	$(function(){
+    	    $('#beginTime').date();
+    	    
+    	    //[点击查询]
+    	    $("#btnselect").click(function(){
+    	    	//在这里操作数据库查询
+        		var param = {"startDate":$("#beginTime").val(),"userID":$("#hideuserid").val()};
+        		
+        		$.ajax({
+        			   type: "POST",
+        			   url: "selectCommissions",
+        			   data: param,
+        			   async: false,
+        			   success: function(bRet){
+        				   //alert(bRet);
+        				   $("#commmiss_query_info").html(bRet);
+        			   }
+        			});
+    	    });
+
+    	});
+
+    </script>
     <style type="text/css">
         .row
         {
@@ -84,6 +125,10 @@
         {
             font-size: 12px;
         }
+        input
+        {
+        	height: 31px;
+        }
     </style>
 </head>
 <body>
@@ -102,74 +147,52 @@
 	            <div class="query_info_top">
 	                <div class="query_info_top_left"><label>佣金帐期</label></div>
 	                <div class="query_info_top_middle">
-	                    <select class="form-control">
-	                        <option>2015年1月</option>
-	                        <option>2015年2月</option>
-	                        <option>2015年3月</option>
-	                        <option>2015年4月</option>
-	                        <option>2015年5月</option>
-	                    </select>
+	                	<input  id="beginTime" class="kbtn" name="beginTime" value=""/>
 	                </div>
 	                <div class="query_info_top_right">
-	                    <button class="btn btn-warning btn-block" type="submit">查询</button>
+	                    <button class="btn btn-warning btn-block" name="btnselect" id="btnselect" type="button">查询</button>
 	                </div>
+	                <div id="datePlugin"></div>
+	                <!-- 隐藏控件用于保存userid -->
+            		<input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
 	            </div>
 	            <div class="query_info_top_clear"></div>
 	        </div>
 	    </form>
 	    <div class="query_info_detail">
 	        <h5><label>当月佣金明细</label></h5>
-	        <table class="table table-hover table-striped table-condensed">
-	            <tr>
-	                <th>序号</th>
-	                <th>商品名称</th>
-	                <th>订单号</th>
-	                <th>销售金额</th>
-	                <th>佣金</th>
-	            </tr>
-	            <tr>
-	                <td>1</td>
-	                <td>iphone6</td>
-	                <td>abc110</td>
-	                <td>5288</td>
-	                <td>50</td>
-	            </tr>
-	            <tr>
-	                <td>2</td>
-	                <td>iphone6</td>
-	                <td>abc110</td>
-	                <td>5288</td>
-	                <td>50</td>
-	            </tr>
-	            <tr>
-	                <td>3</td>
-	                <td>iphone6</td>
-	                <td>abc110</td>
-	                <td>5288</td>
-	                <td>50</td>
-	            </tr>
-	            <tr>
-	                <td>4</td>
-	                <td>iphone6</td>
-	                <td>abc110</td>
-	                <td>5288</td>
-	                <td>50</td>
-	            </tr>
-	            <tr>
-	            	<td colspan="3"><label class="query_info_left">合计</label></td>
-	            	<td><label>200</label></td>
-	            	<td><label>300</label></td>
-	            </tr>
-	        </table>
+	        <div id="commmiss_query_info">
+				<#if (commList?size==0)>
+					您没有佣金
+				<#else>
+				<table class="table table-hover table-striped table-condensed">
+				    <tr>
+				        <th>序号</th>
+				        <th>商品名称</th>
+				        <th>订单号</th>
+				        <th>销售金额</th>
+				        <th>佣金</th>
+				    </tr>
+					<#list commList as item>
+						<tr>
+					      <td>${item_index}</td><!-- 序号 -->
+					      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:74px;">${item.GOODS_NAME}</td><!--商品名称 -->
+					      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;">${item.ORDER_ID}</td><!-- 订单号-->
+					      <td>${item.CMS_SUM_MONEY}</td><!-- 销售金额 -->
+					      <td>${item.CMS_MONEY}</td><!-- 佣金 -->
+						</tr>
+					</#list>
+				    <tr>
+				    	<td colspan="3"><label class="query_info_left">合计</label></td>
+				    	<td><label>200</label></td>
+				    	<td><label>300</label></td>
+				    </tr>
+				</table>
+				</#if>
+	        </div><!-- commmiss_query_info_end -->
 	    </div>
 	</div>
 	
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
 
 </body>
 </html>

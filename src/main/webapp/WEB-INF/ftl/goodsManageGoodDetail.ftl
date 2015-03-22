@@ -39,7 +39,7 @@
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
 	        	<div id="top_middle">${title}</div>
 				<div id="top_right">
-	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff" onclick="saveClick(this); return false;"> 确定 </a>	
+	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="saveClick(this); return false;"> 确定 </a>	
 	        	</div>	
 	</div>
     <!--图片  -->

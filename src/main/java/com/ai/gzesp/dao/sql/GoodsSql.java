@@ -175,11 +175,7 @@ public class GoodsSql {
 					+ " order by t1.GOODS_ID");
 			
 		}else if((searchLowPrice != null) && (searchHightPrice != null)){
-//			 if(Long.parseLong(searchLowPrice) < Long.parseLong(searchHightPrice)){
-//				 return;
-//			 }
-			
-			
+
 			quarySb.append("select distinct "
 					+ "t1.GOODS_ID as goodsId,"
 					+ "t1.GOODS_NAME as goodsName, "

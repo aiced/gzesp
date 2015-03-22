@@ -38,20 +38,20 @@
 		<!--top_end-->
         <div class="orderinfo">
             <div class="list-group">
-                <a href="#" class="list-group-item">订单编号：2105020815120001</a>
-                <a href="#" class="list-group-item">订单金额：5288元</a>
-                <a href="#" class="list-group-item">下单时间：2015.2.8 15:00</a>
+                <a href="#" class="list-group-item">订单编号：${ORDER_ID}</a>
+                <a href="#" class="list-group-item">订单金额：${INCOME_MONEY}元</a>
+                <a href="#" class="list-group-item">下单时间：${Order_Time}</a>
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item">收货人姓名：张三</a>
-                <a href="#" class="list-group-item">收获地址：贵州省贵阳市云岩区宝山北路180路 </a>
-                <a href="#" class="list-group-item">联系电话：18551855999 </a>
-                <a href="#" class="list-group-item">送货日：工作日 </a>
+                <a href="#" class="list-group-item">收货人姓名：${RECEIVER_NAME}</a>
+                <a href="#" class="list-group-item">收获地址：${POST_ADDR} </a>
+                <a href="#" class="list-group-item">联系电话：${MOBILE_PHONE} </a>
+                <a href="#" class="list-group-item">送货日：${DELIVER_TIME_CODE}</a>
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item">支付方式： 微信支付</a>
-                <a href="#" class="list-group-item">订单状态：已付款待发货</a>
-                <a href="#" class="list-group-item">缺货处理：XXXXXXXXXX</a>
+                <a href="#" class="list-group-item">支付方式：${PAY_MODE}</a>
+                <a href="#" class="list-group-item">订单状态：${PAY_STATE}</a>
+                <a href="#" class="list-group-item">缺货处理：${PAY_REMARK}</a>
             </div>
         </div>
     </div>

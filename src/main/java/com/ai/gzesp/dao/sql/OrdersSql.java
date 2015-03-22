@@ -40,7 +40,6 @@ public class OrdersSql {
 	//通过userid获取商品列表
 	public List<Map<String, Object>> getOrdersListbyUserID(String strUserID)
 	{
-		strUserID="1234567890";
 		StringBuffer sb=new StringBuffer();
 		
 		sb.append("select "
@@ -51,17 +50,21 @@ public class OrdersSql {
 				+"ORD_D_POST.RECEIVER_NAME,"//收件人
 				+"ORD_D_POST.POST_ADDR,"//详细地址
 				+"ORD_D_POST.MOBILE_PHONE,"//联系电话
-				+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
+				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
+				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
 				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
-				+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
-				+" "
+				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK"
+				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
+				//+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
-		sb.append("from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST");
+		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST");//GDS_D_PHOTO,GDS_D_INFO 先注释掉后面需要放开注释
 		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
 				+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
 				+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
 				+" and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id"	
+				//+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id"先注释掉，后面需要放开注释
+				//+ "and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID"先注释掉，后面需要放开注释
 				+" and ORD_D_DEAL.USER_ID="+strUserID
 				+" order by ORD_D_BASE.Order_Time DESC"
 				);
@@ -75,7 +78,6 @@ public class OrdersSql {
 	//通过userid获取商品列表
 	public List getOrdersList(String strUserID,String strOrderID,String startDate,String endDate)
 	{
-		strUserID="1234567890";
 		if (strOrderID==null) {
 			strOrderID="";
 		}

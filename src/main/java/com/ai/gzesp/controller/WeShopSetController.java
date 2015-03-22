@@ -39,7 +39,7 @@ public class WeShopSetController {
     
     public ModelAndView weShopSet(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    	String name = paramsMap.get("index");
+    	String userIdStr = paramsMap.get("userId");
     	String userId = "2015031806433310";
     	List<Map<String, Object>> userlist = goodsSql.GetProfileList(userId);   
     	Map rspMap = new HashMap();    

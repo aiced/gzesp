@@ -249,7 +249,7 @@
                     <!--<input type="text" id="txtdateto" class="form-control">-->
                     <input  id="endTime" class="kbtn" name="endTime" value=""/>
                 </div>
-                <div id="datePlugin"></div>
+                <div id="datePlugin"></div><!-- 这句和日历控件有关千万别忘掉 -->
             </div>
             
             <!-- <div class="order_top_right"> -->

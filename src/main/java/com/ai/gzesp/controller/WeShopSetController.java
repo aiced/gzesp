@@ -50,7 +50,8 @@ public class WeShopSetController {
     	List<Map<String, Object>> userlist = goodsSql.GetProfileList(userId);   
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
-    	rspMap.put("name", "weidian");   
+    	rspMap.put("name", "weidian");
+    	rspMap.put("userId", userId);   
     	rspMap.put("total", userlist.size());   
     	rspMap.put("title", "店铺设置");
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
@@ -60,7 +61,7 @@ public class WeShopSetController {
 //    更新资料
     @RequestMapping("/weShopSetUpdate")
     @ResponseBody
-    public void goodsManageGoodDetailUpdate(@RequestBody String inputParam){
+    public void weShopSetUpdate(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String storeName = paramsMap.get("storeName");
     	String phoneNum = paramsMap.get("phoneNum");    	

@@ -163,7 +163,6 @@
 					var goodsId = $("#hideTag").val();
 					 //ajax 操作，刷新本界面数据  					  
 		  	 		var parms = {'goodsId':goodsId,'title':title.value,'content':content.value,'userId':${userId}};
-				    alert(${userId});
 				
 					//ajax 操作，刷新本界面数据     	  		
 					$.ajax({

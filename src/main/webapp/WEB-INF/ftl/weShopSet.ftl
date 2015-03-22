@@ -155,7 +155,6 @@
  		}
  
  		var phoneNum  = document.getElementById("phoneNum");
- 		alert(phoneNum.value);
  		var re = /^1\d{10}$/;
   		  if (re.test(phoneNum.value)) {
   		  } else {
@@ -164,13 +163,14 @@
    		 }
 	    var userId = $("#hideTag").val();;	
     	//ajax 操作，刷新本界面数据   
-		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':userId};
+    	 alert(${userId});
+		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId}};
 		$.ajax({
 		 type: "POST",
-		 url: "weShopSetUpdate",
+		 url: '${base}/shopManage/weShopSetUpdate',
 		 data: parms,
 		 success: function(data){
-			 window.location.reload(); 
+		  	 history.back();	  			   
 		 }
 		});			
 }

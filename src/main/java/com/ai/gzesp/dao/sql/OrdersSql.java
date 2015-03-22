@@ -98,10 +98,12 @@ public class OrdersSql {
 				+"ORD_D_POST.RECEIVER_NAME,"
 				+"ORD_D_POST.POST_ADDR,"
 				+"ORD_D_POST.MOBILE_PHONE,"
-				+"ORD_D_POST.DELIVER_TIME_CODE,"
+				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
+				//+"ORD_D_POST.DELIVER_TIME_CODE,"
 				+"ORD_D_PAYLOG.PAY_MODE,"
 				+"ORD_D_PAYLOG.PAY_STATE,"
-				+"ORD_D_PAYLOG.PAY_REMARK"
+				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK"
+				//+"ORD_D_PAYLOG.PAY_REMARK"
 				+" "
 				);
 		sb.append("from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST");
@@ -119,11 +121,11 @@ public class OrdersSql {
 		else if (strOrderID.length()>0 && startDate.length()>0)//订单id不为空，时间不为空，按时间，订单id查
 		{
 			sb.append(" and ORD_D_DEAL.ORDER_ID=" + strOrderID);
-			sb.append(" and ORD_D_BASE.Order_Time >="+startDate +" and ORD_D_BASE.Order_Time <"+ endDate);
+			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')");
 		}
 		else if(strOrderID.length()<=0 && startDate.length()>0)//订单id为空，时间不为空，按时间查
 		{
-			sb.append(" and ORD_D_BASE.Order_Time >="+startDate +" and ORD_D_BASE.Order_Time <"+ endDate);
+			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')");
 		}
 		else if(strOrderID.length()>0 && startDate.length() <=0)//订单不为空，时间为空，按订单id查
 		{

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdCmsDMDYLOGMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdCmsDMDYLOG" >
+    <result column="USER_ID" property="userId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+    <result column="CONN_CHANNEL" property="connChannel" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="ORDER_FROM" property="orderFrom" jdbcType="VARCHAR" />
+    <result column="INCOME_MONEY" property="incomeMoney" jdbcType="DECIMAL" />
+    <result column="GOODS_ID" property="goodsId" jdbcType="DECIMAL" />
+    <result column="GOODS_NAME" property="goodsName" jdbcType="VARCHAR" />
+    <result column="CMS_SUM_MONEY" property="cmsSumMoney" jdbcType="DECIMAL" />
+    <result column="CMS_MONEY" property="cmsMoney" jdbcType="DECIMAL" />
+    <result column="CMS_MONTH" property="cmsMonth" jdbcType="DECIMAL" />
+    <result column="CAL_DATE" property="calDate" jdbcType="TIMESTAMP" />
+    <result column="GOODS_NUMBER" property="goodsNumber" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    USER_ID, PARTITION_ID, ORDER_ID, ORDER_NO, CONN_CHANNEL, CREATE_TIME, ORDER_FROM, 
+    INCOME_MONEY, GOODS_ID, GOODS_NAME, CMS_SUM_MONEY, CMS_MONEY, CMS_MONTH, CAL_DATE, 
+    GOODS_NUMBER, STATUS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CMS_D_MDY_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from CMS_D_MDY_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdCmsDMDYLOG" >
+    insert into CMS_D_MDY_LOG (USER_ID, PARTITION_ID, ORDER_ID, 
+      ORDER_NO, CONN_CHANNEL, CREATE_TIME, 
+      ORDER_FROM, INCOME_MONEY, GOODS_ID, 
+      GOODS_NAME, CMS_SUM_MONEY, CMS_MONEY, 
+      CMS_MONTH, CAL_DATE, GOODS_NUMBER, 
+      STATUS)
+    values (#{userId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{orderId,jdbcType=DECIMAL}, 
+      #{orderNo,jdbcType=VARCHAR}, #{connChannel,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{orderFrom,jdbcType=VARCHAR}, #{incomeMoney,jdbcType=DECIMAL}, #{goodsId,jdbcType=DECIMAL}, 
+      #{goodsName,jdbcType=VARCHAR}, #{cmsSumMoney,jdbcType=DECIMAL}, #{cmsMoney,jdbcType=DECIMAL}, 
+      #{cmsMonth,jdbcType=DECIMAL}, #{calDate,jdbcType=TIMESTAMP}, #{goodsNumber,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdCmsDMDYLOG" >
+    insert into CMS_D_MDY_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="connChannel != null" >
+        CONN_CHANNEL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="orderFrom != null" >
+        ORDER_FROM,
+      </if>
+      <if test="incomeMoney != null" >
+        INCOME_MONEY,
+      </if>
+      <if test="goodsId != null" >
+        GOODS_ID,
+      </if>
+      <if test="goodsName != null" >
+        GOODS_NAME,
+      </if>
+      <if test="cmsSumMoney != null" >
+        CMS_SUM_MONEY,
+      </if>
+      <if test="cmsMoney != null" >
+        CMS_MONEY,
+      </if>
+      <if test="cmsMonth != null" >
+        CMS_MONTH,
+      </if>
+      <if test="calDate != null" >
+        CAL_DATE,
+      </if>
+      <if test="goodsNumber != null" >
+        GOODS_NUMBER,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="connChannel != null" >
+        #{connChannel,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderFrom != null" >
+        #{orderFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeMoney != null" >
+        #{incomeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsSumMoney != null" >
+        #{cmsSumMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cmsMoney != null" >
+        #{cmsMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="cmsMonth != null" >
+        #{cmsMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="calDate != null" >
+        #{calDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsNumber != null" >
+        #{goodsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from CMS_D_MDY_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CMS_D_MDY_LOG
+    <set >
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderNo != null" >
+        ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connChannel != null" >
+        CONN_CHANNEL = #{record.connChannel,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderFrom != null" >
+        ORDER_FROM = #{record.orderFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.incomeMoney != null" >
+        INCOME_MONEY = #{record.incomeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsId != null" >
+        GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsName != null" >
+        GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmsSumMoney != null" >
+        CMS_SUM_MONEY = #{record.cmsSumMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cmsMoney != null" >
+        CMS_MONEY = #{record.cmsMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cmsMonth != null" >
+        CMS_MONTH = #{record.cmsMonth,jdbcType=DECIMAL},
+      </if>
+      <if test="record.calDate != null" >
+        CAL_DATE = #{record.calDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.goodsNumber != null" >
+        GOODS_NUMBER = #{record.goodsNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CMS_D_MDY_LOG
+    set USER_ID = #{record.userId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      CONN_CHANNEL = #{record.connChannel,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      ORDER_FROM = #{record.orderFrom,jdbcType=VARCHAR},
+      INCOME_MONEY = #{record.incomeMoney,jdbcType=DECIMAL},
+      GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
+      CMS_SUM_MONEY = #{record.cmsSumMoney,jdbcType=DECIMAL},
+      CMS_MONEY = #{record.cmsMoney,jdbcType=DECIMAL},
+      CMS_MONTH = #{record.cmsMonth,jdbcType=DECIMAL},
+      CAL_DATE = #{record.calDate,jdbcType=TIMESTAMP},
+      GOODS_NUMBER = #{record.goodsNumber,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

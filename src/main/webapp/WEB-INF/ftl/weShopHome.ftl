@@ -188,7 +188,7 @@
 	            <table class="table table-striped table-condensed">
 	                <tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日访问：0></td>
+		                    <td class="yesterday_view">昨日访问：0</td>
 		                    <td class="month_view">本月访问：0</td>
 		                    <td class="total_view">累计访问：0</td>	                		
 		                <#else>
@@ -202,7 +202,7 @@
 
 	                <tr>
 	                	<#if saleList?size==0>
-		                    <td class="yesterday_sale">昨日销售：0></td>
+		                    <td class="yesterday_sale">昨日销售：0</td>
 		                    <td class="month_sale">本月销售：0</td>
 		                    <td class="total_sale">累计销售：0</td>	                		
 		                <#else>
@@ -215,7 +215,7 @@
 					</tr>
 					<tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日佣金：0></td>
+		                    <td class="yesterday_view">昨日佣金：0</td>
 		                    <td class="month_view">本月佣金：0</td>
 		                    <td class="total_view">累计佣金：0</td>	                		
 		                <#else>

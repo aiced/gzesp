@@ -34,6 +34,17 @@ public interface TdOrdLDEALLOGMapper {
     int deleteByExample(Criteria example);
 
     /**
+     * 根据主键删除记录
+     */
+    /**
+    * @Title TdOrdLDEALLOGMapper.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除ORD_L_DEALLOG
+    * @param operateLogid operateLogid
+    * @return int  删除个数
+     */
+    int deleteByPrimaryKey(Long operateLogid);
+
+    /**
      * 保存记录,不管记录里面的属性是否为空
      */
     /**
@@ -67,6 +78,17 @@ public interface TdOrdLDEALLOGMapper {
     List<TdOrdLDEALLOG> selectByExample(Criteria example);
 
     /**
+     * 根据主键查询记录
+     */
+    /**
+    * @Title TdOrdLDEALLOGMapper.selectByPrimaryKey
+    * @Description: 根据主键类，返回ORD_L_DEALLOG
+    * @param operateLogid operateLogid
+    * @return TdOrdLDEALLOG bean对象
+     */
+    TdOrdLDEALLOG selectByPrimaryKey(Long operateLogid);
+
+    /**
      * 根据条件更新属性不为空的记录
      */
     /**
@@ -89,4 +111,26 @@ public interface TdOrdLDEALLOGMapper {
     * @return int 更新记录数
      */
     int updateByExample(@Param("record") TdOrdLDEALLOG record, @Param("example") Criteria criteria);
+
+    /**
+     * 根据主键更新属性不为空的记录
+     */
+    /**
+    * @Title TdOrdLDEALLOGMapper.updateByPrimaryKeySelective
+    * @Description: 根据主键更新ORD_L_DEALLOG部分字段
+    * @param record 要更新成为的TdOrdLDEALLOG对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKeySelective(TdOrdLDEALLOG record);
+
+    /**
+     * 根据主键更新记录
+     */
+    /**
+    * @Title TdOrdLDEALLOGMapper.updateByPrimaryKey
+    * @Description: 根据主键更新ORD_L_DEALLOG全部字段
+    * @param record 要更新成为的TdOrdLDEALLOG对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKey(TdOrdLDEALLOG record);
 }

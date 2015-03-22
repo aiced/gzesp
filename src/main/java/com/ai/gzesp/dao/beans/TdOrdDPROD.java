@@ -10,19 +10,11 @@ import java.io.Serializable;
 * @Description: ORD_D_PROD表对应的java bean类
 * @author: linyl linyuliang.85@gmail.com
  */
-public class TdOrdDPROD implements Serializable {
+public class TdOrdDPROD extends TdOrdDPRODKey implements Serializable {
     /**
      * @Fields serialVersionUID : 自动生成默认序列化ID
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 订单标识
-     */
-    /**
-     * @Fields ORD_D_PROD.ORDER_ID :订单标识
-     */
-    private Long orderId;
 
     /**
      * 分区标识
@@ -31,14 +23,6 @@ public class TdOrdDPROD implements Serializable {
      * @Fields ORD_D_PROD.PARTITION_ID :分区标识
      */
     private Short partitionId;
-
-    /**
-     * 商品标识
-     */
-    /**
-     * @Fields ORD_D_PROD.GOODS_ID :商品标识
-     */
-    private Long goodsId;
 
     /**
      * 商品名称
@@ -113,25 +97,12 @@ public class TdOrdDPROD implements Serializable {
     private String values2;
 
     /**
-     * @return 订单标识
+     * 物品信息描述
      */
     /**
-     * @return ORD_D_PROD.ORDER_ID : 返回 订单标识
+     * @Fields ORD_D_PROD.RES_INFO :物品信息描述
      */
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    /**
-     * @param orderId 
-	 *            订单标识
-     */
-    /**
-     * @param orderId of ORD_D_PROD : 设置 订单标识
-     */
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
+    private String resInfo;
 
     /**
      * @return 分区标识
@@ -152,27 +123,6 @@ public class TdOrdDPROD implements Serializable {
      */
     public void setPartitionId(Short partitionId) {
         this.partitionId = partitionId;
-    }
-
-    /**
-     * @return 商品标识
-     */
-    /**
-     * @return ORD_D_PROD.GOODS_ID : 返回 商品标识
-     */
-    public Long getGoodsId() {
-        return goodsId;
-    }
-
-    /**
-     * @param goodsId 
-	 *            商品标识
-     */
-    /**
-     * @param goodsId of ORD_D_PROD : 设置 商品标识
-     */
-    public void setGoodsId(Long goodsId) {
-        this.goodsId = goodsId;
     }
 
     /**
@@ -362,5 +312,26 @@ public class TdOrdDPROD implements Serializable {
      */
     public void setValues2(String values2) {
         this.values2 = values2 == null ? null : values2.trim();
+    }
+
+    /**
+     * @return 物品信息描述
+     */
+    /**
+     * @return ORD_D_PROD.RES_INFO : 返回 物品信息描述
+     */
+    public String getResInfo() {
+        return resInfo;
+    }
+
+    /**
+     * @param resInfo 
+	 *            物品信息描述
+     */
+    /**
+     * @param resInfo of ORD_D_PROD : 设置 物品信息描述
+     */
+    public void setResInfo(String resInfo) {
+        this.resInfo = resInfo == null ? null : resInfo.trim();
     }
 }

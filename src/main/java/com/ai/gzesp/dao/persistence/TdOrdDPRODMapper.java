@@ -2,6 +2,7 @@ package com.ai.gzesp.dao.persistence;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDPROD;
+import com.ai.gzesp.dao.beans.TdOrdDPRODKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,6 +33,17 @@ public interface TdOrdDPRODMapper {
     * @return int  删除个数
      */
     int deleteByExample(Criteria example);
+
+    /**
+     * 根据主键删除记录
+     */
+    /**
+    * @Title TdOrdDPRODMapper.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除ORD_D_PROD
+    * @param key key
+    * @return int  删除个数
+     */
+    int deleteByPrimaryKey(TdOrdDPRODKey key);
 
     /**
      * 保存记录,不管记录里面的属性是否为空
@@ -67,6 +79,17 @@ public interface TdOrdDPRODMapper {
     List<TdOrdDPROD> selectByExample(Criteria example);
 
     /**
+     * 根据主键查询记录
+     */
+    /**
+    * @Title TdOrdDPRODMapper.selectByPrimaryKey
+    * @Description: 根据主键类，返回ORD_D_PROD
+    * @param key key
+    * @return TdOrdDPROD bean对象
+     */
+    TdOrdDPROD selectByPrimaryKey(TdOrdDPRODKey key);
+
+    /**
      * 根据条件更新属性不为空的记录
      */
     /**
@@ -89,4 +112,26 @@ public interface TdOrdDPRODMapper {
     * @return int 更新记录数
      */
     int updateByExample(@Param("record") TdOrdDPROD record, @Param("example") Criteria criteria);
+
+    /**
+     * 根据主键更新属性不为空的记录
+     */
+    /**
+    * @Title TdOrdDPRODMapper.updateByPrimaryKeySelective
+    * @Description: 根据主键更新ORD_D_PROD部分字段
+    * @param record 要更新成为的TdOrdDPROD对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKeySelective(TdOrdDPROD record);
+
+    /**
+     * 根据主键更新记录
+     */
+    /**
+    * @Title TdOrdDPRODMapper.updateByPrimaryKey
+    * @Description: 根据主键更新ORD_D_PROD全部字段
+    * @param record 要更新成为的TdOrdDPROD对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKey(TdOrdDPROD record);
 }

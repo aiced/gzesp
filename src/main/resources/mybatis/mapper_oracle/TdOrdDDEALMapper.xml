@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDDEALMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDDEAL" >
-    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
-    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <id column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <id column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
     <result column="USER_ID" property="userId" jdbcType="DECIMAL" />
     <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
     <result column="DEVLOP_ID" property="devlopId" jdbcType="VARCHAR" />
@@ -99,6 +99,18 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.TdOrdDDEALKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_D_DEAL
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDDEALKey" >
+    delete from ORD_D_DEAL
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from ORD_D_DEAL
     <if test="_parameter != null" >
@@ -263,5 +275,57 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDDEAL" >
+    update ORD_D_DEAL
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="devlopId != null" >
+        DEVLOP_ID = #{devlopId,jdbcType=VARCHAR},
+      </if>
+      <if test="devlopName != null" >
+        DEVLOP_NAME = #{devlopName,jdbcType=VARCHAR},
+      </if>
+      <if test="simcard != null" >
+        SIMCARD = #{simcard,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null" >
+        TERM_ID = #{termId,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="imsi != null" >
+        IMSI = #{imsi,jdbcType=VARCHAR},
+      </if>
+      <if test="invoceTitle != null" >
+        INVOCE_TITLE = #{invoceTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="invoceContent != null" >
+        INVOCE_CONTENT = #{invoceContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDDEAL" >
+    update ORD_D_DEAL
+    set USER_ID = #{userId,jdbcType=DECIMAL},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      DEVLOP_ID = #{devlopId,jdbcType=VARCHAR},
+      DEVLOP_NAME = #{devlopName,jdbcType=VARCHAR},
+      SIMCARD = #{simcard,jdbcType=VARCHAR},
+      TERM_ID = #{termId,jdbcType=VARCHAR},
+      PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      IMSI = #{imsi,jdbcType=VARCHAR},
+      INVOCE_TITLE = #{invoceTitle,jdbcType=VARCHAR},
+      INVOCE_CONTENT = #{invoceContent,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
   </update>
 </mapper>

@@ -11,27 +11,11 @@ import java.util.Date;
 * @Description: ORD_D_BASE表对应的java bean类
 * @author: linyl linyuliang.85@gmail.com
  */
-public class TdOrdDBASE implements Serializable {
+public class TdOrdDBASE extends TdOrdDBASEKey implements Serializable {
     /**
      * @Fields serialVersionUID : 自动生成默认序列化ID
      */
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 订单标识
-     */
-    /**
-     * @Fields ORD_D_BASE.ORDER_ID :订单标识
-     */
-    private Long orderId;
-
-    /**
-     * 分区标识
-     */
-    /**
-     * @Fields ORD_D_BASE.PARTITION_ID :分区标识
-     */
-    private Short partitionId;
 
     /**
      * 展现给客户使用，系统内唯一。具体创建可参见相关文档
@@ -170,48 +154,6 @@ public class TdOrdDBASE implements Serializable {
      * @Fields ORD_D_BASE.VALUES2 :预留字段2
      */
     private String values2;
-
-    /**
-     * @return 订单标识
-     */
-    /**
-     * @return ORD_D_BASE.ORDER_ID : 返回 订单标识
-     */
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    /**
-     * @param orderId 
-	 *            订单标识
-     */
-    /**
-     * @param orderId of ORD_D_BASE : 设置 订单标识
-     */
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
-    }
-
-    /**
-     * @return 分区标识
-     */
-    /**
-     * @return ORD_D_BASE.PARTITION_ID : 返回 分区标识
-     */
-    public Short getPartitionId() {
-        return partitionId;
-    }
-
-    /**
-     * @param partitionId 
-	 *            分区标识
-     */
-    /**
-     * @param partitionId of ORD_D_BASE : 设置 分区标识
-     */
-    public void setPartitionId(Short partitionId) {
-        this.partitionId = partitionId;
-    }
 
     /**
      * @return 展现给客户使用，系统内唯一。具体创建可参见相关文档

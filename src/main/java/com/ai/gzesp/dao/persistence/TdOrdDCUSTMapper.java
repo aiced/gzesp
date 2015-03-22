@@ -2,6 +2,7 @@ package com.ai.gzesp.dao.persistence;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDCUST;
+import com.ai.gzesp.dao.beans.TdOrdDCUSTKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,6 +33,17 @@ public interface TdOrdDCUSTMapper {
     * @return int  删除个数
      */
     int deleteByExample(Criteria example);
+
+    /**
+     * 根据主键删除记录
+     */
+    /**
+    * @Title TdOrdDCUSTMapper.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除ORD_D_CUST
+    * @param key key
+    * @return int  删除个数
+     */
+    int deleteByPrimaryKey(TdOrdDCUSTKey key);
 
     /**
      * 保存记录,不管记录里面的属性是否为空
@@ -67,6 +79,17 @@ public interface TdOrdDCUSTMapper {
     List<TdOrdDCUST> selectByExample(Criteria example);
 
     /**
+     * 根据主键查询记录
+     */
+    /**
+    * @Title TdOrdDCUSTMapper.selectByPrimaryKey
+    * @Description: 根据主键类，返回ORD_D_CUST
+    * @param key key
+    * @return TdOrdDCUST bean对象
+     */
+    TdOrdDCUST selectByPrimaryKey(TdOrdDCUSTKey key);
+
+    /**
      * 根据条件更新属性不为空的记录
      */
     /**
@@ -89,4 +112,26 @@ public interface TdOrdDCUSTMapper {
     * @return int 更新记录数
      */
     int updateByExample(@Param("record") TdOrdDCUST record, @Param("example") Criteria criteria);
+
+    /**
+     * 根据主键更新属性不为空的记录
+     */
+    /**
+    * @Title TdOrdDCUSTMapper.updateByPrimaryKeySelective
+    * @Description: 根据主键更新ORD_D_CUST部分字段
+    * @param record 要更新成为的TdOrdDCUST对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKeySelective(TdOrdDCUST record);
+
+    /**
+     * 根据主键更新记录
+     */
+    /**
+    * @Title TdOrdDCUSTMapper.updateByPrimaryKey
+    * @Description: 根据主键更新ORD_D_CUST全部字段
+    * @param record 要更新成为的TdOrdDCUST对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKey(TdOrdDCUST record);
 }

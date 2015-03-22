@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDCUSTMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDCUST" >
-    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
-    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <id column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <id column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
     <result column="CUST_NAME" property="custName" jdbcType="VARCHAR" />
     <result column="PSPT_TYPE_CODE" property="psptTypeCode" jdbcType="VARCHAR" />
     <result column="PSPT_NO" property="psptNo" jdbcType="VARCHAR" />
@@ -99,6 +99,18 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.TdOrdDCUSTKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_D_CUST
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDCUSTKey" >
+    delete from ORD_D_CUST
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from ORD_D_CUST
     <if test="_parameter != null" >
@@ -263,5 +275,57 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDCUST" >
+    update ORD_D_CUST
+    <set >
+      <if test="custName != null" >
+        CUST_NAME = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="psptTypeCode != null" >
+        PSPT_TYPE_CODE = #{psptTypeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="psptNo != null" >
+        PSPT_NO = #{psptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="psptExpireDate != null" >
+        PSPT_EXPIRE_DATE = #{psptExpireDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="psptImg1 != null" >
+        PSPT_IMG1 = #{psptImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="psptImg2 != null" >
+        PSPT_IMG2 = #{psptImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="authTag != null" >
+        AUTH_TAG = #{authTag,jdbcType=CHAR},
+      </if>
+      <if test="values1 != null" >
+        VALUES1 = #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        VALUES2 = #{values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDCUST" >
+    update ORD_D_CUST
+    set CUST_NAME = #{custName,jdbcType=VARCHAR},
+      PSPT_TYPE_CODE = #{psptTypeCode,jdbcType=VARCHAR},
+      PSPT_NO = #{psptNo,jdbcType=VARCHAR},
+      PSPT_EXPIRE_DATE = #{psptExpireDate,jdbcType=TIMESTAMP},
+      PSPT_IMG1 = #{psptImg1,jdbcType=VARCHAR},
+      PSPT_IMG2 = #{psptImg2,jdbcType=VARCHAR},
+      PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      AUTH_TAG = #{authTag,jdbcType=CHAR},
+      VALUES1 = #{values1,jdbcType=VARCHAR},
+      VALUES2 = #{values2,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
   </update>
 </mapper>

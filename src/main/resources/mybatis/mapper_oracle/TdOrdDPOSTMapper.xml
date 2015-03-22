@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDPOSTMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDPOST" >
-    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
-    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <id column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <id column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
     <result column="DELIVER_TYPE_CODE" property="deliverTypeCode" jdbcType="CHAR" />
     <result column="DELIVER_TIME_CODE" property="deliverTimeCode" jdbcType="CHAR" />
     <result column="RECEIVER_NAME" property="receiverName" jdbcType="VARCHAR" />
@@ -108,6 +108,18 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.TdOrdDPOSTKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_D_POST
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDPOSTKey" >
+    delete from ORD_D_POST
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from ORD_D_POST
     <if test="_parameter != null" >
@@ -356,5 +368,89 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPOST" >
+    update ORD_D_POST
+    <set >
+      <if test="deliverTypeCode != null" >
+        DELIVER_TYPE_CODE = #{deliverTypeCode,jdbcType=CHAR},
+      </if>
+      <if test="deliverTimeCode != null" >
+        DELIVER_TIME_CODE = #{deliverTimeCode,jdbcType=CHAR},
+      </if>
+      <if test="receiverName != null" >
+        RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPsptType != null" >
+        RECEIVER_PSPT_TYPE = #{receiverPsptType,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverPsptNo != null" >
+        RECEIVER_PSPT_NO = #{receiverPsptNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="fixPhone != null" >
+        FIX_PHONE = #{fixPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        PROVINCE_CODE = #{provinceCode,jdbcType=CHAR},
+      </if>
+      <if test="cityCode != null" >
+        CITY_CODE = #{cityCode,jdbcType=CHAR},
+      </if>
+      <if test="districtCode != null" >
+        DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null" >
+        POST_CODE = #{postCode,jdbcType=CHAR},
+      </if>
+      <if test="postAddr != null" >
+        POST_ADDR = #{postAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="postRemark != null" >
+        POST_REMARK = #{postRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="expressId != null" >
+        EXPRESS_ID = #{expressId,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCompnay != null" >
+        EXPRESS_COMPNAY = #{expressCompnay,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        VALUES1 = #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        VALUES2 = #{values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDPOST" >
+    update ORD_D_POST
+    set DELIVER_TYPE_CODE = #{deliverTypeCode,jdbcType=CHAR},
+      DELIVER_TIME_CODE = #{deliverTimeCode,jdbcType=CHAR},
+      RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      RECEIVER_PSPT_TYPE = #{receiverPsptType,jdbcType=VARCHAR},
+      RECEIVER_PSPT_NO = #{receiverPsptNo,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      FIX_PHONE = #{fixPhone,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      PROVINCE_CODE = #{provinceCode,jdbcType=CHAR},
+      CITY_CODE = #{cityCode,jdbcType=CHAR},
+      DISTRICT_CODE = #{districtCode,jdbcType=VARCHAR},
+      POST_CODE = #{postCode,jdbcType=CHAR},
+      POST_ADDR = #{postAddr,jdbcType=VARCHAR},
+      POST_REMARK = #{postRemark,jdbcType=VARCHAR},
+      EXPRESS_ID = #{expressId,jdbcType=VARCHAR},
+      EXPRESS_COMPNAY = #{expressCompnay,jdbcType=VARCHAR},
+      VALUES1 = #{values1,jdbcType=VARCHAR},
+      VALUES2 = #{values2,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
   </update>
 </mapper>

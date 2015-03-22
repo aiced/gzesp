@@ -163,7 +163,6 @@
    		 }
 	    var userId = $("#hideTag").val();;	
     	//ajax 操作，刷新本界面数据   
-    	 alert(${userId});
 		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId}};
 		$.ajax({
 		 type: "POST",

@@ -86,6 +86,7 @@ function nextPage() {
 	tmp.userId = $('#user_id').val();
 	tmp.goodsId = $('#goods_id').val();
 	tmp.goodsName = $('#goods_name').val();
+	tmp.goodsPrice = $('#goods_price').val();
 	tmp.goodsDisc = $('#goods_disc').val();
 	tmp.attrVal = $('#attr_val').val();
 	

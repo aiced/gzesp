@@ -126,7 +126,7 @@
 					<!--活动标题  -->
 							<div style="width:100%;height:50px;margin-bottom:10px;padding-top:10px;">
        	   						<p style="width:60px;height:30px;line-height:30px;margin-left:10px;margin-bottom:10px;float:left;color:#878787">活动标题 </p> 
-       	   						<input id="title" style="width:70%;height:30px;margin-right:30px;float:right;padding-left:10px;"  type="tel" placeholder="赠品：虎牌保温杯" value=''></input>    	   			
+       	   						<input id="title" style="width:70%;height:30px;margin-right:30px;float:right;padding-left:10px;" placeholder="赠品：虎牌保温杯" value=''></input>    	   			
        	   					</div>
        	   			<!--活动详情  -->
        	   					<div style="width:100%;height:150px;margin-bottom:10px;padding-top:10px;padding-bottom:10px;">
@@ -161,8 +161,9 @@
 						return;
 					}
 					var goodsId = $("#hideTag").val();
-					 //ajax 操作，刷新本界面数据   
-		  	 		var parms = {'goodsId':goodsId,'title':title.value,'content':content.value};
+					 //ajax 操作，刷新本界面数据  					  
+		  	 		var parms = {'goodsId':goodsId,'title':title.value,'content':content.value,'userId':${userId}};
+				    alert(${userId});
 				
 					//ajax 操作，刷新本界面数据     	  		
 					$.ajax({

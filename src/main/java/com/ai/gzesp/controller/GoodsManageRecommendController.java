@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
@@ -32,11 +33,13 @@ public class GoodsManageRecommendController {
     GoodsSql goodsSql;
     
     @RequestMapping("/goodsManageRecommend")
-    public ModelAndView goodsManageRecommend(){
-    	
+    public ModelAndView goodsManageRecommend(@RequestParam(value = "userid", required = true)String strUserID){
+    	System.out.println(strUserID);
+
         Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
-    	rspMap.put("name", "weidian");   
+    	rspMap.put("name", "weidian"); 
+    	rspMap.put("userId", strUserID);   
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
     	rspMap.put("title", "选择添加"); 
     	return new ModelAndView("goodsManageRecommend.ftl", rspMap);

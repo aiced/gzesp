@@ -42,7 +42,8 @@ public class GoodsManageGoodAddController {
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String name = paramsMap.get("index");
-    	
+    	String strUserID = paramsMap.get("userId");
+
     	rcdlist = goodsSql.GetRcdList(); 
     	List<Map<String, Object>> goodsList = null;
 		sb = new StringBuffer();
@@ -67,7 +68,8 @@ public class GoodsManageGoodAddController {
     	
     	
 
-    	Map rspMap = new HashMap();    
+    	Map rspMap = new HashMap(); 
+    	rspMap.put("userId", strUserID);   
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", goodsList.size());     	

@@ -108,7 +108,7 @@
 		  //在这里操作获取验证码		
 		  if(index<=0){
 		  $("#hideTag").attr("value",'1');
-  			var parms = null;
+		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
@@ -140,7 +140,7 @@
 		  //在这里操作获取验证码		
 		  if(index<=1){
 		  	 $("#hideTag").attr("value",'1');
-			var parms = null;
+		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
@@ -171,7 +171,7 @@
 		  //在这里操作获取验证码		
 		  if(index<=2){
 		  	 $("#hideTag").attr("value",'1');
-			var parms = null;
+		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms
@@ -203,7 +203,7 @@
 		  //在这里操作获取验证码		
 		  if(index<=3){
 		  	 $("#hideTag").attr("value",'1');
-			var parms = null;
+		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodAdd', 
 				data: parms

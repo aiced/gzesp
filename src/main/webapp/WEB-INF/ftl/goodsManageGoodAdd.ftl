@@ -169,8 +169,8 @@ table{
 	
 	
 	 <script>
-		function itemClick(obj) {
-			var parms = {'goodsId':obj};
+		function itemClick(obj) {		
+			var parms = {'goodsId':obj,'userId':${userId}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodDetail', 
 				data: parms,

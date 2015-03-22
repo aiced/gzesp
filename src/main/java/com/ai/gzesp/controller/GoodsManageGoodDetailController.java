@@ -47,7 +47,7 @@ public class GoodsManageGoodDetailController {
     public ModelAndView goodsManageGoodDetail(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);    	
     	String goodsId = paramsMap.get("goodsId");
-    	
+    	String strUserID = paramsMap.get("userId");
     	List<Map<String, Object>> goodsDetailList = goodsSql.GetGoodsDetail(goodsId);  
     	List<Map<String, Object>> goodsDetailPhotosList = goodsSql.GetGoodsDetailPhotos(goodsId);       	
     	List<Map<String, Object>> goodsActivityList = goodsSql.GetGoodsDetailActivity(goodsId);  
@@ -59,7 +59,8 @@ public class GoodsManageGoodDetailController {
 
     	
     	Map rspMap = new HashMap();    
-    	rspMap.put("rspCode", "0000");   
+    	rspMap.put("rspCode", "0000"); 
+    	rspMap.put("userId", strUserID);   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", goodsDetailPhotosList.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
@@ -84,6 +85,8 @@ public class GoodsManageGoodDetailController {
     	Long goodsId = Long.parseLong(goodsIdStr);
     	String titleStr = paramsMap.get("title");
     	String contentStr = paramsMap.get("content");
+    	String strUserID = paramsMap.get("userId");
+
     	String partitionIdStr = CommonUtil.getPartitionId(goodsIdStr);
     	Short partitionId = (short) Integer.parseInt(partitionIdStr);
     	
@@ -92,9 +95,8 @@ public class GoodsManageGoodDetailController {
     	tdGdsDABLEACTIVITY.setAtyTitle(titleStr);
     	tdGdsDABLEACTIVITY.setAtyContent(contentStr);
     	tdGdsDABLEACTIVITY.setPartitionId(partitionId);
-    	tdGdsDABLEACTIVITY.setUserId(goodsIdStr);
+    	tdGdsDABLEACTIVITY.setUserId(strUserID);
 
-    	
     	Criteria example = new Criteria();
     	example.createConditon().andEqualTo("GOODS_ID", goodsId);
     	List<TdGdsDABLEACTIVITY> list = tdGdsDABLEACTIVITYDao.selectByExample(example);

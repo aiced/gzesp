@@ -1,6 +1,12 @@
 package com.ai.gzesp.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -53,6 +59,49 @@ public class OrderService {
     
     @Resource 
     GoodsSql goodsSql;
+    
+    
+    public List getContractByGoodsID(String goodsId) {
+    	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId);
+    	
+    	List result = new ArrayList();
+    	Set set = new HashSet();
+    	if(contactList.size() > 0) {
+    		for(int i=0; i<contactList.size(); i++) {
+    			Map<String, Object> info = contactList.get(i);
+    			String resId = String.valueOf(info.get("resId"));
+//    			String packName = String.valueOf(info.get("packName"));
+//    			String packVal = String.valueOf(info.get("packVal"));
+    			
+    			if(!set.contains(resId)) {
+    				result.add(info);
+    				set.add(resId);
+    			}
+    			
+    		}
+    		
+    	}
+    	
+    	return result;
+    }
+    
+    public List queryPageInfoListById(String goodsId, String resId) {
+    	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId);
+    	
+    	List result = new ArrayList();
+    	if(contactList.size() > 0) {
+    		for(int i=0; i<contactList.size(); i++) {
+    			Map<String, Object> info = contactList.get(i);
+    			String resIdDB = String.valueOf(info.get("resId"));
+    			if(resId.equals(resIdDB)) {
+    				result.add(info);
+    			}
+    		}
+    	}
+    	
+    	return result;
+    }
+    
     
     public void insertOrder(Map<String, String> paramsMap) {
     	insertOrderBaseInfo(paramsMap);
@@ -216,7 +265,7 @@ public class OrderService {
     	record.setDerateFee(CommonUtil.string2Long(derateFee));
     	record.setDerateReason(derateReason);
     	record.setRecvFee(CommonUtil.string2Long(recvFee));
-    	record.setValues1(goodsDisc);
+    	record.setResInfo(goodsDisc);
     	
     	tdOrdDPRODDao.insertSelective(record);
     }

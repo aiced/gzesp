@@ -13,8 +13,10 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
@@ -31,12 +33,6 @@ public class OrderController {
     @Resource
     private SelectNumberService selectNumberService;
     
-//    @Resource 
-//    TdOrdDBASEDao tdOrdDBASEDao;
-//    
-//    @Resource 
-//    GoodsSql goodsSql;
-//    
     @Resource 
     OrderService orderService;
     
@@ -44,11 +40,11 @@ public class OrderController {
     public ModelAndView newNumberJoin(@RequestBody String inputParams){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	String goods_id = paramsMap.containsKey("goods_id")?paramsMap.get("goods_id"):"";
-    	String goods_name = paramsMap.containsKey("goods_name")?paramsMap.get("goods_name"):"";
-    	String goods_price = paramsMap.containsKey("goods_price")?paramsMap.get("goods_price"):"";
-    	String user_id = paramsMap.containsKey("user_id")?paramsMap.get("user_id"):"";
-    	String goods_disc = paramsMap.containsKey("goods_disc")?paramsMap.get("goods_disc"):"";
-    	String attr_val = paramsMap.containsKey("attr_val")?paramsMap.get("attr_val"):"";
+//    	String goods_name = paramsMap.containsKey("goods_name")?paramsMap.get("goods_name"):"";
+//    	String goods_price = paramsMap.containsKey("goods_price")?paramsMap.get("goods_price"):"";
+//    	String user_id = paramsMap.containsKey("user_id")?paramsMap.get("user_id"):"";
+//    	String goods_disc = paramsMap.containsKey("goods_disc")?paramsMap.get("goods_disc"):"";
+//    	String attr_val = paramsMap.containsKey("attr_val")?paramsMap.get("attr_val"):"";
 //    	String fromPage = paramsMap.containsKey("fromPage")?paramsMap.get("fromPage"):"";
     	
     	 ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
@@ -60,7 +56,7 @@ public class OrderController {
         mav.addObject("title", "新号入网"); 
         
         selectNumberData(mav);
-        selectContractData(mav);
+        selectContractData(mav, goods_id);
         
         return mav;
     }
@@ -79,105 +75,103 @@ public class OrderController {
         mav.addObject("numbers", numbers);	
     }
     
-    private void selectContractData(ModelAndView mav){
-//    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
-//    	String name = paramsMap.get("name");
+    private void selectContractData(ModelAndView mav,String goodsId){
+//    	List<Map<String, String>> pkgList = new ArrayList();
+//    	Map pkg = new HashMap();
+//    	pkg.put("price", "106元");
+//    	pkg.put("type", "1");
+//    	pkg.put("nationalminutes", "300分钟");
+//    	pkg.put("nationalthroughtput", "400MB");
+//    	pkg.put("period", new int[]{12,24,36});
+//    	pkg.put("returnDesc", new String[]{
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
+//    	pkg.put("totalFee", "4699元");
+//    	pkg.put("returnFee", "3499元");
+//    	pkg.put("monthRtnFee", "25元");
+//    	pkgList.add(pkg);
 //    	
-//    	TdOrdDBASE record = new TdOrdDBASE();
-//    	record.setOrderId(123456l);
-//    	record.setCreateTime(DateUtil.getNow());
-//    	tdOrdDBASEDao.insertSelective(record);
-//    
-//    	Criteria example = new Criteria();
-//    	example.createConditon().andEqualTo("ORDER_ID", "123456");
-//    	List<TdOrdDBASE> list = tdOrdDBASEDao.selectByExample(example);
+//    	pkg = new HashMap();
+//    	pkg.put("price", "206元");
+//    	pkg.put("type", "2");
+//    	pkg.put("nationalminutes", "500分钟");
+//    	pkg.put("nationalthroughtput", "600MB");
+//    	pkg.put("period", new int[]{12,24,36});
+//    	pkg.put("returnDesc", new String[]{
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
+//    	pkg.put("totalFee", "4699元");
+//    	pkg.put("returnFee", "3499元");
+//    	pkg.put("monthRtnFee", "25元");
+//    	pkgList.add(pkg);
 //    	
-//    	tdOrdDBASEDao.updateByExampleSelective(record, example);
+//    	pkg = new HashMap();
+//    	pkg.put("price", "306元");
+//    	pkg.put("type", "3");
+//    	pkg.put("nationalminutes", "600分钟");
+//    	pkg.put("nationalthroughtput", "600MB");
+//    	pkg.put("period", new int[]{12,24,36});
+//    	pkg.put("returnDesc", new String[]{
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
+//    	pkg.put("totalFee", "4699元");
+//    	pkg.put("returnFee", "3499元");
+//    	pkg.put("monthRtnFee", "25元");
+//    	pkgList.add(pkg);
 //    	
-//    	List<Map<String, Object>> list = goodsSql.getGoodsList();
-
+//    	pkg = new HashMap();
+//    	pkg.put("price", "406元");
+//    	pkg.put("type", "4");
+//    	pkg.put("nationalminutes", "800分钟");
+//    	pkg.put("nationalthroughtput", "600MB");
+//    	pkg.put("period", new int[]{12,24,36});
+//    	pkg.put("returnDesc", new String[]{
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
+//    	"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
+//    	pkg.put("totalFee", "4699元");
+//    	pkg.put("returnFee", "3499元");
+//    	pkg.put("monthRtnFee", "25元");
+//    	pkgList.add(pkg);
+//    	
+//    	pkg = new HashMap();
+//    	pkg.put("price", "506元");
+//    	pkg.put("type", "5");
+//    	pkg.put("nationalminutes", "1600分钟");
+//    	pkg.put("nationalthroughtput", "600MB");
+//    	pkg.put("period", new int[]{12,24,36});
+//    	pkg.put("returnDesc", new String[]{
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
+//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
+//    	"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
+//    	pkg.put("totalFee", "4699元");
+//    	pkg.put("returnFee", "3499元");
+//    	pkg.put("monthRtnFee", "25元");
+//    	pkgList.add(pkg);
+//    	
+//    	mav.addObject("pkgList", pkgList); 
     	
     	
-    	List<Map<String, String>> pkgList = new ArrayList();
-    	Map pkg = new HashMap();
-    	pkg.put("price", "106元");
-    	pkg.put("type", "1");
-    	pkg.put("nationalminutes", "300分钟");
-    	pkg.put("nationalthroughtput", "400MB");
-    	pkg.put("period", new int[]{12,24,36});
-    	pkg.put("returnDesc", new String[]{
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-    	pkg.put("totalFee", "4699元");
-    	pkg.put("returnFee", "3499元");
-    	pkg.put("monthRtnFee", "25元");
-    	pkgList.add(pkg);
+    	List pkgList = orderService.getContractByGoodsID(goodsId);
+    	mav.addObject("pkgList", pkgList);
     	
-    	pkg = new HashMap();
-    	pkg.put("price", "206元");
-    	pkg.put("type", "2");
-    	pkg.put("nationalminutes", "500分钟");
-    	pkg.put("nationalthroughtput", "600MB");
-    	pkg.put("period", new int[]{12,24,36});
-    	pkg.put("returnDesc", new String[]{
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-    	pkg.put("totalFee", "4699元");
-    	pkg.put("returnFee", "3499元");
-    	pkg.put("monthRtnFee", "25元");
-    	pkgList.add(pkg);
-    	
-    	pkg = new HashMap();
-    	pkg.put("price", "306元");
-    	pkg.put("type", "3");
-    	pkg.put("nationalminutes", "600分钟");
-    	pkg.put("nationalthroughtput", "600MB");
-    	pkg.put("period", new int[]{12,24,36});
-    	pkg.put("returnDesc", new String[]{
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-    	pkg.put("totalFee", "4699元");
-    	pkg.put("returnFee", "3499元");
-    	pkg.put("monthRtnFee", "25元");
-    	pkgList.add(pkg);
-    	
-    	pkg = new HashMap();
-    	pkg.put("price", "406元");
-    	pkg.put("type", "4");
-    	pkg.put("nationalminutes", "800分钟");
-    	pkg.put("nationalthroughtput", "600MB");
-    	pkg.put("period", new int[]{12,24,36});
-    	pkg.put("returnDesc", new String[]{
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-    	"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-    	pkg.put("totalFee", "4699元");
-    	pkg.put("returnFee", "3499元");
-    	pkg.put("monthRtnFee", "25元");
-    	pkgList.add(pkg);
-    	
-    	pkg = new HashMap();
-    	pkg.put("price", "506元");
-    	pkg.put("type", "5");
-    	pkg.put("nationalminutes", "1600分钟");
-    	pkg.put("nationalthroughtput", "600MB");
-    	pkg.put("period", new int[]{12,24,36});
-    	pkg.put("returnDesc", new String[]{
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-    	"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-    	pkg.put("totalFee", "4699元");
-    	pkg.put("returnFee", "3499元");
-    	pkg.put("monthRtnFee", "25元");
-    	pkgList.add(pkg);
-    	
-    	mav.addObject("pkgList", pkgList); 
-     	mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
-     	mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
-     	mav.addObject("selectedNumber", "1306520198"); 
+//     	mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
+//     	mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
+//     	mav.addObject("selectedNumber", "1306520198"); 
+    }
+    
+    @RequestMapping("/queryPageInfoListById")
+    @ResponseBody
+    public List queryPageInfoListById(@RequestBody Map<String, String> paramsMap) {
+    	String goodsId =  paramsMap.get("goodsId");
+    	String resId=  paramsMap.get("resId");
+    	List dataList =  orderService.queryPageInfoListById(goodsId, resId);
+//    	ModelAndView mav = new ModelAndView("selectContractSub.ftl");
+//        mav.addObject("dataList", dataList);
+        return dataList;
     }
     
     @RequestMapping("/fillOrderMain")

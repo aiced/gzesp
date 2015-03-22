@@ -260,5 +260,57 @@ public class GoodsSql {
 		List goodsActivityList = commonDao.queryForList(sb.toString());
 		return goodsActivityList;
 	}
+	
+public List<Map<String, Object>> getContractByGoodsID(String goodsID) {
+		
+		StringBuffer sb=new StringBuffer();
+		  
+//		sb.append("select  "
+//				+ "a.RES_ID as resId, "
+//				+ "b.ATTR_CODE as code, "
+//				+ "b.ATTR_VAL_NAME as name, "
+//				+ "b.VALUES1 as values "
+//				+ "");
+//		sb.append(" from rel_goods_res a, res_d_attrval b");
+//		sb.append(" where"
+//				+ "a.GOODS_ID=" + goodsID );
+//		sb.append(" and  a.RES_ID = b.RES_ID ");
+//		sb.append(" and  b.ATTR_CODE ='PAGERES'");
+//		
+//		sb.append(" union all");
+//		
+//		sb.append("select  "
+//				+ "a.RES_ID as resId, "
+//				+ "b.ATTR_CODE as code, "
+//				+ "b.ATTR_VAL_NAME as name, "
+//				+ "b.VALUES1 as values "
+//				+ "");
+//		sb.append(" from rel_goods_res a, res_d_attrval b");
+//		sb.append(" where"
+//				+ "a.GOODS_ID=" + goodsID );
+//		sb.append(" and  a.RES_ID = b.RES_ID ");
+//		sb.append(" and  b.ATTR_CODE ='PACKRES'");
+		
+		sb.append(" select  t1.goodsId, t1.resId, t1.name as packName, t1.values1 as packVal, t2.name as pageName , t2.values1 as pageVal from ");
+		
+		sb.append("  (select a.GOODS_ID as goodsId, a.RES_ID as resId, b.ATTR_CODE, b.ATTR_VAL_NAME as name ,b.VALUES1 ");
+		sb.append("  from rel_goods_res a, res_d_attrval b ");
+		sb.append("  where a.GOODS_ID=" + goodsID);
+		sb.append("  and a.RES_ID = b.RES_ID  ");
+		sb.append("  and b.ATTR_CODE like 'PACKRES') t1, ");
+		
+		sb.append("  (select b.RES_ID as resid, b.ATTR_CODE, b.ATTR_VAL_NAME as name ,b.VALUES1 ");
+		sb.append("  from   res_d_attrval b ");
+		sb.append("  where b.ATTR_CODE like 'PAGERES' ) t2 ");
+		
+		sb.append("  where t1.resId =  t2.resId ");
+		sb.append("  order by t1.resId ");
+				  
+		System.err.println(sb.toString());
+		
+		List contractList =commonDao.queryForList(sb.toString());
+
+		return contractList;
+	}
 
 }

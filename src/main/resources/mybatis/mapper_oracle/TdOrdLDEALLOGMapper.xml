@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdOrdLDEALLOGMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdLDEALLOG" >
-    <result column="OPERATE_LOGID" property="operateLogid" jdbcType="DECIMAL" />
+    <id column="OPERATE_LOGID" property="operateLogid" jdbcType="DECIMAL" />
     <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
     <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
     <result column="OPERATE_TIME" property="operateTime" jdbcType="TIMESTAMP" />
@@ -100,6 +100,16 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_L_DEALLOG
+    where OPERATE_LOGID = #{operateLogid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ORD_L_DEALLOG
+    where OPERATE_LOGID = #{operateLogid,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from ORD_L_DEALLOG
     <if test="_parameter != null" >
@@ -274,5 +284,63 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdLDEALLOG" >
+    update ORD_L_DEALLOG
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="operateTime != null" >
+        OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorId != null" >
+        OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="dealContent != null" >
+        DEAL_CONTENT = #{dealContent,jdbcType=VARCHAR},
+      </if>
+      <if test="resultCode != null" >
+        RESULT_CODE = #{resultCode,jdbcType=CHAR},
+      </if>
+      <if test="resultInfo != null" >
+        RESULT_INFO = #{resultInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="originalState != null" >
+        ORIGINAL_STATE = #{originalState,jdbcType=CHAR},
+      </if>
+      <if test="currentState != null" >
+        CURRENT_STATE = #{currentState,jdbcType=CHAR},
+      </if>
+      <if test="values1 != null" >
+        VALUES1 = #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        VALUES2 = #{values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OPERATE_LOGID = #{operateLogid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdLDEALLOG" >
+    update ORD_L_DEALLOG
+    set ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      OPERATE_TIME = #{operateTime,jdbcType=TIMESTAMP},
+      OPERATOR_ID = #{operatorId,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      DEAL_CONTENT = #{dealContent,jdbcType=VARCHAR},
+      RESULT_CODE = #{resultCode,jdbcType=CHAR},
+      RESULT_INFO = #{resultInfo,jdbcType=VARCHAR},
+      ORIGINAL_STATE = #{originalState,jdbcType=CHAR},
+      CURRENT_STATE = #{currentState,jdbcType=CHAR},
+      VALUES1 = #{values1,jdbcType=VARCHAR},
+      VALUES2 = #{values2,jdbcType=VARCHAR}
+    where OPERATE_LOGID = #{operateLogid,jdbcType=DECIMAL}
   </update>
 </mapper>

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDPAYLOGMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
+    <id column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <id column="PAY_LOGID" property="payLogid" jdbcType="DECIMAL" />
     <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
-    <result column="PAY_LOGID" property="payLogid" jdbcType="DECIMAL" />
-    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
     <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
     <result column="PAY_MODE" property="payMode" jdbcType="VARCHAR" />
     <result column="PAY_ASK_TIME" property="payAskTime" jdbcType="TIMESTAMP" />
@@ -96,7 +96,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ORDER_ID, PAY_LOGID, PARTITION_ID, PAY_TYPE, PAY_MODE, PAY_ASK_TIME, PAY_COMPLETE_TIME, 
+    PARTITION_ID, PAY_LOGID, ORDER_ID, PAY_TYPE, PAY_MODE, PAY_ASK_TIME, PAY_COMPLETE_TIME, 
     LOCAL_COMPLETE_TIME, CURRENCY_TYPE, PAY_MONEY, PAY_STATE, PAY_REMARK, HALT_TAG, HALT_TIME, 
     REFUND_TAG, REFUND_TIME, REFUND_LOGID, UDP_ORDER, PAY_ORG_CODE, PAY_ORG_LOGID, PAY_CHNL_CODE, 
     PAY_CHNL_ORDER, PAY_ACUNT_NO, PAY_ACUNT_NAME, NOTIFY_TYPE, SIGN_HMAC, VALUES1, VALUES2
@@ -117,6 +117,18 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOGKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_D_PAYLOG
+    where PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+      and PAY_LOGID = #{payLogid,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOGKey" >
+    delete from ORD_D_PAYLOG
+    where PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+      and PAY_LOGID = #{payLogid,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from ORD_D_PAYLOG
     <if test="_parameter != null" >
@@ -124,7 +136,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
-    insert into ORD_D_PAYLOG (ORDER_ID, PAY_LOGID, PARTITION_ID, 
+    insert into ORD_D_PAYLOG (PARTITION_ID, PAY_LOGID, ORDER_ID, 
       PAY_TYPE, PAY_MODE, PAY_ASK_TIME, 
       PAY_COMPLETE_TIME, LOCAL_COMPLETE_TIME, 
       CURRENCY_TYPE, PAY_MONEY, PAY_STATE, 
@@ -134,7 +146,7 @@
       PAY_CHNL_CODE, PAY_CHNL_ORDER, PAY_ACUNT_NO, 
       PAY_ACUNT_NAME, NOTIFY_TYPE, SIGN_HMAC, 
       VALUES1, VALUES2)
-    values (#{orderId,jdbcType=DECIMAL}, #{payLogid,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, 
+    values (#{partitionId,jdbcType=DECIMAL}, #{payLogid,jdbcType=DECIMAL}, #{orderId,jdbcType=DECIMAL}, 
       #{payType,jdbcType=CHAR}, #{payMode,jdbcType=VARCHAR}, #{payAskTime,jdbcType=TIMESTAMP}, 
       #{payCompleteTime,jdbcType=TIMESTAMP}, #{localCompleteTime,jdbcType=TIMESTAMP}, 
       #{currencyType,jdbcType=CHAR}, #{payMoney,jdbcType=DECIMAL}, #{payState,jdbcType=CHAR}, 
@@ -148,14 +160,14 @@
   <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
     insert into ORD_D_PAYLOG
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        ORDER_ID,
+      <if test="partitionId != null" >
+        PARTITION_ID,
       </if>
       <if test="payLogid != null" >
         PAY_LOGID,
       </if>
-      <if test="partitionId != null" >
-        PARTITION_ID,
+      <if test="orderId != null" >
+        ORDER_ID,
       </if>
       <if test="payType != null" >
         PAY_TYPE,
@@ -234,14 +246,14 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="orderId != null" >
-        #{orderId,jdbcType=DECIMAL},
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
       </if>
       <if test="payLogid != null" >
         #{payLogid,jdbcType=DECIMAL},
       </if>
-      <if test="partitionId != null" >
-        #{partitionId,jdbcType=DECIMAL},
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
       </if>
       <if test="payType != null" >
         #{payType,jdbcType=CHAR},
@@ -329,14 +341,14 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update ORD_D_PAYLOG
     <set >
-      <if test="record.orderId != null" >
-        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
       </if>
       <if test="record.payLogid != null" >
         PAY_LOGID = #{record.payLogid,jdbcType=DECIMAL},
       </if>
-      <if test="record.partitionId != null" >
-        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
       </if>
       <if test="record.payType != null" >
         PAY_TYPE = #{record.payType,jdbcType=CHAR},
@@ -420,9 +432,9 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update ORD_D_PAYLOG
-    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+    set PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
       PAY_LOGID = #{record.payLogid,jdbcType=DECIMAL},
-      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
       PAY_TYPE = #{record.payType,jdbcType=CHAR},
       PAY_MODE = #{record.payMode,jdbcType=VARCHAR},
       PAY_ASK_TIME = #{record.payAskTime,jdbcType=TIMESTAMP},
@@ -451,5 +463,121 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
+    update ORD_D_PAYLOG
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="payMode != null" >
+        PAY_MODE = #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="payAskTime != null" >
+        PAY_ASK_TIME = #{payAskTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payCompleteTime != null" >
+        PAY_COMPLETE_TIME = #{payCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="localCompleteTime != null" >
+        LOCAL_COMPLETE_TIME = #{localCompleteTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currencyType != null" >
+        CURRENCY_TYPE = #{currencyType,jdbcType=CHAR},
+      </if>
+      <if test="payMoney != null" >
+        PAY_MONEY = #{payMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="payState != null" >
+        PAY_STATE = #{payState,jdbcType=CHAR},
+      </if>
+      <if test="payRemark != null" >
+        PAY_REMARK = #{payRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="haltTag != null" >
+        HALT_TAG = #{haltTag,jdbcType=CHAR},
+      </if>
+      <if test="haltTime != null" >
+        HALT_TIME = #{haltTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTag != null" >
+        REFUND_TAG = #{refundTag,jdbcType=CHAR},
+      </if>
+      <if test="refundTime != null" >
+        REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundLogid != null" >
+        REFUND_LOGID = #{refundLogid,jdbcType=DECIMAL},
+      </if>
+      <if test="udpOrder != null" >
+        UDP_ORDER = #{udpOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrgCode != null" >
+        PAY_ORG_CODE = #{payOrgCode,jdbcType=CHAR},
+      </if>
+      <if test="payOrgLogid != null" >
+        PAY_ORG_LOGID = #{payOrgLogid,jdbcType=VARCHAR},
+      </if>
+      <if test="payChnlCode != null" >
+        PAY_CHNL_CODE = #{payChnlCode,jdbcType=VARCHAR},
+      </if>
+      <if test="payChnlOrder != null" >
+        PAY_CHNL_ORDER = #{payChnlOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="payAcuntNo != null" >
+        PAY_ACUNT_NO = #{payAcuntNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payAcuntName != null" >
+        PAY_ACUNT_NAME = #{payAcuntName,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE = #{notifyType,jdbcType=CHAR},
+      </if>
+      <if test="signHmac != null" >
+        SIGN_HMAC = #{signHmac,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        VALUES1 = #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        VALUES2 = #{values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+      and PAY_LOGID = #{payLogid,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYLOG" >
+    update ORD_D_PAYLOG
+    set ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      PAY_TYPE = #{payType,jdbcType=CHAR},
+      PAY_MODE = #{payMode,jdbcType=VARCHAR},
+      PAY_ASK_TIME = #{payAskTime,jdbcType=TIMESTAMP},
+      PAY_COMPLETE_TIME = #{payCompleteTime,jdbcType=TIMESTAMP},
+      LOCAL_COMPLETE_TIME = #{localCompleteTime,jdbcType=TIMESTAMP},
+      CURRENCY_TYPE = #{currencyType,jdbcType=CHAR},
+      PAY_MONEY = #{payMoney,jdbcType=DECIMAL},
+      PAY_STATE = #{payState,jdbcType=CHAR},
+      PAY_REMARK = #{payRemark,jdbcType=VARCHAR},
+      HALT_TAG = #{haltTag,jdbcType=CHAR},
+      HALT_TIME = #{haltTime,jdbcType=TIMESTAMP},
+      REFUND_TAG = #{refundTag,jdbcType=CHAR},
+      REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      REFUND_LOGID = #{refundLogid,jdbcType=DECIMAL},
+      UDP_ORDER = #{udpOrder,jdbcType=VARCHAR},
+      PAY_ORG_CODE = #{payOrgCode,jdbcType=CHAR},
+      PAY_ORG_LOGID = #{payOrgLogid,jdbcType=VARCHAR},
+      PAY_CHNL_CODE = #{payChnlCode,jdbcType=VARCHAR},
+      PAY_CHNL_ORDER = #{payChnlOrder,jdbcType=VARCHAR},
+      PAY_ACUNT_NO = #{payAcuntNo,jdbcType=VARCHAR},
+      PAY_ACUNT_NAME = #{payAcuntName,jdbcType=VARCHAR},
+      NOTIFY_TYPE = #{notifyType,jdbcType=CHAR},
+      SIGN_HMAC = #{signHmac,jdbcType=VARCHAR},
+      VALUES1 = #{values1,jdbcType=VARCHAR},
+      VALUES2 = #{values2,jdbcType=VARCHAR}
+    where PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+      and PAY_LOGID = #{payLogid,jdbcType=DECIMAL}
   </update>
 </mapper>

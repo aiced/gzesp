@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDBASEMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDBASE" >
-    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
-    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <id column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <id column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
     <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="ORDER_FROM" property="orderFrom" jdbcType="CHAR" />
@@ -105,6 +105,18 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.TdOrdDBASEKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_D_BASE
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDBASEKey" >
+    delete from ORD_D_BASE
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from ORD_D_BASE
     <if test="_parameter != null" >
@@ -321,5 +333,77 @@
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDBASE" >
+    update ORD_D_BASE
+    <set >
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderFrom != null" >
+        ORDER_FROM = #{orderFrom,jdbcType=CHAR},
+      </if>
+      <if test="orderTime != null" >
+        ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE = #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="couponMoney != null" >
+        COUPON_MONEY = #{couponMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="manMadeMoney != null" >
+        MAN_MADE_MONEY = #{manMadeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="postFee != null" >
+        POST_FEE = #{postFee,jdbcType=DECIMAL},
+      </if>
+      <if test="topayMoney != null" >
+        TOPAY_MONEY = #{topayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="incomeMoney != null" >
+        INCOME_MONEY = #{incomeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderState != null" >
+        ORDER_STATE = #{orderState,jdbcType=CHAR},
+      </if>
+      <if test="custRemark != null" >
+        CUST_REMARK = #{custRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerRemark != null" >
+        SELLER_REMARK = #{sellerRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="values1 != null" >
+        VALUES1 = #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        VALUES2 = #{values2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDBASE" >
+    update ORD_D_BASE
+    set ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      ORDER_FROM = #{orderFrom,jdbcType=CHAR},
+      ORDER_TIME = #{orderTime,jdbcType=TIMESTAMP},
+      ORIGINAL_PRICE = #{originalPrice,jdbcType=DECIMAL},
+      COUPON_MONEY = #{couponMoney,jdbcType=DECIMAL},
+      MAN_MADE_MONEY = #{manMadeMoney,jdbcType=DECIMAL},
+      POST_FEE = #{postFee,jdbcType=DECIMAL},
+      TOPAY_MONEY = #{topayMoney,jdbcType=DECIMAL},
+      INCOME_MONEY = #{incomeMoney,jdbcType=DECIMAL},
+      ORDER_STATE = #{orderState,jdbcType=CHAR},
+      CUST_REMARK = #{custRemark,jdbcType=VARCHAR},
+      SELLER_REMARK = #{sellerRemark,jdbcType=VARCHAR},
+      VALUES1 = #{values1,jdbcType=VARCHAR},
+      VALUES2 = #{values2,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PARTITION_ID = #{partitionId,jdbcType=DECIMAL}
   </update>
 </mapper>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdCmsPGOODSRULEMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdCmsPGOODSRULE" >
+    <id column="GOODS_ID" property="goodsId" jdbcType="DECIMAL" />
+    <id column="RULE_ID" property="ruleId" jdbcType="DECIMAL" />
+    <result column="ADD_DATE" property="addDate" jdbcType="TIMESTAMP" />
+    <result column="BEGIN_DATE" property="beginDate" jdbcType="TIMESTAMP" />
+    <result column="END_DATE" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="STAFF_ID" property="staffId" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    GOODS_ID, RULE_ID, ADD_DATE, BEGIN_DATE, END_DATE, STAFF_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from CMS_P_GOODS_RULE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.TdCmsPGOODSRULEKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from CMS_P_GOODS_RULE
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdCmsPGOODSRULEKey" >
+    delete from CMS_P_GOODS_RULE
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from CMS_P_GOODS_RULE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdCmsPGOODSRULE" >
+    insert into CMS_P_GOODS_RULE (GOODS_ID, RULE_ID, ADD_DATE, 
+      BEGIN_DATE, END_DATE, STAFF_ID
+      )
+    values (#{goodsId,jdbcType=DECIMAL}, #{ruleId,jdbcType=DECIMAL}, #{addDate,jdbcType=TIMESTAMP}, 
+      #{beginDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{staffId,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdCmsPGOODSRULE" >
+    insert into CMS_P_GOODS_RULE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        GOODS_ID,
+      </if>
+      <if test="ruleId != null" >
+        RULE_ID,
+      </if>
+      <if test="addDate != null" >
+        ADD_DATE,
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE,
+      </if>
+      <if test="endDate != null" >
+        END_DATE,
+      </if>
+      <if test="staffId != null" >
+        STAFF_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleId != null" >
+        #{ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="addDate != null" >
+        #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginDate != null" >
+        #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="staffId != null" >
+        #{staffId,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from CMS_P_GOODS_RULE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update CMS_P_GOODS_RULE
+    <set >
+      <if test="record.goodsId != null" >
+        GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ruleId != null" >
+        RULE_ID = #{record.ruleId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addDate != null" >
+        ADD_DATE = #{record.addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.beginDate != null" >
+        BEGIN_DATE = #{record.beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endDate != null" >
+        END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.staffId != null" >
+        STAFF_ID = #{record.staffId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update CMS_P_GOODS_RULE
+    set GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      RULE_ID = #{record.ruleId,jdbcType=DECIMAL},
+      ADD_DATE = #{record.addDate,jdbcType=TIMESTAMP},
+      BEGIN_DATE = #{record.beginDate,jdbcType=TIMESTAMP},
+      END_DATE = #{record.endDate,jdbcType=TIMESTAMP},
+      STAFF_ID = #{record.staffId,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdCmsPGOODSRULE" >
+    update CMS_P_GOODS_RULE
+    <set >
+      <if test="addDate != null" >
+        ADD_DATE = #{addDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginDate != null" >
+        BEGIN_DATE = #{beginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null" >
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="staffId != null" >
+        STAFF_ID = #{staffId,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdCmsPGOODSRULE" >
+    update CMS_P_GOODS_RULE
+    set ADD_DATE = #{addDate,jdbcType=TIMESTAMP},
+      BEGIN_DATE = #{beginDate,jdbcType=TIMESTAMP},
+      END_DATE = #{endDate,jdbcType=TIMESTAMP},
+      STAFF_ID = #{staffId,jdbcType=DECIMAL}
+    where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+      and RULE_ID = #{ruleId,jdbcType=DECIMAL}
+  </update>
+</mapper>

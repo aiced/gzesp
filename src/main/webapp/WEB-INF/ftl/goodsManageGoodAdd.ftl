@@ -67,7 +67,7 @@ table{
 	        	<div id="top_right">
 	        			<#list goodsList as info>
 						 <#if (info_index<=0) > 
-						   <a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff" onclick="saveClick(${goodsList?size}); return false;"> 确定 </a>	
+						   <a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="saveClick(${goodsList?size}); return false;"> 确定 </a>	
 						 </#if>
 
 	        			</#list>
@@ -169,8 +169,8 @@ table{
 	
 	
 	 <script>
-		function itemClick(obj) {
-			var parms = {'goodsId':obj};
+		function itemClick(obj) {		
+			var parms = {'goodsId':obj,'userId':${userId}};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/goodsManageGoodDetail', 
 				data: parms,
@@ -213,8 +213,8 @@ table{
 		  			 url: "goodsManageGoodAddInsert",
 		  			 data: parms,
 		 			 success: function(data){
-				   	window.history.go(-1);
-					window.location.reload()
+				    history.back();	  			   
+
 		  			   
 		 		  }
 				});		

@@ -36,6 +36,10 @@ public class GoodsManageGoodSelectController {
     public ModelAndView goodsManageGoodSelect(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String name = paramsMap.get("index");
+    	String strUserID = paramsMap.get("userId");
+    	if(strUserID == null){
+    		strUserID = "333";
+    	}
     	
     	//根据index 检索数据库，加载数据。
     	String goodsId = paramsMap.get("goodsId");
@@ -47,7 +51,8 @@ public class GoodsManageGoodSelectController {
 
     	
     	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
-    	Map rspMap = new HashMap();    
+    	Map rspMap = new HashMap();  
+    	rspMap.put("userId", strUserID);   
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", rcdlist.size());   

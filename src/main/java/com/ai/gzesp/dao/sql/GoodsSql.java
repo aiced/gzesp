@@ -28,7 +28,7 @@ public class GoodsSql {
 		sb.append("select distinct "
 				+ "t1.USER_ID as userId,"
 				+ "t1.STORE_NAME as storeName,"
-				+ "t1.USER_IMG as avatar,"
+				+"NVL(t1.USER_IMG,'0') as avatar,"
 				+ "t1.PHONE_NUMBER as phoneNumber"
 				);
 		sb.append(" from AUR_D_AUTHINFO t1");
@@ -175,11 +175,7 @@ public class GoodsSql {
 					+ " order by t1.GOODS_ID");
 			
 		}else if((searchLowPrice != null) && (searchHightPrice != null)){
-//			 if(Long.parseLong(searchLowPrice) < Long.parseLong(searchHightPrice)){
-//				 return;
-//			 }
-			
-			
+
 			quarySb.append("select distinct "
 					+ "t1.GOODS_ID as goodsId,"
 					+ "t1.GOODS_NAME as goodsName, "

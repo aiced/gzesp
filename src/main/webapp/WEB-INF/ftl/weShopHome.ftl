@@ -188,7 +188,7 @@
 	            <table class="table table-striped table-condensed">
 	                <tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日访问：0></td>
+		                    <td class="yesterday_view">昨日访问：0</td>
 		                    <td class="month_view">本月访问：0</td>
 		                    <td class="total_view">累计访问：0</td>	                		
 		                <#else>
@@ -202,7 +202,7 @@
 
 	                <tr>
 	                	<#if saleList?size==0>
-		                    <td class="yesterday_sale">昨日销售：0></td>
+		                    <td class="yesterday_sale">昨日销售：0</td>
 		                    <td class="month_sale">本月销售：0</td>
 		                    <td class="total_sale">累计销售：0</td>	                		
 		                <#else>
@@ -215,7 +215,7 @@
 					</tr>
 					<tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日佣金：0></td>
+		                    <td class="yesterday_view">昨日佣金：0</td>
 		                    <td class="month_view">本月佣金：0</td>
 		                    <td class="total_view">累计佣金：0</td>	                		
 		                <#else>
@@ -230,7 +230,7 @@
 	            </table>
 	        </div>
 	        <div class="list-group">
-	            <a href="goodsManageRecommend" class="list-group-item">商品管理 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item">商品管理 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	            <a href="ordersQuery?userid=${userid}" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	            <a href="commissionQuery" class="list-group-item">佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	        </div>
@@ -253,7 +253,7 @@
 		   //[导航-右边]按钮点击
 		  $("#top_right").click(function(){  
 		  //在这里操作导航-右边操作
-		  	location.href = "weShopSet";
+		  	location.href = "weShopSet/"+${userid};
 		  });  
 		  //[进入店铺]按钮点击
 		  $("#btnGoIntoShop").click(function(){  

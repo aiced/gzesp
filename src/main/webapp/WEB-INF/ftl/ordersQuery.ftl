@@ -340,7 +340,7 @@
 		           </div><!-- order_middle_end -->
 				</#list>
  			</#if>
-        </div>
+        </div><!-- order_middle_info_end -->
     </div>
 
 

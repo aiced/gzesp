@@ -155,25 +155,12 @@
 	                <td>5288</td>
 	                <td>50</td>
 	            </tr>
+	            <tr>
+	            	<td colspan="3"><label class="query_info_left">合计</label></td>
+	            	<td><label>200</label></td>
+	            	<td><label>300</label></td>
+	            </tr>
 	        </table>
-	        <div class="row">
-	            <div class="col-xs-9 col-sm-9">
-	                <label class="query_info_left" placeholder=".col-xs-9 col-sm-9">合计</label>
-	            </div>
-	            <div class="col-xs-3 col-sm-3">
-	                <label class="query_info_right" placeholder=".col-xs-3 col-sm-3">200</label>
-	            </div>
-	        </div>
-	    </div>
-	    <div class="query_info_bottom">
-	        <div class="row">
-	            <div class="col-xs-9 col-sm-9">
-	                <label class="query_info_left" placeholder=".col-xs-9 col-sm-9">截至当前佣金累计金额</label>
-	            </div>
-	            <div class="col-xs-3 col-sm-3">
-	                <label class="query_info_right" placeholder=".col-xs-3 col-sm-3">200</label>
-	            </div>
-	        </div>
 	    </div>
 	</div>
 	

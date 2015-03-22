@@ -28,7 +28,7 @@ public class GoodsSql {
 		sb.append("select distinct "
 				+ "t1.USER_ID as userId,"
 				+ "t1.STORE_NAME as storeName,"
-				+ "t1.USER_IMG as avatar,"
+				+"NVL(t1.USER_IMG,'0') as avatar,"
 				+ "t1.PHONE_NUMBER as phoneNumber"
 				);
 		sb.append(" from AUR_D_AUTHINFO t1");

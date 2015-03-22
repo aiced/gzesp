@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,12 +36,17 @@ public class WeShopSetController {
     @Resource 
     TdAurDAUTHINFODao tdAurDAUTHINFODao;
     
-    @RequestMapping("/weShopSet")
+//    @RequestMapping("/index/{user_id}")
+//    public ModelAndView index(@PathVariable("user_id") String user_id){
+//        ModelAndView mav = new ModelAndView("weShopIndex.ftl");
     
-    public ModelAndView weShopSet(@RequestBody String inputParam){
-    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    	String userIdStr = paramsMap.get("userId");
-    	String userId = "2015031806433310";
+    @RequestMapping("/weShopSet/{user_id}")
+    
+    public ModelAndView weShopSet(@PathVariable("user_id") String user_id){
+    	String userId = user_id;
+    	if(userId == null){
+    		userId = "2015031806433310";
+    	}
     	List<Map<String, Object>> userlist = goodsSql.GetProfileList(userId);   
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   

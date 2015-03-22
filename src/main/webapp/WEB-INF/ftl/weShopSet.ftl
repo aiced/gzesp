@@ -28,7 +28,7 @@
 	.cellDiv {background:white;width:100%;height:44px;}
 	.cellRightLable{color:#545454;margin-left:10px;width:150px;height:42px;line-height:42px;float:left;display: block;}
 	.cellTopLine{background-color:#E8E9E8;width:95%;height:0.5px;margin:auto;}
-	.avartar{width:36px;height:36px ;float:right;display: block;margin-right:10px;margin-top:4px;}
+	.avatar{width:36px;height:36px ;float:right;display: block;margin-right:10px;margin-top:4px;}
 	.input{width:140px;height:40px ;float:right;display: block;margin-right:10px;margin-top:2px; text-align:right;
 		border-left: 0;
    		border-right: 0;
@@ -73,7 +73,11 @@
 			 <#if (info_index<=0) > 
 	<div class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺图标 </p>
- 		    	<img class = "avartar img-circle" src='${info.avatar}' > 
+		    	  	<#if ('${info.avatar}'?exists) > 
+			  			   <img class = "avatar img-circle" src='${info.avatar}' > 
+ 					<#else>						
+ 		    				<img class = "avatar img-circle" src=""  > 
+					</#if>		    	
 		    	</div>	
    	<!--店铺名称   -->	
 	    <div class = "cellDiv" >

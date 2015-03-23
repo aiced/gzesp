@@ -6,6 +6,13 @@ var params;
 
 $(function() {
 	changeSatate();
+	
+	//子页面返回按钮
+	$('#selectContractBackBtn').bind("click",function(){
+		$('#selectContractPage').css({ "display":"none" });
+		$('#mianPage').css({ "display":"block" });
+		return false;
+	});
 })
 
 function changeSatate() {
@@ -20,15 +27,6 @@ function changeSatate() {
 
 
 function toSelectNumberPage() {
-//    		var parms = {'fromPage':'newNumberJoin' };
-//			
-//			 $.commonFormSubmit({  
-//    	        action : 'selectNumber', 
-//				data: parms,
-//    	        success : function(rtdata, status) { 
-//    	        }  
-//    	    }); 
-			 
 			$('#selectNumberPage').css({ "display":"block" }).siblings().css({ "display":"none" });
 }
 
@@ -84,15 +82,12 @@ function afterUpdateNumber(data) {
 	$('#num-choosed').css({ "display":"block" });
 }
 
+function back2Main() {
+	$('#selectNumberPage').css({ "display":"none" });
+	$('#mianPage').css({ "display":"block" });
+}
+
 function toSelectContractPage() {
-//	var parms = {'fromPage':'newNumberJoin' };
-//	
-//	 $.commonFormSubmit({  
-//        action : 'selectContract', 
-//		data: parms,
-//        success : function(rtdata, status) { 
-//        }  
-//    }); 
 	 $('#selectContractPage').css({ "display":"block" }).siblings().css({ "display":"none" });
 }
 

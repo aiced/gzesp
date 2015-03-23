@@ -74,7 +74,7 @@
 	                </a>
 	            </div>
 	            <div class="media-body">
-	                <h4 class="media-heading">${goodsDisc}</h4>
+	                <h4 class="media-heading">${goodsName}</h4>
 	            </div>
 	        </div>
 	        <br/>
@@ -88,7 +88,7 @@
 	                <label>配送方式</label>
 	                <div id="deliver-select" class="p-list">
                         <a id="deliver-select-post" href="javascript:void(0);"  value="01"  class="selected">快递配送</a>
-                        <a href="javascript:void(0);"  value="02"   >自提</a>
+                        <a href="javascript:void(0);"  value="02" class="disabled" >自提</a>
                     </div>
 <!--                     <div> -->
 <!--                         <p style="display: none;" id="express-tip" class="line">中国联通免费为您配送</p> -->
@@ -99,7 +99,7 @@
 	            <div id="postInfoTab" class="list-group-item">
 	                <label>物流公司</label>
 	                <div id="post-select" class="p-list">
-                        <a id="post-select-none" href="javascript:void(0);"  value="nomal"  class="selected">不限物流</a>
+                        <a id="post-select-none" href="javascript:void(0);"  value="nomal"  class="selected">宅急送</a>
                         <a id="post-select-shunfeng" href="javascript:void(0);"  value="sf"   >顺丰速运</a>
                     </div>
 	            </div>

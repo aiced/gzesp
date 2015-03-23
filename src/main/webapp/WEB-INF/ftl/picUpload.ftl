@@ -44,7 +44,7 @@
     <!-- 主机号，身份证号 -->
     <div style="background-color:white;height:110px;padding-top:25px;text-align:center;">
       	 	 <div  style ="width:100%;height:25px;font-size:14px;">
-      		      		 <input id = "userName" type="text" placeholder="主机姓名" style ="width:175px;height:25px;line-height:25px;padding-left:5px;border:1px solid #A6A6A6;border-radius:2px;font-size:10px;margin:0px auto;pading-left:5px">
+      		      		 <input id = "userName" type="text" placeholder="机主姓名" style ="width:175px;height:25px;line-height:25px;padding-left:5px;border:1px solid #A6A6A6;border-radius:2px;font-size:10px;margin:0px auto;pading-left:5px">
       		 </div> 
       		 <div  style ="width:100%;height:25px;font-size:14px;margin-top:10px;">
    						 <input id = "userCard" type="text" placeholder="身份证号" style ="width:175px;height:25px;line-height:25px;padding-left:5px;margin-top:10px;border:1px solid #A6A6A6;font-size:10px;margin:auto;">

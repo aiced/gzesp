@@ -149,7 +149,7 @@ $(function() {
 	});
 	
 	//配送方式
-	$('#deliver-select a').bind("click",function(){
+	$('#deliver-select a').find('.selected').bind("click",function(){
   	  $(this).addClass("selected").siblings().removeClass("selected");
 		if($('#deliver-select-post').hasClass("selected")){
 			$('#postInfoTab').css({ "display":"block" });

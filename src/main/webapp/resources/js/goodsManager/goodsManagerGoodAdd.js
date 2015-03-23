@@ -38,8 +38,7 @@ function showFlowView(whichpic) {
 
 //	综合排序
 function multipleSoft(obj) {
-	alert('综合排序');   	
-
+	window.location.reload(); 
 }
 
 

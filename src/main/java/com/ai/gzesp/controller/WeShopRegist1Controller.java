@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
+import com.ai.gzesp.dao.sql.OrdersSql;
+import com.ai.gzesp.dao.sql.RegistSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
@@ -30,7 +34,8 @@ public class WeShopRegist1Controller {
     
 	@Autowired
     private WeShopService weShopService;
-
+	@Resource 
+	RegistSql registSql;
 
     @RequestMapping("/register/step1")
     public ModelAndView index(){
@@ -39,6 +44,10 @@ public class WeShopRegist1Controller {
         mav.addObject("title", "注册微店");
 //        mav.addObject("phone", "18685292522"); 
 //        mav.addObject("weixin", "1306520198@qq.com"); 
+        
+        List<Map<String, Object>> cityList=registSql.getCityList("85");
+        
+        mav.addObject("cityList", cityList);
         
         return mav;
     }

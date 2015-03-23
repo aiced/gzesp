@@ -119,11 +119,11 @@
 	            <!--开户银行-->
 	            <div class="form-group">
 	                <select class="form-control" name="selBank">
-	                    <option value="贵州银行1">贵州银行1</option>
-	                    <option value="贵州银行2">贵州银行2</option>
-	                    <option value="贵州银行3">贵州银行3</option>
-	                    <option value="贵州银行4">贵州银行4</option>
-	                    <option value="贵州银行5">贵州银行5</option>
+	                    <option value="招商银行">招商银行</option>
+	                    <option value="农业银行">农业银行</option>
+	                    <option value="建设银行">建设银行</option>
+	                    <option value="工商银行">工商银行</option>
+	                    <option value="交通银行">交通银行</option>
 	                </select>
 	            </div>
 	            <!--银行卡号-->

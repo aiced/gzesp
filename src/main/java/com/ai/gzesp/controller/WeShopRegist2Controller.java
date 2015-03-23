@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -137,10 +138,26 @@ public class WeShopRegist2Controller {
     	tdAurDBASEINFODao.insertSelective(record_aurdbaseinfo);
     	 	
     	
-    	//ModelAndView mav = new ModelAndView("weShopLogin.ftl");
-    	ModelAndView mav = new ModelAndView("redirect:/auth/login");
+    	ModelAndView mav = null;
+    	ModelMap mmap=null;
+		mmap=new ModelMap();
+        //从数据库获取信息赋值
+		mmap.addAttribute("title", "我的微店");
+		mmap.addAttribute("id", LId.toString());
+		mmap.addAttribute("userid",LId.toString());
+		mmap.addAttribute("name", strName);//姓名
+		mmap.addAttribute("phone", strPhoneNum); //手机号
+		mmap.addAttribute("weixin", strwecharaccount); //微信
+		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
     	
-    	mav.addObject("title", "登录微店账号");
+    	//ModelAndView mav = new ModelAndView("weShopLogin.ftl");
+//    	ModelAndView mav = new ModelAndView("redirect:../../shopManage/weShopHome/");
+//    	mav.addObject("title", "登录微店账号");
+//    	mav.addObject("id",);
+//    	mav.addObject("userid", attributeValue)
+//    	mav.addObject("name", attributeValue);
+//    	mav.addObject("phone", attributeValue);
+//    	mav.addObject("weixin", attributeValue);
     	return mav;
     	
     } 

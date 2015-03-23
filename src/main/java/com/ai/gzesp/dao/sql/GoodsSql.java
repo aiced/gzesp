@@ -257,7 +257,11 @@ public class GoodsSql {
 		return goodsActivityList;
 	}
 	
-public List<Map<String, Object>> getContractByGoodsID(String goodsID) {
+	public List<Map<String, Object>> getContractByGoodsID(String goodsID) {
+		return getContractByGoodsID(goodsID, null);
+	}
+	
+	public List<Map<String, Object>> getContractByGoodsID(String goodsID, String orderByStr) {
 		
 		StringBuffer sb=new StringBuffer();
 		  
@@ -300,7 +304,11 @@ public List<Map<String, Object>> getContractByGoodsID(String goodsID) {
 		sb.append("  where b.ATTR_CODE like 'PAGERES' ) t2 ");
 		
 		sb.append("  where t1.resId =  t2.resId ");
-		sb.append("  order by t1.resId ");
+		if(orderByStr == null || "".equals(orderByStr)) {
+			sb.append("  order by t1.resId ");
+		} else {
+			sb.append("  order by " + orderByStr);
+		}
 				  
 		System.err.println(sb.toString());
 		

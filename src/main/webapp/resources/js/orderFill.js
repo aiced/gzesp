@@ -350,22 +350,22 @@ function getParams() {
 
 function nextPage() {
 	
-//	if(orderStat.netInfoStat==0) {
-//		alert('请完整入网资料');
-//		return;
-//	}
-//	if(orderStat.receiveInfoStat==0) {
-//		alert('请完整收货信息');
-//		return;
-//	}
-//	if(orderStat.payInfoStat==0) {
-//		alert('请完整支付信息');
-//		return;
-//	}
-//	if(orderStat.otherInfoStat==0) {
-//		alert('请完整其他信息');
-//		return;
-//	}
+	if(orderStat.netInfoStat==0) {
+		alert('请完整入网资料');
+		return;
+	}
+	if(orderStat.receiveInfoStat==0) {
+		alert('请完整收货信息');
+		return;
+	}
+	if(orderStat.payInfoStat==0) {
+		alert('请完整支付信息');
+		return;
+	}
+	if(orderStat.otherInfoStat==0) {
+		alert('请完整其他信息');
+		return;
+	}
 //	var postStyle = checkPostSelect();
 //	if(postStyle !=null ){
 ////		alert(postStyle);

@@ -41,7 +41,6 @@ public class GoodsManageGoodAddController {
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    	String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
 
     	rcdlist = goodsSql.GetRcdList(); 
@@ -65,8 +64,6 @@ public class GoodsManageGoodAddController {
 		}else{
 			goodsList = goodsSql.getGoodsList();   			
 		}
-    	
-    	
 
     	Map rspMap = new HashMap(); 
     	rspMap.put("userId", strUserID);   

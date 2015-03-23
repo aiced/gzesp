@@ -170,8 +170,8 @@ table{
      <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
 	 <script type="text/javascript">
-		$(document).ready(function(){  
-			$("#tableDiv").style.width=document.body.clientHeight-140+'px';
+		$(document).ready(function(){  			
+			$('#tableDiv').css("height",document.body.clientHeight-140);
 		});
    	</script>
 	
@@ -188,9 +188,9 @@ table{
 		}
 	</script>
 	
+	
 	 <script>
 		function saveClick(obj) {
-		
 			var goodsIndex = null;
 			var goodsId = null;
 			for(var i = 0;i<obj;i++){

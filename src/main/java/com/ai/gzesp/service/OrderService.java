@@ -86,7 +86,8 @@ public class OrderService {
     }
     
     public List queryPageInfoListById(String goodsId, String resId) {
-    	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId);
+    	String orderByStr = "pageName";
+    	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId, orderByStr);
     	
     	List result = new ArrayList();
     	if(contactList.size() > 0) {

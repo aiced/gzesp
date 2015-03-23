@@ -18,18 +18,20 @@
  	* {margin:0;padding:0;} 
 	
 	html{
+		height:100%;width:100%;
 /*  		background-color:gray;
  */		}
 	
 	body {
+		height:100%;width:100%;
 	/*	默认有个高度 20px */
-/* 		 background-color:red;
- */		 }
+ 	/* background-color:red;*/
+		 }
      html, body , p ,img{
 	  margin:0; 
 	  padding:0; 
 	  border:0;
-   	  list-style:none;
+   	/*  list-style:none; */
 	 }
 	 
 
@@ -59,8 +61,10 @@ table{
 
 </style>
  
- <body >
-	<!--标题   -->
+ <body>
+ 	<div style="background-color:white;width:100%;height:100%;overflow-x: hidden;">
+	 <div id = "headDiv" style="width:100%;height:140px">
+		<!--标题   -->
  		   <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
 	        	<div id="top_middle">${title}</div>
@@ -75,7 +79,7 @@ table{
 	        	</div>
 	        </div>
     <!--搜索  -->
-    <div style="background-color:white;width:100%;overflow:hidden;margin-top:20px;">
+    <div style="background-color:white;width:100%;overflow:hidden;margin-top:0px;">
   			 <input id = "searchInput" type="text" placeholder="请输入商品关键字" style ="width:60%;height:30px;margin-top:10px;float:left;margin-bottom:10px;margin-left:20px;padding-left:15px;border:1px solid #A6A6A6;font-size:14px">
  			 <a style="width:60px;height:30px;display:block;text-align:center;float:left;line-height:30px;margin-top:10px;margin-bottom:10px;margin-left:20px;border:1px solid #A6A6A6;font-size:12px;" onclick="searchWord(this); return false;">搜索</a>
 	</div >
@@ -117,9 +121,10 @@ table{
 		</div>	
 		
 	</div>
-	
+	</div>
+
 	<!--列表  -->
-	  <div style="background-color:blue;width:100%;overflow:hidden">
+	  <div id="tableDiv" style="background-color:blue;width:100%;height:75%;overflow-x: hidden;">
 		<table>
 			<tbody id = "datagrid">			
 			
@@ -151,6 +156,9 @@ table{
 			</tbody>
 		</table>
 	 </div >
+ 	</div>
+
+	
 	
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -163,9 +171,9 @@ table{
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
 	 <script type="text/javascript">
 		$(document).ready(function(){  
+			$("#tableDiv").style.width=document.body.clientHeight-140+'px';
 		});
    	</script>
-	
 	
 	
 	 <script>
@@ -179,7 +187,6 @@ table{
      	    });  
 		}
 	</script>
-	
 	
 	 <script>
 		function saveClick(obj) {

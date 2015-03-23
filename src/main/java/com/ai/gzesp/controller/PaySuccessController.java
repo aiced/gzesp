@@ -21,7 +21,7 @@ import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 
 @Controller
-@RequestMapping("/shopManage")
+@RequestMapping("/order")
 public class PaySuccessController {
     
     

@@ -77,13 +77,13 @@
 				
 				
 	          <p>2.确认适合您的合约期限</p>
-<!-- 	          <div id="datagrid"></div> -->
+	          <div id="datagrid"></div>
 	          
-	          <div id="period-select" class="p-list">
-                        <a href="javascript:void(0);"  value="12" actType="4" class="selected">12个月</a>
-                        <a href="javascript:void(0);"  value="24" actType="4" >24个月</a>
-                        <a href="javascript:void(0);"  value="36" actType="4" >36个月</a>
-                    </div>
+<!-- 	          <div id="period-select" class="p-list"> -->
+<!--                         <a href="javascript:void(0);"  value="12" actType="4" class="selected">12个月</a> -->
+<!--                         <a href="javascript:void(0);"  value="24" actType="4" >24个月</a> -->
+<!--                         <a href="javascript:void(0);"  value="36" actType="4" >36个月</a> -->
+<!--                     </div> -->
 <!-- 				 <table class="table table-bordered"> -->
 <!-- 				 		<tr> -->
 <!-- 						  	<td colspan=2></td> -->

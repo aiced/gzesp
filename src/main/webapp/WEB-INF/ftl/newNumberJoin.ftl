@@ -99,11 +99,12 @@
 		               <p id="ctrct-unchoose" >根据您的月消费，选择一个合适的合约计划</p>
 		               <div id="ctrct-choosed" style="display:none">
 		               		<p><div > <span id="conType"></span>套餐  <span id="conPeriod"></span>月合约</div></p>
-		                   <div class="pack-detail" id="packageDetail">
-		                       <span class="pack-call"><i></i></span><span>50分钟</span><span></span>
-		                       <span class="pack-msg"><i></i></span><span>0条</span><span></span>
-		                       <span class="pack-flow"><i></i></span><span>300M</span>
-		                   </div>
+<!-- 		                   <div class="pack-detail" id="packageDetail"> -->
+<!-- 		                       <span class="pack-call"><i></i></span><span id="call"></span><span></span> -->
+<!-- 		                       <span class="pack-msg"><i></i></span><span id="msg"></span><span></span> -->
+<!-- 		                       <span class="pack-flow"><i></i></span><span id="flow"></span> -->
+<!-- 		                   </div> -->
+		                   <div id="conDesc"></div>
 		               </div>
 	               </section>
 			  </li>

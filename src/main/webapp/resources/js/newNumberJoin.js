@@ -40,6 +40,18 @@ function selConBack2Main(data) {
 	$('#conType').text(data.conType);
 	$('#conPeriod').text(data.conPeriod);
 	
+//	var tmp = data.packVal.split("　"); 
+//	$('#call').text(tmp[0]);
+//	$('#msg').text(tmp[1]);
+//	$('#flow').text(tmp[2]);
+	$('#conDesc').text(data.packVal);
+	
+	var conAttrVal1=data.resId+"|"+"PACKRES"+"|"+data.conType+"|"+data.packVal;
+	var conAttrVal2=data.resId+"|"+"PAGERES"+"|"+data.conPeriod+"|"+data.pageVal;
+	var attrVal = $('#attr_val').val();
+	attrVal = attrVal+"^"+conAttrVal1+"^"+conAttrVal2;
+	$('#attr_val').val(attrVal);
+	
 	var tmp = {
 			conType:data.conType,
 			conPeriod:data.conPeriod,
@@ -56,6 +68,11 @@ function afterUpdateNumber(data) {
 	selectState = 2;
 	changeSatate();
 	$('#serial_number').html(data.serial_number);
+	
+//	var conAttrVal1=data.resId+"|"+"NUMBERS"+"|"+ "号码" +"|"+data.serial_number;
+//	var attrVal = $('#attr_val').val();
+//	attrVal = attrVal+"^"+conAttrVal1;
+//	$('#attr_val').val(attrVal);
 	
 	var tmp = {serialNumber:data.serial_number};
 	params = $.extend({}, params, tmp );

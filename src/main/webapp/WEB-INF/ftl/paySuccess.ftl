@@ -43,7 +43,7 @@
 							<p style="display:block;float:left; margin-top:12px;margin-left:5px;width:170px;height:10px;font-size:13px;">您的付款方式：${payModle}</p>
 					</div>
 					
-					<div style="width:200px;height:30px;margin-left: auto;margin-top:20px;margin-right: auto;">
+					<div style="width:200px;height:30px;margin-left: auto;margin-top:25px;margin-right: auto;">
 						   <a id="netInfoBtn" style="background-color:#FD8E4D;color:#fff;width:50%;height:30px ;line-height:30px;display: block;text-align:center;margin:0px auto;text-decoration:none" onclick="backClick(); return false;" > 返回商城 </a>	
 					</div>
 					

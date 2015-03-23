@@ -88,7 +88,7 @@
      	  	 <#if (info_index<=0) > 
 							<p style="margin-left:5px;margin-right:5px;margin-bottom:5px;font-size:16px;color:#33333">套餐名称：${info.goodsName}</p>
      						<div style=" width:100%;height:25px;float:none;margin-bottom:10px;">
-     		     				<p style="padding:5px;margin-bottom:0px;font-size:15px;color:#717171;float:left;">合约价:</p>	<p style="padding:5px;margin-bottom:0px;float:left; font-size:17px;color:red">¥${info.goodsPrice}（最高返5900）</p>	  
+     		     				<p style="padding:5px;margin-bottom:0px;font-size:15px;color:#717171;float:left;">合约价:</p>	<p style="padding:5px;margin-bottom:0px;float:left; font-size:17px;color:red">¥${info.goodsPrice}</p>	  
      						</div>
      						<!--
      						<div style=" width:100%;height:25px;float:none;">

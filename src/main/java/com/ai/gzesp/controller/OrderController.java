@@ -165,13 +165,13 @@ public class OrderController {
     
     @RequestMapping("/queryPageInfoListById")
     @ResponseBody
-    public List queryPageInfoListById(@RequestBody Map<String, String> paramsMap) {
+    public ModelAndView queryPageInfoListById(@RequestBody Map<String, String> paramsMap) {
     	String goodsId =  paramsMap.get("goodsId");
     	String resId=  paramsMap.get("resId");
     	List dataList =  orderService.queryPageInfoListById(goodsId, resId);
-//    	ModelAndView mav = new ModelAndView("selectContractSub.ftl");
-//        mav.addObject("dataList", dataList);
-        return dataList;
+    	ModelAndView mav = new ModelAndView("selectContractSub.ftl");
+        mav.addObject("dataList", dataList);
+        return mav;
     }
     
     @RequestMapping("/fillOrderMain")

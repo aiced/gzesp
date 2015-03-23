@@ -124,7 +124,7 @@ table{
 	</div>
 
 	<!--列表  -->
-	  <div id="tableDiv" style="background-color:blue;width:100%;height:75%;overflow-x: hidden;">
+	  <div id="tableDiv" style="width:100%;height:75%;overflow-x: hidden;">
 		<table>
 			<tbody id = "datagrid">			
 			

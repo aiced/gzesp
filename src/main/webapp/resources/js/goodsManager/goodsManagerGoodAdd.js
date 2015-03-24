@@ -3,21 +3,29 @@ function searchWord(obj) {
 //	搜索框：searchInput
 	var searchKey = document.getElementById('searchInput');
     if (searchKey.value.length == 0){
-		window.location.reload(); 
-    	return;
+    	var param = null;
+    	$.ajax({
+    		   type: "POST",
+    		   url: "reloadGoodsByAjax",
+    		   data: param,
+    		   success: function(data){
+    			   //alert(data);
+    		     $('#datagrid').html(data);
+    		   }
+    		});	    	
+    }else{
+    	var param = {"searchKey":searchKey};
+    	$.ajax({
+    		   type: "POST",
+    		   url: "queryGoodsByAjax",
+    		   data: param,
+    		   success: function(data){
+    			   //alert(data);
+    		     $('#datagrid').html(data);
+    		   }
+    		});	
     }   
-	var searchKey = $('#searchInput').val();
-	var param = {"searchKey":searchKey};
-
-	$.ajax({
-		   type: "POST",
-		   url: "queryGoodsByAjax",
-		   data: param,
-		   success: function(data){
-			   //alert(data);
-		     $('#datagrid').html(data);
-		   }
-		});	
+	
 
 }
 

@@ -1,6 +1,7 @@
 
     <input type="hidden" id="baseRoot" value="${base}"></input>
   	<!-- nav bar -->
+  	<!--
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
         <div class="col-xs-2" style="margin-top:5px;padding:0px;">
@@ -14,7 +15,16 @@
     	  </div>    	
       </div>      
     </div>
-
+    -->
+	<div id="top">
+	  <div id="top_left">
+	    <a onclick="back2Main()">
+	      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    </a>
+	  </div>
+	  <div id="top_middle">选择号码</div>
+	  <div id="top_right"></div>
+	</div>  
   
     <!-- 号码筛选，排序 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;">

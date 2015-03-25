@@ -302,6 +302,12 @@ public class CommonUtil {
     	return i;
     }
     
+    public static Long toDbPrice(Long l) {
+    	if(l != null) {
+    		l = l * 1000;
+    	}
+    	return l;
+    }
     /*
      * @author wenhui 
      * @param strBankCard 银行卡号

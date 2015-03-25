@@ -1,34 +1,43 @@
 #top
 {
     width: auto;
-    height: 60px;
+    height: 40px;
     background-color:#21292C;
     color: #ffffff;
     vertical-align: middle;
     text-align: center;
-    line-height: 60px;
-    font-size: 20px
-
+    line-height: 40px;
+    font-size: 20px;
 }
 #top_left
 {
 	float:left;
 	width:20%;
-	height:60px;
+	height:40px;
 	font-size:14px;
+}
+#top_left a
+{
+	color: #ffffff;
 }
 #top_middle
 {
 	float:left;
 	width:60%;
-	height:60px;
-
+	height:40px;
+	font-family: 'Microsoft Yahei','Simsun',Helvetica,Arial,sans-serif;
+    font-size: 19px;
+    font-weight: bold;
 }
 #top_right
 {
 	float:left;
 	width:20%;
-	height:60px;
+	height:40px;
+}
+#top_right button
+{
+	border-color: #000000;
 }
 #dv_clear
 {

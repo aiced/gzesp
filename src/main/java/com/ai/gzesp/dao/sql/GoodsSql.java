@@ -258,6 +258,24 @@ public class GoodsSql {
 		return goodsActivityList;
 	}
 	
+	public Map GetGoodsDefaultPhoto(String goodsId) {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("select distinct "
+				+ "t1.GOODS_ID as goodsId,"
+				+ "t4.PHOTO_LINKS as photoLinks"
+				);
+		sb.append(" from GDS_D_INFO t1, GDS_D_PHOTO t4 ");
+		sb.append(" where t1.GOODS_ID = " + goodsId
+				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
+				+ " and t1.GOODS_STATE = '1'"
+				+ " and t4.DEFAULT_TAG = '0'"
+				+ " order by t1.GOODS_ID");
+
+		Map goodsDefaultPhoto = commonDao.queryForMap(sb.toString());
+		return goodsDefaultPhoto;
+	}
+	
 	public List<Map<String, Object>> getContractByGoodsID(String goodsID) {
 		return getContractByGoodsID(goodsID, null);
 	}
@@ -292,27 +310,45 @@ public class GoodsSql {
 //		sb.append(" and  a.RES_ID = b.RES_ID ");
 //		sb.append(" and  b.ATTR_CODE ='PACKRES'");
 		
-		sb.append(" select  t1.goodsId, t1.resId, t1.name as packName, t1.values1 as packVal, t2.name as pageName , t2.values1 as pageVal from ");
+//		sb.append(" select  t1.goodsId, t1.resId, t1.name as packName, t1.values1 as packVal, t2.name as pageName , t2.values1 as pageVal from ");
+//		
+//		sb.append("  (select a.GOODS_ID as goodsId, a.RES_ID as resId, b.ATTR_CODE, b.ATTR_VAL_NAME as name ,b.VALUES1 ");
+//		sb.append("  from rel_goods_res a, res_d_attrval b ");
+//		sb.append("  where a.GOODS_ID=" + goodsID);
+//		sb.append("  and a.RES_ID = b.RES_ID  ");
+//		sb.append("  and b.ATTR_CODE like 'PACKRES') t1, ");
+//		
+//		sb.append("  (select b.RES_ID as resid, b.ATTR_CODE, b.ATTR_VAL_NAME as name ,b.VALUES1 ");
+//		sb.append("  from   res_d_attrval b ");
+//		sb.append("  where b.ATTR_CODE like 'PAGERES' ) t2 ");
+//		
+//		sb.append("  where t1.resId =  t2.resId ");
+//		if(orderByStr == null || "".equals(orderByStr)) {
+//			sb.append("  order by t1.resId ");
+//		} else {
+//			sb.append("  order by " + orderByStr);
+//		}
 		
-		sb.append("  (select a.GOODS_ID as goodsId, a.RES_ID as resId, b.ATTR_CODE, b.ATTR_VAL_NAME as name ,b.VALUES1 ");
-		sb.append("  from rel_goods_res a, res_d_attrval b ");
-		sb.append("  where a.GOODS_ID=" + goodsID);
-		sb.append("  and a.RES_ID = b.RES_ID  ");
-		sb.append("  and b.ATTR_CODE like 'PACKRES') t1, ");
 		
-		sb.append("  (select b.RES_ID as resid, b.ATTR_CODE, b.ATTR_VAL_NAME as name ,b.VALUES1 ");
-		sb.append("  from   res_d_attrval b ");
-		sb.append("  where b.ATTR_CODE like 'PAGERES' ) t2 ");
-		
-		sb.append("  where t1.resId =  t2.resId ");
+		sb.append("SELECT  ");
+		sb.append(" a.GOODS_ID AS goodsId , ");
+		sb.append(" a.RES_ID AS resId ,");
+		sb.append(" b.ATTR_CODE as code,");
+		sb.append(" b.ATTR_VAL_NAME AS name ,");
+		sb.append(" b.VALUES1 as val");
+		sb.append(" FROM ");
+		sb.append(" rel_goods_res a ,");
+		sb.append(" res_d_attrval b");
+		sb.append(" WHERE ");
+		sb.append(" a.GOODS_ID =" + goodsID);
+		sb.append(" AND a.RES_ID = b.RES_ID");
+		sb.append(" AND b.ATTR_CODE in ( 'PACKRES', 'PAGERES')");
 		if(orderByStr == null || "".equals(orderByStr)) {
-			sb.append("  order by t1.resId ");
+			sb.append("  order by code ");
 		} else {
 			sb.append("  order by " + orderByStr);
 		}
-				  
-		System.err.println(sb.toString());
-		
+
 		List contractList =commonDao.queryForList(sb.toString());
 
 		return contractList;

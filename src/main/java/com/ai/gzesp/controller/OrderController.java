@@ -155,24 +155,25 @@ public class OrderController {
 //    	mav.addObject("pkgList", pkgList); 
     	
     	
-    	List pkgList = orderService.getContractByGoodsID(goodsId);
-    	mav.addObject("pkgList", pkgList);
+    	List<Map>[] contractList = orderService.getContractByGoodsID(goodsId);
+    	mav.addObject("pkgList", contractList[0]);
+    	mav.addObject("peroidList", contractList[1]);
     	
 //     	mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
 //     	mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
 //     	mav.addObject("selectedNumber", "1306520198"); 
     }
     
-    @RequestMapping("/queryPageInfoListById")
-    @ResponseBody
-    public ModelAndView queryPageInfoListById(@RequestBody Map<String, String> paramsMap) {
-    	String goodsId =  paramsMap.get("goodsId");
-    	String resId=  paramsMap.get("resId");
-    	List dataList =  orderService.queryPageInfoListById(goodsId, resId);
-    	ModelAndView mav = new ModelAndView("selectContractSub.ftl");
-        mav.addObject("dataList", dataList);
-        return mav;
-    }
+//    @RequestMapping("/queryPageInfoListById")
+//    @ResponseBody
+//    public ModelAndView queryPageInfoListById(@RequestBody Map<String, String> paramsMap) {
+//    	String goodsId =  paramsMap.get("goodsId");
+//    	String resId=  paramsMap.get("resId");
+//    	List dataList =  orderService.queryPageInfoListById(goodsId, resId);
+//    	ModelAndView mav = new ModelAndView("selectContractSub.ftl");
+//        mav.addObject("dataList", dataList);
+//        return mav;
+//    }
     
     @RequestMapping("/fillOrderMain")
     public ModelAndView fillOrderMain(@RequestBody String inputParams){
@@ -183,12 +184,15 @@ public class OrderController {
     		paramsMap = convertKey(paramsMap);
     	}
     	
+    	String goodsId = paramsMap.get("goodsId");
+    	Map info = orderService.getGoodsDefaultPhoto(goodsId);
     	
         ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "订单填写");
 //        mav.addObject("originalPrice", "998");
 //        mav.addObject("userId", "1234567890");
+        mav.getModel().putAll(info);
         mav.getModel().putAll(paramsMap);
         return mav;
     }
@@ -225,4 +229,5 @@ public class OrderController {
     	}
     	return result;
     }
+    
 }

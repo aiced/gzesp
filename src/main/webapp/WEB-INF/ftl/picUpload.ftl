@@ -44,7 +44,7 @@
     <!-- 主机号，身份证号 -->
     <div style="background-color:white;height:110px;padding-top:25px;text-align:center;">
       	 	 <div  style ="width:100%;height:25px;font-size:14px;">
-      		      		 <input id = "userName" type="text" placeholder="主机姓名" style ="width:175px;height:25px;line-height:25px;padding-left:5px;border:1px solid #A6A6A6;border-radius:2px;font-size:10px;margin:0px auto;pading-left:5px">
+      		      		 <input id = "userName" type="text" placeholder="机主姓名" style ="width:175px;height:25px;line-height:25px;padding-left:5px;border:1px solid #A6A6A6;border-radius:2px;font-size:10px;margin:0px auto;pading-left:5px">
       		 </div> 
       		 <div  style ="width:100%;height:25px;font-size:14px;margin-top:10px;">
    						 <input id = "userCard" type="text" placeholder="身份证号" style ="width:175px;height:25px;line-height:25px;padding-left:5px;margin-top:10px;border:1px solid #A6A6A6;font-size:10px;margin:auto;">
@@ -67,13 +67,13 @@
       <div style="width:100%;height:250px;text-align:center;" >
       			<div class="img-w">
 	     		     <img id ="firstCard" src="${resRoot}/image/order/card01.png" style="display:block;width:175px;height:110px;margin:0px auto;">
-	     		     <input class="file-input select-file" type="file" id="file-font" name="files[]" accept="image/*"/>     			
+	     		     <input class="file-input select-file" type="file" id="file-front" name="uploadFile" accept="image/*"/>     			
 	     			  <div style="width:100%;height:15px" >	</div>
      			  </div>
      			     
      			 <div class="img-w"> 
      	        	 <img id ="secondCard" src="${resRoot}/image/order/card02.png" style="display:block;width:175px;height:110px;margin:0px auto;">
-     	         	<input class="file-input select-file" type="file" id="file-back" name="files[]" accept="image/*"/>
+     	         	<input class="file-input select-file" type="file" id="file-back" name="uploadFile" accept="image/*"/>
        		 		  <div style="width:100%;height:40px" >	</div>
        		 	</div>
        		     <a id="netInfoBtn" style="background-color:#FD8E4D;color:#fff;width:90%;height:35px ;line-height:35px;display: block;text-align:center;margin:0px auto;" > 同意协议并确定 </a>	

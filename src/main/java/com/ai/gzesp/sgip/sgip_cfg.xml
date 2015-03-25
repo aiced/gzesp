@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="GB2312"?>
+<config>
+   <SGIPConnect>
+       <!-- SMG主机地址 -->
+       <host>58.16.249.70</host>
+       <!-- SMG主机端口号 -->
+       <port>8801</port>
+       <!-- <ServiceIP>0.0.0.0</ServiceIP> -->
+       <!-- <ServicePort>8811</ServicePort> -->
+       <!--业务代码，由SP定义，字符-->
+       <ServiceType>JXHD</ServiceType>
+       <!--双方协商的版本号(大于0，小于256)-->
+       <version>1</version>
+       <!--登陆用户名(最大为六位字符)-->
+       <login-name>aiced</login-name>
+       <!--登陆密码-->
+       <login-pass>aiced1234</login-pass>
+       <!--计费号码，我们是白名单-->
+       <ChargeNumber>000000000000000000000</chargeNumber>
+       <SPNumber>10655717</SPNumber>
+       <!--SP…ID(最大为六位字符)-->
+       <CorpId>73112</CorpId>
+       <source-addr>3047112345</source-addr>
+       <!-- 操作超时时间(单位：秒) -->
+       <transaction-timeout>10</transaction-timeout>
+       <!-- 物理连接读操作超时时间(单位：秒) -->
+       <read-timeout>15</read-timeout>       
+       <!--是否属于调试状态,true表示属于调试状态，所有的消息被打印输出到屏幕，false表示不属于调试状态，所有的消息不被输出-->
+       <debug>true</debug>
+  </SGIPConnect> 
+
+</config>

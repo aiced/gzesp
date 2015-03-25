@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>合约购机</title>
+    <title>${detail.GOODS_NAME}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain2.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/orderMain3.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet"> 
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>    
@@ -35,6 +36,7 @@
   <!-- 第一页 商品详情主页start -->
   <div id="page_main">
   	<!-- nav bar -->
+  	<!--
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
         <div class="col-xs-2" style="margin-top:5px;padding:0px;">
@@ -51,6 +53,18 @@
         </div> 
       </div>      
     </div> 
+    -->
+	<div id="top">
+	  <div id="top_left">
+	    <a href="javascript:history.back(-1);">
+	      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    </a>
+	  </div>
+	  <div id="top_middle">商品详情</div>
+	  <div id="top_right">
+	    <button class="btn btn-primary btn-sm" style="background-color:#21292c;" data-toggle="modal" data-target="#myModal">分享</button>
+	  </div>
+	</div>       
   
     <!-- 分享到弹出框 -->    
     <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">

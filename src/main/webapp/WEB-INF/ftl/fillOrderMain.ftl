@@ -62,19 +62,19 @@
         <div id="top">
         	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
         	<div id="top_middle">${title}</div>
-        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
+        	<div id="top_right"></div>
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
 	    <div class="div_contain">
 	        <div class="media">
-	            <div class="media-left media-middle" style="background:#ffff00">
+	            <div class="media-left media-middle" >
 	                <a href="#">
-	                    <img class="media-object" src="wo_logo.png" alt="64×64" width="64" height="64">
+	                	 <img src="${imageRoot}${PHOTOLINKS}" alt="" class="img-responsive" /> 
 	                </a>
 	            </div>
 	            <div class="media-body">
-	                <h4 class="media-heading">${goodsDisc}</h4>
+	                <h4 class="media-heading">${goodsName}</h4>
 	            </div>
 	        </div>
 	        <br/>
@@ -88,7 +88,7 @@
 	                <label>配送方式</label>
 	                <div id="deliver-select" class="p-list">
                         <a id="deliver-select-post" href="javascript:void(0);"  value="01"  class="selected">快递配送</a>
-                        <a href="javascript:void(0);"  value="02"   >自提</a>
+                        <a href="javascript:void(0);"  value="02" class="disabled" >自提</a>
                     </div>
 <!--                     <div> -->
 <!--                         <p style="display: none;" id="express-tip" class="line">中国联通免费为您配送</p> -->
@@ -99,7 +99,7 @@
 	            <div id="postInfoTab" class="list-group-item">
 	                <label>物流公司</label>
 	                <div id="post-select" class="p-list">
-                        <a id="post-select-none" href="javascript:void(0);"  value="nomal"  class="selected">不限物流</a>
+                        <a id="post-select-none" href="javascript:void(0);"  value="nomal"  class="selected">宅急送</a>
                         <a id="post-select-shunfeng" href="javascript:void(0);"  value="sf"   >顺丰速运</a>
                     </div>
 	            </div>
@@ -110,7 +110,7 @@
 	            </a>
 	            <!--支付方式-->
 	            <a id="payInfoTab" href="#" class="list-group-item">
-	                <label>支付方式</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
+	                <label>支付方式</label><span style="margin-left:10px" id="payText"></span><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--其他-->
 	            <a id="otherInfoTab" href="#" class="list-group-item">

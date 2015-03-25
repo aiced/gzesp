@@ -71,7 +71,7 @@
         .login_bottom{
             width:100%;
             position:absolute;
-            bottom: 0;
+            bottom: 5%;
             text-align: center;
         }
     </style>

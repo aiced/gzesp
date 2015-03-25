@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -24,6 +25,7 @@ import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
 import com.ai.gzesp.dao.service.TdAurDRELINFODao;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
+import com.ai.gzesp.dao.sql.RegistSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
@@ -36,7 +38,8 @@ public class WeShopRegist2Controller {
 
     @Autowired
     private WeShopService weShopService;
-    
+	
+	
     @Resource 
     TdAurDAUTHINFODao tdAurDAUTHINFODao;
     
@@ -51,8 +54,9 @@ public class WeShopRegist2Controller {
         ModelAndView mav = new ModelAndView("weShopRegist2.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "注册微店");
-//        mav.addObject("phone", "18685292522"); 
-//        mav.addObject("weixin", "1306520198@qq.com"); 
+
+
+        
         return mav;
     }
     

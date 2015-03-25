@@ -42,9 +42,6 @@ public class WeShopRegist1Controller {
         ModelAndView mav = new ModelAndView("weShopRegist1.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "注册微店");
-//        mav.addObject("phone", "18685292522"); 
-//        mav.addObject("weixin", "1306520198@qq.com"); 
-        
         List<Map<String, Object>> cityList=registSql.getCityList("85");
         
         mav.addObject("cityList", cityList);
@@ -69,6 +66,24 @@ public class WeShopRegist1Controller {
     		return true;//没有注册过
     	}
     }
+    @RequestMapping("/register/checkWeChat")
+    @ResponseBody
+    public Boolean checkWeChat(@RequestBody String strWeChat)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(strWeChat);
+    	String WeChat = paramsMap.get("WeChat");
+    	System.out.println(WeChat);
+    	Criteria myCriteria = new Criteria();
+    	myCriteria.createConditon().andEqualTo("WEIXIN_ID", WeChat);
+    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+    	System.out.println(count);
+    	if(count >= 1) {
+    		return false; //该账户已经注册了
+            
+    	} else {
+    		return true;//没有注册过
+    	}
+    }    
     @RequestMapping("/register/reg_step1_postdata")
     @ResponseBody
     public ModelAndView RegStep1_PostData(@RequestBody String inputParams){
@@ -97,6 +112,9 @@ public class WeShopRegist1Controller {
         mav.addObject("weixin", strwecharaccount); 
         mav.addObject("pwd", strPwd); 
 
+        List<Map<String, Object>> bankList=registSql.getBankList("BANK_TYPE");
+        
+        mav.addObject("bankList", bankList);
         
         
         return mav;

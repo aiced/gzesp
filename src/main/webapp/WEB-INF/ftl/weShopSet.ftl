@@ -13,7 +13,57 @@
   
   </head>
   
-  
+     <!-- Bootstrap core JavaScript====================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+      <script type="text/javascript">
+		$(document).ready(function(){  
+		   //[获取验证码]按钮点击
+		  $("#qrCode").click(function(){  
+		  //在这里操作获取验证码
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/weShopSet/weShopSetQrcode', 
+				data: parms
+     	    });  
+		  	
+		  });  
+		  
+		});
+	</script>
+	
+	 <script type="text/javascript">
+    function doneClick(obj) {
+ 		 var storeName = document.getElementById("storeName");
+ 		if (storeName.value.length !== 0){
+		 }else{
+	 		alert("店名不能为空");
+		    return;
+ 		}
+ 		//修改手机号 还需要去判断是否有手机号是否存在
+ 		var phoneNum  = document.getElementById("phoneNum");
+ 		var re = /^1\d{10}$/;
+  		  if (re.test(phoneNum.value)) {
+  		  } else {
+ 			 alert("请输入正确的手机号");
+ 			 return;
+   		 }
+	    var userId = $("#hideTag").val();;	
+    	//ajax 操作，刷新本界面数据   
+		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId},'weixinid':${weixin}};
+		$.ajax({
+		 type: "POST",
+		 url: '${base}/shopManage/weShopSetUpdate',
+		 data: parms,
+		 success: function(data){
+		  	 //history.back();	   
+		 }
+		});			
+}
+     </script>
  <style type="text/css">	 
  	 * {margin:0;padding:0;} 
 	html,body{
@@ -122,58 +172,7 @@
 	</#list>
 	
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
-      <script type="text/javascript">
-		$(document).ready(function(){  
-		   //[获取验证码]按钮点击
-		  $("#qrCode").click(function(){  
-		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
-			 $.commonFormSubmit({  
-     	        action : '${base}/shopManage/weShopSet/weShopSetQrcode', 
-				data: parms
-     	    });  
-		  	
-		  });  
-		  
-		});
-	</script>
-	
-	 <script type="text/javascript">
-    function doneClick(obj) {
- 		 var storeName = document.getElementById("storeName");
- 		if (storeName.value.length !== 0){
-		 }else{
-	 		alert("店名不能为空");
-		    return;
- 		}
  
- 		var phoneNum  = document.getElementById("phoneNum");
- 		var re = /^1\d{10}$/;
-  		  if (re.test(phoneNum.value)) {
-  		  } else {
- 			 alert("请输入正确的手机号");
- 			 return;
-   		 }
-	    var userId = $("#hideTag").val();;	
-    	//ajax 操作，刷新本界面数据   
-		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId}};
-		$.ajax({
-		 type: "POST",
-		 url: '${base}/shopManage/weShopSetUpdate',
-		 data: parms,
-		 success: function(data){
-		  	 history.back();	  			   
-		 }
-		});			
-}
-     </script>
 	
     
   </body>

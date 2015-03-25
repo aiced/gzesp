@@ -28,8 +28,9 @@ public class GoodsSql {
 		sb.append("select distinct "
 				+ "t1.USER_ID as userId,"
 				+ "t1.STORE_NAME as storeName,"
-				+"NVL(t1.USER_IMG,'0') as avatar,"
-				+ "t1.PHONE_NUMBER as phoneNumber"
+				+ "NVL(t1.USER_IMG,'0') as avatar,"
+				+ "t1.PHONE_NUMBER as phoneNumber,"
+				+ "t1.WEIXIN_ID as weixin_id" //edit_by_wenh_2015_3_25
 				);
 		sb.append(" from AUR_D_AUTHINFO t1");
 		sb.append("	where t1.USER_ID ="+ userId);

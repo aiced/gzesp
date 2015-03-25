@@ -208,6 +208,29 @@ function  checkPhoneNum(strPhoneNum)
 		});
 	return bReturn;
 }
+//判断微信号是否已经注册过
+function checkWeChat(strWeChat)
+{
+	var bRetrun=false;
+	var param = {"WeChat":strWeChat};
+	$.ajax({
+		   type: "POST",
+		   url: "checkWeChat",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   if (!bRet) {
+				   alert("该微信号已经注册过");
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   bReturn=true;
+			   }
+		   }
+		});
+	return bReturn;
+}
 //倒计时发送验证码
 /*-------------------------------------------*/  
 var InterValObj; //timer变量，控制时间  

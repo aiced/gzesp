@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,32 +42,39 @@ public class WeShopSetController {
 //        ModelAndView mav = new ModelAndView("weShopIndex.ftl");
     
     @RequestMapping("/weShopSet/{user_id}")
-    
+    @ResponseBody
     public ModelAndView weShopSet(@PathVariable("user_id") String user_id){
     	String userId = user_id;
-    	if(userId == null){
-    		userId = "2015031806433310";
-    	}
+    	//edit_by_wenh_2015_3_25
+//    	if(userId == null){
+//    		userId = "2015031806433310";
+//    	}
+    	System.out.println("userid"+user_id);
     	List<Map<String, Object>> userlist = goodsSql.GetProfileList(userId);   
     	Map rspMap = new HashMap();    
     	rspMap.put("rspCode", "0000");   
-    	rspMap.put("name", "weidian");
+    	rspMap.put("name", userlist.get(0).get("storeName"));
     	rspMap.put("userId", userId);   
     	rspMap.put("total", userlist.size());   
     	rspMap.put("title", "店铺设置");
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
     	rspMap.put("userlist", userlist);  
+    	//edit_by_wenh_2015_3_25
+    	rspMap.put("weixin", userlist.get(0).get("weixin_id"));
+    	System.out.println("微信号："+userlist.get(0).get("weixin_id"));
     	return new ModelAndView("weShopSet.ftl", rspMap);
     }
 //    更新资料
     @RequestMapping("/weShopSetUpdate")
     @ResponseBody
-    public void weShopSetUpdate(@RequestBody String inputParam){
+    public ModelAndView weShopSetUpdate(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String storeName = paramsMap.get("storeName");
     	String phoneNum = paramsMap.get("phoneNum");    	
     	String userId = paramsMap.get("userId");    	
-
+    	//edit_by_wenh_2015_3_25
+    	String weixinid=paramsMap.get("weixinid");
+    	System.out.println(weixinid);
     	TdAurDAUTHINFO tdAurDAUTHINFO = new TdAurDAUTHINFO();
     	tdAurDAUTHINFO.setStoreName(storeName);
     	tdAurDAUTHINFO.setPhoneNumber(phoneNum);
@@ -75,6 +83,20 @@ public class WeShopSetController {
     	example.createConditon().andEqualTo("USER_ID", userId);    	
     	tdAurDAUTHINFODao.updateByExampleSelective(tdAurDAUTHINFO, example);
 
+    	
+    	//edit_by_wenh_2015_3_25
+    	ModelAndView mav = null;
+    	ModelMap mmap=null;
+		mmap=new ModelMap();
+        //从数据库获取信息赋值
+		mmap.addAttribute("title", "我的微店");
+		mmap.addAttribute("userid", userId);
+		mmap.addAttribute("name", storeName);//姓名
+		mmap.addAttribute("phone", phoneNum); //手机号
+		mmap.addAttribute("weixin",weixinid ); //微信
+		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);    
+    	
+    	return mav;
     }
     
     

@@ -25,9 +25,14 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script type="text/javascript">
+    	var bRet1=false;
+    	var bRet2=false;
+    	var bRet3=false;
+    	
+    
     	function checkData()
     	{
-    		if(!$("#txtname").val())
+    		/*if(!$("#txtname").val())
     		{
     			alert("请输入姓名");
     			return false;
@@ -45,7 +50,25 @@
     		if (!checkBankCard($("#txtbankcardid").val())) {
 				return false;
 			}
+    		return true;*/
+    		
+    		
+    		
+    		if(!bRet1)
+    		{
+    			alert("请输入姓名");
+    			return false;
+    		}
+    		if(!bRet2)
+    		{
+    			return false;
+    		}
+    		if(!bRet3)
+    		{
+				return false;    			
+    		}
     		return true;
+    		
     	}
 		$(document).ready(function(){ 
 		   //[提交]按钮点击
@@ -64,6 +87,78 @@
 			}
 		  });		
 			
+		  //[姓名]文本框失去焦点
+		  $("#txtname").blur(function(){
+		  	//在这里操作 姓名 文本框失去焦点
+		  	if(!$("#txtname").val())
+		  	{
+		  		$("#div_name").addClass("has-error");
+		  		bRet1=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		$("#div_name").removeClass("has-error");
+		  		$("#div_name").addClass("has-success");
+
+		  		bRet1=true;
+		  		return;
+		  	}
+		  });
+		  
+		  //[身份证号]文本框失去焦点
+		  $("#txtpersonalid").blur(function(){
+		  	//在这里操作 身份证号 文本框失去焦点
+		  	if(!$("#txtpersonalid").val())
+		  	{
+		  		$("#div_personalid").addClass("has-error");
+		  		bRet2=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		
+	    		if(!checkEnergyCard($("#txtpersonalid").val()))
+	    		{
+			  		$("#div_personalid").addClass("has-error");
+			  		bRet2=false;
+	    			return;
+	    		}
+		  		
+		  		$("#div_personalid").removeClass("has-error");
+		  		$("#div_personalid").addClass("has-success");
+
+		  		bRet2=true;
+		  		return;
+		  	}
+		  });
+		   
+		  //[银行卡号]文本框失去焦点
+		  $("#txtbankcardid").blur(function(){
+		  	//在这里操作 银行卡号 文本框失去焦点
+		  	if(!$("#txtbankcardid").val())
+		  	{
+		  		$("#div_bankcardid").addClass("has-error");
+		  		bRet3=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		
+	    		if (!checkBankCard($("#txtbankcardid").val())) {
+			  		$("#div_bankcardid").removeClass("has-error");
+			  		bRet3=false;
+					return;
+				}
+	    		
+		  		$("#div_bankcardid").removeClass("has-error");
+		  		$("#div_bankcardid").addClass("has-success");
+
+		  		bRet3=true;
+		  		return;
+		  	}
+		  });
+		   
 		});
     </script>
     <style type="text/css">
@@ -98,7 +193,7 @@
 	    <div class="container-fluid">
 	        <form action="reg_step2_postdata" method="post">
 	            <!--姓名-->
-	            <div class="form-group">
+	            <div class="form-group" id="div_name">
 	                <label for="txtname" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtname" name="txtname" placeholder="请输入姓名">
 	            </div>
@@ -112,22 +207,24 @@
 	                </label>
 	            </div>
 	            <!--身份证号-->
-	            <div class="form-group">
+	            <div class="form-group" id="div_personalid">
 	                <label for="txtpersonalid" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtpersonalid" name="txtpersonalid" placeholder="请输入身份证号">
 	            </div>
 	            <!--开户银行-->
 	            <div class="form-group">
 	                <select class="form-control" name="selBank">
-	                    <option value="招商银行">招商银行</option>
-	                    <option value="农业银行">农业银行</option>
-	                    <option value="建设银行">建设银行</option>
-	                    <option value="工商银行">工商银行</option>
-	                    <option value="交通银行">交通银行</option>
+			      		<#if (bankList?size==0)>
+							<option value="数据加载失败">数据加载失败</option>
+			        	<#else>
+							<#list bankList as item>
+								<option value="${item.param_code}">${item.param_value}</option>
+							</#list>
+			 			</#if>
 	                </select>
 	            </div>
 	            <!--银行卡号-->
-	            <div class="form-group">
+	            <div class="form-group" id="div_bankcardid">
 	                <label for="txtbankcardid" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
 	            </div>

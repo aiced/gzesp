@@ -26,4 +26,16 @@ public class RegistSql {
 
 		return cityList;
 	}
+	//获得银行
+	public List<Map<String, Object>> getBankList(String strParam_type)
+	{
+		StringBuffer sb=new StringBuffer();
+		
+		sb.append("select Param_code,param_value from SYS_D_ESPPARAM where Param_type='" + strParam_type+"'");
+		
+		System.out.println(sb.toString());
+		List<Map<String, Object>> bankList =commonDao.queryForList(sb.toString());
+
+		return bankList;
+	}
 }

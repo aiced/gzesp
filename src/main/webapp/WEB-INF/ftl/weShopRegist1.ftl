@@ -105,10 +105,10 @@
 			  else
 			  {
 			  	//这里开始做验证码操作
-			  	sendMessage($("#txtphonenum").val(),"#btnCode");
+			  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode");
 				//按钮禁用
 			  	//$("#btnCode").attr('disabled',true);
-			  	bRet1=true;
+			  	//=true;
 			  	return;
 			  }
 		  });

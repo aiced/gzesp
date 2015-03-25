@@ -292,5 +292,24 @@ function sendMessage(strPhone,btnName) {
 //        error: function (XMLHttpRequest, textStatus, errorThrown) { },  
 //        success: function (msg){ }  
 //    });  
-
+	var bRetrun=false;
+	var param = {"phone":strPhone,"code":code};
+	$.ajax({
+		   type: "POST",
+		   url: "yanzhengma",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   if (!bRet) {
+				   alert("验证码发送失败！");
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   alert("验证码发送成功！");
+				   bReturn=true;
+			   }
+		   }
+		});
+	return bReturn;
 }  

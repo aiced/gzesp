@@ -29,7 +29,7 @@ $(function() {
 })
 
 function selectPeriod(selectedPeriod) {
-	var pageVal = $(selectedPeriod).attr("pageVal_hidden")
+	var pageVal = $(selectedPeriod).find("#pageVal_hidden").val();
 	contract.pageVal = pageVal;
 	
 	var pageName = $(selectedPeriod).find('#pageName_hidden').val();

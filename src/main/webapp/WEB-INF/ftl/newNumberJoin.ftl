@@ -151,6 +151,8 @@
     <input type="hidden" id="goods_name" value="${goods_name}"></input>
     <input type="hidden" id="goods_price" value="${goods_price}"></input>
     <input type="hidden" id="attr_val" value="${attr_val}"></input>
+    <input type="hidden" id="attr_contract" ></input>
+    <input type="hidden" id="attr_number"></input>
       
   </body>
 </html>

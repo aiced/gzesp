@@ -1,18 +1,4 @@
 
-//var ordResInfo = {
-//		resId:"",
-//		resAttrCode:"",
-//		resAttrVal:""
-//}
-
-//var ordResArr=new Array();
-
-//var ordResInfo = new Object();
-//ordResInfo.resId = "";
-//ordResInfo.resAttrCode = "";
-//ordResInfo.resAttrVal = "";
-//ordResArr.push(ordResInfo);
-
 var orderStat = {
 		netInfoStat:0,
 		receiveInfoStat:0,
@@ -334,22 +320,6 @@ function getParams() {
 	orderFormParams.phoneNum = $('#txtphone').val();
 	orderFormParams.postAddr = $('#txtaddress').val();
 	
-	
-//	var ordResArr=new Array();
-//	var ordResInfo = new Object();
-//	ordResInfo.resId = "1";
-//	ordResInfo.resAttrCode = "颜色";
-//	ordResInfo.resAttrVal = "红色";
-////	ordResArr.push($.toJSON(ordResInfo));
-//	ordResArr.push(ordResInfo);
-//	
-//	ordResInfo = new Object();
-//	ordResInfo.resId = "2";
-//	ordResInfo.resAttrCode = "重量";
-//	ordResInfo.resAttrVal = "100g";
-//	ordResArr.push(ordResInfo);
-	
-//	orderFormParams.resAttr = ordResArr;
 	orderFormParams.resAttr = $('#attrVal').val();
 	
 	orderFormParams.goodsId= $('#goodsId').val();

@@ -46,9 +46,7 @@ function selConBack2Main(data) {
 	
 	var conAttrVal1=data.resId+"|"+"PACKRES"+"|"+data.conType+"|"+data.packVal;
 	var conAttrVal2=data.resId+"|"+"PAGERES"+"|"+data.conPeriod+"|"+data.pageVal;
-	var attrVal = $('#attr_val').val();
-	attrVal = attrVal+"^"+conAttrVal1+"^"+conAttrVal2;
-	$('#attr_val').val(attrVal);
+	$('#attr_contract').val(conAttrVal1+"^"+conAttrVal2);
 	
 	var tmp = {
 			conType:data.conType,
@@ -67,10 +65,8 @@ function afterUpdateNumber(data) {
 	changeSatate();
 	$('#serial_number').html(data.serial_number);
 	
-//	var conAttrVal1=data.resId+"|"+"NUMBERS"+"|"+ "号码" +"|"+data.serial_number;
-//	var attrVal = $('#attr_val').val();
-//	attrVal = attrVal+"^"+conAttrVal1;
-//	$('#attr_val').val(attrVal);
+//	var attrVal=data.resId+"|"+"NUMBERS"+"|"+ "号码" +"|"+data.serial_number;
+//	$('#attr_number').val(attrVal);
 	
 	var tmp = {serialNumber:data.serial_number};
 	params = $.extend({}, params, tmp );
@@ -100,7 +96,7 @@ function nextPage() {
 	tmp.goodsName = $('#goods_name').val();
 	tmp.goodsPrice = $('#goods_price').val();
 	tmp.goodsDisc = $('#goods_disc').val();
-	tmp.attrVal = $('#attr_val').val();
+	tmp.attrVal = $('#attr_val').val()+"^"+$('#attr_contract').val()+"^"+$('#attr_number').val();
 	
 	params = $.extend({}, params, tmp );
 	 $.commonFormSubmit({  

@@ -177,12 +177,12 @@
 	            <div class="head_bottom">
 	                <div class="head_bottom_share"><a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/shopHome/shopshare.png" width="24" height="24">店铺分享<img/></a></div>
 	                <div class="head_bottom_line"></div>
-	                <div class="head_bottom_show"><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</div>
+	                <div class="head_bottom_show"><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></div>
 	            </div>
 	            <div class="head_user"><img src="${resRoot}/image/shopHome/head.png" alt="头像" class="img-circle" width="90" height="90"></div>
 	        </div>
 	        
-		    <!-- 分享到弹出框 -->    
+	         <!-- 分享到弹出框 -->    
 		    <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 		      <div class="modal-dialog modal-lg">
 		        <div class="modal-content" style="padding:5px;height:80px;">
@@ -196,7 +196,7 @@
 		            <a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a>
 		            <a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a>
 		          </div>
-		          <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+		          <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdUrl":"http://wap.gz10010.xyz/esp/weShop/index/${userid}","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 		          <!-- Baidu Button END -->   
 		        </div>
 		      </div>
@@ -268,6 +268,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+    <script type="text/javascript" src="${resRoot}/js/jquery.zclip.js?v=${resVer}"></script>
 
 	<script type="text/javascript">
 		$(document).ready(function(){  
@@ -280,7 +281,12 @@
 		  $("#btnGoIntoShop").click(function(){  
 		  //在这里操作进入店铺操作
 		  	location.href = "../weShop/index/"+${userid};
-		  });  
+		  }); 
+		  
+// 		  $('a#copyUrl').zclip({
+// 			  path:'${resRoot}/js/ZeroClipboard.swf',
+// 			  copy:function(){alert('123');}
+// 			  });
 		});
 	</script>
 </body>

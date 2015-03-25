@@ -10,6 +10,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script src="${resRoot}/js/newNumberJoin.js?v=${resVer}"></script>
     <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>
@@ -98,7 +99,7 @@
 					   <label>选择合约</label>
 		               <p id="ctrct-unchoose" >根据您的月消费，选择一个合适的合约计划</p>
 		               <div id="ctrct-choosed" style="display:none">
-		               		<p><div > <span id="conType"></span>套餐  <span id="conPeriod"></span>月合约</div></p>
+		               		<p><div > <span id="conType"></span>套餐  <span id="conPeriod"></span>合约</div></p>
 <!-- 		                   <div class="pack-detail" id="packageDetail"> -->
 <!-- 		                       <span class="pack-call"><i></i></span><span id="call"></span><span></span> -->
 <!-- 		                       <span class="pack-msg"><i></i></span><span id="msg"></span><span></span> -->

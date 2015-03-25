@@ -62,15 +62,15 @@
         <div id="top">
         	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
         	<div id="top_middle">${title}</div>
-        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
+        	<div id="top_right"></div>
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
 	    <div class="div_contain">
 	        <div class="media">
-	            <div class="media-left media-middle" style="background:#ffff00">
+	            <div class="media-left media-middle" >
 	                <a href="#">
-	                    <img class="media-object" src="wo_logo.png" alt="64×64" width="64" height="64">
+	                	 <img src="${imageRoot}${PHOTOLINKS}" alt="" class="img-responsive" /> 
 	                </a>
 	            </div>
 	            <div class="media-body">
@@ -110,7 +110,7 @@
 	            </a>
 	            <!--支付方式-->
 	            <a id="payInfoTab" href="#" class="list-group-item">
-	                <label>支付方式</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
+	                <label>支付方式</label><span style="margin-left:10px" id="payText"></span><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--其他-->
 	            <a id="otherInfoTab" href="#" class="list-group-item">

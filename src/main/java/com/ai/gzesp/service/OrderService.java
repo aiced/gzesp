@@ -61,43 +61,33 @@ public class OrderService {
     GoodsSql goodsSql;
     
     
-    public List getContractByGoodsID(String goodsId) {
+    public Map getGoodsDefaultPhoto(String goodsId) {
+    	return goodsSql.GetGoodsDefaultPhoto(goodsId);
+    }
+    
+    
+    public List<Map>[] getContractByGoodsID(String goodsId) {
     	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId);
     	
-    	List result = new ArrayList();
-    	Set set = new HashSet();
+    	List<Map> packList = new ArrayList();
+    	List<Map> pageList = new ArrayList();
+    	List<Map>[] result = new ArrayList[2];
+    	result[0] = packList;
+    	result[1] = pageList;
+    	
     	if(contactList.size() > 0) {
     		for(int i=0; i<contactList.size(); i++) {
     			Map<String, Object> info = contactList.get(i);
-    			String resId = String.valueOf(info.get("resId"));
-//    			String packName = String.valueOf(info.get("packName"));
-//    			String packVal = String.valueOf(info.get("packVal"));
+    			String code = String.valueOf(info.get("code"));
     			
-    			if(!set.contains(resId)) {
-    				result.add(info);
-    				set.add(resId);
+    			if("PACKRES".equals(code)) {
+    				packList.add(info);
+    			} else if("PAGERES".equals(code)) {
+    				pageList.add(info);
     			}
     			
     		}
     		
-    	}
-    	
-    	return result;
-    }
-    
-    public List queryPageInfoListById(String goodsId, String resId) {
-    	String orderByStr = "pageName";
-    	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId, orderByStr);
-    	
-    	List result = new ArrayList();
-    	if(contactList.size() > 0) {
-    		for(int i=0; i<contactList.size(); i++) {
-    			Map<String, Object> info = contactList.get(i);
-    			String resIdDB = String.valueOf(info.get("resId"));
-    			if(resId.equals(resIdDB)) {
-    				result.add(info);
-    			}
-    		}
     	}
     	
     	return result;
@@ -131,10 +121,10 @@ public class OrderService {
     	record.setCreateTime(DateUtil.getNow());
     	record.setOrderFrom(orderFrom);
     	record.setOrderTime(DateUtil.getNow());
-    	record.setOriginalPrice(CommonUtil.string2Long(originalPrice));
-    	record.setCouponMoney(CommonUtil.string2Long(couponMoney));
-    	record.setManMadeMoney(CommonUtil.string2Long(manMadeMoney));
-    	record.setTopayMoney(CommonUtil.string2Long(topayMoney));
+    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
+    	record.setCouponMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(couponMoney)));
+    	record.setManMadeMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(manMadeMoney)));
+    	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney)));
     	record.setIncomeMoney(0l);
     	record.setOrderState("00");
     	record.setCustRemark(custRemark);
@@ -260,12 +250,12 @@ public class OrderService {
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
     	record.setGoodsId(CommonUtil.string2Long(goodsId));
     	record.setGoodsName(goodsName);
-    	record.setUnitPrice(CommonUtil.string2Long(unitPrice));
+    	record.setUnitPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(unitPrice)));
     	record.setSaleNum(CommonUtil.string2Int(saleNum));
-    	record.setTopayFee(CommonUtil.string2Long(topayFee));
-    	record.setDerateFee(CommonUtil.string2Long(derateFee));
+    	record.setTopayFee(CommonUtil.toDbPrice(CommonUtil.string2Long(topayFee)));
+    	record.setDerateFee(CommonUtil.toDbPrice(CommonUtil.string2Long(derateFee)));
     	record.setDerateReason(derateReason);
-    	record.setRecvFee(CommonUtil.string2Long(recvFee));
+    	record.setRecvFee(CommonUtil.toDbPrice(CommonUtil.string2Long(recvFee)));
     	record.setResInfo(goodsDisc);
     	
     	tdOrdDPRODDao.insertSelective(record);

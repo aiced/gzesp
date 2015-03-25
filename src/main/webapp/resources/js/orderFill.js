@@ -124,6 +124,7 @@ $(function() {
 	
 	$('#payInfoBtn').bind("click",function(){
 		orderStat.payInfoStat = 1;
+		setPayText();
 		$('#payInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
 		return false;
@@ -292,6 +293,20 @@ function checkPostSelect() {
 
 }
 
+function setPayText() {
+	var text;
+	text = $('input[name="pay_mode"]:checked').attr("data-text");
+	switch ($("input[name=pay_mode]:checked").attr("id"))  {
+         case "pay_mode_1":
+        	 text = text +" " +$('input[name="pay_mode_style"]:checked').val();
+        	 break;
+         case "pay_mode_2":
+        	 text = text +" " + $('#paySelector option:selected').text();
+        	 break;
+    }
+	$('#payText').text(text);
+}
+
 
 function getParams() {
 	orderFormParams.custName = $('#userName').val();
@@ -347,8 +362,42 @@ function getParams() {
 	orderFormParams.topayFee= orderFormParams.originalPrice;
 }
 
+function uploadPic(){
+	
+	var params = {
+			"idCardNum": $('#userCard').val()
+	};
+	 $.ajaxFileUpload({  
+	        url : "../common/uploadFile", 
+	        async:false, 
+	        secureuri : false,  
+	        fileElementId : "file-front",  
+	        dataType : 'json',
+			data: params,
+	        success : function(rtdata, status) { 
+	        	//alert(rtdata.url);
+	        	orderFormParams.cardPic1 = rtdata.url;
+	        },  
+	    });  
+	 
+	 $.ajaxFileUpload({  
+	        url : "../common/uploadFile", 
+	        async:false, 
+	        secureuri : false,  
+	        fileElementId : "file-back",  
+	        dataType : 'json',
+			data: params,
+	        success : function(rtdata, status) { 
+	        	//alert(rtdata.url);
+	        	orderFormParams.cardPic2 = rtdata.url;
+	        },  
+	    });  
+};
 
 function nextPage() {
+	
+//	uploadPic();
+//	return;
 	
 	if(orderStat.netInfoStat==0) {
 		alert('请完整入网资料');
@@ -371,6 +420,15 @@ function nextPage() {
 ////		alert(postStyle);
 //		return;
 //	}
+	
+	uploadPic();
+	
+	setTimeout('formSubmit()', 2000);
+	
+	
+}
+
+function formSubmit() {
 	var tmp = {'fromPage':'orderFill' };
 	getParams();
     var parms = $.extend({}, tmp, orderFormParams);
@@ -380,5 +438,5 @@ function nextPage() {
 	        data:  parms,
 	        success : function(rtdata, status) { 
 	        }
-	    });  
+	 });  
 }

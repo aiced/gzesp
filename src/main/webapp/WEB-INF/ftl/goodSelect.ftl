@@ -10,6 +10,7 @@
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/goodSelect.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
   </head>
 
   <body>
@@ -17,6 +18,7 @@
     <input type="hidden" id="user_id" value="${user_id}"></input>
     <input type="hidden" id="good_type" value="${good_type}"></input>
   	<!-- nav bar -->
+  	<!--
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
         <div class="col-xs-2" style="margin-top:5px;padding:0px;">
@@ -30,6 +32,16 @@
     	  </div>    	
       </div>      
     </div>
+    -->
+	<div id="top">
+	  <div id="top_left">
+	    <a href="javascript:history.back(-1);">
+	      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    </a>
+	  </div>
+	  <div id="top_middle">商品选择</div>
+	  <div id="top_right"></div>
+	</div>       
 
   
     <!-- 销量价格筛选，排序 -->
@@ -51,7 +63,7 @@
       <!-- 销量排序 价格排序-->
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-3" style="padding:0px;margin:0px;text-align:center">
-    	  <button type="button" id="goods_amount" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortPhoneList('goods_amount')">
+    	  <button type="button" id="goods_amount" class="btn btn-default"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortPhoneList('goods_amount')">
                         销量 <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
           </button>
     	</div>  	
@@ -59,7 +71,7 @@
     	  <div class="shuxian"></div> 
     	</div>
     	<div class="col-xs-3" style="padding:0px;text-align:center">
-    	  <button type="button" id="goods_price" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortPhoneList('goods_price')">
+    	  <button type="button" id="goods_price" class="btn btn-default"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortPhoneList('goods_price')">
                         价格 <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
           </button>    	  
     	</div>
@@ -67,7 +79,7 @@
     	  <div class="shuxian"></div> 
     	</div>
     	<div class="col-xs-3" style="padding:0px;text-align:center">
-    	  <button type="button" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false">
+    	  <button type="button" class="btn btn-default"  aria-haspopup="true" aria-expanded="false">
                         筛选 <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
           </button>    	  
     	</div>  		    		

@@ -19,7 +19,7 @@ public class RegistSql {
 	{
 		StringBuffer sb=new StringBuffer();
 		
-		sb.append("select city_code, city_name, province_code from sys_p_city where province_code="+strProvince_code+" order by order_number");
+		sb.append("select ess_city_code city_code, city_name, ess_province_code province_code from SYS_P_WEB_CITY where ess_province_code="+strProvince_code+" order by order_number");
 		
 		System.out.println(sb.toString());
 		List<Map<String, Object>> cityList =commonDao.queryForList(sb.toString());

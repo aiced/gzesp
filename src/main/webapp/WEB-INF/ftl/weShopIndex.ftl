@@ -82,6 +82,7 @@
     </div>
   
     <!-- 能人招募广告 -->
+    <!--
     <div class="container-fluid" style="margin:10px;background-color:#ffffff;">
       <div class="row" >
         <div class="col-xs-3 div-text-center" style="background-color:#ffc798;margin:0px;padding:2px">
@@ -92,6 +93,7 @@
     	</div>    	
       </div>
     </div>
+    -->
     
     <!-- xxx 的微店 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-top:5px;">

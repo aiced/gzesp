@@ -2,6 +2,7 @@ package com.ai.gzesp.sgip;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -36,10 +37,22 @@ public class SgipService {
      */
     public boolean smsSend(String[] numbers, String content) {
         //String[] UserNumber = { "8618686619970","8618686619977"};
-        Args argstr = SgipConfig.getArgs(); // 获取sgip配置参数
+        //Args argstr = SgipConfig.getArgs(); // 获取sgip配置参数
+        //int srcnode =new BigInteger("3085173112").intValue();    //源节点编号，这一步非常重要，华为包中，该字段类型为int，而接入协议中要求在企业代码前加上30000，这样就超过了int的取值范围，所以需要用BigInteger转一下就可以了
+        //argstr.set("source-addr",  srcnode); // SP…ID(最大为六位字符)
+        Args argstr = new Args();
+        argstr.set("host", SgipConfig.host);
+        argstr.set("port", SgipConfig.port);
+        argstr.set("transaction-timeout", SgipConfig.transaction_timeout); // 操作超时时间(单位：秒)
+        argstr.set("read-timeout", SgipConfig.read_timeout); // 物理连接读操作超时时间(单位：秒)
+        argstr.set("source-addr",  SgipConfig.source_addr); // SP…ID(最大为六位字符)
+        argstr.set("login-name", SgipConfig.login_Name);
+        argstr.set("login-pass", SgipConfig.login_PassWord);
+        argstr.set("debug", SgipConfig.debug);
+        
         SGIPSMProxy sgipsmproxy = new SGIPSMProxy(argstr);
         
-        boolean connectSuccess = getConnect(sgipsmproxy, argstr); // 连接登陆
+        boolean connectSuccess = getConnect(sgipsmproxy); // 连接登陆
         
         //登陆成功才执行发送消息
         if(connectSuccess){
@@ -51,7 +64,7 @@ public class SgipService {
                 e.printStackTrace();
             }
             //提交短信到联通在信平台
-            boolean status = submitMsg(sgipsmproxy, argstr, numbers, MessageContent);
+            boolean status = submitMsg(sgipsmproxy, numbers, MessageContent);
             return status;
         }
         
@@ -60,19 +73,19 @@ public class SgipService {
 
     }
 
-    private boolean getConnect(SGIPSMProxy sgipsmproxy, Args argstr) {
+    private boolean getConnect(SGIPSMProxy sgipsmproxy) {
         
         try {
             // connect表示向SMG登陆,登录名与密码分别是SMG向SP分配的用户名与密码,调用这个接口方法，向SMG发送Bind命令消息。
             // 如果发送消息超时或通信异常则抛出异常，需要调用者捕获处理。
             // 登陆得到true和false
-            boolean reslut = sgipsmproxy.connect(argstr.get("login-name", ""), argstr.get("login-pass", ""));
+            boolean reslut = sgipsmproxy.connect(SgipConfig.login_Name, SgipConfig.login_PassWord);
 
             if (reslut) {
-                log.debug("【登陆联通短信平台成功:" +argstr.get("login-name", "") + ", " + argstr.get("login-pass", "") +"】");
+                log.debug("【登陆联通短信平台成功:" +SgipConfig.login_Name + ", " + SgipConfig.login_PassWord +"】");
                 return true;
             } else {
-                log.debug("【登陆联通短信平台失败】【用户名或密码错误:" +argstr.get("login-name", "") + ", " + argstr.get("login-pass", "") +"】");
+                log.debug("【登陆联通短信平台失败】【用户名或密码错误:" + SgipConfig.login_Name + ", " + SgipConfig.login_PassWord +"】");
                 return false;
             }
         } catch (Exception ex) {
@@ -82,16 +95,16 @@ public class SgipService {
         }
     }
     
-    private boolean submitMsg(SGIPSMProxy sgipsmproxy, Args argstr, String[] numbers, byte[] messageContent){
+    private boolean submitMsg(SGIPSMProxy sgipsmproxy, String[] numbers, byte[] messageContent){
         //String ChargeNumber = "000000000000000000000"; // 计费号码，我们是白名单
         //String serviceType = "JXHD";//服务类型
         // 上行短息
         SGIPSubmitMessage sgipsubmit = new SGIPSubmitMessage(
-                argstr.get("SPNumber", ""), // SP的接入号码 
-                argstr.get("ChargeNumber", ""), // 付费号码 string
+                SgipConfig.SPNumber, // SP的接入号码 
+                SgipConfig.ChargeNumber, // 付费号码 string
                 numbers, // 接收该短消息的手机号，最多100个号码 string[]
-                argstr.get("CorpId", ""), // 企业代码，取值范围为0～99999 string
-                argstr.get("ServiceType", ""), // 业务代码，由SP定义 stirng
+                SgipConfig.CorpId, // 企业代码，取值范围为0～99999 string
+                SgipConfig.ServiceType, // 业务代码，由SP定义 stirng
                 03, // 计费类型 int
                 "0", // 该条短消息的收费值 stirng
                 "0", // 赠送用户的话费 string

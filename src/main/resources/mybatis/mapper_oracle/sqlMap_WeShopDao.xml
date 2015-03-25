@@ -141,9 +141,9 @@
 	
 	<select id="getCitys" resultType="java.util.HashMap">
 	<![CDATA[
-         select city_code, city_name, province_code
-           from sys_p_city 
-          where province_code='85'
+         select ess_city_code city_code, city_name, ess_province_code province_code
+           from SYS_P_WEB_CITY 
+          where ess_province_code='85'
           order by order_number
      ]]>
 	</select>

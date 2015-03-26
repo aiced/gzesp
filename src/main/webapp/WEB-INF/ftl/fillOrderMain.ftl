@@ -60,20 +60,18 @@
 	<div id="orderMain">
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
 	    <div class="div_contain">
-	        <div class="media">
-	            <div class="media-left media-middle" >
-	                <a href="#">
+	         <div class="row" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;" >
+         		 <div class="col-xs-4" style="padding:1px;">
 	                	 <img src="${imageRoot}${PHOTOLINKS}" alt="" class="img-responsive" /> 
-	                </a>
 	            </div>
-	            <div class="media-body">
+         		 <div class="col-xs-8" style="padding:5px;">
 	                <h4 class="media-heading">${goodsName}</h4>
 	            </div>
 	        </div>

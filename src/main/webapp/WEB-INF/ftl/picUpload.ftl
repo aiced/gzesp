@@ -36,23 +36,22 @@
   <body >
 <!--标题   -->
    	<div id="top">
-       	<div id="netInfoBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div></div>
+       	<div id="netInfoBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div>
        	<div id="top_middle">${title}</div>
        	<div id="top_right"></div>
     </div>
 	<div id="dv_clear"></div>
     <!-- 主机号，身份证号 -->
-    <div style="background-color:white;height:110px;padding-top:25px;text-align:center;">
-      	 	 <div  style ="width:100%;height:25px;font-size:14px;">
-      		      		 <input id = "userName" type="text" placeholder="机主姓名" style ="width:175px;height:25px;line-height:25px;padding-left:5px;border:1px solid #A6A6A6;border-radius:2px;font-size:10px;margin:0px auto;pading-left:5px">
-      		 </div> 
-      		 <div  style ="width:100%;height:25px;font-size:14px;margin-top:10px;">
-   						 <input id = "userCard" type="text" placeholder="身份证号" style ="width:175px;height:25px;line-height:25px;padding-left:5px;margin-top:10px;border:1px solid #A6A6A6;font-size:10px;margin:auto;">
-      		 </div> 
+     <div class="container">
+      		<br/>
+      		 <input id = "userName" type="text" placeholder="机主姓名"  class="form-control" required>
+			 <br/>
+			 <input id = "userCard" type="text" placeholder="身份证号" class="form-control" required>
+			  <br/>
      </div> 
       
      
-     <div style="background-color:#EBEBEB;height:410px;">
+     <div class="container">
      <!--上传文字  -->
      	<div style="height:70px;" >
      			<div style="background-color:#5B5B5B; float:left;width:5px;height:12px;margin-top:8px;margin-left:8px;">
@@ -64,7 +63,7 @@
      	</div>
       <!--上传图片  -->
        
-      <div style="width:100%;height:250px;text-align:center;" >
+      <div style="padding:5px" >
       			<div class="img-w">
 	     		     <img id ="firstCard" src="${resRoot}/image/order/card01.png" style="display:block;width:175px;height:110px;margin:0px auto;">
 	     		     <input class="file-input select-file" type="file" id="file-front" name="uploadFile" accept="image/*"/>     			
@@ -76,10 +75,10 @@
      	         	<input class="file-input select-file" type="file" id="file-back" name="uploadFile" accept="image/*"/>
        		 		  <div style="width:100%;height:40px" >	</div>
        		 	</div>
-       		     <a id="netInfoBtn" style="background-color:#FD8E4D;color:#fff;width:90%;height:35px ;line-height:35px;display: block;text-align:center;margin:0px auto;" > 同意协议并确定 </a>	
+       		     <button id="netInfoBtn" class="btn btn-warning btn-block " type="submit" >同意协议并确定</button>
     	</div>
      	
-        </div>
+     </div>
     
   </body>
 </html>

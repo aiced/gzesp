@@ -187,6 +187,9 @@ public class OrderController {
     	String goodsId = paramsMap.get("goodsId");
     	Map info = orderService.getGoodsDefaultPhoto(goodsId);
     	
+    	List<Map<Object, Object>> citys = weShopService.getCitys();
+       
+    	
         ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "订单填写");
@@ -194,6 +197,7 @@ public class OrderController {
 //        mav.addObject("userId", "1234567890");
         mav.getModel().putAll(info);
         mav.getModel().putAll(paramsMap);
+        mav.addObject("citys", citys);
         return mav;
     }
     

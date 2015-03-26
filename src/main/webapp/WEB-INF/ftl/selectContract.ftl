@@ -4,12 +4,12 @@
   <body>
     <!-- nav bar -->
      <div id="top">
-       	<div id="selectContractBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div></div>
+       	<div id="selectContractBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div>
        	<div id="top_middle">${title}</div>
        	<div id="top_right"></div>
      </div>
     
-    <div class="container-fluid" style="padding:5px">
+    <div class="container-fluid">
 	    <div class="row" >
 		    <div class="col-xs-6" >
 		     	<button class="btn btn-default btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
@@ -17,6 +17,7 @@
 				    <span class="caret"></span>
 			 	 </button>
 	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+	           			<#if (pkgList?? && pkgList?size>0)>
 		        	  	<#list pkgList as item>  
 							<li role="presentation" onclick="javascript:showActPkg(this)">
 						  		 <a role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
@@ -26,6 +27,7 @@
 						         <input type="hidden" id="packVal_hidden" value="${item.val}">
 							  </li>
 						</#list>   
+						</#if>
 					</ul>
 	        </div>
 	        <div class="col-xs-6 ">
@@ -34,6 +36,7 @@
 				    <span class="caret"></span>
 			 	 </button>
 	        		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+	        			<#if (peroidList?? && peroidList?size>0)>
 	        			<#list peroidList as item>  
 							  <li role="presentation"	onclick="javascript:selectPeriod(this)">
 							   <a role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
@@ -42,11 +45,12 @@
 						      <input type="hidden" id="pageVal_hidden" value="${item.val}">
 							  </li>
 						</#list> 
+						</#if> 
 					</ul>
 	        </div> 
         </div>     
      </div>
-     <div class="container-fluid" style="padding:5px; position:absolute; bottom:6%;width:98%;">
+     <div class="container-fluid" style="position:absolute; bottom:6%; width:100%">
      	<button id="selectConOkBtn" type="button" class="btn btn-warning  btn-lg btn-block" >确定合约</button>
       </div>
       

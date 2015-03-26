@@ -108,7 +108,7 @@
             </div>
         </div> <!-- /container -->
         <div class="login_bottom">
-           <img src="${resRoot}/image/login/wo_logo.png" width="128px" height="128px">
+           <img src="${resRoot}/image/login/wo_logo.png" width="92px" height="92px">
         </div>
 		<input type="hidden" name="hideRet" id="hideRet" value="${ret}" />  
     </div>

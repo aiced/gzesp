@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.service.TdSysPWEBDISTRICTDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.SelectNumberService;
@@ -35,6 +37,9 @@ public class OrderController {
     
     @Resource 
     OrderService orderService;
+    
+    @Resource
+    TdSysPWEBDISTRICTDao tdSysPWEBDISTRICTDao;
     
     @RequestMapping("/newNumberJoin")
     public ModelAndView newNumberJoin(@RequestBody String inputParams){
@@ -76,104 +81,22 @@ public class OrderController {
     }
     
     private void selectContractData(ModelAndView mav,String goodsId){
-//    	List<Map<String, String>> pkgList = new ArrayList();
-//    	Map pkg = new HashMap();
-//    	pkg.put("price", "106元");
-//    	pkg.put("type", "1");
-//    	pkg.put("nationalminutes", "300分钟");
-//    	pkg.put("nationalthroughtput", "400MB");
-//    	pkg.put("period", new int[]{12,24,36});
-//    	pkg.put("returnDesc", new String[]{
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-//    	pkg.put("totalFee", "4699元");
-//    	pkg.put("returnFee", "3499元");
-//    	pkg.put("monthRtnFee", "25元");
-//    	pkgList.add(pkg);
-//    	
-//    	pkg = new HashMap();
-//    	pkg.put("price", "206元");
-//    	pkg.put("type", "2");
-//    	pkg.put("nationalminutes", "500分钟");
-//    	pkg.put("nationalthroughtput", "600MB");
-//    	pkg.put("period", new int[]{12,24,36});
-//    	pkg.put("returnDesc", new String[]{
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-//    	pkg.put("totalFee", "4699元");
-//    	pkg.put("returnFee", "3499元");
-//    	pkg.put("monthRtnFee", "25元");
-//    	pkgList.add(pkg);
-//    	
-//    	pkg = new HashMap();
-//    	pkg.put("price", "306元");
-//    	pkg.put("type", "3");
-//    	pkg.put("nationalminutes", "600分钟");
-//    	pkg.put("nationalthroughtput", "600MB");
-//    	pkg.put("period", new int[]{12,24,36});
-//    	pkg.put("returnDesc", new String[]{
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-//    	pkg.put("totalFee", "4699元");
-//    	pkg.put("returnFee", "3499元");
-//    	pkg.put("monthRtnFee", "25元");
-//    	pkgList.add(pkg);
-//    	
-//    	pkg = new HashMap();
-//    	pkg.put("price", "406元");
-//    	pkg.put("type", "4");
-//    	pkg.put("nationalminutes", "800分钟");
-//    	pkg.put("nationalthroughtput", "600MB");
-//    	pkg.put("period", new int[]{12,24,36});
-//    	pkg.put("returnDesc", new String[]{
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-//    	"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-//    	pkg.put("totalFee", "4699元");
-//    	pkg.put("returnFee", "3499元");
-//    	pkg.put("monthRtnFee", "25元");
-//    	pkgList.add(pkg);
-//    	
-//    	pkg = new HashMap();
-//    	pkg.put("price", "506元");
-//    	pkg.put("type", "5");
-//    	pkg.put("nationalminutes", "1600分钟");
-//    	pkg.put("nationalthroughtput", "600MB");
-//    	pkg.put("period", new int[]{12,24,36});
-//    	pkg.put("returnDesc", new String[]{
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分12个月返完。",
-//    			"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分24个月返完。",
-//    	"所赠3499元话费，当月即返还1999元，剩余部分每月返款200元，分36个月返完。"});
-//    	pkg.put("totalFee", "4699元");
-//    	pkg.put("returnFee", "3499元");
-//    	pkg.put("monthRtnFee", "25元");
-//    	pkgList.add(pkg);
-//    	
-//    	mav.addObject("pkgList", pkgList); 
-    	
-    	
     	List<Map>[] contractList = orderService.getContractByGoodsID(goodsId);
     	mav.addObject("pkgList", contractList[0]);
     	mav.addObject("peroidList", contractList[1]);
-    	
-//     	mav.addObject("selectedPhone", "Iphone6 plus(5.5英寸) 16G深空灰色");
-//     	mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
-//     	mav.addObject("selectedNumber", "1306520198"); 
     }
     
-//    @RequestMapping("/queryPageInfoListById")
+    @RequestMapping("/getDistrictListByCityCode")
 //    @ResponseBody
-//    public ModelAndView queryPageInfoListById(@RequestBody Map<String, String> paramsMap) {
-//    	String goodsId =  paramsMap.get("goodsId");
-//    	String resId=  paramsMap.get("resId");
-//    	List dataList =  orderService.queryPageInfoListById(goodsId, resId);
-//    	ModelAndView mav = new ModelAndView("selectContractSub.ftl");
-//        mav.addObject("dataList", dataList);
-//        return mav;
-//    }
+    public ModelAndView getDistrictListByCityCode(@RequestBody Map<String, String> paramsMap) {
+    	String cityCode =  paramsMap.get("cityCode");
+    	Criteria example = new Criteria();
+    	example.createConditon().andEqualTo("ESS_CITY_CODE", cityCode);
+    	List dataList =  tdSysPWEBDISTRICTDao.selectByExample(example);
+    	ModelAndView mav = new ModelAndView("selectDistrictSub.ftl");
+        mav.addObject("districts", dataList);
+        return mav;
+    }
     
     @RequestMapping("/fillOrderMain")
     public ModelAndView fillOrderMain(@RequestBody String inputParams){

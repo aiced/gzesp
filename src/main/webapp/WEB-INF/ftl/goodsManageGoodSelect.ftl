@@ -41,10 +41,11 @@
   <body>
    <!--标题   -->
  	<div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 				<div id="top_right">
-	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="get_t(this); return false;">管理</a>	
+	        	    <!--	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="get_t(this); return false;">管理</a> -->
+	        	  <button class="btn btn-primary btn-sm" style="background-color:#21292c;" onclick="get_t(this); return false;">管理</button>	
 	        	</div>	 </div>
     <div style="width:100%;height:24px ;margin-top:20px;">
 	 <p style="padding-left:20px;width:260px;height:24px ;line-height:24px;display: block;font-size:13px;color:#6A6969;margin-top:20px;">可选择的不超过四个</p>
@@ -121,7 +122,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==0){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",
@@ -153,7 +154,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==1){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",
@@ -184,7 +185,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==2){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",
@@ -216,7 +217,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==3){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",

@@ -50,7 +50,7 @@ public class GoodsManageGoodSelectController {
     	}
 
     	
-    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
+    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList(strUserID);   
     	Map rspMap = new HashMap();  
     	rspMap.put("userId", strUserID);   
     	rspMap.put("rspCode", "0000");   
@@ -71,9 +71,11 @@ public class GoodsManageGoodSelectController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	//根据index 检索数据库，加载数据。
     	String goodsId = paramsMap.get("goodsId");
+    	String userId = paramsMap.get("userId");
     	if(goodsId != null){
         	Criteria criteria = new Criteria();
         	criteria.createConditon().andEqualTo("GOODS_ID", goodsId);
+        	criteria.createConditon().andEqualTo("USER_ID", userId);
         	int res = tdGdsDABLERCDDao.deleteByExample(criteria);   
     	}
     }

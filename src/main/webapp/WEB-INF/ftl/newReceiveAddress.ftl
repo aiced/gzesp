@@ -30,7 +30,7 @@
                      <div class="input-group ">
                           <span class="input-group-addon" id="sizing-addon1">省</span>
 		                <select name="selProvince" id="selProvince" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon1">
-			      			<option value="贵州">贵州</option>
+			      			<option value="85">贵州</option>
 		                </select>
                      </div>
                       <br/>
@@ -50,16 +50,6 @@
              		<br/>
             
                      <div id="selectDistrictDiv" class="input-group ">
-                          <span class="input-group-addon" id="sizing-addon3">区</span>
-		                <select name="selDistrict" id="selDistrict" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon3">
-			      		<#if (districts?? && districts?size>0)>
-							<#list districts as item>
-								<option value="${item.DISTRICT_CODE}">${item.DISTRICT_NAME}</option>
-							</#list>
-			        	<#else>
-							<option value="数据加载失败">数据加载失败</option>
-			 			</#if>
-		                </select>
                      </div>
                 <br/>
                 <!--输入详细地址-->

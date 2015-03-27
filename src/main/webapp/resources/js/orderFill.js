@@ -183,19 +183,30 @@ $(function() {
 	//省、市、区联动
 	$('#selCity').change(function(){
 		var cityCode = $(this).children('option:selected').val();
-		var param = {"cityCode":cityCode}; 
-		$.ajax({
-			   type: "POST",
-			   contentType:"application/json", //发送给服务器的内容编码类型
-			   url: "getDistrictListByCityCode",
-			   data: JSON.stringify(param), //服务器只能接收json字符串
-			   success: function(data){
-				   $('#selectDistrictDiv').html(data);
-			   }
-			});	
+		getDistrictListByCityCode(cityCode);
 	});
 	
+	initSelect();
+	
 })
+
+function initSelect() {
+	var cityCode = $("#selCity").val();
+	getDistrictListByCityCode(cityCode);
+}
+
+function getDistrictListByCityCode(cityCode) {
+	var param = {"cityCode":cityCode}; 
+	$.ajax({
+		   type: "POST",
+		   contentType:"application/json", //发送给服务器的内容编码类型
+		   url: "getDistrictListByCityCode",
+		   data: JSON.stringify(param), //服务器只能接收json字符串
+		   success: function(data){
+			   $('#selectDistrictDiv').html(data);
+		   }
+		});	
+}
 
 //wenhui_newReceiveAddress_数值校验
 function addres_checkData()
@@ -265,16 +276,14 @@ function netInfo_checkData() {
 		 return false;
 	 }
     
-//	alert( $('#firstCard').attr("src"));   	
-//	alert( $('#secondCard').attr("src"));   	
 
-    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
-    	alert("证件照片不能为空");   	
-    	return false;
-    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
-    	alert("证件照片不能为空");   	
-    	return false;
-    }
+//    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
+//    	alert("证件照片不能为空");   	
+//    	return false;
+//    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+//    	alert("证件照片不能为空");   	
+//    	return false;
+//    }
     return true;
 }
 //	
@@ -334,6 +343,10 @@ function getParams() {
 	orderFormParams.receiverName = $('#txtname').val();
 	orderFormParams.phoneNum = $('#txtphone').val();
 	orderFormParams.postAddr = $('#txtaddress').val();
+	orderFormParams.provinceCode= $('#selProvince').val();
+	orderFormParams.cityCode=$("#selCity").val();
+	orderFormParams.districtCode=$("#selDistrict").val();
+	
 	
 	orderFormParams.resAttr = $('#attrVal').val();
 	

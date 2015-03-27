@@ -134,12 +134,8 @@
 	            </a>
 	        </div>
 	        <br/>
-	        <br/>
-	        <br/>
 	
 	        <div style="font-size: 12px;text-align: center;"><a href="#"><u>为保障您的权益，下单请阅读并确定相关协议</u></a></div>
-	        <br/>
-	        <br/>
 	        <br/>
 	        <button class="btn btn-warning btn-block " type="button" onclick="nextPage()">提交订单</button>
 	    </div>

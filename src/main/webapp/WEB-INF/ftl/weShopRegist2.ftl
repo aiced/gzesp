@@ -67,6 +67,8 @@
     		{
 				return false;    			
     		}
+
+    			
     		return true;
     		
     	}
@@ -192,6 +194,9 @@
 	
 	    <div class="container-fluid">
 	        <form action="reg_step2_postdata" method="post">
+	        	<span style="color: #ff0000">为保证收益的准确发放，以下请填写真实信息!</span>
+	            <br/>
+	            <br/>
 	            <!--姓名-->
 	            <div class="form-group" id="div_name">
 	                <label for="txtname" class="sr-only"></label>
@@ -206,6 +211,7 @@
 	                    <input type="radio" name="radsex" id="radnv" value="女"> 女
 	                </label>
 	            </div>
+	            
 	            <!--身份证号-->
 	            <div class="form-group" id="div_personalid">
 	                <label for="txtpersonalid" class="sr-only"></label>
@@ -228,9 +234,12 @@
 	                <label for="txtbankcardid" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
 	            </div>
-	            	<span style="color: #ff0000">尊敬的掌柜，请确保您的银行卡信息准确无误，否则会导致收益发放失败！</span>
-	            <br/>
-	            <br/>
+				<!-- 用户注册协议 -->
+				<div style="float:right;font-size: 12px;">
+					<a href="#">用户注册协议</a>
+				</div>
+				<br/>
+				<br/>
 	            <button class="btn-sm btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">提交</button>
 	        	
 	        	<input type="hidden" name="selArea" value="${area}" />

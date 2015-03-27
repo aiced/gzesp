@@ -187,7 +187,7 @@ function checkBankCard(strBankCard)
 //判断手机号是否已经注册过
 function  checkPhoneNum(strPhoneNum)
 {
-	var bRetrun=false;
+	var bReturn=false;
 	var param = {"PhoneNum":strPhoneNum};
 	$.ajax({
 		   type: "POST",
@@ -211,7 +211,7 @@ function  checkPhoneNum(strPhoneNum)
 //判断微信号是否已经注册过
 function checkWeChat(strWeChat)
 {
-	var bRetrun=false;
+	var bReturn=false;
 	var param = {"WeChat":strWeChat};
 	$.ajax({
 		   type: "POST",
@@ -292,7 +292,7 @@ function sendMessage(strPhone,btnName) {
 //        error: function (XMLHttpRequest, textStatus, errorThrown) { },  
 //        success: function (msg){ }  
 //    });  
-	var bRetrun=false;
+	var bReturn=false;
 	var param = {"phone":strPhone,"code":code};
 	$.ajax({
 		   type: "POST",

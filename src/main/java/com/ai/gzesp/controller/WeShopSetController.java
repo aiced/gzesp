@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -41,17 +42,17 @@ public class WeShopSetController {
 //    public ModelAndView index(@PathVariable("user_id") String user_id){
 //        ModelAndView mav = new ModelAndView("weShopIndex.ftl");
     
-    @RequestMapping("/weShopSet/{user_id}")
+    @RequestMapping("/weShopSet")
     @ResponseBody
-    public ModelAndView weShopSet(@PathVariable("user_id") String user_id){
-    	String userId = user_id;
+    public ModelAndView weShopSet(@RequestParam(value = "userid", required = true)String strUserID){
+    	String userId = strUserID;
     	//edit_by_wenh_2015_3_25
 //    	if(userId == null){
 //    		userId = "2015031806433310";
 //    	}
-    	System.out.println("userid"+user_id);
+    	System.out.println("userid"+userId);
     	List<Map<String, Object>> userlist = goodsSql.GetProfileList(userId);   
-    	Map rspMap = new HashMap();    
+    	Map rspMap = new HashMap();
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", userlist.get(0).get("storeName"));
     	rspMap.put("userId", userId);   

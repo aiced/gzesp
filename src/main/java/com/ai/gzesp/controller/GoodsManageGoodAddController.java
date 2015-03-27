@@ -41,10 +41,10 @@ public class GoodsManageGoodAddController {
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    	String name = paramsMap.get("index");
+    	//String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
 
-    	rcdlist = goodsSql.GetRcdList(); 
+    	rcdlist = goodsSql.GetRcdList(strUserID); //根据能人id 查询店长推荐的列表
     	List<Map<String, Object>> goodsList = null;
 		sb = new StringBuffer();
 
@@ -93,13 +93,16 @@ public class GoodsManageGoodAddController {
     public void goodsManageGoodAddInsert(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String goodsIdStr = paramsMap.get("goodsId");
+    	String userId = paramsMap.get("userId"); 
+    	String partitionIdStr = goodsIdStr.substring(14); //取商品id后两位做分区id，商品id共16位
     	Long goodsId = Long.parseLong(goodsIdStr);
     	Short seqNum = 1;
-    	Short userId = 1;
+    	//Short userId = 1;
+    	Short partitionId = Short.parseShort(partitionIdStr);
     	TdGdsDABLERCD tdGdsDABLERCD = new TdGdsDABLERCD();
     	tdGdsDABLERCD.setGoodsId(goodsId);
-    	tdGdsDABLERCD.setPartitionId(userId);
-    	tdGdsDABLERCD.setUserId("1");
+    	tdGdsDABLERCD.setPartitionId(partitionId);
+    	tdGdsDABLERCD.setUserId(userId);
     	tdGdsDABLERCD.setSeqNum(seqNum);    	
     	tdGdsDABLERCDDao.insertSelective(tdGdsDABLERCD);
     	
@@ -176,7 +179,6 @@ public class GoodsManageGoodAddController {
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
 }
-    
     
 }
 

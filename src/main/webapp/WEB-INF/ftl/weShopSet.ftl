@@ -46,20 +46,31 @@
  		//修改手机号 还需要去判断是否有手机号是否存在
  		var phoneNum  = document.getElementById("phoneNum");
  		var re = /^1\d{10}$/;
+ 		 if(!checkPhoneNum(phoneNum.value)) //edit_by_wenh_2015_3_26
+ 		 {
+ 			  alert("该手机号已经注册过");
+ 			  return
+ 			}
   		  if (re.test(phoneNum.value)) {
-  		  } else {
+  		  } 
+  		  else {
  			 alert("请输入正确的手机号");
  			 return;
    		 }
+
 	    var userId = $("#hideTag").val();;	
     	//ajax 操作，刷新本界面数据   
 		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId},'weixinid':${weixin}};
-		$.ajax({
+		$.commonFormSubmit({
 		 type: "POST",
-		 url: '${base}/shopManage/weShopSetUpdate',
+		 action: '${base}/shopManage/weShopSetUpdate',
 		 data: parms,
 		 success: function(data){
-		  	 //history.back();	   
+		  	 //history.back();
+		  	 //alert("ok");
+		  	 //return;
+		  	 alert(data);
+		  	 return;
 		 }
 		});			
 }
@@ -143,6 +154,13 @@
 		    	<div class = "cellTopLine">
 		    	</div>		
 	    </div>
+	<!--微信号   -->	
+    <div class = "cellDiv" >
+	    	<p class = "cellRightLable"> 微信号 </p>
+	    	<input id = "weixin" class = "input" value=${info.weixin_id} placeholder="点击输入微信"></input> 
+	    	<div class = "cellTopLine">
+	    	</div>		
+    </div>    
 	<!--店铺二维码   -->	
 	    <div id ="qrCode" class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺二维码 </p>
@@ -162,7 +180,7 @@
 	    </div>
 				
     <div style="width:100%;height:44px;margin-top:20px;">   	
-    	<a class = "ok" onclick="doneClick(this); return false;"> 确定</a>
+    	<a class = "ok" onclick="doneClick(this);"> 确定</a>
     </div>
     
     <input id = "hideTag" type = "hidden" name = 'hideTag' value = ${info.userId}>

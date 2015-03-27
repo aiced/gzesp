@@ -36,6 +36,7 @@ public class SgipService {
      * @since [产品/模块版本](可选)
      */
     public boolean smsSend(String[] numbers, String content) {
+        log.debug("【短信：调用短信发送接口开始......手机号：" + numbers[0] + "，内容：" + content + "】");
         //String[] UserNumber = { "8618686619970","8618686619977"};
         //Args argstr = SgipConfig.getArgs(); // 获取sgip配置参数
         //int srcnode =new BigInteger("3085173112").intValue();    //源节点编号，这一步非常重要，华为包中，该字段类型为int，而接入协议中要求在企业代码前加上30000，这样就超过了int的取值范围，所以需要用BigInteger转一下就可以了
@@ -59,8 +60,9 @@ public class SgipService {
             byte[] MessageContent = null;
             try {
                 MessageContent = content.getBytes("GB2312");
+                log.debug("【短信：短信内容转换成byte[]成功】");
             } catch (UnsupportedEncodingException e) {
-                log.debug("【短信内容转换gb2312失败】");
+                log.debug("【短信：短信内容转换gb2312失败】");
                 e.printStackTrace();
             }
             //提交短信到联通在信平台
@@ -68,8 +70,10 @@ public class SgipService {
             return status;
         }
         
+        //断开连接
+        disConnect(sgipsmproxy);
         //连接登陆失败则直接返回false
-        return false;
+        return connectSuccess;
 
     }
 
@@ -79,17 +83,18 @@ public class SgipService {
             // connect表示向SMG登陆,登录名与密码分别是SMG向SP分配的用户名与密码,调用这个接口方法，向SMG发送Bind命令消息。
             // 如果发送消息超时或通信异常则抛出异常，需要调用者捕获处理。
             // 登陆得到true和false
+            log.debug("【短信：开始连接登陆......】");
             boolean reslut = sgipsmproxy.connect(SgipConfig.login_Name, SgipConfig.login_PassWord);
-
+            
             if (reslut) {
-                log.debug("【登陆联通短信平台成功:" +SgipConfig.login_Name + ", " + SgipConfig.login_PassWord +"】");
+                log.debug("【短信：登陆联通短信平台成功:" +SgipConfig.login_Name + ", " + SgipConfig.login_PassWord +"】");
                 return true;
             } else {
-                log.debug("【登陆联通短信平台失败】【用户名或密码错误:" + SgipConfig.login_Name + ", " + SgipConfig.login_PassWord +"】");
+                log.debug("【短信：登陆联通短信平台失败】【用户名或密码错误:" + SgipConfig.login_Name + ", " + SgipConfig.login_PassWord +"】");
                 return false;
             }
         } catch (Exception ex) {
-            log.debug("【登陆联通短信平台失败】【网络异常】 ");
+            log.debug("【短信：登陆联通短信平台失败】【网络异常】 ");
             ex.printStackTrace();
             return false;
         }
@@ -126,9 +131,11 @@ public class SgipService {
         //发送短信，并收到响应消息
         SGIPMessage msg = null;
         try {
+            log.debug("【短信：短信发送submit开始......】");
             msg = sgipsmproxy.send(sgipsubmit);
+            log.debug("【短信：短信发送submit结束并且收到响应msg】");
         } catch (IOException e) {
-            log.debug("【短信发送submit失败】【IOException】 ");
+            log.debug("【短信：短信发送submit失败】【IOException】 ");
             e.printStackTrace();
         }
         //收到的响应消息转换成rep
@@ -137,18 +144,25 @@ public class SgipService {
     }
 
     private boolean processSubmitRep(SGIPMessage msg) {
+        log.debug("【短信：收到响应msg后开始解析响应状态......】");
         // 收到的响应消息转换成repMsg
         SGIPSubmitRepMessage repMsg = (SGIPSubmitRepMessage) msg;
         //System.out.println(repMsg.getSrcNodeId());
         //System.out.println("status:::::::" + repMsg.getResult());
         if (repMsg != null && repMsg.getResult() == 0) {
-            log.debug("【短信发送成功,状态】" + repMsg.getResult());
+            log.debug("【短信：短信发送成功,msg响应状态】" + repMsg.getResult());
             return true;
         }
         else {
-            log.debug("【短信发送失败，状态】" + repMsg.getResult());
+            log.debug("【短信：短信发送失败，msg响应状态】" + repMsg.getResult());
             return false;
             
         }
+    }
+    
+    private void disConnect(SGIPSMProxy sgipsmproxy){
+        //断开连接
+        sgipsmproxy.close();
+        log.debug("【短信：断开连接】");
     }
 }

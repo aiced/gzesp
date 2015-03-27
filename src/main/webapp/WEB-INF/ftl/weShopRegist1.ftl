@@ -280,19 +280,6 @@
 		<!--top_end-->
 	    <div class="container-fluid">
 	        <form action="reg_step1_postdata" method="post">
-	            <div class="input-group">
-	                <span class="input-group-addon" id="sizing-addon2">地区</span>
-	                <select name="selArea" id="selArea" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon2">
-		      		<#if (cityList?size==0)>
-						<option value="数据加载失败">数据加载失败</option>
-		        	<#else>
-						<#list cityList as item>
-							<option value="${item.city_code}">${item.city_name}</option>
-						</#list>
-		 			</#if>
-	                </select>
-	            </div>
-	            <br/>
 	            <div class="row">
 	                <div class="col-xs-8 col-sm-8">
 	                    <div class="input-group" id="div_phonenum">
@@ -310,6 +297,19 @@
 	                <label for="txtyanzhengma" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtyanzhengma" name="txtyanzhengma" placeholder="请输入验证码">
 	            </div>
+	            <div class="input-group">
+	                <span class="input-group-addon" id="sizing-addon2">地区</span>
+	                <select name="selArea" id="selArea" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon2">
+		      		<#if (cityList?size==0)>
+						<option value="数据加载失败">数据加载失败</option>
+		        	<#else>
+						<#list cityList as item>
+							<option value="${item.city_code}">${item.city_name}</option>
+						</#list>
+		 			</#if>
+	                </select>
+	            </div>
+	            <br/>
 	            <!--输入微信号-->
 	            <div class="form-group" id="div_weichat">
 	                <label for="txtwechataccount" class="sr-only"></label>

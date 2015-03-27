@@ -35,7 +35,7 @@
   <body>
   <!--标题   -->
   		   <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 	        </div>        
 	        
@@ -83,7 +83,7 @@
      	    });  
 		  	
 		  });  
-		   $("#second_row").click(function(){  
+		  /* $("#second_row").click(function(){  
 		  //在这里操作获取验证码
 		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
@@ -91,8 +91,8 @@
 				data: parms
      	    });  
 		  	
-		  });  
-		  $("#third_row").click(function(){  
+		  });*/  
+		  /*$("#third_row").click(function(){  
 		  //在这里操作获取验证码
 		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
@@ -100,7 +100,7 @@
 				data: parms
      	    });  
 		  	
-		  }); 
+		  });*/ 
 		  
 		});
 	</script>

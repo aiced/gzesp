@@ -23,7 +23,7 @@
     <style type="text/css">
         .head_top
         {
-            height: 100px;
+            height: 120px;
             background: #f66326;
             color: #ffffff;
         }
@@ -70,48 +70,48 @@
         }
         .yesterday_view
         {
-            font-size:5px;
+            font-size:12px;
             color: #9EC7FF;
         }
         .month_view
         {
-            font-size:5px;
+            font-size:12px;
             color:#759EE7;
         }
         .total_view
         {
-            font-size:5px;
+            font-size:12px;
             color:#385B8A;
         }
         .yesterday_sale
         {
-            font-size:5px;
+            font-size:12px;
             color:#ffB878
         }
         .month_sale
         {
-        	font-size:5px;
+        	font-size:12px;
             color:#DB9A5F;
         }
         .total_sale
         {
-            font-size:5px;
+            font-size:12px;
             color:#96653A;
         }
 
         .yesterday_money
         {
-            font-size:5px;
+            font-size:12px;
             color:#ff7878;
         }
         .month_money
         {
-            font-size:5px;
+            font-size:12px;
             color:#ce4141;
         }
         .total_money
         {
-            font-size:5px;
+            font-size:12px;
             color: #742525;
         }
         .list-group
@@ -145,7 +145,7 @@
         }
         .shoptel,.shopweixin
         {
-            font-size: 12px;
+            font-size: 15px;
             padding: 1px;
         }
     </style>
@@ -275,7 +275,7 @@
 		   //[导航-右边]按钮点击
 		  $("#top_right").click(function(){  
 		  //在这里操作导航-右边操作
-		  	location.href = "weShopSet/"+${userid};
+		  	location.href = "weShopSet?userid="+${userid};
 		  });  
 		  //[进入店铺]按钮点击
 		  $("#btnGoIntoShop").click(function(){  

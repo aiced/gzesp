@@ -56,7 +56,7 @@ var orderFormParams = {
 		resAttr:""
 };
 
-
+// 初始化按钮点击事件
 $(function() {
 	
 	$('#netInfoTab').bind("click",function(){
@@ -179,6 +179,21 @@ $(function() {
 	    reader.readAsDataURL(f);
 	});
 	
+	
+	//省、市、区联动
+	$('#selCity').change(function(){
+		var cityCode = $(this).children('option:selected').val();
+		var param = {"cityCode":cityCode}; 
+		$.ajax({
+			   type: "POST",
+			   contentType:"application/json", //发送给服务器的内容编码类型
+			   url: "getDistrictListByCityCode",
+			   data: JSON.stringify(param), //服务器只能接收json字符串
+			   success: function(data){
+				   $('#selectDistrictDiv').html(data);
+			   }
+			});	
+	});
 	
 })
 

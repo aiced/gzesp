@@ -88,6 +88,9 @@
     	<mapper resource="mybatis/mapper_oracle/TdSysPSTATICMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdTFAAGENTACCOUNTMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdTFFAGENTSTAFFINFOMapper.xml" />  
+    	<mapper resource="mybatis/mapper_oracle/TdSysPWEBCITYMapper.xml" />  
+    	<mapper resource="mybatis/mapper_oracle/TdSysPWEBDISTRICTMapper.xml" />  
+    	<mapper resource="mybatis/mapper_oracle/TdSysPWEBPROVINCEMapper.xml" />  
     	
     	
     		 		

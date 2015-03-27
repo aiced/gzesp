@@ -18,19 +18,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdSysPCITY;
+import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdSysPCITYDao;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.PathUtil;
+import com.ai.sysframe.utils.StringUtil;
 import com.alibaba.fastjson.JSON;
 
 @Controller
 @RequestMapping("/common")
 public class CommonController {
     
+    @Resource
+    TdAurDAUTHINFODao tdAurDAUTHINFODao;
+	
 	 protected Logger logger = LoggerFactory.getLogger(getClass());
 	 
 	 @Resource
@@ -119,4 +125,42 @@ public class CommonController {
 //      response.getOutputStream().write(date);
 //  }
 
+  
+  
+ //edit_by_wenh_2015_3_27
+	@RequestMapping("/checkPhoneNum")
+	@ResponseBody
+	public Boolean checkPhoneNum(@RequestBody String strPhoneNum) {
+		Map<String, String> paramsMap = StringUtil.params2Map(strPhoneNum);
+		String PhoneNum = paramsMap.get("PhoneNum");
+		System.out.println(PhoneNum);
+		Criteria myCriteria = new Criteria();
+		myCriteria.createConditon().andEqualTo("PHONE_NUMBER", PhoneNum);
+		int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+		System.out.println(count);
+		if (count >= 1) {
+			return false; // 该账户已经注册了
+
+		} else {
+			return true;// 没有注册过
+		}
+	}
+	@RequestMapping("/checkWeChat")
+	@ResponseBody
+	public Boolean checkWeChat(@RequestBody String strWeChat)
+	{
+		Map<String, String> paramsMap = StringUtil.params2Map(strWeChat);
+		String WeChat = paramsMap.get("WeChat");
+		System.out.println(WeChat);
+		Criteria myCriteria = new Criteria();
+		myCriteria.createConditon().andEqualTo("WEIXIN_ID", WeChat);
+		int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+		System.out.println("微信的个数："+count);
+		if(count >= 1) {
+			return false; //该账户已经注册了
+	        
+		} else {
+			return true;//没有注册过
+		}
+	} 
 }

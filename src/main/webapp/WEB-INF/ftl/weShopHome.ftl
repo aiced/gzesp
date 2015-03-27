@@ -20,6 +20,43 @@
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![end if]-->
 
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.zclip.min.js?v=${resVer}"></script>
+	<script src="${resRoot}/js/jquery.zclip.js?v=${resVer}"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){  
+		   //[导航-右边]按钮点击
+		  $("#top_right").click(function(){  
+		  //在这里操作导航-右边操作
+		  	location.href = "weShopSet?userid="+${userid};
+		  });  
+		  //[进入店铺]按钮点击
+		  $("#btnGoIntoShop").click(function(){  
+		  //在这里操作进入店铺操作
+		  	location.href = "../weShop/index/"+${userid};
+		  }); 
+		  
+          //[点击订单列表]
+          $(".head_bottom_show").zclip({
+  				path:"${resRoot}/js/ZeroClipboard.swf",
+  				copy:function(){
+					return window.location.href;
+  				},
+  				afterCopy:function(){
+  					alert("复制成功");
+  				}
+           });
+		});
+	</script>
+
+
     <style type="text/css">
         .head_top
         {
@@ -168,7 +205,7 @@
 	                </div>
 	                <div class="head_top_info">
 	                    <div class="head_top_info_details">
-	                        <div class="shopname">${name}的店铺</div>
+	                        <div class="shopname">${storename}</div>
 	                        <div class="shoptel"><img src="${resRoot}/image/shopHome/tel.png" width="16" height="16"/>&nbsp;&nbsp;${phone}</div>
 	                        <div class="shopweixin"><img src="${resRoot}/image/shopHome/weixin.png" width="16" height="16"/>&nbsp;&nbsp;${weixin}</div>
 	                    </div>
@@ -262,32 +299,6 @@
 	</div>
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-    <script type="text/javascript" src="${resRoot}/js/jquery.zclip.js?v=${resVer}"></script>
 
-	<script type="text/javascript">
-		$(document).ready(function(){  
-		   //[导航-右边]按钮点击
-		  $("#top_right").click(function(){  
-		  //在这里操作导航-右边操作
-		  	location.href = "weShopSet?userid="+${userid};
-		  });  
-		  //[进入店铺]按钮点击
-		  $("#btnGoIntoShop").click(function(){  
-		  //在这里操作进入店铺操作
-		  	location.href = "../weShop/index/"+${userid};
-		  }); 
-		  
-// 		  $('a#copyUrl').zclip({
-// 			  path:'${resRoot}/js/ZeroClipboard.swf',
-// 			  copy:function(){alert('123');}
-// 			  });
-		});
-	</script>
 </body>
 </html>

@@ -50,42 +50,42 @@ public class WeShopRegist1Controller {
         
         return mav;
     }
-    @RequestMapping("/register/checkPhoneNum")
-    @ResponseBody
-    public Boolean checkPhoneNum(@RequestBody String strPhoneNum)
-    {
-    	Map<String, String> paramsMap = StringUtil.params2Map(strPhoneNum);
-    	String PhoneNum = paramsMap.get("PhoneNum");
-    	System.out.println(PhoneNum);
-    	Criteria myCriteria = new Criteria();
-    	myCriteria.createConditon().andEqualTo("PHONE_NUMBER", PhoneNum);
-    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
-    	System.out.println(count);
-    	if(count >= 1) {
-    		return false; //该账户已经注册了
-            
-    	} else {
-    		return true;//没有注册过
-    	}
-    }
-    @RequestMapping("/register/checkWeChat")
-    @ResponseBody
-    public Boolean checkWeChat(@RequestBody String strWeChat)
-    {
-    	Map<String, String> paramsMap = StringUtil.params2Map(strWeChat);
-    	String WeChat = paramsMap.get("WeChat");
-    	System.out.println(WeChat);
-    	Criteria myCriteria = new Criteria();
-    	myCriteria.createConditon().andEqualTo("WEIXIN_ID", WeChat);
-    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
-    	System.out.println(count);
-    	if(count >= 1) {
-    		return false; //该账户已经注册了
-            
-    	} else {
-    		return true;//没有注册过
-    	}
-    } 
+//    @RequestMapping("/register/checkPhoneNum")
+//    @ResponseBody
+//    public Boolean checkPhoneNum(@RequestBody String strPhoneNum)
+//    {
+//    	Map<String, String> paramsMap = StringUtil.params2Map(strPhoneNum);
+//    	String PhoneNum = paramsMap.get("PhoneNum");
+//    	System.out.println(PhoneNum);
+//    	Criteria myCriteria = new Criteria();
+//    	myCriteria.createConditon().andEqualTo("PHONE_NUMBER", PhoneNum);
+//    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+//    	System.out.println(count);
+//    	if(count >= 1) {
+//    		return false; //该账户已经注册了
+//            
+//    	} else {
+//    		return true;//没有注册过
+//    	}
+//    }
+//    @RequestMapping("/register/checkWeChat")
+//    @ResponseBody
+//    public Boolean checkWeChat(@RequestBody String strWeChat)
+//    {
+//    	Map<String, String> paramsMap = StringUtil.params2Map(strWeChat);
+//    	String WeChat = paramsMap.get("WeChat");
+//    	System.out.println(WeChat);
+//    	Criteria myCriteria = new Criteria();
+//    	myCriteria.createConditon().andEqualTo("WEIXIN_ID", WeChat);
+//    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+//    	System.out.println("微信的个数："+count);
+//    	if(count >= 1) {
+//    		return false; //该账户已经注册了
+//            
+//    	} else {
+//    		return true;//没有注册过
+//    	}
+//    } 
     @RequestMapping("/register/yanzhengma")
     @ResponseBody
     public Boolean sendYanzhenma(@RequestBody String strParam)

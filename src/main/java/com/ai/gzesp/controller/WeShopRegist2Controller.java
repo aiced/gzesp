@@ -112,7 +112,7 @@ public class WeShopRegist2Controller {
     	record_aurdauthinfo.setPhoneNumber(strPhoneNum);//PHONE_NUMBER
     	record_aurdauthinfo.setStatus("00");//STATUS
     	record_aurdauthinfo.setStoreId(LId.toString());//STORE_ID
-    	record_aurdauthinfo.setStoreName(strName);//STORE_NAME
+    	record_aurdauthinfo.setStoreName(strName+"的店铺");//STORE_NAME
     	//record.setCreateTime(DateUtil.getNow());
     	tdAurDAUTHINFODao.insertSelective(record_aurdauthinfo);
     	
@@ -150,6 +150,7 @@ public class WeShopRegist2Controller {
 		mmap.addAttribute("id", LId.toString());
 		mmap.addAttribute("userid",LId.toString());
 		mmap.addAttribute("name", strName);//姓名
+		mmap.addAttribute("storename", strName+"的店铺");//姓名
 		mmap.addAttribute("phone", strPhoneNum); //手机号
 		mmap.addAttribute("weixin", strwecharaccount); //微信
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     

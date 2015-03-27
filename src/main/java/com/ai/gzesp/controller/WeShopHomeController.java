@@ -59,6 +59,7 @@ public class WeShopHomeController {
         mav.addObject("userid",requestinputParams.getParameter("userid"));
         mav.addObject("title",requestinputParams.getParameter("title"));
         mav.addObject("name", requestinputParams.getParameter("name"));
+        mav.addObject("storename", requestinputParams.getParameter("storename"));
         mav.addObject("phone", requestinputParams.getParameter("phone")); 
         mav.addObject("weixin", requestinputParams.getParameter("weixin")); 
         mav.addObject("viewcountlist",ViewCountlist);

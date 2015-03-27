@@ -26,7 +26,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-    
+
 	<script type="text/javascript">
 	
 		var bRet1=true;
@@ -197,6 +197,12 @@
 		  		bRet5=false;
 		  		return;
 		  	}
+		  	else if($("#txtpassword").val().length<6)
+		  	{
+		  		$("#div_password").addClass("has-error");
+		  		bRet5=false;
+		  		return;
+		  	}
 		  	else
 		  	{
 		  		$("#div_password").removeClass("has-error");
@@ -210,6 +216,12 @@
 		  $("#txtrepassword").blur(function(){
 		  	//在这里操作 再次设置登录密码 文本框失去焦点
 		  	if(!$("#txtrepassword").val())
+		  	{
+		  		$("#div_repassword").addClass("has-error");
+		  		bRet6=false;
+		  		return;
+		  	}
+		  	else if($("#txtrepassword").val().length<6)
 		  	{
 		  		$("#div_repassword").addClass("has-error");
 		  		bRet6=false;
@@ -318,12 +330,12 @@
 	            <!--输入密码-->
 	            <div class="form-group" id="div_password">
 	                <label for="txtpassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="请设置登录密码">
+	                <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="请设置登录密码(至少6位)">
 	            </div>
 	            <!--再次输入验证码-->
 	            <div class="form-group" id="div_repassword">
 	                <label for="txtrepassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码">
+	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
 	            </div>
 	            <button class="btn-sm btn-warning btn-block " type="submit" id="btnStep1" name="btnStep1">下一步</button>
 	        </form>

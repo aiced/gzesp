@@ -53,8 +53,9 @@ public class WeShopSetController {
     	System.out.println("userid"+userId);
     	List<Map<String, Object>> userlist = goodsSql.GetProfileList(userId);   
     	Map rspMap = new HashMap();
-    	rspMap.put("rspCode", "0000");   
-    	rspMap.put("name", userlist.get(0).get("storeName"));
+    	rspMap.put("rspCode", "0000");
+    	rspMap.put("name", userlist.get(0).get("user_name"));
+    	rspMap.put("storename", userlist.get(0).get("storeName"));
     	rspMap.put("userId", userId);   
     	rspMap.put("total", userlist.size());   
     	rspMap.put("title", "店铺设置");
@@ -62,7 +63,7 @@ public class WeShopSetController {
     	rspMap.put("userlist", userlist);  
     	//edit_by_wenh_2015_3_25
     	rspMap.put("weixin", userlist.get(0).get("weixin_id"));
-    	System.out.println("微信号："+userlist.get(0).get("weixin_id"));
+
     	return new ModelAndView("weShopSet.ftl", rspMap);
     }
 //    更新资料
@@ -70,6 +71,7 @@ public class WeShopSetController {
     @ResponseBody
     public ModelAndView weShopSetUpdate(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String strUserName=paramsMap.get("username");
     	String storeName = paramsMap.get("storeName");
     	String phoneNum = paramsMap.get("phoneNum");    	
     	String userId = paramsMap.get("userId");    	
@@ -79,7 +81,7 @@ public class WeShopSetController {
     	TdAurDAUTHINFO tdAurDAUTHINFO = new TdAurDAUTHINFO();
     	tdAurDAUTHINFO.setStoreName(storeName);
     	tdAurDAUTHINFO.setPhoneNumber(phoneNum);
-    	
+    	tdAurDAUTHINFO.setWeixinId(weixinid);
     	Criteria example = new Criteria();
     	example.createConditon().andEqualTo("USER_ID", userId);    	
     	tdAurDAUTHINFODao.updateByExampleSelective(tdAurDAUTHINFO, example);
@@ -92,7 +94,8 @@ public class WeShopSetController {
         //从数据库获取信息赋值
 		mmap.addAttribute("title", "我的微店");
 		mmap.addAttribute("userid", userId);
-		mmap.addAttribute("name", storeName);//姓名
+		mmap.addAttribute("name", strUserName);//姓名
+		mmap.addAttribute("storename", storeName);//店名
 		mmap.addAttribute("phone", phoneNum); //手机号
 		mmap.addAttribute("weixin",weixinid ); //微信
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);    

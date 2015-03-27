@@ -72,6 +72,7 @@ public class WeShopLoginController {
     		mmap.addAttribute("id", list.get(0).getId());
     		mmap.addAttribute("userid",list.get(0).getUserId());
     		mmap.addAttribute("name", list.get(0).getUserName());//姓名
+    		mmap.addAttribute("storename", list.get(0).getStoreName());//姓名
     		mmap.addAttribute("phone", list.get(0).getPhoneNumber()); //手机号
     		mmap.addAttribute("weixin", list.get(0).getWeixinId()); //微信
     		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);            

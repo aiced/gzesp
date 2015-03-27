@@ -191,7 +191,7 @@ function  checkPhoneNum(strPhoneNum)
 	var param = {"PhoneNum":strPhoneNum};
 	$.ajax({
 		   type: "POST",
-		   url: "checkPhoneNum",
+		   url: "/esp/common/checkPhoneNum",
 		   data: param,
 		   async: false,
 		   success: function(bRet){
@@ -215,7 +215,7 @@ function checkWeChat(strWeChat)
 	var param = {"WeChat":strWeChat};
 	$.ajax({
 		   type: "POST",
-		   url: "checkWeChat",
+		   url: "/esp/common/checkWeChat",
 		   data: param,
 		   async: false,
 		   success: function(bRet){
@@ -276,7 +276,7 @@ function sendMessage(strPhone,btnName) {
     var phone=strPhone;//手机号码  
     m_btnName=btnName;
     //产生验证码  
-    for (var i = 0; i < 4; i++) {  
+    for (var i = 0; i < 6; i++) {  
         code += parseInt(Math.random() * 9).toString();  
     }
     //设置button效果，开始计时  

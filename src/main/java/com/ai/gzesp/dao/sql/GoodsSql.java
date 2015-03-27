@@ -30,7 +30,8 @@ public class GoodsSql {
 				+ "t1.STORE_NAME as storeName,"
 				+ "NVL(t1.USER_IMG,'0') as avatar,"
 				+ "t1.PHONE_NUMBER as phoneNumber,"
-				+ "t1.WEIXIN_ID as weixin_id" //edit_by_wenh_2015_3_25
+				+ "t1.WEIXIN_ID as weixin_id," //edit_by_wenh_2015_3_25
+				+ "t1.USER_Name as user_name" //edit_by_wenh_2015_3_27
 				);
 		sb.append(" from AUR_D_AUTHINFO t1");
 		sb.append("	where t1.USER_ID ="+ userId);
@@ -42,7 +43,7 @@ public class GoodsSql {
 	/*
 	 * 得到推荐列表数据
 	 */
-	public List GetRcdList() {
+	public List GetRcdList(String userId) {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("select distinct "
@@ -53,8 +54,9 @@ public class GoodsSql {
 		sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
 				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t4.DEFAULT_TAG = '0'"
-				+ " and t1.GOODS_STATE = '1'"
-				+ " order by t1.GOODS_ID");
+				+ " and t1.GOODS_STATE = '1'");
+		sb.append(" and t2.USER_ID ="+ userId);
+		sb.append(" order by t1.GOODS_ID");
 		List rcdList = commonDao.queryForList(sb.toString());
 		return rcdList;
 	}
@@ -91,7 +93,7 @@ public class GoodsSql {
 		sb.append("select distinct "
 				+ "t1.GOODS_ID as goodsId,"
 				+ "t1.GOODS_NAME as goodsName, "
-				+ "t2.ADD_PRICE as addPrice, "
+				+ "t2.ADD_PRICE/1000 as addPrice, "
 				+ "t4.PHOTO_LINKS as photoLinks,"
 				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 				);

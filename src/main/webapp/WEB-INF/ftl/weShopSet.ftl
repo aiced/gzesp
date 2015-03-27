@@ -46,21 +46,31 @@
  		//修改手机号 还需要去判断是否有手机号是否存在
  		var phoneNum  = document.getElementById("phoneNum");
  		var re = /^1\d{10}$/;
- 		 if(!checkPhoneNum(phoneNum.value)) //edit_by_wenh_2015_3_26
- 		 {
- 			  alert("该手机号已经注册过");
- 			  return
- 			}
-  		  if (re.test(phoneNum.value)) {
-  		  } 
-  		  else {
- 			 alert("请输入正确的手机号");
- 			 return;
-   		 }
+ 		if($("#hide_phonenumber").val()!=phoneNum.value)
+ 		{
+ 			 if(!checkPhoneNum(phoneNum.value)) //edit_by_wenh_2015_3_26
+ 	 		 {
+ 	 			  alert("该手机号已经注册过");
+ 	 			  return
+ 	 		 }
+ 	  		  if (re.test(phoneNum.value)) {
+ 	  		  } 
+ 	  		  else {
+ 	 			 alert("请输入正确的手机号");
+ 	 			 return;
+ 	   		 }
+ 		}
+ 		if($("#hide_weixin_id").val()!=$("#weixin").val())
+ 		{
+			 if(!checkWeChat($("#weixin").val())) //edit_by_wenh_2015_3_26
+ 	 		 {
+ 	 			  return
+ 	 		 }
+ 		}
 
 	    var userId = $("#hideTag").val();;	
     	//ajax 操作，刷新本界面数据   
-		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId},'weixinid':${weixin}};
+		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId},'weixinid':${weixin},'username':'${name}'};
 		$.commonFormSubmit({
 		 type: "POST",
 		 action: '${base}/shopManage/weShopSetUpdate',
@@ -154,13 +164,17 @@
 		    	<div class = "cellTopLine">
 		    	</div>		
 	    </div>
+	    <!-- edit_wenh_2015_3_27 -->
+	    <input type="hidden" value=${info.phoneNumber} id="hide_phonenumber"/>
 	<!--微信号   -->	
     <div class = "cellDiv" >
 	    	<p class = "cellRightLable"> 微信号 </p>
 	    	<input id = "weixin" class = "input" value=${info.weixin_id} placeholder="点击输入微信"></input> 
 	    	<div class = "cellTopLine">
 	    	</div>		
-    </div>    
+    </div>   
+    	<!-- edit_wenh_2015_3_27 -->
+	    <input type="hidden" value=${info.weixin_id} id="hide_weixin_id"/> 
 	<!--店铺二维码   -->	
 	    <div id ="qrCode" class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺二维码 </p>

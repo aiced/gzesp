@@ -6,7 +6,7 @@
 							</a>
 							
 							<a  style="width:20px;height:20px;display: block;position:absolute;;left:12px;top:28px" onclick="showSelectedView(${info_index},${goodsList?size});return false;">
-								<img id="leftItemSelected_${info_index}" src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display:block;visibility:hidden; position:absolute;" >							
+								<img id="leftItemSelected_${info_index}"  goods_id="${info.goodsId}" src=${resRoot}/image/goodsManager/itemSelected.png style="width:20px;height:20px;display:block;visibility:hidden; position:absolute;" >							
 							</a>
 							
 					</td>

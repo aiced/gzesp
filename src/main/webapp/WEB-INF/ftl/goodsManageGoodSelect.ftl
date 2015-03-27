@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${name}的微店</title>
+    <title>欢迎来到${name}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -61,6 +61,7 @@
          	     			<img id = "image01" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
          	
          	</div>           		
+
        		<div id="second_row_left" style="width:40%;height:40%;display: block;position:absolute;left:5px;bottom:5px">
        		     		    <img id = "image2" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
        		     			<img id = "image02" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
@@ -70,7 +71,6 @@
        		     	         <img id = "image3" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
        		     			 <img id = "image03" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
        		</div>
-       		
        		<input id = "hideTag" type = "hidden" name = 'hideTag' value = ${hideTag}>
        		
      							

@@ -146,7 +146,7 @@ table{
 					</td>
 					<td class = "td_second">
 							<a id="itemSelected_${info_index}" style="background-color:white;display:block; width:100%;height:70px;margin-top:15px;margin-bottom:15px" onclick='itemClick(${info.goodsId})'>
-         	     				<img src='${imageRoot}${info.photoLinks}' onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'"   style="display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">								
+         	     				<img src='${imageRoot}${info.photoLinks}' onerror=""   style="display:block;width:75px;height:50px;float:left;margin-left:10px;margin-top:10px">								
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px;text-overflow:clip | ellipsis">								
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">${info.goodsCtlgName}</p> 
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${info.goodsName}</p> 
@@ -193,25 +193,7 @@ table{
 	</script>
 	
 	 <script>
-     function saveClick(obj) {
-			var goodsId = $('img[id *= leftItemSelected_]').attr('goods_id'); //img标签 并且 id是 leftItemSelected_ 开头的
-			if(goodsId == null){
-				history.back();
-			}
-			
-		     //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':goodsId, 'userId':${userId}};
-				$.ajax({
-		  			 type: "POST",
-		  			 url: "goodsManageGoodAddInsert",
-		  			 data: parms,
-		 			 success: function(data){
-				    history.back();	  			   
-		 		  }
-				});		
-		}
-		
-		function saveClick2(obj) {
+		function saveClick(obj) {
 		
 			var goodsIndex = null;
 			var goodsId = null;
@@ -236,7 +218,7 @@ table{
 			
 			
 		     //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':goodsId};
+		  	 	var parms = {'goodsId':goodsId, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodAddInsert",

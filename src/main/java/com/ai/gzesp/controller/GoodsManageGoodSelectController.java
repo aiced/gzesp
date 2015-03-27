@@ -35,9 +35,9 @@ public class GoodsManageGoodSelectController {
     @RequestMapping("/goodsManageGoodSelect")
     public ModelAndView goodsManageGoodSelect(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    	String name = paramsMap.get("index");
+    	//String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
-    	if(strUserID == null){
+/*    	if(strUserID == null){
     		strUserID = "333";
     	}
     	
@@ -47,7 +47,7 @@ public class GoodsManageGoodSelectController {
         	Criteria criteria = new Criteria();
         	criteria.createConditon().andEqualTo("GOODS_ID", goodsId);
         	int res = tdGdsDABLERCDDao.deleteByExample(criteria);   
-    	}
+    	}*/
 
     	
     	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList(strUserID);   

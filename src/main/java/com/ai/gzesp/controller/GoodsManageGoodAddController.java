@@ -6,22 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdGdsDABLERCD;
-import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.service.TdGdsDABLERCDDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
-import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
 @Controller
@@ -89,8 +87,8 @@ public class GoodsManageGoodAddController {
     }
     
     @RequestMapping("/goodsManageGoodAddInsert")
-    @ResponseBody
-    public void goodsManageGoodAddInsert(@RequestBody String inputParam){
+    //@ResponseBody
+    public ModelAndView goodsManageGoodAddInsert(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String goodsIdStr = paramsMap.get("goodsId");
     	String userId = paramsMap.get("userId"); 
@@ -105,6 +103,11 @@ public class GoodsManageGoodAddController {
     	tdGdsDABLERCD.setUserId(userId);
     	tdGdsDABLERCD.setSeqNum(seqNum);    	
     	tdGdsDABLERCDDao.insertSelective(tdGdsDABLERCD);
+    	
+    	//保存完数据库后再重定向到上一步商品添加页面
+    	ModelMap mmap = new ModelMap();
+    	mmap.addAttribute("userId", userId);
+        return new ModelAndView("redirect:/shopManage/goodsManageGoodSelect", mmap);
     	
     }
     

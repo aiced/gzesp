@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
    
-    <title>欢迎来到${name}的店铺</title>
+    <title>欢迎来到${storename}</title>
    
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -192,7 +192,7 @@
 	    <div>
 	    	<!--top_start-->
 	        <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
 	        </div>

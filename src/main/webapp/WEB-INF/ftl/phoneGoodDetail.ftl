@@ -218,6 +218,7 @@
                   </div>
               </li>              
             </#if>
+            <!--
             <#if attrs.PACKRES??>
               <li id="packageList" class="num-info-li" >
                   <p style="margin-bottom: 0px;"><label>优惠活动</label></p>
@@ -236,7 +237,7 @@
                   </div>
               </li>              
             </#if>            
-
+            -->
         </ul>
     </div>
 

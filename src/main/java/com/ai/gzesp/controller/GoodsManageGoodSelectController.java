@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,10 +34,15 @@ public class GoodsManageGoodSelectController {
     TdGdsDABLERCDDao tdGdsDABLERCDDao;
     
     @RequestMapping("/goodsManageGoodSelect")
-    public ModelAndView goodsManageGoodSelect(@RequestBody String inputParam){
+    public ModelAndView goodsManageGoodSelect(@RequestBody String inputParam, HttpServletRequest request){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	//String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
+        //inputParam如果娶不到userId,表示是从/goodsManageGoodAddInsert这个controller 重定向过来的
+        if(strUserID == null){
+            strUserID = request.getParameter("userId");
+        }
+    	
 /*    	if(strUserID == null){
     		strUserID = "333";
     	}

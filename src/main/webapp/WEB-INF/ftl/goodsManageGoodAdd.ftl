@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${name}的微店</title>
+    <title>商品选择</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -102,11 +102,13 @@ table{
 		<!-- 筛选条件 -->
 		<div id="searchMark" style="float:left;width:100%;height:600px;top:31px;display:none;position:absolute;margin:auto;z-index:100;">
 			    	<div id="searchMarkSub" style="background-color:white;width:260px;height:180px;margin:auto;;border:1px solid #A6A6A6;">
+			    	    <!--
 			    		<p style="width:60px;height:20px;line-height:20px;margin-top:10px;margin-left:5px;float:left;font-size:13px;color:#807E7E">奖励区间 </p> 
 			    	    <input id="startInput" type="text" style ="width:68px;height:20px;margin-top:10px;float:left;margin-left:0px;padding-left:5px;border:1px solid #7A7A7A;font-size:14px">
 			    		<div style="background-color:#C7C7C7;float:left;width:15px;float:left;height:1px;margin-left:10px;margin-top:19px">
 						</div>
 			    		<input id="endInput" type="text" style ="width:68px;height:20px;margin-top:10px;float:left;margin-left:10px;padding-left:5px;border:1px solid #7A7A7A;font-size:14px">
+			    		-->
 			    		<!-- 商品类型 -->
 			    		<p style="width:100%;height:20px;line-height:20px;margin-top:10px;margin-left:5px;float:left;font-size:13px;color:#807E7E">商品类型 </p> 
 			    		<div style="background-color:#C2C2C2;float:left;width:100%;float:left;height:1px;margin-left:0px;margin-top:1px">
@@ -217,18 +219,23 @@ table{
 			}
 			
 			
-		     //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':goodsId, 'userId':${userId}};
-				$.ajax({
-		  			 type: "POST",
-		  			 url: "goodsManageGoodAddInsert",
-		  			 data: parms,
-		 			 success: function(data){
-				    history.back();	  			   
-
-		  			   
-		 		  }
-				});		
+		     //ajax 操作，刷新本界面数据     	 
+		     var parms = {'goodsId':goodsId, 'userId':${userId}}; 		
+				//$.ajax({
+		  	//		 type: "POST",
+		  	//		 url: "goodsManageGoodAddInsert",
+		  	//		 data: parms,
+		 		//	 success: function(data){
+				//    history.back();	  			   
+		 		//  }
+				//});		
+			 //不用ajax，history.back();测试发现除了chrome，其他浏览器回到上一步页面展示有问题，改成form提交
+			 $.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodAddInsert', 
+				data: parms,
+     	        success : function(rtdata, status) { 
+     	        }  
+     	    });  	
 		}
 	 </script>
 

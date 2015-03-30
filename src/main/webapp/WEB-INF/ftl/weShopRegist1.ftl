@@ -106,6 +106,7 @@
 			  {
 			  	//这里开始做验证码操作
 			  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode");
+
 				//按钮禁用
 			  	//$("#btnCode").attr('disabled',true);
 			  	//=true;
@@ -152,6 +153,13 @@
 		  	//在这里操作 验证码 文本框失去焦点
 		  	if(!$("#txtyanzhengma").val())
 		  	{
+		  		$("#div_yanzhengma").addClass("has-error");
+		  		bRet3=false;
+		  		return;
+		  	}
+		  	else if($("#txtyanzhengma").val()!=code)
+		  	{
+		  		alert("输入的验证码与短信中的验证码不匹配");
 		  		$("#div_yanzhengma").addClass("has-error");
 		  		bRet3=false;
 		  		return;

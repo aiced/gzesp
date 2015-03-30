@@ -97,10 +97,9 @@
                 <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="输入密码" required>
                 <br/>
                 <br/>
-                <button class="btn btn-default btn-block" type="button" name="btnReg" id="btnReg" onClick="location.href='register/step1'">注册</button>
-                <br/>
                 <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">登录</button>
-                
+                <br/>
+                <button class="btn btn-default btn-block" type="button" name="btnReg" id="btnReg" onClick="location.href='register/step1'">注册</button>
             </form>
             <br/>
             <div class="forget_pwd">

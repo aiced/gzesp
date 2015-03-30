@@ -306,7 +306,6 @@ function sendMessage(strPhone,btnName) {
 			   }
 			   else
 			   {
-				   alert("验证码发送成功！");
 				   bReturn=true;
 			   }
 		   }

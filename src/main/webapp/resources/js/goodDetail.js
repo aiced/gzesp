@@ -56,7 +56,7 @@ function back2Main(){
 function planGotoOrderMain(){
     var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
-	$('#attrs').val(attr_val); 
+	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
 	$('#form1').submit();
@@ -66,7 +66,7 @@ function planGotoOrderMain(){
 //合约购机 商品详情页面 新号入网 按钮跳转到订单填写页面
 function phoneGotoOrderMainNew(){
     var attr_val = getAttrVal();
-    $('#attrs').val(attr_val); 
+    $('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc);     
 	$('#form1').attr('action', $('#form1').attr('url1')); //替换action路径，新号和老用户跳转路径不一样
@@ -77,7 +77,7 @@ function phoneGotoOrderMainNew(){
 //合约购机 商品详情页面 老用户办理 按钮跳转到订单填写页面
 function phoneGotoOrderMainOld(){
 	var attr_val = getAttrVal();
-	$('#attrs').val(attr_val); 
+	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
 	$('#form1').attr('action', $('#form1').attr('url2')); //替换action路径，新号和老用户跳转路径不一样

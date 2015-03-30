@@ -60,6 +60,9 @@ public class OrderService {
     @Resource 
     GoodsSql goodsSql;
     
+    public String GetGoodsNumAttr(String goodsId) {
+    	return goodsSql.GetGoodsNumAttr(goodsId);
+    }
     
     public Map getGoodsDefaultPhoto(String goodsId) {
     	return goodsSql.GetGoodsDefaultPhoto(goodsId);
@@ -272,14 +275,17 @@ public class OrderService {
     	String[] rows = resAttrStr.split("\\^");
     	for(String row : rows) {
     		String[] col = row.split("\\|");
-    		if(col.length != 4) {
+    		if(col.length < 3) {
     			continue;
     		}
     		
     		String resId = col[0];
     		String resAttrCode = col[1];
     		String resAttrVal = col[2];
-    		String values1 = col[3];
+    		String values1 = "";
+    		if(col.length > 3) {
+    			values1 = col[3];
+    		}
     		
     		TdOrdDRES record = new TdOrdDRES();
     		record.setOrderId(CommonUtil.string2Long(orderId));

@@ -19,11 +19,11 @@ $(function() {
 //	    	  return false;
 //	});
 	
-	$('#selectConOkBtn').bind("click",function(){
-		var tmp = {'fromPage':'selectContract' };
-	    var parms = $.extend({}, tmp, contract);
-	    selConBack2Main(parms);
-    });
+//	$('#selectConOkBtn').bind("click",function(){
+//		var tmp = {'fromPage':'selectContract' };
+//	    var parms = $.extend({}, tmp, contract);
+//	    selConBack2Main(parms);
+//    });
 	
 //	showActPkg($('#p-tab li:first'));
 })
@@ -36,6 +36,11 @@ function selectPeriod(selectedPeriod) {
 	contract.conPeriod = pageName;
 	
 	$('#pageName').text(pageName);
+	
+	
+	var tmp = {'fromPage':'selectContract' };
+    var parms = $.extend({}, tmp, contract);
+    selConBack2Main(parms);
 }
 
 function showActPkg(selectedTab) {

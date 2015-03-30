@@ -52,6 +52,7 @@ public class OrderController {
 //    	String attr_val = paramsMap.containsKey("attr_val")?paramsMap.get("attr_val"):"";
 //    	String fromPage = paramsMap.containsKey("fromPage")?paramsMap.get("fromPage"):"";
     	
+    	String num_resId = orderService.GetGoodsNumAttr(goods_id);
     	 ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
 //        mav.addObject("selectedPhone", goods_name);
 //        mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
@@ -59,6 +60,7 @@ public class OrderController {
 //        mav.addObject("goods_price", goods_price); 
         mav.getModel().putAll(paramsMap);
         mav.addObject("title", "新号入网"); 
+        mav.addObject("num_resId", num_resId); 
         
         selectNumberData(mav);
         selectContractData(mav, goods_id);
@@ -129,6 +131,8 @@ public class OrderController {
 //    	inputParams = URLDecoder.decode(inputParams);		
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
+    	String userId =  paramsMap.get("userId");
+    	String fromPage = paramsMap.get("fromPage");
     	String orderId = CommonUtil.generateOrderId();
     	String payLogId = CommonUtil.generatePayLogId();
     	paramsMap.put("orderId", orderId);
@@ -136,10 +140,11 @@ public class OrderController {
     	
     	orderService.insertOrder(paramsMap);
     	
-    	ModelAndView mav = new ModelAndView("redirect:/shopManage/ordersQuery");
-    	//从数据库获取信息赋值
-    	mav.addObject("title", "订单支付");
-    	mav.addObject("userid", paramsMap.get("userId"));
+    	String url = "redirect:/shopManage/ordersQuery?userid="+userId+"&fromPage="+fromPage;
+    	ModelAndView mav = new ModelAndView(url);
+//    	//从数据库获取信息赋值
+//    	mav.addObject("title", "订单支付");
+//    	mav.addObject("userid", paramsMap.get("userId"));
     	
     	return mav;
     }

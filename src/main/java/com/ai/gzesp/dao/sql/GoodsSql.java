@@ -229,6 +229,27 @@ public class GoodsSql {
 		return rcdList;
 	}
 	
+	/*
+	 * 得到商品号码属性数据
+	 */
+	public String GetGoodsNumAttr(String goodsId) {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("select distinct a.res_id ");
+		sb.append(" from REL_GOODS_RES a , RES_D_ATTRVAL b");
+		sb.append(" where  a.goods_id = " + goodsId
+				+ "	and a.res_id = b.res_id "
+				+ " and b.attr_code = 'NUMBERS'" );
+
+		Map<String, Object> info = commonDao.queryForMap(sb.toString());
+		Object obj = info.get("RES_ID");
+		String resId = "-1";
+		if(obj != null ) {
+			resId = String.valueOf(obj);
+		}
+		return resId;
+	}
+	
 	public List GetGoodsDetailPhotos(String goodsId) {
 		StringBuffer sb = new StringBuffer();
 		

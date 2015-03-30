@@ -27,7 +27,7 @@ function changeSatate() {
 
 
 function toSelectNumberPage() {
-			$('#selectNumberPage').css({ "display":"block" }).siblings().css({ "display":"none" });
+		$('#selectNumberPage').css({ "display":"block" }).siblings().css({ "display":"none" });
 }
 
 
@@ -65,8 +65,8 @@ function afterUpdateNumber(data) {
 	changeSatate();
 	$('#serial_number').html(data.serial_number);
 	
-//	var attrVal=data.resId+"|"+"NUMBERS"+"|"+ "号码" +"|"+data.serial_number;
-//	$('#attr_number').val(attrVal);
+	var attrVal=$('#num_resId').val()+"|"+"NUMBERS"+"|"+ "号码" +"|"+data.serial_number;
+	$('#attr_number').val(attrVal);
 	
 	var tmp = {serialNumber:data.serial_number};
 	params = $.extend({}, params, tmp );
@@ -87,8 +87,25 @@ function toSelectContractPage() {
 	 $('#selectContractPage').css({ "display":"block" }).siblings().css({ "display":"none" });
 }
 
+function checkSelState() {
+	//selectState--0:selectedNone, 1:selectedCon, 2:selectedNum
+	if(selectState == 0) {
+		alert('请选择合约');
+		return false;
+	} else if(selectState == 1) {
+		alert('请选择号码');
+		return false;
+	}
+	return true;
+}
+
 function nextPage() {
 //	var tmp = {'fromPage':'newNumberJoin' };
+	
+	if(!checkSelState()) {
+		return;
+	}
+	
 	var tmp = new Object();
 	tmp.fromPage = 'newNumberJoin' ;
 	tmp.userId = $('#user_id').val();

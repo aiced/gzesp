@@ -120,13 +120,12 @@ $(function() {
 		$('#orderMain').css({ "display":"block" });
 		return false;
 	});
-	
 	$('#otherInfoBtn').bind("click",function(){
-		if(otherOrder_checkData()) {
+//		if(otherOrder_checkData()) {
 			orderStat.otherInfoStat = 1;
 			$('#otherInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
-		}
+//		}
 		return false;
 	});
 	$('#otherInfoBackBtn').bind("click",function(){
@@ -409,10 +408,10 @@ function nextPage() {
 		alert('请完整支付信息');
 		return;
 	}
-	if(orderStat.otherInfoStat==0) {
-		alert('请完整其他信息');
-		return;
-	}
+//	if(orderStat.otherInfoStat==0) {
+//		alert('请完整其他信息');
+//		return;
+//	}
 //	var postStyle = checkPostSelect();
 //	if(postStyle !=null ){
 ////		alert(postStyle);

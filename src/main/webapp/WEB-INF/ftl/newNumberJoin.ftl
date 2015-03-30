@@ -67,6 +67,18 @@
 		    text-align: right;
 		}
 		
+		 .list_gou {
+            float: right;
+            text-align: right;
+            position:absolute;
+            bottom: 2px;
+            right:15px;
+        }
+         .label-sm {
+            margin-left: 5px;
+            color: #c0c0c0;
+        }
+        
 		.pack-detail{width:100%;font-size:13px;overflow:hidden;}
 		.pack-detail span{float:left;margin-right:3px;margin-bottom:10px;}
 		.pack-detail span i{display:inline-block;width:19px;height:17px;margin-right:3px;-webkit-background-size:19px 17px;-moz-background-size:19px 17px;background-size:19px 17px;vertical-align:middle;}
@@ -151,6 +163,7 @@
     <input type="hidden" id="goods_name" value="${goods_name}"></input>
     <input type="hidden" id="goods_price" value="${goods_price}"></input>
     <input type="hidden" id="attr_val" value="${attr_val}"></input>
+    <input type="hidden" id="num_resId" value="${num_resId}"></input>
     <input type="hidden" id="attr_contract" ></input>
     <input type="hidden" id="attr_number"></input>
       

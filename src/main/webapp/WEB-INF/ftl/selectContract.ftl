@@ -5,18 +5,23 @@
     <!-- nav bar -->
      <div id="top">
        	<div id="selectContractBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div>
-       	<div id="top_middle">${title}</div>
+       	<div id="top_middle">选择合约</div>
        	<div id="top_right"></div>
      </div>
     
-    <div class="container-fluid">
+    <div class="container-fluid" style="background-color:#ffffff;">
 	    <div class="row" >
-		    <div class="col-xs-6" >
-		     	<button class="btn btn-default btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-				    <span id="packName">套餐资费选择</span>
-				    <span class="caret"></span>
-			 	 </button>
-	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+		    <div class="col-xs-6" style="height:38px;" >
+		    	<div style="padding-:2px;margin-right:-5px; margin-top:8px;border-right:solid 1px #f4f4f4;" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+			    	<label id="packName" class="text-center label-sm">套餐资费选择</label>
+			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
+		    	</div>
+				
+<!-- 		     	<button class="btn btn-default btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> -->
+<!-- 				    <span id="packName">套餐资费选择</span> -->
+<!-- 				    <span class="caret"></span> -->
+<!-- 			 	 </button> -->
+	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="">
 	           			<#if (pkgList?? && pkgList?size>0)>
 		        	  	<#list pkgList as item>  
 							<li role="presentation" onclick="javascript:showActPkg(this)">
@@ -30,11 +35,15 @@
 						</#if>
 					</ul>
 	        </div>
-	        <div class="col-xs-6 ">
-	       		<button class="btn btn-default  btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
-				    <span id="pageName">合约期限选择</span>
-				    <span class="caret"></span>
-			 	 </button>
+	        <div class="col-xs-6"  style="height:38px;">
+	       		 <div style="padding:2px;margin-top:8px;" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+			    	<label id="pageName" class="text-center label-sm">合约期限选择</label>
+			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
+		    	</div>
+<!-- 	       		<button class="btn btn-default  btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true"> -->
+<!-- 				    <span id="pageName">合约期限选择</span> -->
+<!-- 				    <span class="caret"></span> -->
+<!-- 			 	 </button> -->
 	        		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
 	        			<#if (peroidList?? && peroidList?size>0)>
 	        			<#list peroidList as item>  
@@ -50,9 +59,9 @@
 	        </div> 
         </div>     
      </div>
-     <div class="container-fluid" style="position:absolute; bottom:6%; width:100%">
-     	<button id="selectConOkBtn" type="button" class="btn btn-warning  btn-lg btn-block" >确定合约</button>
-      </div>
+<!--      <div class="container-fluid" style="position:absolute; bottom:6%; width:100%"> -->
+<!--      	<button id="selectConOkBtn" type="button" class="btn btn-warning  btn-lg btn-block" >确定合约</button> -->
+<!--       </div> -->
       
 
     <!-- Bootstrap core JavaScript

@@ -29,8 +29,20 @@
      	        action : '${base}/shopManage/weShopSet/weShopSetQrcode', 
 				data: parms
      	    });  
-		  	
 		  });  
+		  //店铺名称文本框失去焦点
+		  $("#storeName").focus(function(){
+			  $("#storeName").val("");
+		  });
+		  //手机号文本框失去焦点
+		  $("#phoneNum").focus(function(){
+			  $("#phoneNum").val("");
+		  });
+		  //微信号文本框失去焦点
+		  $("#weixin").focus(function(){
+			  $("#weixin").val("");
+		  });
+		  
 		  
 		});
 	</script>
@@ -50,7 +62,6 @@
  		{
  			 if(!checkPhoneNum(phoneNum.value)) //edit_by_wenh_2015_3_26
  	 		 {
- 	 			  alert("该手机号已经注册过");
  	 			  return
  	 		 }
  	  		  if (re.test(phoneNum.value)) {
@@ -70,7 +81,7 @@
 
 	    var userId = $("#hideTag").val();;	
     	//ajax 操作，刷新本界面数据   
-		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId},'weixinid':${weixin},'username':'${name}'};
+		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId},'weixinid':$('#weixin').val(),'username':'${name}'};
 		$.commonFormSubmit({
 		 type: "POST",
 		 action: '${base}/shopManage/weShopSetUpdate',

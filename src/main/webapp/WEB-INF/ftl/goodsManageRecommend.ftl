@@ -40,29 +40,23 @@
 	        </div>        
 	        
     
-     <div id="first_row" style=" width:100%;height:44px;margin-left:0px;margin-top:20px;margin-bottom:20px;" >   	
+     <div id="first_row" style=" width:100%;height:50px;padding:5px;margin-left:0px;border-bottom:1px solid #A6A6A6" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">店长推荐
     		</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
-			<div style="background-color:#A6A6A6;width:100%;float:left;height:0.5px;margin-top:0px;">
-			</div>
      </div>
      
-     <div id="second_row" style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     <div id="second_row"  style="width:100%;height:50px;padding:5px;margin-left:0px;border-bottom:1px solid #A6A6A6; background:#dcdcdc;color:#aaa;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热约合约
     		</p>
     		
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
-			<div style="background-color:#A6A6A6;width:100%;float:left;height:0.5px;margin-top:0px;">
-			</div>
      </div>
      
-          <div id="third_row" style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     <div id="third_row" style="width:100%;height:50px;padding:5px;margin-left:0px;border-bottom:1px solid #A6A6A6; background:#dcdcdc;color:#aaa;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热销网卡
     		</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
-			<div style="background-color:#A6A6A6;width:100%;float:left;height:0.5px;margin-top:0px;">
-			</div>
      </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->

@@ -33,6 +33,25 @@
     <script src="${resRoot}/js/date.js?v=${resVer}"></script>
     <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
     <script type="text/javascript">
+    
+	  //js日期比较(yyyy-mm-dd)
+	    function CompareDate(startDate,endDate) {
+	        var arr = startDate.split("-");
+	        var starttime = new Date(arr[0], arr[1], arr[2]);
+	        var starttimes = starttime.getTime();
+	
+	        var arrs = endDate.split("-");
+	        var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+	        var lktimes = lktime.getTime();
+	
+	        if (starttimes >= lktimes) {
+	            return false;
+	        }
+	        else
+	            return true;
+	
+	    }    
+    
         $(function(){
             $('#beginTime').date();
             $('#endTime').date();
@@ -221,7 +240,6 @@
         .order_contain_middle_left
         {
             float: left;
-            background: #66512c;
         }
         .order_contain_middle_middle
         {
@@ -326,7 +344,7 @@
 		                   <div class="order_line"></div>
 		                   <div class="order_contain_middle">
 		                       <div class="order_contain_middle_left">
-		                           <img src="${resRoot}/image/login/wo_logo.png" width="50" height="65">
+		                           <img src="${imageRoot}${item.PHOTO_LINKS}" width="50" height="65">
 		                       </div>
 		                       <div class="order_contain_middle_middle">
 		                           <div>订单编号：${item.ORDER_ID}</div>

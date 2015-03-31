@@ -86,7 +86,7 @@ public class WeShopRegist2Controller {
     	String strPersonalId=paramsMap.get("txtpersonalid");//身份证号
     	String strBank=paramsMap.get("selBank");//开户银行
     	String strBankCardId=paramsMap.get("txtbankcardid");//银行卡号
-    	
+    	String strDefalutImg="/uploader/headimages/touxiang_default.png";
     	
     	System.out.println("打印的数据");
     	System.out.println(LId);
@@ -113,6 +113,7 @@ public class WeShopRegist2Controller {
     	record_aurdauthinfo.setStatus("00");//STATUS
     	record_aurdauthinfo.setStoreId(LId.toString());//STORE_ID
     	record_aurdauthinfo.setStoreName(strName+"的店铺");//STORE_NAME
+    	record_aurdauthinfo.setUserImg(strDefalutImg);
     	//record.setCreateTime(DateUtil.getNow());
     	tdAurDAUTHINFODao.insertSelective(record_aurdauthinfo);
     	
@@ -143,16 +144,17 @@ public class WeShopRegist2Controller {
     	 	
     	
     	ModelAndView mav = null;
-    	ModelMap mmap=null;
-		mmap=new ModelMap();
+    	ModelMap mmap=new ModelMap();
         //从数据库获取信息赋值
 		mmap.addAttribute("title", "我的微店");
-		mmap.addAttribute("id", LId.toString());
+//		mmap.addAttribute("id", LId.toString());
 		mmap.addAttribute("userid",LId.toString());
-		mmap.addAttribute("name", strName);//姓名
-		mmap.addAttribute("storename", strName+"的店铺");//姓名
-		mmap.addAttribute("phone", strPhoneNum); //手机号
-		mmap.addAttribute("weixin", strwecharaccount); //微信
+//		mmap.addAttribute("name", strName);//姓名
+//		mmap.addAttribute("storename", strName+"的店铺");//姓名
+//		mmap.addAttribute("phone", strPhoneNum); //手机号
+//		mmap.addAttribute("weixin", strwecharaccount); //微信
+//		mmap.addAttribute("userimage",strDefalutImg);
+		
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
     	
     	//ModelAndView mav = new ModelAndView("weShopLogin.ftl");

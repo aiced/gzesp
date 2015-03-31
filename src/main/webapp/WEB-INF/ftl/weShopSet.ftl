@@ -155,10 +155,11 @@
 			 <#if (info_index<=0) > 
 	<div class = "cellDiv" >
 		    	<p class = "cellRightLable"> 店铺图标 </p>
-		    	  	<#if ('${info.avatar}'?exists) > 
-			  			   <img class = "avatar img-circle" src='${info.avatar}' > 
+		    		<!-- edit_by_wenh_2015_3_31 通过根据该字段的字符串的长度是否大于5来进行显示相关图片，已经路径的长度肯定大于5，5是随便写的，后续可以修改 -->
+		    	  	<#if ('${info.avatar}'?length gt 5) > 
+			  			   <img class = "avatar img-circle" src='${imageRoot}${info.avatar}' > 
  					<#else>						
- 		    				<img class = "avatar img-circle" src=""  > 
+ 		    				<img class = "avatar img-circle" src="${imageRoot}/esp/resources/image/shopHome/head.png"  > 
 					</#if>		    	
 		    	</div>	
    	<!--店铺名称   -->	

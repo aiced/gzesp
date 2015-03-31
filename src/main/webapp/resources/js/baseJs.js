@@ -253,23 +253,7 @@ function SetRemainTime() {
         $(m_btnName).text(curCount + "秒内输入验证码");  
     }  
 }  
-//js日期比较(yyyy-mm-dd)
-function CompareDate(startDate,endDate) {
-    var arr = startDate.split("-");
-    var starttime = new Date(arr[0], arr[1], arr[2]);
-    var starttimes = starttime.getTime();
 
-    var arrs = endDate.split("-");
-    var lktime = new Date(arrs[0], arrs[1], arrs[2]);
-    var lktimes = lktime.getTime();
-
-    if (starttimes >= lktimes) {
-        return false;
-    }
-    else
-        return true;
-
-}
 //发送验证码
 function sendMessage(strPhone,btnName) {  
     curCount = count;  

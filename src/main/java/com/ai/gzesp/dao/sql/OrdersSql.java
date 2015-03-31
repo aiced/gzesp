@@ -54,17 +54,18 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
 				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK"
+				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
-				//+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
+				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
-		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST");//GDS_D_PHOTO,GDS_D_INFO 先注释掉后面需要放开注释
+		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");//GDS_D_PHOTO,GDS_D_INFO 先注释掉后面需要放开注释
 		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
 				+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
 				+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
 				+" and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id"	
-				//+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id"先注释掉，后面需要放开注释
-				//+ "and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID"先注释掉，后面需要放开注释
+				+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id" //先注释掉，后面需要放开注释
+				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
+				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
 				+" and ORD_D_DEAL.USER_ID="+strUserID
 				+" order by ORD_D_BASE.Order_Time DESC"
 				);
@@ -102,15 +103,18 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"
 				+"ORD_D_PAYLOG.PAY_MODE,"
 				+"ORD_D_PAYLOG.PAY_STATE,"
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK"
+				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"
-				+" "
+				+"GDS_D_PHOTO.PHOTO_LINKS"
 				);
-		sb.append("from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST");
+		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
 		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
 				+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
 				+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
-				+" and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id"	
+				+" and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id"
+				+" and GDS_D_INFO.GOODS_ID=ORD_D_PROD.Goods_Id"
+				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.Album_Id"
+				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
 				+" and ORD_D_DEAL.USER_ID="+strUserID
 				);
 		if (strOrderID.length()<=0 && startDate.length()<=0) //订单id为空 ,时间为空，查全部的
@@ -141,7 +145,6 @@ public class OrdersSql {
 	//iflag 
 	public List getOrderCountByUserID(String strUserID)
 	{
-		strUserID="1234567890";
 		StringBuffer sb=new StringBuffer();
 		
 		sb.append("select b.user_id,");

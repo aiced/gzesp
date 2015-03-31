@@ -60,7 +60,7 @@ public class GoodsManageGoodSelectController {
     	Map rspMap = new HashMap();  
     	rspMap.put("userId", strUserID);   
     	rspMap.put("rspCode", "0000");   
-    	rspMap.put("name", "weidian");   
+    	rspMap.put("name", "");   
     	rspMap.put("total", rcdlist.size());   
     	rspMap.put("title", "选择商品");
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));

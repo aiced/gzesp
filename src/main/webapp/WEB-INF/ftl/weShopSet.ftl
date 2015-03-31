@@ -90,7 +90,7 @@
 		  	 //history.back();
 		  	 //alert("ok");
 		  	 //return;
-		  	 alert(data);
+		  	 //alert(data);
 		  	 return;
 		 }
 		});			

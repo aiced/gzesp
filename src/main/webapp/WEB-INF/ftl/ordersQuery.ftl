@@ -27,8 +27,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-
+    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    
     <!--日历控件js-->
     <script src="${resRoot}/js/date.js?v=${resVer}"></script>
     <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
@@ -37,6 +37,23 @@
             $('#beginTime').date();
             $('#endTime').date();
 
+            //[返回]按钮点击
+            $("#top_left").click(function(){  
+        		var parms = {'userid':'${hideuserid}','fromPage':'${fromPage}'};
+        		$.commonFormSubmit({
+           		 type: "POST",
+        		 action: '${base}/shopManage/Back',
+        		 data: parms,
+        		 success: function(data){
+        		  	 //history.back();
+        		  	 //alert("ok");
+        		  	 //return;
+        		  	 //alert(data);
+        		  	 return;
+        		 }
+        		});
+            });    
+            
             //检验输入数值是否正确
             function checkData()
             {
@@ -228,7 +245,7 @@
     <div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>

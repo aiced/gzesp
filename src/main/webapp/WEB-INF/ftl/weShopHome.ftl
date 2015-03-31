@@ -216,7 +216,7 @@
 	                <div class="head_bottom_line"></div>
 	                <div class="head_bottom_show"><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></div>
 	            </div>
-	            <div class="head_user"><img src="${resRoot}/image/shopHome/head.png" alt="头像" class="img-circle" width="90" height="90"></div>
+	            <div class="head_user"><img src="${imageRoot}${userimage}" alt="头像" class="img-circle" width="90" height="90"></div>
 	        </div>
 	        
 	         <!-- 分享到弹出框 -->    
@@ -251,9 +251,9 @@
 		                    <td class="total_view">累计访问：0</td>	                		
 		                <#else>
 	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_view">昨日访问：${item.visitDay}</td>
-	                    		<td class="month_view">本月访问：${item.visitMonth}</td>
-	                    		<td class="total_view">累计访问：${item.visitTotal}</td>
+	                	    	<td class="yesterday_view">昨日访问：${item.yesterday_view}</td>
+	                    		<td class="month_view">本月访问：${item.month_view}</td>
+	                    		<td class="total_view">累计访问：${item.total_count}</td>
 	                		</#list>
 	                	</#if>
 					</tr>
@@ -278,9 +278,9 @@
 		                    <td class="total_view">累计佣金：0</td>	                		
 		                <#else>
 	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_money">昨日佣金：${item.visitDay}</td>
-	                    		<td class="month_money">本月佣金：${item.visitMonth}</td>
-	                    		<td class="total_money">累计佣金：${item.visitTotal}</td>
+	                	    	<td class="yesterday_money">昨日佣金：${item.yesterday_view}</td>
+	                    		<td class="month_money">本月佣金：${item.month_view}</td>
+	                    		<td class="total_money">累计佣金：${item.total_count}</td>
 	                		</#list>
 	                	</#if>
 					</tr>
@@ -289,7 +289,7 @@
 	        </div>
 	        <div class="list-group">
 	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item">商品管理 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
-	            <a href="ordersQuery?userid=${userid}" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	            <a href="commissionQuery?userid=${userid}" class="list-group-item">佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	        </div>
 	        <div class="list-group">

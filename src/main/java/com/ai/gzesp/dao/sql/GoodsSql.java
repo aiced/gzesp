@@ -35,6 +35,7 @@ public class GoodsSql {
 				);
 		sb.append(" from AUR_D_AUTHINFO t1");
 		sb.append("	where t1.USER_ID ="+ userId);
+		System.out.println(sb.toString());
 		List userList = commonDao.queryForList(sb.toString());
 		return userList;
 	}

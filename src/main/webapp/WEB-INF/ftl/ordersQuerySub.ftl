@@ -27,7 +27,7 @@
 		                   <div class="order_line"></div>
 		                   <div class="order_contain_middle">
 		                       <div class="order_contain_middle_left">
-		                           <img src="${resRoot}/image/login/wo_logo.png" width="50" height="65">
+		                           <img src="${imageRoot}${item.PHOTO_LINKS}" width="50" height="65">
 		                       </div>
 		                       <div class="order_contain_middle_middle">
 		                           <div>订单编号：${item.ORDER_ID}</div>

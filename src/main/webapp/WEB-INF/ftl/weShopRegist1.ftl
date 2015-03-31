@@ -157,13 +157,13 @@
 		  		bRet3=false;
 		  		return;
 		  	}
-		  	else if($("#txtyanzhengma").val()!=code)
-		  	{
-		  		alert("输入的验证码与短信中的验证码不匹配");
-		  		$("#div_yanzhengma").addClass("has-error");
-		  		bRet3=false;
-		  		return;
-		  	}
+		  	//else if($("#txtyanzhengma").val()!=code)
+		  	//{
+		  	//	alert("输入的验证码与短信中的验证码不匹配");
+		  	//	$("#div_yanzhengma").addClass("has-error");
+		  	//	bRet3=false;
+		  	//	return;
+		  	//}
 		  	else
 		  	{
 		  		$("#div_yanzhengma").removeClass("has-error");

@@ -27,16 +27,52 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-
+    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    
     <!--日历控件js-->
     <script src="${resRoot}/js/date.js?v=${resVer}"></script>
     <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
     <script type="text/javascript">
+    
+	  //js日期比较(yyyy-mm-dd)
+	    function CompareDate(startDate,endDate) {
+	        var arr = startDate.split("-");
+	        var starttime = new Date(arr[0], arr[1], arr[2]);
+	        var starttimes = starttime.getTime();
+	
+	        var arrs = endDate.split("-");
+	        var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+	        var lktimes = lktime.getTime();
+	
+	        if (starttimes >= lktimes) {
+	            return false;
+	        }
+	        else
+	            return true;
+	
+	    }    
+    
         $(function(){
             $('#beginTime').date();
             $('#endTime').date();
 
+            //[返回]按钮点击
+            $("#top_left").click(function(){  
+        		var parms = {'userid':'${hideuserid}','fromPage':'${fromPage}'};
+        		$.commonFormSubmit({
+           		 type: "POST",
+        		 action: '${base}/shopManage/Back',
+        		 data: parms,
+        		 success: function(data){
+        		  	 //history.back();
+        		  	 //alert("ok");
+        		  	 //return;
+        		  	 //alert(data);
+        		  	 return;
+        		 }
+        		});
+            });    
+            
             //检验输入数值是否正确
             function checkData()
             {
@@ -204,7 +240,6 @@
         .order_contain_middle_left
         {
             float: left;
-            background: #66512c;
         }
         .order_contain_middle_middle
         {
@@ -228,7 +263,7 @@
     <div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
@@ -309,7 +344,7 @@
 		                   <div class="order_line"></div>
 		                   <div class="order_contain_middle">
 		                       <div class="order_contain_middle_left">
-		                           <img src="${resRoot}/image/login/wo_logo.png" width="50" height="65">
+		                           <img src="${imageRoot}${item.PHOTO_LINKS}" width="50" height="65">
 		                       </div>
 		                       <div class="order_contain_middle_middle">
 		                           <div>订单编号：${item.ORDER_ID}</div>

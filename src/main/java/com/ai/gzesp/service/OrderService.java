@@ -1,6 +1,8 @@
 package com.ai.gzesp.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -70,7 +72,9 @@ public class OrderService {
     
     
     public List<Map>[] getContractByGoodsID(String goodsId) {
-    	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId);
+    	
+    	String orderByStr = "SEQ_NUM"; 
+    	List<Map<String, Object>> contactList = goodsSql.getContractByGoodsID(goodsId, orderByStr);
     	
     	List<Map> packList = new ArrayList();
     	List<Map> pageList = new ArrayList();

@@ -24,13 +24,16 @@
 	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="margin:-1px 0px 0px 2px">
 	           			<#if (pkgList?? && pkgList?size>0)>
 		        	  	<#list pkgList as item>  
-							<li role="presentation" onclick="javascript:showActPkg(this)">
-						  		 <a style=" line-height:4;vertical-align:middle;" role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
+							<li role="presentation"  onclick="javascript:showActPkg(this)">
+						  		 <a style=" line-height:3;vertical-align:middle;" role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
 						         <input type="hidden" id="goodsId_hidden" value="${item.goodsId}">
 						         <input type="hidden" id="pkgType_hidden" value="${item.name}">
 						         <input type="hidden" id="resId_hidden" value="${item.resId}">
 						         <input type="hidden" id="packVal_hidden" value="${item.val}">
 							  </li>
+							  <#if item_has_next>
+								  <li role="presentation" class="divider"></li>
+							  </#if>
 						</#list>   
 						</#if>
 					</ul>
@@ -48,11 +51,14 @@
 	        			<#if (peroidList?? && peroidList?size>0)>
 	        			<#list peroidList as item>  
 							  <li role="presentation"	onclick="javascript:selectPeriod(this)">
-							   <a  style=" line-height:4;vertical-align:middle;" role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
+							   <a  style=" line-height:3;vertical-align:middle;" role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
 							  <input type="hidden" id="resId_hidden" value="${item.resId}">
 						      <input type="hidden" id="pageName_hidden" value="${item.name}">
 						      <input type="hidden" id="pageVal_hidden" value="${item.val}">
 							  </li>
+							   <#if item_has_next>
+								  <li role="presentation" class="divider"></li>
+							  </#if>
 						</#list> 
 						</#if> 
 					</ul>

@@ -82,7 +82,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
      <script type="text/javascript">
@@ -265,6 +264,13 @@
 			}
 			
 		}
+	
+ 	$(function(){
+        //[返回]按钮点击
+        $("#top_left").click(function(){  
+    		location.href = "goodsManageRecommend?userid="+${userId};
+        });   
+ 	})
 	</script>
 
   </body>

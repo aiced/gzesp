@@ -96,6 +96,10 @@
 		  	
 		  });*/ 
 		  
+	        //[返回]按钮点击
+	        $("#top_left").click(function(){
+	    		location.href = "weShopHome?userid="+${userId};
+	        });   
 		});
 	</script>
     

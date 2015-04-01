@@ -65,7 +65,7 @@ function afterUpdateNumber(data) {
 	changeSatate();
 	$('#serial_number').html(data.serial_number);
 	
-	var attrVal=$('#num_resId').val()+"|"+"NUMBERS"+"|"+ "号码" +"|"+data.serial_number;
+	var attrVal=$('#num_resId').val()+"|"+"NUMBERS"+"|"+ data.serial_number +"|"+data.serial_number;
 	$('#attr_number').val(attrVal);
 	
 	var tmp = {serialNumber:data.serial_number};

@@ -11,8 +11,8 @@
     
     <div class="container-fluid" style="background-color:#ffffff;">
 	    <div class="row" >
-		    <div class="col-xs-6" style="height:38px;" >
-		    	<div style="padding-:2px;margin-right:-5px; margin-top:8px;border-right:solid 1px #f4f4f4;" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+		    <div class="col-xs-6" style="line-height:3;" >
+		    	<div style="padding:2px;margin:3px -5px 2px 0px;border-right:solid 1px #f4f4f4;" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
 			    	<label id="packName" class="text-center label-sm">套餐资费选择</label>
 			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
 		    	</div>
@@ -21,11 +21,11 @@
 <!-- 				    <span id="packName">套餐资费选择</span> -->
 <!-- 				    <span class="caret"></span> -->
 <!-- 			 	 </button> -->
-	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="">
+	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="margin:-1px 0px 0px 2px">
 	           			<#if (pkgList?? && pkgList?size>0)>
 		        	  	<#list pkgList as item>  
 							<li role="presentation" onclick="javascript:showActPkg(this)">
-						  		 <a role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
+						  		 <a style=" line-height:4;vertical-align:middle;" role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
 						         <input type="hidden" id="goodsId_hidden" value="${item.goodsId}">
 						         <input type="hidden" id="pkgType_hidden" value="${item.name}">
 						         <input type="hidden" id="resId_hidden" value="${item.resId}">
@@ -35,8 +35,8 @@
 						</#if>
 					</ul>
 	        </div>
-	        <div class="col-xs-6"  style="height:38px;">
-	       		 <div style="padding:2px;margin-top:8px;" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+	        <div class="col-xs-6"  style="line-height:3;">
+	       		 <div style="padding:2px;margin-top:3px;" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
 			    	<label id="pageName" class="text-center label-sm">合约期限选择</label>
 			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
 		    	</div>
@@ -44,11 +44,11 @@
 <!-- 				    <span id="pageName">合约期限选择</span> -->
 <!-- 				    <span class="caret"></span> -->
 <!-- 			 	 </button> -->
-	        		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2">
+	        		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2" style="margin:0px 0px 0px -2px">
 	        			<#if (peroidList?? && peroidList?size>0)>
 	        			<#list peroidList as item>  
 							  <li role="presentation"	onclick="javascript:selectPeriod(this)">
-							   <a role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
+							   <a  style=" line-height:4;vertical-align:middle;" role="menuitem" tabindex="-1" href="javascript:void(0)">${item.name}</a>
 							  <input type="hidden" id="resId_hidden" value="${item.resId}">
 						      <input type="hidden" id="pageName_hidden" value="${item.name}">
 						      <input type="hidden" id="pageVal_hidden" value="${item.val}">

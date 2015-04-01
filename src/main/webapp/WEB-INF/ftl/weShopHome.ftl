@@ -192,7 +192,7 @@
 	    <div>
 	    	<!--top_start-->
 	        <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+	        	<div style="float:left;width:20%;height:40px;font-size:14px;"></div>
 	        	<div id="top_middle">${title}</div>
 	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
 	        </div>

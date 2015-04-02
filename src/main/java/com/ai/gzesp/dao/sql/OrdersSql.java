@@ -160,4 +160,37 @@ public class OrdersSql {
 
 		return saleList;
 	}
+	
+	public List getCustMyOrder(String passport, String phone) {
+		StringBuffer sb=new StringBuffer();
+		sb.append("select distinct"
+				+ "	a.ORDER_ID, b.ORDER_STATE as ORDER_STATE_CODE ,"
+				+ " CASE WHEN b.ORDER_STATE='00' then '待处理'"
+				+ " WHEN b.ORDER_STATE='01' then '待分配'"
+				+ " WHEN b.ORDER_STATE='02' then '订单补录'"
+				+ " WHEN b.ORDER_STATE='03' then '待发货'"
+				+ " WHEN b.ORDER_STATE='04' then '发货中'"
+				+ " WHEN b.ORDER_STATE='05' then '物流在途'"
+				+ " WHEN b.ORDER_STATE='05' then '成功关闭'"
+				+ " ELSE '未知'"
+				+ " END ORDER_STATE," 
+				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
+				+ " e.USER_IMG, e.STORE_NAME,  g.PHOTO_LINKS" );
+		sb.append("	from ORD_D_CUST a, ORD_D_BASE b, ORD_D_PROD c, ORD_D_DEAL d, AUR_D_AUTHINFO e,"
+				+ " GDS_D_INFO f, GDS_D_PHOTO g");
+		sb.append(" where "
+				+ " a.PSPT_NO = '" + passport + "'"
+				+ " and a.PHONE_NUMBER = '"+ phone + "'"
+				+ " and a.ORDER_ID = b.ORDER_ID "
+				+ " and a.ORDER_ID = c.ORDER_ID "
+				+ " and a.ORDER_ID = d.ORDER_ID "
+				+ " and d.USER_ID = e.USER_ID "
+				+ " and c.GOODS_ID = f.GOODS_ID"
+				+ " and f.ALBUM_ID = g.ALBUM_ID"
+				+ " and g.DEFAULT_TAG = '0'" );
+		
+		List custMyOrderList =commonDao.queryForList(sb.toString());
+
+		return custMyOrderList;
+	}
 }

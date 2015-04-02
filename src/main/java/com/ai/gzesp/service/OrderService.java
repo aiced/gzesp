@@ -29,6 +29,7 @@ import com.ai.gzesp.dao.service.TdOrdDPOSTDao;
 import com.ai.gzesp.dao.service.TdOrdDPRODDao;
 import com.ai.gzesp.dao.service.TdOrdDRESDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
+import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.alibaba.fastjson.JSON;
@@ -62,12 +63,19 @@ public class OrderService {
     @Resource 
     GoodsSql goodsSql;
     
+    @Resource 
+    OrdersSql ordersSql;
+    
     public String GetGoodsNumAttr(String goodsId) {
     	return goodsSql.GetGoodsNumAttr(goodsId);
     }
     
     public Map getGoodsDefaultPhoto(String goodsId) {
     	return goodsSql.GetGoodsDefaultPhoto(goodsId);
+    }
+    
+    public List getCustMyOrder(String passport, String phone) {
+    	return ordersSql.getCustMyOrder(passport, phone);
     }
     
     

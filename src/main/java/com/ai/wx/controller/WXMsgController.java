@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ai.sysframe.utils.XmlUtil;
+import com.ai.wx.consts.DataConstants;
 import com.ai.wx.service.CoreService;
 import com.ai.wx.service.WXMsgService;
 
 @Controller
 @RequestMapping("/wx")
 public class WXMsgController {
-     final String Token = "asiainfo";
+//     final String Token = "asiainfo";
      
      protected Logger logger = LoggerFactory.getLogger(getClass());
      
@@ -43,7 +44,7 @@ public class WXMsgController {
     		@RequestParam(value = "echostr", required = true)String echostr,
     		HttpServletResponse response) throws IOException{
     	
-    	 String[] ArrTmp = { Token, timestamp, nonce };  
+    	 String[] ArrTmp = { DataConstants.TOKEN, timestamp, nonce };  
          Arrays.sort(ArrTmp);  
          StringBuffer sb = new StringBuffer();  
          for (int i = 0; i < ArrTmp.length; i++) {  

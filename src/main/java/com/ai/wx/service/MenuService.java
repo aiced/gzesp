@@ -102,8 +102,20 @@ public class MenuService {
             log.error(resultInfo.get(resultInfo.size()-1));
             return false;
         }
-        
     }
+    
+	public boolean createMenu(String accessToken, String menuTxt) {
+		StringBuilder url = new StringBuilder();
+		url.append("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=");
+		url.append(accessToken);
+		String respJson = HttpClientUtil.sendPostSSLRequest(url.toString(),	menuTxt);
+		if (StringUtils.isNotBlank(respJson)) {
+			ErrorCode errorcode = JsonUtils.parseJson(respJson, ErrorCode.class);
+			return errorcode.getErrcode().equals("0") ? true : false;// 返回0时表示创建成功
+		} else {
+			return false;
+		}
+	}
     
     private Menu buildMenu(){
         Menu menu = new Menu();

@@ -68,7 +68,7 @@ public class WeShopLoginController {
     		//mav = new ModelAndView("weShopHome.ftl");
     		mmap=new ModelMap();
             //从数据库获取信息赋值
-    		mmap.addAttribute("title", "我的微店");
+    		//mmap.addAttribute("title", "我的微店");
 //    		mmap.addAttribute("id", list.get(0).getId());
     		mmap.addAttribute("userid",list.get(0).getUserId());
 //    		mmap.addAttribute("name", list.get(0).getUserName());//姓名

@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${name}的微店</title>
+<title>欢迎来到${name}的微店</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
-         <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
-  
-  </head>
-  
-     <!-- Bootstrap core JavaScript====================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
-      <script type="text/javascript">
+<!-- Bootstrap core CSS -->
+<link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}"
+	rel="stylesheet">
+<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+
+</head>
+
+<!-- Bootstrap core JavaScript====================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+<script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+<script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+<script type="text/javascript">
 		$(document).ready(function(){  
 		   //[获取验证码]按钮点击
 		  $("#qrCode").click(function(){  
@@ -46,8 +48,8 @@
 		  
 		});
 	</script>
-	
-	 <script type="text/javascript">
+
+<script type="text/javascript">
     function doneClick(obj) {
  		 var storeName = document.getElementById("storeName");
  		if (storeName.value.length !== 0){
@@ -96,128 +98,156 @@
 		});			
 }
      </script>
- <style type="text/css">	 
- 	 * {margin:0;padding:0;} 
-	html,body{
- 		background-color:#E8E9E8; 
-	}
-	 html, body , p {
-	  margin:0; 
-	  padding:0; 
-   	  list-style:none;
-	 }
-	 
-	.cellDiv {background:white;width:100%;height:44px;}
-	.cellRightLable{color:#545454;margin-left:10px;width:150px;height:42px;line-height:42px;float:left;display: block;}
-	.cellTopLine{background-color:#E8E9E8;width:95%;height:0.5px;margin:auto;}
-	.avatar{width:36px;height:36px ;float:right;display: block;margin-right:10px;margin-top:4px;}
-	.input{width:140px;height:40px ;float:right;display: block;margin-right:10px;margin-top:2px; text-align:right;
-		border-left: 0;
-   		border-right: 0;
-  		border-top: 0;
-  	    border-bottom:0px;
-  	    color:#BABABA;
-  	    }
-  	 .arrow{width:10px;height:15px ;float:right;display: block;margin-right:10px;margin-top:15px}
-  	 .qrCode{width:20px;height:20px ;float:right;display: block;margin-right:5px;margin-top:12px;background-color:#E8E9E8;}
-  	 .skin{width:20px;height:20px ;float:right;display: block;margin-right:5px;margin-top:12px;background-color:#E8E9E8;}
-  	 
-   .ok{
-    background-color:#F7A837;
-    width : 90%;
-	height : 40px;
-	line-height: 40px;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    text-align: center;
-	margin:2px auto;
+<style type="text/css">
+
+.cellDiv {
+	background: white;
+	width: 100%;
+	height: 60px;
+}
+
+.cellRightLable {
+	color: #545454;
+	margin-left: 10px;
+	height: 60px;
+	line-height: 60px;
+	float: left;
+}
+
+.cellTopLine {
+	background-color: #E8E9E8;
+	width: 95%;
+	height: 0.5px;
+	margin: auto;
+}
+
+.avatar {
+	width: 48px;
+	height: 48px;
+	float: right;
+	margin-right: 30px;
+	margin-top: 5px;
+}
+
+.input {
+	width: 140px;
+	height: 40px;
+	float: right;
 	display: block;
-	}
-  	    
-  	    
-	
+	margin-right: 10px;
+	margin-top: 10px;
+	text-align: right;
+	border-left: 0;
+	border-right: 0;
+	border-top: 0;
+	border-bottom: 0px;
+	color: #BABABA;
+}
+
+.arrow {
+	width: 10px;
+	height: 15px;
+	float: right;
+	margin-right: 10px;
+	margin-top: 30px
+}
+
+.qrCode {
+	width: 48px;
+	height: 48px;
+	float: right;
+	display: block;
+	margin-right: 12px;
+	margin-top: 10px;
+	background-color: #E8E9E8;
+}
+
+.skin {
+	width: 48px;
+	height: 48px;
+	float: right;
+	display: block;
+	margin-right: 12px;
+	margin-top: 10px;
+	background-color: #E8E9E8;
+}
+
 </style>
 
-  <body >
-<!--标题   -->
- 	<div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
-	        	<div id="top_middle">${title}</div>
-	 </div>
-    
-    <div style="width:100%;height:20px;">
-    </div>
-    
-    <!--列表   -->
-	<!--店铺图标   -->	
-	<#list userlist as info>			
-			 <#if (info_index<=0) > 
-	<div class = "cellDiv" >
-		    	<p class = "cellRightLable"> 店铺图标 </p>
-		    		<!-- edit_by_wenh_2015_3_31 通过根据该字段的字符串的长度是否大于5来进行显示相关图片，已经路径的长度肯定大于5，5是随便写的，后续可以修改 -->
-		    	  	<#if ('${info.avatar}'?length gt 5) > 
-			  			   <img class = "avatar img-circle" src='${imageRoot}${info.avatar}' > 
- 					<#else>						
- 		    				<img class = "avatar img-circle" src="${imageRoot}/esp/resources/image/shopHome/head.png"  > 
-					</#if>		    	
-		    	</div>	
-   	<!--店铺名称   -->	
-	    <div class = "cellDiv" >
-		    	<p class = "cellRightLable"> 店铺名称 </p>
-		    	<input id = "storeName" class = "input" value=${info.storeName} placeholder="点击输入店名"></input> 
-		    	<div class = "cellTopLine">
-		    	</div>		
-	    </div>
-	<!--联系方式   -->	
-	    <div class = "cellDiv" >
-		    	<p class = "cellRightLable"> 联系方式 </p>
-		    	<input id = "phoneNum" class = "input" value=${info.phoneNumber} placeholder="点击输入联系方式"></input> 
-		    	<div class = "cellTopLine">
-		    	</div>		
-	    </div>
-	    <!-- edit_wenh_2015_3_27 -->
-	    <input type="hidden" value=${info.phoneNumber} id="hide_phonenumber"/>
-	<!--微信号   -->	
-    <div class = "cellDiv" >
-	    	<p class = "cellRightLable"> 微信号 </p>
-	    	<input id = "weixin" class = "input" value=${info.weixin_id} placeholder="点击输入微信"></input> 
-	    	<div class = "cellTopLine">
-	    	</div>		
-    </div>   
-    	<!-- edit_wenh_2015_3_27 -->
-	    <input type="hidden" value=${info.weixin_id} id="hide_weixin_id"/> 
-	<!--店铺二维码   -->	
-	    <div id ="qrCode" class = "cellDiv" >
-		    	<p class = "cellRightLable"> 店铺二维码 </p>
-		    	
-		    	<img class = "arrow" src="${resRoot}/image/goodsManager/goodSelectArrow.png" > 
-		    	<img class = "qrCode" src="${resRoot}/image/weShop/erweima.png" > 
-		    	<div class = "cellTopLine">
-		    	</div>		
-	    </div>
-	 <!--店铺皮肤   -->	
-	     <div class = "cellDiv" >
-		    	<p class = "cellRightLable"> 店铺皮肤 </p>
-		    	<img class = "arrow" src="${resRoot}/image/goodsManager/goodSelectArrow.png" > 
-		    	<img class = "skin" src="${resRoot}/image/goodsManager/skin.png" > 
-		    	<div class = "cellTopLine">
-		    	</div>		
-	    </div>
-				
-    <div style="width:100%;height:44px;margin-top:20px;">   	
-    	<a class = "ok" onclick="doneClick(this);"> 确定</a>
-    </div>
-    
-    <input id = "hideTag" type = "hidden" name = 'hideTag' value = ${info.userId}>
-    
-				
- 			 </#if>
-	</#list>
-	
+<body>
+	<!--标题   -->
+	<!--top_start-->
+	<div id="top">
+		<div id="top_left">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+		</div>
+		<div id="top_middle">${title}</div>
+		<div id="top_right"></div>
+	</div>
+	<div id="dv_clear"></div>
+	<!--top_end-->
+	<!--列表   -->
+	<!--店铺图标   -->
+	<#list userlist as info> <#if (info_index<=0) >
+	<div class="cellDiv">
+		<h4><div class="cellRightLable">店铺图标</div></h4>
+		<!-- edit_by_wenh_2015_3_31 通过根据该字段的字符串的长度是否大于5来进行显示相关图片，已经路径的长度肯定大于5，5是随便写的，后续可以修改 -->
+		<#if ('${info.avatar}'?length gt 5) > 
+			<img class="avatar img-circle" src='${imageRoot}${info.avatar}'> 
+		<#else> 
+			<img class="avatar img-circle" src="${imageRoot}/esp/resources/image/shopHome/head.png">
+		</#if>
+	</div>
+	<!--店铺名称   -->
+	<div class="cellDiv">
+		<h4><div class="cellRightLable">店铺名称</div></h4>
+		<input id="storeName" class="input input-lg" value=${info.storeName}
+			placeholder="点击输入店名"></input>
+		<div class="cellTopLine"></div>
+	</div>
+	<!--联系方式   -->
+	<div class="cellDiv">
+		<h4><div class="cellRightLable">联系方式</div></h4>
+		<input id="phoneNum" class="input input-lg" value=${info.phoneNumber}
+			placeholder="点击输入联系方式"></input>
+		<div class="cellTopLine"></div>
+	</div>
+	<!-- edit_wenh_2015_3_27 -->
+	<input type="hidden" value=${info.phoneNumber} id="hide_phonenumber" />
+	<!--微信号   -->
+	<div class="cellDiv">
+		<h4><div class="cellRightLable">微信号</div></h4>
+		<input id="weixin" class="input input-lg" value=${info.weixin_id}
+			placeholder="点击输入微信"></input>
+		<div class="cellTopLine"></div>
+	</div>
+	<!-- edit_wenh_2015_3_27 -->
+	<input type="hidden" value=${info.weixin_id} id="hide_weixin_id" />
+	<!--店铺二维码   -->
+	<div id="qrCode" class="cellDiv">
+		<h4><div class="cellRightLable">店铺二维码</div></h4>
 
- 
-	
-    
-  </body>
+		<img class="arrow"
+			src="${resRoot}/image/goodsManager/goodSelectArrow.png"> <img
+			class="qrCode" src="${resRoot}/image/weShop/erweima.png">
+		<div class="cellTopLine"></div>
+	</div>
+	<!--店铺皮肤   -->
+	<div class="cellDiv">
+		<h4><div class="cellRightLable">店铺皮肤</div></h4>
+		<img class="arrow"
+			src="${resRoot}/image/goodsManager/goodSelectArrow.png"> <img
+			class="skin" src="${resRoot}/image/goodsManager/skin.png">
+		<div class="cellTopLine"></div>
+	</div>
+	<br/>
+	<div style="margin: 20px;">
+		<button class="btn btn-lg btn-warning btn-block" type="button" onclick="doneClick(this);"> 确定</button>
+	</div>
+
+	<input id="hideTag" type="hidden" name='hideTag' value=${info.userId}>
+
+
+	</#if> </#list>
+</body>
 </html>

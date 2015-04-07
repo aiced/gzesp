@@ -146,7 +146,7 @@ public class WeShopRegist2Controller {
     	ModelAndView mav = null;
     	ModelMap mmap=new ModelMap();
         //从数据库获取信息赋值
-		mmap.addAttribute("title", "我的微店");
+		//mmap.addAttribute("title", "我的微店");
 //		mmap.addAttribute("id", LId.toString());
 		mmap.addAttribute("userid",LId.toString());
 //		mmap.addAttribute("name", strName);//姓名

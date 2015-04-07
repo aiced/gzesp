@@ -92,12 +92,12 @@ public class WeShopSetController {
     	ModelMap mmap=null;
 		mmap=new ModelMap();
         //从数据库获取信息赋值
-		mmap.addAttribute("title", "我的微店");
+//		mmap.addAttribute("title", "我的微店");
 		mmap.addAttribute("userid", userId);
-		mmap.addAttribute("name", strUserName);//姓名
-		mmap.addAttribute("storename", storeName);//店名
-		mmap.addAttribute("phone", phoneNum); //手机号
-		mmap.addAttribute("weixin",weixinid ); //微信
+//		mmap.addAttribute("name", strUserName);//姓名
+//		mmap.addAttribute("storename", storeName);//店名
+//		mmap.addAttribute("phone", phoneNum); //手机号
+//		mmap.addAttribute("weixin",weixinid ); //微信
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);    
     	
     	return mav;

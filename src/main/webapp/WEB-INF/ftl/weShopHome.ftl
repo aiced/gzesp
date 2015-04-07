@@ -60,13 +60,13 @@
     <style type="text/css">
         .head_top
         {
-            height: 120px;
+            height: 140px;
             background: #f66326;
             color: #ffffff;
         }
         .head_bottom
         {
-            height: 40px;
+            height: 60px;
             background: #ffffff;
         }
         .head_bottom_show{
@@ -79,7 +79,7 @@
             background: #cccccc;
             width: 1px;
             height: 30px;
-            margin: 5px;
+            margin:15px 10px 10px 10px;
         }
         .head_bottom_share{
             float: right;
@@ -88,8 +88,8 @@
         }
         .head_user
         {
-            width: 90px;
-            height: 90px;
+            width: 110px;
+            height: 110px;
             top:100px;
             left:15px;
             position:absolute;
@@ -172,19 +172,13 @@
         }
         .head_top_info_details
         {
-            margin-left: 10px;
+            margin-left: 20px;
         }
         .shopname
         {
-            font-size: 18px;
             font-weight: bold;
-            padding: 1px;
         }
-        .shoptel,.shopweixin
-        {
-            font-size: 15px;
-            padding: 1px;
-        }
+
     </style>
 </head>
 <body>
@@ -205,21 +199,21 @@
 	                </div>
 	                <div class="head_top_info">
 	                    <div class="head_top_info_details">
-	                        <div class="shopname">${storename}</div>
-	                        <div class="shoptel"><img src="${resRoot}/image/shopHome/tel.png" width="16" height="16"/>&nbsp;&nbsp;${phone}</div>
-	                        <div class="shopweixin"><img src="${resRoot}/image/shopHome/weixin.png" width="16" height="16"/>&nbsp;&nbsp;${weixin}</div>
+	                        <h4><div class="shopname">${storename}</div></h4>
+	                        <h4><div class="shoptel"><img src="${resRoot}/image/shopHome/tel.png" width="24" height="24"/>&nbsp;&nbsp;${phone}</div></h4>
+	                        <h4><div class="shopweixin"><img src="${resRoot}/image/shopHome/weixin.png" width="24" height="24"/>&nbsp;&nbsp;${weixin}</div></h4>
 	                    </div>
 	                </div>
 	            </div>
 	            <div class="head_bottom">
-	                <div class="head_bottom_share"><a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/shopHome/shopshare.png" width="24" height="24">店铺分享<img/></a></div>
+	                <div class="head_bottom_share"><h4><a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/shopHome/shopshare.png" width="24" height="24">店铺分享<img/></a></h4></div>
 	                <div class="head_bottom_line"></div>
-	                <div class="head_bottom_show"><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></div>
+	                <div class="head_bottom_show"><h4><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></h4></div>
 	            </div>
-	            <div class="head_user"><img src="${imageRoot}${userimage}" alt="头像" class="img-circle" width="90" height="90"></div>
+	            <div class="head_user"><img src="${imageRoot}${userimage}" alt="头像" class="img-circle" width="110" height="110"></div>
 	        </div>
 	        
-	         <!-- 分享到弹出框 -->    
+	        <!-- 分享到弹出框 -->    
 		    <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
 		      <div class="modal-dialog modal-lg">
 		        <div class="modal-content" style="padding:5px;height:80px;">
@@ -240,47 +234,47 @@
 		    </div>  
 	        
 	        <div class="head_title">
-	           <div style="width:8px;height: 20px;background: #CFCFCF;float: left;margin-right:5px;"></div> 店铺发展信息
+	           <div style="width:8px;height: 20px;background: #CFCFCF;float: left;margin-right:5px;"></div><h4>店铺发展信息</h4>
 	        </div>
 	        <div class="detail_info">
 	            <table class="table table-striped table-condensed">
 	                <tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日访问：0</td>
-		                    <td class="month_view">本月访问：0</td>
-		                    <td class="total_view">累计访问：0</td>	                		
+		                    <td class="yesterday_view"><h4>昨日访问：0</h4></td>
+		                    <td class="month_view"><h4>本月访问：0</h4></td>
+		                    <td class="total_view"><h4>累计访问：0</h4></td>
 		                <#else>
 	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_view">昨日访问：${item.yesterday_view}</td>
-	                    		<td class="month_view">本月访问：${item.month_view}</td>
-	                    		<td class="total_view">累计访问：${item.total_count}</td>
+	                	    	<td class="yesterday_view"><h4>昨日访问：${item.yesterday_view}</h4></td>
+	                    		<td class="month_view"><h4>本月访问：${item.month_view}</h4></td>
+	                    		<td class="total_view"><h4>累计访问：${item.total_count}</h4></td>
 	                		</#list>
 	                	</#if>
 					</tr>
 
 	                <tr>
 	                	<#if saleList?size==0>
-		                    <td class="yesterday_sale">昨日销售：0</td>
-		                    <td class="month_sale">本月销售：0</td>
-		                    <td class="total_sale">累计销售：0</td>	                		
+		                    <td class="yesterday_sale"><h4>昨日销售：0</h4></td>
+		                    <td class="month_sale"><h4>本月销售：0</h4></td>
+		                    <td class="total_sale"><h4>累计销售：0</h4></td>          		
 		                <#else>
 	                		<#list saleList as item>
-	                	    	<td class="yesterday_sale">昨日销售：${item.yesterday_count}</td>
-	                    		<td class="month_sale">本月销售：${item.month_count}</td>
-	                    		<td class="total_sale">累计销售：${item.total_count}</td>
+	                	    	<td class="yesterday_sale"><h4>昨日销售：${item.yesterday_count}</h4></td>
+	                    		<td class="month_sale"><h4>本月销售：${item.month_count}</h4></td>
+	                    		<td class="total_sale"><h4>累计销售：${item.total_count}</h4></td>
 	                		</#list>
 	                	</#if>
 					</tr>
 					<tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日佣金：0</td>
-		                    <td class="month_view">本月佣金：0</td>
-		                    <td class="total_view">累计佣金：0</td>	                		
+		                    <td class="yesterday_view"><h4>昨日佣金：0</h4></td>
+		                    <td class="month_view"><h4>本月佣金：0</h4></td>
+		                    <td class="total_view"><h4>累计佣金：0</h4></td>	                		
 		                <#else>
 	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_money">昨日佣金：${item.yesterday_view}</td>
-	                    		<td class="month_money">本月佣金：${item.month_view}</td>
-	                    		<td class="total_money">累计佣金：${item.total_count}</td>
+	                	    	<td class="yesterday_money"><h4>昨日佣金：${item.yesterday_view}</h4></td>
+	                    		<td class="month_money"><h4>本月佣金：${item.month_view}</h4></td>
+	                    		<td class="total_money"><h4>累计佣金：${item.total_count}</h4></td>
 	                		</#list>
 	                	</#if>
 					</tr>
@@ -288,12 +282,13 @@
 	            </table>
 	        </div>
 	        <div class="list-group">
-	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item">商品管理 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
-	            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
-	            <a href="commissionQuery?userid=${userid}" class="list-group-item">佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item"><h4>商品管理<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></h4></a>
+	            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item"><h4>订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></h4></a>
+	            <a href="commissionQuery?userid=${userid}" class="list-group-item"><h4>佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></h4></a>
 	        </div>
+	        <br/>
 	        <div class="list-group">
-	            <button class="btn btn-lg btn-default btn-block" type="button" id="btnGoIntoShop" name="btnGoIntoShop">进入店铺主页</button>
+	            <button class="btn btn-lg btn-warning btn-block" type="button" id="btnGoIntoShop" name="btnGoIntoShop">进入店铺主页</button>
 	        </div>
 	    </div>
 	</div>

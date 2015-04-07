@@ -110,7 +110,7 @@ public class WeShopOrdersQueryController {
 
         ModelAndView mav = null;
     	ModelMap mmap=new ModelMap();
-        mmap.addAttribute("title", "我的微店");
+        //mmap.addAttribute("title", "我的微店");
 		mmap.addAttribute("userid",strUserID);
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
     	

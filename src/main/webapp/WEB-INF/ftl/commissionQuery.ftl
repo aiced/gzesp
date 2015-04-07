@@ -30,12 +30,35 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-
+<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
     <!--日历控件js-->
     <script src="${resRoot}/js/date.js?v=${resVer}"></script>
     <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
     <script type="text/javascript">
+    
+    //[点击佣金列表]
+    function doneClick(obj)
+    {
+    	var tdlist = $(obj).find('td');
+    	var td=tdlist.eq(2);//订单号
+	    var userId = $("#hideuserid").val();
+    	//ajax 操作，刷新本界面数据   
+		var parms = {'userid':'${hideuserid}','orderid':td.text()};
+		$.commonFormSubmit({
+		 type: "POST",
+		 action: '${base}/shopManage/commissionDetail',
+		 data: parms,
+		 success: function(data){
+		  	 //history.back();
+		  	 //alert("ok");
+		  	 //return;
+		  	 //alert(data);
+		  	 return;
+		 }
+		});
+    }
+    
     	$(function(){
     	    $('#beginTime').date();
     	    
@@ -55,7 +78,6 @@
         			   }
         			});
     	    });
-
     	});
 
     </script>
@@ -68,16 +90,15 @@
         .query_info_top
         {
             background: #ffffff;
-            height:50px;
+            height:60px;
         }
         .query_info_detail
         {
-            font-size: 12px;
             background: #ffffff;
+            padding-top: 40px;
         }
         .query_info_bottom
         {
-            font-size: 12px;
             background: #ffffff;
             margin-top: 15px;
         }
@@ -98,10 +119,8 @@
         {
             width:20%;
             float: left;
-            font-size: 12px;
-            height: 34px;
-            line-height: 34px;
-            margin-top: 7px;
+            height: 60px;
+            line-height: 60px;
             margin-left: 7px;
         }
         .query_info_top_middle
@@ -109,6 +128,7 @@
             width:50%;
             float: left;
             margin-top: 7px;
+            margin-left: 7px;
         }
         .query_info_top_right
         {
@@ -121,13 +141,11 @@
         {
             clear:both;;
         }
-        .btn
-        {
-            font-size: 12px;
-        }
+
         input
         {
         	height: 31px;
+        	width:100%;	
         }
     </style>
 </head>
@@ -145,12 +163,12 @@
 	    <form>
 	        <div>
 	            <div class="query_info_top">
-	                <div class="query_info_top_left"><label>佣金帐期</label></div>
+	              <h4><div class="query_info_top_left"><label>佣金帐期</label></div></h4>
 	                <div class="query_info_top_middle">
-	                	<input  id="beginTime" class="kbtn" name="beginTime" value=""/>
+	                	<input  id="beginTime" class="kbtn input-lg" name="beginTime" value=""/>
 	                </div>
 	                <div class="query_info_top_right">
-	                    <button class="btn btn-warning btn-block" name="btnselect" id="btnselect" type="button">查询</button>
+	                    <button class="btn btn-lg btn-warning btn-block" name="btnselect" id="btnselect" type="button">查询</button>
 	                </div>
 	                <div id="datePlugin"></div>
 	                <!-- 隐藏控件用于保存userid -->
@@ -159,8 +177,9 @@
 	            <div class="query_info_top_clear"></div>
 	        </div>
 	    </form>
+
 	    <div class="query_info_detail">
-	        <h5><label>当月佣金明细</label></h5>
+	        <h4><label>当月佣金明细</label></h4>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
 					您没有佣金
@@ -174,7 +193,7 @@
 				        <th>佣金</th>
 				    </tr>
 					<#list commList as item>
-						<tr>
+						<tr onclick="doneClick(this);">
 					      <td>${item_index}</td><!-- 序号 -->
 					      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:74px;">${item.GOODS_NAME}</td><!--商品名称 -->
 					      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;">${item.ORDER_ID}</td><!-- 订单号-->
@@ -183,9 +202,9 @@
 						</tr>
 					</#list>
 				    <tr>
-				    	<td colspan="3"><label class="query_info_left">合计</label></td>
-				    	<td><label>200</label></td>
-				    	<td><label>300</label></td>
+				    	<td colspan="3"><h4><label class="query_info_left">合计</label></h4></td>
+				    	<td><h4><label>200</label></h4></td>
+				    	<td><h4><label>300</label></h4></td>
 				    </tr>
 				</table>
 				</#if>

@@ -9,7 +9,7 @@ import com.ai.wx.consts.DataConstants;
 import com.ai.wx.service.MenuService;
 
 @Service
-public class wxTimeTask {
+public class WxTimeTask {
 
 	@Resource
 	public MenuService service;

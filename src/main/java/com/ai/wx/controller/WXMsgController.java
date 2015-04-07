@@ -13,16 +13,24 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.sysframe.utils.StringUtil;
 import com.ai.sysframe.utils.XmlUtil;
 import com.ai.wx.consts.DataConstants;
 import com.ai.wx.service.CoreService;
+import com.ai.wx.service.MenuService;
 import com.ai.wx.service.WXMsgService;
+import com.ai.wx.util.RegexUtils;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 @Controller
 @RequestMapping("/wx")
@@ -36,6 +44,9 @@ public class WXMsgController {
  	
  	@Resource 
  	CoreService coreService;
+ 	
+ 	@Resource 
+ 	MenuService menuService;
 	
     @RequestMapping(value="/access",method = RequestMethod.GET)
     public void access(@RequestParam(value = "signature", required = true)String signature,
@@ -80,7 +91,30 @@ public class WXMsgController {
     	 response.getWriter().write(respMessage);  
     }
     
-   
+    @RequestMapping("/createMenu")
+    public ModelAndView createMenu(){
+        ModelAndView mav = new ModelAndView("wxCreateMenu.ftl");
+        mav.addObject("title", "创建菜单");
+        return mav;
+    }
+    
+    
+    @RequestMapping("/createMenuSubmit")
+    @ResponseBody
+    public boolean createMenuSubmit(@RequestBody String inputParams){
+//    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+//    	String menuTxt = paramsMap.containsKey("menuTxt")?paramsMap.get("menuTxt"):"";
+//    	inputParams = RegexUtils.getStringNoBlank(inputParams);
+    	boolean flag  = menuService.createMenu(DataConstants.accessToken, inputParams);
+    	
+    	return flag;
+    	
+//    	JSONObject obj = JSON.parseObject(inputParams);
+//    	menuService.createMenu(DataConstants.accessToken, obj.toJSONString());
+    	
+//    	ModelAndView mav = new ModelAndView("wxCreateMenu.ftl");
+//    	mav.addObject("title", "创建菜单");
+    }
     
 }
 

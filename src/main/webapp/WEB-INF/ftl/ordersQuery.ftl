@@ -363,7 +363,7 @@
 		           <!-- 传给订单详情主页面 -->
 				 	 <form id="form${item_index}" method="post" action="orderDetail" style="display:none;">
 				    	<input id="ORDER_ID" name="ORDER_ID" value='${item.ORDER_ID}'></input>
-			    		<input id="GOODS_NAME" name="GOODS_NAME" value='${item.GOODS_NAME}'></input>
+			    		<!--<input id="GOODS_NAME" name="GOODS_NAME" value='${item.GOODS_NAME}'></input>
 				    	<input id="INCOME_MONEY" name="INCOME_MONEY" value='${item.INCOME_MONEY}'></input>
 				    	<input id="Order_Time" name="Order_Time" value='${item.Order_Time}'></input>
 				    	<input id="RECEIVER_NAME" name="RECEIVER_NAME" value='${item.RECEIVER_NAME}'></input>
@@ -372,7 +372,7 @@
 				    	<input id="DELIVER_TIME_CODE" name="DELIVER_TIME_CODE" value='${item.DELIVER_TIME_CODE}'></input>
 				    	<input id="PAY_MODE" name="PAY_MODE" value='${item.PAY_MODE}'></input>
 				    	<input id="PAY_STATE" name="PAY_STATE" value='${item.PAY_STATE}'></input>
-				    	<input id="PAY_REMARK" name="PAY_REMARK" value='${item.PAY_REMARK}'></input>
+				    	<input id="PAY_REMARK" name="PAY_REMARK" value='${item.PAY_REMARK}'></input>-->
 				 	 </form>
 		           </div><!-- order_middle_end -->
 				</#list>

@@ -30,7 +30,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
     <!--日历控件js-->
     <script src="${resRoot}/js/date.js?v=${resVer}"></script>
@@ -76,31 +76,58 @@
 	    $('#totalRow').append('<td><h4><label>'+totalCommission+'</label></h4></td>');
     }
     
-    	$(function(){
-    	    $('#beginTime').date();
-    	    
-    	    //[点击查询]
-    	    $("#btnselect").click(function(){
-    	    	//在这里操作数据库查询
-        		var param = {"startDate":$("#beginTime").val(),"userID":$("#hideuserid").val()};
-        		
-        		$.ajax({
-        			   type: "POST",
-        			   url: "selectCommissions",
-        			   data: param,
-        			   async: false,
-        			   success: function(bRet){
-        				   //alert(bRet);
-        				   $("#commmiss_query_info").html(bRet);
-       				  	 	//调用计算总和方法
-       				  	 	countTotal();
-        			   }
-        			});
-    	    });
-    	    countTotal();
+    var iflag=1;//记录查询的条件 1.帐期查询 2起始日期查询
+   	$(function(){
+   		
+   		$('#zhangqiTime').date();
+   	    $('#beginTime').date();
+   	    $('#endTime').date();
+   	    
+   	    //[点击查询]
+   	    $("#btnselect").click(function(){
+   	    	//在这里操作数据库查询
+       		
+       		if(iflag == 1)
+       		{
+       			var param = {"startDate":$("#zhangqiTime").val(),"userID":$("#hideuserid").val()};
+       		}
+       		else if(iflag==2)
+       		{
+       			var param = {"startDate":$("#beginTime").val(),"userID":$("#hideuserid").val()};
+       		}
+       		
+       		$.ajax({
+       			   type: "POST",
+       			   url: "selectCommissions",
+       			   data: param,
+       			   async: false,
+       			   success: function(bRet){
+       				   //alert(bRet);
+       				   $("#commmiss_query_info").html(bRet);
+      				  	 	//调用计算总和方法
+      				  	 	countTotal();
+       			   }
+       			});
+   	    });
+   	    countTotal();//计算总和
+   	    
+   	    $("#selSearch").change(function(){
+   	    	if($("#selSearch").val() == "1")
+   	    	{
+   	    		iflag=1;
+   	   	    	$(".order_top_middle").css("display","none");
+   	   	    	$("#zhangqiTime").css("display","block");
+   	    	}
+   	    	else
+   	    	{
+   	    		iflag=2;
+   	    		$("#zhangqiTime").css("display","none");
+   	    		$(".order_top_middle").css("display","block");
+   	    	}
+   	    		
 
-    	    
-    	});
+   	    });
+   	});
 
     </script>
     <style type="text/css">
@@ -145,19 +172,29 @@
             line-height: 60px;
             margin-left: 7px;
         }
+        select
+        {
+        	height: 45px;
+        	font-size: 1em;
+        }
+        input
+        {
+            width: 80px;
+            height: 34px;
+        }
         .query_info_top_middle
         {
-            width:50%;
+            width:45%;
             float: left;
             margin-top: 7px;
-            margin-left: 7px;
+            margin-left: 20px;
         }
         .query_info_top_right
         {
             width:20%;
-            float: left;
+            float: right;
             margin-top: 7px;
-            margin-left: 7px;
+            margin-right: 7px;
         }
         .query_info_top_clear
         {
@@ -166,8 +203,25 @@
 
         input
         {
-        	height: 31px;
+        	height: 45px;
         	width:100%;	
+        }
+
+        .order_top_middle1
+        {
+            float: left;
+            width: 45%;
+        }
+        .order_top_middle2
+        {
+            float: left;
+            width: 10%;
+            line-height: 34px;
+        }
+        .order_top_middle3
+        {
+            float: left;
+            width: 45%;
         }
     </style>
 </head>
@@ -175,7 +229,7 @@
 	<div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
@@ -185,18 +239,39 @@
 	    <form>
 	        <div>
 	            <div class="query_info_top">
-	              <h4><div class="query_info_top_left"><label>佣金帐期</label></div></h4>
+	              <!-- <h4><div class="query_info_top_left"><label>佣金帐期</label></div></h4> -->
+	              	<div class="query_info_top_left">
+		                <select name="selSearch" id="selSearch">
+								<option value="1">佣金帐期</option>
+								<option value="2">订单日期</option>
+		                </select>
+	           		</div>
 	                <div class="query_info_top_middle">
-	                	<input  id="beginTime" class="kbtn input-lg" name="beginTime" value=""/>
-	                </div>
+	                	<input  id="zhangqiTime" class="kbtn input-lg" name="zhangqiTime" value="" />
+		                <div id="datePlugin"></div>
+		                <!-- 隐藏控件用于保存userid -->
+						<div class="order_top_middle" style="display:none">
+							<div class="order_top_middle1">
+								<input id="beginTime" class="kbtn" name="beginTime" value="" />
+							</div>
+							<div class="order_top_middle2">—</div>
+							<div class="order_top_middle3">
+								<input id="endTime" class="kbtn" name="endTime" value="" />
+							</div>
+							
+							<!-- 这句和日历控件有关千万别忘掉 -->
+						</div>
+						<div id="datePlugin"></div>
+
+					</div>
 	                <div class="query_info_top_right">
 	                    <button class="btn btn-lg btn-warning btn-block" name="btnselect" id="btnselect" type="button">查询</button>
 	                </div>
-	                <div id="datePlugin"></div>
-	                <!-- 隐藏控件用于保存userid -->
+
             		<input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
 	            </div>
 	            <div class="query_info_top_clear"></div>
+
 	        </div>
 	    </form>
 
@@ -211,8 +286,8 @@
 				        <th>序号</th>
 				        <th>商品名称</th>
 				        <th>订单号</th>
-				        <th>销售金额</th>
-				        <th>佣金</th>
+				        <th>预期收益</th>
+				        <th>当前应收</th>
 				    </tr>
 					<#list commList as item>
 						<tr onclick="doneClick(this);">

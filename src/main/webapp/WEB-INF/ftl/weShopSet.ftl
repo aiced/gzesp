@@ -77,11 +77,11 @@
  		{
 			 if(!checkWeChat($("#weixin").val())) //edit_by_wenh_2015_3_26
  	 		 {
- 	 			  return
+ 	 			  return;
  	 		 }
  		}
 
-	    var userId = $("#hideTag").val();;	
+	    var userId = $("#hideTag").val();
     	//ajax 操作，刷新本界面数据   
 		var parms = {'storeName':storeName.value,'phoneNum':phoneNum.value,'userId':${userId},'weixinid':$('#weixin').val(),'username':'${name}'};
 		$.commonFormSubmit({

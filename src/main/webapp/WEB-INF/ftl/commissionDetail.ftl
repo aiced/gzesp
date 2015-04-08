@@ -25,10 +25,32 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
 
 	<script type="text/javascript">
 		$(function() {
 			setTimeout("changeDivStyle();", 10); // 0.1秒后展示结果，因为HTML加载顺序，先加载脚本+样式，再加载body内容。所以加个延时
+		
+			
+			$(".div2").click(function(){
+		    	//ajax 操作，刷新本界面数据   
+		    	var orderid=$(".div2 u a").text();
+				var parms = {'ORDER_ID':orderid};
+				$.commonFormSubmit({
+				 type: "POST",
+				 action: '${base}/shopManage/orderDetail',
+				 data: parms,
+				 success: function(data){
+				  	 //history.back();
+				  	 //alert("ok");
+				  	 //return;
+				  	 //alert(data);
+				  	 return;
+				 }
+				});
+				
+				
+			});
 		});
 	function changeDivStyle(){
 	//		var o_status = $("#o_status").val();	//获取隐藏框值
@@ -124,14 +146,14 @@
 	<div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
 		<div class="div1">商品名称：Iphone6合约机</div>
-		<div class="div2">订单号：<u><a>A2311</a></u></div>
+		<div class="div2">订单号：<u><a>2311</a></u></div>
 		<div class="div3">佣金收益</div>
 		<br/>
 		<br/>

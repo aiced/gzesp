@@ -6,8 +6,8 @@
         <th>序号</th>
         <th>商品名称</th>
         <th>订单号</th>
-        <th>销售金额</th>
-        <th>佣金</th>
+        <th>预期收益</th>
+        <th>当前应收</th>
     </tr>
 	<#list commList as item>
 		<tr onclick="doneClick(this);">

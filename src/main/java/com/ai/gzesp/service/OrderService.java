@@ -78,6 +78,10 @@ public class OrderService {
     	return ordersSql.getCustMyOrder(passport, phone);
     }
     
+    public Map getCustOrderDetail(String orderId) {
+    	return ordersSql.getCustOrderDetail(orderId);
+    }
+    
     
     public List<Map>[] getContractByGoodsID(String goodsId) {
     	

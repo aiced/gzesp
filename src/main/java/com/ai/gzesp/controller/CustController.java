@@ -47,4 +47,18 @@ public class CustController {
     	
     	return mav;
     }
+    
+	   @RequestMapping("/custOrderDetail/{orderId}")
+	    public ModelAndView custOrderDetail(@PathVariable("orderId") String orderId){
+	    	ModelAndView mav = new ModelAndView("custOrderDetailQuery.ftl");
+	        //从数据库获取信息赋值
+	    	
+	    	Map custOrderDetail = orderService.getCustOrderDetail(orderId);
+	        
+	        mav.addObject("title", "订单详情");
+	        mav.addAllObjects(custOrderDetail);
+	//	        mav.addObject("weixin", "1306520198@qq.com"); 
+	        
+	        return mav;
+	    }
 }

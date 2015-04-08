@@ -220,55 +220,58 @@
         <div class="contain">
             <div class="container_top">
                 <div class="top_div">
-                    <div class="top_div_left">张三</div>
-                    <div class="top_div_right">13814023390</div>
+                    <div class="top_div_left">${RECEIVER_NAME}</div>
+                    <div class="top_div_right">${MOBILE_PHONE}</div>
                 </div>
                 <div class="div_clear"></div>
-                <div class="top_div_bottom">贵州遵义上X县，小面街道，通向哩个坉街区12-323</div>
+                <div class="top_div_bottom">${ADDRESS}</div>
             </div>
             <br/>
             <div class="container_mid_1">
                 <div class="mid_1_div1">
-                    <div class="mid_1_div_left">订单号：111111</div>
-                    <div class="mid_1_div_right">已发货</div>
+                    <div class="mid_1_div_left">订单号：${ORDER_ID}</div>
+                    <div class="mid_1_div_right">${ORDER_STATE}</div>
                 </div>
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
                 <div class="mid_1_div2">
-                    <img src="head.png" width="32" height="32">&nbsp;&nbsp;
-                    <label>戴文的微店</label>
+                    <img src="${imageRoot}${USER_IMG}" width="32" height="32">&nbsp;&nbsp;
+                    <label>${STORE_NAME}</label>
                 </div>
                 <div class="mid_1_div3 media">
                     <div class="media-left media-middle">
-                        <img src="head.png" width="96" height="96">&nbsp;&nbsp;
+                        <img src="${imageRoot}${PHOTO_LINKS}" width="96" height="96">&nbsp;&nbsp;
                     </div>
                     <div class="media-body">
-                        <div><label>苹果（apple）iphone6最新处理器A8</label></div>
+                        <div><label>${GOODS_NAME}</label></div>
                         <div>
                             <div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D">退款</div>
                         </div>
                         <div class="div_clear"></div>
                         <br/>
                         <div>
-                            <div style="float: left;color: #666666">1件</div>
-                            <div style="float: right;color: red">￥5000</div>
+                            <div style="float: left;color: #666666">${SALE_NUM}件</div>
+                            <div style="float: right;color: red">￥${TOPAY_FEE}</div>
                         </div>
                     </div>
                 </div>
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
-                <div class="mid_1_div4">
-                   	 共1件商品 实付：5000元
-                </div>
+<!--                 <div class="mid_1_div4"> -->
+<!--                    	 共1件商品 实付：5000元 -->
+<!--                 </div> -->
             </div>
             <br/>
             <div class="container_mid_2">
                 <div class="mid_2_div1">
                     <div class="mid_2_div_left">支付方式</div>
-                    <div class="mid_2_div_right">在线支付</div>
+                    <div class="mid_2_div_right">${PAY_TYPE}</div>
                 </div>
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
+                <div class="mid_2_div2">
+                	物流单号：${EXPRESS_ID}
+                </div>
                 <div class="mid_2_div2">
                    	 物流信息：快件正在配送
                 </div>
@@ -283,27 +286,27 @@
                 </div>
                 <div class="div_clear"></div>
                 <div class="mid_2_div4">
-                    <div>发票抬头：个人</div>
-                    <div>发票内容：明细</div>
+                    <div>发票抬头：${INVOCE_TITLE}</div>
+                    <div>发票内容：${INVOCE_CONTENT}</div>
                 </div>
             </div>
             <div class="container_bottom">
                 <div class="bottom_1_div1">
                     <div class="bottom_1_div1_left">商品总额</div>
-                    <div class="bottom_1_div1_right">￥123</div>
+                    <div class="bottom_1_div1_right">￥${TOPAY_FEE}</div>
                 </div>
                 <div class="div_clear"></div>
                 <div class="bottom_1_div1">
                     <div class="bottom_1_div1_left">运费</div>
-                    <div class="bottom_1_div1_right">￥20</div>
+                    <div class="bottom_1_div1_right">￥${POST_FEE}</div>
                 </div>
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
                 <div class="bottom_1_div2">
-                    <label>实付款：</label><span style="color: red">312</span>
+                    <label>实付款：</label><span style="color: red">${RECV_FEE}</span>
                 </div>
                 <div class="bottom_1_div3">
-                   	 下单时间：2015-4-2 14:31
+                   	 下单时间：${ORDER_TIME}
                 </div>
             </div>
             <div>

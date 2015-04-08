@@ -54,9 +54,26 @@
 		  	 //alert("ok");
 		  	 //return;
 		  	 //alert(data);
+
 		  	 return;
 		 }
 		});
+    }
+    function countTotal()
+    {
+	    var totalSale = 0;
+	    var totalCommission=0;
+	    $('table tr:gt(0)').each(function() { 
+	    	$(this).find('td:eq(3)').each(function(){ 
+	    		totalSale += parseFloat($(this).text()); 
+	    	}); 
+	    	$(this).find('td:eq(4)').each(function(){ 
+	    		totalCommission += parseFloat($(this).text()); 
+	    	}); 
+	    }); 
+	    $('#totalRow').append('<td colspan="3"><h4><label class="query_info_left">合计</label></h4></td>');
+	    $('#totalRow').append('<td><h4><label>'+totalSale+'</label></h4></td>');
+	    $('#totalRow').append('<td><h4><label>'+totalCommission+'</label></h4></td>');
     }
     
     	$(function(){
@@ -75,9 +92,14 @@
         			   success: function(bRet){
         				   //alert(bRet);
         				   $("#commmiss_query_info").html(bRet);
+       				  	 	//调用计算总和方法
+       				  	 	countTotal();
         			   }
         			});
     	    });
+    	    countTotal();
+
+    	    
     	});
 
     </script>
@@ -201,10 +223,8 @@
 					      <td>${item.CMS_MONEY}</td><!-- 佣金 -->
 						</tr>
 					</#list>
-				    <tr>
-				    	<td colspan="3"><h4><label class="query_info_left">合计</label></h4></td>
-				    	<td><h4><label>200</label></h4></td>
-				    	<td><h4><label>300</label></h4></td>
+				    <tr id="totalRow">
+
 				    </tr>
 				</table>
 				</#if>

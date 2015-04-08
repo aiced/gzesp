@@ -18,10 +18,8 @@
 	      <td>${item.CMS_MONEY}</td><!-- 佣金 -->
 		</tr>
 	</#list>
-    <tr>
-    	<td colspan="3"><h4><label class="query_info_left">合计</label></h4></td>
-    	<td><h4><label>200</label></h4></td>
-    	<td><h4><label>300</label></h4></td>
+    <tr id="totalRow">
+
     </tr>
 </table>
 </#if>

@@ -143,6 +143,7 @@ public class OrderService {
     	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
     	record.setCouponMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(couponMoney)));
     	record.setManMadeMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(manMadeMoney)));
+    	record.setPostFee(0l);
     	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney)));
     	record.setIncomeMoney(0l);
     	record.setOrderState("00");
@@ -183,6 +184,7 @@ public class OrderService {
     	String devlpName = paramsMap.get("devlpName");
     	String phoneNum = paramsMap.get("phoneNum");
     	String invoiceTitle = paramsMap.get("invoiceTitle");
+    	String invoceContent = paramsMap.get("invoceContent");
     	
     	TdOrdDDEAL record = new TdOrdDDEAL();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -194,6 +196,7 @@ public class OrderService {
     	record.setDevlopId(devlpId);
     	record.setDevlopName(devlpName);
     	record.setInvoceTitle(invoiceTitle);
+    	record.setInvoceContent(invoceContent);
 
     	tdOrdDDEALDao.insertSelective(record);
     }

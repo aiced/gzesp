@@ -327,6 +327,7 @@ function getParams() {
 	orderFormParams.topayMoney = orderFormParams.originalPrice;
 	
 	orderFormParams.userId = $('#userId').val();
+	orderFormParams.invoiceTitle = $('#invoiceTitle').val();
 	
 	orderFormParams.payType = $('input[name="pay_mode"]:checked').val();
 	switch ($("input[name=pay_mode]:checked").attr("id"))  {

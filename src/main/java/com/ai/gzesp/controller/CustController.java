@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,13 +41,29 @@ public class CustController {
     @RequestMapping("/custMyOrder/{cust_phone}/{cust_passport}")
     public ModelAndView custMyOrder(@PathVariable("cust_phone") String cust_phone,
     		@PathVariable("cust_passport") String cust_passport){
-    	List custMyOrderList = orderService.getCustMyOrder(cust_passport, cust_phone);
+    	List custMyOrderList = orderService.getCustMyOrder(cust_passport, cust_phone, null);
     	
     	ModelAndView mav = new ModelAndView("custMyOrder.ftl");
     	mav.addObject("custMyOrderList", custMyOrderList);
+    	mav.addObject("cust_phone", cust_phone);
+    	mav.addObject("cust_passport", cust_passport);
     	
     	return mav;
     }
+    
+    
+	   @RequestMapping("/custOrderFilterByAjax")
+	   public ModelAndView custOrderFilterByAjax(@RequestBody Map<String, String> inputParams){
+		   String cust_passport = inputParams.get("cust_passport");
+		   String cust_phone = inputParams.get("cust_phone");
+		   String keyword = inputParams.get("keyword");
+		   List custMyOrderList = orderService.getCustMyOrder(cust_passport, cust_phone, keyword);
+	    	
+	    	ModelAndView mav = new ModelAndView("custMyOrderSub.ftl");
+	    	mav.addObject("custMyOrderList", custMyOrderList);
+		   
+		   return mav;
+	   }
     
 	   @RequestMapping("/custOrderDetail/{orderId}")
 	    public ModelAndView custOrderDetail(@PathVariable("orderId") String orderId){
@@ -61,4 +78,5 @@ public class CustController {
 	        
 	        return mav;
 	    }
+	   
 }

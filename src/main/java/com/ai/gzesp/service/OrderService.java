@@ -74,8 +74,8 @@ public class OrderService {
     	return goodsSql.GetGoodsDefaultPhoto(goodsId);
     }
     
-    public List getCustMyOrder(String passport, String phone) {
-    	return ordersSql.getCustMyOrder(passport, phone);
+    public List getCustMyOrder(String passport, String phone, String keyword) {
+    	return ordersSql.getCustMyOrder(passport, phone, keyword);
     }
     
     public Map getCustOrderDetail(String orderId) {

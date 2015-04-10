@@ -13,6 +13,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.service.CommonDao;
+import com.ai.sysframe.utils.StringUtil;
+import com.ibm.wsdl.util.StringUtils;
 
 @Service
 public class OrdersSql {
@@ -161,7 +163,7 @@ public class OrdersSql {
 		return saleList;
 	}
 	
-	public List getCustMyOrder(String passport, String phone) {
+	public List getCustMyOrder(String passport, String phone, String keyword) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("select distinct"
 				+ "	a.ORDER_ID, b.ORDER_STATE as ORDER_STATE_CODE ,"
@@ -188,6 +190,10 @@ public class OrdersSql {
 				+ " and c.GOODS_ID = f.GOODS_ID"
 				+ " and f.ALBUM_ID = g.ALBUM_ID"
 				+ " and g.DEFAULT_TAG = '0'" );
+		if(keyword != null && !"".equals(keyword)) {
+			sb.append(" and (a.ORDER_ID like '%"+keyword+"%'"
+					+ " 	or c.GOODS_NAME like '%"+keyword+"%')" );
+		}
 		
 		List custMyOrderList =commonDao.queryForList(sb.toString());
 

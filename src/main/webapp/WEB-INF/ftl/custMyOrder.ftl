@@ -29,18 +29,35 @@
     	 .goodsState a.selected{color:#e8742b;}
     </style>
     <script type="text/javascript">
-	    $(function() {
-		    $('.goodsState a').bind("click",function(){
-				$(this).addClass("selected").siblings().removeClass("selected");
-				alert($(this).attr("value"));
-				return false;
-			});
-	    })
+// 	    $(function() {
+// 		    $('.goodsState a').bind("click",function(){
+// 				$(this).addClass("selected").siblings().removeClass("selected");
+// 				alert($(this).attr("value"));
+// 				return false;
+// 			});
+// 	    })
 	    
 	    function showCustOrderDetail(orderId) {
         	//alert(orderId);
         	location.href = "${base}/customer/custOrderDetail/"+orderId;
         	return false;
+	    }
+	    
+	    function custOrderFilter() {
+	    	var param = {"keyword": $('#keyword').val(),
+	    			"cust_passport": $('#cust_passport').val(),
+	    			"cust_phone": $('#cust_phone').val()};
+	    	$.ajax({
+	 		   type: "POST",
+	 		   contentType:"application/json", //发送给服务器的内容编码类型
+	 		   url: "${base}/customer/custOrderFilterByAjax",
+	 		   //dataType:"json", //预期服务器返回的数据类型
+	 		   data: JSON.stringify(param), //服务器只能接收json字符串
+	 		   success: function(data){
+	 			   //alert(data);
+	 			   $('#datagrid').html(data);
+	 		   }
+	 		});
 	    }
     </script>
   </head>
@@ -66,9 +83,9 @@
 	      <div class="row" style="margin-top:10px;background-color:#ffffff;">
 	    	<div class="col-xs-12" style="padding:0" >
 	    	  <div class="input-group">
-	            <input id='keyword' type="text" class="form-control input-sm" placeholder="输入商品名称关键字">
+	            <input id='keyword' type="text" class="form-control input-sm" placeholder="输入关键字">
 	            <span class="input-group-btn">
-	              <button class="btn btn-default btn-sm" type="button" >
+	              <button class="btn btn-default btn-sm" type="button" onclick="custOrderFilter()">
 	                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 	              </button>
 	            </span>
@@ -77,13 +94,13 @@
 	      </div>
 	      <!-- 销量排序 价格排序-->
 	      <div class="row goodsState" style="margin:10px 0px 5px 0px;">
-	      	<div class="col-xs-12"> 
-		    	<a href="#" value="1">全部</a>     	
-		    	<a href="#" value="2">待付款</a>
-		    	<a href="#">待发货</a>	    		
-		    	<a href="#">待收货</a>    		
-		    	<a href="#">待评价</a>
-	    	</div>  
+<!-- 	      	<div class="col-xs-12">  -->
+<!-- 		    	<a href="#" value="1">全部</a>     	 -->
+<!-- 		    	<a href="#" value="2">待付款</a> -->
+<!-- 		    	<a href="#">待发货</a>	    		 -->
+<!-- 		    	<a href="#">待收货</a>    		 -->
+<!-- 		    	<a href="#">待评价</a> -->
+<!-- 	    	</div>   -->
 <!-- 	    	<div class="col-xs-2" ><a href="#">全部</a>    	</div>  	 -->
 <!-- 	    	<div class="col-xs-3" ><a href="#">待付款</a>    	</div> -->
 <!-- 	    	<div class="col-xs-3" >待发货    	</div>  		    		 -->
@@ -137,6 +154,9 @@
 	    </div> 
     </div> 
     
-  
+    <input type="hidden" id="cust_passport" name="cust_passport" value="${cust_passport}" />
+    <input type="hidden" id="cust_phone" name="cust_phone" value="${cust_phone}" />
+    
+     
   </body>
 </html>

@@ -25,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.sysframe.utils.StringUtil;
 import com.ai.sysframe.utils.XmlUtil;
 import com.ai.wx.consts.DataConstants;
+import com.ai.wx.entity.WebAuthAccessTokenModel;
 import com.ai.wx.service.CoreService;
 import com.ai.wx.service.MenuService;
 import com.ai.wx.service.WXMsgService;
+import com.ai.wx.service.WebAuthService;
 import com.ai.wx.util.RegexUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -47,6 +49,9 @@ public class WXMsgController {
  	
  	@Resource 
  	MenuService menuService;
+ 	
+ 	@Resource 
+ 	WebAuthService webAuthService;
 	
     @RequestMapping(value="/access",method = RequestMethod.GET)
     public void access(@RequestParam(value = "signature", required = true)String signature,
@@ -89,6 +94,43 @@ public class WXMsgController {
 //    	 service.handleMsg(info, response);
     	 String respMessage = coreService.processRequest(inputParam);  
     	 response.getWriter().write(respMessage);  
+    }
+    
+
+    /**
+     * http://wap.gz10010.xyz/wx/auth?code=CODE&state=STATE
+     * state 参数表示跳转页面（weShopIndex, weShopHome, queryInfo..）
+     * code 用于获取openId
+     * @param state
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping(value="/auth")
+    public ModelAndView auth(@RequestParam(value="code", required=true) String code, 
+    		@RequestParam(value="state", required=true) String state, HttpServletResponse response) throws IOException {
+    	 logger.info("params:" + code + "," +state);
+    	 WebAuthAccessTokenModel webToken =  webAuthService.getAccessToken(DataConstants.appid, DataConstants.appsecret, code);
+    	 ModelAndView mav = null;
+    	 if(webToken != null) {
+    		 String openId = webToken.getOpenid();
+    		 // 根据openId获取userId
+//    		 String userId = service.getUserIdByOpenId(openId);
+    		 String userId = "2015000000000000";
+    		 //用户已注册，免登录，根据state值跳页面
+    		 if( userId != null) {
+    			 if("weShopIndex".equals(state)) {
+        			 mav=new ModelAndView("redirect:/shopManage/weShopHome?userid="+userId);    
+        		 } else if("weShopHome".equals(state)) {
+        			 mav=new ModelAndView("redirect:/weShop/index/"+userId);    
+        		 } else if("queryInfo".equals(state)) {
+        			 
+        		 }
+    			 //用户不存在，跳注册页
+    		 } else {
+    			 mav=new ModelAndView("redirect:/auth/register/step1");
+    		 }
+    	 }
+    	 return mav;
     }
     
     @RequestMapping("/createMenu")

@@ -166,7 +166,7 @@ function checkBankCard(strBankCard)
 	var param = {"BankCard":strBankCard};
 	$.ajax({
 		   type: "POST",
-		   url: "checkBankCard",
+		   url: "/esp/common/checkBankCard",
 		   data: param,
 		   async: false,
 		   success: function(bRet){
@@ -280,7 +280,7 @@ function sendMessage(strPhone,btnName) {
 	var param = {"phone":strPhone,"code":code};
 	$.ajax({
 		   type: "POST",
-		   url: "yanzhengma",
+		   url: "/esp/common/yanzhengma",
 		   data: param,
 		   async: false,
 		   success: function(bRet){

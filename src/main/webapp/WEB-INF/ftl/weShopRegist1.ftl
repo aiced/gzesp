@@ -115,7 +115,6 @@
 		  });
 		  //[手机号]文本框失去焦点
 		  $("#txtphonenum").blur(function(){
-			  	//在这里操作 验证码 文本框失去焦点
 			  	if(!$("#txtphonenum").val())
 			  	{
 			  		$("#div_phonenum").addClass("has-error");
@@ -150,7 +149,6 @@
 			});
 		  //[验证码]文本框失去焦点  
 		  $("#txtyanzhengma").blur(function(){
-		  	//在这里操作 验证码 文本框失去焦点
 		  	if(!$("#txtyanzhengma").val())
 		  	{
 		  		$("#div_yanzhengma").addClass("has-error");

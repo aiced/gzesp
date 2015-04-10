@@ -25,6 +25,8 @@ import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdSysPCITY;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdSysPCITYDao;
+import com.ai.gzesp.sgip.SgipService;
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.PathUtil;
 import com.ai.sysframe.utils.StringUtil;
@@ -36,7 +38,8 @@ public class CommonController {
     
     @Resource
     TdAurDAUTHINFODao tdAurDAUTHINFODao;
-	
+	@Resource 
+	SgipService sgipService;
 	 protected Logger logger = LoggerFactory.getLogger(getClass());
 	 
 	 @Resource
@@ -163,4 +166,23 @@ public class CommonController {
 			return true;//没有注册过
 		}
 	} 
+	//edit_by_wenh_2015_4_9	
+    @RequestMapping("/checkBankCard")
+    @ResponseBody
+    public Boolean checkBankCard(@RequestBody String strBankCard)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(strBankCard);
+    	String BankCard = paramsMap.get("BankCard");
+    	return CommonUtil.checkBankCard(BankCard);
+    }
+    //edit_by_wenh_2015_4_10
+    @RequestMapping("/yanzhengma")
+    @ResponseBody
+    public Boolean sendYanzhenma(@RequestBody String strParam)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+    	String strphone = "86"+paramsMap.get("phone");
+    	String strcode=paramsMap.get("code");
+    	return sgipService.smsSend(new String[]{strphone},"微店注册验证码："+strcode+"，祝您开店顺利！【贵州联通】。");
+    }
 }

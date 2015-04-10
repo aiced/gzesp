@@ -37,8 +37,7 @@ public class WeShopRegist1Controller {
     private WeShopService weShopService;
 	@Resource 
 	RegistSql registSql;
-	@Resource 
-	SgipService sgipService;
+
     @RequestMapping("/register/step1")
     public ModelAndView index(){
         ModelAndView mav = new ModelAndView("weShopRegist1.ftl");
@@ -86,16 +85,16 @@ public class WeShopRegist1Controller {
 //    		return true;//没有注册过
 //    	}
 //    } 
-    @RequestMapping("/register/yanzhengma")
-    @ResponseBody
-    public Boolean sendYanzhenma(@RequestBody String strParam)
-    {
-    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
-    	String strphone = "86"+paramsMap.get("phone");
-    	String strcode=paramsMap.get("code");
-    	return sgipService.smsSend(new String[]{strphone},strcode);
-    	
-    }
+//    @RequestMapping("/register/yanzhengma")
+//    @ResponseBody
+//    public Boolean sendYanzhenma(@RequestBody String strParam)
+//    {
+//    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+//    	String strphone = "86"+paramsMap.get("phone");
+//    	String strcode=paramsMap.get("code");
+//    	return sgipService.smsSend(new String[]{strphone},strcode);
+//    	
+//    }
     @RequestMapping("/register/reg_step1_postdata")
     @ResponseBody
     public ModelAndView RegStep1_PostData(@RequestBody String inputParams){

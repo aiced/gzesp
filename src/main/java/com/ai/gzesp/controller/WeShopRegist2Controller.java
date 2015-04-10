@@ -60,14 +60,7 @@ public class WeShopRegist2Controller {
         return mav;
     }
     
-    @RequestMapping("/register/checkBankCard")
-    @ResponseBody
-    public Boolean checkBankCard(@RequestBody String strBankCard)
-    {
-    	Map<String, String> paramsMap = StringUtil.params2Map(strBankCard);
-    	String BankCard = paramsMap.get("BankCard");
-    	return CommonUtil.checkBankCard(BankCard);
-    }
+
     
     @RequestMapping("/register/reg_step2_postdata")
     public ModelAndView RegStep2_PostData(@RequestBody String inputParams)

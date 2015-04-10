@@ -10,10 +10,10 @@
         <th>当前应收</th>
     </tr>
 	<#list commList as item>
-		<tr onclick="doneClick(this);">
+		<tr>
 	      <td>${item_index}</td><!-- 序号 -->
 	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:74px;">${item.GOODS_NAME}</td><!--商品名称 -->
-	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;">${item.ORDER_ID}</td><!-- 订单号-->
+	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);">${item.ORDER_ID}</td><!-- 订单号-->
 	      <td>${item.CMS_SUM_MONEY}</td><!-- 销售金额 -->
 	      <td>${item.CMS_MONEY}</td><!-- 佣金 -->
 		</tr>

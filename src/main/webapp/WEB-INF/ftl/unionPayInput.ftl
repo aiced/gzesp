@@ -30,7 +30,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script language="javascript" type="text/javascript" src="${resRoot}/My97DatePicker/WdatePicker.js"></script>
   
   
@@ -505,25 +504,59 @@
 			  
 
 	});
+	
+        function unionPayPay(card_type){
+            //01信用卡 02 储蓄卡
+            var param;
+            if(card_type == '01'){
+              param = {"order_id":${order_id}, "fee":${fee}, "card_type":card_type, bank_card_no:$('#txtXYCardCode').val(), 
+                           bank_card_expire_date:$('#txtXYDate').val(), bank_card_cvn:$('#txtXYCardCode3').val(), 
+                           id_card_no:$('#txtXYPersonId').val(), phone_no:$('#txtXYphonenum').val(), full_name:$('#txtXYname').val()};
+            }
+            else{
+              param = {"order_id":${order_id}, "fee":${fee}, "card_type":card_type, bank_card_no:$('#txtCCCardCode').val(), 
+                           id_card_no:$('#txtCCPersonId').val(), phone_no:$('#txtCCphonenum').val(), full_name:$('#txtCCname').val()};            
+            }
+            //弹出gif动画，支付中请等待
+            $('#myModal').modal({
+               keyboard: false,
+               backdrop: 'static'
+            }) ;            
+	
+	        $.ajax({
+		      type: "POST",
+		      contentType:"application/json", //发送给服务器的内容编码类型
+		      url: "${base}/pay/unionPay/pay/${order_id}/${fee}",
+		      dataType:"json", //预期服务器返回的数据类型
+		      data: JSON.stringify(param), //服务器只能接收json字符串
+		      success: function(data){
+			    //alert(data.state);
+			    $('#myModal').modal('toggle');
+		      }
+		    });
+        }	
 	</script>
 </head>
 
 <body>
 	<div>
     	<!--top_start-->
-        <div id="top">
-        	<div id="top_left"></div>
-        	<div id="top_middle">${title}</div>
-        	<div id="top_right"></div></div>
-        </div>
-		<div id="dv_clear"></div>
+	    <div id="top">
+	      <div id="top_left">
+	        <a href="javascript:history.back(-1);">
+	          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	        </a>
+	      </div>
+	      <div id="top_middle">${title}</div>
+	      <div id="top_right"></div>
+	    </div>   
 		<!--top_end-->
 		<br/>
 		<div role="tabpanel">
 			<!-- Nav tabs -->
 			<ul class="nav nav-tabs" role="tablist">
 				<li role="presentation" class="active"><a href="#xinyongka" aria-controls="xinyongka" role="tab" data-toggle="tab">信用卡</a></li>
-				<li role="presentation"><a href="#chuxuka" aria-controls="chuxuka" role="tab" data-toggle="tab">存储卡</a></li>
+				<li role="presentation"><a href="#chuxuka" aria-controls="chuxuka" role="tab" data-toggle="tab">储蓄卡</a></li>
 			</ul>
 		
 			<!-- Tab panes -->
@@ -559,30 +592,30 @@
 							<!--输入有效期-->
 							<div class="form-group-lg" id="div_txtXYDate">
 								<label for="txtXYDate" class="sr-only"></label>
-								<input type="text" class="form-control" id="txtXYDate" placeholder="请输入有效期" onfocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy年MM月'})" class="Wdate">
+								<input type="text" class="form-control" id="txtXYDate" placeholder="请输入信用卡有效期例如:0115" >
 							</div>
 							<br/>
+							<!--输入手机号-->
+							<div class="form-group-lg" id="div_txtXYphonenum">
+							    <label for="txtXYphonenum" class="sr-only"></label>
+								<input type="text" class="form-control" id="txtXYphonenum"aria-describedby="txtXYnum" placeholder="请输入银行预留手机号">
+							</div>
+							<br/>
+							<!-- 短信验证码-->
 							<div class="form-group-lg">
 								<div class="row">
-									<div class="col-xs-7 col-sm-7">
-										<div class="input-group" id="div_txtXYphonenum">
-											<span class="input-group-addon" id="txtXYnum">+86</span>
-											<input type="text" class="form-control" id="txtXYphonenum"aria-describedby="txtXYnum" placeholder="请输入联通手机号">
+									<div class="col-xs-6 col-sm-6">
+										<div class="form-group" id="div_XYyanzhengma">
+											<label for="XYyanzhengma" class="sr-only"></label>
+								            <input type="text" class="form-control" id="XYyanzhengma" placeholder="输入验证码">
 										</div><!-- /input-group -->
 									</div>
-									<div class="col-xs-5 col-sm-5">
+									<div class="col-xs-6 col-sm-6">
 										<button class="btn btn-primary btn-block form-control" type="button" id="btnXYCode">获取验证码</button>
 									</div>
 								</div>
-							</div>
-							<br/>
-							<!--输入验证码-->
-							<div class="form-group-lg" id="div_XYyanzhengma">
-								<label for="XYyanzhengma" class="sr-only"></label>
-								<input type="text" class="form-control" id="XYyanzhengma" placeholder="请输入验证码">
-							</div>
-							<br/>
-							<button class="btn btn-lg btn-warning btn-block" type="button" id="btnXYSubmit">确认支付</button>
+							</div>														
+							<button class="btn btn-lg btn-warning btn-block" type="button" id="btnXYSubmit" onclick="unionPayPay('01')">确认支付</button>
 						</form>
 					</div>
 					<br/>
@@ -610,27 +643,26 @@
 								<input type="text" class="form-control" id="txtCCCardCode" placeholder="请输入卡号">
 							</div>
 							<br/>
+							<!--银行预留手机号 -->
 							<div class="form-group-lg" id="div_txtCCphonenum">
+								<label for="txtCCphonenum" class="sr-only"></label>
+								<input type="text" class="form-control" id="txtCCphonenum" placeholder="请输入银行预留手机号">
+							</div>
+							<br/>	
+							<!--输入验证码-->
+							<div class="form-group-lg" id="div_CCyanzhengma">
 								<div class="row">
-									<div class="col-xs-7 col-sm-7">
-										<div class="input-group">
-											<span class="input-group-addon" id="txCCtnum">+86</span>
-											<input type="text" class="form-control" id="txtCCphonenum"aria-describedby="txCCtnum" placeholder="请输入联通手机号">
+									<div class="col-xs-6 col-sm-6">
+										<div class="form-group">
+											<input type="text" class="form-control" id="CCyanzhengma" placeholder="输入验证码">
 										</div><!-- /input-group -->
 									</div>
-									<div class="col-xs-5 col-sm-5">
+									<div class="col-xs-6 col-sm-6">
 										<button class="btn btn-primary btn-block form-control" type="button" id="btnCCCode">获取验证码</button>
 									</div>
 								</div>
 							</div>
-							<br/>
-							<!--输入验证码-->
-							<div class="form-group-lg" id="div_CCyanzhengma">
-								<label for="CCyanzhengma" class="sr-only"></label>
-								<input type="text" class="form-control" id="CCyanzhengma" placeholder="请输入验证码">
-							</div>
-							<br/>
-							<button class="btn btn-lg btn-warning btn-block " type="button">确认支付</button>
+							<button class="btn btn-lg btn-warning btn-block " type="button" onclick="unionPayPay('02')">确认支付</button>
 						</form>
 					</div>
 				</div>
@@ -639,5 +671,13 @@
 		</div>
 	</div>
 
+    <!-- 正在支付弹出框 -->    
+    <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="padding:5px;height:180px;text-align:center">
+            <img src="${resRoot}/image/paying.gif" alt="" />
+        </div>
+      </div>
+    </div>  
 </body>
 </html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:cache="http://www.springframework.org/schema/cache" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation=" 
+	  http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd          
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd          
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd          
+      http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd          
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd          
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+      http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+      http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd"
+      >
+  <!-- 加这句是为了下面 serverHandler 里 注入 unionPayService 注解与配置混合使用-->
+  <context:component-scan base-package="com.ai" />
+  
+  <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+    <property name="customEditors">
+      <map>
+        <entry key="java.net.SocketAddress" value="org.apache.mina.integration.beans.InetSocketAddressEditor">
+        </entry>
+      </map>
+    </property>
+  </bean>
+  
+  <bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor" init-method="bind" destroy-method="unbind">
+    <!-- 默认启用的线程个数是CPU 的核数+1，数值需要多次测试来设定， 测试方法在国外网站有完整表述,8002端口是esp主机外网能访问的端口 -->
+    <!--<constructor-arg index="0" value="10"></constructor-arg>-->    
+    <property name="defaultLocalAddress" value=":8002" />
+    <property name="handler" ref="serverHandler" />
+    <property name="filterChainBuilder" ref="filterChainBuilder" />
+    <property name="reuseAddress" value="true" />
+  </bean>
+  
+  <!--服务端处理器 ，unionPayService是通过注解生成的bean-->
+  <bean id="serverHandler" class="com.ai.gzesp.unionpay.ServerHandler" init-method="init" >
+    <property name="unionPayService" ref="unionPayService"></property>
+  </bean>
+  
+  <!--请求端处理器  -->
+  <bean id="clientHandler" class="com.ai.gzesp.unionpay.ClientHanler"/>    
+  
+  <bean id="mdcInjectionFilter" class="org.apache.mina.filter.logging.MdcInjectionFilter">
+    <constructor-arg value="remoteAddress" />
+  </bean>
+  
+  <!-- 数据包解码器 银联是byte[]字节流-->
+  <bean id="codecFilter" class="org.apache.mina.filter.codec.ProtocolCodecFilter">
+    <constructor-arg>
+      <!-- <bean class="org.apache.mina.filter.codec.textline.TextLineCodecFactory"/> -->
+      <!-- <bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory"/> -->
+    <bean class="com.ai.gzesp.unionpay.ByteArrayCodecFactory"></bean>
+    </constructor-arg>
+  </bean>
+  
+  <!-- 日志过滤器 Mina自带日志过滤器 默认级别为debug  -->
+  <bean id="loggingFilter" class="org.apache.mina.filter.logging.LoggingFilter">
+    <!--
+    <property name="messageReceivedLogLevel" ref="info"></property>
+    <property name="exceptionCaughtLogLevel" ref="info"></property>
+    -->
+  </bean>
+
+  <!-- 多线程处理过滤器，为后面的操作开启多线程，一般放在编解码过滤器之后，开始业务逻辑处理 -->
+  <bean id="executorFilter" class="org.apache.mina.filter.executor.ExecutorFilter" />
+  
+  <!-- 过滤器链 -->
+  <bean id="filterChainBuilder" class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
+    <property name="filters">
+      <map>
+        <entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" />
+        <entry key="codecFilter" value-ref="codecFilter" />
+        <entry key="loggingFilter" value-ref="loggingFilter" />
+        <entry key="executor" value-ref="executorFilter" />
+      </map>
+    </property>
+  </bean>
+
+  <!--mina自带的心跳必须设置响应超时时间，但银联不返回报文，所以只能搞个线程循环维持心跳  -->
+  <!-- <bean id="heartBeat" class="com.ai.gzesp.unionpay.HeartBeatThread" init-method="init"/>   -->
+  
+</beans>
+

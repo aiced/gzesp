@@ -38,6 +38,7 @@
      	<mapper resource="mybatis/mapper_oracle/CommonMapper.xml" />    	
     	<mapper resource="mybatis/mapper_oracle/sqlMap_WeShopDao.xml" />
     	<mapper resource="mybatis/mapper_oracle/sqlMap_OrderDao.xml" />
+    	<mapper resource="mybatis/mapper_oracle/sqlMap_UnionPayDao.xml" />    	
     	<mapper resource="mybatis/mapper_oracle/TdAurDAUTHINFOMapper.xml" /> 
         <mapper resource="mybatis/mapper_oracle/TdAurDBASEINFOMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdAurDRELINFOMapper.xml" /> 

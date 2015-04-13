@@ -14,7 +14,11 @@
 		<param-name>contextConfigLocation</param-name>
 		<!-- ,classpath:/spring/applicationContext-shiro.xml -->
 <!-- 		<param-value>classpath:/spring/applicationContext.xml,classpath:/spring/applicationContext-shiro.xml,classpath:/spring/applicationContext-task.xml,classpath:/spring/applicationContext-ehcache.xml</param-value> -->
-		<param-value>classpath:/spring/applicationContext.xml,classpath:/spring/applicationContext-shiro.xml,classpath:/spring/applicationContext-task.xml</param-value>
+		<param-value>
+		   classpath:/spring/applicationContext.xml,
+		   classpath:/spring/applicationContext-shiro.xml,
+		   classpath:/spring/applicationContext-mina.xml
+		</param-value>
 		<!-- 
 		<param-value>classpath:/spring/applicationContext.xml</param-value>
 		 -->

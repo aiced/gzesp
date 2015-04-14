@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdSysPCITY;
@@ -31,7 +32,6 @@ import com.ai.sysframe.utils.StringUtil;
 import com.alibaba.fastjson.JSON;
 
 @Controller
-@RequestMapping("/common")
 public class CommonController {
     
     @Resource
@@ -50,7 +50,7 @@ public class CommonController {
 	 }
 	 
 //  @RequestMapping(value="uploadFile")
-  @RequestMapping(value="/uploadFile",method = RequestMethod.POST)
+  @RequestMapping(value="/common/uploadFile",method = RequestMethod.POST)
   public void uploadFile(
   		@RequestParam(value = "idCardNum", required = true)String idCardNum, 
   		@RequestParam(value = "uploadFile", required = true)MultipartFile imgFile, 
@@ -128,7 +128,7 @@ public class CommonController {
   
   
  //edit_by_wenh_2015_3_27
-	@RequestMapping("/checkPhoneNum")
+	@RequestMapping("/common/checkPhoneNum")
 	@ResponseBody
 	public Boolean checkPhoneNum(@RequestBody String strPhoneNum) {
 		Map<String, String> paramsMap = StringUtil.params2Map(strPhoneNum);
@@ -145,7 +145,7 @@ public class CommonController {
 			return true;// 没有注册过
 		}
 	}
-	@RequestMapping("/checkWeChat")
+	@RequestMapping("/common/checkWeChat")
 	@ResponseBody
 	public Boolean checkWeChat(@RequestBody String strWeChat)
 	{
@@ -162,5 +162,11 @@ public class CommonController {
 		} else {
 			return true;//没有注册过
 		}
+	} 
+	
+	@RequestMapping("/error")
+	@ResponseBody
+	public ModelAndView error(@RequestBody String inputParams)	{
+		return new ModelAndView("error.ftl");
 	} 
 }

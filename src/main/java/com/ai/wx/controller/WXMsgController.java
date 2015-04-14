@@ -187,5 +187,12 @@ public class WXMsgController {
     	return mav;
     }
     
+    @RequestMapping("/guides")
+    public ModelAndView guides(){
+    	ModelAndView mav = new ModelAndView("wxGuides.ftl");
+    	mav.addObject("title", "入门须知");
+    	return mav;
+    }
+    
 }
 

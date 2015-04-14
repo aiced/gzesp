@@ -208,7 +208,7 @@ public class CoreService {
             resp.setFromUserName(message.getToUserName());
             resp.setToUserName(message.getFromUserName());
             resp.setCreateTime(new Date().getTime());
-            resp.setContent(buildMenuResp()); //关注的时候主动发送菜单
+            resp.setContent(buildWelcomeResp()); //关注的时候主动发送菜单
             resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
             resp.setFuncFlag(0);
             respMessage = XmlUtils.textMessageToXml(resp);
@@ -321,14 +321,14 @@ public class CoreService {
      *
      * @return
      */
-    private String buildMenuResp(){
+    private String buildWelcomeResp(){
         StringBuffer buffer = new StringBuffer();  
         buffer.append(" /::D 欢迎来到掌柜大本营！官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，领福利，学销售，一起做亮闪闪的大掌柜").append("\n");  
-        buffer.append("<a href=\"http://www.baidu.com\">1. 0元免费开店，加入掌柜小分队</a>").append("\n");  
-        buffer.append("<a href=\"http://www.126.com\" >2  收益说明</a>").append("\n");  
-        buffer.append("<a href=\"http://www.126.com\" >3  提现规则</a>").append("\n");  
-        buffer.append("<a href=\"http://www.126.com\" >4  销售进阶</a>").append("\n");  
-        buffer.append("<a href=\"http://www.126.com\" >5  更多互动咨询</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">1. 0元免费开店，加入掌柜小分队</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >2.  收益说明</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >3.  提现规则</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/saleAdvance\" >4.  销售进阶</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >5.  更多互动咨询</a>").append("\n");  
      
         return buffer.toString();        
     }

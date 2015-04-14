@@ -292,7 +292,7 @@ public class GoodsSql {
 		sb.append(" from GDS_D_INFO t1, GDS_D_PHOTO t4 ");
 		sb.append(" where t1.GOODS_ID = " + goodsId
 				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
-				+ " and t1.GOODS_STATE = '1'"
+//				+ " and t1.GOODS_STATE = '1'"
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " order by t1.GOODS_ID");
 

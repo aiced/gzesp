@@ -131,16 +131,18 @@ public class OrderController {
 //    	inputParams = URLDecoder.decode(inputParams);		
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
-    	String userId =  paramsMap.get("userId");
-    	String fromPage = paramsMap.get("fromPage");
+//    	String userId =  paramsMap.get("userId");
+//    	String fromPage = paramsMap.get("fromPage");
     	String orderId = CommonUtil.generateOrderId();
     	String payLogId = CommonUtil.generatePayLogId();
+    	String topayMoney = paramsMap.get("topayMoney");
+    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney));
     	paramsMap.put("orderId", orderId);
     	paramsMap.put("payLogId", payLogId);
     	
     	orderService.insertOrder(paramsMap);
     	
-    	String url = "redirect:/shopManage/ordersQuery?userid="+userId+"&fromPage="+fromPage;
+    	String url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
     	ModelAndView mav = new ModelAndView(url);
 //    	//从数据库获取信息赋值
 //    	mav.addObject("title", "订单支付");

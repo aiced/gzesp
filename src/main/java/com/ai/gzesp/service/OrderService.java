@@ -117,7 +117,7 @@ public class OrderService {
     	insertOrderBaseInfo(paramsMap);
     	insertOrderCustInfo(paramsMap);
     	insertOrderDealInfo(paramsMap);
-    	insertOrderPayLogInfo(paramsMap);
+//    	insertOrderPayLogInfo(paramsMap);
     	insertOrderPostInfo(paramsMap);
     	insertOrderProdInfo(paramsMap);
     	insertOrderResInfo(paramsMap);

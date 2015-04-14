@@ -29,7 +29,7 @@
     	$('#custOrderQueryForm').submit(function() {
     		var phone = $('#inputMobile').val();
         	var passport = $('#inputPassport').val();
-        	alert(phone + passport);
+        	//alert(phone + passport);
         	location.href = "custMyOrder/"+phone+"/"+passport;
         	return false;
     	});

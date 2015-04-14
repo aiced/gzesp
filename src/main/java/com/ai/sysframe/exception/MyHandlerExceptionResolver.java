@@ -17,22 +17,14 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request,
             HttpServletResponse response, Object handler, Exception ex) {
         log.warn("Handle exception: " + ex.getClass().getName());
-        String path =  CommonUtil.appResource.getString("adminPath");
+        String path =  CommonUtil.appResource.getString("base");
         
         if(ex instanceof org.apache.shiro.authz.UnauthenticatedException) {
         	return new ModelAndView("forward:"+path+"/notLogin");
         } else if(ex instanceof org.apache.shiro.authz.UnauthorizedException) {
         	return new ModelAndView("forward:"+path+"/unauthorized");
         } else {
-        	return new ModelAndView("forward:"+path+"/error");
+        	return new ModelAndView("redirect:/error");
         }
-        
-//        Map<String, String> model = new HashMap();
-//        model.put("ex", ex.getClass().getSimpleName());
-//        model.put("error", ex.getMessage());
-//        model.put("adminPath", path);
-//        return new ModelAndView("redirect:http://baidu.com", model);
-//        return new ModelAndView("forward:"+path+"/unauthorized", model);
-//        return new ModelAndView("redirect:"+path+"/unauthorized", model);
     }
 }

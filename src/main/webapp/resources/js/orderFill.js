@@ -67,10 +67,10 @@ $(function() {
 		$('#receiveInfo').css({ "display":"block" }).siblings().css({ "display":"none" });
 		return false;
 	});
-	$('#payInfoTab').bind("click",function(){
-		$('#payInfo').css({ "display":"block" }).siblings().css({ "display":"none" });
-		return false;
-	});
+//	$('#payInfoTab').bind("click",function(){
+//		$('#payInfo').css({ "display":"block" }).siblings().css({ "display":"none" });
+//		return false;
+//	});
 	$('#otherInfoTab').bind("click",function(){
 		$('#otherInfo').css({ "display":"block" }).siblings().css({ "display":"none" });
 		return false;
@@ -108,18 +108,18 @@ $(function() {
 		return false;
 	});
 	
-	$('#payInfoBtn').bind("click",function(){
-		orderStat.payInfoStat = 1;
-		setPayText();
-		$('#payInfo').css({ "display":"none" });
-		$('#orderMain').css({ "display":"block" });
-		return false;
-	});
-	$('#payInfoBackBtn').bind("click",function(){
-		$('#payInfo').css({ "display":"none" });
-		$('#orderMain').css({ "display":"block" });
-		return false;
-	});
+//	$('#payInfoBtn').bind("click",function(){
+//		orderStat.payInfoStat = 1;
+//		setPayText();
+//		$('#payInfo').css({ "display":"none" });
+//		$('#orderMain').css({ "display":"block" });
+//		return false;
+//	});
+//	$('#payInfoBackBtn').bind("click",function(){
+//		$('#payInfo').css({ "display":"none" });
+//		$('#orderMain').css({ "display":"block" });
+//		return false;
+//	});
 	$('#otherInfoBtn').bind("click",function(){
 //		if(otherOrder_checkData()) {
 			orderStat.otherInfoStat = 1;
@@ -303,19 +303,19 @@ function checkPostSelect() {
 
 }
 
-function setPayText() {
-	var text;
-	text = $('input[name="pay_mode"]:checked').attr("data-text");
-	switch ($("input[name=pay_mode]:checked").attr("id"))  {
-         case "pay_mode_1":
-        	 text = text +" " +$('input[name="pay_mode_style"]:checked').val();
-        	 break;
-         case "pay_mode_2":
-        	 text = text +" " + $('#paySelector option:selected').text();
-        	 break;
-    }
-	$('#payText').text(text);
-}
+//function setPayText() {
+//	var text;
+//	text = $('input[name="pay_mode"]:checked').attr("data-text");
+//	switch ($("input[name=pay_mode]:checked").attr("id"))  {
+//         case "pay_mode_1":
+//        	 text = text +" " +$('input[name="pay_mode_style"]:checked').val();
+//        	 break;
+//         case "pay_mode_2":
+//        	 text = text +" " + $('#paySelector option:selected').text();
+//        	 break;
+//    }
+//	$('#payText').text(text);
+//}
 
 
 function getParams() {
@@ -330,15 +330,15 @@ function getParams() {
 	orderFormParams.userId = $('#userId').val();
 	orderFormParams.invoiceTitle = $('#invoiceTitle').val();
 	
-	orderFormParams.payType = $('input[name="pay_mode"]:checked').val();
-	switch ($("input[name=pay_mode]:checked").attr("id"))  {
-         case "pay_mode_1":
-        	 orderFormParams.payMode = $('input[name="pay_mode_style"]:checked').val();
-        	 break;
-         case "pay_mode_2":
-        	 orderFormParams.payMode = $('#paySelector').val();
-        	 break;
-    }
+//	orderFormParams.payType = $('input[name="pay_mode"]:checked').val();
+//	switch ($("input[name=pay_mode]:checked").attr("id"))  {
+//         case "pay_mode_1":
+//        	 orderFormParams.payMode = $('input[name="pay_mode_style"]:checked').val();
+//        	 break;
+//         case "pay_mode_2":
+//        	 orderFormParams.payMode = $('#paySelector').val();
+//        	 break;
+//    }
 	
 	orderFormParams.deliverTypeCode = $('#deliver-select').find('a.selected').attr("value");
 	orderFormParams.receiverName = $('#txtname').val();
@@ -361,37 +361,13 @@ function getParams() {
 	orderFormParams.topayFee= orderFormParams.originalPrice;
 }
 
-function uploadPic(){
-	
-	var params = {
-			"idCardNum": $('#userCard').val()
-	};
-	 $.ajaxFileUpload({  
-	        url : "../common/uploadFile", 
-	        async:false, 
-	        secureuri : false,  
-	        fileElementId : "file-front",  
-	        dataType : 'json',
-			data: params,
-	        success : function(rtdata, status) { 
-	        	//alert(rtdata.url);
-	        	orderFormParams.cardPic1 = rtdata.url;
-	        },  
-	    });  
-	 
-	 $.ajaxFileUpload({  
-	        url : "../common/uploadFile", 
-	        async:false, 
-	        secureuri : false,  
-	        fileElementId : "file-back",  
-	        dataType : 'json',
-			data: params,
-	        success : function(rtdata, status) { 
-	        	//alert(rtdata.url);
-	        	orderFormParams.cardPic2 = rtdata.url;
-	        },  
-	    });  
-};
+//function uploadPic(){
+//	
+//	var params = {
+//			"idCardNum": $('#userCard').val()
+//	};
+//	
+//}
 
 function nextPage() {
 	
@@ -420,11 +396,11 @@ function nextPage() {
 //		return;
 //	}
 	
-	uploadPic();
+//	uploadPic();
+//	
+//	setTimeout('formSubmit()', 2000);
 	
-	setTimeout('formSubmit()', 2000);
-	
-	
+	formSubmit();
 }
 
 function formSubmit() {

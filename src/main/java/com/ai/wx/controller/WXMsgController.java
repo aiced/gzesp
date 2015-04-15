@@ -158,5 +158,41 @@ public class WXMsgController {
 //    	mav.addObject("title", "创建菜单");
     }
     
+    
+    @RequestMapping("/incomeNote")
+    public ModelAndView incomeNote(){
+        ModelAndView mav = new ModelAndView("wxIncomeNote.ftl");
+        mav.addObject("title", "收益说明");
+        return mav;
+    }
+    
+    @RequestMapping("/cashRule")
+    public ModelAndView cashRule(){
+    	ModelAndView mav = new ModelAndView("wxCashRule.ftl");
+    	mav.addObject("title", "提现规则");
+    	return mav;
+    }
+    
+    @RequestMapping("/saleAdvance")
+    public ModelAndView saleAdvance(){
+    	ModelAndView mav = new ModelAndView("wxSaleAdvance.ftl");
+    	mav.addObject("title", "销售进阶");
+    	return mav;
+    }
+    
+    @RequestMapping("/more")
+    public ModelAndView more(){
+    	ModelAndView mav = new ModelAndView("wxMore.ftl");
+    	mav.addObject("title", "更多互动咨询");
+    	return mav;
+    }
+    
+    @RequestMapping("/guides")
+    public ModelAndView guides(){
+    	ModelAndView mav = new ModelAndView("wxGuides.ftl");
+    	mav.addObject("title", "入门须知");
+    	return mav;
+    }
+    
 }
 

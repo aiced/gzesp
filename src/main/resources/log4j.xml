@@ -71,8 +71,8 @@
 
 	<!-- 文件日志，（每天产生一个日志文件） -->
 	<appender name="DailyRolling" class="org.apache.log4j.DailyRollingFileAppender">
-		<!-- <param name="File" value="${esp.root}/WEB-INF/logs/log.log" /> -->
-		<param name="File" value="/home/webapp/app/logs/esp/esp.log" />
+		<param name="File" value="${esp.root}/WEB-INF/logs/log.log" />
+<!-- 		<param name="File" value="/home/webapp/app/logs/esp/esp.log" /> -->
 		<param name="DatePattern" value="'_'yyyyMMdd'.log'" />
 		<param name="append" value="true" />
 		<param name="Encoding" value="UTF-8" />

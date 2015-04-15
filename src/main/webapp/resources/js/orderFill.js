@@ -223,6 +223,7 @@ function addres_checkData()
 	if(!$("#txtaddress").val())
 	{
 		alert("请填写详细地址");
+		return false;
 	}
 	return true;
 }
@@ -405,10 +406,10 @@ function nextPage() {
 		alert('请完整收货信息');
 		return;
 	}
-	if(orderStat.payInfoStat==0) {
-		alert('请完整支付信息');
-		return;
-	}
+//	if(orderStat.payInfoStat==0) {
+//		alert('请完整支付信息');
+//		return;
+//	}
 //	if(orderStat.otherInfoStat==0) {
 //		alert('请完整其他信息');
 //		return;

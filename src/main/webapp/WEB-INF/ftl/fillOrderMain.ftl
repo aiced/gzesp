@@ -107,9 +107,9 @@
 	                <label>收货信息</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	            <!--支付方式-->
-	            <a id="payInfoTab" href="#" class="list-group-item">
-	                <label>支付方式</label><span style="margin-left:10px" id="payText"></span><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
-	            </a>
+<!-- 	            <a id="payInfoTab" href="#" class="list-group-item"> -->
+<!-- 	                <label>支付方式</label><span style="margin-left:10px" id="payText"></span><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span> -->
+<!-- 	            </a> -->
 	            <!--其他-->
 	            <a id="otherInfoTab" href="#" class="list-group-item">
 	                <label>其他</label><label class="label-sm">发票 代金券 备注 推荐人</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>

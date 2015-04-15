@@ -33,7 +33,7 @@ public class WeShopCommissQueryController {
     	
     	//这里从数据库查询数据
     	
-       	List<Map<String, Object>> commList=commissionSql.getCommListbyMonth(strUserID,"");
+       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup("0",strUserID,"","","","-1");
     	
 
     	
@@ -53,18 +53,38 @@ public class WeShopCommissQueryController {
     @ResponseBody
     public ModelAndView queryOrdersByDate(@RequestBody String strParam)
     {
-    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+    	String strzhangqiTime="";
+    	String strStartDate="";
+    	String strEndDate="";
     	
-    	String strStartDate=paramsMap.get("startDate");
+    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+    	String strFlag=paramsMap.get("iflag");
     	String strUserID=paramsMap.get("userID");
-
-    	strStartDate=strStartDate.replace("-", "");
-    	System.out.println(strStartDate);
+    	String strStatusflag=paramsMap.get("iStatusflag");
+    	
+    	if (strFlag.equals("1")) {
+    		strzhangqiTime=paramsMap.get("zhangqiTime");
+    		//strzhangqiTime=strzhangqiTime.replace("-", "");
+		}
+    	else if(strFlag.equals("2"))
+    	{
+        	strStartDate=paramsMap.get("startDate");
+        	strEndDate=paramsMap.get("endDate");
+        	
+        	//strStartDate=strStartDate.replace("-", "");
+        	//strEndDate=strEndDate.replace("-", "");
+    	}
+    	
+    	System.out.println(strFlag);
     	System.out.println(strUserID);
-
+    	System.out.println(strzhangqiTime);
+    	System.out.println(strStartDate);
+    	System.out.println(strEndDate);
+    	System.out.println(strStatusflag);
+    	
     	//这里从数据库查询数据
     	
-       	List<Map<String, Object>> commList=commissionSql.getCommListbyMonth(strUserID,strStartDate);
+       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,strStatusflag);
     	
         ModelAndView mav = new ModelAndView("commissionQuerySub.ftl");
         mav.addObject("commList",commList);

@@ -67,7 +67,10 @@
     		{
 				return false;    			
     		}
-
+    		if(!$('#chkRight').is(':checked')) {
+    			alert("请勾选用户注册协议");
+    		    return false;
+    		}
     			
     		return true;
     		
@@ -227,7 +230,7 @@
 	            </div>
 				<!-- 用户注册协议 -->
 				<div style="float:right;font-size: 12px;">
-					<h4><a href="#">用户注册协议</a></h4>
+					<h4><input type="checkbox" name="chkRight" id="chkRight" checked="true"><a href="#">用户注册协议</a></h4>
 				</div>
 				<br/>
 				<br/>

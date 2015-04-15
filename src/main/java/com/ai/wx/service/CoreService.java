@@ -323,9 +323,11 @@ public class CoreService {
      */
     private String buildWelcomeResp(){
         StringBuffer buffer = new StringBuffer();  
-        buffer.append(" /::D 欢迎来到掌柜大本营！官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，领福利，学销售，一起做亮闪闪的大掌柜").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">1. 0元免费开店，加入掌柜小分队</a>").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >2.  收益说明</a>").append("\n");  
+        buffer.append(" /::D 欢迎来到沃掌柜大本营！").append("\n");  
+        buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n");  
+        buffer.append("1. 0元免费开店").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >2.  收益说明</a>").append("\n").append("\n");  
         buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >3.  提现规则</a>").append("\n");  
         buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/saleAdvance\" >4.  销售进阶</a>").append("\n");  
         buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >5.  更多互动咨询</a>").append("\n");  

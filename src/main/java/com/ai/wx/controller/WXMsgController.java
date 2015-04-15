@@ -113,9 +113,14 @@ public class WXMsgController {
     	 ModelAndView mav = null;
     	 if(webToken != null) {
     		 String openId = webToken.getOpenid();
+    		 if(openId == null) {
+    			 mav=new ModelAndView("redirect:/error");
+    			 return mav;
+    		 }
+    		 
     		 // 根据openId获取userId
-//    		 String userId = service.getUserIdByOpenId(openId);
-    		 String userId = "2015000000000000";
+    		 String userId = service.getUserIdByOpenId(openId);
+//    		 String userId = "2015000000000000";
     		 //用户已注册，免登录，根据state值跳页面
     		 if( userId != null) {
     			 if("weShopIndex".equals(state)) {
@@ -184,6 +189,13 @@ public class WXMsgController {
     public ModelAndView more(){
     	ModelAndView mav = new ModelAndView("wxMore.ftl");
     	mav.addObject("title", "更多互动咨询");
+    	return mav;
+    }
+    
+    @RequestMapping("/guides")
+    public ModelAndView guides(){
+    	ModelAndView mav = new ModelAndView("wxGuides.ftl");
+    	mav.addObject("title", "入门须知");
     	return mav;
     }
     

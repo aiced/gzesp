@@ -266,14 +266,14 @@
 	                	</#if>
 					</tr>
 					<tr>
-	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view"><h4>昨日佣金：0</h4></td>
-		                    <td class="month_view"><h4>本月佣金：0</h4></td>
-		                    <td class="total_view"><h4>累计佣金：0</h4></td>	                		
+	                	<#if commissionList?size==0>
+		                    <td class="yesterday_money"><h4>昨日佣金：0</h4></td>
+		                    <td class="month_money"><h4>本月佣金：0</h4></td>
+		                    <td class="total_money"><h4>累计佣金：0</h4></td>	                		
 		                <#else>
-	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_money"><h4>昨日佣金：${item.yesterday_view}</h4></td>
-	                    		<td class="month_money"><h4>本月佣金：${item.month_view}</h4></td>
+	                		<#list commissionList as item>
+	                	    	<td class="yesterday_money"><h4>昨日佣金：${item.yesterday_commison}</h4></td>
+	                    		<td class="month_money"><h4>本月佣金：${item.month_commison}</h4></td>
 	                    		<td class="total_money"><h4>累计佣金：${item.total_count}</h4></td>
 	                		</#list>
 	                	</#if>

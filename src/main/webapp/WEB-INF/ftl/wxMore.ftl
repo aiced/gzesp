@@ -23,13 +23,6 @@
 	  <div id="top_right"></div>
 	</div>    
     
-         
-    <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
-      <div>
-        <p>赶快联系管理员大哥吧。。</p> 
-      </div>       
-    </div>
-    
-    
+
   </body>
 </html>

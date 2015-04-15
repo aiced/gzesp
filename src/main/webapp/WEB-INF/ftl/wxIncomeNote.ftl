@@ -16,7 +16,7 @@
 	    <p>
     <img style="width:100%;" src="https://mmbiz.qlogo.cn/mmbiz/bmwiaV1TjZPrCibDGGqibCibHicsdH7IreBdjc74cexlnib0ebe1nIjW9W0Oia0wmocB07wRAuag936h4uFwmLutnTUiaA/0/mmbizgif0"/>
 </p>
-<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 0px; padding: 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid rgb(235, 63, 0);">
+<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 10px; padding: 15px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid rgb(235, 63, 0);">
     <p style="margin-top: 0px; margin-bottom: 0px; color: rgb(68, 68, 68); font-family: inherit; font-size: 1em; white-space: normal; padding: 0px; border: currentcolor; text-align: center; line-height: 1.5em; text-decoration: inherit; max-width: 100%; box-sizing: border-box !important; background-image: none; background-color: rgb(255, 255, 255);">
         <span style="font-size: 12px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">不以赚钱为目的的掌柜都是在耍流氓！</span>
     </p>

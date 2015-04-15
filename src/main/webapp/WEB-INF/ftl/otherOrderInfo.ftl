@@ -12,7 +12,7 @@
     <div>
     	<!--top_start-->
         <div id="top">
-        	<div id="otherInfoBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div></div>
+        	<div id="otherInfoBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
@@ -23,8 +23,8 @@
             <form>
                 <!--输入发票抬头-->
                 <div class="form-group">
-                    <label for="txtbilltitle" class="sr-only"></label>
-                    <input type="text" class="form-control" id="txtbilltitle" name="txtbilltitle" placeholder="请输入发票抬头">
+                    <label for="invoiceTitle" class="sr-only"></label>
+                    <input type="text" class="form-control" id="invoiceTitle" name="invoiceTitle" placeholder="请输入发票抬头">
                 </div>
                 <!--输入代金券-->
                 <div class="form-group">

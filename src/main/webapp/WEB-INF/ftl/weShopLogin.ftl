@@ -60,18 +60,26 @@
 	</script>
     
     <style type="text/css">
+    	.login{
+    		height: 40px;
+            vertical-align: middle;
+			float:left;
+			text-align=center;
+            line-height: 40px;
+            font-size: 12px;
+    	}
         .forget_pwd{
             width: auto;
             height: 40px;
             vertical-align: middle;
-            text-align: right;
+            float:right;
             line-height: 40px;
             font-size: 12px;
         }
         .login_bottom{
             width:100%;
             position:absolute;
-            bottom: 0;
+            bottom: 5%;
             text-align: center;
         }
     </style>
@@ -82,7 +90,7 @@
         <div id="top">
         	<div id="top_left"></div>
         	<div id="top_middle">${title}</div>
-        	<div id="top_right"></div>
+        	<div id="top_right"></div></div>
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
@@ -91,24 +99,27 @@
                 <br/>
                 <br/>
                 <label for="inputMobile" class="sr-only">输入手机号</label>
-                <input type="text"  id="inputMobile" name="inputMobile" class="form-control" placeholder="输入手机号"  required autofocus>
+                <input type="text"  id="inputMobile" name="inputMobile" class="form-control input-lg" placeholder="输入手机号"  required autofocus>
                 <br/>
                 <label for="inputPassword" class="sr-only">输入密码</label>
-                <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="输入密码" required>
+                <input type="password" id="inputPassword" name="inputPassword" class="form-control input-lg" placeholder="输入密码" required>
                 <br/>
                 <br/>
-                <button class="btn btn-default btn-block" type="button" name="btnReg" id="btnReg" onClick="location.href='register/step1'">注册</button>
-                <br/>
-                <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">登录</button>
-                
+                <button class="btn btn-warning btn-block btn-lg" type="submit" name="btnSubmit" id="btnSubmit">登录</button>
             </form>
             <br/>
-            <div class="forget_pwd">
-                <a href="findPassword/step1">忘记密码</a>
+            <div>
+            	<div class="login">
+            		<h4><a name="btnReg" id="btnReg" href="register/step1">注册</a></h4>
+            	</div>
+                <div class="forget_pwd">
+                	<h4><a href="findPassword/step1">忘记密码</a></h4>
+            	</div>
             </div>
+
         </div> <!-- /container -->
         <div class="login_bottom">
-           <img src="${resRoot}/image/login/wo_logo.png" width="128px" height="128px">
+           <img src="${resRoot}/image/login/wo_logo.png" width="92px" height="92px">
         </div>
 		<input type="hidden" name="hideRet" id="hideRet" value="${ret}" />  
     </div>

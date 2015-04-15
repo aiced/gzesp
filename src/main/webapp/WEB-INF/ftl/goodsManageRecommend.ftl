@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${name}的微店</title>
+    <title>${title}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -35,34 +35,28 @@
   <body>
   <!--标题   -->
   		   <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 	        </div>        
 	        
     
-     <div id="first_row" style=" width:100%;height:44px;margin-left:0px;margin-top:20px;margin-bottom:20px;" >   	
+     <div id="first_row" style=" width:100%;height:50px;padding:5px;margin-left:0px;border-bottom:1px solid #A6A6A6" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">店长推荐
     		</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
-			<div style="background-color:#A6A6A6;width:100%;float:left;height:0.5px;margin-top:0px;">
-			</div>
      </div>
      
-     <div id="second_row" style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     <div id="second_row"  style="width:100%;height:50px;padding:5px;margin-left:0px;border-bottom:1px solid #A6A6A6; background:#dcdcdc;color:#aaa;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热约合约
     		</p>
     		
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
-			<div style="background-color:#A6A6A6;width:100%;float:left;height:0.5px;margin-top:0px;">
-			</div>
      </div>
      
-          <div id="third_row" style="width:100%;height:44px;margin-left:0px;margin-bottom:20px;" >   	
+     <div id="third_row" style="width:100%;height:50px;padding:5px;margin-left:0px;border-bottom:1px solid #A6A6A6; background:#dcdcdc;color:#aaa;" >   	
      		<p style="float:left;width:120px;height:44px;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热销网卡
     		</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
-			<div style="background-color:#A6A6A6;width:100%;float:left;height:0.5px;margin-top:0px;">
-			</div>
      </div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -83,7 +77,7 @@
      	    });  
 		  	
 		  });  
-		   $("#second_row").click(function(){  
+		  /* $("#second_row").click(function(){  
 		  //在这里操作获取验证码
 		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
@@ -91,8 +85,8 @@
 				data: parms
      	    });  
 		  	
-		  });  
-		  $("#third_row").click(function(){  
+		  });*/  
+		  /*$("#third_row").click(function(){  
 		  //在这里操作获取验证码
 		  	var parms = {'userId':${userId}};
 			 $.commonFormSubmit({  
@@ -100,8 +94,12 @@
 				data: parms
      	    });  
 		  	
-		  }); 
+		  });*/ 
 		  
+	        //[返回]按钮点击
+	        $("#top_left").click(function(){
+	    		location.href = "weShopHome?userid="+${userId};
+	        });   
 		});
 	</script>
     

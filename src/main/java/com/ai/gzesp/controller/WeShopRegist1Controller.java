@@ -22,6 +22,7 @@ import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.dao.sql.RegistSql;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.gzesp.sgip.SgipService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -42,33 +43,58 @@ public class WeShopRegist1Controller {
         ModelAndView mav = new ModelAndView("weShopRegist1.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "注册微店");
-//        mav.addObject("phone", "18685292522"); 
-//        mav.addObject("weixin", "1306520198@qq.com"); 
-        
         List<Map<String, Object>> cityList=registSql.getCityList("85");
         
         mav.addObject("cityList", cityList);
         
         return mav;
     }
-    @RequestMapping("/register/checkPhoneNum")
-    @ResponseBody
-    public Boolean checkPhoneNum(@RequestBody String strPhoneNum)
-    {
-    	Map<String, String> paramsMap = StringUtil.params2Map(strPhoneNum);
-    	String PhoneNum = paramsMap.get("PhoneNum");
-    	System.out.println(PhoneNum);
-    	Criteria myCriteria = new Criteria();
-    	myCriteria.createConditon().andEqualTo("PHONE_NUMBER", PhoneNum);
-    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
-    	System.out.println(count);
-    	if(count >= 1) {
-    		return false; //该账户已经注册了
-            
-    	} else {
-    		return true;//没有注册过
-    	}
-    }
+//    @RequestMapping("/register/checkPhoneNum")
+//    @ResponseBody
+//    public Boolean checkPhoneNum(@RequestBody String strPhoneNum)
+//    {
+//    	Map<String, String> paramsMap = StringUtil.params2Map(strPhoneNum);
+//    	String PhoneNum = paramsMap.get("PhoneNum");
+//    	System.out.println(PhoneNum);
+//    	Criteria myCriteria = new Criteria();
+//    	myCriteria.createConditon().andEqualTo("PHONE_NUMBER", PhoneNum);
+//    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+//    	System.out.println(count);
+//    	if(count >= 1) {
+//    		return false; //该账户已经注册了
+//            
+//    	} else {
+//    		return true;//没有注册过
+//    	}
+//    }
+//    @RequestMapping("/register/checkWeChat")
+//    @ResponseBody
+//    public Boolean checkWeChat(@RequestBody String strWeChat)
+//    {
+//    	Map<String, String> paramsMap = StringUtil.params2Map(strWeChat);
+//    	String WeChat = paramsMap.get("WeChat");
+//    	System.out.println(WeChat);
+//    	Criteria myCriteria = new Criteria();
+//    	myCriteria.createConditon().andEqualTo("WEIXIN_ID", WeChat);
+//    	int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+//    	System.out.println("微信的个数："+count);
+//    	if(count >= 1) {
+//    		return false; //该账户已经注册了
+//            
+//    	} else {
+//    		return true;//没有注册过
+//    	}
+//    } 
+//    @RequestMapping("/register/yanzhengma")
+//    @ResponseBody
+//    public Boolean sendYanzhenma(@RequestBody String strParam)
+//    {
+//    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+//    	String strphone = "86"+paramsMap.get("phone");
+//    	String strcode=paramsMap.get("code");
+//    	return sgipService.smsSend(new String[]{strphone},strcode);
+//    	
+//    }
     @RequestMapping("/register/reg_step1_postdata")
     @ResponseBody
     public ModelAndView RegStep1_PostData(@RequestBody String inputParams){
@@ -97,6 +123,9 @@ public class WeShopRegist1Controller {
         mav.addObject("weixin", strwecharaccount); 
         mav.addObject("pwd", strPwd); 
 
+        List<Map<String, Object>> bankList=registSql.getBankList("BANK_TYPE");
+        
+        mav.addObject("bankList", bankList);
         
         
         return mav;

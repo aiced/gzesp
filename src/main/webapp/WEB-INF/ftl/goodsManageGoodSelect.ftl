@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${name}的微店</title>
+    <title>${title}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -41,10 +41,11 @@
   <body>
    <!--标题   -->
  	<div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 				<div id="top_right">
-	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="get_t(this); return false;">管理</a>	
+	        	    <!--	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="get_t(this); return false;">管理</a> -->
+	        	  <button class="btn btn-primary btn-sm" style="background-color:#21292c;" onclick="get_t(this); return false;">管理</button>	
 	        	</div>	 </div>
     <div style="width:100%;height:24px ;margin-top:20px;">
 	 <p style="padding-left:20px;width:260px;height:24px ;line-height:24px;display: block;font-size:13px;color:#6A6969;margin-top:20px;">可选择的不超过四个</p>
@@ -60,6 +61,7 @@
          	     			<img id = "image01" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
          	
          	</div>           		
+
        		<div id="second_row_left" style="width:40%;height:40%;display: block;position:absolute;left:5px;bottom:5px">
        		     		    <img id = "image2" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
        		     			<img id = "image02" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
@@ -69,7 +71,6 @@
        		     	         <img id = "image3" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
        		     			 <img id = "image03" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
        		</div>
-       		
        		<input id = "hideTag" type = "hidden" name = 'hideTag' value = ${hideTag}>
        		
      							
@@ -81,7 +82,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
      <script type="text/javascript">
@@ -121,7 +121,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==0){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",
@@ -153,7 +153,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==1){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",
@@ -184,7 +184,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==2){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",
@@ -216,7 +216,7 @@
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==3){
 		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}};
+		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
 				$.ajax({
 		  			 type: "POST",
 		  			 url: "goodsManageGoodSelectDelete",
@@ -230,7 +230,7 @@
 			});	
 
 		    <#list rcdlist as info>	
-				document.getElementById('image${info_index}').src='${imageRoot}${info.photoLinks}';				
+				document.getElementById('image${info_index}').src='${imageRoot}${info.photoLinks}';		
 				
 			</#list>
 		
@@ -264,6 +264,13 @@
 			}
 			
 		}
+	
+ 	$(function(){
+        //[返回]按钮点击
+        $("#top_left").click(function(){  
+    		location.href = "goodsManageRecommend?userid="+${userId};
+        });   
+ 	})
 	</script>
 
   </body>

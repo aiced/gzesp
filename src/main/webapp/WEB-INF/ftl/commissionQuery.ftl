@@ -30,33 +30,104 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-
+	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
     <!--日历控件js-->
     <script src="${resRoot}/js/date.js?v=${resVer}"></script>
     <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
     <script type="text/javascript">
-    	$(function(){
-    	    $('#beginTime').date();
-    	    
-    	    //[点击查询]
-    	    $("#btnselect").click(function(){
-    	    	//在这里操作数据库查询
-        		var param = {"startDate":$("#beginTime").val(),"userID":$("#hideuserid").val()};
-        		
-        		$.ajax({
-        			   type: "POST",
-        			   url: "selectCommissions",
-        			   data: param,
-        			   async: false,
-        			   success: function(bRet){
-        				   //alert(bRet);
-        				   $("#commmiss_query_info").html(bRet);
-        			   }
-        			});
-    	    });
+    
+    //[点击佣金列表]
+    function doneClick(obj)
+    {
+    	//var tdlist = $(obj).find('td');
+    	//var td=tdlist.eq(2);//订单号
+	    var userId = $("#hideuserid").val();
+    	//ajax 操作，刷新本界面数据   
+		var parms = {'ORDER_ID':$(obj).text()};
+		$.commonFormSubmit({
+		 type: "POST",
+		 action: '${base}/shopManage/orderDetail',
+		 data: parms,
+		 success: function(data){
+		  	 //history.back();
+		  	 //alert("ok");
+		  	 //return;
+		  	 //alert(data);
 
-    	});
+		  	 return;
+		 }
+		});
+    }
+    function countTotal()
+    {
+	    var totalSale = 0;
+	    var totalCommission=0;
+	    $('table tr:gt(0)').each(function() { 
+	    	$(this).find('td:eq(2)').each(function(){ 
+	    		totalSale += parseFloat($(this).text()); 
+	    	}); 
+	    	$(this).find('td:eq(3)').each(function(){ 
+	    		totalCommission += parseFloat($(this).text()); 
+	    	}); 
+	    }); 
+	    $('#totalRow').append('<td colspan="2"><h4><label class="query_info_left">合计</label></h4></td>');
+	    $('#totalRow').append('<td><h4><label>'+totalSale+'</label></h4></td>');
+	    $('#totalRow').append('<td><h4><label>'+totalCommission+'</label></h4></td>');
+    }
+    
+    var iflag=1;//记录查询的条件 1.帐期查询 2起始日期查询
+   	$(function(){
+   		
+   		$('#zhangqiTime').date();
+   	    $('#beginTime').date();
+   	    $('#endTime').date();
+   	    
+   	    //[点击查询]
+   	    $("#btnselect").click(function(){
+   	    	//在这里操作数据库查询
+       		
+       		if(iflag == 1)
+       		{
+       			var param = {"startDate":$("#zhangqiTime").val(),"userID":$("#hideuserid").val()};
+       		}
+       		else if(iflag==2)
+       		{
+       			var param = {"startDate":$("#beginTime").val(),"userID":$("#hideuserid").val()};
+       		}
+       		
+       		$.ajax({
+       			   type: "POST",
+       			   url: "selectCommissions",
+       			   data: param,
+       			   async: false,
+       			   success: function(bRet){
+       				   //alert(bRet);
+       				   $("#commmiss_query_info").html(bRet);
+      				  	 	//调用计算总和方法
+      				  	 	countTotal();
+       			   }
+       			});
+   	    });
+   	    countTotal();//计算总和
+   	    
+   	    $("#selSearch").change(function(){
+   	    	if($("#selSearch").val() == "1")
+   	    	{
+   	    		iflag=1;
+   	   	    	$(".order_top_middle").css("display","none");
+   	   	    	$("#zhangqiTime").css("display","block");
+   	    	}
+   	    	else
+   	    	{
+   	    		iflag=2;
+   	    		$("#zhangqiTime").css("display","none");
+   	    		$(".order_top_middle").css("display","block");
+   	    	}
+   	    		
+
+   	    });
+   	});
 
     </script>
     <style type="text/css">
@@ -68,19 +139,14 @@
         .query_info_top
         {
             background: #ffffff;
-            height:50px;
+            height:60px;
         }
         .query_info_detail
         {
-            font-size: 12px;
             background: #ffffff;
+            padding-top: 40px;
         }
-        .query_info_bottom
-        {
-            font-size: 12px;
-            background: #ffffff;
-            margin-top: 15px;
-        }
+
         h5
         {
             padding-top: 15px;
@@ -98,44 +164,79 @@
         {
             width:20%;
             float: left;
-            font-size: 12px;
-            height: 34px;
-            line-height: 34px;
-            margin-top: 7px;
+            height: 60px;
+            line-height: 60px;
             margin-left: 7px;
         }
+        select
+        {
+        	height: 45px;
+        	font-size: 1em;
+        }
+
         .query_info_top_middle
         {
-            width:50%;
+            width:45%;
             float: left;
             margin-top: 7px;
+            margin-left: 20px;
         }
         .query_info_top_right
         {
             width:20%;
-            float: left;
+            float: right;
             margin-top: 7px;
-            margin-left: 7px;
+            margin-right: 7px;
         }
         .query_info_top_clear
         {
             clear:both;;
         }
-        .btn
-        {
-            font-size: 12px;
-        }
+
         input
         {
-        	height: 31px;
+        	height: 45px;
+        	width:100%;	
         }
+
+        .order_top_middle1
+        {
+            float: left;
+            width: 45%;
+        }
+        .order_top_middle2
+        {
+            float: left;
+            width: 10%;
+            line-height: 34px;
+        }
+        .order_top_middle3
+        {
+            float: left;
+            width: 45%;
+        }
+        .query_info_bottom
+        {
+        	background: #cccccc;
+			position:fixed;
+        	bottom:0em;
+        	height: 120px;
+        	color：#333333;
+        	padding: 20px;
+        	z-index:-9999;
+        }
+		.th_title
+		{
+			height: 30px;
+			line-height: 30px;
+		}
     </style>
 </head>
 <body>
 	<div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
@@ -145,52 +246,94 @@
 	    <form>
 	        <div>
 	            <div class="query_info_top">
-	                <div class="query_info_top_left"><label>佣金帐期</label></div>
+	              <!-- <h4><div class="query_info_top_left"><label>佣金帐期</label></div></h4> -->
+	              	<div class="query_info_top_left">
+		                <select name="selSearch" id="selSearch">
+								<option value="1">佣金帐期</option>
+								<option value="2">订单日期</option>
+		                </select>
+	           		</div>
 	                <div class="query_info_top_middle">
-	                	<input  id="beginTime" class="kbtn" name="beginTime" value=""/>
-	                </div>
+	                	<input  id="zhangqiTime" class="kbtn input-lg" name="zhangqiTime" value="" />
+		                <div id="datePlugin"></div>
+		                <!-- 隐藏控件用于保存userid -->
+						<div class="order_top_middle" style="display:none">
+							<div class="order_top_middle1">
+								<input id="beginTime" class="kbtn" name="beginTime" value="" />
+							</div>
+							<div class="order_top_middle2">—</div>
+							<div class="order_top_middle3">
+								<input id="endTime" class="kbtn" name="endTime" value="" />
+							</div>
+							
+							<!-- 这句和日历控件有关千万别忘掉 -->
+						</div>
+						<div id="datePlugin"></div>
+
+					</div>
 	                <div class="query_info_top_right">
-	                    <button class="btn btn-warning btn-block" name="btnselect" id="btnselect" type="button">查询</button>
+	                    <button class="btn btn-lg btn-warning btn-block" name="btnselect" id="btnselect" type="button">查询</button>
 	                </div>
-	                <div id="datePlugin"></div>
-	                <!-- 隐藏控件用于保存userid -->
+
             		<input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
 	            </div>
 	            <div class="query_info_top_clear"></div>
+
 	        </div>
 	    </form>
+
 	    <div class="query_info_detail">
-	        <h5><label>当月佣金明细</label></h5>
+	        <h4><label>当月佣金明细</label></h4>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
 					您没有佣金
 				<#else>
-				<table class="table table-hover table-striped table-condensed">
+				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
 				    <tr>
-				        <th>序号</th>
-				        <th>商品名称</th>
-				        <th>订单号</th>
-				        <th>销售金额</th>
-				        <th>佣金</th>
+				        <!--<th>序号</th>-->
+				        <th><div class="th_title">商品名称</div></th>
+				        <th><div class="th_title">订单号</div></th>
+				        <th><div class="th_title">收益</div></th>
+				        <th>
+							<div class="btn-group" role="group" aria-label="...">
+								<div class="btn-group" role="group">
+									<button type="button" class="btn btn-default dropdown-toggle"
+										data-toggle="dropdown" aria-expanded="false">
+										状态
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<li><a href="#">可领取</a></li>
+										<li role="presentation" class="divider"></li>
+										<li><a href="#">冻结</a></li>
+									</ul>
+								</div>
+							</div>
+						</th>
 				    </tr>
 					<#list commList as item>
 						<tr>
-					      <td>${item_index}</td><!-- 序号 -->
-					      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:74px;">${item.GOODS_NAME}</td><!--商品名称 -->
-					      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;">${item.ORDER_ID}</td><!-- 订单号-->
+					      <!-- <td>${item_index}</td> --><!-- 序号 -->
+					      <td style="width:74px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.GOODS_NAME}</td><!--商品名称 -->
+					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);">${item.ORDER_ID}</td><!-- 订单号-->
 					      <td>${item.CMS_SUM_MONEY}</td><!-- 销售金额 -->
 					      <td>${item.CMS_MONEY}</td><!-- 佣金 -->
 						</tr>
 					</#list>
-				    <tr>
-				    	<td colspan="3"><label class="query_info_left">合计</label></td>
-				    	<td><label>200</label></td>
-				    	<td><label>300</label></td>
+				    <tr id="totalRow">
+
 				    </tr>
 				</table>
 				</#if>
 	        </div><!-- commmiss_query_info_end -->
+
 	    </div>
+		<div >
+	        <div class="query_info_bottom">
+				温馨提示：我们的佣金出帐日为每月的20号，处于冻结状态的佣金可能是未到出帐日或号码还没有激活，每月出帐后的佣金将在25号到达您的微账户。
+	    	</div>
+		</div>
+
 	</div>
 	
 

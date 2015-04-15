@@ -6,22 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdGdsDABLERCD;
-import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.service.TdGdsDABLERCDDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
-import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
 @Controller
@@ -43,11 +41,19 @@ public class GoodsManageGoodAddController {
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+//<<<<<<< HEAD
+//    	String strUserID = paramsMap.get("userId");
+//    	if(strUserID == null){
+//    		strUserID = "333";
+//    	}
+//    	rcdlist = goodsSql.GetRcdList(); 
+//=======
+    	//String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
-    	if(strUserID == null){
-    		strUserID = "333";
-    	}
-    	rcdlist = goodsSql.GetRcdList(); 
+
+    	rcdlist = goodsSql.GetRcdList(strUserID); //根据能人id 查询店长推荐的列表
+    	List<Map<String, Object>> goodsList = null;
+//>>>>>>> cda98479ff777e99dab992d7058040523a03f99d
 		sb = new StringBuffer();
 
 		if(rcdlist.size() != 0){
@@ -89,19 +95,27 @@ public class GoodsManageGoodAddController {
     }
     
     @RequestMapping("/goodsManageGoodAddInsert")
-    @ResponseBody
-    public void goodsManageGoodAddInsert(@RequestBody String inputParam){
+    //@ResponseBody
+    public ModelAndView goodsManageGoodAddInsert(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String goodsIdStr = paramsMap.get("goodsId");
+    	String userId = paramsMap.get("userId"); 
+    	String partitionIdStr = goodsIdStr.substring(14); //取商品id后两位做分区id，商品id共16位
     	Long goodsId = Long.parseLong(goodsIdStr);
     	Short seqNum = 1;
-    	Short userId = 1;
+    	//Short userId = 1;
+    	Short partitionId = Short.parseShort(partitionIdStr);
     	TdGdsDABLERCD tdGdsDABLERCD = new TdGdsDABLERCD();
     	tdGdsDABLERCD.setGoodsId(goodsId);
-    	tdGdsDABLERCD.setPartitionId(userId);
-    	tdGdsDABLERCD.setUserId("1");
+    	tdGdsDABLERCD.setPartitionId(partitionId);
+    	tdGdsDABLERCD.setUserId(userId);
     	tdGdsDABLERCD.setSeqNum(seqNum);    	
     	tdGdsDABLERCDDao.insertSelective(tdGdsDABLERCD);
+    	
+    	//保存完数据库后再重定向到上一步商品添加页面
+    	ModelMap mmap = new ModelMap();
+    	mmap.addAttribute("userId", userId);
+        return new ModelAndView("redirect:/shopManage/goodsManageGoodSelect", mmap);
     	
     }
     
@@ -174,23 +188,6 @@ public class GoodsManageGoodAddController {
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
 }
-    
-    
-    
-//    @RequestMapping("/reloadGoodsByAjax")
-//   	public ModelAndView reloadGoodsByAjax(@RequestBody String inputParam){
-//   		//返回数据表格子页面
-//    	List<Map<String, Object>> goodsList = goodsNotInRcdList;
-//    	Map<String, Object> rspMap = new HashMap<String, Object>();  
-//       	rspMap.put("rspCode", "0000");   
-//       	rspMap.put("name", "weidian");   
-//       	rspMap.put("total", goodsList.size());     	
-//       	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-//       	rspMap.put("goodsList", goodsList);  
-//       	rspMap.put("title", "选择商品"); 
-//       	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
-//   }
-    
     
 }
 

@@ -25,9 +25,14 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script type="text/javascript">
+    	var bRet1=false;
+    	var bRet2=false;
+    	var bRet3=false;
+    	
+    
     	function checkData()
     	{
-    		if(!$("#txtname").val())
+    		/*if(!$("#txtname").val())
     		{
     			alert("请输入姓名");
     			return false;
@@ -45,7 +50,27 @@
     		if (!checkBankCard($("#txtbankcardid").val())) {
 				return false;
 			}
+    		return true;*/
+    		
+    		
+    		
+    		if(!bRet1)
+    		{
+    			alert("请输入姓名");
+    			return false;
+    		}
+    		if(!bRet2)
+    		{
+    			return false;
+    		}
+    		if(!bRet3)
+    		{
+				return false;    			
+    		}
+
+    			
     		return true;
+    		
     	}
 		$(document).ready(function(){ 
 		   //[提交]按钮点击
@@ -64,6 +89,78 @@
 			}
 		  });		
 			
+		  //[姓名]文本框失去焦点
+		  $("#txtname").blur(function(){
+		  	//在这里操作 姓名 文本框失去焦点
+		  	if(!$("#txtname").val())
+		  	{
+		  		$("#div_name").addClass("has-error");
+		  		bRet1=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		$("#div_name").removeClass("has-error");
+		  		$("#div_name").addClass("has-success");
+
+		  		bRet1=true;
+		  		return;
+		  	}
+		  });
+		  
+		  //[身份证号]文本框失去焦点
+		  $("#txtpersonalid").blur(function(){
+		  	//在这里操作 身份证号 文本框失去焦点
+		  	if(!$("#txtpersonalid").val())
+		  	{
+		  		$("#div_personalid").addClass("has-error");
+		  		bRet2=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		
+	    		if(!checkEnergyCard($("#txtpersonalid").val()))
+	    		{
+			  		$("#div_personalid").addClass("has-error");
+			  		bRet2=false;
+	    			return;
+	    		}
+		  		
+		  		$("#div_personalid").removeClass("has-error");
+		  		$("#div_personalid").addClass("has-success");
+
+		  		bRet2=true;
+		  		return;
+		  	}
+		  });
+		   
+		  //[银行卡号]文本框失去焦点
+		  $("#txtbankcardid").blur(function(){
+		  	//在这里操作 银行卡号 文本框失去焦点
+		  	if(!$("#txtbankcardid").val())
+		  	{
+		  		$("#div_bankcardid").addClass("has-error");
+		  		bRet3=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		
+	    		if (!checkBankCard($("#txtbankcardid").val())) {
+			  		$("#div_bankcardid").removeClass("has-error");
+			  		bRet3=false;
+					return;
+				}
+	    		
+		  		$("#div_bankcardid").removeClass("has-error");
+		  		$("#div_bankcardid").addClass("has-success");
+
+		  		bRet3=true;
+		  		return;
+		  	}
+		  });
+		   
 		});
     </script>
     <style type="text/css">
@@ -71,16 +168,7 @@
         {
             margin: 15px;
         }
-        .btn{
-            padding: 1px 5px;
-            font-size: 12px;
-            line-height: 1.5;
-        }
-        .form-control
-        {
-            font-size: 10px;
-            padding:3px 3px;
-        }
+
 
     </style>
 </head>
@@ -97,13 +185,16 @@
 	
 	    <div class="container-fluid">
 	        <form action="reg_step2_postdata" method="post">
+	        	<h4><span style="color: #ff0000">为保证收益的准确发放，以下请填写真实信息!</span></h4>
+	            <br/>
+	            <br/>
 	            <!--姓名-->
-	            <div class="form-group">
+	            <div class="form-group" id="div_name">
 	                <label for="txtname" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtname" name="txtname" placeholder="请输入姓名">
+	                <input type="text" class="form-control input-lg" id="txtname" name="txtname" placeholder="请输入姓名">
 	            </div>
 	            <!--性别-->
-	            <div class="form-group">
+	            <div class="form-group input-lg">
 	                <label class="radio-inline">
 	                    <input type="radio" name="radsex" id="radnan" value="男" checked="checked"> 男
 	                </label>
@@ -111,30 +202,37 @@
 	                    <input type="radio" name="radsex" id="radnv" value="女"> 女
 	                </label>
 	            </div>
+	            
 	            <!--身份证号-->
-	            <div class="form-group">
+	            <div class="form-group" id="div_personalid">
 	                <label for="txtpersonalid" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtpersonalid" name="txtpersonalid" placeholder="请输入身份证号">
+	                <input type="text" class="form-control input-lg" id="txtpersonalid" name="txtpersonalid" placeholder="请输入身份证号">
 	            </div>
 	            <!--开户银行-->
 	            <div class="form-group">
-	                <select class="form-control" name="selBank">
-	                    <option value="招商银行">招商银行</option>
-	                    <option value="农业银行">农业银行</option>
-	                    <option value="建设银行">建设银行</option>
-	                    <option value="工商银行">工商银行</option>
-	                    <option value="交通银行">交通银行</option>
+	                <select class="form-control input-lg" name="selBank">
+			      		<#if (bankList?size==0)>
+							<option value="数据加载失败">数据加载失败</option>
+			        	<#else>
+							<#list bankList as item>
+								<option value="${item.param_code}">${item.param_value}</option>
+							</#list>
+			 			</#if>
 	                </select>
 	            </div>
 	            <!--银行卡号-->
-	            <div class="form-group">
+	            <div class="form-group" id="div_bankcardid">
 	                <label for="txtbankcardid" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
+	                <input type="text" class="form-control input-lg" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
 	            </div>
-	            	<span style="color: #ff0000">尊敬的掌柜，请确保您的银行卡信息准确无误，否则会导致收益发放失败！</span>
-	            <br/>
-	            <br/>
-	            <button class="btn-sm btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">提交</button>
+				<!-- 用户注册协议 -->
+				<div style="float:right;font-size: 12px;">
+					<h4><a href="#">用户注册协议</a></h4>
+				</div>
+				<br/>
+				<br/>
+				<br/>
+	            <button class="btn-lg btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">提交</button>
 	        	
 	        	<input type="hidden" name="selArea" value="${area}" />
 	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />

@@ -30,7 +30,7 @@
     <div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
@@ -38,20 +38,20 @@
 		<!--top_end-->
         <div class="orderinfo">
             <div class="list-group">
-                <a href="#" class="list-group-item">订单编号：${ORDER_ID}</a>
-                <a href="#" class="list-group-item">订单金额：${INCOME_MONEY}元</a>
-                <a href="#" class="list-group-item">下单时间：${Order_Time}</a>
+                <a href="#" class="list-group-item"><h4>订单编号：${ORDER_ID}</h4></a>
+                <a href="#" class="list-group-item"><h4>订单金额：${INCOME_MONEY}元</h4></a>
+                <a href="#" class="list-group-item"><h4>下单时间：${Order_Time}</h4></a>
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item">收货人姓名：${RECEIVER_NAME}</a>
-                <a href="#" class="list-group-item">收获地址：${POST_ADDR} </a>
-                <a href="#" class="list-group-item">联系电话：${MOBILE_PHONE} </a>
-                <a href="#" class="list-group-item">送货日：${DELIVER_TIME_CODE}</a>
+                <a href="#" class="list-group-item"><h4>收货人姓名：${RECEIVER_NAME}</h4></a>
+                <a href="#" class="list-group-item"><h4>收获地址：${POST_ADDR}</h4></a>
+                <a href="#" class="list-group-item"><h4>联系电话：${MOBILE_PHONE}</h4></a>
+                <a href="#" class="list-group-item"><h4>送货日：${DELIVER_TIME_CODE}</h4></a>
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item">支付方式：${PAY_MODE}</a>
-                <a href="#" class="list-group-item">订单状态：${PAY_STATE}</a>
-                <a href="#" class="list-group-item">缺货处理：${PAY_REMARK}</a>
+                <a href="#" class="list-group-item"><h4>支付方式：${PAY_MODE}</h4></a>
+                <a href="#" class="list-group-item"><h4>订单状态：${PAY_STATE}</h4></a>
+                <a href="#" class="list-group-item"><h4>缺货处理：${PAY_REMARK}</h4></a>
             </div>
         </div>
     </div>

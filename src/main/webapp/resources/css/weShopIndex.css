@@ -53,5 +53,20 @@ p {
 }
 
 
+.text-shenlue{
+  font-size:14px;
+  font-weight:bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width:150px;
+}
+
+.price-red-bold{
+  color:#F70909;
+  font-size:14px;
+  font-weight:bold
+}
+
 
 

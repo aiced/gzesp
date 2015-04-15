@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <!-- Bootstrap core JavaScript
@@ -10,6 +11,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script src="${resRoot}/js/newNumberJoin.js?v=${resVer}"></script>
     <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>
@@ -66,6 +68,17 @@
 		    text-align: right;
 		}
 		
+		 .list_gou {
+            float: right;
+            text-align: right;
+            position:absolute;
+            bottom: 2px;
+            right:15px;
+        }
+         .label-sm {
+            margin-left: 5px;
+        }
+        
 		.pack-detail{width:100%;font-size:13px;overflow:hidden;}
 		.pack-detail span{float:left;margin-right:3px;margin-bottom:10px;}
 		.pack-detail span i{display:inline-block;width:19px;height:17px;margin-right:3px;-webkit-background-size:19px 17px;-moz-background-size:19px 17px;background-size:19px 17px;vertical-align:middle;}
@@ -81,7 +94,7 @@
  	 <div id="mianPage" >
 	    <!-- nav bar -->
 	     <div id="top">
-		        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
+		        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 		        	<div id="top_middle">${title}</div>
 		        	<div id="top_right"></div>
 		        </div>
@@ -98,7 +111,7 @@
 					   <label>选择合约</label>
 		               <p id="ctrct-unchoose" >根据您的月消费，选择一个合适的合约计划</p>
 		               <div id="ctrct-choosed" style="display:none">
-		               		<p><div > <span id="conType"></span>套餐  <span id="conPeriod"></span>月合约</div></p>
+		               		<p><div > <span id="conType"></span>套餐  <span id="conPeriod"></span>合约</div></p>
 <!-- 		                   <div class="pack-detail" id="packageDetail"> -->
 <!-- 		                       <span class="pack-call"><i></i></span><span id="call"></span><span></span> -->
 <!-- 		                       <span class="pack-msg"><i></i></span><span id="msg"></span><span></span> -->
@@ -150,6 +163,9 @@
     <input type="hidden" id="goods_name" value="${goods_name}"></input>
     <input type="hidden" id="goods_price" value="${goods_price}"></input>
     <input type="hidden" id="attr_val" value="${attr_val}"></input>
+    <input type="hidden" id="num_resId" value="${num_resId}"></input>
+    <input type="hidden" id="attr_contract" ></input>
+    <input type="hidden" id="attr_number"></input>
       
   </body>
 </html>

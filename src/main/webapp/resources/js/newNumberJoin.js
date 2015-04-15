@@ -6,6 +6,13 @@ var params;
 
 $(function() {
 	changeSatate();
+	
+	//子页面返回按钮
+	$('#selectContractBackBtn').bind("click",function(){
+		$('#selectContractPage').css({ "display":"none" });
+		$('#mianPage').css({ "display":"block" });
+		return false;
+	});
 })
 
 function changeSatate() {
@@ -20,16 +27,7 @@ function changeSatate() {
 
 
 function toSelectNumberPage() {
-//    		var parms = {'fromPage':'newNumberJoin' };
-//			
-//			 $.commonFormSubmit({  
-//    	        action : 'selectNumber', 
-//				data: parms,
-//    	        success : function(rtdata, status) { 
-//    	        }  
-//    	    }); 
-			 
-			$('#selectNumberPage').css({ "display":"block" }).siblings().css({ "display":"none" });
+		$('#selectNumberPage').css({ "display":"block" }).siblings().css({ "display":"none" });
 }
 
 
@@ -48,9 +46,7 @@ function selConBack2Main(data) {
 	
 	var conAttrVal1=data.resId+"|"+"PACKRES"+"|"+data.conType+"|"+data.packVal;
 	var conAttrVal2=data.resId+"|"+"PAGERES"+"|"+data.conPeriod+"|"+data.pageVal;
-	var attrVal = $('#attr_val').val();
-	attrVal = attrVal+"^"+conAttrVal1+"^"+conAttrVal2;
-	$('#attr_val').val(attrVal);
+	$('#attr_contract').val(conAttrVal1+"^"+conAttrVal2);
 	
 	var tmp = {
 			conType:data.conType,
@@ -69,10 +65,8 @@ function afterUpdateNumber(data) {
 	changeSatate();
 	$('#serial_number').html(data.serial_number);
 	
-//	var conAttrVal1=data.resId+"|"+"NUMBERS"+"|"+ "号码" +"|"+data.serial_number;
-//	var attrVal = $('#attr_val').val();
-//	attrVal = attrVal+"^"+conAttrVal1;
-//	$('#attr_val').val(attrVal);
+	var attrVal=$('#num_resId').val()+"|"+"NUMBERS"+"|"+ data.serial_number +"|"+data.serial_number;
+	$('#attr_number').val(attrVal);
 	
 	var tmp = {serialNumber:data.serial_number};
 	params = $.extend({}, params, tmp );
@@ -84,20 +78,34 @@ function afterUpdateNumber(data) {
 	$('#num-choosed').css({ "display":"block" });
 }
 
+function back2Main() {
+	$('#selectNumberPage').css({ "display":"none" });
+	$('#mianPage').css({ "display":"block" });
+}
+
 function toSelectContractPage() {
-//	var parms = {'fromPage':'newNumberJoin' };
-//	
-//	 $.commonFormSubmit({  
-//        action : 'selectContract', 
-//		data: parms,
-//        success : function(rtdata, status) { 
-//        }  
-//    }); 
 	 $('#selectContractPage').css({ "display":"block" }).siblings().css({ "display":"none" });
+}
+
+function checkSelState() {
+	//selectState--0:selectedNone, 1:selectedCon, 2:selectedNum
+	if(selectState == 0) {
+		alert('请选择合约');
+		return false;
+	} else if(selectState == 1) {
+		alert('请选择号码');
+		return false;
+	}
+	return true;
 }
 
 function nextPage() {
 //	var tmp = {'fromPage':'newNumberJoin' };
+	
+	if(!checkSelState()) {
+		return;
+	}
+	
 	var tmp = new Object();
 	tmp.fromPage = 'newNumberJoin' ;
 	tmp.userId = $('#user_id').val();
@@ -105,7 +113,7 @@ function nextPage() {
 	tmp.goodsName = $('#goods_name').val();
 	tmp.goodsPrice = $('#goods_price').val();
 	tmp.goodsDisc = $('#goods_disc').val();
-	tmp.attrVal = $('#attr_val').val();
+	tmp.attrVal = $('#attr_val').val()+"^"+$('#attr_contract').val()+"^"+$('#attr_number').val();
 	
 	params = $.extend({}, params, tmp );
 	 $.commonFormSubmit({  

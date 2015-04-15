@@ -166,7 +166,7 @@ function checkBankCard(strBankCard)
 	var param = {"BankCard":strBankCard};
 	$.ajax({
 		   type: "POST",
-		   url: "checkBankCard",
+		   url: "/esp/common/checkBankCard",
 		   data: param,
 		   async: false,
 		   success: function(bRet){
@@ -187,17 +187,40 @@ function checkBankCard(strBankCard)
 //判断手机号是否已经注册过
 function  checkPhoneNum(strPhoneNum)
 {
-	var bRetrun=false;
+	var bReturn=false;
 	var param = {"PhoneNum":strPhoneNum};
 	$.ajax({
 		   type: "POST",
-		   url: "checkPhoneNum",
+		   url: "/esp/common/checkPhoneNum",
 		   data: param,
 		   async: false,
 		   success: function(bRet){
 			   //alert(bRet);
 			   if (!bRet) {
 				   alert("该手机号已经注册过");
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   bReturn=true;
+			   }
+		   }
+		});
+	return bReturn;
+}
+//判断微信号是否已经注册过
+function checkWeChat(strWeChat)
+{
+	var bReturn=false;
+	var param = {"WeChat":strWeChat};
+	$.ajax({
+		   type: "POST",
+		   url: "/esp/common/checkWeChat",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   if (!bRet) {
+				   alert("该微信号已经注册过");
 				   bReturn=false;
 			   }
 			   else
@@ -230,30 +253,14 @@ function SetRemainTime() {
         $(m_btnName).text(curCount + "秒内输入验证码");  
     }  
 }  
-//js日期比较(yyyy-mm-dd)
-function CompareDate(startDate,endDate) {
-    var arr = startDate.split("-");
-    var starttime = new Date(arr[0], arr[1], arr[2]);
-    var starttimes = starttime.getTime();
 
-    var arrs = endDate.split("-");
-    var lktime = new Date(arrs[0], arrs[1], arrs[2]);
-    var lktimes = lktime.getTime();
-
-    if (starttimes >= lktimes) {
-        return false;
-    }
-    else
-        return true;
-
-}
 //发送验证码
 function sendMessage(strPhone,btnName) {  
     curCount = count;  
     var phone=strPhone;//手机号码  
     m_btnName=btnName;
     //产生验证码  
-    for (var i = 0; i < 4; i++) {  
+    for (var i = 0; i < 6; i++) {  
         code += parseInt(Math.random() * 9).toString();  
     }
     //设置button效果，开始计时  
@@ -269,5 +276,23 @@ function sendMessage(strPhone,btnName) {
 //        error: function (XMLHttpRequest, textStatus, errorThrown) { },  
 //        success: function (msg){ }  
 //    });  
-
+	var bReturn=false;
+	var param = {"phone":strPhone,"code":code};
+	$.ajax({
+		   type: "POST",
+		   url: "/esp/common/yanzhengma",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   if (!bRet) {
+				   alert("验证码发送失败！");
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   bReturn=true;
+			   }
+		   }
+		});
+	return bReturn;
 }  

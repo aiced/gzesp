@@ -17,9 +17,8 @@ public class CommissionSql {
 	private CommonDao commonDao;
 	//通过日期获得佣金信息
 	public List<Map<String,Object>> getCommListbyMonth(String strUserID,String startDate)
-	{
-		strUserID="111";
-		
+	{		
+		strUserID="2015032304234862";
 		if (startDate==null) {
 			startDate="";
 		}
@@ -44,4 +43,7 @@ public class CommissionSql {
 
 		return CommList;
 	}
+	
+	
+	
 }

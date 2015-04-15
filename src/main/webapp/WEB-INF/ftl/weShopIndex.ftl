@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>欢迎来到${developer.STORE_NAME}的微店</title>
+    <title>欢迎来到${developer.STORE_NAME}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -82,6 +82,7 @@
     </div>
   
     <!-- 能人招募广告 -->
+    <!--
     <div class="container-fluid" style="margin:10px;background-color:#ffffff;">
       <div class="row" >
         <div class="col-xs-3 div-text-center" style="background-color:#ffc798;margin:0px;padding:2px">
@@ -92,6 +93,7 @@
     	</div>    	
       </div>
     </div>
+    -->
     
     <!-- xxx 的微店 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-top:5px;">
@@ -101,7 +103,7 @@
     	</div>
     	<div class="col-xs-6" style="padding:10px 0px 10px 0px;">
     	  <ul class="list-unstyled">
-            <li style="font-size:15px;">${developer.STORE_NAME}的微店</li>
+            <li style="font-size:15px;">${developer.STORE_NAME}</li>
             <li style="font-size:15px;">手机：${developer.PHONE_NUMBER}</li>
             <li style="font-size:15px;">微信：${developer.WEIXIN_ID}</li>
           </ul>  
@@ -169,8 +171,8 @@
     	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
-    	  	  <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> 
-    	  	  <p style="font-size:14px;">合约价:<font color="#F70909">${item.GOODS_PRICE}</font></p>
+    	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
+    	  	  <p style="font-size:14px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
     	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
@@ -200,8 +202,9 @@
     	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
-    	  	  <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> 
-    	  	  <p style="font-size:10px;">合约价:<font color="#F70909">${item.GOODS_PRICE}</font></p>
+    	      <!-- <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> -->
+    	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
+    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
     	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
@@ -231,8 +234,8 @@
     	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
-    	  	  <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> 
-    	  	  <p style="font-size:10px;">合约价:<font color="#F70909">${item.GOODS_PRICE}</font></p>
+    	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
+    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
     	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>

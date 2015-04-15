@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,11 +34,16 @@ public class GoodsManageGoodSelectController {
     TdGdsDABLERCDDao tdGdsDABLERCDDao;
     
     @RequestMapping("/goodsManageGoodSelect")
-    public ModelAndView goodsManageGoodSelect(@RequestBody String inputParam){
+    public ModelAndView goodsManageGoodSelect(@RequestBody String inputParam, HttpServletRequest request){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    	String name = paramsMap.get("index");
+    	//String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
-    	if(strUserID == null){
+        //inputParam如果娶不到userId,表示是从/goodsManageGoodAddInsert这个controller 重定向过来的
+        if(strUserID == null){
+            strUserID = request.getParameter("userId");
+        }
+    	
+/*    	if(strUserID == null){
     		strUserID = "333";
     	}
     	
@@ -47,14 +53,14 @@ public class GoodsManageGoodSelectController {
         	Criteria criteria = new Criteria();
         	criteria.createConditon().andEqualTo("GOODS_ID", goodsId);
         	int res = tdGdsDABLERCDDao.deleteByExample(criteria);   
-    	}
+    	}*/
 
     	
-    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList();   
+    	List<Map<String, Object>> rcdlist = goodsSql.GetRcdList(strUserID);   
     	Map rspMap = new HashMap();  
     	rspMap.put("userId", strUserID);   
     	rspMap.put("rspCode", "0000");   
-    	rspMap.put("name", "weidian");   
+    	rspMap.put("name", "");   
     	rspMap.put("total", rcdlist.size());   
     	rspMap.put("title", "选择商品");
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
@@ -71,9 +77,11 @@ public class GoodsManageGoodSelectController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	//根据index 检索数据库，加载数据。
     	String goodsId = paramsMap.get("goodsId");
+    	String userId = paramsMap.get("userId");
     	if(goodsId != null){
         	Criteria criteria = new Criteria();
         	criteria.createConditon().andEqualTo("GOODS_ID", goodsId);
+        	criteria.createConditon().andEqualTo("USER_ID", userId);
         	int res = tdGdsDABLERCDDao.deleteByExample(criteria);   
     	}
     }

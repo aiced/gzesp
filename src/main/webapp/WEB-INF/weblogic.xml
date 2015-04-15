@@ -3,7 +3,7 @@
     <container-descriptor>
         <prefer-web-inf-classes>true</prefer-web-inf-classes>
     </container-descriptor>
-    <context-root>/</context-root>
+    <context-root>/esp</context-root>
 <!--     <session-descriptor>
         <timeout-secs>1800</timeout-secs>
         <invalidation-interval-secs>60</invalidation-interval-secs>

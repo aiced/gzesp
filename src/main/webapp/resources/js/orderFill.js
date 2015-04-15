@@ -1,18 +1,4 @@
 
-//var ordResInfo = {
-//		resId:"",
-//		resAttrCode:"",
-//		resAttrVal:""
-//}
-
-//var ordResArr=new Array();
-
-//var ordResInfo = new Object();
-//ordResInfo.resId = "";
-//ordResInfo.resAttrCode = "";
-//ordResInfo.resAttrVal = "";
-//ordResArr.push(ordResInfo);
-
 var orderStat = {
 		netInfoStat:0,
 		receiveInfoStat:0,
@@ -70,7 +56,7 @@ var orderFormParams = {
 		resAttr:""
 };
 
-
+// 初始化按钮点击事件
 $(function() {
 	
 	$('#netInfoTab').bind("click",function(){
@@ -124,6 +110,7 @@ $(function() {
 	
 	$('#payInfoBtn').bind("click",function(){
 		orderStat.payInfoStat = 1;
+		setPayText();
 		$('#payInfo').css({ "display":"none" });
 		$('#orderMain').css({ "display":"block" });
 		return false;
@@ -133,13 +120,12 @@ $(function() {
 		$('#orderMain').css({ "display":"block" });
 		return false;
 	});
-	
 	$('#otherInfoBtn').bind("click",function(){
-		if(otherOrder_checkData()) {
+//		if(otherOrder_checkData()) {
 			orderStat.otherInfoStat = 1;
 			$('#otherInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
-		}
+//		}
 		return false;
 	});
 	$('#otherInfoBackBtn').bind("click",function(){
@@ -149,7 +135,7 @@ $(function() {
 	});
 	
 	//配送方式
-	$('#deliver-select a').bind("click",function(){
+	$('#deliver-select a').find('.selected').bind("click",function(){
   	  $(this).addClass("selected").siblings().removeClass("selected");
 		if($('#deliver-select-post').hasClass("selected")){
 			$('#postInfoTab').css({ "display":"block" });
@@ -193,7 +179,33 @@ $(function() {
 	});
 	
 	
+	//省、市、区联动
+	$('#selCity').change(function(){
+		var cityCode = $(this).children('option:selected').val();
+		getDistrictListByCityCode(cityCode);
+	});
+	
+	initSelect();
+	
 })
+
+function initSelect() {
+	var cityCode = $("#selCity").val();
+	getDistrictListByCityCode(cityCode);
+}
+
+function getDistrictListByCityCode(cityCode) {
+	var param = {"cityCode":cityCode}; 
+	$.ajax({
+		   type: "POST",
+		   contentType:"application/json", //发送给服务器的内容编码类型
+		   url: "getDistrictListByCityCode",
+		   data: JSON.stringify(param), //服务器只能接收json字符串
+		   success: function(data){
+			   $('#selectDistrictDiv').html(data);
+		   }
+		});	
+}
 
 //wenhui_newReceiveAddress_数值校验
 function addres_checkData()
@@ -263,16 +275,14 @@ function netInfo_checkData() {
 		 return false;
 	 }
     
-//	alert( $('#firstCard').attr("src"));   	
-//	alert( $('#secondCard').attr("src"));   	
 
-    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
-    	alert("证件照片不能为空");   	
-    	return false;
-    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
-    	alert("证件照片不能为空");   	
-    	return false;
-    }
+//    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
+//    	alert("证件照片不能为空");   	
+//    	return false;
+//    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+//    	alert("证件照片不能为空");   	
+//    	return false;
+//    }
     return true;
 }
 //	
@@ -292,6 +302,20 @@ function checkPostSelect() {
 
 }
 
+function setPayText() {
+	var text;
+	text = $('input[name="pay_mode"]:checked').attr("data-text");
+	switch ($("input[name=pay_mode]:checked").attr("id"))  {
+         case "pay_mode_1":
+        	 text = text +" " +$('input[name="pay_mode_style"]:checked').val();
+        	 break;
+         case "pay_mode_2":
+        	 text = text +" " + $('#paySelector option:selected').text();
+        	 break;
+    }
+	$('#payText').text(text);
+}
+
 
 function getParams() {
 	orderFormParams.custName = $('#userName').val();
@@ -303,6 +327,7 @@ function getParams() {
 	orderFormParams.topayMoney = orderFormParams.originalPrice;
 	
 	orderFormParams.userId = $('#userId').val();
+	orderFormParams.invoiceTitle = $('#invoiceTitle').val();
 	
 	orderFormParams.payType = $('input[name="pay_mode"]:checked').val();
 	switch ($("input[name=pay_mode]:checked").attr("id"))  {
@@ -318,23 +343,11 @@ function getParams() {
 	orderFormParams.receiverName = $('#txtname').val();
 	orderFormParams.phoneNum = $('#txtphone').val();
 	orderFormParams.postAddr = $('#txtaddress').val();
+	orderFormParams.provinceCode= $('#selProvince').val();
+	orderFormParams.cityCode=$("#selCity").val();
+	orderFormParams.districtCode=$("#selDistrict").val();
 	
 	
-//	var ordResArr=new Array();
-//	var ordResInfo = new Object();
-//	ordResInfo.resId = "1";
-//	ordResInfo.resAttrCode = "颜色";
-//	ordResInfo.resAttrVal = "红色";
-////	ordResArr.push($.toJSON(ordResInfo));
-//	ordResArr.push(ordResInfo);
-//	
-//	ordResInfo = new Object();
-//	ordResInfo.resId = "2";
-//	ordResInfo.resAttrCode = "重量";
-//	ordResInfo.resAttrVal = "100g";
-//	ordResArr.push(ordResInfo);
-	
-//	orderFormParams.resAttr = ordResArr;
 	orderFormParams.resAttr = $('#attrVal').val();
 	
 	orderFormParams.goodsId= $('#goodsId').val();
@@ -347,8 +360,42 @@ function getParams() {
 	orderFormParams.topayFee= orderFormParams.originalPrice;
 }
 
+function uploadPic(){
+	
+	var params = {
+			"idCardNum": $('#userCard').val()
+	};
+	 $.ajaxFileUpload({  
+	        url : "../common/uploadFile", 
+	        async:false, 
+	        secureuri : false,  
+	        fileElementId : "file-front",  
+	        dataType : 'json',
+			data: params,
+	        success : function(rtdata, status) { 
+	        	//alert(rtdata.url);
+	        	orderFormParams.cardPic1 = rtdata.url;
+	        },  
+	    });  
+	 
+	 $.ajaxFileUpload({  
+	        url : "../common/uploadFile", 
+	        async:false, 
+	        secureuri : false,  
+	        fileElementId : "file-back",  
+	        dataType : 'json',
+			data: params,
+	        success : function(rtdata, status) { 
+	        	//alert(rtdata.url);
+	        	orderFormParams.cardPic2 = rtdata.url;
+	        },  
+	    });  
+};
 
 function nextPage() {
+	
+//	uploadPic();
+//	return;
 	
 	if(orderStat.netInfoStat==0) {
 		alert('请完整入网资料');
@@ -362,15 +409,24 @@ function nextPage() {
 		alert('请完整支付信息');
 		return;
 	}
-	if(orderStat.otherInfoStat==0) {
-		alert('请完整其他信息');
-		return;
-	}
+//	if(orderStat.otherInfoStat==0) {
+//		alert('请完整其他信息');
+//		return;
+//	}
 //	var postStyle = checkPostSelect();
 //	if(postStyle !=null ){
 ////		alert(postStyle);
 //		return;
 //	}
+	
+	uploadPic();
+	
+	setTimeout('formSubmit()', 2000);
+	
+	
+}
+
+function formSubmit() {
 	var tmp = {'fromPage':'orderFill' };
 	getParams();
     var parms = $.extend({}, tmp, orderFormParams);
@@ -380,5 +436,5 @@ function nextPage() {
 	        data:  parms,
 	        success : function(rtdata, status) { 
 	        }
-	    });  
+	 });  
 }

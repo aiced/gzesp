@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -24,6 +25,7 @@ import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
 import com.ai.gzesp.dao.service.TdAurDRELINFODao;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
+import com.ai.gzesp.dao.sql.RegistSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
@@ -36,7 +38,8 @@ public class WeShopRegist2Controller {
 
     @Autowired
     private WeShopService weShopService;
-    
+	
+	
     @Resource 
     TdAurDAUTHINFODao tdAurDAUTHINFODao;
     
@@ -51,19 +54,13 @@ public class WeShopRegist2Controller {
         ModelAndView mav = new ModelAndView("weShopRegist2.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "注册微店");
-//        mav.addObject("phone", "18685292522"); 
-//        mav.addObject("weixin", "1306520198@qq.com"); 
+
+
+        
         return mav;
     }
     
-    @RequestMapping("/register/checkBankCard")
-    @ResponseBody
-    public Boolean checkBankCard(@RequestBody String strBankCard)
-    {
-    	Map<String, String> paramsMap = StringUtil.params2Map(strBankCard);
-    	String BankCard = paramsMap.get("BankCard");
-    	return CommonUtil.checkBankCard(BankCard);
-    }
+
     
     @RequestMapping("/register/reg_step2_postdata")
     public ModelAndView RegStep2_PostData(@RequestBody String inputParams)
@@ -82,7 +79,7 @@ public class WeShopRegist2Controller {
     	String strPersonalId=paramsMap.get("txtpersonalid");//身份证号
     	String strBank=paramsMap.get("selBank");//开户银行
     	String strBankCardId=paramsMap.get("txtbankcardid");//银行卡号
-    	
+    	String strDefalutImg="/uploader/headimages/touxiang_default.png";
     	
     	System.out.println("打印的数据");
     	System.out.println(LId);
@@ -108,7 +105,8 @@ public class WeShopRegist2Controller {
     	record_aurdauthinfo.setPhoneNumber(strPhoneNum);//PHONE_NUMBER
     	record_aurdauthinfo.setStatus("00");//STATUS
     	record_aurdauthinfo.setStoreId(LId.toString());//STORE_ID
-    	record_aurdauthinfo.setStoreName(strName);//STORE_NAME
+    	record_aurdauthinfo.setStoreName(strName+"的店铺");//STORE_NAME
+    	record_aurdauthinfo.setUserImg(strDefalutImg);
     	//record.setCreateTime(DateUtil.getNow());
     	tdAurDAUTHINFODao.insertSelective(record_aurdauthinfo);
     	
@@ -139,15 +137,17 @@ public class WeShopRegist2Controller {
     	 	
     	
     	ModelAndView mav = null;
-    	ModelMap mmap=null;
-		mmap=new ModelMap();
+    	ModelMap mmap=new ModelMap();
         //从数据库获取信息赋值
-		mmap.addAttribute("title", "我的微店");
-		mmap.addAttribute("id", LId.toString());
+		//mmap.addAttribute("title", "我的微店");
+//		mmap.addAttribute("id", LId.toString());
 		mmap.addAttribute("userid",LId.toString());
-		mmap.addAttribute("name", strName);//姓名
-		mmap.addAttribute("phone", strPhoneNum); //手机号
-		mmap.addAttribute("weixin", strwecharaccount); //微信
+//		mmap.addAttribute("name", strName);//姓名
+//		mmap.addAttribute("storename", strName+"的店铺");//姓名
+//		mmap.addAttribute("phone", strPhoneNum); //手机号
+//		mmap.addAttribute("weixin", strwecharaccount); //微信
+//		mmap.addAttribute("userimage",strDefalutImg);
+		
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
     	
     	//ModelAndView mav = new ModelAndView("weShopLogin.ftl");

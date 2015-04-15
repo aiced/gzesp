@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gzesp.dao.UnionPayDao">
+
+	
+	<select id="queryNumberListByPage" resultType="java.util.HashMap">
+      select *
+        from (	
+        select a.serial_number, 
+               a.nice_fee/1000 nice_fee
+          from NUM_D_NUMINFO a
+         where a.code_state = '1'
+           and a.province_code = '85'
+            <if test="keyword != null">
+               and a.serial_number like '%'||#{keyword}||'%'
+            </if>
+          <choose>
+		    <when test="eparchy_code != null">
+			  and a.eparchy_code = #{eparchy_code}
+			</when>  
+		    <otherwise>
+			  and a.eparchy_code = '850'
+		    </otherwise>
+	      </choose>            
+            <if test="nice_rule != null">
+               and a.nice_rule = #{nice_rule}
+            </if>
+            <if test="nice_fee_start != null">
+               <![CDATA[ 
+                 and a.nice_fee >= #{nice_fee_start}*1000
+                  ]]>
+            </if>
+            <if test="nice_fee_end != null">
+               <![CDATA[ 
+               and a.nice_fee <= #{nice_fee_end}*1000
+               ]]>
+            </if>
+          order by 
+          <choose>
+		    <when test="sortCol != null">
+			  ${sortCol}
+			</when>  
+		    <otherwise>
+			  a.serial_number 
+		    </otherwise>
+	      </choose>          
+          <choose>
+		    <when test="sort != null">
+			  ${sort}
+			</when>  
+		    <otherwise>
+			  desc
+		    </otherwise>
+	      </choose>
+          ) m
+	<![CDATA[
+        where rownum > (${pageNum}-1)*${pageSize}
+          and rownum <= ${pageNum}*${pageSize}       
+     ]]>
+	</select>	
+	
+	<select id="querySignCode" resultType="java.util.HashMap">
+         select acc_no, cvn2, nbr, name, certificate_code, expire_date, currency_code, sign_code
+           from SYS_D_UNIONPAY_SIGNCODE
+          where acc_no = #{bank_card_no}
+	</select>	
+
+	
+	<insert id="insertSignCode" parameterType="java.util.Map">
+	    insert into SYS_D_UNIONPAY_SIGNCODE 
+	           (ACC_NO, CVN2, NBR, NAME, CERTIFICATE_CODE, EXPIRE_DATE, CURRENCY_CODE, SIGN_CODE, SYS_TRADE_NO)
+	    values(#accNo, #cvn2, #Nbr, #Name, #certificateCode, #expireDate, '156', null, #sysTradeNo)
+	</insert>
+	
+	<insert id="insertBindlog">
+        insert into ord_d_paylog
+              (pay_id, partition_id, pay_type, pay_mode, pay_state, req_time, req_status, req_trade_type,
+               sys_trade_no, order_id, txn_amt, acc_no, cvn2, nbr, name, certificate_code, expire_date)
+        values(${pay_id}, ${partition_id}, #{pay_type}, #{pay_mode}, #{pay_state}, #{req_time}, #{req_status},
+               #{req_trade_type}, ${sys_trade_no}, ${order_id}, ${txn_amt},
+               ${acc_no}, ${cvn2}, ${nbr}, #{name}, #{certificate_code}, #{expire_date}
+              )	    
+	</insert>	
+
+	<insert id="insertPaylog">
+        insert into ord_d_paylog
+              (pay_id, partition_id, pay_type, pay_mode, pay_state, req_time, req_status, req_trade_type,
+               sys_trade_no, order_id, txn_amt)
+        values(${pay_id}, ${partition_id}, #{pay_type}, #{pay_mode}, #{pay_state}, #{req_time}, #{req_status},
+               #{req_trade_type}, ${sys_trade_no}, ${order_id}, ${txn_amt}
+              )	    
+	</insert>
+	
+	<select id="queryPaylog" resultType="java.util.HashMap">
+         select pay_id, resp_trade_type, result_code, result_desc 
+           from ord_d_paylog 
+          where pay_id = ${pay_id}
+	</select>		
+	
+</mapper>

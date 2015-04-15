@@ -51,6 +51,7 @@ public class CoreService {
         String reqType = RegexUtils.getElementText(XmlUtils.deleteCdataTag(reqTypeElement));
         String respMessage = "消息处理异常";
         
+        log.info("reqType---"+reqType);
         // 文本消息
         if (MessageType.REQ_MESSAGE_TYPE_TEXT.equals(reqType)) {
             respMessage = processTextReq(xml);
@@ -74,7 +75,9 @@ public class CoreService {
         // 事件推送
         else if (MessageType.REQ_MESSAGE_TYPE_EVENT.equals(reqType)) {
             // 事件类型
-            String eventType = RegexUtils.getElementBySinglePath(xml, MessageType.XML_ATTR_EVENT);
+            String eventTypeElement = RegexUtils.getElementBySinglePath(xml, MessageType.XML_ATTR_EVENT);
+            String eventType = RegexUtils.getElementText(XmlUtils.deleteCdataTag(eventTypeElement));
+            log.info("eventType---"+eventType);
             // 订阅,关注公众号
             if (MessageType.EVENT_TYPE_SUBSCRIBE.equals(eventType)) {
                 respMessage = processSubscribeReq(xml);
@@ -205,7 +208,7 @@ public class CoreService {
             resp.setFromUserName(message.getToUserName());
             resp.setToUserName(message.getFromUserName());
             resp.setCreateTime(new Date().getTime());
-            resp.setContent(buildMenuResp()); //关注的时候主动发送菜单
+            resp.setContent(buildWelcomeResp()); //关注的时候主动发送菜单
             resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
             resp.setFuncFlag(0);
             respMessage = XmlUtils.textMessageToXml(resp);
@@ -318,18 +321,15 @@ public class CoreService {
      *
      * @return
      */
-    private String buildMenuResp(){
+    private String buildWelcomeResp(){
         StringBuffer buffer = new StringBuffer();  
-        buffer.append("您好，我是奚敏辉，请回复数字选择服务：").append("\n");  
-        buffer.append("1  天气预报").append("\n");  
-        buffer.append("2  公交查询").append("\n");  
-        buffer.append("3  周边搜索").append("\n");  
-        buffer.append("4  歌曲点播").append("\n");  
-        buffer.append("5  经典游戏").append("\n");  
-        buffer.append("6  美女电台").append("\n");  
-        buffer.append("7  人脸识别").append("\n");  
-        buffer.append("8  聊天唠嗑").append("\n");  
-        buffer.append("回复“?”显示此帮助菜单");  
+        buffer.append(" /::D 欢迎来到掌柜大本营！官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，领福利，学销售，一起做亮闪闪的大掌柜").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">1. 0元免费开店，加入掌柜小分队</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >2.  收益说明</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >3.  提现规则</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/saleAdvance\" >4.  销售进阶</a>").append("\n");  
+        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >5.  更多互动咨询</a>").append("\n");  
+     
         return buffer.toString();        
     }
     

@@ -68,12 +68,13 @@ public class WeShopLoginController {
     		//mav = new ModelAndView("weShopHome.ftl");
     		mmap=new ModelMap();
             //从数据库获取信息赋值
-    		mmap.addAttribute("title", "我的微店");
-    		mmap.addAttribute("id", list.get(0).getId());
+    		//mmap.addAttribute("title", "我的微店");
+//    		mmap.addAttribute("id", list.get(0).getId());
     		mmap.addAttribute("userid",list.get(0).getUserId());
-    		mmap.addAttribute("name", list.get(0).getUserName());//姓名
-    		mmap.addAttribute("phone", list.get(0).getPhoneNumber()); //手机号
-    		mmap.addAttribute("weixin", list.get(0).getWeixinId()); //微信
+//    		mmap.addAttribute("name", list.get(0).getUserName());//姓名
+//    		mmap.addAttribute("storename", list.get(0).getStoreName());//姓名
+//    		mmap.addAttribute("phone", list.get(0).getPhoneNumber()); //手机号
+//    		mmap.addAttribute("weixin", list.get(0).getWeixinId()); //微信
     		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);            
     	} else {
     		ret="账号或密码不存在";

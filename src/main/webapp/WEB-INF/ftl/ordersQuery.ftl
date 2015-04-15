@@ -27,16 +27,52 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
-
+    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    
     <!--日历控件js-->
     <script src="${resRoot}/js/date.js?v=${resVer}"></script>
     <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
     <script type="text/javascript">
+    
+	  //js日期比较(yyyy-mm-dd)
+	    function CompareDate(startDate,endDate) {
+	        var arr = startDate.split("-");
+	        var starttime = new Date(arr[0], arr[1], arr[2]);
+	        var starttimes = starttime.getTime();
+	
+	        var arrs = endDate.split("-");
+	        var lktime = new Date(arrs[0], arrs[1], arrs[2]);
+	        var lktimes = lktime.getTime();
+	
+	        if (starttimes > lktimes) {
+	            return false;
+	        }
+	        else
+	            return true;
+	
+	    }    
+    
         $(function(){
             $('#beginTime').date();
             $('#endTime').date();
 
+            //[返回]按钮点击
+            $("#top_left").click(function(){  
+        		var parms = {'userid':'${hideuserid}','fromPage':'${fromPage}'};
+        		$.commonFormSubmit({
+           		 type: "POST",
+        		 action: '${base}/shopManage/Back',
+        		 data: parms,
+        		 success: function(data){
+        		  	 //history.back();
+        		  	 //alert("ok");
+        		  	 //return;
+        		  	 //alert(data);
+        		  	 return;
+        		 }
+        		});
+            });    
+            
             //检验输入数值是否正确
             function checkData()
             {
@@ -108,15 +144,17 @@
         .order_top_left
         {
             float: left;
-            width: 20%;
-            font-size: 12px;
+            width: 30%;
             height: 34px;
-            line-height: 34px;
+            
+        }
+        h4{
+        	margin-top: 5px;
         }
         .order_top_middle
         {
             float: left;
-            width: 70%;
+            width: 60%;
             text-align: center;
             margin-left: 5px;
             margin-right: 5px;
@@ -124,18 +162,18 @@
         .order_top_middle1
         {
             float: left;
-            width: 40%;
+            width: 45%;
         }
         .order_top_middle2
         {
             float: left;
-            width: 20%;
+            width: 10%;
             line-height: 34px;
         }
         .order_top_middle3
         {
             float: left;
-            width: 40%;
+            width: 45%;
         }
         .order_top_right
         {
@@ -148,8 +186,7 @@
         }
         input
         {
-            width: 70px;
-            font-size: 12px;
+            width: 80px;
             height: 34px;
         }
         .div_line
@@ -161,9 +198,8 @@
         .order_middle
         {
             background: #ffffff;
-            height: 110px;
+            height: 140px;
             margin: 15px;
-            font-size: 12px;
         }
         .order_contain
         {
@@ -185,7 +221,7 @@
         .order_contain_statue
         {
             float: right;
-            width: 40px;
+            text-align:center;
             height: 20px;
             border: 1px solid #ff7878;
             color: #ff7878;
@@ -204,7 +240,7 @@
         .order_contain_middle_left
         {
             float: left;
-            background: #66512c;
+            margin-top: 15px;
         }
         .order_contain_middle_middle
         {
@@ -228,14 +264,14 @@
     <div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
         <div  class="order_top">
-            <div class="order_top_left"><label>订单时间</label></div>
+            <div class="order_top_left"><h4><label>订单时间</label></h4></div>
             
             <div class="order_top_middle">
                 <div class="order_top_middle1">
@@ -258,7 +294,7 @@
             <div class="div_clear"></div>
         </div>
         <div  class="order_top">
-            <div class="order_top_left"><label>订单号</label></div>
+            <div class="order_top_left"><h4><label>订单号</label></h4></div>
             
             <div class="order_top_middle">
 				<input type="text" name="txtorderid" id="txtorderid" style="width:200px;" value=""/>
@@ -270,7 +306,7 @@
 			<div class="div_clear"></div>
             <div class="div_line"></div>
             <br/>
-            <button class="btn btn-warning btn-block" type="button" name="btnselect" id="btnselect">查询</button>
+            <button class="btn btn-warning btn-block btn-lg" type="button" name="btnselect" id="btnselect">查询</button>
             <!-- 隐藏控件用于保存userid -->
             <input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
         </div>        
@@ -278,11 +314,12 @@
         <br/>
         <br/>
 		<br/>
+		<br/>
         <div id="order_middle_info">
         
         	<#if (orderList?size==0)>
 	        	<div class="order_middle">
-	        		您还没有订单
+	        		<h4>您还没有订单</h4>
 	        	</div>
         	<#else>
 				<#list orderList as item>
@@ -291,17 +328,17 @@
 		               <div class="order_contain">
 		                   <div class="order_contain_top">
 		                   	   <!-- ,苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器 -->
-		                       <div class="order_contain_title">${item.GOODS_NAME}</div>
+		                       <h4><div class="order_contain_title">${item.GOODS_NAME}</div></h4>
 		                       <#if (item.PAY_STATE=='0')>
-		                       	<div class="order_contain_statue">未支付</div>
+		                       	<h4><div class="order_contain_statue">未支付</div></h4>
 		                       <#elseif (item.PAY_STATE=='1')>
-		                       	<div class="order_contain_statue">已支付</div>
+		                       	<h4><div class="order_contain_statue">已支付</div></h4>
 		                       <#elseif (item.PAY_STATE=='2')>
-		                       	<div class="order_contain_statue">支付失败</div>
+		                       	<h4><div class="order_contain_statue">支付失败</div></h4>
 		                       <#elseif (item.PAY_STATE=='3')>
-		                       	<div class="order_contain_statue">已冲正</div>	
+		                       	<h4><div class="order_contain_statue">已冲正</div></h4>
 		                       <#elseif (item.PAY_STATE=='4')>
-		                       	<div class="order_contain_statue">冲正失败</div>
+		                       	<h4><div class="order_contain_statue">冲正失败</div></h4>
 		                       </#if>
 		                       <!-- <div class="order_contain_statue">${item.PAY_STATE}</div> -->
 		                   </div>
@@ -309,12 +346,12 @@
 		                   <div class="order_line"></div>
 		                   <div class="order_contain_middle">
 		                       <div class="order_contain_middle_left">
-		                           <img src="${resRoot}/image/login/wo_logo.png" width="50" height="65">
+		                           <img src="${imageRoot}${item.PHOTO_LINKS}" width="50" height="65">
 		                       </div>
 		                       <div class="order_contain_middle_middle">
-		                           <div>订单编号：${item.ORDER_ID}</div>
-		                           <div>订单金额：${item.INCOME_MONEY}元</div>
-		                           <div>下单时间：${item.ORDER_TIME}</div>
+		                           <h4><div>订单编号：${item.ORDER_ID}</div></h4>
+		                           <h4><div>订单金额：${item.INCOME_MONEY}元</div></h4>
+		                           <h4><div>下单时间：${item.ORDER_TIME}</div></h4>
 		                       </div>
 		                       <div class="order_contain_middle_right">
 		                           <img src="${resRoot}/image/orderQuery/jiantou.png" width="9" height="15">
@@ -326,7 +363,7 @@
 		           <!-- 传给订单详情主页面 -->
 				 	 <form id="form${item_index}" method="post" action="orderDetail" style="display:none;">
 				    	<input id="ORDER_ID" name="ORDER_ID" value='${item.ORDER_ID}'></input>
-			    		<input id="GOODS_NAME" name="GOODS_NAME" value='${item.GOODS_NAME}'></input>
+			    		<!--<input id="GOODS_NAME" name="GOODS_NAME" value='${item.GOODS_NAME}'></input>
 				    	<input id="INCOME_MONEY" name="INCOME_MONEY" value='${item.INCOME_MONEY}'></input>
 				    	<input id="Order_Time" name="Order_Time" value='${item.Order_Time}'></input>
 				    	<input id="RECEIVER_NAME" name="RECEIVER_NAME" value='${item.RECEIVER_NAME}'></input>
@@ -335,7 +372,7 @@
 				    	<input id="DELIVER_TIME_CODE" name="DELIVER_TIME_CODE" value='${item.DELIVER_TIME_CODE}'></input>
 				    	<input id="PAY_MODE" name="PAY_MODE" value='${item.PAY_MODE}'></input>
 				    	<input id="PAY_STATE" name="PAY_STATE" value='${item.PAY_STATE}'></input>
-				    	<input id="PAY_REMARK" name="PAY_REMARK" value='${item.PAY_REMARK}'></input>
+				    	<input id="PAY_REMARK" name="PAY_REMARK" value='${item.PAY_REMARK}'></input>-->
 				 	 </form>
 		           </div><!-- order_middle_end -->
 				</#list>

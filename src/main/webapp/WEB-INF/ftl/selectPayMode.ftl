@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+    <title>${title}</title>
+
+    <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>    
     
     <style type="text/css">
         .container-fluid
@@ -75,17 +84,40 @@
                     break;
             }
         }
+        function unionPayInput(){
+	        var url;
+            var pay_mode = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
+	        //alert(pay_mode);
+            if(pay_mode == '00'){
+               var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
+               //alert(pay_mode_style);
+               if(pay_mode_style == "银联"){
+                 url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //银联
+               }
+               else{
+                 url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //支付宝
+               }
+            }
+            else{
+               url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+            }
+            
+	        window.location.href = url;  
+        }
     </script>
 </head>
 <body>
     <div>
     	<!--top_start-->
-        <div id="top">
-        	<div id="payInfoBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div></div>
-        	<div id="top_middle">${title}</div>
-        	<div id="top_right"></div>
-        </div>
-		<div id="dv_clear"></div>
+	    <div id="top">
+	      <div id="top_left">
+	        <a href="javascript:history.back(-1);">
+	          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	        </a>
+	      </div>
+	      <div id="top_middle">${title}</div>
+	      <div id="top_right"></div>
+	    </div>    
 		<!--top_end-->
         <div class="container-fluid">
             <div class="payInfo">
@@ -98,10 +130,10 @@
                     <!--</li>-->
                 <!--</ul>-->
                 <label class="radio-inline">
-                    <input type="radio" name="pay_mode" id="pay_mode_1" value="00" checked="checked">在线支付
+                    <input type="radio" name="pay_mode" id="pay_mode_1" value="00" checked="checked" data-text="在线支付">在线支付
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="pay_mode" id="pay_mode_2" value="01">货到付款
+                    <input type="radio" name="pay_mode" id="pay_mode_2" value="01" data-text="货到付款">货到付款
                 </label>
             </div>
             <div id="pay_mode_1_detail">
@@ -112,13 +144,15 @@
                 </div>
                 <div>
                     <div class="mode_1">
-                            <img src="${resRoot}/image/selectPayMode/zhifubao.png" width="45" height="30"/>&nbsp;&nbsp;支付宝快捷支付&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pay_mode_style" id="zhifubao" value="支付宝" checked>
+                            <input type="radio" name="pay_mode_style" id="unionpay" value="银联" checked="checked" >
+                            <img src="${resRoot}/image/selectPayMode/unionpay.png" width="45" height="30"/>&nbsp;&nbsp;银联支付&nbsp;&nbsp;&nbsp;
                     </div>
+                    <#--
                     <div class="mode_1">
-                            <img src="${resRoot}/image/selectPayMode/unionpay.png" width="45" height="30"/>&nbsp;&nbsp;财付通快捷支付&nbsp;&nbsp;&nbsp;
-                            <input type="radio" name="pay_mode_style" id="caifutong" value="财付通">
+                            <input type="radio" name="pay_mode_style" id="zhifubao" value="支付宝">
+                            <img src="${resRoot}/image/selectPayMode/zhifubao.png" width="45" height="30"/>&nbsp;&nbsp;支付宝支付&nbsp;&nbsp;&nbsp;
                     </div>
+                    -->
                 </div>
             </div>
             <div id="pay_mode_2_detail">
@@ -143,7 +177,7 @@
         </div>
         <br/>
         <div id="payInfoBtn" style="margin: 15px">
-            <button class="btn btn-warning btn-block" type="submit">确定</button>
+            <button class="btn btn-warning btn-block" id="btnsubmit" onclick="unionPayInput()">确定</button>
         </div>
 
     </div>

@@ -5,15 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>产品详情</title>
+    <title>${detail.GOODS_NAME}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/bandGoodDetail.css?v=${resVer}" rel="stylesheet">    
+    <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
   </head>
 
   <body>
   	<!-- nav bar -->
+  	<!--
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
       <div class="row" style="margin-top:8px;margin-left:5px;">
         <div class="col-xs-2" style="margin-top:5px;padding:0px;">
@@ -27,6 +29,18 @@
     	</div>
       </div>      
     </div> 
+    -->
+	<div id="top">
+	  <div id="top_left">
+	    <a href="javascript:history.back(-1);">
+	      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+	    </a>
+	  </div>
+	  <div id="top_middle">商品详情</div>
+	  <div id="top_right">
+	    <button class="btn btn-primary btn-sm" style="background-color:#21292c;" data-toggle="modal" data-target="#myModal">分享</button>
+	  </div>
+	</div>      
     
     <!-- 图片 -->
     <div class="container-fluid" style="margin:0px;padding:0px;">

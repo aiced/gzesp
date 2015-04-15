@@ -41,7 +41,7 @@ public class GoodsManageRecommendController {
     	rspMap.put("name", "weidian"); 
     	rspMap.put("userId", strUserID);   
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-    	rspMap.put("title", "选择添加"); 
+    	rspMap.put("title", "商品发布"); 
     	return new ModelAndView("goodsManageRecommend.ftl", rspMap);
     }
 }

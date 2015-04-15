@@ -1,8 +1,11 @@
 package com.ai.gzesp.utils;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import org.apache.log4j.Logger;
+
+import com.ai.gzesp.unionpay.UnionPayCons;
 
 /**
  * md5加密解密工具<br> 
@@ -17,7 +20,7 @@ public class MD5Util {
     private static final Logger log = Logger.getLogger(MD5Util.class); 
     
     /*** 
-     * MD5加码 生成32位md5码 
+     * MD5加码 生成32位md5码 ，银联需要有秘钥，把原报文后面加个秘钥字符串
      */  
     public static String str2MD5(String inStr){  
         MessageDigest md5 = null;  
@@ -28,7 +31,7 @@ public class MD5Util {
             e.printStackTrace();  
             return "";  
         }  
-        char[] charArray = inStr.toCharArray();  
+        char[] charArray = (inStr+UnionPayCons.md5Key).toCharArray();  //原字符串后加个秘钥
         byte[] byteArray = new byte[charArray.length];  
   
         for (int i = 0; i < charArray.length; i++)  
@@ -60,6 +63,38 @@ public class MD5Util {
         return s;  
   
     }  
+    
+    /**
+     * 银联给的md5算法，需要加密秘钥
+     * 
+     * @param plainText 待加密字符串
+     * @param key 签名密钥
+     * @return 加密后字符串
+     */
+/*    public static String md5s(String plainText, String key) {
+        plainText = plainText + key; //等于把原报文后面加个秘钥字符串
+        StringBuffer buf = new StringBuffer("");
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(plainText.getBytes());
+            byte b[] = md.digest();
+
+            int i;
+
+            for (int offset = 0; offset < b.length; offset++) {
+                i = b[offset];
+                if (i < 0)
+                    i += 256;
+                if (i < 16)
+                    buf.append("0");
+                buf.append(Integer.toHexString(i));
+            }
+            return buf.toString();
+        } catch (NoSuchAlgorithmException e) {
+        }
+        
+        return buf.toString();
+    }*/
   
     // 测试主函数  
     public static void main(String args[]) {  

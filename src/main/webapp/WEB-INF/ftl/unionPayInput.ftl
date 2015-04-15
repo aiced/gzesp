@@ -530,7 +530,7 @@
 		      dataType:"json", //预期服务器返回的数据类型
 		      data: JSON.stringify(param), //服务器只能接收json字符串
 		      success: function(data){
-			    //alert(data.state);
+			    alert(data.status);
 			    $('#myModal').modal('toggle');
 		      }
 		    });

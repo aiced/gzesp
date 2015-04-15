@@ -12,6 +12,7 @@ import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.unionpay.UnionPayAttrs;
 import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.unionpay.UnionPayUtil;
+import com.ai.gzesp.utils.DESUtil;
 import com.ai.gzesp.utils.MD5Util;
 
 /**
@@ -51,7 +52,6 @@ public class UnionPayService {
             //boolean flag = checkParam(param, signCodeRow, result);
             
             param.setSign_code(MD5Util.convertMD5(signCodeRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
-            
             result = sendPayReq(param);
         }      
         
@@ -66,11 +66,11 @@ public class UnionPayService {
             Map<String, String> xmlMap = UnionPayUtil.genBindReq(param);
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             
-/*            //调用绑定接口前插签约信息表，sign_code 空着，后面等待银联返回后根据sys_trade_no更新sign_code
+            //调用绑定接口前插签约信息表，sign_code 空着，后面等待银联返回后根据sys_trade_no更新sign_code
             int n1 = unionPayDao.insertSignCode(xmlMap.get(UnionPayAttrs.accNo), 
                     xmlMap.get(UnionPayAttrs.cvn2), xmlMap.get(UnionPayAttrs.Nbr), xmlMap.get(UnionPayAttrs.Name), 
                     xmlMap.get(UnionPayAttrs.certificateCode), xmlMap.get(UnionPayAttrs.expireDate), 
-                    xmlMap.get(UnionPayAttrs.currencyCode), xmlMap.get(UnionPayAttrs.sysTradeNo));*/
+                    xmlMap.get(UnionPayAttrs.currencyCode), xmlMap.get(UnionPayAttrs.sysTradeNo));
             
             //调用mina客户端发送报文
             if(xmlSend != null){
@@ -88,13 +88,7 @@ public class UnionPayService {
                                     xmlMap.get(UnionPayAttrs.TradeType), //req_trade_type
                                     xmlMap.get(UnionPayAttrs.sysTradeNo), //sys_trade_no
                                     param.getOrder_id(),
-                                    param.getFee(),
-                                    xmlMap.get(UnionPayAttrs.accNo),     
-                                    xmlMap.get(UnionPayAttrs.cvn2),
-                                    xmlMap.get(UnionPayAttrs.Nbr),
-                                    xmlMap.get(UnionPayAttrs.Name), 
-                                    xmlMap.get(UnionPayAttrs.certificateCode),
-                                    xmlMap.get(UnionPayAttrs.expireDate)
+                                    param.getFee()  //订单传过来是厘，传给银联单位是分 需要乘以10
                     );
             
             //如果绑定接口调用成功就要开始等待银联返回签约号了，如果超时未返回则支付失败
@@ -103,7 +97,7 @@ public class UnionPayService {
                 while(true){
                     if(timeout >= UnionPayCons.WAIT_TIMEOUT){
                         result.put("status", "E11");
-                        result.put("detail", "支付失败！发送绑定接口报文后未接收到银联响应");
+                        result.put("detail", "支付失败！发送绑定接口报文后未接收到银联响应或应答码错误");
                         break;
                     }
                     try {
@@ -152,6 +146,7 @@ public class UnionPayService {
                     "01",  //pay_type
                     xmlMap.get(UnionPayAttrs.cardType).equals("01") ? "11" : "12", //pay_mode
                             "0", //pay_state 初始0已发起支付
+                            MD5Util.convertMD5(param.getSign_code()), //银联支付接口时插入md5 加密后的签约号,用于退款时知道退到哪个账户
                             xmlMap.get(UnionPayAttrs.timeStamp), //req_time
                             isSuccess ? "00" : "01",  //req_status
                                     xmlMap.get(UnionPayAttrs.TradeType), //req_trade_type
@@ -213,7 +208,57 @@ public class UnionPayService {
                 bank_card_expire_date);
     }
     
-    public int insertSignCode(Map<String, String> respMap) {
-        return unionPayDao.insertSignCode(respMap);
-    }*/
+    */
+    
+    /**
+     * 收到银联绑定接口的返回后，更新paylog日志表<br>
+     * 〈功能详细描述〉
+     *
+     * @param respMap
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public int updateBindlog(Map<String, String> respMap) {
+        return unionPayDao.updateBindlog(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
+                respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
+                respMap.get(UnionPayAttrs.sysTradeNo));
+    } 
+    
+    /**
+     * 收到银联支付接口的返回后，更新paylog日志表<br>
+     * 〈功能详细描述〉
+     *
+     * @param respMap
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public int updatePaylog(Map<String, String> respMap) {
+        String pay_state = "2"; //默认支付失败
+        if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
+            pay_state = "1"; // 支付成功
+        }
+        else{
+            pay_state = "2"; 
+        }
+        return unionPayDao.updatePaylog(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
+                respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
+                pay_state, respMap.get(UnionPayAttrs.sysTradeNo));
+    }     
+    
+    
+    /**
+     * 收到银联绑定接口的返回后,如果绑定成功，需要更新签约信息表<br>
+     * 〈功能详细描述〉
+     *
+     * @param respMap
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public int updateSignCode(Map<String, String> respMap) {
+        String sign_code = MD5Util.convertMD5(respMap.get(UnionPayAttrs.signCode)); //表里存放md5加密的签约号
+        return unionPayDao.updateSignCode(sign_code, respMap.get(UnionPayAttrs.sysTradeNo));
+    }
 }

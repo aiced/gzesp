@@ -2,6 +2,9 @@ package com.ai.gzesp.unionpay;
 
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ai.gzesp.service.UnionPayService;
 
 /**
@@ -12,28 +15,22 @@ import com.ai.gzesp.service.UnionPayService;
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
+@Service
 public class RespBindHandler implements IDealUnionPayResp {
-    
-    /**
-     * 响应报文的map格式
-     */
-    private Map<String, String> respMap;
     
     /**
      * 业务逻辑处理service
      */
+    @Autowired
     private UnionPayService unionPayService;
-    
-    public RespBindHandler(Map<String, String> respMap, UnionPayService unionPayService){
-        this.respMap = respMap;
-        this.unionPayService = unionPayService;
-    }
 
     @Override
-    public void dealResp() {
-        //如果应答码是00表示接口调用成功，其他应答码都是有问题，直接返回报错信息给页面
+    public void dealResp(Map<String, String> respMap) {
+        //更新paylog日志表里的接口调用日志
+        int r1 = unionPayService.updateBindlog(respMap);
+        //如果应答码是00表示接口调用成功，需要插签约信息表，其他应答码都是有问题，直接返回报错信息给页面
         if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
-            //unionPayService
+            int r2 = unionPayService.updateSignCode(respMap);
         }
         else{
             

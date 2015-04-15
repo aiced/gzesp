@@ -13,12 +13,12 @@ public class UnionPayCons {
     /**
      * 银联服务端ip
      */
-    public static String SERVER_HOST = "127.0.0.1";
+    public static String SERVER_HOST = "58.16.16.10";
     
     /**
      * 银联服务端端口
      */
-    public static int SERVER_PORT = 8002;
+    public static int SERVER_PORT = 10004;
     
     /**
      * 银联接口请求参数:编码方式，推荐用gbk
@@ -33,7 +33,7 @@ public class UnionPayCons {
     /**
      * 银联接口请求参数:发送渠道号
      */
-    public static String ChannelID = "1234567890123456";
+    public static String ChannelID = "7651444882235483";
     
     /**
      * 银联接口请求参数:商户类型 填01表示直连，填02表示转接
@@ -43,7 +43,7 @@ public class UnionPayCons {
     /**
      * 银联接口请求参数:前置平台获批后分配的商户身份ID
      */
-    public static String bmMerId = "bmMerId";    
+    public static String bmMerId = "1000000000009904";    
     
     /**
      * 银联接口请求参数:交易货币代码（156）
@@ -53,13 +53,17 @@ public class UnionPayCons {
     /**
      * 银联接口请求参数:支付行业类型
      */
-    public static String industryType = "12345678";    
+    public static String industryType = "60120851";    
     
     /**
      * 银联接口des加密密钥:，长度为24字节
      */
-    public static String desKey = "e143cc8236aed7f7786da932";   
-    
+    public static String desKey = "yvo0sovt414fakqwvchs70b3";   
+ 
+    /**
+     * 银联接口md5加密密钥:，长度为32字节
+     */
+    public static String md5Key = "8396596f6e94b58f03d1cbaa800b2bd0";       
     
     
     /**

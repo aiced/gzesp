@@ -113,9 +113,14 @@ public class WXMsgController {
     	 ModelAndView mav = null;
     	 if(webToken != null) {
     		 String openId = webToken.getOpenid();
+    		 if(openId == null) {
+    			 mav=new ModelAndView("redirect:/error");
+    			 return mav;
+    		 }
+    		 
     		 // 根据openId获取userId
-//    		 String userId = service.getUserIdByOpenId(openId);
-    		 String userId = "2015000000000000";
+    		 String userId = service.getUserIdByOpenId(openId);
+//    		 String userId = "2015000000000000";
     		 //用户已注册，免登录，根据state值跳页面
     		 if( userId != null) {
     			 if("weShopIndex".equals(state)) {

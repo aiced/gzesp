@@ -28,6 +28,8 @@ public class GoodsManageGoodAddController {
     
     @Autowired
     private WeShopService weShopService;
+	List<Map<String, Object>> goodsNotInRcdList;
+    
     StringBuffer sb;
     List<Map<String, Object>> rcdlist;
     @Resource 
@@ -39,11 +41,19 @@ public class GoodsManageGoodAddController {
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+//<<<<<<< HEAD
+//    	String strUserID = paramsMap.get("userId");
+//    	if(strUserID == null){
+//    		strUserID = "333";
+//    	}
+//    	rcdlist = goodsSql.GetRcdList(); 
+//=======
     	//String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
 
     	rcdlist = goodsSql.GetRcdList(strUserID); //根据能人id 查询店长推荐的列表
     	List<Map<String, Object>> goodsList = null;
+//>>>>>>> cda98479ff777e99dab992d7058040523a03f99d
 		sb = new StringBuffer();
 
 		if(rcdlist.size() != 0){
@@ -59,20 +69,18 @@ public class GoodsManageGoodAddController {
 	        }
 			sb.append(")");
 			sb.deleteCharAt(1);
-			goodsList = goodsSql.getGoodsListNotIn(sb.toString());   
+			goodsNotInRcdList = goodsSql.getGoodsListNotIn(sb.toString());   
 		}else{
-			goodsList = goodsSql.getGoodsList();   			
+			goodsNotInRcdList = goodsSql.getGoodsList();   			
 		}
-    	
-    	
 
     	Map rspMap = new HashMap(); 
     	rspMap.put("userId", strUserID);   
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
-    	rspMap.put("total", goodsList.size());     	
+    	rspMap.put("total", goodsNotInRcdList.size());     	
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-    	rspMap.put("goodsList", goodsList);  
+    	rspMap.put("goodsList", goodsNotInRcdList);  
     	rspMap.put("rcdlist", rcdlist);  
 
     	rspMap.put("title", "选择商品"); 
@@ -117,7 +125,6 @@ public class GoodsManageGoodAddController {
 		//返回数据表格子页面
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String searchKey = paramsMap.get("searchKey");
-    	
     	String searchType = paramsMap.get("searchType");
     	String searchLowPrice = paramsMap.get("searchLowPrice");
     	String searchHightPrice = paramsMap.get("searchHightPrice");
@@ -135,45 +142,44 @@ public class GoodsManageGoodAddController {
         		rspMap.put("searchHightPrice",searchHightPrice);
     		}
     	}  
-    	List<Map<String, Object>>goodsList = goodsSql.getGoodsListWithCondition(rspMap);
-    	List<Map<String, Object>>goodsNotInList = new ArrayList<Map<String, Object>>();
-    	
-    	//除去已经选中的元素。
-		if(rcdlist.size() != 0){
-			for(Map<String, Object> mapGoodsList : goodsList){ 
-				Boolean isTrue = false;
-				Map<String, Object> mapIndex = mapGoodsList;
-				for (String kGoodsList : mapGoodsList.keySet())  
-			      { 
-					if(kGoodsList.equals("GOODSID")){
-						//遍历子list;
-						for(Map<String, Object> map : rcdlist){ 
-							for (String k : map.keySet())  
-						      { 
-						        if(k.equals("GOODSID")){
-						        	System.out.println(mapGoodsList.get(kGoodsList));
-						        	System.out.println(map.get(k));						        	
-						        	if(mapGoodsList.get(kGoodsList).equals(map.get(k))){
-							        	isTrue = true;
-							        }
-						        	break;
-						        }
-						      }  
-							if(isTrue == true){
-								break;
-							}
-				        }
-						if(isTrue == false){
-							goodsNotInList.add(mapIndex);
-						}
-						break;
-			        }
+    		List<Map<String, Object>>goodsList = goodsSql.getGoodsListWithCondition(rspMap);
+    		List<Map<String, Object>>goodsNotInList = new ArrayList<Map<String, Object>>();
+        	//除去已经选中的元素。
+    		if(rcdlist.size() != 0){
+    			for(Map<String, Object> mapGoodsList : goodsList){ 
+    				Boolean isTrue = false;
+    				Map<String, Object> mapIndex = mapGoodsList;
+    				for (String kGoodsList : mapGoodsList.keySet())  
+    			      { 
+    					if(kGoodsList.equals("GOODSID")){
+    						//遍历子list;
+    						for(Map<String, Object> map : rcdlist){ 
+    							for (String k : map.keySet())  
+    						      { 
+    						        if(k.equals("GOODSID")){
+    						        	System.out.println(mapGoodsList.get(kGoodsList));
+    						        	System.out.println(map.get(k));						        	
+    						        	if(mapGoodsList.get(kGoodsList).equals(map.get(k))){
+    							        	isTrue = true;
+    							        }
+    						        	break;
+    						        }
+    						      }  
+    							if(isTrue == true){
+    								break;
+    							}
+    				        }
+    						if(isTrue == false){
+    							goodsNotInList.add(mapIndex);
+    						}
+    						break;
+    			        }
 
-			      }  
-	        }	
-			goodsList = goodsNotInList;
-		}		
-    	
+    			      }  
+    	        }	
+    			goodsList = goodsNotInList;
+    		}		
+
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", goodsList.size());     	

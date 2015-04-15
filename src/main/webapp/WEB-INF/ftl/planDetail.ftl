@@ -184,7 +184,6 @@
                         </#list>
                       </ul>
                   </div>
-                  <p style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>  
               </li>              
             </#if>    
             <!-- 普通卡/微卡/Nano卡-->        

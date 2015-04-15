@@ -16,9 +16,10 @@ public interface IDealUnionPayResp {
      * 处理返回的报文(已经转换成map格式)<br>
      * 〈功能详细描述〉
      *
+     * @param respMap
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public void dealResp();
+    public void dealResp(Map<String, String> respMap);
 
 }

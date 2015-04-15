@@ -179,7 +179,7 @@
 	<div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
@@ -230,7 +230,7 @@
 	            </div>
 				<!-- 用户注册协议 -->
 				<div style="float:right;font-size: 12px;">
-					<h4><input type="checkbox" name="chkRight" id="chkRight" checked="true"><a href="#">用户注册协议</a></h4>
+					<h4><input type="checkbox" name="chkRight" id="chkRight" checked="true"><a href="regProtocol">用户注册协议</a></h4>
 				</div>
 				<br/>
 				<br/>

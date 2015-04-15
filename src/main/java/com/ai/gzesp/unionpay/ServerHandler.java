@@ -43,8 +43,9 @@ public class ServerHandler extends IoHandlerAdapter {
         //根据respMap里交易类型进行业务处理
         if (xmlResp != null) {
             Map<String, String> respMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
-            IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap, unionPayService);
-            respHanler.dealResp();
+            //IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap, unionPayService);
+            IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
+            respHanler.dealResp(respMap);
         }
     }
 

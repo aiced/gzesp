@@ -12,9 +12,13 @@
     <link href="${resRoot}/css/weShopLoginIndex.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
 
-    <!--日历控件css-->
-	<link href="${resRoot}/css/date_common.css?v=${resVer}" rel="stylesheet">
-    
+	<!-- 日历控件_start -->
+	<link href="${resRoot}/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+	<link href="${resRoot}/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
+	<link href="${resRoot}/css/mobiscroll.css" rel="stylesheet" type="text/css">
+	<!-- 日历控件_end -->
+	
+	
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,9 +33,15 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     
-    <!--日历控件js-->
-    <script src="${resRoot}/js/date.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>
+    <!-- 日历控件_start -->
+    <script src="${resRoot}/js/mobiscroll_002.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_004.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_003.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_005.js" type="text/javascript"></script>
+	<!-- 日历控件_end -->
+
+
     <script type="text/javascript">
     
 	  //js日期比较(yyyy-mm-dd)
@@ -52,10 +62,32 @@
 	
 	    }    
     
-        $(function(){
-            $('#beginTime').date();
-            $('#endTime').date();
+        $(function(){ 
+        	var currYear = (new Date()).getFullYear();	
+    		var opt={};
+    		opt.date = {preset : 'date'};
+    		opt.datetime = {preset : 'datetime'};
+    		opt.time = {preset : 'time'};
+    		opt.default_main={
+    			theme: 'android-ics light', //皮肤样式
+    	        display: 'modal', //显示方式 
+    	        mode: 'scroller', //日期选择模式
+    			dateFormat: 'yyyy-mm-dd',
+    			lang: 'zh',
+    			showNow: true,
+    			nowText: "今天",
+    			dateOrder: 'yymmdd',
+    	        startYear: currYear - 10, //开始年份
+    	        endYear: currYear + 10 //结束年份	
+    		};
 
+    	  	$("#beginTime").mobiscroll($.extend(opt['date'], opt['default_main']));
+    	  	$("#endTime").mobiscroll($.extend(opt['date'], opt['default_main']));
+
+
+            
+            
+            
             //[返回]按钮点击
             $("#top_left").click(function(){  
         		var parms = {'userid':'${hideuserid}','fromPage':'${fromPage}'};

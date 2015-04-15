@@ -56,7 +56,7 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
 				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
+				//+"ORD_D_REFUND.REFUND_REASON"//无//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
 				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
@@ -95,7 +95,7 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
 				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
+				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
 				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
@@ -143,7 +143,7 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"
 				+"ORD_D_PAYLOG.PAY_MODE,"
 				+"ORD_D_PAYLOG.PAY_STATE,"
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
+				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"
 				+"GDS_D_PHOTO.PHOTO_LINKS"
 				);
@@ -262,7 +262,8 @@ public class OrdersSql {
 				+ " END PAY_TYPE ,"
 				+ " j.CITY_NAME||j.DISTRICT_NAME|| h.POST_ADDR ADDRESS" );
 		sb.append("	from ORD_D_CUST a, ORD_D_BASE b, ORD_D_PROD c, ORD_D_DEAL d, AUR_D_AUTHINFO e,"
-				+ " GDS_D_INFO f, GDS_D_PHOTO g, ORD_D_POST h, ORD_D_PAYLOG i," 
+				+ " GDS_D_INFO f, GDS_D_PHOTO g,"
+				+ " ORD_D_POST h LEFT JOIN ORD_D_PAYLOG i ON   h.ORDER_ID = i.ORDER_ID,"
 				+ "	 (select t1.CITY_NAME, t1.CITY_CODE, t2.DISTRICT_CODE, t2.DISTRICT_NAME" 
 					+ " from SYS_P_WEB_CITY t1, SYS_P_WEB_DISTRICT t2"
 					+ " where t1.ESS_PROVINCE_CODE = '85'" 
@@ -272,7 +273,6 @@ public class OrdersSql {
 				+ " and a.ORDER_ID = b.ORDER_ID "
 				+ " and a.ORDER_ID = c.ORDER_ID "
 				+ " and a.ORDER_ID = d.ORDER_ID "
-				+ " AND a.ORDER_ID = i.ORDER_ID"
 				+ " and d.USER_ID = e.USER_ID "
 				+ " and c.GOODS_ID = f.GOODS_ID"
 				+ " and f.ALBUM_ID = g.ALBUM_ID"

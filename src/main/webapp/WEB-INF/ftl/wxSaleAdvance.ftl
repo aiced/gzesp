@@ -13,61 +13,38 @@
   </head>
   <body>
     <p class="ue_t" style="margin: 20px;">
-        啊看来减肥啦放假啦卡家阿拉；精神分裂；阿开始减肥了卡手机阿莱克斯放假啦上课减肥啦说； 阿斯利康记得发啦手机发了
+       说不尽的江湖风云，叨不尽的赚钱秘籍，为了大掌柜高枕无忧，小编也是拼了，各种推广渠道大招，且听小编一一道来。
     </p>
   
 	<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 20px; padding: 15px; border: 1px solid rgb(200, 200, 200);">
-    <p class="ue_t">
-        可在这输入内容， 关注我 - 微信图文排版,微信图文编辑器,微信公众号编辑器，微信编辑首选。
-    </p>
+
     <p class="ue_t">
         <img src="${resRoot}/image/wx/danka.png" title="1429094415678869.png" alt="cunfeisongji.png" style="width: 100%; height: auto !important;" />
     </p>
     
-    <p class="ue_t">
-        这是子标题！
-    </p>
 </blockquote>
 
 <blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 20px; padding: 15px; border: 1px solid rgb(200, 200, 200);">
     <p class="ue_t">
-        可在这输入内容， 关注我 - 微信图文排版,微信图文编辑器,微信公众号编辑器，微信编辑首选。
+        叨叨赚钱秘籍。
     </p>
     <p class="ue_t">
         <img src="${resRoot}/image/wx/danka.png" title="1429094415678869.png" alt="cunfeisongji.png" style="width: 100%; height: auto !important;" />
     </p>
-    
-    <p class="ue_t">
-        这是子标题！
-    </p>
+
 </blockquote>
 
 
 <blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 20px; padding: 15px; border: 1px solid rgb(200, 200, 200);">
     <p class="ue_t">
-        可在这输入内容， 关注我 - 微信图文排版,微信图文编辑器,微信公众号编辑器，微信编辑首选。
+        叨叨赚钱秘籍。
     </p>
     <p class="ue_t">
         <img src="${resRoot}/image/wx/danka.png" title="1429094415678869.png" alt="cunfeisongji.png" style="width: 100%; height: auto !important;" />
     </p>
     
-    <p class="ue_t">
-        这是子标题！
-    </p>
 </blockquote>
 
-<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 20px; padding: 15px; border: 1px solid rgb(200, 200, 200);">
-    <p class="ue_t">
-        可在这输入内容， 关注我 - 微信图文排版,微信图文编辑器,微信公众号编辑器，微信编辑首选。
-    </p>
-    <p class="ue_t">
-        <img src="${resRoot}/image/wx/danka.png" title="1429094415678869.png" alt="cunfeisongji.png" style="width: 100%; height: auto !important;" />
-    </p>
-    
-    <p class="ue_t">
-        这是子标题！
-    </p>
-</blockquote>
 <p>
     <br/>
 </p>

@@ -128,11 +128,7 @@ public class GoodsManageGoodAddController {
         		rspMap.put("searchHightPrice",searchHightPrice);
     		}
     	}  
-    	List<Map<String, Object>>goodsList = null;
-    	if(searchKey.equals("reLoad")){
-    		goodsList = goodsNotInRcdList;
-    	}else{
-    		goodsList = goodsSql.getGoodsListWithCondition(rspMap);    		
+    		List<Map<String, Object>>goodsList = goodsSql.getGoodsListWithCondition(rspMap);
     		List<Map<String, Object>>goodsNotInList = new ArrayList<Map<String, Object>>();
         	//除去已经选中的元素。
     		if(rcdlist.size() != 0){
@@ -169,10 +165,7 @@ public class GoodsManageGoodAddController {
     	        }	
     			goodsList = goodsNotInList;
     		}		
-    	}
-    	
-    	
-    	
+
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("total", goodsList.size());     	
@@ -184,19 +177,19 @@ public class GoodsManageGoodAddController {
     
     
     
-    @RequestMapping("/reloadGoodsByAjax")
-   	public ModelAndView reloadGoodsByAjax(@RequestBody String inputParam){
-   		//返回数据表格子页面
-    	List<Map<String, Object>> goodsList = goodsNotInRcdList;
-    	Map<String, Object> rspMap = new HashMap<String, Object>();  
-       	rspMap.put("rspCode", "0000");   
-       	rspMap.put("name", "weidian");   
-       	rspMap.put("total", goodsList.size());     	
-       	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-       	rspMap.put("goodsList", goodsList);  
-       	rspMap.put("title", "选择商品"); 
-       	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
-   }
+//    @RequestMapping("/reloadGoodsByAjax")
+//   	public ModelAndView reloadGoodsByAjax(@RequestBody String inputParam){
+//   		//返回数据表格子页面
+//    	List<Map<String, Object>> goodsList = goodsNotInRcdList;
+//    	Map<String, Object> rspMap = new HashMap<String, Object>();  
+//       	rspMap.put("rspCode", "0000");   
+//       	rspMap.put("name", "weidian");   
+//       	rspMap.put("total", goodsList.size());     	
+//       	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
+//       	rspMap.put("goodsList", goodsList);  
+//       	rspMap.put("title", "选择商品"); 
+//       	return new ModelAndView("goodsManageGoodAddSub.ftl", rspMap);
+//   }
     
     
 }

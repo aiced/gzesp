@@ -56,7 +56,7 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
 				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
+				//+"ORD_D_REFUND.REFUND_REASON"//无//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
 				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
@@ -95,7 +95,7 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
 				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
+				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
 				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
@@ -143,7 +143,7 @@ public class OrdersSql {
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"
 				+"ORD_D_PAYLOG.PAY_MODE,"
 				+"ORD_D_PAYLOG.PAY_STATE,"
-				+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
+				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"
 				+"GDS_D_PHOTO.PHOTO_LINKS"
 				);

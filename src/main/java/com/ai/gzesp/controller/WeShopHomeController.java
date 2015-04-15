@@ -21,6 +21,7 @@ import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
 import com.ai.gzesp.dao.beans.TdAurDCOUNT;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdAurDCOUNTDao;
+import com.ai.gzesp.dao.sql.CommissionSql;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.dao.sql.ViewSql;
 import com.ai.gzesp.service.WeShopService;
@@ -39,6 +40,8 @@ public class WeShopHomeController {
 	OrdersSql ordersSql;
 	@Resource 
 	ViewSql viewSql;
+	@Resource 
+	CommissionSql commissionSql;
     @RequestMapping("/weShopHome")
     @ResponseBody
     public ModelAndView index(HttpServletRequest requestinputParams){
@@ -73,6 +76,8 @@ public class WeShopHomeController {
     	List<Map<String, Object>> ViewCountlist = viewSql.getViewCountByUserID(strUserID);
         //根据userid查询销售量
        	List<Map<String, Object>> SaleList=ordersSql.getOrderCountByUserID(strUserID);
+       	//根据userid查询佣金
+       	List<Map<String, Object>> commissionList=commissionSql.getCommissionCountByUserID(strUserID);
 
 //    	//根据userid查询佣金值
 //    	myCriteria.createConditon().andEqualTo("USER_ID",requestinputParams.getParameter("userid"));
@@ -89,6 +94,7 @@ public class WeShopHomeController {
 //        mav.addObject("userimage",requestinputParams.getParameter("userimage"));
         mav.addObject("viewcountlist",ViewCountlist);
         mav.addObject("saleList", SaleList);
+        mav.addObject("commissionList",commissionList);
       //mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap); 
         return mav;
     }

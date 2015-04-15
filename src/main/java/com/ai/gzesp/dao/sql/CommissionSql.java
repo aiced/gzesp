@@ -82,7 +82,6 @@ public class CommissionSql {
 	public List<Map<String,Object>> getCommissionCountByUserID(String strUserID)
 	{
 		StringBuffer sb=new StringBuffer();
-		strUserID="20150325002";
 		sb.append("with ");
 		sb.append("T1 as(");
 		sb.append("select ORDER_ID,RES_ATTR_CODE,RES_ATTR_VAL,USER_ID,ACT_STATUS from ORD_D_RES,ITF_D_NUMBER_INFO where RES_ATTR_CODE='NUMBERS' and RES_ATTR_VAL=SERIAL_NUMBER");

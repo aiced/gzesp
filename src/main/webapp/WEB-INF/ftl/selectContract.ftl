@@ -29,7 +29,9 @@
 							  <#if item_has_next>
 								  <li role="presentation" class="divider"></li>
 							  </#if>
-						</#list>   
+						</#list> 
+						<#else>
+								 <a  style=" line-height:3;vertical-align:middle;width:100%;height:40px;display: block;text-align:center;color:black" role="menuitem" tabindex="-1" href="javascript:void(0)"><无选项></a>
 						</#if>
 					</ul>
 	        </div>

@@ -236,6 +236,7 @@ public class OrderService {
     	String cityCode = paramsMap.get("cityCode");
     	String districtCode = paramsMap.get("districtCode");
     	String postRemark = paramsMap.get("postRemark");
+    	String expressCompany = paramsMap.get("expressCompany");
     	
     	TdOrdDPOST record = new TdOrdDPOST();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -251,6 +252,7 @@ public class OrderService {
     	record.setCityCode(cityCode);
     	record.setDistrictCode(districtCode);
     	record.setPostRemark(postRemark);
+    	record.setExpressCompnay(expressCompany);
     	
     	tdOrdDPOSTDao.insertSelective(record);
     }

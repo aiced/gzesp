@@ -97,8 +97,8 @@
 	            <div id="postInfoTab" class="list-group-item">
 	                <label>物流公司</label>
 	                <div id="post-select" class="p-list">
-                        <a id="post-select-none" href="javascript:void(0);"  value="nomal"  class="selected">宅急送</a>
-                        <a id="post-select-shunfeng" href="javascript:void(0);"  value="sf"   >顺丰速运</a>
+                        <a id="post-select-none" href="javascript:void(0);"  value="2"  class="selected">宅急送</a>
+                        <a id="post-select-shunfeng" href="javascript:void(0);"  value="1"   >顺丰速运</a>
                     </div>
 	            </div>
 	            

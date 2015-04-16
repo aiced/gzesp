@@ -42,6 +42,7 @@ var orderFormParams = {
 		cityCode:"",
 		districtCode:"",
 		postRemark:"",
+		expressCompany:"",
 		
 		goodsId:"",
 		goodsName:"",
@@ -341,6 +342,7 @@ function getParams() {
 //    }
 	
 	orderFormParams.deliverTypeCode = $('#deliver-select').find('a.selected').attr("value");
+	orderFormParams.expressCompany = $('#post-select').find('a.selected').attr("value");
 	orderFormParams.receiverName = $('#txtname').val();
 	orderFormParams.phoneNum = $('#txtphone').val();
 	orderFormParams.postAddr = $('#txtaddress').val();

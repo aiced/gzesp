@@ -126,7 +126,7 @@ public class OrderService {
     	insertOrderPostInfo(paramsMap);
     	insertOrderProdInfo(paramsMap);
     	insertOrderResInfo(paramsMap);
-    	insertOrderReFundInfo(paramsMap);
+//    	insertOrderReFundInfo(paramsMap);
     }
     
     

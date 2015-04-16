@@ -132,9 +132,11 @@
                 <label class="radio-inline">
                     <input type="radio" name="pay_mode" id="pay_mode_1" value="00" checked="checked" data-text="在线支付">在线支付
                 </label>
+                <#--
                 <label class="radio-inline">
                     <input type="radio" name="pay_mode" id="pay_mode_2" value="01" data-text="货到付款">货到付款
                 </label>
+                -->
             </div>
             <div id="pay_mode_1_detail">
                 <div class="pay_mode_1_info">

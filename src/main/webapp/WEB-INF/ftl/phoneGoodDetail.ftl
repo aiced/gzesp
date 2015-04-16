@@ -242,8 +242,11 @@
     </div>
 
     <div class="btns-box userType">
+        <#--
         <a id="new-user" onclick="phoneGotoOrderMainNew()" class="org-btn w-49p fl" href="javascript:void(0)">新号入网</a>
         <a id="old-user" onclick="phoneGotoOrderMainOld()" class="blue-btn w-49p fr" href="javascript:void(0)">老用户办理</a>
+        -->
+        <a id="new-user" onclick="phoneGotoOrderMainNew()" class="org-btn w-full fl" href="javascript:void(0)">新号入网</a>
     </div>
 
     <div class="btns-box noAmount" style="display:none">

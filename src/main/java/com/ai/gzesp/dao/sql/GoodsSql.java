@@ -3,6 +3,7 @@ package com.ai.gzesp.dao.sql;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -296,7 +297,12 @@ public class GoodsSql {
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " order by t1.GOODS_ID");
 
-		Map goodsDefaultPhoto = commonDao.queryForMap(sb.toString());
+		Map goodsDefaultPhoto = new HashMap();
+		List<Map<String, Object>> list = commonDao.queryForList(sb.toString());
+		if(list != null && list.size()>0) {
+			goodsDefaultPhoto = list.get(0);
+		}
+		
 		return goodsDefaultPhoto;
 	}
 	

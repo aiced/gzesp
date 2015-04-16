@@ -82,22 +82,21 @@ public class CommissionSql {
 	public List<Map<String,Object>> getCommissionCountByUserID(String strUserID)
 	{
 		StringBuffer sb=new StringBuffer();
-		strUserID="20150325002";
 		sb.append("with ");
 		sb.append("T1 as(");
 		sb.append("select ORDER_ID,RES_ATTR_CODE,RES_ATTR_VAL,USER_ID,ACT_STATUS from ORD_D_RES,ITF_D_NUMBER_INFO where RES_ATTR_CODE='NUMBERS' and RES_ATTR_VAL=SERIAL_NUMBER");
 		sb.append("),");	
 		sb.append("T2 as(");
-		sb.append("select a.Order_Id,b.Cms_Month,sum(CMS_MONEY) as SUM_CMS_MONEY from ORD_D_BASE a,CMS_D_MONTH b where a.Order_Id=b.Order_Id(+) group by a.order_id,b.Cms_Month");	
+		sb.append("select a.Order_Id,b.CMS_DAY,sum(CMS_MONEY) as SUM_CMS_MONEY from ORD_D_BASE a,CMS_D_DAILY b where a.Order_Id=b.Order_Id(+) group by a.order_id,b.CMS_DAY");	
 		sb.append("),");
 		sb.append("T3 as(");
-		sb.append("select T1.ORDER_ID,T1.USER_ID,T1.ACT_STATUS,T2.SUM_CMS_MONEY,T2.CMS_MONTH from T1,T2 where T1.order_id=T2.order_id");
+		sb.append("select T1.ORDER_ID,T1.USER_ID,T1.ACT_STATUS,T2.SUM_CMS_MONEY,T2.CMS_DAY from T1,T2 where T1.order_id=T2.order_id");
 		sb.append("),");
 		sb.append("T4 as(");
 		sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,b.CMS_PRE_FEE,c.RECEIVER_NAME  from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id");		
 		sb.append("),");
 		sb.append("T5 as (");
-		sb.append("select T3.ORDER_ID,USER_ID,ACT_STATUS,SUM_CMS_MONEY,CMS_MONTH,CREATE_TIME,GOODS_ID,GOODS_NAME,CMS_PRE_FEE,RECEIVER_NAME from T3,T4 where T3.order_id=T4.order_id");
+		sb.append("select T3.ORDER_ID,USER_ID,ACT_STATUS,SUM_CMS_MONEY,CMS_DAY,CREATE_TIME,GOODS_ID,GOODS_NAME,CMS_PRE_FEE,RECEIVER_NAME from T3,T4 where T3.order_id=T4.order_id");
 		sb.append(")");
 		sb.append(" select count (case when create_time>=trunc(sysdate-1) and create_time<trunc(sysdate) then 1 else null end) yesterday_commison,");
 		sb.append("count(case when create_time>=trunc(sysdate,'month') and create_time<trunc(add_months(sysdate,1),'month') then 1 else null end) month_commison,");
@@ -138,10 +137,10 @@ public class CommissionSql {
 		sb.append("select ORDER_ID,RES_ATTR_CODE,RES_ATTR_VAL,USER_ID,ACT_STATUS from ORD_D_RES,ITF_D_NUMBER_INFO where RES_ATTR_CODE='NUMBERS' and RES_ATTR_VAL=SERIAL_NUMBER");
 		sb.append("),");	
 		sb.append("T2 as(");
-		sb.append("select a.Order_Id,b.Cms_Month,sum(CMS_MONEY) as SUM_CMS_MONEY from ORD_D_BASE a,CMS_D_MONTH b where a.Order_Id=b.Order_Id(+) group by a.order_id,b.Cms_Month");	
+		sb.append("select a.Order_Id,b.CMS_DAY,sum(CMS_MONEY) as SUM_CMS_MONEY from ORD_D_BASE a,CMS_D_DAILY b where a.Order_Id=b.Order_Id(+) group by a.order_id,b.CMS_DAY");	
 		sb.append("),");
 		sb.append("T3 as(");
-		sb.append("select T1.ORDER_ID,T1.USER_ID,T1.ACT_STATUS,T2.SUM_CMS_MONEY,T2.CMS_MONTH from T1,T2 where T1.order_id=T2.order_id");
+		sb.append("select T1.ORDER_ID,T1.USER_ID,T1.ACT_STATUS,T2.SUM_CMS_MONEY,T2.CMS_DAY from T1,T2 where T1.order_id=T2.order_id");
 		sb.append("),");
 		sb.append("T4 as(");
 		if (strFlag.equals("1")) //按照帐期查询，暂时先这样写着
@@ -164,19 +163,19 @@ public class CommissionSql {
 		
 		if (strStatusflag.equals("1")) //可提现 
 		{
-			sb.append(" and T3.ACT_STATUS='1' and T3.CMS_MONTH is not null");
+			sb.append(" and T3.ACT_STATUS='1' and T3.CMS_DAY is not null");
 		}
 		else if(strStatusflag.equals("2"))//无效单
 		{
-			sb.append(" and T3.ACT_STATUS='0' and T3.CMS_MONTH is not null");
+			sb.append(" and T3.ACT_STATUS='0' and T3.CMS_DAY is not null");
 		}
 		else if(strStatusflag.equals("3"))//结算中
 		{
-			sb.append(" and T3.ACT_STATUS='1' and T3.CMS_MONTH is null");
+			sb.append(" and T3.ACT_STATUS='1' and T3.CMS_DAY is null");
 		}
 		else if(strStatusflag.equals("4"))//未激活
 		{
-			sb.append(" and T3.ACT_STATUS='0' and T3.CMS_MONTH is null");
+			sb.append(" and T3.ACT_STATUS='0' and T3.CMS_DAY is null");
 		}
 		else //strStatusflag=-1 什么都不操作
 		{

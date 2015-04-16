@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdGdsDINFO;
+import com.ai.gzesp.dao.service.TdGdsDINFODao;
 import com.ai.gzesp.dao.service.TdSysPWEBDISTRICTDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.OrderService;
@@ -40,6 +42,9 @@ public class OrderController {
     
     @Resource
     TdSysPWEBDISTRICTDao tdSysPWEBDISTRICTDao;
+    
+    @Resource
+    TdGdsDINFODao tdGdsDINFODao;
     
     @RequestMapping("/newNumberJoin")
     public ModelAndView newNumberJoin(@RequestBody String inputParams){
@@ -86,6 +91,13 @@ public class OrderController {
     	List<Map>[] contractList = orderService.getContractByGoodsID(goodsId);
     	mav.addObject("pkgList", contractList[0]);
     	mav.addObject("peroidList", contractList[1]);
+    	
+    	Criteria example = new Criteria();
+    	example.createConditon().andEqualTo("GOODS_ID", goodsId);
+    	List<TdGdsDINFO> dataList = tdGdsDINFODao.selectByExample(example);
+    	if(dataList != null && dataList.size() > 0) {
+    		mav.addObject("simpDesc", dataList.get(0).getSimpDesc());
+    	}
     }
     
     @RequestMapping("/getDistrictListByCityCode")

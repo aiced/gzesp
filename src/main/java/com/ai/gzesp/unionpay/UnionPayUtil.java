@@ -114,7 +114,7 @@ public class UnionPayUtil {
         xmlMap.put(UnionPayAttrs.signCode, param.getSign_code()); //签约号
         xmlMap.put(UnionPayAttrs.orderId, param.getOrder_id()); //支付订单号
         xmlMap.put(UnionPayAttrs.industryType, UnionPayCons.industryType); //支付行业类型
-        xmlMap.put(UnionPayAttrs.txnAmt, param.getFee()); //交易金额（单位：分）
+        xmlMap.put(UnionPayAttrs.txnAmt, String.valueOf(Integer.parseInt(param.getFee())/10)); //订单传过来是厘，传给银联单位是分 需要除以10
 
         //return genByteReq(xmlMap);
         return xmlMap;
@@ -170,7 +170,7 @@ public class UnionPayUtil {
         xmlMap.put(UnionPayAttrs.Name, "奚敏辉"); //受卡人姓名
         xmlMap.put(UnionPayAttrs.Nbr, "18651885060"); //手机号
         xmlMap.put(UnionPayAttrs.orderId, ); //支付订单号
-        xmlMap.put(UnionPayAttrs.txnAmt, ); //交易金额（单位：分）
+        xmlMap.put(UnionPayAttrs.txnAmt, String.valueOf(Integer.parseInt(param.getFee())/10)); //订单传过来是厘，传给银联单位是分 需要除以10
 
         //return genByteReq(xmlMap);
         return xmlMap;

@@ -63,7 +63,10 @@
 						</#if> 
 					</ul>
 	        </div> 
-        </div>     
+        </div>
+         <div class="row" >
+		    <div class="col-xs-12" >${simpDesc}</div>
+		</div>
      </div>
 <!--      <div class="container-fluid" style="position:absolute; bottom:6%; width:100%"> -->
 <!--      	<button id="selectConOkBtn" type="button" class="btn btn-warning  btn-lg btn-block" >确定合约</button> -->

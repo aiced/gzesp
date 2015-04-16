@@ -155,13 +155,13 @@
 		  		bRet3=false;
 		  		return;
 		  	}
-		  	//else if($("#txtyanzhengma").val()!=code)
-		  	//{
-		  	//	alert("输入的验证码与短信中的验证码不匹配");
-		  	//	$("#div_yanzhengma").addClass("has-error");
-		  	//	bRet3=false;
-		  	//	return;
-		  	//}
+		  	else if($("#txtyanzhengma").val()!=code)
+		  	{
+		  		alert("输入的验证码与短信中的验证码不匹配");
+		  		$("#div_yanzhengma").addClass("has-error");
+		  		bRet3=false;
+		  		return;
+		  	}
 		  	else
 		  	{
 		  		$("#div_yanzhengma").removeClass("has-error");
@@ -287,7 +287,7 @@
 	<div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>

@@ -34,6 +34,17 @@ public interface TdAurDAUTHINFOMapper {
     int deleteByExample(Criteria example);
 
     /**
+     * 根据主键删除记录
+     */
+    /**
+    * @Title TdAurDAUTHINFOMapper.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除AUR_D_AUTHINFO
+    * @param id id
+    * @return int  删除个数
+     */
+    int deleteByPrimaryKey(Long id);
+
+    /**
      * 保存记录,不管记录里面的属性是否为空
      */
     /**
@@ -67,6 +78,17 @@ public interface TdAurDAUTHINFOMapper {
     List<TdAurDAUTHINFO> selectByExample(Criteria example);
 
     /**
+     * 根据主键查询记录
+     */
+    /**
+    * @Title TdAurDAUTHINFOMapper.selectByPrimaryKey
+    * @Description: 根据主键类，返回AUR_D_AUTHINFO
+    * @param id id
+    * @return TdAurDAUTHINFO bean对象
+     */
+    TdAurDAUTHINFO selectByPrimaryKey(Long id);
+
+    /**
      * 根据条件更新属性不为空的记录
      */
     /**
@@ -89,4 +111,26 @@ public interface TdAurDAUTHINFOMapper {
     * @return int 更新记录数
      */
     int updateByExample(@Param("record") TdAurDAUTHINFO record, @Param("example") Criteria criteria);
+
+    /**
+     * 根据主键更新属性不为空的记录
+     */
+    /**
+    * @Title TdAurDAUTHINFOMapper.updateByPrimaryKeySelective
+    * @Description: 根据主键更新AUR_D_AUTHINFO部分字段
+    * @param record 要更新成为的TdAurDAUTHINFO对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKeySelective(TdAurDAUTHINFO record);
+
+    /**
+     * 根据主键更新记录
+     */
+    /**
+    * @Title TdAurDAUTHINFOMapper.updateByPrimaryKey
+    * @Description: 根据主键更新AUR_D_AUTHINFO全部字段
+    * @param record 要更新成为的TdAurDAUTHINFO对象
+    * @return int 更新记录数
+     */
+    int updateByPrimaryKey(TdAurDAUTHINFO record);
 }

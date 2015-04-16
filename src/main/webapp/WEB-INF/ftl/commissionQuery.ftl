@@ -501,9 +501,9 @@
 
 	    </div>
 		<div >
-	        <div class="query_info_bottom">
+	        <!-- <div class="query_info_bottom">
 				温馨提示：我们每天凌晨4点根据用户状态计算佣金收益，处于冻结状态的佣金可能是未到计算时点或号码还没有激活。
-	    	</div>
+	    	</div> -->
 		</div>
 
 	</div>

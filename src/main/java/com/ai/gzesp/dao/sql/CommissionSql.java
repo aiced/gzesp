@@ -182,7 +182,7 @@ public class CommissionSql {
 			
 		}
 
-		//sb.append(" where T3.USER_ID='"+strUserID+"'");//先注释掉
+		sb.append(" and T3.USER_ID='"+strUserID+"'");//先注释掉
 		
 		System.out.println(sb.toString());
 		List<Map<String, Object>> CommList =commonDao.queryForList(sb.toString());

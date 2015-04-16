@@ -50,7 +50,33 @@
             </div>
             <div class="list-group">
                 <a href="#" class="list-group-item"><h4>支付方式：${PAY_MODE}</h4></a>
-                <a href="#" class="list-group-item"><h4>订单状态：${PAY_STATE}</h4></a>
+                <a href="#" class="list-group-item">
+                <h4>订单状态
+				<#if (ORDER_STATE=='0')>
+                	待支付
+                <#elseif (ORDER_STATE=='1')>
+                	待分配
+                <#elseif (ORDER_STATE=='2')>
+                	待处理
+                <#elseif (ORDER_STATE=='3')>
+                	处理中
+                <#elseif (ORDER_STATE=='4')>
+                	待发货
+                <#elseif (ORDER_STATE=='5')>
+                	发货中
+                <#elseif (ORDER_STATE=='6')>
+                	物流在途
+                <#elseif (ORDER_STATE=='7')>
+                	待归档
+                <#elseif (ORDER_STATE=='8')>
+                	成功关闭（已归档）
+                <#elseif (ORDER_STATE=='9')>
+                	订单处理退单
+                <#elseif (ORDER_STATE=='10')>
+					客户拒收退单
+                </#if>
+                </h4>
+                </a>
                 <a href="#" class="list-group-item"><h4>缺货处理：${PAY_REMARK}</h4></a>
             </div>
         </div>

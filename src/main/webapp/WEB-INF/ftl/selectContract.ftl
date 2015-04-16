@@ -12,15 +12,11 @@
     <div class="container-fluid" style="background-color:#ffffff;">
 	    <div class="row" >
 		    <div class="col-xs-6" style="line-height:3;" >
-		    	<div style="padding:2px;margin:3px -5px 2px 0px;border-right:solid 1px #f4f4f4;" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-			    	<label id="packName" class="text-center label-sm">套餐资费选择</label>
-			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
-		    	</div>
 				
-<!-- 		     	<button class="btn btn-default btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> -->
-<!-- 				    <span id="packName">套餐资费选择</span> -->
-<!-- 				    <span class="caret"></span> -->
-<!-- 			 	 </button> -->
+ 		     	<button style="padding:2px;margin-top:3px;border-right:solid 1px #f4f4f4;width:100%;height:50px;display: block;text-align:center;background-color:white;" class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> 
+			    	<label id="packName" class="text-center label-sm">套餐资费选择</label>
+					<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
+ 			 	 </button> 
 	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="margin:-1px 0px 0px 2px">
 	           			<#if (pkgList?? && pkgList?size>0)>
 		        	  	<#list pkgList as item>  
@@ -39,10 +35,11 @@
 					</ul>
 	        </div>
 	        <div class="col-xs-6"  style="line-height:3;">
-	       		 <div style="padding:2px;margin-top:3px;" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true">
+	         	<button style="padding:2px;margin-top:3px;width:100%;height:50px;display: block;text-align:center;background-color:white;" class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true"> 
 			    	<label id="pageName" class="text-center label-sm">合约期限选择</label>
 			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
-		    	</div>
+		    </button> 
+		    	
 <!-- 	       		<button class="btn btn-default  btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true"> -->
 <!-- 				    <span id="pageName">合约期限选择</span> -->
 <!-- 				    <span class="caret"></span> -->
@@ -63,10 +60,7 @@
 						</#if> 
 					</ul>
 	        </div> 
-        </div>
-         <div class="row" >
-		    <div class="col-xs-12" >${simpDesc}</div>
-		</div>
+        </div>     
      </div>
 <!--      <div class="container-fluid" style="position:absolute; bottom:6%; width:100%"> -->
 <!--      	<button id="selectConOkBtn" type="button" class="btn btn-warning  btn-lg btn-block" >确定合约</button> -->

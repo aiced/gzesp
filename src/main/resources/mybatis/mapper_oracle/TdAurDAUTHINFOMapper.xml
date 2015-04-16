@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ai.gzesp.dao.persistence.TdAurDAUTHINFOMapper" >
   <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdAurDAUTHINFO" >
-    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <id column="ID" property="id" jdbcType="DECIMAL" />
     <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
     <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
     <result column="USER_IMG" property="userImg" jdbcType="VARCHAR" />
@@ -13,6 +13,7 @@
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="STORE_ID" property="storeId" jdbcType="VARCHAR" />
     <result column="STORE_NAME" property="storeName" jdbcType="VARCHAR" />
+    <result column="WXOPEN_ID" property="wxopenId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -80,7 +81,7 @@
   </sql>
   <sql id="Base_Column_List" >
     ID, USER_ID, USER_NAME, USER_IMG, USER_PASSWORD, WEIXIN_ID, EMAIL, PHONE_NUMBER, 
-    STATUS, STORE_ID, STORE_NAME
+    STATUS, STORE_ID, STORE_NAME, WXOPEN_ID
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -98,6 +99,16 @@
     </if>
     <include refid="common.Oracle_Pagination_Tail" />
   </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from AUR_D_AUTHINFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from AUR_D_AUTHINFO
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
   <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     delete from AUR_D_AUTHINFO
     <if test="_parameter != null" >
@@ -108,11 +119,13 @@
     insert into AUR_D_AUTHINFO (ID, USER_ID, USER_NAME, 
       USER_IMG, USER_PASSWORD, WEIXIN_ID, 
       EMAIL, PHONE_NUMBER, STATUS, 
-      STORE_ID, STORE_NAME)
+      STORE_ID, STORE_NAME, WXOPEN_ID
+      )
     values (#{id,jdbcType=DECIMAL}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{userImg,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{storeId,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR})
+      #{storeId,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, #{wxopenId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdAurDAUTHINFO" >
     insert into AUR_D_AUTHINFO
@@ -150,6 +163,9 @@
       <if test="storeName != null" >
         STORE_NAME,
       </if>
+      <if test="wxopenId != null" >
+        WXOPEN_ID,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -184,6 +200,9 @@
       </if>
       <if test="storeName != null" >
         #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxopenId != null" >
+        #{wxopenId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -229,6 +248,9 @@
       <if test="record.storeName != null" >
         STORE_NAME = #{record.storeName,jdbcType=VARCHAR},
       </if>
+      <if test="record.wxopenId != null" >
+        WXOPEN_ID = #{record.wxopenId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -246,9 +268,64 @@
       PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=CHAR},
       STORE_ID = #{record.storeId,jdbcType=VARCHAR},
-      STORE_NAME = #{record.storeName,jdbcType=VARCHAR}
+      STORE_NAME = #{record.storeName,jdbcType=VARCHAR},
+      WXOPEN_ID = #{record.wxopenId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdAurDAUTHINFO" >
+    update AUR_D_AUTHINFO
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null" >
+        USER_IMG = #{userImg,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null" >
+        USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinId != null" >
+        WEIXIN_ID = #{weixinId,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="storeId != null" >
+        STORE_ID = #{storeId,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        STORE_NAME = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxopenId != null" >
+        WXOPEN_ID = #{wxopenId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdAurDAUTHINFO" >
+    update AUR_D_AUTHINFO
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_IMG = #{userImg,jdbcType=VARCHAR},
+      USER_PASSWORD = #{userPassword,jdbcType=VARCHAR},
+      WEIXIN_ID = #{weixinId,jdbcType=VARCHAR},
+      EMAIL = #{email,jdbcType=VARCHAR},
+      PHONE_NUMBER = #{phoneNumber,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      STORE_ID = #{storeId,jdbcType=VARCHAR},
+      STORE_NAME = #{storeName,jdbcType=VARCHAR},
+      WXOPEN_ID = #{wxopenId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
   </update>
 </mapper>

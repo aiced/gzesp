@@ -40,6 +40,16 @@ public class TdAurDAUTHINFODao extends ITableDao {
     }
 
     /**
+    * @Title TdAurDAUTHINFODao.selectByPrimaryKey
+    * @Description: 根据主键类，返回AUR_D_AUTHINFO
+    * @param id id
+    * @return TdAurDAUTHINFO bean对象
+     */
+    public TdAurDAUTHINFO selectByPrimaryKey(Long id) {
+        return this.tdAurDAUTHINFOMapper.selectByPrimaryKey(id);
+    }
+
+    /**
     * @Title TdAurDAUTHINFODao.selectByExample
     * @Description: 根据查询条件类，返回AUR_D_AUTHINFO结果集
     * @param example 通用查询条件类
@@ -47,6 +57,36 @@ public class TdAurDAUTHINFODao extends ITableDao {
      */
     public List<TdAurDAUTHINFO> selectByExample(Criteria example) {
         return this.tdAurDAUTHINFOMapper.selectByExample(example);
+    }
+
+    /**
+    * @Title TdAurDAUTHINFODao.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除AUR_D_AUTHINFO
+    * @param id id
+    * @return int  删除个数
+     */
+    public int deleteByPrimaryKey(Long id) {
+        return this.tdAurDAUTHINFOMapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+    * @Title TdAurDAUTHINFODao.updateByPrimaryKeySelective
+    * @Description: 根据主键更新AUR_D_AUTHINFO部分字段
+    * @param record 要更新成为的TdAurDAUTHINFO对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKeySelective(TdAurDAUTHINFO record) {
+        return this.tdAurDAUTHINFOMapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+    * @Title TdAurDAUTHINFODao.updateByPrimaryKey
+    * @Description: 根据主键更新AUR_D_AUTHINFO全部字段
+    * @param record 要更新成为的TdAurDAUTHINFO对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKey(TdAurDAUTHINFO record) {
+        return this.tdAurDAUTHINFOMapper.updateByPrimaryKey(record);
     }
 
     /**

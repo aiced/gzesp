@@ -32,7 +32,7 @@
 		var bRet1=true;
 		var bRet2=false;
 		var bRet3=false;
-		var bRet4=false;
+		var bRet4=true;//微信选填
 		var bRet5=false;
 		var bRet6=false;
 		//判断输入的是否是手机号
@@ -60,11 +60,11 @@
 				alert("验证码不能为空");
 				return false;
 			}
-			if(!bRet4)
-			{
-				alert("微信号不能为空");
-				return false;
-			}
+			//if(!bRet4)
+			//{
+			//	alert("微信号不能为空");
+			//	return false;
+			//}
 			if(!bRet5)
 			{
 				//alert("请输入登录密码");
@@ -171,7 +171,7 @@
 		  	}
 		  });
 		  //[微信号]文本框失去焦点
-		  $("#txtwechataccount").blur(function(){
+		  /*$("#txtwechataccount").blur(function(){
 		  	//在这里操作 微信号  文本框失去焦点
 		  	if(!$("#txtwechataccount").val())
 		  	{
@@ -193,7 +193,7 @@
 		  		bRet4=true;
 		  		return;
 		  	}
-		  });
+		  });*/
 		  //[登录密码]文本框失去焦点
 		  $("#txtpassword").blur(function(){
 		  	//在这里操作 登录密码文本框失去焦点
@@ -341,6 +341,7 @@
 	                <input type="password" class="form-control input-lg" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
 	            </div>
 	            <br/>
+	            <input type="hidden" value='${openId}' id="hide_openid" name="hide_openid">
 	            <button class="btn-warning btn-block btn-lg" type="submit" id="btnStep1" name="btnStep1">下一步</button>
 	        </form>
 	    </div>

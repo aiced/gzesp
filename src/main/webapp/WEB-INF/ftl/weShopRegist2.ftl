@@ -241,6 +241,8 @@
 	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />
 	        	<input type="hidden" name="txtwechataccount" value="${weixin}" />
 	        	<input type="hidden" name="txtpassword" value="${pwd}" />
+	        	<input type="hidden" name="txtopenid" value="${openid}" />
+
 	        </form>
 	    </div>
 	</div>

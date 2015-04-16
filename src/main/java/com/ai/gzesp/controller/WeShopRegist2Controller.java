@@ -80,6 +80,8 @@ public class WeShopRegist2Controller {
     	String strBank=paramsMap.get("selBank");//开户银行
     	String strBankCardId=paramsMap.get("txtbankcardid");//银行卡号
     	String strDefalutImg="/uploader/headimages/touxiang_default.png";
+    	String strOpenid=paramsMap.get("txtopenid");
+    	
     	
     	System.out.println("打印的数据");
     	System.out.println(LId);
@@ -107,6 +109,7 @@ public class WeShopRegist2Controller {
     	record_aurdauthinfo.setStoreId(LId.toString());//STORE_ID
     	record_aurdauthinfo.setStoreName(strName+"的店铺");//STORE_NAME
     	record_aurdauthinfo.setUserImg(strDefalutImg);
+    	record_aurdauthinfo.setWxopenId(strOpenid);
     	//record.setCreateTime(DateUtil.getNow());
     	tdAurDAUTHINFODao.insertSelective(record_aurdauthinfo);
     	

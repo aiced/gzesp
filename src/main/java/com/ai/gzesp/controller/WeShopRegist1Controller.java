@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -39,14 +40,18 @@ public class WeShopRegist1Controller {
 	RegistSql registSql;
 
     @RequestMapping("/register/step1")
-    public ModelAndView index(){
+    public ModelAndView index(@RequestParam(value = "openId", required = false)String stropenId){
         ModelAndView mav = new ModelAndView("weShopRegist1.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "注册微店");
         List<Map<String, Object>> cityList=registSql.getCityList("85");
         
         mav.addObject("cityList", cityList);
-        
+        if (stropenId==null) {
+        	stropenId="";
+		}
+        System.out.println("openid="+stropenId);
+        mav.addObject("openId", stropenId);
         return mav;
     }
 //    @RequestMapping("/register/checkPhoneNum")
@@ -107,13 +112,14 @@ public class WeShopRegist1Controller {
     	//String stryanzhengma=paramsMap.get("txtyanzhengma");//验证码
     	String strwecharaccount=paramsMap.get("txtwechataccount");//微信号
     	String strPwd=paramsMap.get("txtpassword");//密码
+    	String strOpenId=paramsMap.get("hide_openid");
     	
     	//System.out.println(bId);
     	System.out.println(strArea);
     	System.out.println(strPhoneNum);
     	System.out.println(strwecharaccount);
     	System.out.println(strPwd);
-
+    	System.out.println(strOpenId);
     	
     	ModelAndView mav = new ModelAndView("weShopRegist2.ftl");
         //从数据库获取信息赋值
@@ -122,11 +128,11 @@ public class WeShopRegist1Controller {
         mav.addObject("phonenum", strPhoneNum); 
         mav.addObject("weixin", strwecharaccount); 
         mav.addObject("pwd", strPwd); 
+        mav.addObject("openid",strOpenId);
 
         List<Map<String, Object>> bankList=registSql.getBankList("BANK_TYPE");
         
         mav.addObject("bankList", bankList);
-        
         
         return mav;
     }

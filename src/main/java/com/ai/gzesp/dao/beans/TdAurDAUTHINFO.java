@@ -117,6 +117,14 @@ public class TdAurDAUTHINFO implements Serializable {
     private String storeName;
 
     /**
+     * 微信openId
+     */
+    /**
+     * @Fields AUR_D_AUTHINFO.WXOPEN_ID :微信openId
+     */
+    private String wxopenId;
+
+    /**
      * @return ID
      */
     /**
@@ -369,5 +377,26 @@ public class TdAurDAUTHINFO implements Serializable {
      */
     public void setStoreName(String storeName) {
         this.storeName = storeName == null ? null : storeName.trim();
+    }
+
+    /**
+     * @return 微信openId
+     */
+    /**
+     * @return AUR_D_AUTHINFO.WXOPEN_ID : 返回 微信openId
+     */
+    public String getWxopenId() {
+        return wxopenId;
+    }
+
+    /**
+     * @param wxopenId 
+	 *            微信openId
+     */
+    /**
+     * @param wxopenId of AUR_D_AUTHINFO : 设置 微信openId
+     */
+    public void setWxopenId(String wxopenId) {
+        this.wxopenId = wxopenId == null ? null : wxopenId.trim();
     }
 }

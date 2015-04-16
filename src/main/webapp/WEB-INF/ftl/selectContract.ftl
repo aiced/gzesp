@@ -11,9 +11,8 @@
     
     <div class="container-fluid" style="background-color:#ffffff;">
 	    <div class="row" >
-		    <div class="col-xs-6" style="line-height:3;" >
-				
- 		     	<button style="padding:2px;margin-top:3px;border-right:solid 1px #f4f4f4;width:100%;height:50px;display: block;text-align:center;background-color:white;" class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> 
+		    <div class="col-xs-6" style="line-height:3;border-right:solid 1px #f4f4f4;" >
+ 		     	<button style="width:100%;height:50px;display: block;text-align:center;background-color:white;" class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> 
 			    	<label id="packName" class="text-center label-sm">套餐资费选择</label>
 					<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
  			 	 </button> 
@@ -56,7 +55,9 @@
 							   <#if item_has_next>
 								  <li role="presentation" class="divider"></li>
 							  </#if>
-						</#list> 
+						</#list> 						
+						<#else>
+								 <a  style=" line-height:3;vertical-align:middle;width:100%;height:40px;display: block;text-align:center;color:black" role="menuitem" tabindex="-1" href="javascript:void(0)"><无选项></a>
 						</#if> 
 					</ul>
 	        </div> 

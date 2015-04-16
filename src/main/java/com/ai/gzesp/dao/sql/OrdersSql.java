@@ -165,11 +165,11 @@ public class OrdersSql {
 		else if (strOrderID.length()>0 && startDate.length()>0)//订单id不为空，时间不为空，按时间，订单id查
 		{
 			sb.append(" and ORD_D_DEAL.ORDER_ID=" + strOrderID);
-			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')");
+			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')+1");
 		}
 		else if(strOrderID.length()<=0 && startDate.length()>0)//订单id为空，时间不为空，按时间查
 		{
-			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')");
+			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')+1");
 		}
 		else if(strOrderID.length()>0 && startDate.length() <=0)//订单不为空，时间为空，按订单id查
 		{

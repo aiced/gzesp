@@ -1,16 +1,9 @@
 package com.ai.gzesp.unionpay;
 
-import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-import org.apache.mina.core.future.ConnectFuture;
-import org.apache.mina.core.session.IdleStatus;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.codec.textline.TextLineCodecFactory;
-import org.apache.mina.filter.keepalive.KeepAliveFilter;
-import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
-import org.apache.mina.filter.logging.LoggingFilter;
-import org.apache.mina.transport.socket.nio.NioSocketConnector;
+import com.ai.gzesp.utils.XmlUtils;
 
 public class Test {
 
@@ -36,13 +29,39 @@ public class Test {
         cf.getSession().getCloseFuture().awaitUninterruptibly();//等待连接断开 
         connector.dispose(); */
         
-        byte[] head = "0123".getBytes();
+/*        byte[] head = "0123".getBytes();
         System.out.println(new String(head));
         System.out.println(new String(head).trim());
         System.out.println(Integer.parseInt(new String(head)));
         
         System.out.println("1142883333799600".substring(14));
-        System.out.println("1142883333799600".substring(14,16));
+        System.out.println("1142883333799600".substring(14,16));*/
+        
+        Map xmlMap = new LinkedHashMap();
+        xmlMap.put(UnionPayAttrs.charCode, "1");
+        xmlMap.put(UnionPayAttrs.Version, "2");
+        xmlMap.put(UnionPayAttrs.TradeType, "3");
+        xmlMap.put(UnionPayAttrs.ChannelID, "4");
+        xmlMap.put(UnionPayAttrs.MerType, "5");
+        xmlMap.put(UnionPayAttrs.bmMerId, "6");
+        xmlMap.put(UnionPayAttrs.timeStamp, "7");
+        xmlMap.put(UnionPayAttrs.sysTradeNo, "8");
+        xmlMap.put(UnionPayAttrs.accNo, "9");
+        xmlMap.put(UnionPayAttrs.cvn2, "10");
+        xmlMap.put(UnionPayAttrs.currencyCode, "11");
+        xmlMap.put(UnionPayAttrs.Nbr, "12");
+        xmlMap.put(UnionPayAttrs.Name, "13");
+        xmlMap.put(UnionPayAttrs.certificateCode, "14");
+        xmlMap.put(UnionPayAttrs.expireDate, "15");
+        xmlMap.put(UnionPayAttrs.cardType, "16");
+
+        String xmlStr1 = XmlUtils.toXML(xmlMap);
+
+        System.out.println(xmlStr1);
+
+        String data = UnionPayUtil.getDataFromxmlMap(xmlMap);
+
+        System.out.println(data);
     }
 
 }

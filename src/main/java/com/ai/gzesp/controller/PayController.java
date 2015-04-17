@@ -162,4 +162,27 @@ public class PayController {
         
         return result;
     }
+    
+    @RequestMapping("/unionPay/test1")
+    public ModelAndView test(){
+        ModelAndView mav = new ModelAndView("unionPayInput.ftl");
+        
+        //原始响应报文map
+        Map<String, String> xmlMap = new HashMap<String, String>();
+        xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
+        xmlMap.put(UnionPayAttrs.TradeType, TradeType.bindRsp.getTradeType()); //交易类型支付请求（0200）
+        xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
+        xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
+        xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
+        xmlMap.put(UnionPayAttrs.timeStamp, DateUtils.getCurentTime()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, "1234567890123456");//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.resultCode, "00");
+        xmlMap.put(UnionPayAttrs.resultDesc, "绑定成功");
+        xmlMap.put(UnionPayAttrs.signCode, "1234567890123456"); //签约号
+        xmlMap.put(UnionPayAttrs.orderId, "123"); //支付订单号
+        xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
+        
+        
+        return mav;
+    }
 }

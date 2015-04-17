@@ -10,6 +10,12 @@
          //如果没被选中，则更改为选中的样式 ,其他兄弟元素更改为没选项中样式 
          $(this).addClass('tab-on'); 
          $(this).siblings().removeClass('tab-on');
+         
+         //如果选择了A/B/C 套餐 还需要展示描述, 要有attr_desc的属性才触发
+         if(typeof($(this).attr('attr_desc')) != 'undefined'){
+        	 $('#package_detail').show();
+        	 $('#package_detail').val($(this).attr('attr_desc'));
+         }
        });
        
        //激活图文详情页面tab导航

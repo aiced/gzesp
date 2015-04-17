@@ -26,21 +26,21 @@
   </bean>
   
   <bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor" init-method="bind" destroy-method="unbind">
-    <!-- 默认启用的线程个数是CPU 的核数+1，数值需要多次测试来设定， 测试方法在国外网站有完整表述,8002端口是esp主机外网能访问的端口 -->
+    <!-- 默认启用的线程个数是CPU 的核数+1，数值需要多次测试来设定， 测试方法在国外网站有完整表述,8035端口是esp主机专门开放和银联交互 -->
     <!--<constructor-arg index="0" value="10"></constructor-arg>-->    
-    <property name="defaultLocalAddress" value=":8005" />
+    <property name="defaultLocalAddress" value=":8035" />
     <property name="handler" ref="serverHandler" />
     <property name="filterChainBuilder" ref="filterChainBuilder" />
     <property name="reuseAddress" value="true" />
   </bean>
   
   <!--服务端处理器 ，unionPayService是通过注解生成的bean-->
-  <bean id="serverHandler" class="com.ai.gzesp.unionpay.ServerHandler" init-method="init" >
+  <bean id="serverHandler" class="com.ai.gzesp.unionpay.ServerHandler" >
     <property name="unionPayService" ref="unionPayService"></property>
   </bean>
   
   <!--请求端处理器  -->
-  <bean id="clientHandler" class="com.ai.gzesp.unionpay.ClientHanler"/>    
+  <bean id="clientHandler" class="com.ai.gzesp.unionpay.ClientHandler" init-method="init" />    
   
   <bean id="mdcInjectionFilter" class="org.apache.mina.filter.logging.MdcInjectionFilter">
     <constructor-arg value="remoteAddress" />

@@ -1,6 +1,7 @@
 package com.ai.gzesp.utils;
 
-import java.util.Map;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.TimeZone;
 
 import com.ai.gzesp.unionpay.MyMapConverter;
@@ -31,13 +32,14 @@ public class XmlUtils {
         //XSTREAM.registerConverter(new MyDateConverter(), XStream.PRIORITY_VERY_HIGH);
         //XSTREAM.registerConverter(new MyTimeConverter(), XStream.PRIORITY_VERY_HIGH);
         XSTREAMREQ.autodetectAnnotations(true);
-        XSTREAMREQ.alias("requestData", Map.class);
+        XSTREAMREQ.alias("requestData", LinkedHashMap.class);
+        //XSTREAMREQ.alias("responseData", LinkedHashMap.class); //本机测试用
         
         XSTREAMRSP.registerConverter(new DateConverter(zone), XStream.PRIORITY_NORMAL);
         XSTREAMRSP.registerConverter(new MyMapConverter());  //自定义map转换器   
         XSTREAMRSP.autodetectAnnotations(true);        
-        XSTREAMRSP.alias("responseData", Map.class);
-        //XSTREAMRSP.alias("requestData", Map.class); //本机测试用
+        XSTREAMRSP.alias("responseData", HashMap.class);
+        //XSTREAMRSP.alias("requestData", HashMap.class); //本机测试用
     }
 
     /**

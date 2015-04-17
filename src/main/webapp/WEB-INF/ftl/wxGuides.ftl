@@ -464,9 +464,6 @@
         </li>
     </ul>
     <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-        <br/>
-    </p>
-    <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
         <span style="font-family: arial, helvetica, sans-serif; line-height: 25px;"><img src="${resRoot}/image/wx/huanying.png" title="1429182717508291.png" alt="blob.png" style="width: 80%; height: auto !important;"/></span>
     </p>
 </fieldset>
@@ -568,7 +565,7 @@
         </li>
     </ul>
     <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif;">（插入退机所需清单图）</span>
+        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif;"><img src="${resRoot}/image/wx/tuiji.png" title="1429182717508291.png" alt="blob.png" style="width: 80%; height: auto !important;"/></span>
     </p>
     <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
         <br/>
@@ -581,7 +578,7 @@
         </li>
     </ul>
     <p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2; font-size: 14px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); max-width: 100%;">
-        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif;">（插入换机所需清单图）</span>
+        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif;"><img src="${resRoot}/image/wx/huanji.png" title="1429182717508291.png" alt="blob.png" style="width: 80%; height: auto !important;"/></span>
     </p>
 </fieldset></div>
 

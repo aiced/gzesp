@@ -37,9 +37,9 @@
 	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 		  <td>
 	      	<#if (item.SUM_CMS_MONEY== '')>
-	      		${item.CMS_PRE_FEE}
+	      		${item.CMS_PRE_FEE}(元)
 	      	<#else>
-	      		${item.SUM_CMS_MONEY}
+	      		${item.SUM_CMS_MONEY}(元)
 	      	</#if>      
 		  </td><!-- 预期-->
 	     

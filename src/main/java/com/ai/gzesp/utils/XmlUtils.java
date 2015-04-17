@@ -32,8 +32,8 @@ public class XmlUtils {
         //XSTREAM.registerConverter(new MyDateConverter(), XStream.PRIORITY_VERY_HIGH);
         //XSTREAM.registerConverter(new MyTimeConverter(), XStream.PRIORITY_VERY_HIGH);
         XSTREAMREQ.autodetectAnnotations(true);
-        XSTREAMREQ.alias("requestData", LinkedHashMap.class);
-        //XSTREAMREQ.alias("responseData", LinkedHashMap.class); //本机测试用
+        //XSTREAMREQ.alias("requestData", LinkedHashMap.class);
+        XSTREAMREQ.alias("responseData", LinkedHashMap.class); //本机测试用
         
         XSTREAMRSP.registerConverter(new DateConverter(zone), XStream.PRIORITY_NORMAL);
         XSTREAMRSP.registerConverter(new MyMapConverter());  //自定义map转换器   

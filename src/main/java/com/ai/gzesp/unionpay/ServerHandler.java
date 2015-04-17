@@ -39,6 +39,7 @@ public class ServerHandler extends IoHandlerAdapter {
     
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
+        log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "】");
         byte[] msg = (byte[])message;
         //String msgStr = new String(msg);
         log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "， message：" + new String(msg) + "】");

@@ -190,7 +190,7 @@
 	<!--店铺图标   -->
 	<#list userlist as info> <#if (info_index<=0) >
 	<div class="cellDiv">
-		<h4><div class="cellRightLable">店铺图标</div></h4>
+		<div class="cellRightLable">店铺图标</div>
 		<!-- edit_by_wenh_2015_3_31 通过根据该字段的字符串的长度是否大于5来进行显示相关图片，已经路径的长度肯定大于5，5是随便写的，后续可以修改 -->
 		<#if ('${info.avatar}'?length gt 5) > 
 			<img class="avatar img-circle" src='${imageRoot}${info.avatar}'> 
@@ -200,14 +200,14 @@
 	</div>
 	<!--店铺名称   -->
 	<div class="cellDiv">
-		<h4><div class="cellRightLable">店铺名称</div></h4>
+		<h5><div class="cellRightLable">店铺名称</div></h5>
 		<input id="storeName" class="input input-lg" value=${info.storeName}
 			placeholder="点击输入店名"></input>
 		<div class="cellTopLine"></div>
 	</div>
 	<!--联系方式   -->
 	<div class="cellDiv">
-		<h4><div class="cellRightLable">联系方式</div></h4>
+		<h5><div class="cellRightLable">联系方式</div></h5>
 		<input id="phoneNum" class="input input-lg" value=${info.phoneNumber}
 			placeholder="点击输入联系方式"></input>
 		<div class="cellTopLine"></div>
@@ -216,7 +216,7 @@
 	<input type="hidden" value=${info.phoneNumber} id="hide_phonenumber" />
 	<!--微信号   -->
 	<div class="cellDiv">
-		<h4><div class="cellRightLable">微信号</div></h4>
+		<h5><div class="cellRightLable">微信号</div></h5>
 		<input id="weixin" class="input input-lg" value=${info.weixin_id}
 			placeholder="点击输入微信"></input>
 		<div class="cellTopLine"></div>
@@ -225,7 +225,7 @@
 	<input type="hidden" value=${info.weixin_id} id="hide_weixin_id" />
 	<!--店铺二维码   -->
 	<div id="qrCode" class="cellDiv">
-		<h4><div class="cellRightLable">店铺二维码</div></h4>
+		<h5><div class="cellRightLable">店铺二维码</div></h5>
 
 		<img class="arrow"
 			src="${resRoot}/image/goodsManager/goodSelectArrow.png"> <img
@@ -234,7 +234,7 @@
 	</div>
 	<!--店铺皮肤   -->
 	<div class="cellDiv">
-		<h4><div class="cellRightLable">店铺皮肤</div></h4>
+		<h5><div class="cellRightLable">店铺皮肤</div></h5>
 		<img class="arrow"
 			src="${resRoot}/image/goodsManager/goodSelectArrow.png"> <img
 			class="skin" src="${resRoot}/image/goodsManager/skin.png">
@@ -242,7 +242,7 @@
 	</div>
 	<br/>
 	<div style="margin: 20px;">
-		<button class="btn btn-lg btn-warning btn-block" type="button" onclick="doneClick(this);"> 确定</button>
+		<button class="btn btn-warning btn-block" type="button" onclick="doneClick(this);"> 确定</button>
 	</div>
 
 	<input id="hideTag" type="hidden" name='hideTag' value=${info.userId}>

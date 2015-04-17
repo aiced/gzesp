@@ -129,7 +129,7 @@
         <br/>
     </p>
     <p style="text-align:center">
-        <img src="${resRoot}/image/wx/danka.png" title="1429079555128781.png" alt="blob.png" style="width: 100%; height: auto !important;"/>
+        <img src="${resRoot}/image/wx/danka.png" title="1429079555128781.png" alt="blob.png" style="width: 80%; height: auto !important;"/>
     </p>
     <p>
         <img style="width: 100%; height: auto !important;" src="http://mmbiz.qpic.cn/mmbiz/n9BCHWJuRJdzyh5Fp34xlCVWbiaUmtrN1yiceibLDdtNOVKXATXs54cHQU8qmuiaYKmddeRdECbALhP8UbNDBvhL8A/0"/>
@@ -144,7 +144,7 @@
         <br/>
     </p>
     <p style="text-align:center">
-        <img src="${resRoot}/image/wx/cunfeisongji.png" title="1429079631113259.png" alt="blob.png" style="width: 100%; height: auto !important;"/>
+        <img src="${resRoot}/image/wx/cunfeisongji.png" title="1429079631113259.png" alt="blob.png" style="width: 80%; height: auto !important;"/>
     </p>
     <p>
         <span style="font-size: 14px;"><span style="color: rgb(255, 0, 0);"><strong><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">AND！</span></strong></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">存费送机产品会根据业务需求定期或不定期的针对某款机型进行额外收益激励~</span></span>
@@ -194,7 +194,7 @@
         <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">第一时间快速了解店铺访问量信息、销量情况、收益情况。</span>
     </p>
     <p style="font-family: 宋体;">
-        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"><img src="/ueditor/php/upload/image/20150416/1429174610247432.png" title="1429174610247432.png" alt="blob.png"/></span>
+        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"><img src="${resRoot}/image/wx/dianpufazhan.png" title="1429174610247432.png" alt="blob.png"/></span>
     </p>
     <hr style="font-family: 宋体;"/>
     <p style="font-family: 微软雅黑; margin: 8px 0px 0px; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
@@ -346,7 +346,7 @@
         </li>
     </ul>
     <p style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 24px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; text-align: left;">
-        <img src="/ueditor/php/upload/image/20150416/1429178919104623.png" title="1429178919104623.png" alt="blob.png"/><br/>
+        <img src="${resRoot}/image/wx/wodedianpu.jpg" title="1429178919104623.png" alt="blob.png" style="width: 80%; height: auto !important;"/><br/>
     </p>
 </fieldset>
 <p>
@@ -401,8 +401,11 @@
     <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
         <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">通过美化编辑，给小店改名字换图标，还可将店铺背景设置成自己喜欢的颜色或图片。</span>
     </p>
+       <p style="font-weight: normal; font-style: normal; font-variant: normal; font-size: 14px; line-height: 24px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px;">
+        <br/>
+    </p>
     <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
-        <img src="/ueditor/php/upload/image/20150416/1429184747760457.png" title="1429184747760457.png" alt="blob.png" width="320" height="337" style="width: 320px; height: 337px;"/>
+        <img src="${resRoot}/image/wx/dianpushezhi.png" title="1429184747760457.png" alt="blob.png" width="320" height="337" style="width: 80%; height: auto !important;"/>
     </p>
     <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
         <br/>
@@ -425,12 +428,11 @@
     <p style="font-weight: normal; font-style: normal; font-variant: normal; font-size: 14px; line-height: 24px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px;">
         <br/>
     </p>
-    <p style="font-weight: normal; font-style: normal; font-variant: normal; font-size: 14px; line-height: 24px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px;">
-        <br/>
-    </p>
+
 </fieldset>
 <p>
-    <br/>
+   	    <br/>
+    
 </p>
 		</div>
     
@@ -452,7 +454,7 @@
         </li>
         <li class="list-dot list-dot-paddingleft">
             <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">通过店铺中分享按钮或微信自带的分享功能将店铺或商品链接分享至微信、QQ等社交圈；</span>
+                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">通过微信自带的分享功能将店铺或商品链接分享至微信、QQ等社交圈；</span>
             </p>
         </li>
         <li class="list-dot list-dot-paddingleft">
@@ -465,7 +467,7 @@
         <br/>
     </p>
     <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-        <span style="font-family: arial, helvetica, sans-serif; line-height: 25px;"><img src="/ueditor/php/upload/image/20150416/1429182717508291.png" title="1429182717508291.png" alt="blob.png"/></span>
+        <span style="font-family: arial, helvetica, sans-serif; line-height: 25px;"><img src="${resRoot}/image/wx/huanying.png" title="1429182717508291.png" alt="blob.png" style="width: 80%; height: auto !important;"/></span>
     </p>
 </fieldset>
 <p>

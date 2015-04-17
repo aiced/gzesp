@@ -61,9 +61,9 @@
 	    </a>
 	  </div>
 	  <div id="top_middle">商品详情</div>
-	  <div id="top_right">
+	  <!-- <div id="top_right">
 	    <button class="btn btn-primary btn-sm" style="background-color:#21292c;" data-toggle="modal" data-target="#myModal">分享</button>
-	  </div>
+	  </div> -->
 	</div>      
   
     <!-- 分享到弹出框 -->    

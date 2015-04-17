@@ -120,10 +120,10 @@
 	    	//	totalCommission += parseFloat($(this).text()); 
 	    	//}); 
 	    }); 
-	    $('#totalRowCount').append('<td colspan="4"><h4>共'+totalRowCount+'条数据</h4></td>');
-	    $('#totalRow').append('<td colspan="2"><h4><label class="query_info_left">合计</label></h4></td>');
-	    $('#totalRow').append('<td><h4><label>'+totalSale+'</label></h4></td>');
-	    $('#totalRow').append('<td><h4><label></label></h4></td>');
+	    $('#totalRowCount').append('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
+	    $('#totalRow').append('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td>');
+	    $('#totalRow').append('<td><h5><label>'+totalSale+'</label></h5></td>');
+	    $('#totalRow').append('<td><h5><label></label></h5></td>');
     }
     
     function selectData()
@@ -277,8 +277,8 @@
         .query_info_top
         {
             background: #ffffff;
-            height:100px;
-            line-height: 100px;
+            height:80px;
+            line-height: 80px;
 
         }
         .query_info_detail
@@ -308,7 +308,7 @@
         }
         select
         {
-        	height: 45px;
+        	height: 34px;
         	font-size: 1em;
         }
 
@@ -331,8 +331,13 @@
 
         input
         {
-        	height: 45px;
+        	height: 34px;
         	width:100%;	
+        	padding:0px;
+        	font-size: 12px;
+        	text-align: center;
+        	line-height: 34px;
+        	
         }
         .input-lg
         {
@@ -399,16 +404,16 @@
 		                </select>
 	           		</div>
 	                <div class="query_info_top_middle">
-	                	<input  id="zhangqiTime" class="kbtn input-lg" name="zhangqiTime" value="" style="display:none" />
+	                	<input  id="zhangqiTime"  name="zhangqiTime" value="" style="display:none" />
 		                <!--<div id="datePlugin"></div>-->
 		                <!-- 隐藏控件用于保存userid -->
 						<div class="order_top_middle" >
 							<div class="order_top_middle1">
-								<input id="beginTime" class="input-lg" name="beginTime" value="" />
+								<input id="beginTime"  name="beginTime" value="" />
 							</div>
 							<div class="order_top_middle2">—</div>
 							<div class="order_top_middle3">
-								<input id="endTime" class="input-lg" name="endTime" value="" />
+								<input id="endTime" name="endTime" value="" />
 							</div>
 							
 							<!-- 这句和日历控件有关千万别忘掉 -->
@@ -417,7 +422,7 @@
 
 					</div>
 	                <div class="query_info_top_right">
-	                    <button class="btn btn-lg btn-warning" name="btnselect" id="btnselect" type="button">查询</button>
+	                    <button class="btn btn-warning" name="btnselect" id="btnselect" type="button">查询</button>
 	                </div>
 
             		<input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
@@ -428,7 +433,7 @@
 	    </form>
 
 	    <div class="query_info_detail">
-	        <h4><label>当月佣金明细</label></h4>
+	        <h5><label>当月佣金明细</label></h5>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
 					您没有佣金

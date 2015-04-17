@@ -99,21 +99,21 @@
                 <br/>
                 <br/>
                 <label for="inputMobile" class="sr-only">输入手机号</label>
-                <input type="text"  id="inputMobile" name="inputMobile" class="form-control input-lg" placeholder="输入手机号"  required autofocus>
+                <input type="text"  id="inputMobile" name="inputMobile" class="form-control input" placeholder="输入手机号"  required autofocus>
                 <br/>
                 <label for="inputPassword" class="sr-only">输入密码</label>
-                <input type="password" id="inputPassword" name="inputPassword" class="form-control input-lg" placeholder="输入密码" required>
+                <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="输入密码" required>
                 <br/>
                 <br/>
-                <button class="btn btn-warning btn-block btn-lg" type="submit" name="btnSubmit" id="btnSubmit">登录</button>
+                <button class="btn btn-warning btn-block" type="submit" name="btnSubmit" id="btnSubmit">登录</button>
             </form>
             <br/>
             <div>
             	<div class="login">
-            		<h4><a name="btnReg" id="btnReg" href="register/step1">注册</a></h4>
+            		<h5><a name="btnReg" id="btnReg" href="register/step1">注册</a></h5>
             	</div>
                 <div class="forget_pwd">
-                	<h4><a href="findPassword/step1">忘记密码</a></h4>
+                	<h5><a href="findPassword/step1">忘记密码</a></h5>
             	</div>
             </div>
 

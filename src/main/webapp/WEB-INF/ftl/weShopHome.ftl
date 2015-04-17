@@ -60,13 +60,13 @@
     <style type="text/css">
         .head_top
         {
-            height: 140px;
+            height: 120px;
             background: #f66326;
             color: #ffffff;
         }
         .head_bottom
         {
-            height: 60px;
+            height: 50px;
             background: #ffffff;
         }
         .head_bottom_show{
@@ -79,7 +79,7 @@
             background: #cccccc;
             width: 1px;
             height: 30px;
-            margin:15px 10px 10px 10px;
+            margin:10px 10px 10px 10px;
         }
         .head_bottom_share{
             float: right;
@@ -88,8 +88,8 @@
         }
         .head_user
         {
-            width: 110px;
-            height: 110px;
+            width: 90px;
+            height: 90px;
             top:100px;
             left:15px;
             position:absolute;
@@ -107,48 +107,48 @@
         }
         .yesterday_view
         {
-            font-size:12px;
+            font-size:14px;
             color: #9EC7FF;
         }
         .month_view
         {
-            font-size:12px;
+            font-size:14px;
             color:#759EE7;
         }
         .total_view
         {
-            font-size:12px;
+            font-size:14px;
             color:#385B8A;
         }
         .yesterday_sale
         {
-            font-size:12px;
+            font-size:14px;
             color:#ffB878
         }
         .month_sale
         {
-        	font-size:12px;
+        	font-size:14px;
             color:#DB9A5F;
         }
         .total_sale
         {
-            font-size:12px;
+            font-size:14px;
             color:#96653A;
         }
 
         .yesterday_money
         {
-            font-size:12px;
+            font-size:14px;
             color:#ff7878;
         }
         .month_money
         {
-            font-size:12px;
+            font-size:14px;
             color:#ce4141;
         }
         .total_money
         {
-            font-size:12px;
+            font-size:14px;
             color: #742525;
         }
         .list-group
@@ -172,7 +172,7 @@
         }
         .head_top_info_details
         {
-            margin-left: 20px;
+            margin-left: 10px;
         }
         .shopname
         {
@@ -199,18 +199,18 @@
 	                </div>
 	                <div class="head_top_info">
 	                    <div class="head_top_info_details">
-	                        <h4><div class="shopname">${storename}</div></h4>
-	                        <h4><div class="shoptel"><img src="${resRoot}/image/shopHome/tel.png" width="24" height="24"/>&nbsp;&nbsp;${phone}</div></h4>
-	                        <h4><div class="shopweixin"><img src="${resRoot}/image/shopHome/weixin.png" width="24" height="24"/>&nbsp;&nbsp;${weixin}</div></h4>
+	                        <div class="shopname">${storename}</div>
+	                        <div class="shoptel"><img src="${resRoot}/image/shopHome/tel.png" width="21" height="21"/>&nbsp;&nbsp;${phone}</div>
+	                        <div class="shopweixin"><img src="${resRoot}/image/shopHome/weixin.png" width="21" height="21"/>&nbsp;&nbsp;${weixin}</div>
 	                    </div>
 	                </div>
 	            </div>
 	            <div class="head_bottom">
-	                <div class="head_bottom_share"><h4><a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/shopHome/shopshare.png" width="24" height="24">店铺分享<img/></a></h4></div>
+	                <div class="head_bottom_share"><a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/shopHome/shopshare.png" width="24" height="24">店铺分享<img/></a></div>
 	                <div class="head_bottom_line"></div>
-	                <div class="head_bottom_show"><h4><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></h4></div>
+	                <div class="head_bottom_show"><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></div>
 	            </div>
-	            <div class="head_user"><img src="${imageRoot}${userimage}" alt="头像" class="img-circle" width="110" height="110"></div>
+	            <div class="head_user"><img src="${imageRoot}${userimage}" alt="头像" class="img-circle" width="90" height="90"></div>
 	        </div>
 	        
 	        <!-- 分享到弹出框 -->    
@@ -234,7 +234,7 @@
 		    </div>  
 	        
 	        <div class="head_title">
-	           <div style="width:8px;height: 20px;background: #CFCFCF;float: left;margin-right:5px;"></div><h4>店铺发展信息</h4>
+	           <div style="width:8px;height: 20px;background: #CFCFCF;float: left;margin-right:5px;"></div><h5>店铺发展信息</h5>
 	        </div>
 	        <div class="detail_info">
 	            <table class="table table-striped table-condensed">
@@ -282,13 +282,13 @@
 	            </table>
 	        </div>
 	        <div class="list-group">
-	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item"><h4>商品管理<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></h4></a>
-	            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item"><h4>订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></h4></a>
-	            <a href="commissionQuery?userid=${userid}" class="list-group-item"><h4>佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></h4></a>
+	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item">商品管理<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="commissionQuery?userid=${userid}" class="list-group-item">佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	        </div>
 	        <br/>
 	        <div class="list-group">
-	            <button class="btn btn-lg btn-warning btn-block" type="button" id="btnGoIntoShop" name="btnGoIntoShop">进入店铺主页</button>
+	            <button class="btn btn-warning btn-block" type="button" id="btnGoIntoShop" name="btnGoIntoShop">进入店铺主页</button>
 	        </div>
 	    </div>
 	</div>

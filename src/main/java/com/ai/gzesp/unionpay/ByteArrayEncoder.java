@@ -1,5 +1,7 @@
 package com.ai.gzesp.unionpay;
 
+import java.nio.ByteOrder;
+
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.ProtocolEncoderAdapter;
@@ -27,6 +29,7 @@ public class ByteArrayEncoder extends ProtocolEncoderAdapter {
       
       IoBuffer buffer = IoBuffer.allocate(256); 
       buffer.setAutoExpand(true);
+      //buffer.order(ByteOrder.BIG_ENDIAN);
       
       buffer.put(sizeBytes);
       buffer.put(dataBytes);

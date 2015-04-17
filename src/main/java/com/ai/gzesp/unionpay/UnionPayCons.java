@@ -13,12 +13,12 @@ public class UnionPayCons {
     /**
      * 银联服务端ip
      */
-    public static String SERVER_HOST = "58.16.16.10";
+    public static String SERVER_HOST = "58.16.16.10"; // 58.16.16.10  58.16.11.245
     
     /**
      * 银联服务端端口
      */
-    public static int SERVER_PORT = 10004;
+    public static int SERVER_PORT = 10004; //10004  8035
     
     /**
      * 银联接口请求参数:编码方式，推荐用gbk

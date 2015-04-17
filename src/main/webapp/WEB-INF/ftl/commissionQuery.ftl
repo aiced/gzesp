@@ -477,13 +477,15 @@
 						  </td><!-- 预期-->
 					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->
 					      <td>
-					      	<#if (item.ACT_STATUS=='0'  && item.CMS_DAY=='')><!-- 没激活没到时间:未激活 -->
+					      	<#if (item.ACT_STATUS == "")>
 					      		<span class="label label-default">未激活</span>
-					      	<#elseif (item.ACT_STATUS=='0' && item.CMS_DAY!='')><!-- 没激活到时间:无效单 -->	
+					      	<#elseif (item.ACT_STATUS=='0'  && item.OPENDATE_STATUS=='0')><!-- 没激活没到时间:未激活 -->
+					      		<span class="label label-default">未激活</span>
+					      	<#elseif (item.ACT_STATUS=='0' && item.OPENDATE_STATUS=='1')><!-- 没激活到时间:无效单 -->	
 					      		<span class="label label-primary">无效单</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.CMS_DAY=='')><!-- 激活没到时间:结算中 -->
+					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='0')><!-- 激活没到时间:结算中 -->
 					      		<span class="label label-warning">结算中</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.CMS_DAY!='')><!-- 激活到时间 :可提现-->
+					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='1')><!-- 激活到时间 :可提现-->
 					      		<span class="label label-success">可提现</span>
 					      	</#if>
 					      </td><!-- 状态 -->
@@ -501,9 +503,9 @@
 
 	    </div>
 		<div >
-	        <div class="query_info_bottom">
+	        <!-- <div class="query_info_bottom">
 				温馨提示：我们每天凌晨4点根据用户状态计算佣金收益，处于冻结状态的佣金可能是未到计算时点或号码还没有激活。
-	    	</div>
+	    	</div> -->
 		</div>
 
 	</div>

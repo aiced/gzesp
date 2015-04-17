@@ -20,6 +20,7 @@ import com.ai.gzesp.dao.beans.TdOrdDDEAL;
 import com.ai.gzesp.dao.beans.TdOrdDPAYLOG;
 import com.ai.gzesp.dao.beans.TdOrdDPOST;
 import com.ai.gzesp.dao.beans.TdOrdDPROD;
+import com.ai.gzesp.dao.beans.TdOrdDREFUND;
 import com.ai.gzesp.dao.beans.TdOrdDRES;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.service.TdOrdDCUSTDao;
@@ -27,6 +28,7 @@ import com.ai.gzesp.dao.service.TdOrdDDEALDao;
 import com.ai.gzesp.dao.service.TdOrdDPAYLOGDao;
 import com.ai.gzesp.dao.service.TdOrdDPOSTDao;
 import com.ai.gzesp.dao.service.TdOrdDPRODDao;
+import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdOrdDRESDao;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.dao.sql.OrdersSql;
@@ -59,6 +61,9 @@ public class OrderService {
     
     @Resource 
     TdOrdDRESDao tdOrdDRESDao;
+    
+    @Resource 
+    TdOrdDREFUNDDao tdOrdDREFUNDDao;
     
     @Resource 
     GoodsSql goodsSql;
@@ -121,6 +126,7 @@ public class OrderService {
     	insertOrderPostInfo(paramsMap);
     	insertOrderProdInfo(paramsMap);
     	insertOrderResInfo(paramsMap);
+//    	insertOrderReFundInfo(paramsMap);
     }
     
     
@@ -317,22 +323,18 @@ public class OrderService {
         	record.setValues1(values1);
     		tdOrdDRESDao.insertSelective(record);
     	}
-    	
-//    	JSONArray resAttrJson =  JSON.parseArray(resAttrStr);
-//    	for(int i=0; i<resAttrJson.size(); i++) {
-//    		JSONObject jsonObj = resAttrJson.getJSONObject(i);
-//    		String resId = jsonObj.getString("resId");
-//    		String resAttrCode = jsonObj.getString("resAttrCode");
-//    		String resAttrVal = jsonObj.getString("resAttrVal");
-//    		
-//    		TdOrdDRES record = new TdOrdDRES();
-//    		record.setOrderId(CommonUtil.string2Long(orderId));
-//        	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
-//        	record.setResId(CommonUtil.string2Long(resId));
-//        	record.setResAttrCode(resAttrCode);
-//        	record.setResAttrVal(resAttrVal);
-//    		tdOrdDRESDao.insertSelective(record);
-//    	}
     }
-    
+    	
+	private void insertOrderReFundInfo(Map<String, String> paramsMap) {
+		String orderId = paramsMap.get("orderId");
+    	String topayFee = paramsMap.get("topayFee");
+    	
+    	TdOrdDREFUND record = new TdOrdDREFUND();
+    	record.setOrderId(CommonUtil.string2Long(orderId));
+    	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+    	record.setTxnAmt(CommonUtil.toDbPrice(CommonUtil.string2Long(topayFee)));
+    	
+    	tdOrdDREFUNDDao.insertSelective(record);
+	}
+    	
 }

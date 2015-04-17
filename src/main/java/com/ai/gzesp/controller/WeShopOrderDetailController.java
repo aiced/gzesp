@@ -58,8 +58,8 @@ public class WeShopOrderDetailController {
             mav.addObject("MOBILE_PHONE","没有数据");
             mav.addObject("DELIVER_TIME_CODE","没有数据");
             mav.addObject("PAY_MODE","没有数据");
-            mav.addObject("PAY_STATE","没有数据");      
-            mav.addObject("PAY_REMARK","没有数据");
+            mav.addObject("ORDER_STATE","没有数据");      
+            //mav.addObject("PAY_REMARK","没有数据");
 		
 		}
         else {
@@ -73,8 +73,8 @@ public class WeShopOrderDetailController {
             mav.addObject("MOBILE_PHONE",orderList.get(0).get("MOBILE_PHONE"));
             mav.addObject("DELIVER_TIME_CODE",orderList.get(0).get("DELIVER_TIME_CODE"));
             mav.addObject("PAY_MODE",orderList.get(0).get("PAY_MODE"));
-            mav.addObject("PAY_STATE",orderList.get(0).get("ORDER_STATE"));      
-            mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
+            mav.addObject("ORDER_STATE",orderList.get(0).get("ORDER_STATE"));      
+           // mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
 		
 		}
         

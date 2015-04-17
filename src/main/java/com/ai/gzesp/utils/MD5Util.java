@@ -1,5 +1,6 @@
 package com.ai.gzesp.utils;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -65,13 +66,13 @@ public class MD5Util {
     }  
     
     /**
-     * 银联给的md5算法，需要加密秘钥
+     * 银联冯工给的md5算法，需要加密秘钥
      * 
      * @param plainText 待加密字符串
      * @param key 签名密钥
      * @return 加密后字符串
      */
-/*    public static String md5s(String plainText, String key) {
+    public static String md5s(String plainText, String key) {
         plainText = plainText + key; //等于把原报文后面加个秘钥字符串
         StringBuffer buf = new StringBuffer("");
         try {
@@ -94,7 +95,52 @@ public class MD5Util {
         }
         
         return buf.toString();
-    }*/
+    }
+    
+    /**
+     * 功能描述: 银联袁静给的md5加密摘要<br>
+     * 〈功能详细描述〉
+     *
+     * @param plainText
+     * @param key
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static String md5s2(String plainText, String key)
+    {
+      return md5s2(plainText + key);
+    }
+
+    private static String md5s2(String plainText)
+    {
+      StringBuffer buf = new StringBuffer("");
+      try {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        try {
+          md.update(plainText.getBytes(UnionPayCons.charCode));
+        }
+        catch (UnsupportedEncodingException e) {
+          e.printStackTrace();
+        }
+        byte[] b = md.digest();
+
+        for (int offset = 0; offset < b.length; offset++) {
+          int i = b[offset];
+          if (i < 0)
+            i += 256;
+          if (i < 16)
+            buf.append("0");
+          buf.append(Integer.toHexString(i));
+        }
+        return buf.toString();
+      }
+      catch (NoSuchAlgorithmException e) {
+        e.printStackTrace();
+      }
+
+      return buf.toString();
+    }    
   
     // 测试主函数  
     public static void main(String args[]) {  

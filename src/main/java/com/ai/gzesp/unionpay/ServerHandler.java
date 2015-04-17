@@ -1,5 +1,6 @@
 package com.ai.gzesp.unionpay;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -24,7 +25,18 @@ public class ServerHandler extends IoHandlerAdapter {
     
     //@Autowired //写在配置文件里了
     private UnionPayService unionPayService;
+    
+    private HashMap<String, IoSession> sessionMap = new HashMap();
 
+    @Override   
+    public void sessionOpened(IoSession session) throws Exception {
+        for (Map.Entry entry : this.sessionMap.entrySet()) {
+            ((IoSession) entry.getValue()).close(true);
+        }
+        this.sessionMap.clear();
+        this.sessionMap.put(String.valueOf(session.getId()), session);
+    }
+    
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
         byte[] msg = (byte[])message;
@@ -76,10 +88,10 @@ public class ServerHandler extends IoHandlerAdapter {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public void init(){
+/*    public void init(){
         HeartBeatThread heartThread = new HeartBeatThread();
         Thread t = new Thread(heartThread);
         t.start();
-    }
+    }*/
     
 }

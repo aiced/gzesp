@@ -1,7 +1,7 @@
 package com.ai.gzesp.unionpay;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -39,7 +39,7 @@ public class UnionPayUtil {
     public static Map<String, String> genBindReq(UnionPayParam param){
         log.debug("【银联支付：创建bind请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.bind.getTradeType()); //交易类型银行卡绑定（0120）
@@ -71,7 +71,7 @@ public class UnionPayUtil {
     public static Map<String, String> genBindQryReq(UnionPayParam param){
         log.debug("【银联支付：创建bindQry请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.bindQry.getTradeType()); //交易类型绑定关系查询（0100）
@@ -99,7 +99,7 @@ public class UnionPayUtil {
     public static Map<String, String> genPayReq(UnionPayParam param){
         log.debug("【银联支付：创建pay请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.pay.getTradeType()); //交易类型支付请求（0200）
@@ -130,7 +130,7 @@ public class UnionPayUtil {
 /*    public static Map<String, String> genPayQryReq(UnionPayParam param){
         log.debug("【银联支付：创建payQry请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.payQry.getTradeType()); //交易类型支付查询（0300）
@@ -155,7 +155,7 @@ public class UnionPayUtil {
 /*    public static Map<String, String> genPayProxyReq(UnionPayParam param){
         log.debug("【银联支付：创建payProxy请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.payProxy.getTradeType()); //交易类型代付请求（0250）
@@ -186,7 +186,7 @@ public class UnionPayUtil {
 /*    public static Map<String, String> genPayProxyQryReq(UnionPayParam param){
         log.debug("【银联支付：创建payProxyQry请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.payProxyQry.getTradeType()); //交易类型代付查询（0370）
@@ -211,7 +211,7 @@ public class UnionPayUtil {
 /*    public static Map<String, String> genPayCancelReq(UnionPayParam param){
         log.debug("【银联支付：创建payCancel请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.payCancel.getTradeType()); //交易类型支付撤消（0970）
@@ -241,7 +241,7 @@ public class UnionPayUtil {
 /*    public static Map<String, String> genPayCancelQryReq(UnionPayParam param){
         log.debug("【银联支付：创建payCancelQry请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.payCancelQry.getTradeType()); //交易类型支付退款查询（0320）
@@ -267,7 +267,7 @@ public class UnionPayUtil {
 /*    public static Map<String, String> genPayRefundReq(UnionPayParam param){
         log.debug("【银联支付：创建payRefund请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.payRefund.getTradeType()); //交易类型支付退款（0900）
@@ -297,7 +297,7 @@ public class UnionPayUtil {
 /*    public static Map<String, String> genPayRefundQryReq(UnionPayParam param){
         log.debug("【银联支付：创建payRefundQry请求原始数据map】");
         //原始请求报文map
-        Map<String, String> xmlMap = new HashMap<String, String>();
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
         xmlMap.put(UnionPayAttrs.TradeType, TradeType.payRefundQry.getTradeType()); //交易类型退货交易查询（0350）
@@ -329,11 +329,13 @@ public class UnionPayUtil {
         log.debug("【银联支付：1.请求map创建成功】");
         
         //map转换层原始数据xml报文
-        String xmlStr1 = XmlUtils.toXML(xmlMap);
-        log.debug("【银联支付：2.请求map转换原始数据xml报文(不含md5加密摘要): " + xmlStr1 + "】");
+        //String xmlStr1 = XmlUtils.toXML(xmlMap);
+        String data = getDataFromxmlMap(xmlMap);
+        log.debug("【银联支付：2.请求map里提取原始数据用于md5加密: " + data + "】");
         //xml报文加密生成MD5摘要
-        String xmlMD5 = MD5Util.str2MD5(xmlStr1);
-        log.debug("【银联支付：3.请求原始数据xml报文 md5加密摘要: " + xmlMD5 + "】");
+        //String xmlMD5 = MD5Util.str2MD5(xmlStr1);
+        String xmlMD5 = MD5Util.md5s2(data, UnionPayCons.md5Key);
+        log.debug("【银联支付：3.请求原始数据 md5加密摘要: " + xmlMD5 + "】");
         //加密后的摘要 加 到 原始数据 后面
         xmlMap.put(UnionPayAttrs.md5ConSec, xmlMD5); 
         //重新转换层 xml报文(包含了md5摘要)
@@ -385,18 +387,20 @@ public class UnionPayUtil {
 //        kaf.setRequestTimeout(UnionPayCons.HEART_TIMEOUT); //设置心跳包请求后 等待反馈超时时间
 
             // 创建客户端连接器. 
-            NioSocketConnector connector = new NioSocketConnector(); 
-            connector.getFilterChain().addLast("logger", new LoggingFilter() ); 
-            connector.getFilterChain().addLast("codec", new ProtocolCodecFilter( new ByteArrayCodecFactory())); //设置编码过滤器 
-            //connector.getFilterChain().addLast("heart", kaf);  //设置心跳
-            connector.setHandler(new ClientHanler());//设置事件处理器 
-            ConnectFuture cf = connector.connect( 
-            new InetSocketAddress(UnionPayCons.SERVER_HOST, UnionPayCons.SERVER_PORT));//建立连接 
-            cf.awaitUninterruptibly();//等待连接创建完成 
-            cf.getSession().write(xmlSend);//发送消息 
-            cf.getSession().close(true);
-            cf.getSession().getCloseFuture().awaitUninterruptibly();//等待连接断开 
-            connector.dispose(); //断开连接，释放资源
+//            NioSocketConnector connector = new NioSocketConnector(); 
+//            connector.getFilterChain().addLast("logger", new LoggingFilter() ); 
+//            connector.getFilterChain().addLast("codec", new ProtocolCodecFilter( new ByteArrayCodecFactory())); //设置编码过滤器 
+//            //connector.getFilterChain().addLast("heart", kaf);  //设置心跳
+//            connector.setHandler(new ClientHandler());//设置事件处理器 
+//            ConnectFuture cf = connector.connect( 
+//            new InetSocketAddress(UnionPayCons.SERVER_HOST, UnionPayCons.SERVER_PORT));//建立连接 
+//            cf.awaitUninterruptibly();//等待连接创建完成 
+//            cf.getSession().write(xmlSend);//发送消息 
+//            cf.getSession().close(true);
+//            cf.getSession().getCloseFuture().awaitUninterruptibly();//等待连接断开 
+//            connector.dispose(); //断开连接，释放资源
+            
+            ClientHandler.sendMsg(xmlSend);
             
             return isSuccess;
         } catch (Exception e) {
@@ -511,5 +515,14 @@ public class UnionPayUtil {
         Random random = new Random();
         sb.append(random.nextInt(2)); //加1位随机整数
         return sb.toString();
+    }
+    
+    public static String getDataFromxmlMap(Map<String, String> xmlMap)
+    {
+      StringBuffer sb = new StringBuffer(200);
+      for (Map.Entry entry : xmlMap.entrySet()) {
+        sb.append(entry.getValue().toString());
+      }
+      return sb.toString();
     }
 }

@@ -1,13 +1,9 @@
 package com.ai.gzesp.unionpay;
 
 import java.io.UnsupportedEncodingException;
-import java.net.InetSocketAddress;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.future.ConnectFuture;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.logging.LoggingFilter;
-import org.apache.mina.transport.socket.nio.NioSocketConnector;
 
 /**
  * 心跳线程，维持和银联服务器的长连接<br>
@@ -21,8 +17,15 @@ import org.apache.mina.transport.socket.nio.NioSocketConnector;
 public class HeartBeatThread implements Runnable {
     private static Logger log = Logger.getLogger(HeartBeatThread.class);
     
+    private ConnectFuture cf;
+    
+    public HeartBeatThread(ConnectFuture cf)
+    {
+      this.cf = cf;
+    }
+    
     @Override
-    public void run() {
+/*    public void run() {
         log.debug("【银联支付：esp维持长连接，线程启动，初始化开始。。。】");
         
         String tip = "循环中。。。";
@@ -41,7 +44,7 @@ public class HeartBeatThread implements Runnable {
                     connector = new NioSocketConnector();
                     connector.getFilterChain().addLast("logger", new LoggingFilter());
                     connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ByteArrayCodecFactory())); // 设置编码过滤器
-                    connector.setHandler(new ClientHanler());// 设置事件处理器
+                    connector.setHandler(new ClientHandler());// 设置事件处理器
                     cf = connector.connect(new InetSocketAddress(UnionPayCons.SERVER_HOST,
                             UnionPayCons.SERVER_PORT));// 建立连接
                     cf.awaitUninterruptibly();// 等待连接创建完成
@@ -89,6 +92,58 @@ public class HeartBeatThread implements Runnable {
             }
         }
 
+    }*/
+    
+    public void run()
+    {
+      log.debug("【银联支付：esp维持长连接，线程启动，初始化开始。。。】");
+
+      String tip = "循环中。。。";
+      int times = 0;
+
+      while (!ClientHandler.stopHeartBeat)
+      {
+        try
+        {
+          log.debug("【银联支付：esp维持长连接，" + tip + "】");
+
+          byte[] heart = new byte[4];
+          heart = String.valueOf(UnionPayCons.HEARTBEAT_REQ).getBytes(UnionPayCons.charCode);
+
+          UnionPayUtil.sendMsg(heart);
+          log.debug("【银联支付：esp维持长连接，发送心跳报文0000成功，2分钟后again】");
+          Thread.sleep(120000L);
+        } catch (UnsupportedEncodingException e) {
+          log.debug("【银联支付：ERROR！！！esp维持长连接，生成心跳报文异常，5分钟后retry重新尝试连接！！！】");
+          e.printStackTrace();
+          try {
+            Thread.sleep(300000L);
+          } catch (InterruptedException e1) {
+            e1.printStackTrace();
+          }
+          times++; tip = "重试次数 " + times;
+        }
+        catch (InterruptedException e) {
+          log.debug("【银联支付：ERROR！！！esp维持长连接，发送心跳报文异常，5分钟后retry重新尝试连接！！！】");
+          e.printStackTrace();
+          try {
+            Thread.sleep(300000L);
+          } catch (InterruptedException e1) {
+            e1.printStackTrace();
+          }
+          times++; tip = "重试次数 " + times;
+        }
+        catch (Exception e) {
+          log.debug("【银联支付：ERROR！！！esp维持长连接，其他异常，5分钟后retry重新尝试连接！！！】");
+          e.printStackTrace();
+          try {
+            Thread.sleep(300000L);
+          } catch (InterruptedException e1) {
+            e1.printStackTrace();
+          }
+          times++; tip = "重试次数 " + times;
+        }
+      }
     }
     
 /*    private NioSocketConnector getConnector() throws Exception{

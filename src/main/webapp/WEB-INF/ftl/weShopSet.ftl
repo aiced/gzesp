@@ -217,7 +217,7 @@
 	<!--微信号   -->
 	<div class="cellDiv">
 		<h5><div class="cellRightLable">微信号</div></h5>
-		<input id="weixin" class="input input-lg" value=${info.weixin_id}
+		<input id="weixin" class="input input-lg" value='${info.weixin_id}'
 			placeholder="点击输入微信"></input>
 		<div class="cellTopLine"></div>
 	</div>

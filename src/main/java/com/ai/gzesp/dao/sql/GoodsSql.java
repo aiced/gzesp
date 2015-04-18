@@ -45,7 +45,7 @@ public class GoodsSql {
 	/*
 	 * 得到推荐列表数据
 	 */
-	public List GetRcdList(String userId) {
+	public List<Map<String, Object>> GetRcdList(String userId) {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("select distinct "
@@ -59,7 +59,7 @@ public class GoodsSql {
 				+ " and t1.GOODS_STATE = '1'");
 		sb.append(" and t2.USER_ID ="+ userId);
 		sb.append(" order by t1.GOODS_ID");
-		List rcdList = commonDao.queryForList(sb.toString());
+		List<Map<String, Object>> rcdList = commonDao.queryForList(sb.toString());
 		return rcdList;
 	}
 	

@@ -240,41 +240,41 @@
 	            <table class="table table-striped table-condensed">
 	                <tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日访问：0</td>
-		                    <td class="month_view">本月访问：0</td>
-		                    <td class="total_view">累计访问：0</td>
+		                    <td class="yesterday_view">昨日访问：<br/>0</td>
+		                    <td class="month_view">本月访问：0<br/></td>
+		                    <td class="total_view">累计访问：0<br/></td>
 		                <#else>
 	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_view">昨日访问：${item.yesterday_view}</td>
-	                    		<td class="month_view">本月访问：${item.month_view}</td>
-	                    		<td class="total_view">累计访问：${item.total_count}</td>
+	                	    	<td class="yesterday_view">昨日访问：<br/>${item.yesterday_view}</td>
+	                    		<td class="month_view">本月访问：<br/>${item.month_view}</td>
+	                    		<td class="total_view">累计访问：<br/>${item.total_count}</td>
 	                		</#list>
 	                	</#if>
 					</tr>
 
 	                <tr>
 	                	<#if saleList?size==0>
-		                    <td class="yesterday_sale">昨日销售：0</td>
-		                    <td class="month_sale">本月销售：0</td>
-		                    <td class="total_sale">累计销售：0</td>          		
+		                    <td class="yesterday_sale">昨日销售：0<br/></td>
+		                    <td class="month_sale">本月销售：0<br/></td>
+		                    <td class="total_sale">累计销售：0<br/></td>          		
 		                <#else>
 	                		<#list saleList as item>
-	                	    	<td class="yesterday_sale">昨日销售：${item.yesterday_count}</td>
-	                    		<td class="month_sale">本月销售：${item.month_count}</td>
-	                    		<td class="total_sale">累计销售：${item.total_count}</td>
+	                	    	<td class="yesterday_sale">昨日销售：<br/>${item.yesterday_count}</td>
+	                    		<td class="month_sale">本月销售：<br/>${item.month_count}</td>
+	                    		<td class="total_sale">累计销售：<br/>${item.total_count}</td>
 	                		</#list>
 	                	</#if>
 					</tr>
 					<tr>
 	                	<#if commissionList?size==0>
-		                    <td class="yesterday_money">昨日佣金：0</td>
-		                    <td class="month_money">本月佣金：0</td>
-		                    <td class="total_money">累计佣金：0</td>	                		
+		                    <td class="yesterday_money">昨日佣金：<br/>0</td>
+		                    <td class="month_money">本月佣金：<br/>0</td>
+		                    <td class="total_money">累计佣金：<br/>0</td>	                		
 		                <#else>
 	                		<#list commissionList as item>
-	                	    	<td class="yesterday_money">昨日佣金：${item.yesterday_commison}</td>
-	                    		<td class="month_money">本月佣金：${item.month_commison}</td>
-	                    		<td class="total_money">累计佣金：${item.total_count}</td>
+	                	    	<td class="yesterday_money">昨日佣金：<br/>${item.yesterday_commison}</td>
+	                    		<td class="month_money">本月佣金：<br/>${item.month_commison}</td>
+	                    		<td class="total_money">累计佣金：<br/>${item.total_count}</td>
 	                		</#list>
 	                	</#if>
 					</tr>

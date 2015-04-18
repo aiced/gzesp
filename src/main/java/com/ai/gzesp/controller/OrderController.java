@@ -50,19 +50,9 @@ public class OrderController {
     public ModelAndView newNumberJoin(@RequestBody String inputParams){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	String goods_id = paramsMap.containsKey("goods_id")?paramsMap.get("goods_id"):"";
-//    	String goods_name = paramsMap.containsKey("goods_name")?paramsMap.get("goods_name"):"";
-//    	String goods_price = paramsMap.containsKey("goods_price")?paramsMap.get("goods_price"):"";
-//    	String user_id = paramsMap.containsKey("user_id")?paramsMap.get("user_id"):"";
-//    	String goods_disc = paramsMap.containsKey("goods_disc")?paramsMap.get("goods_disc"):"";
-//    	String attr_val = paramsMap.containsKey("attr_val")?paramsMap.get("attr_val"):"";
-//    	String fromPage = paramsMap.containsKey("fromPage")?paramsMap.get("fromPage"):"";
     	
     	String num_resId = orderService.GetGoodsNumAttr(goods_id);
     	 ModelAndView mav = new ModelAndView("newNumberJoin.ftl");
-//        mav.addObject("selectedPhone", goods_name);
-//        mav.addObject("selectedContract", "4G 106元套餐 12月合约 </br> 电话 短信 流量 </br> 合约价6999"); 
-//        mav.addObject("selectedNumber", "1306520198"); 
-//        mav.addObject("goods_price", goods_price); 
         mav.getModel().putAll(paramsMap);
         mav.addObject("title", "新号入网"); 
         mav.addObject("num_resId", num_resId); 
@@ -130,8 +120,6 @@ public class OrderController {
         ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "订单填写");
-//        mav.addObject("originalPrice", "998");
-//        mav.addObject("userId", "1234567890");
         mav.getModel().putAll(info);
         mav.getModel().putAll(paramsMap);
         mav.addObject("citys", citys);
@@ -140,11 +128,8 @@ public class OrderController {
     
     @RequestMapping("/submitFilledOrder")
     public ModelAndView submitFilledOrder(@RequestBody String inputParams) throws UnsupportedEncodingException{
-//    	inputParams = URLDecoder.decode(inputParams);		
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
-//    	String userId =  paramsMap.get("userId");
-//    	String fromPage = paramsMap.get("fromPage");
     	String orderId = CommonUtil.generateOrderId();
     	String payLogId = CommonUtil.generatePayLogId();
     	String topayMoney = paramsMap.get("topayMoney");
@@ -156,9 +141,6 @@ public class OrderController {
     	
     	String url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
     	ModelAndView mav = new ModelAndView(url);
-//    	//从数据库获取信息赋值
-//    	mav.addObject("title", "订单支付");
-//    	mav.addObject("userid", paramsMap.get("userId"));
     	
     	return mav;
     }

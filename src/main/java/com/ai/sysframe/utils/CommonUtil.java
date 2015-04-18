@@ -289,6 +289,19 @@ public class CommonUtil {
     	return l;
     }
     
+    public static Float string2Float(String str) {
+    	if(str == null || "".equals(str.trim())) {
+    		return null;
+    	}
+    	Float f;
+    	try {
+    		f = Float.parseFloat(str);
+    	} catch(NumberFormatException e) {
+    		f = null;
+    	}
+    	return f;
+    }
+    
     public static Integer string2Int(String str) {
     	if(str == null || "".equals(str.trim())) {
     		return null;
@@ -307,6 +320,13 @@ public class CommonUtil {
     		l = l * 1000;
     	}
     	return l;
+    }
+    
+    public static Long toDbPrice(Float f) {
+    	if(f != null) {
+    		f = f * 1000;
+    	}
+    	return f==null?null:f.longValue();
     }
     /*
      * @author wenhui 

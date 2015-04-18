@@ -383,5 +383,26 @@ public class GoodsSql {
 
 		return contractList;
 	}
+	
+	
+	/*
+	 * 得到推荐列表数据
+	 */
+	public List<Map<String, Object>> GetSaleAdvanceList() {
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append("select distinct "
+				+ "t1.CREATE_DATE as create_date,"
+				+ "t1.IMAGE_ADDRESS as image_address,"
+				+ "t1.TITLE as title,"
+				+ "t1.SUBTITLE as subtitle,"
+				+ "t1.LINK as link"
+				);
+		sb.append(" from SALE_ADVANCE t1");
+		List<Map<String, Object>> rcdList = commonDao.queryForList(sb.toString());
+		return rcdList;
+	}
+	
+	
 
 }

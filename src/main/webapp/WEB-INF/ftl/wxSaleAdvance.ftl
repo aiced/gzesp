@@ -43,24 +43,24 @@
 
 
 		<#list salelist as info>			
-			
+			<div class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 0px; padding: 0px; border: 1px solid rgb(199, 205, 210);">
+		 	<a style="margin:0px; padding: 0px;display: block;" onclick='itemClick("${info.link}")'>
+ 			 <p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+    			<span style="color: rgb(247, 150, 70);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px;">${info.subtitle}</span></strong></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">&nbsp;&nbsp;</span>
+			</p>
+			<p style="text-align:center">
+    			<img style="width: 100%; height: auto !important;" src=${info.image_address} alt="3.png" width="529" height="166" style="width: 529px; height: 166px;"/>
+			</p>
+			<p>	
+    			<span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;width:100%;height:25px;text-align:center; display:block;">&nbsp; &nbsp; &nbsp; &nbsp;${info.create_date} &nbsp;${info.title}</span>
+			</p>
+ 			 </a>
+ 			</div>
 		</#list>
 
 
 
-	<div class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 0px; padding: 0px; border: 1px solid rgb(199, 205, 210);">
-		 <a style="margin:0px; padding: 0px;display: block;" onclick='itemClick("1")'>
- 			 <p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
-    			<span style="color: rgb(247, 150, 70);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px;">第一期</span></strong></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">&nbsp;&nbsp;</span>
-			</p>
-			<p style="text-align:center">
-    			<img style="width: 100%; height: auto !important;" src="http://www.weixinbianjiqi.com/ueditor/php/upload/image/20150418/1429328202377948.png" title="1429328202377948.png" alt="3.png" width="529" height="166" style="width: 529px; height: 166px;"/>
-			</p>
-			<p>	
-    			<span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;width:100%;height:25px;text-align:center; display:block;">&nbsp; &nbsp; &nbsp; &nbsp; 4月18日 &nbsp;叨一叨赚钱秘籍一式之线上推广</span>
-			</p>
- 		 </a>
- 	</div>
+	
  	
  	
  	
@@ -77,7 +77,7 @@
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
 	<script>
 		function itemClick(obj) {
-		           window.location.href="http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203866099&idx=1&sn=d79864c12f8acaca96c0630fb7c9f20d#rd"; 
+		           window.location.href=obj; 
 				}
 	 </script>
 

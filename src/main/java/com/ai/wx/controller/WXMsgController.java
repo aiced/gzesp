@@ -190,10 +190,10 @@ public class WXMsgController {
     	HashMap<String, Object> map = new HashMap<String, Object>();  
         map.put("1", "fds");  
         map.put("2", "valu");  
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();  
-        list.add(map);  
+        List<Map<String, Object>> salelist = new ArrayList<Map<String, Object>>();  
+        salelist.add(map);  
     	
-        List<Map<String, Object>> salelist = goodsSql.GetRcdList("11"); //根据能人id 查询店长推荐的列表
+//        List<Map<String, Object>> salelist = goodsSql.GetRcdList("11"); //根据能人id 查询店长推荐的列表
     	Map<String, Object> rspMap =  new HashMap<String, Object>();   
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   

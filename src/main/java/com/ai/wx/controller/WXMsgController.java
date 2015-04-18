@@ -102,7 +102,7 @@ public class WXMsgController {
     
 
     /**
-     * http://wap.gz10010.xyz/wx/auth?code=CODE&state=STATE
+     * http://wap.gz10010.xyz/esp/wx/auth?code=CODE&state=STATE
      * state 参数表示跳转页面（weShopIndex, weShopHome, queryInfo..）
      * code 用于获取openId
      * @param state
@@ -128,15 +128,15 @@ public class WXMsgController {
     		 //用户已注册，免登录，根据state值跳页面
     		 if( userId != null) {
     			 if("weShopIndex".equals(state)) {
-        			 mav=new ModelAndView("redirect:/shopManage/weShopHome?userid="+userId);    
-        		 } else if("weShopHome".equals(state)) {
         			 mav=new ModelAndView("redirect:/weShop/index/"+userId);    
+        		 } else if("weShopHome".equals(state)) {
+        			 mav=new ModelAndView("redirect:/shopManage/weShopHome?userid="+userId);    
         		 } else if("queryInfo".equals(state)) {
         			 
         		 }
     			 //用户不存在，跳注册页
     		 } else {
-    			 mav=new ModelAndView("redirect:/auth/register/step1");
+    			 mav=new ModelAndView("redirect:/auth/register/step1?openId="+openId);
     		 }
     	 }
     	 return mav;

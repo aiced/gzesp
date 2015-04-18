@@ -7,6 +7,7 @@
     <result column="STATUS" property="status" jdbcType="CHAR" />
     <result column="ADD_DATE" property="addDate" jdbcType="TIMESTAMP" />
     <result column="STAFF_ID" property="staffId" jdbcType="DECIMAL" />
+    <result column="RULE_DESC" property="ruleDesc" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,7 +74,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    ID, COMMISSION_RULE, STATUS, ADD_DATE, STAFF_ID
+    ID, COMMISSION_RULE, STATUS, ADD_DATE, STAFF_ID, RULE_DESC
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -109,9 +110,11 @@
   </delete>
   <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdCmsPRULE" >
     insert into CMS_P_RULE (ID, COMMISSION_RULE, STATUS, 
-      ADD_DATE, STAFF_ID)
+      ADD_DATE, STAFF_ID, RULE_DESC
+      )
     values (#{id,jdbcType=DECIMAL}, #{commissionRule,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{addDate,jdbcType=TIMESTAMP}, #{staffId,jdbcType=DECIMAL})
+      #{addDate,jdbcType=TIMESTAMP}, #{staffId,jdbcType=DECIMAL}, #{ruleDesc,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdCmsPRULE" >
     insert into CMS_P_RULE
@@ -131,6 +134,9 @@
       <if test="staffId != null" >
         STAFF_ID,
       </if>
+      <if test="ruleDesc != null" >
+        RULE_DESC,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -147,6 +153,9 @@
       </if>
       <if test="staffId != null" >
         #{staffId,jdbcType=DECIMAL},
+      </if>
+      <if test="ruleDesc != null" >
+        #{ruleDesc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -174,6 +183,9 @@
       <if test="record.staffId != null" >
         STAFF_ID = #{record.staffId,jdbcType=DECIMAL},
       </if>
+      <if test="record.ruleDesc != null" >
+        RULE_DESC = #{record.ruleDesc,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -185,7 +197,8 @@
       COMMISSION_RULE = #{record.commissionRule,jdbcType=VARCHAR},
       STATUS = #{record.status,jdbcType=CHAR},
       ADD_DATE = #{record.addDate,jdbcType=TIMESTAMP},
-      STAFF_ID = #{record.staffId,jdbcType=DECIMAL}
+      STAFF_ID = #{record.staffId,jdbcType=DECIMAL},
+      RULE_DESC = #{record.ruleDesc,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -205,6 +218,9 @@
       <if test="staffId != null" >
         STAFF_ID = #{staffId,jdbcType=DECIMAL},
       </if>
+      <if test="ruleDesc != null" >
+        RULE_DESC = #{ruleDesc,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=DECIMAL}
   </update>
@@ -213,7 +229,8 @@
     set COMMISSION_RULE = #{commissionRule,jdbcType=VARCHAR},
       STATUS = #{status,jdbcType=CHAR},
       ADD_DATE = #{addDate,jdbcType=TIMESTAMP},
-      STAFF_ID = #{staffId,jdbcType=DECIMAL}
+      STAFF_ID = #{staffId,jdbcType=DECIMAL},
+      RULE_DESC = #{ruleDesc,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=DECIMAL}
   </update>
 </mapper>

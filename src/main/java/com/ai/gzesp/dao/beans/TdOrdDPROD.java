@@ -105,6 +105,14 @@ public class TdOrdDPROD extends TdOrdDPRODKey implements Serializable {
     private String resInfo;
 
     /**
+     * 商品预估佣金金额
+     */
+    /**
+     * @Fields ORD_D_PROD.CMS_PRE_FEE :商品预估佣金金额
+     */
+    private Long cmsPreFee;
+
+    /**
      * @return 分区标识
      */
     /**
@@ -333,5 +341,26 @@ public class TdOrdDPROD extends TdOrdDPRODKey implements Serializable {
      */
     public void setResInfo(String resInfo) {
         this.resInfo = resInfo == null ? null : resInfo.trim();
+    }
+
+    /**
+     * @return 商品预估佣金金额
+     */
+    /**
+     * @return ORD_D_PROD.CMS_PRE_FEE : 返回 商品预估佣金金额
+     */
+    public Long getCmsPreFee() {
+        return cmsPreFee;
+    }
+
+    /**
+     * @param cmsPreFee 
+	 *            商品预估佣金金额
+     */
+    /**
+     * @param cmsPreFee of ORD_D_PROD : 设置 商品预估佣金金额
+     */
+    public void setCmsPreFee(Long cmsPreFee) {
+        this.cmsPreFee = cmsPreFee;
     }
 }

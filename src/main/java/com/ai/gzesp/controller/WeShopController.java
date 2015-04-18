@@ -2,6 +2,7 @@ package com.ai.gzesp.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
+import com.ai.gzesp.unionpay.TradeType;
 
 /**
  * 一级功能：wap端<br> 
@@ -57,8 +59,15 @@ public class WeShopController {
         //获取热销网卡商品
         List<Map<Object, Object>> rxwk = weShopService.getRxwk();
         mav.addObject("rxwk", rxwk);
-
+        
+        //edit_by_wenh_2015_4_18
+        weShopService.insertVisitLog(user_id);
+        
+        
+        
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
         return mav;
     }
+
+  
 }

@@ -30,10 +30,12 @@ import com.ai.gzesp.dao.service.TdOrdDPOSTDao;
 import com.ai.gzesp.dao.service.TdOrdDPRODDao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdOrdDRESDao;
+import com.ai.gzesp.dao.sql.CommissionSql;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
+import com.ai.sysframe.utils.RegexUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -70,6 +72,9 @@ public class OrderService {
     
     @Resource 
     OrdersSql ordersSql;
+    
+    @Resource 
+    CommissionSql commissionSql;
     
     public String GetGoodsNumAttr(String goodsId) {
     	return goodsSql.GetGoodsNumAttr(goodsId);
@@ -118,14 +123,64 @@ public class OrderService {
     }
     
     
+    private void cacuCMSPreFee(Map<String, String> paramsMap) {
+    	// get cms rules
+    	String goodsId = paramsMap.get("goodsId");
+    	String cmsRule = commissionSql.getCmsRuleByGoodsId(goodsId);
+    	// no need to check con for pre Fee
+    	// SAVEMEY( 4G组合套餐，还是ORD_D_RES表中  	这个商品去取RES_ATTR_CODE='SAVEMEY'),PACKMEY(ORD_D_RES表中套餐面值),PRODMEY(上网卡的价格,是直接取商品价格还是说需要配置一个物品属性,需要确认)
+    	String[] result = RegexUtil.getCMSRule(cmsRule);
+    	if(result != null) {
+    		String money = "";
+    		if("SAVEMEY".equals(result[0]) ) {
+    			money = getOriginMoneyByAttrCode("SAVEMEY", paramsMap);
+    		} else if("PACKMEY".equals(result[0])) {
+    			money = getOriginMoneyByAttrCode("PACKRES", paramsMap);
+    		} else if("PRODMEY".equals(result[0])) {
+    			
+    		}
+    		
+    		
+    		float cmsPreFee = Long.parseLong("".equals(money)?"0":money)*Float.parseFloat(result[1]);
+			paramsMap.put("cmsPreFee", String.valueOf(cmsPreFee));
+    	}
+    }
+    
+    private String getOriginMoneyByAttrCode(String attrCode, Map<String, String> paramsMap) {
+    	String resAttrStr = paramsMap.get("resAttr");
+    	
+    	if(resAttrStr == null) {
+    		return "";
+    	}
+    	
+    	String[] rows = resAttrStr.split("\\^");
+    	for(String row : rows) {
+    		String[] col = row.split("\\|");
+    		if(col.length < 3) {
+    			continue;
+    		}
+    		
+//    		String resId = col[0];
+    		String resAttrCode = col[1];
+    		String resAttrVal = col[2];
+    		
+    		if(attrCode.equals(resAttrCode)) {
+    			String money = RegexUtil.getMoney(resAttrVal);
+    			return money;
+    		}
+    	}
+    	return "";
+    }
+    
     public void insertOrder(Map<String, String> paramsMap) {
     	insertOrderBaseInfo(paramsMap);
     	insertOrderCustInfo(paramsMap);
     	insertOrderDealInfo(paramsMap);
 //    	insertOrderPayLogInfo(paramsMap);
     	insertOrderPostInfo(paramsMap);
-    	insertOrderProdInfo(paramsMap);
     	insertOrderResInfo(paramsMap);
+    	cacuCMSPreFee(paramsMap);
+    	insertOrderProdInfo(paramsMap);
 //    	insertOrderReFundInfo(paramsMap);
     }
     
@@ -274,6 +329,7 @@ public class OrderService {
     	String derateReason = paramsMap.get("derateReason");
     	String recvFee = paramsMap.get("recvFee");
     	String goodsDisc = paramsMap.get("goodsDisc");
+    	String cmsPreFee = paramsMap.get("cmsPreFee");
     	
     	TdOrdDPROD record = new TdOrdDPROD();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -287,6 +343,8 @@ public class OrderService {
     	record.setDerateReason(derateReason);
     	record.setRecvFee(CommonUtil.toDbPrice(CommonUtil.string2Long(recvFee)));
     	record.setResInfo(goodsDisc);
+    	record.setCmsPreFee(CommonUtil.toDbPrice(CommonUtil.string2Float(cmsPreFee)));
+    	
     	
     	tdOrdDPRODDao.insertSelective(record);
     }

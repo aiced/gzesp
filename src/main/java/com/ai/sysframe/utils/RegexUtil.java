@@ -22,4 +22,35 @@ public class RegexUtil {
         final Matcher m = p.matcher(value);
         return m.find();
     }
+    
+    /**
+     *  cms pre fee rule
+     * @param elementString
+     * @return
+     */
+    public static String[] getCMSRule(String elementString) {
+    	String[] result = null;
+        Pattern p = Pattern.compile("=MUL\\(([\\S]*),([0-9.]*)\\)");
+        Matcher m = p.matcher(elementString);
+        if (m.find()) {
+        	result = new String[2];
+        	result[0] = m.group(1);
+        	result[1] = m.group(2);
+        }
+        return result;
+    }
+    
+    /**
+     *  money
+     * @param elementString
+     * @return
+     */
+    public static String getMoney(String elementString) {
+    	Pattern p = Pattern.compile("([0-9]*)");
+    	Matcher m = p.matcher(elementString);
+    	if (m.find()) {
+    		return m.group();
+    	}
+    	return "";
+    }
 }

@@ -30,4 +30,6 @@ public interface WeShopDao {
     public List<Map<Object, Object>> queryGoodListByPage(@Param("ctlgArray") String[] ctlgArray,
             @Param("pageNum") int pageNum, @Param("pageSize") int pageSize, @Param("keyword") String keyword,
             @Param("sort") String sort, @Param("sortCol") String sortCol);
+    
+    public int insertVisitLog(@Param("log_id") String log_id,@Param("partition_id") String partition_id,@Param("store_id") String store_id, @Param("user_id") String user_id);
 }

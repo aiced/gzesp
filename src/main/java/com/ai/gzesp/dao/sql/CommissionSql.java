@@ -190,6 +190,20 @@ public class CommissionSql {
 		return CommList;
 	}
 	
-	
+	public String getCmsRuleByGoodsId(String goodsId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" SELECT distinct "
+				+ " a.GOODS_ID, b.COMMISSION_RULE "
+				+ " FROM cms_p_goods_rule a, cms_p_rule b"
+				+ " WHERE a.GOODS_ID = '" + goodsId + "'"
+				+ " AND a.RULE_ID = b.ID"
+				);
+		List<Map<String, Object>> ruleList = commonDao.queryForList(sb.toString());
+		if(ruleList.size() > 0) {
+			Map info = ruleList.get(0);
+			return String.valueOf(info.get("COMMISSION_RULE"));
+		}
+		return "";
+	}
 	
 }

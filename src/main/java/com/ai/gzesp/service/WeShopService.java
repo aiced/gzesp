@@ -1,16 +1,20 @@
 package com.ai.gzesp.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dao.WeShopDao;
 import com.ai.gzesp.dto.GoodsDetailResult;
+import com.ai.gzesp.unionpay.TradeType;
 
 @Service
 public class WeShopService {
@@ -174,4 +178,27 @@ public class WeShopService {
     public List<Map<Object, Object>> queryGoodListByPage(String[] ctlgArray, int pageNum, int pageSize, String keyword, String sort, String sortCol){
         return weShopDao.queryGoodListByPage(ctlgArray, pageNum, pageSize, keyword, sort, sortCol);
     }
+    
+    //edit_by_wenh_2015_4_18
+    public int insertVisitLog(@Param("user_id") String user_id)
+    {
+    	String log_id=getVisitLogNo();
+    	String store_id=user_id;
+    	
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        String partition_id=String.valueOf(month);
+        
+    	return weShopDao.insertVisitLog(log_id, partition_id, store_id, user_id);
+    }
+    
+    
+    public String getVisitLogNo(){
+        StringBuffer sb = new StringBuffer(16);
+        sb.append(System.currentTimeMillis()); //13位
+        Random random = new Random();
+        sb.append(random.nextInt(4)); //加1位随机整数
+        return sb.toString();
+    }
+    
 }

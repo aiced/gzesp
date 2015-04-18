@@ -216,6 +216,13 @@
      ]]>
 	</select>
 	
+	
+	<insert id="insertVisitLog">
+        insert into AUR_D_VISIT_LOG
+              (log_id, partition_id, store_id, user_id,visit_time)
+        values(#{log_id}, #{partition_id}, #{store_id}, #{user_id},sysdate
+              )	 
+	</insert>
 				
 
 </mapper>

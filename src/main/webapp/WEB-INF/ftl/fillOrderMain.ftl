@@ -96,10 +96,12 @@
 	            <!--物流公司-->
 	            <div id="postInfoTab" class="list-group-item">
 	                <label>物流公司</label>
+	          
 	                <div id="post-select" class="p-list">
                         <a id="post-select-none" href="javascript:void(0);"  value="2"  class="selected">宅急送</a>
                         <a id="post-select-shunfeng" href="javascript:void(0);"  value="1"   >顺丰速运</a>
                     </div>
+                    <div style="font-size: 12px;color:#c0c0c0;">我们会优先使用您选择的物流公司发货，因配送范围每家物流公司有所不同，如无法送到我们将为您另行安排。</div>
 	            </div>
 	            
 	            <!--收获信息-->

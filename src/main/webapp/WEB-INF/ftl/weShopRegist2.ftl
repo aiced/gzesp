@@ -188,16 +188,16 @@
 	
 	    <div class="container-fluid">
 	        <form action="reg_step2_postdata" method="post">
-	        	<h4><span style="color: #ff0000">为保证收益的准确发放，以下请填写真实信息!</span></h4>
+	        	<span style="color: #ff0000">为保证收益的准确发放，以下请填写真实信息!</span>
 	            <br/>
 	            <br/>
 	            <!--姓名-->
 	            <div class="form-group" id="div_name">
 	                <label for="txtname" class="sr-only"></label>
-	                <input type="text" class="form-control input-lg" id="txtname" name="txtname" placeholder="请输入姓名">
+	                <input type="text" class="form-control" id="txtname" name="txtname" placeholder="请输入姓名">
 	            </div>
 	            <!--性别-->
-	            <div class="form-group input-lg">
+	            <div class="form-group">
 	                <label class="radio-inline">
 	                    <input type="radio" name="radsex" id="radnan" value="男" checked="checked"> 男
 	                </label>
@@ -209,11 +209,11 @@
 	            <!--身份证号-->
 	            <div class="form-group" id="div_personalid">
 	                <label for="txtpersonalid" class="sr-only"></label>
-	                <input type="text" class="form-control input-lg" id="txtpersonalid" name="txtpersonalid" placeholder="请输入身份证号">
+	                <input type="text" class="form-control" id="txtpersonalid" name="txtpersonalid" placeholder="请输入身份证号">
 	            </div>
 	            <!--开户银行-->
 	            <div class="form-group">
-	                <select class="form-control input-lg" name="selBank">
+	                <select class="form-control" name="selBank">
 			      		<#if (bankList?size==0)>
 							<option value="数据加载失败">数据加载失败</option>
 			        	<#else>
@@ -226,16 +226,16 @@
 	            <!--银行卡号-->
 	            <div class="form-group" id="div_bankcardid">
 	                <label for="txtbankcardid" class="sr-only"></label>
-	                <input type="text" class="form-control input-lg" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
+	                <input type="text" class="form-control" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
 	            </div>
 				<!-- 用户注册协议 -->
 				<div style="float:right;font-size: 12px;">
-					<h4><input type="checkbox" name="chkRight" id="chkRight" checked="true"><a href="regProtocol">用户注册协议</a></h4>
+					<input type="checkbox" name="chkRight" id="chkRight" checked="true"><a href="regProtocol">用户注册协议</a>
 				</div>
 				<br/>
 				<br/>
 				<br/>
-	            <button class="btn-lg btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">提交</button>
+	            <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">提交</button>
 	        	
 	        	<input type="hidden" name="selArea" value="${area}" />
 	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />

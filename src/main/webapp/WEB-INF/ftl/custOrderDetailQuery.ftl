@@ -245,7 +245,7 @@
                     <div class="media-body">
                         <div><label>${GOODS_NAME}</label></div>
                         <div>
-                            <div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D">退款</div>
+                            <div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="custRefund?orderid=${ORDER_ID}">退款</a></div>
                         </div>
                         <div class="div_clear"></div>
                         <br/>

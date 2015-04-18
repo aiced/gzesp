@@ -1,5 +1,6 @@
 package com.ai.gzesp.unionpay;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -24,9 +25,48 @@ public class ServerHandler extends IoHandlerAdapter {
     
     //@Autowired //写在配置文件里了
     private UnionPayService unionPayService;
+    
+    private HashMap<String, IoSession> sessionMap = new HashMap();
+    
+    @Override
+    public void sessionCreated(IoSession session) throws Exception {
+        log.debug("【银联支付：服务端esp sessionCreated sessionId： " + session.getId() + "】");
+        // Empty handler
+    }
 
+    @Override   
+    public void sessionOpened(IoSession session) throws Exception {
+        log.debug("【银联支付：服务端esp sessionOpened sessionId： " + session.getId() + "，sessionMap里原来有" + sessionMap.entrySet().size() + "个；链接】");
+        for (Map.Entry entry : this.sessionMap.entrySet()) {
+            IoSession s = ((IoSession) entry.getValue());
+            log.debug("【银联支付：服务端esp sessionMap里原来有: " + s.getId() +"】");
+            s.close(true);
+        }
+        this.sessionMap.clear();
+        this.sessionMap.put(String.valueOf(session.getId()), session);
+    }
+    
+    @Override
+    public void sessionClosed(IoSession session) throws Exception {
+        log.debug("【银联支付：服务端esp关闭链接 sessionId： " + session.getId() + "】");
+      super.sessionClosed(session);
+    }
+
+    @Override 
+    public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
+        super.sessionIdle(session, status);
+    }
+    
+    @Override  
+    public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        log.debug("【银联支付：服务端esp收到消息异常 sessionId： " + session.getId() + cause.toString() + "】");
+    }
+
+    
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
+        log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "】");
         byte[] msg = (byte[])message;
         //String msgStr = new String(msg);
         log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "， message：" + new String(msg) + "】");
@@ -41,23 +81,12 @@ public class ServerHandler extends IoHandlerAdapter {
         }*/
         
         //根据respMap里交易类型进行业务处理
-        if (xmlResp != null) {
+/*        if (xmlResp != null) {
             Map<String, String> respMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
             //IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap, unionPayService);
             IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
             respHanler.dealResp(respMap);
-        }
-    }
-
-    @Override
-    public void sessionClosed(IoSession session) throws Exception {
-        log.debug("【银联支付：服务端esp关闭链接 sessionId： " + session.getId() + "】");
-      super.sessionClosed(session);
-    }
-
-    @Override
-    public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
-      super.sessionIdle(session, status);
+        }*/
     }
 
     public UnionPayService getUnionPayService() {
@@ -76,10 +105,10 @@ public class ServerHandler extends IoHandlerAdapter {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public void init(){
+/*    public void init(){
         HeartBeatThread heartThread = new HeartBeatThread();
         Thread t = new Thread(heartThread);
         t.start();
-    }
+    }*/
     
 }

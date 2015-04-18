@@ -86,6 +86,9 @@ public class GoodDetailController {
         mav.addObject("attrs", attrs);
         
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
+        
+        //edit_by_wenh_2015_4_18
+        weShopService.insertVisitLog(user_id);
         return mav;
     }
 }

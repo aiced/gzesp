@@ -10,6 +10,12 @@
          //如果没被选中，则更改为选中的样式 ,其他兄弟元素更改为没选项中样式 
          $(this).addClass('tab-on'); 
          $(this).siblings().removeClass('tab-on');
+         
+         //如果选择了A/B/C 套餐 还需要展示描述, 要有attr_desc的属性才触发
+         if(typeof($(this).attr('attr_desc')) != 'undefined'){
+        	 $('#package_detail').show();
+        	 $('#package_detail').val($(this).attr('attr_desc'));
+         }
        });
        
        //激活图文详情页面tab导航
@@ -55,6 +61,12 @@ function back2Main(){
 //新号入网 商品详情页面 立即购买 按钮跳转到订单填写页面
 function planGotoOrderMain(){
     var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
+   //edit_by_wenh_2015_4_17
+    if($('#phone_number').text()=='请选择号码')
+    {
+    	alert("请选择号码");
+    	return false;
+    }
     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
 	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();

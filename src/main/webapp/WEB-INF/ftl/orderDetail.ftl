@@ -38,20 +38,48 @@
 		<!--top_end-->
         <div class="orderinfo">
             <div class="list-group">
-                <a href="#" class="list-group-item"><h4>订单编号：${ORDER_ID}</h4></a>
-                <a href="#" class="list-group-item"><h4>订单金额：${INCOME_MONEY}元</h4></a>
-                <a href="#" class="list-group-item"><h4>下单时间：${Order_Time}</h4></a>
+                <a href="#" class="list-group-item"><h5>订单编号：${ORDER_ID}</h5></a>
+                <a href="#" class="list-group-item"><h5>订单金额：${INCOME_MONEY}元</h5></a>
+                <a href="#" class="list-group-item"><h5>下单时间：${Order_Time}</h5></a>
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item"><h4>收货人姓名：${RECEIVER_NAME}</h4></a>
-                <a href="#" class="list-group-item"><h4>收获地址：${POST_ADDR}</h4></a>
-                <a href="#" class="list-group-item"><h4>联系电话：${MOBILE_PHONE}</h4></a>
-                <a href="#" class="list-group-item"><h4>送货日：${DELIVER_TIME_CODE}</h4></a>
+                <a href="#" class="list-group-item"><h5>收货人姓名：${RECEIVER_NAME}</h5></a>
+                <a href="#" class="list-group-item"><h5>收获地址：${POST_ADDR}</h5></a>
+                <a href="#" class="list-group-item"><h5>联系电话：${MOBILE_PHONE}</h5></a>
+                <a href="#" class="list-group-item"><h5>送货日：${DELIVER_TIME_CODE}</h5></a>
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item"><h4>支付方式：${PAY_MODE}</h4></a>
-                <a href="#" class="list-group-item"><h4>订单状态：${PAY_STATE}</h4></a>
-                <a href="#" class="list-group-item"><h4>缺货处理：${PAY_REMARK}</h4></a>
+                <a href="#" class="list-group-item"><h5>支付方式：${PAY_MODE}</h5></a>
+                <a href="#" class="list-group-item">
+                <h5>订单状态:
+				<#if (ORDER_STATE=='0')>
+                	待支付
+                <#elseif (ORDER_STATE=='1')>
+                	待分配
+                <#elseif (ORDER_STATE=='2')>
+                	待处理
+                <#elseif (ORDER_STATE=='3')>
+                	处理中
+                <#elseif (ORDER_STATE=='4')>
+                	待发货
+                <#elseif (ORDER_STATE=='5')>
+                	发货中
+                <#elseif (ORDER_STATE=='6')>
+                	物流在途
+                <#elseif (ORDER_STATE=='7')>
+                	待归档
+                <#elseif (ORDER_STATE=='8')>
+                	成功关闭（已归档）
+                <#elseif (ORDER_STATE=='9')>
+                	订单处理退单
+                <#elseif (ORDER_STATE=='10')>
+					客户拒收退单
+				<#else>
+					${ORDER_STATE}
+                </#if>
+                </h5>
+                </a>
+                <!-- <a href="#" class="list-group-item"><h5>缺货处理：${PAY_REMARK}</h5></a> -->
             </div>
         </div>
     </div>

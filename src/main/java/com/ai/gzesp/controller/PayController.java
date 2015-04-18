@@ -1,6 +1,7 @@
 package com.ai.gzesp.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.service.UnionPayService;
-import com.ai.gzesp.unionpay.BusiType;
 import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayAttrs;
 import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.unionpay.UnionPayUtil;
+import com.ai.gzesp.utils.DESUtil;
 import com.ai.gzesp.utils.DateUtils;
-import com.ai.gzesp.utils.MD5Util;
 
 /**
  * 支付入口<br> 
@@ -161,5 +161,63 @@ public class PayController {
         result.put("status", isSuccess ? "00": "01");
         
         return result;
+    }
+    
+    @RequestMapping("/unionPay/test1")
+    public ModelAndView test1(){
+        ModelAndView mav = new ModelAndView("unionPayInput.ftl");
+        
+        //原始响应报文map
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
+        xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
+        xmlMap.put(UnionPayAttrs.TradeType, TradeType.bindRsp.getTradeType()); //交易类型支付请求（0200）
+        xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
+        xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
+        xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
+        xmlMap.put(UnionPayAttrs.timeStamp, DateUtils.getCurentTime()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, "1234567890123456");//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.resultCode, "00");
+        xmlMap.put(UnionPayAttrs.resultDesc, "绑定成功");
+        xmlMap.put(UnionPayAttrs.signCode, "1234567890123456"); //签约号
+        xmlMap.put(UnionPayAttrs.orderId, "123"); //支付订单号
+        xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
+        
+        byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
+        UnionPayUtil.sendMsg(xmlSend);
+        return mav;
+    }
+    
+    @RequestMapping("/unionPay/test2")
+    public ModelAndView test2(){
+        ModelAndView mav = new ModelAndView("unionPayInput.ftl");
+        
+        //原始响应报文map
+        String xmlStr2 = "<?xml version=\"1.0\" encoding=\"GBK\"?><responseData><charCode>GBK</charCode><TradeType>0130</TradeType><ChannelID>7651444882235483</ChannelID><MerType>01</MerType><bmMerId>1000000000009904</bmMerId><timeStamp>20150417091333</timeStamp><sysTradeNo>1014292332134671</sysTradeNo><resultCode>W5</resultCode><resultDesc>该卡已绑定过，请勿重新绑定</resultDesc><signCode>03a05df6c2d44ebda29c457751feaba5</signCode><currencyCode>156</currencyCode><md5ConSec>a38efa1e54970726582f283705af2432</md5ConSec></responseData>";
+
+        try {
+            //3DES加密 报文
+            byte[] xmlByte = DESUtil.encryptMode(xmlStr2.getBytes(UnionPayCons.charCode));
+            /*        if(xmlByte == null)
+        {
+            log.error("【加密XML失败,xmlStr = " + xmlStr2);
+        }*/
+            
+            //4位报文体字节长度+渠道号（16位）+加密后的xml报文体。如：0231+渠道号（16位）+加密后的xml报文体（215字节）
+            //转化为4位长度字节数据以供另一端读取,长度不足4字节要补0
+            byte[] xmlHead = new byte[4];
+            byte[] xmlHeadLen = ((xmlByte.length+16)<1000 ? "0"+String.valueOf(xmlByte.length+16) : String.valueOf(xmlByte.length+16)).getBytes(UnionPayCons.charCode);
+            System.arraycopy(xmlHeadLen, 0, xmlHead, xmlHead.length - xmlHeadLen.length, xmlHeadLen.length); //给xmlHead 赋值
+            byte[] xmlSend = new byte[4 + 16 + xmlByte.length]; 
+            System.arraycopy(xmlHead, 0, xmlSend, 0, 4);
+            System.arraycopy(UnionPayCons.ChannelID.getBytes(UnionPayCons.charCode), 0, xmlSend, 4, 16);
+            System.arraycopy(xmlByte, 0, xmlSend, 20, xmlByte.length);
+            
+        UnionPayUtil.sendMsg(xmlSend);
+        return mav;
+    }catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    } 
+        
     }
 }

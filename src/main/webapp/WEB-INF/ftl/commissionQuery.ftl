@@ -120,10 +120,10 @@
 	    	//	totalCommission += parseFloat($(this).text()); 
 	    	//}); 
 	    }); 
-	    $('#totalRowCount').append('<td colspan="4"><h4>共'+totalRowCount+'条数据</h4></td>');
-	    $('#totalRow').append('<td colspan="2"><h4><label class="query_info_left">合计</label></h4></td>');
-	    $('#totalRow').append('<td><h4><label>'+totalSale+'</label></h4></td>');
-	    $('#totalRow').append('<td><h4><label></label></h4></td>');
+	    $('#totalRowCount').append('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
+	    $('#totalRow').append('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td>');
+	    $('#totalRow').append('<td><h5><label>'+totalSale+'(元)</label></h5></td>');
+	    $('#totalRow').append('<td><h5><label></label></h5></td>');
     }
     
     function selectData()
@@ -277,8 +277,8 @@
         .query_info_top
         {
             background: #ffffff;
-            height:100px;
-            line-height: 100px;
+            height:80px;
+            line-height: 80px;
 
         }
         .query_info_detail
@@ -308,7 +308,7 @@
         }
         select
         {
-        	height: 45px;
+        	height: 34px;
         	font-size: 1em;
         }
 
@@ -331,8 +331,13 @@
 
         input
         {
-        	height: 45px;
+        	height: 34px;
         	width:100%;	
+        	padding:0px;
+        	font-size: 12px;
+        	text-align: center;
+        	line-height: 34px;
+        	
         }
         .input-lg
         {
@@ -399,16 +404,16 @@
 		                </select>
 	           		</div>
 	                <div class="query_info_top_middle">
-	                	<input  id="zhangqiTime" class="kbtn input-lg" name="zhangqiTime" value="" style="display:none" />
+	                	<input  id="zhangqiTime"  name="zhangqiTime" value="" style="display:none" />
 		                <!--<div id="datePlugin"></div>-->
 		                <!-- 隐藏控件用于保存userid -->
 						<div class="order_top_middle" >
 							<div class="order_top_middle1">
-								<input id="beginTime" class="input-lg" name="beginTime" value="" />
+								<input id="beginTime"  name="beginTime" value="" />
 							</div>
 							<div class="order_top_middle2">—</div>
 							<div class="order_top_middle3">
-								<input id="endTime" class="input-lg" name="endTime" value="" />
+								<input id="endTime" name="endTime" value="" />
 							</div>
 							
 							<!-- 这句和日历控件有关千万别忘掉 -->
@@ -417,7 +422,7 @@
 
 					</div>
 	                <div class="query_info_top_right">
-	                    <button class="btn btn-lg btn-warning" name="btnselect" id="btnselect" type="button">查询</button>
+	                    <button class="btn btn-warning" name="btnselect" id="btnselect" type="button">查询</button>
 	                </div>
 
             		<input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
@@ -428,7 +433,7 @@
 	    </form>
 
 	    <div class="query_info_detail">
-	        <h4><label>当月佣金明细</label></h4>
+	        <h5><label>当月佣金明细</label></h5>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
 					您没有佣金
@@ -470,20 +475,22 @@
 					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 						  <td>
 					      	<#if (item.SUM_CMS_MONEY== '')>
-					      		${item.CMS_PRE_FEE}
+					      		${item.CMS_PRE_FEE}(元)
 					      	<#else>
-					      		${item.SUM_CMS_MONEY}
+					      		${item.SUM_CMS_MONEY}(元)
 					      	</#if>      
 						  </td><!-- 预期-->
 					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->
 					      <td>
-					      	<#if (item.ACT_STATUS=='0'  && item.CMS_DAY=='')><!-- 没激活没到时间:未激活 -->
+					      	<#if (item.ACT_STATUS == "")>
 					      		<span class="label label-default">未激活</span>
-					      	<#elseif (item.ACT_STATUS=='0' && item.CMS_DAY!='')><!-- 没激活到时间:无效单 -->	
+					      	<#elseif (item.ACT_STATUS=='0'  && item.OPENDATE_STATUS=='0')><!-- 没激活没到时间:未激活 -->
+					      		<span class="label label-default">未激活</span>
+					      	<#elseif (item.ACT_STATUS=='0' && item.OPENDATE_STATUS=='1')><!-- 没激活到时间:无效单 -->	
 					      		<span class="label label-primary">无效单</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.CMS_DAY=='')><!-- 激活没到时间:结算中 -->
+					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='0')><!-- 激活没到时间:结算中 -->
 					      		<span class="label label-warning">结算中</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.CMS_DAY!='')><!-- 激活到时间 :可提现-->
+					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='1')><!-- 激活到时间 :可提现-->
 					      		<span class="label label-success">可提现</span>
 					      	</#if>
 					      </td><!-- 状态 -->
@@ -501,9 +508,9 @@
 
 	    </div>
 		<div >
-	        <div class="query_info_bottom">
+	        <!-- <div class="query_info_bottom">
 				温馨提示：我们每天凌晨4点根据用户状态计算佣金收益，处于冻结状态的佣金可能是未到计算时点或号码还没有激活。
-	    	</div>
+	    	</div> -->
 		</div>
 
 	</div>

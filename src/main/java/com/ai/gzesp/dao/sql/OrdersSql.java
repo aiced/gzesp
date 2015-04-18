@@ -55,7 +55,7 @@ public class OrdersSql {
 				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
-				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
+				+"ORD_D_BASE.ORDER_STATE,"//订单状态
 				//+"ORD_D_REFUND.REFUND_REASON"//无//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
 				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
@@ -94,7 +94,7 @@ public class OrdersSql {
 				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
 				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
-				+"ORD_D_PAYLOG.PAY_STATE,"//订单状态
+				+"ORD_D_BASE.ORDER_STATE,"//订单状态
 				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
 				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
@@ -142,7 +142,7 @@ public class OrdersSql {
 				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
 				//+"ORD_D_POST.DELIVER_TIME_CODE,"
 				+"ORD_D_PAYLOG.PAY_MODE,"
-				+"ORD_D_PAYLOG.PAY_STATE,"
+				+"ORD_D_BASE.ORDER_STATE,"
 				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
 				//+"ORD_D_PAYLOG.PAY_REMARK"
 				+"GDS_D_PHOTO.PHOTO_LINKS"
@@ -165,11 +165,11 @@ public class OrdersSql {
 		else if (strOrderID.length()>0 && startDate.length()>0)//订单id不为空，时间不为空，按时间，订单id查
 		{
 			sb.append(" and ORD_D_DEAL.ORDER_ID=" + strOrderID);
-			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')");
+			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')+1");
 		}
 		else if(strOrderID.length()<=0 && startDate.length()>0)//订单id为空，时间不为空，按时间查
 		{
-			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')");
+			sb.append(" and ORD_D_BASE.Order_Time >="+"to_date('"+startDate+"','yyyy-mm-dd')" +" and ORD_D_BASE.Order_Time <"+ "to_date('"+endDate+"','yyyy-mm-dd')+1");
 		}
 		else if(strOrderID.length()>0 && startDate.length() <=0)//订单不为空，时间为空，按订单id查
 		{

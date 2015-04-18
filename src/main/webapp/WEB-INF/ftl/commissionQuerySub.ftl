@@ -37,20 +37,22 @@
 	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 		  <td>
 	      	<#if (item.SUM_CMS_MONEY== '')>
-	      		${item.CMS_PRE_FEE}
+	      		${item.CMS_PRE_FEE}(元)
 	      	<#else>
-	      		${item.SUM_CMS_MONEY}
+	      		${item.SUM_CMS_MONEY}(元)
 	      	</#if>      
 		  </td><!-- 预期-->
 	     
 	      <td>
-	      	<#if (item.ACT_STATUS=='0'  && item.CMS_DAY=='')><!-- 没激活没到时间:未激活 -->
+	      	<#if (item.ACT_STATUS == "")>
 	      		<span class="label label-default">未激活</span>
-	      	<#elseif (item.ACT_STATUS=='0' && item.CMS_DAY!='')><!-- 没激活到时间:无效单 -->	
+	      	<#elseif (item.ACT_STATUS=='0'  && item.OPENDATE_STATUS=='0')><!-- 没激活没到时间:未激活 -->
+	      		<span class="label label-default">未激活</span>
+	      	<#elseif (item.ACT_STATUS=='0' && item.OPENDATE_STATUS=='1')><!-- 没激活到时间:无效单 -->	
 	      		<span class="label label-primary">无效单</span>
-	      	<#elseif (item.ACT_STATUS=='1' && item.CMS_DAY=='')><!-- 激活没到时间:结算中 -->
+	      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='0')><!-- 激活没到时间:结算中 -->
 	      		<span class="label label-warning">结算中</span>
-	      	<#elseif (item.ACT_STATUS=='1' && item.CMS_DAY!='')><!-- 激活到时间 :可提现-->
+	      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='1')><!-- 激活到时间 :可提现-->
 	      		<span class="label label-success">可提现</span>
 	      	</#if>
 	      </td><!-- 状态 -->

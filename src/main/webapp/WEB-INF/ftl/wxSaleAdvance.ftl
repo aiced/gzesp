@@ -41,25 +41,25 @@
 <p>
     <span style="font-size: 14px; color: rgb(89, 89, 89);">新内容排序在最上面，历史内容下移：如：）</span>
 </p>
+		<#list salelist as info>			
+			<div class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 10px; padding: 15px; border: 1px solid rgb(199, 205, 210);">
+			  <a style="margin:10px; padding: 15px;display: block;background-color:red;" onclick='itemClick("1")'>
+ 			  <p style="white-space: normal;">
+       		 &nbsp;你收到一张雷军&amp;张杰的邀请函
+  			  </p>
+  			  <p style="white-space: normal;">
+    			    &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 13px;">4月14日</span>
+  			  </p>
+   			 <p style="white-space: normal;">
+     			   <span style="font-size: 12px;"><img src="http://www.weixinbianjiqi.com/ueditor/php/upload/image/20150417/1429267881109571.png" title="1429267881109571.png" alt="3.png" width="332" height="256" style="width: 100%; height: auto !important;"/><span style="font-size: 16px;"></span></span>
+   			 </p>
+   			 <p style="white-space: normal;">
+     		   <span style="font-size: 14px;">互联网＋音乐 新模式，求祝福，求点赞！</span>
+   			 </p>
+ 			 </a>
+			</div>
+		</#list>
 
-
-<div class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 10px; padding: 15px; border: 1px solid rgb(199, 205, 210);">
-  <a style="margin:10px; padding: 15px;display: block;background-color:red;" onclick='itemClick("1")'>
- <p style="white-space: normal;">
-        &nbsp;你收到一张雷军&amp;张杰的邀请函
-    </p>
-    <p style="white-space: normal;">
-        &nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 13px;">4月14日</span>
-    </p>
-    <p style="white-space: normal;">
-        <span style="font-size: 12px;"><img src="http://www.weixinbianjiqi.com/ueditor/php/upload/image/20150417/1429267881109571.png" title="1429267881109571.png" alt="3.png" width="332" height="256" style="width: 100%; height: auto !important;"/><span style="font-size: 16px;"></span></span>
-    </p>
-    <p style="white-space: normal;">
-        <span style="font-size: 14px;">互联网＋音乐 新模式，求祝福，求点赞！</span>
-    </p>
-  </a>
-
-</div>
 <p>
     <br/>
 </p>
@@ -76,7 +76,6 @@
 			alert("11111");
 		}
 	 </script>
-
 
   </body>
 </html>

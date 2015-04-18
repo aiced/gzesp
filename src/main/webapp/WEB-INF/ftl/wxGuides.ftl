@@ -25,10 +25,10 @@
     
     
     
-<p style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: normal; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+<p style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: normal; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="font-family: arial, helvetica, sans-serif; font-size: 12px;"></span>
 </p>
-<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 0px; padding: 5px; border: 1px solid rgb(235, 161, 50);">
+<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 5px; padding: 5px; border: 1px solid rgb(235, 161, 50);">
     <legend style="margin: 0px 10px; text-align: center;">
         <span style="padding: 5px 10px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; color: rgb(255, 255, 255); font-size: 14px; font-weight: bold; font-family: arial, helvetica, sans-serif; background-color: rgb(235, 161, 50);">欢迎加入掌柜小分队</span>
     </legend>
@@ -48,11 +48,14 @@
     <strong><span style="color: rgb(255, 255, 255); font-family: 微软雅黑; line-height: 2em; padding: 5px 10px; font-size: 14px; display: inline-block; max-width: 100%; box-sizing: border-box !important; background-color: rgb(235, 161, 50);">贵州联通沃掌柜 <span style="color: rgb(255, 0, 0); font-family: 微软雅黑; line-height: 2em; padding: 5px 10px; font-size: 14px; display: inline-block; max-width: 100%;">&nbsp;F＆Q&nbsp;</span></span></strong>
 </p>
 
-      	<a  data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><p style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: normal; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"><p style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: normal; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     	<span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;">1.贵州联通掌柜招募计划是什么？</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"><br/></span>
 		</p>
 		</a>
-		<div class="collapse" id="collapseExample"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+		
+		<div class="collapse" id="collapseExample">
+		
+	<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
         <br/>
     </legend>
@@ -82,10 +85,10 @@
 </p></div>
 
 
-      	<a  data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2"><p style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: normal; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2"><p style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: normal; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">2.说的再多不如赚的多，商品收益怎么算？</span>
 </p></a>
-		<div class="collapse" id="collapseExample2"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="white-space: normal; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 164, 50); max-width: 100%; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">
+		<div class="collapse" id="collapseExample2"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="white-space: normal; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 164, 50); max-width: 100%; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; max-width: 100%;">
         <br/>
     </legend>
@@ -123,7 +126,8 @@
         <strong><span style="font-size: 14px; color: rgb(68, 68, 68); font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; line-height: 24px; text-align: center; background-color: rgb(255, 255, 255);">&nbsp;</span><span style="color: rgb(0, 0, 0);"><span style="font-size: 14px;"><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; line-height: 24px; text-align: center; background-color: rgb(255, 255, 255);">以下是</span><span style="color: rgb(255, 0, 0); font-size: 14px;"><strong style="color: rgb(68, 68, 68); font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 12px; line-height: 24px; text-align: center; background-color: rgb(255, 255, 255);"><span style="font-size: 14px;">沃掌柜收益说明表</span></strong></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; line-height: 24px; text-align: center; background-color: rgb(255, 255, 255);">，请各位掌柜细细品读</span></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 12px; line-height: 24px; text-align: center; background-color: rgb(255, 255, 255);">：</span></span></strong><br/>
     </p>
     <p style="margin: 8px 0px 0px; padding: 0px; border: 0px currentColor; height: 32px; text-align: justify; color: rgb(62, 62, 62); line-height: 18px; font-family: 微软雅黑; font-size: 16px; font-weight: normal; white-space: normal;">
-        <span class="wxqq-borderBottomColor" style="padding: 0px 2px 3px; color: rgb(0, 112, 192); line-height: 28px; border-bottom-color: rgb(235, 63, 0); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; text-align: center;"><span class="wxqq-bg" style="padding: 4px 10px; color: rgb(255, 255, 255); margin-right: 8px; background-color: rgb(235, 63, 0);">1.</span><strong class="wxqq-color" style="color: rgb(235, 63, 0);">单卡产品</strong></span><span class="wxqq-borderBottomColor" style="padding: 0px 2px 3px; color: rgb(0, 112, 192); line-height: 28px; border-bottom-color: rgb(235, 63, 0); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block;"><strong class="wxqq-color" style="color: rgb(235, 63, 0);"><br/></strong></span>
+        <span class="wxqq-borderBottomColor" style="padding: 0px 2px 3px; color: rgb(0, 112, 192); line-height: 28px; border-bottom-color: rgb(235, 63, 0); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; text-align: center;"><span class="wxqq-bg" style="padding: 4px 10px; color: rgb(255, 255, 255); margin-right: 8px; background-color: rgb(235, 63, 0);">
+</span><strong class="wxqq-color" style="color: rgb(235, 63, 0);">单卡产品</strong></span><span class="wxqq-borderBottomColor" style="padding: 0px 2px 3px; color: rgb(0, 112, 192); line-height: 28px; border-bottom-color: rgb(235, 63, 0); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block;"><strong class="wxqq-color" style="color: rgb(235, 63, 0);"><br/></strong></span>
     </p>
     <p>
         <br/>
@@ -174,11 +178,11 @@
 </p>
 </div>
     
-      	<a  data-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3"><p class="wxqq-color wxqq-borderLeftColor" style="margin-bottom: 13px; white-space: normal; border-width: 0px 0px 0px 5px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; border-left-color: rgb(235, 164, 50); border-left-style: solid; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3"><p class="wxqq-color wxqq-borderLeftColor" style="margin-bottom: 13px; white-space: normal; border-width: 0px 0px 0px 5px;margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; border-left-color: rgb(235, 164, 50); border-left-style: solid; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"></span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;">3.如何查看我的业绩情况？</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 1.5em;"></span>
 </p></a>
-		<div class="collapse" id="collapseExample3"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="white-space: normal; line-height: 24px; margin: 0px; padding: 15px; border: 1px solid rgb(235, 164, 50); max-width: 100%; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">
-    <legend style="font-family: 宋体; margin: 0px; padding: 0px; text-align: center; font-size: medium; max-width: 100%;">
+		<div class="collapse" id="collapseExample3"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="white-space: normal; line-height: 24px;font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 164, 50); max-width: 100%; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">
+    <legend style="font-family: 宋体; margin: 5px; padding: 0px; text-align: center; font-size: medium; max-width: 100%;">
         <br/>
     </legend>
     <p style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px; color: rgb(89, 89, 89); max-width: 100%;">
@@ -291,10 +295,10 @@
 
 
     
-      	<a  data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4"><p><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4"><p><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">4.如何才能提取收益？</span>
 </p></p></a>
-		<div class="collapse" id="collapseExample4"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+		<div class="collapse" id="collapseExample4"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
         <br/>
     </legend>
@@ -308,11 +312,11 @@
 
 
     
-      	<a  data-toggle="collapse" href="#collapseExample5" aria-expanded="false" aria-controls="collapseExample5"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample5" aria-expanded="false" aria-controls="collapseExample5"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">5.服务号里，【我的店铺】和【店铺管理】有什么区别？</span>
 </p></a>
 		<div class="collapse" id="collapseExample5">
-			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
         <br/>
     </legend>
@@ -356,10 +360,10 @@
     
     
     
-      	<a  data-toggle="collapse" href="#collapseExample6" aria-expanded="false" aria-controls="collapseExample6"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample6" aria-expanded="false" aria-controls="collapseExample6"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">6.微社区有什么作用？</span>
 </p></a>
-		<div class="collapse" id="collapseExample6"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+		<div class="collapse" id="collapseExample6"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
         <br/>
     </legend>
@@ -387,11 +391,11 @@
 </p>
 </div>
     
-      	<a  data-toggle="collapse" href="#collapseExample7" aria-expanded="false" aria-controls="collapseExample7"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample7" aria-expanded="false" aria-controls="collapseExample7"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">7.预装店铺太单调，如何编辑美化？</span>
 </p></a>
 		<div class="collapse" id="collapseExample7">
-			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="font-weight: normal; margin: 0px; padding: 0px; text-align: center; font-size: medium; max-width: 100%;">
         <br/>
     </legend>
@@ -438,11 +442,11 @@
     
     
     
-      	<a  data-toggle="collapse" href="#collapseExample8" aria-expanded="false" aria-controls="collapseExample8"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample8" aria-expanded="false" aria-controls="collapseExample8"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">8.小店开张了，怎样快速推广销售？</span>
 </p></a>
 		<div class="collapse" id="collapseExample8">
-			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
         <br/>
     </legend>
@@ -474,10 +478,10 @@
     
     
     
-      	<a  data-toggle="collapse" href="#collapseExample9" aria-expanded="false" aria-controls="collapseExample9"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample9" aria-expanded="false" aria-controls="collapseExample9"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">9.店铺里的商品都是固定的吗？自己能上架其他商品或对商品进行编辑吗？</span>
 </p></a>
-		<div class="collapse" id="collapseExample9"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+		<div class="collapse" id="collapseExample9"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
         <br/>
     </legend>
@@ -503,10 +507,10 @@
     <br/>
 </p></div>
     
-      	<a  data-toggle="collapse" href="#collapseExample10" aria-expanded="false" aria-controls="collapseExample10"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample10" aria-expanded="false" aria-controls="collapseExample10"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">10.如果朋友在店里买了东西，怎么送货呢？</span>
 </p></a>
-		<div class="collapse" id="collapseExample10"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+		<div class="collapse" id="collapseExample10"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
         <br/>
     </legend>
@@ -532,10 +536,10 @@
 
 
     
-      	<a  data-toggle="collapse" href="#collapseExample11" aria-expanded="false" aria-controls="collapseExample11"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample11" aria-expanded="false" aria-controls="collapseExample11"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 164, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">11.如果下单后，朋友要退货怎么办？·</span>
 </p></a>
-		<div class="collapse" id="collapseExample11"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 0px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+		<div class="collapse" id="collapseExample11"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
     <p class="wxqq-borderTopColor" style="padding: 0px; color: rgb(62, 62, 62); line-height: 2em; font-family: 微软雅黑; margin-top: 0px; margin-bottom: 0px; border-top-color: rgb(235, 164, 50); border-top-width: 2px; border-top-style: solid; white-space: normal; min-height: 1.5em; max-width: 100%; box-sizing: border-box !important;">
         <span style="font-family: arial, helvetica, sans-serif; font-size: 14px;"><strong><span class="wxqq-bg" style="font-family: arial, helvetica, sans-serif; padding: 5px 10px; color: rgb(255, 255, 255); display: inline-block; max-width: 100%; box-sizing: border-box !important; background-color: rgb(235, 164, 50);">商品未签收前申请退款：</span></strong></span>
     </p>
@@ -582,7 +586,7 @@
     </p>
 </fieldset></div>
 
-<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 0px; padding: 20px 15px 15px 48px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid rgb(235, 161, 50); line-height: 1.5; background-image: url(https://mmbiz.qlogo.cn/mmbiz/6xsuhALdNEr8ZmVegySCLnxIFNbiapIkjzQtojyF4Yc6cqozUlj2iaWK6yhTuFgUGK7ibNVaqFdMbMA1eLo2nAjVA/0/mmbizgif); background-position: 10px 11px; background-repeat: no-repeat;">
+<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 5px; padding: 20px 15px 15px 48px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; border: 1px solid rgb(235, 161, 50); line-height: 1.5; background-image: url(https://mmbiz.qlogo.cn/mmbiz/6xsuhALdNEr8ZmVegySCLnxIFNbiapIkjzQtojyF4Yc6cqozUlj2iaWK6yhTuFgUGK7ibNVaqFdMbMA1eLo2nAjVA/0/mmbizgif); background-position: 10px 11px; background-repeat: no-repeat;">
     <p style="line-height: normal;">
         <span style="color: rgb(89, 89, 89);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px;">还有更多疑问？来“贵州联通沃掌柜”提问吧！</span></strong><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px;"></span></strong></span>
     </p>

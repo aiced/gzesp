@@ -1,6 +1,7 @@
 package com.ai.wx.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -186,11 +187,18 @@ public class WXMsgController {
     public ModelAndView saleAdvance(){
     	
 //        List<Map<String, Object>> salelist = goodsSql.GetRcdList("11"); //根据能人id 查询店长推荐的列表
-    	Map rspMap = new HashMap(); 
+    	HashMap<String, Object> map = new HashMap<String, Object>();  
+        map.put("1", "fds");  
+        map.put("2", "valu");  
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();  
+        list.add(map);  
+    	
+        List<Map<String, Object>> salelist = goodsSql.GetRcdList("11"); //根据能人id 查询店长推荐的列表
+    	Map<String, Object> rspMap =  new HashMap<String, Object>();   
     	rspMap.put("rspCode", "0000");   
     	rspMap.put("name", "weidian");   
     	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
-//    	rspMap.put("salelist", salelist);  
+    	rspMap.put("salelist", salelist);  
     	rspMap.put("title", "销售进阶"); 
     	return new ModelAndView("wxSaleAdvance.ftl", rspMap);
     	

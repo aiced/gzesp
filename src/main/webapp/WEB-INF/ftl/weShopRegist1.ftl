@@ -57,7 +57,7 @@
 			}
 			if(!bRet3)
 			{
-				alert("验证码不能为空");
+				
 				return false;
 			}
 			//if(!bRet4)
@@ -81,6 +81,19 @@
 			
 		}
 	
+    	function getNowDate()
+    	{
+		  var d = new Date();
+		  var vYear = d.getFullYear();
+		  var vMon = d.getMonth() + 1;
+		  var vDay = d.getDate();
+		  var h = d.getHours(); 
+		  var m = d.getMinutes(); 
+		  var se = d.getSeconds(); 
+		  s=vYear+(vMon<10 ? "0" + vMon : vMon)+(vDay<10 ? "0"+ vDay : vDay)+(h<10 ? "0"+ h : h)+(m<10 ? "0" + m : m)+(se<10 ? "0" +se : se);
+		  return s;	
+    	}
+    	
 		$(document).ready(function(){  
 			
 			$("#txtphonenum").focus();
@@ -89,6 +102,9 @@
 		  $("#btnCode").click(function(){  
 			  //在这里操作获取验证码
 			  //alert("发送验证码");
+			  //点击的时候 获得当前时间
+			  $("#hide_code_date").val(getNowDate());
+			  
 			  var bRet=isPhoneNum($("#txtphonenum").val());
 				
 			  if(!bRet)
@@ -149,10 +165,12 @@
 			});
 		  //[验证码]文本框失去焦点  
 		  $("#txtyanzhengma").blur(function(){
+			  
 		  	if(!$("#txtyanzhengma").val())
 		  	{
 		  		$("#div_yanzhengma").addClass("has-error");
 		  		bRet3=false;
+		  		//alert("验证码不能为空");
 		  		return;
 		  	}
 		  	//else if($("#txtyanzhengma").val()!=code)
@@ -162,6 +180,13 @@
 		  	//	bRet3=false;
 		  	//	return;
 		  	//}
+		  	else if(getNowDate() - $("#hide_code_date").val()>1800)
+		  	{
+		  		$("#div_yanzhengma").addClass("has-error");
+		  		alert("验证码过期");
+		  		bRet3=false;
+		  		return;
+		  	}
 		  	else
 		  	{
 		  		$("#div_yanzhengma").removeClass("has-error");
@@ -341,7 +366,9 @@
 	            </div>
 	            <br/>
 	            <input type="hidden" value='${openId}' id="hide_openid" name="hide_openid">
+	            <input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 	            <button class="btn-warning btn-block btn" type="submit" id="btnStep1" name="btnStep1">下一步</button>
+
 	        </form>
 	    </div>
 	</div>

@@ -13,7 +13,7 @@ public class UnionPayCons {
     /**
      * 银联服务端ip
      */
-    public static String SERVER_HOST = "58.16.16.10"; // 58.16.16.10  58.16.11.245
+    public static String SERVER_HOST = "127.0.0.1"; // 58.16.16.10  58.16.11.245
     
     /**
      * 银联服务端端口

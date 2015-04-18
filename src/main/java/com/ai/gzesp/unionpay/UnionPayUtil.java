@@ -417,7 +417,12 @@ public class UnionPayUtil {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public static String recvMsg(byte[] msg){
+/*    public static String recvMsg(byte[] msg){
+        if(msg.length == 0){
+            log.debug("【银联支付：服务端收到报文 长度=0, 是心跳报文】");
+            return null;
+        }
+        
         if(msg.length < 4){
             log.debug("【银联支付：收到的报文字节数<4, 报文有问题，esp忽略不处理！！！ 】");
             return null;
@@ -464,11 +469,54 @@ public class UnionPayUtil {
         }
         
         //根据respMap里交易类型进行业务处理
-/*        if(xmlResp != null ){
+        if(xmlResp != null ){
             Map<String, String> respMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
             IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
             respHanler.dealResp(respMap);
-        }*/
+        }
+        
+        return xmlResp;
+    }*/
+    
+    public static String recvMsg(byte[] msg){
+      //如果收到的是心跳报文0000,则返回 0000响应,心跳报文银联也不需要我返回
+        if(msg.length == 0){
+            log.debug("【银联支付：服务端收到报文 长度=0, 是心跳报文】");
+            return null;
+        }
+        
+        //4位报文体字节长度+渠道号（16位）+加密后的xml报文体。如：0231+渠道号（16位）+加密后的xml报文体（215字节）
+        if(msg.length <= 16){
+            log.debug("【银联支付：收到的响应报文长度<=16,报文有问题，esp忽略不处理！！！ 】");
+            return null;
+        }
+        
+        //header存的是 正在报文体的字节数+16位渠道号字节数
+        int len = msg.length;
+        byte [] channel = new byte[16];
+        byte [] resp = new byte[len-16];
+        System.arraycopy(msg, 0, channel, 0, 16); //获取响应报文channelId部分
+        System.arraycopy(msg, 16, resp, 0, len-16); //获取响应报文数据部分,还未解密
+        String xmlResp = null;
+        try {
+            //解密数据
+            byte [] respDecr = DESUtil.decryptMode(resp);
+            xmlResp = new String(respDecr, UnionPayCons.charCode);
+            log.debug("【银联支付：收到的响应报文,数据部分解密后byte[]转换成xml," + xmlResp +" 】");
+            Map<String, String> xmlMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
+            log.debug("【银联支付：收到的响应报文,数据部分xml转换成map成功】");
+        } catch (Exception e) {
+            log.debug("【银联支付：收到的响应报文,数据部分解密后byte[]转换成xml再转换成map 出现异常！！！ 】");
+            e.printStackTrace();
+            return null;
+        }
+        
+        //根据respMap里交易类型进行业务处理
+        if(xmlResp != null ){
+            Map<String, String> respMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
+            IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
+            respHanler.dealResp(respMap);
+        }
         
         return xmlResp;
     }

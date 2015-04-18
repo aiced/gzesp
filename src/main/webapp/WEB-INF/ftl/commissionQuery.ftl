@@ -122,7 +122,7 @@
 	    }); 
 	    $('#totalRowCount').append('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
 	    $('#totalRow').append('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td>');
-	    $('#totalRow').append('<td><h5><label>'+totalSale+'</label></h5></td>');
+	    $('#totalRow').append('<td><h5><label>'+totalSale+'(元)</label></h5></td>');
 	    $('#totalRow').append('<td><h5><label></label></h5></td>');
     }
     
@@ -475,9 +475,9 @@
 					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 						  <td>
 					      	<#if (item.SUM_CMS_MONEY== '')>
-					      		${item.CMS_PRE_FEE}
+					      		${item.CMS_PRE_FEE}(元)
 					      	<#else>
-					      		${item.SUM_CMS_MONEY}
+					      		${item.SUM_CMS_MONEY}(元)
 					      	</#if>      
 						  </td><!-- 预期-->
 					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->

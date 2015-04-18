@@ -142,4 +142,10 @@
     	<level value="info" />
         <appender-ref ref="Console" />
     </logger>
+    
+    <logger name="org.apache.mina">
+    	<level value="debug" />
+        <appender-ref ref="Console" />
+        <appender-ref ref="DailyRolling"/>
+    </logger>
 </log4j:configuration>

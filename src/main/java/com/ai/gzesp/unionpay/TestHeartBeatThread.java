@@ -47,7 +47,7 @@ public class TestHeartBeatThread implements Runnable {
           OutputStream out = new BufferedOutputStream(socket.getOutputStream());
           out.write(heart); //发送心跳报文
           log.debug("【银联支付：esp发送心跳报文0000成功，2分钟后again】");
-          Thread.sleep(120000L);
+          Thread.sleep(30000L);
         } catch (UnsupportedEncodingException e) {
           log.debug("【银联支付：ERROR！！！esp维持长连接，生成心跳报文异常，5分钟后retry重新尝试连接！！！】");
           e.printStackTrace();

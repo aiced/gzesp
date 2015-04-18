@@ -1,5 +1,6 @@
 package com.ai.gzesp.unionpay;
 
+import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
@@ -19,9 +20,12 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
  * @since [产品/模块版本] （可选）
  */
 public class ByteArrayDecoder extends CumulativeProtocolDecoder {
+    private static Logger log = Logger.getLogger(ByteArrayDecoder.class); 
     
     public boolean doDecode(IoSession session, IoBuffer in,  ProtocolDecoderOutput out) throws Exception {
+        log.debug("【银联支付：esp收到数据包解码开始。。。】");
           if (in.remaining() > 0) {
+              log.debug("【银联支付：esp收到数据包解码， IoBuffer.remaining()= " +in.remaining()+ "】");
             // 有数据时，读取 4 字节判断消息长度
             byte[] sizeBytes = new byte[4];
 
@@ -31,16 +35,22 @@ public class ByteArrayDecoder extends CumulativeProtocolDecoder {
             // 读取钱 4 个字节
             in.get(sizeBytes);
 
+            log.debug("【银联支付：esp收到数据包解码， sizeBytes = new byte[4]; "+ new String(sizeBytes) +"】");
+            //log.debug("【银联支付：esp收到数据包解码， size= "+ NumberUtil.bytesToInt(sizeBytes, 0) + "|"+ NumberUtil.bytesToInt2(sizeBytes, 0)  +"】");
             // NumberUtil 是自己写的一个 int 转 byte[] 的工具类
-            int size = NumberUtil.bytes2int(sizeBytes);
+            //int size = NumberUtil.bytes2int(sizeBytes);
+            int size = Integer.parseInt(new String(sizeBytes));
+            log.debug("【银联支付：esp收到数据包解码， header部分长度="+size+"】");
 
             if (size > in.remaining()) {
               // 如果消息内容的长度不够，则重置（相当于不读取 size），返回 false
+              log.debug("【银联支付：esp收到数据包解码， size > in.remaining(),消息内容的长度不够，则重置（相当于不读取 size），返回 false】");
               in.reset();
               // 接收新数据，以拼凑成完整的数据~
               return false;
 
             } else {
+              log.debug("【银联支付：esp收到数据包解码， size < in.remaining(),消息内容的长度足够，开始读取byte[size]】");
               byte[] dataBytes = new byte[size];
               in.get(dataBytes, 0, size);
               out.write(dataBytes);
@@ -51,8 +61,14 @@ public class ByteArrayDecoder extends CumulativeProtocolDecoder {
               }
             }
           }
+          return false; // 处理成功，让父类进行接收下个包
+          
+/*        int size = in.remaining();
+        byte[] dataBytes = new byte[size];
+        in.get(dataBytes, 0, size);
+        out.write(dataBytes);
           // 处理成功，让父类进行接收下个包
-          return false;
+          return false;*/
         }
 
 }

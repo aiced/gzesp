@@ -51,16 +51,14 @@
     <constructor-arg>
       <!-- <bean class="org.apache.mina.filter.codec.textline.TextLineCodecFactory"/> -->
       <!-- <bean class="org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory"/> -->
-    <bean class="com.ai.gzesp.unionpay.ByteArrayCodecFactory"></bean>
+      <bean class="com.ai.gzesp.unionpay.ByteArrayCodecFactory"></bean>
     </constructor-arg>
   </bean>
   
   <!-- 日志过滤器 Mina自带日志过滤器 默认级别为debug  -->
   <bean id="loggingFilter" class="org.apache.mina.filter.logging.LoggingFilter">
-    <!--
-    <property name="messageReceivedLogLevel" ref="info"></property>
-    <property name="exceptionCaughtLogLevel" ref="info"></property>
-    -->
+<!--     <property name="messageReceivedLogLevel" ref="info"></property>
+    <property name="exceptionCaughtLogLevel" ref="info"></property> -->
   </bean>
 
   <!-- 多线程处理过滤器，为后面的操作开启多线程，一般放在编解码过滤器之后，开始业务逻辑处理 -->
@@ -70,10 +68,10 @@
   <bean id="filterChainBuilder" class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
     <property name="filters">
       <map>
-        <entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" />
+        <!-- <entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" /> -->
         <entry key="loggingFilter" value-ref="loggingFilter" />
         <entry key="codecFilter" value-ref="codecFilter" />
-        <entry key="executor" value-ref="executorFilter" />
+        <!-- <entry key="executor" value-ref="executorFilter" /> -->
       </map>
     </property>
   </bean>

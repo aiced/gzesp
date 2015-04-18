@@ -34,7 +34,7 @@ public class TestServerSocketAcceptorThread implements Runnable {
     {
         
         try {
-            serverSocket = new ServerSocket(8035);
+            serverSocket = new ServerSocket(UnionPayCons.SERVER_PORT);
             log.debug("【银联支付：esp开启serversocket服务端监听成功】");
             
             while(true){

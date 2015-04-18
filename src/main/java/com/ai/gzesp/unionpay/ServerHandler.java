@@ -27,15 +27,40 @@ public class ServerHandler extends IoHandlerAdapter {
     private UnionPayService unionPayService;
     
     private HashMap<String, IoSession> sessionMap = new HashMap();
+    
+    @Override
+    public void sessionCreated(IoSession session) throws Exception {
+        log.debug("【银联支付：服务端esp sessionCreated sessionId： " + session.getId() + "】");
+        // Empty handler
+    }
 
     @Override   
     public void sessionOpened(IoSession session) throws Exception {
-        for (Map.Entry entry : this.sessionMap.entrySet()) {
+        log.debug("【银联支付：服务端esp sessionOpened sessionId： " + session.getId() + "】");
+/*        for (Map.Entry entry : this.sessionMap.entrySet()) {
             ((IoSession) entry.getValue()).close(true);
         }
         this.sessionMap.clear();
-        this.sessionMap.put(String.valueOf(session.getId()), session);
+        this.sessionMap.put(String.valueOf(session.getId()), session);*/
     }
+    
+    @Override
+    public void sessionClosed(IoSession session) throws Exception {
+        log.debug("【银联支付：服务端esp关闭链接 sessionId： " + session.getId() + "】");
+      super.sessionClosed(session);
+    }
+
+    @Override 
+    public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
+        super.sessionIdle(session, status);
+    }
+    
+    @Override  
+    public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
+        cause.printStackTrace();
+        log.debug("【银联支付：服务端esp收到消息异常 sessionId： " + session.getId() + cause.toString() + "】");
+    }
+
     
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
@@ -60,17 +85,6 @@ public class ServerHandler extends IoHandlerAdapter {
             IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
             respHanler.dealResp(respMap);
         }
-    }
-
-    @Override
-    public void sessionClosed(IoSession session) throws Exception {
-        log.debug("【银联支付：服务端esp关闭链接 sessionId： " + session.getId() + "】");
-      super.sessionClosed(session);
-    }
-
-    @Override
-    public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
-      super.sessionIdle(session, status);
     }
 
     public UnionPayService getUnionPayService() {

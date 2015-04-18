@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.sql.GoodsSql;
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
 import com.ai.sysframe.utils.XmlUtil;
 import com.ai.wx.consts.DataConstants;
@@ -177,12 +180,25 @@ public class WXMsgController {
     	mav.addObject("title", "提现规则");
     	return mav;
     }
-    
+    @Resource 
+    GoodsSql goodsSql;
     @RequestMapping("/saleAdvance")
     public ModelAndView saleAdvance(){
-    	ModelAndView mav = new ModelAndView("wxSaleAdvance.ftl");
-    	mav.addObject("title", "销售进阶");
-    	return mav;
+    	
+//        List<Map<String, Object>> salelist = goodsSql.GetRcdList("11"); //根据能人id 查询店长推荐的列表
+    	Map rspMap = new HashMap(); 
+    	rspMap.put("rspCode", "0000");   
+    	rspMap.put("name", "weidian");   
+    	rspMap.put("rspDesc", CommonUtil.getMvcMsg("successMsg"));
+//    	rspMap.put("salelist", salelist);  
+    	rspMap.put("title", "销售进阶"); 
+    	return new ModelAndView("wxSaleAdvance.ftl", rspMap);
+    	
+    	
+    	
+//    	ModelAndView mav = new ModelAndView("wxSaleAdvance.ftl");
+//    	mav.addObject("title", "销售进阶");
+//    	return mav;
     }
     
     @RequestMapping("/more")

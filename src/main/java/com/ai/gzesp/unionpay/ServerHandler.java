@@ -36,12 +36,14 @@ public class ServerHandler extends IoHandlerAdapter {
 
     @Override   
     public void sessionOpened(IoSession session) throws Exception {
-        log.debug("【银联支付：服务端esp sessionOpened sessionId： " + session.getId() + "】");
-/*        for (Map.Entry entry : this.sessionMap.entrySet()) {
-            ((IoSession) entry.getValue()).close(true);
+        log.debug("【银联支付：服务端esp sessionOpened sessionId： " + session.getId() + "，sessionMap里原来有" + sessionMap.entrySet().size() + "个；链接】");
+        for (Map.Entry entry : this.sessionMap.entrySet()) {
+            IoSession s = ((IoSession) entry.getValue());
+            log.debug("【银联支付：服务端esp sessionMap里原来有: " + s.getId() +"】");
+            s.close(true);
         }
         this.sessionMap.clear();
-        this.sessionMap.put(String.valueOf(session.getId()), session);*/
+        this.sessionMap.put(String.valueOf(session.getId()), session);
     }
     
     @Override

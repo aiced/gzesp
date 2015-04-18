@@ -34,7 +34,7 @@ public class ClientHandler extends IoHandlerAdapter {
       super.messageReceived(session, message);
     }
 
-/*    @Override
+    @Override
     public void sessionClosed(IoSession session) throws Exception {
         log.debug("【银联支付：客户端链接关闭 sessionId： " + session.getId() + "】");
         
@@ -42,7 +42,7 @@ public class ClientHandler extends IoHandlerAdapter {
         initConnector();
         startHeartBeat(cf);
       super.sessionClosed(session);
-    }*/
+    }
 
     @Override
     public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
@@ -89,10 +89,10 @@ public class ClientHandler extends IoHandlerAdapter {
 
     private void startHeartBeat(ConnectFuture cf)
     {
-/*      stopHeartBeat = false;
+      stopHeartBeat = false;
       HeartBeatThread heartThread = new HeartBeatThread(cf);
       Thread t = new Thread(heartThread);
-      t.start();*/
+      t.start();
     }
 
     private void stopHeartBeat() {

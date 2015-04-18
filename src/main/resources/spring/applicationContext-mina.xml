@@ -71,7 +71,7 @@
         <!-- <entry key="mdcInjectionFilter" value-ref="mdcInjectionFilter" /> -->
         <entry key="loggingFilter" value-ref="loggingFilter" />
         <entry key="codecFilter" value-ref="codecFilter" />
-        <!-- <entry key="executor" value-ref="executorFilter" /> -->
+        <entry key="executor" value-ref="executorFilter" />
       </map>
     </property>
   </bean>

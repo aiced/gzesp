@@ -35,12 +35,11 @@ public class ByteArrayDecoder extends CumulativeProtocolDecoder {
             // 读取钱 4 个字节
             in.get(sizeBytes);
 
-            log.debug("【银联支付：esp收到数据包解码， sizeBytes = new byte[4]; "+ new String(sizeBytes) +"】");
+            log.debug("【银联支付：esp收到数据包解码， sizeBytes = new byte[4];size= "+ new String(sizeBytes) +"】");
             //log.debug("【银联支付：esp收到数据包解码， size= "+ NumberUtil.bytesToInt(sizeBytes, 0) + "|"+ NumberUtil.bytesToInt2(sizeBytes, 0)  +"】");
             // NumberUtil 是自己写的一个 int 转 byte[] 的工具类
             //int size = NumberUtil.bytes2int(sizeBytes);
             int size = Integer.parseInt(new String(sizeBytes));
-            log.debug("【银联支付：esp收到数据包解码， header部分长度="+size+"】");
 
             if (size > in.remaining()) {
               // 如果消息内容的长度不够，则重置（相当于不读取 size），返回 false

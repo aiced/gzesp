@@ -2,6 +2,7 @@ package com.ai.gzesp.dao.service;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDPROD;
+import com.ai.gzesp.dao.beans.TdOrdDPRODKey;
 import com.ai.gzesp.dao.persistence.TdOrdDPRODMapper;
 import java.util.List;
 import javax.annotation.Resource;
@@ -40,6 +41,16 @@ public class TdOrdDPRODDao extends ITableDao {
     }
 
     /**
+    * @Title TdOrdDPRODDao.selectByPrimaryKey
+    * @Description: 根据主键类，返回ORD_D_PROD
+    * @param key key
+    * @return TdOrdDPROD bean对象
+     */
+    public TdOrdDPROD selectByPrimaryKey(TdOrdDPRODKey key) {
+        return this.tdOrdDPRODMapper.selectByPrimaryKey(key);
+    }
+
+    /**
     * @Title TdOrdDPRODDao.selectByExample
     * @Description: 根据查询条件类，返回ORD_D_PROD结果集
     * @param example 通用查询条件类
@@ -47,6 +58,36 @@ public class TdOrdDPRODDao extends ITableDao {
      */
     public List<TdOrdDPROD> selectByExample(Criteria example) {
         return this.tdOrdDPRODMapper.selectByExample(example);
+    }
+
+    /**
+    * @Title TdOrdDPRODDao.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除ORD_D_PROD
+    * @param key key
+    * @return int  删除个数
+     */
+    public int deleteByPrimaryKey(TdOrdDPRODKey key) {
+        return this.tdOrdDPRODMapper.deleteByPrimaryKey(key);
+    }
+
+    /**
+    * @Title TdOrdDPRODDao.updateByPrimaryKeySelective
+    * @Description: 根据主键更新ORD_D_PROD部分字段
+    * @param record 要更新成为的TdOrdDPROD对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKeySelective(TdOrdDPROD record) {
+        return this.tdOrdDPRODMapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+    * @Title TdOrdDPRODDao.updateByPrimaryKey
+    * @Description: 根据主键更新ORD_D_PROD全部字段
+    * @param record 要更新成为的TdOrdDPROD对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKey(TdOrdDPROD record) {
+        return this.tdOrdDPRODMapper.updateByPrimaryKey(record);
     }
 
     /**

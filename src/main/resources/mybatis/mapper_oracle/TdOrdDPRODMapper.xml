@@ -15,6 +15,7 @@
     <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
     <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
     <result column="RES_INFO" property="resInfo" jdbcType="VARCHAR" />
+    <result column="CMS_PRE_FEE" property="cmsPreFee" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -82,7 +83,7 @@
   </sql>
   <sql id="Base_Column_List" >
     GOODS_ID, ORDER_ID, PARTITION_ID, GOODS_NAME, UNIT_PRICE, SALE_NUM, TOPAY_FEE, DERATE_FEE, 
-    DERATE_REASON, RECV_FEE, VALUES1, VALUES2, RES_INFO
+    DERATE_REASON, RECV_FEE, VALUES1, VALUES2, RES_INFO, CMS_PRE_FEE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -123,12 +124,12 @@
       GOODS_NAME, UNIT_PRICE, SALE_NUM, 
       TOPAY_FEE, DERATE_FEE, DERATE_REASON, 
       RECV_FEE, VALUES1, VALUES2, 
-      RES_INFO)
+      RES_INFO, CMS_PRE_FEE)
     values (#{goodsId,jdbcType=DECIMAL}, #{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, 
       #{goodsName,jdbcType=VARCHAR}, #{unitPrice,jdbcType=DECIMAL}, #{saleNum,jdbcType=DECIMAL}, 
       #{topayFee,jdbcType=DECIMAL}, #{derateFee,jdbcType=DECIMAL}, #{derateReason,jdbcType=VARCHAR}, 
       #{recvFee,jdbcType=DECIMAL}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}, 
-      #{resInfo,jdbcType=VARCHAR})
+      #{resInfo,jdbcType=VARCHAR}, #{cmsPreFee,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPROD" >
     insert into ORD_D_PROD
@@ -172,6 +173,9 @@
       <if test="resInfo != null" >
         RES_INFO,
       </if>
+      <if test="cmsPreFee != null" >
+        CMS_PRE_FEE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="goodsId != null" >
@@ -212,6 +216,9 @@
       </if>
       <if test="resInfo != null" >
         #{resInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsPreFee != null" >
+        #{cmsPreFee,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -263,6 +270,9 @@
       <if test="record.resInfo != null" >
         RES_INFO = #{record.resInfo,jdbcType=VARCHAR},
       </if>
+      <if test="record.cmsPreFee != null" >
+        CMS_PRE_FEE = #{record.cmsPreFee,jdbcType=DECIMAL},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -282,7 +292,8 @@
       RECV_FEE = #{record.recvFee,jdbcType=DECIMAL},
       VALUES1 = #{record.values1,jdbcType=VARCHAR},
       VALUES2 = #{record.values2,jdbcType=VARCHAR},
-      RES_INFO = #{record.resInfo,jdbcType=VARCHAR}
+      RES_INFO = #{record.resInfo,jdbcType=VARCHAR},
+      CMS_PRE_FEE = #{record.cmsPreFee,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -323,6 +334,9 @@
       <if test="resInfo != null" >
         RES_INFO = #{resInfo,jdbcType=VARCHAR},
       </if>
+      <if test="cmsPreFee != null" >
+        CMS_PRE_FEE = #{cmsPreFee,jdbcType=DECIMAL},
+      </if>
     </set>
     where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
       and ORDER_ID = #{orderId,jdbcType=DECIMAL}
@@ -339,7 +353,8 @@
       RECV_FEE = #{recvFee,jdbcType=DECIMAL},
       VALUES1 = #{values1,jdbcType=VARCHAR},
       VALUES2 = #{values2,jdbcType=VARCHAR},
-      RES_INFO = #{resInfo,jdbcType=VARCHAR}
+      RES_INFO = #{resInfo,jdbcType=VARCHAR},
+      CMS_PRE_FEE = #{cmsPreFee,jdbcType=DECIMAL}
     where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
       and ORDER_ID = #{orderId,jdbcType=DECIMAL}
   </update>

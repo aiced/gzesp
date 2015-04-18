@@ -334,8 +334,8 @@ public class CoreService {
         buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >☞点这立即了解！</a>").append("\n").append("\n");  
         buffer.append("4.  销售进阶").append("\n");  
         buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/saleAdvance\" >☞点这立即学习！</a>").append("\n").append("\n");  
-        buffer.append("5.  更多互动咨询").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >☞点这立即打开！</a>").append("\n").append("\n");  
+//        buffer.append("5.  更多互动咨询").append("\n");  
+//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >☞点这立即打开！</a>").append("\n").append("\n");  
      
         return buffer.toString();        
     }

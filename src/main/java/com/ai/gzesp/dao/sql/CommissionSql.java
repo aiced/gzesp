@@ -98,9 +98,9 @@ public class CommissionSql {
 		sb.append("T5 as (");
 		sb.append("select T3.ORDER_ID,T4.USER_ID,ACT_STATUS,SUM_CMS_MONEY,CMS_DAY,CREATE_TIME,GOODS_ID,GOODS_NAME,CMS_PRE_FEE,RECEIVER_NAME from T3,T4 where T3.order_id=T4.order_id");
 		sb.append(")");
-		sb.append(" select count (case when create_time>=trunc(sysdate-1) and create_time<trunc(sysdate) then 1 else null end) yesterday_commison,");
-		sb.append("count(case when create_time>=trunc(sysdate,'month') and create_time<trunc(add_months(sysdate,1),'month') then 1 else null end) month_commison,");
-		sb.append("count(1) total_count");
+		sb.append(" select sum(case when create_time >= trunc(sysdate - 1) and create_time < trunc(sysdate) then nvl(SUM_CMS_MONEY, CMS_PRE_FEE) else 0 end) yesterday_commison,");
+		sb.append("sum(case when create_time >= trunc(sysdate, 'month') and create_time < trunc(add_months(sysdate, 1), 'month') then nvl(SUM_CMS_MONEY, CMS_PRE_FEE) else null end) month_commison,");
+		sb.append("sum(nvl(SUM_CMS_MONEY, CMS_PRE_FEE)) total_count");
 		sb.append(" from T5 ");
 		sb.append("where User_id='"+strUserID+"'");
 		

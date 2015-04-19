@@ -278,7 +278,6 @@
 	                		</#list>
 	                	</#if>
 					</tr> -->
-	
 	            </table>
 	        </div>
 	        <div class="list-group">

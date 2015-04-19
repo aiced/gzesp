@@ -93,7 +93,7 @@ public class CommissionSql {
 		sb.append("select T1.ORDER_ID,T1.ACT_STATUS,T2.SUM_CMS_MONEY,T2.CMS_DAY,T1.Open_DATE from T1,T2 where T1.order_id=T2.order_id");
 		sb.append("),");
 		sb.append("T4 as(");
-		sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,b.CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");		
+		sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(b.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");		
 		sb.append("),");
 		sb.append("T5 as (");
 		sb.append("select T3.ORDER_ID,T4.USER_ID,ACT_STATUS,SUM_CMS_MONEY,CMS_DAY,CREATE_TIME,GOODS_ID,GOODS_NAME,CMS_PRE_FEE,RECEIVER_NAME from T3,T4 where T3.order_id=T4.order_id");
@@ -145,16 +145,16 @@ public class CommissionSql {
 		sb.append("T4 as(");
 		if (strFlag.equals("1")) //按照帐期查询，暂时先这样写着
 		{
-			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,b.CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");		
+			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(b.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");		
 		}
 		else if (strFlag.equals("2")) //按照订单时间查询
 		{
-			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,b.CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");			
+			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(b.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");			
 			sb.append(" and a.CREATE_TIME >=to_date('"+strStartDate+"','yyyy-mm-dd') and a.CREATE_TIME < to_date('"+strEndDate+"','yyyy-mm-dd')+1");
 		}
 		else //刚一进来，默认是当天的时间 
 		{
-			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,b.CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");
+			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(b.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");
 			sb.append(" and a.CREATE_TIME >=to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') and a.CREATE_TIME < to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')+1");
 		}
 

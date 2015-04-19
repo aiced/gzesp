@@ -4,7 +4,7 @@
 	        	</div>
         	<#else>
 				<#list orderList as item>
-		           <div class="order_middle">
+		           <div class="order_middle" onclick="doneClick(this);">
 		           	   <input type="hidden" name="itemindx${item_index}" id="itemindex${item_index}" value=${item_index}>
 		               <div class="order_contain">
 		                   <div class="order_contain_top">

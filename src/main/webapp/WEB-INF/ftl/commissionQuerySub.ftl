@@ -1,11 +1,11 @@
 <#if (commList?size==0)>
-	您没有佣金
+	您没有收益
 <#else>
 <table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
     <tr>
         <th><div class="th_title">商品名称</div></th>
         <th><div class="th_title">订单详情</div></th>
-        <th><div class="th_title">收益</div></th>
+        <th><div class="th_title">收益(元)</div></th>
         <th>
 				<div class="btn-group" role="group" aria-label="...">
 					<div class="btn-group" role="group">
@@ -37,9 +37,9 @@
 	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 		  <td>
 	      	<#if (item.SUM_CMS_MONEY== '')>
-	      		${item.CMS_PRE_FEE}(元)
+	      		${item.CMS_PRE_FEE}
 	      	<#else>
-	      		${item.SUM_CMS_MONEY}(元)
+	      		${item.SUM_CMS_MONEY}
 	      	</#if>      
 		  </td><!-- 预期-->
 	     

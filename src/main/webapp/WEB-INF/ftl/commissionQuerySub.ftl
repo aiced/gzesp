@@ -7,7 +7,7 @@
         <th><div class="th_title">订单详情</div></th>
         <th><div class="th_title">收益(元)</div></th>
         <th>
-				<div class="btn-group" role="group" aria-label="...">
+				<div class="btn-group" role="group">
 					<div class="btn-group" role="group">
 						<div class="dropdown-toggle"
 							data-toggle="dropdown" aria-expanded="false">
@@ -37,9 +37,9 @@
 	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 		  <td>
 	      	<#if (item.SUM_CMS_MONEY== '')>
-	      		${item.CMS_PRE_FEE}
+	      		${(item.CMS_PRE_FEE/1000)?string("#.##")}
 	      	<#else>
-	      		${item.SUM_CMS_MONEY}
+	      		${(item.SUM_CMS_MONEY/1000)?string("#.##")}
 	      	</#if>      
 		  </td><!-- 预期-->
 	     

@@ -272,9 +272,9 @@
 		                    <td class="total_money">累计收益(元)<br/><div style="text-align: center;">0</div></td>	                		
 		                <#else>
 	                		<#list commissionList as item>
-	                	    	<td class="yesterday_money">昨日收益(元)<br/><div style="text-align: center;">${item.yesterday_commison}</div></td>
-	                    		<td class="month_money">本月收益(元)<br/><div style="text-align: center;">${item.month_commison}</div></td>
-	                    		<td class="total_money">累计收益(元)<br/><div style="text-align: center;">${item.total_count}</div></td>
+	                	    	<td class="yesterday_money">昨日收益(元)<br/><div style="text-align: center;">${(item.yesterday_commison/1000)?string("#.##")}</div></td>
+	                    		<td class="month_money">本月收益(元)<br/><div style="text-align: center;">${(item.month_commison/1000)?string("#.##")}</div></td>
+	                    		<td class="total_money">累计收益(元)<br/><div style="text-align: center;">${(item.total_count/1000)?string("#.##")}</div></td>
 	                		</#list>
 	                	</#if>
 					</tr>

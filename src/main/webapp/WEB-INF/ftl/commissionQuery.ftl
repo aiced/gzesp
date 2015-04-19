@@ -374,7 +374,7 @@
 
 		.dropdown-menu
 		{
-			min-width:70px;
+			min-width:80px;
 		}
 
     </style>
@@ -477,9 +477,9 @@
 					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 						  <td>
 					      	<#if (item.SUM_CMS_MONEY== '')>
-					      		${item.CMS_PRE_FEE}
+					      		${(item.CMS_PRE_FEE/1000)?string("#.##")}
 					      	<#else>
-					      		${item.SUM_CMS_MONEY}
+					      		${(item.SUM_CMS_MONEY/1000)?string("#.##")}
 					      	</#if>      
 						  </td><!-- 预期-->
 					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->

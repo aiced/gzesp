@@ -245,7 +245,9 @@
                     <div class="media-body">
                         <div><label>${GOODS_NAME}</label></div>
                         <div>
-                            <div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="custRefund?orderid=${ORDER_ID}">退款</a></div>
+                        	
+                        
+                            <div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="../custRefund?orderid=${ORDER_ID}">退款</a></div>
                         </div>
                         <div class="div_clear"></div>
                         <br/>
@@ -270,11 +272,12 @@
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
                 <div class="mid_2_div2">
-                	物流单号：${EXPRESS_ID}
+                   	 物流公司：${EXPRESS_COMPNAY}
                 </div>
                 <div class="mid_2_div2">
-                   	 物流信息：快件正在配送
+                	物流单号：${EXPRESS_ID}
                 </div>
+
                 <div class="div_line"></div>
                 <div class="mid_2_div3">
                     <div class="mid_2_div3_left">
@@ -309,9 +312,9 @@
                    	 下单时间：${ORDER_TIME}
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <div style="text-align: center;border: 2px solid #91CA7D;float: right;width: 60px;color:#91CA7D;margin-top: 10px;margin-right: 10px;margin-bottom:30px;background-color: #ffffff;font-size: 16px;">评价</div>
-            </div>
+            </div> -->
         </div>
     </div>
     

@@ -53,7 +53,7 @@
     <script src="${resRoot}/js/date_iscroll.js?v=${resVer}"></script>-->
     <script type="text/javascript">
     
-    //[点击佣金列表]
+    //[点击收益列表]
     function doneClick(obj)
     {
     	//var tdlist = $(obj).find('td');
@@ -277,9 +277,8 @@
         .query_info_top
         {
             background: #ffffff;
-            height:80px;
-            line-height: 80px;
-
+            height:120px;
+            padding:10px;
         }
         .query_info_detail
         {
@@ -302,9 +301,8 @@
         }
         .query_info_top_left
         {
-            width:18%;
+            width:25%;
             float: left;
-            margin-left: 7px;
         }
         select
         {
@@ -314,9 +312,9 @@
 
         .query_info_top_middle
         {
-            width:50%;
-            float: left;
-            margin-left: 20px;
+            width:70%;
+            float: right;
+
         }
         .query_info_top_right
         {
@@ -395,11 +393,14 @@
 	    <form>
 	        <div>
 	            <div class="query_info_top">
-	              <!-- <h4><div class="query_info_top_left"><label>佣金帐期</label></div></h4> -->
+	             <div style="height:50px;line-height: 50px;">
+	             
+	             
+	              <!-- <h4><div class="query_info_top_left"><label>收益帐期</label></div></h4> -->
 	              	<div class="query_info_top_left">
 		                <select name="selSearch" id="selSearch">
 		                		<option value="2">订单日期</option>
-								<!-- <option value="1">佣金帐期</option> -->
+								<!-- <option value="1">收益帐期</option> -->
 								
 		                </select>
 	           		</div>
@@ -415,14 +416,15 @@
 							<div class="order_top_middle3">
 								<input id="endTime" name="endTime" value="" />
 							</div>
-							
 							<!-- 这句和日历控件有关千万别忘掉 -->
 						</div>
 						<!--<div id="datePlugin"></div>-->
-
 					</div>
-	                <div class="query_info_top_right">
-	                    <button class="btn btn-warning" name="btnselect" id="btnselect" type="button">查询</button>
+					<div class="query_info_top_clear"></div>
+					</div>
+					<br/>
+	                <div>
+	                    <button class="btn btn-warning btn-block" name="btnselect" id="btnselect" type="button">查询</button>
 	                </div>
 
             		<input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
@@ -433,17 +435,17 @@
 	    </form>
 
 	    <div class="query_info_detail">
-	        <h5><label>当月佣金明细</label></h5>
+	        <h5><label>当月收益明细</label></h5>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
-					您没有佣金
+					您没有收益
 				<#else>
 				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
 				    <tr>
 				        <!--<th>序号</th>-->
 				        <th><div class="th_title">商品名称</div></th>
 				        <th><div class="th_title">订单详情</div></th>
-				        <th><div class="th_title">收益</div></th>
+				        <th><div class="th_title">收益(元)</div></th>
 				        <th>
 							<div class="btn-group" role="group" aria-label="...">
 								<div class="btn-group" role="group">
@@ -475,9 +477,9 @@
 					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 						  <td>
 					      	<#if (item.SUM_CMS_MONEY== '')>
-					      		${item.CMS_PRE_FEE}(元)
+					      		${(item.CMS_PRE_FEE/1000)?string("#.##")}
 					      	<#else>
-					      		${item.SUM_CMS_MONEY}(元)
+					      		${(item.SUM_CMS_MONEY/1000)?string("#.##")}
 					      	</#if>      
 						  </td><!-- 预期-->
 					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->
@@ -509,7 +511,7 @@
 	    </div>
 		<div >
 	        <!-- <div class="query_info_bottom">
-				温馨提示：我们每天凌晨4点根据用户状态计算佣金收益，处于冻结状态的佣金可能是未到计算时点或号码还没有激活。
+				温馨提示：我们每天凌晨4点根据用户状态计算收益收益，处于冻结状态的收益可能是未到计算时点或号码还没有激活。
 	    	</div> -->
 		</div>
 

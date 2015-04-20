@@ -24,7 +24,7 @@ public class WeShopCommissionDetailController {
 	    	ModelAndView mav = new ModelAndView("commissionDetail.ftl");
 	        //从数据库获取信息赋值
 	        
-	        mav.addObject("title", "佣金查询");
+	        mav.addObject("title", "收益查询");
 	//	        mav.addObject("weixin", "1306520198@qq.com"); 
 	        
 	        return mav;

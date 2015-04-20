@@ -215,8 +215,8 @@
 	            <div class="top_container">
 	                <div>订单编号：${refundInfo.order_id}</div>
 	                <div>退款金额：${refundInfo.unit_price}元</div>
-	                <div style="font-weight: bolder">退款方式：</div>
-	                <div>原路返回（按照您原来支付的方式进行原来退回退款）</div>
+	                <!-- <div style="font-weight: bolder">退款方式：</div>
+	                <div>原路返回（按照您原来支付的方式进行原来退回退款）</div> -->
 	                <input type="hidden" value='${refundInfo.order_id}' id="hide_order_id" name="hide_order_id">
 	                <input type="hidden" value='${refundInfo.unit_price}' id="hide_unit_price" name="hide_unit_price">
 	                <input type="hidden" value='${refundInfo.Partition_Id}' id="hide_Partition_Id" name="hide_Partition_Id">

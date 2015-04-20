@@ -62,6 +62,13 @@
 	
 	    }    
     
+	    function doneClick(obj)
+	    {
+        	var formid = $(obj).find('form');
+        	formid.submit();
+	    }
+	  
+	  
         $(function(){ 
         	var currYear = (new Date()).getFullYear();	
     		var opt={};
@@ -132,11 +139,11 @@
             	return true;
             }
             //[点击订单列表]
-            $(".order_middle").click(function(){
-            	//alert($("#itemindex").val());
-            	var formid = $(this).find('form');
-            	formid.submit();
-            });
+            //$(".order_middle").click(function(){
+            //	//alert($("#itemindex").val());
+            //	var formid = $(this).find('form');
+            //	formid.submit();
+            //});
  			           
             //[查询]按钮点击
             $("#btnselect").click(function(){
@@ -218,7 +225,7 @@
         }
         input
         {
-            width: 80px;
+            width: 100%;
             height: 34px;
         }
         .div_line
@@ -329,7 +336,7 @@
             <div class="order_top_left"><h5><label>订单号</label></h5></div>
             
             <div class="order_top_middle">
-				<input type="text" name="txtorderid" id="txtorderid" style="width:200px;" value=""/>
+				<input type="text" name="txtorderid" id="txtorderid" value=""/>
             </div>
             
             <!-- <div class="order_top_right"> -->
@@ -355,7 +362,7 @@
 	        	</div>
         	<#else>
 				<#list orderList as item>
-		           <div class="order_middle">
+		           <div class="order_middle" onclick="doneClick(this);">
 		           	   <input type="hidden" name="itemindx${item_index}" id="itemindex${item_index}" value=${item_index}>
 		               <div class="order_contain">
 		                   <div class="order_contain_top">
@@ -393,9 +400,9 @@
 		                           <img src="${imageRoot}${item.PHOTO_LINKS}" width="50" height="65">
 		                       </div>
 		                       <div class="order_contain_middle_middle">
-		                           <h4><div>订单编号：${item.ORDER_ID}</div></h4>
-		                           <h4><div>订单金额：${item.INCOME_MONEY}元</div></h4>
-		                           <h4><div>下单时间：${item.ORDER_TIME}</div></h4>
+		                           <h5><div>订单编号：${item.ORDER_ID}</div></h5>
+		                           <h5><div>订单金额：${item.INCOME_MONEY}元</div></h5>
+		                           <h5><div>下单时间：${item.ORDER_TIME}</div></h5>
 		                       </div>
 		                       <div class="order_contain_middle_right">
 		                           <img src="${resRoot}/image/orderQuery/jiantou.png" width="9" height="15">

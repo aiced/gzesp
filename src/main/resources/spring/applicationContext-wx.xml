@@ -9,6 +9,8 @@
 	 <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 	 </context:component-scan>  
 	 
+	<bean id="tdAurDAUTHINFODao" class="com.ai.gzesp.dao.service.TdAurDAUTHINFODao" />
+	
 <!-- 	<task:scheduled-tasks>    -->
 <!--     	<task:scheduled ref="wxTimeTask" method="run" cron="0 */3 * * * ?" />    -->
 <!-- 	</task:scheduled-tasks>   -->

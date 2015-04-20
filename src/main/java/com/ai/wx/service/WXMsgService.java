@@ -1,28 +1,24 @@
 package com.ai.wx.service;
 
-import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ai.gzesp.dao.WeShopDao;
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
-import com.ai.wx.consts.MessageType;
+
 
 @Service
 public class WXMsgService {
 	
 	@Resource
-	private TdAurDAUTHINFODao tdAurDAUTHINFODao;
+	TdAurDAUTHINFODao tdAurDAUTHINFODao;
 
 //	public void handleMsg(Map<String,String> info, HttpServletResponse response) throws IOException {
 //	    	String msgType = info.get(MessageType.XML_ATTR_MSG_TYPE);

@@ -42,7 +42,7 @@ function selConBack2Main(data) {
 //	$('#call').text(tmp[0]);
 //	$('#msg').text(tmp[1]);
 //	$('#flow').text(tmp[2]);
-	$('#conDesc').text(data.packVal);
+	//$('#conDesc').text(data.packVal);
 	
 	var conAttrVal1=data.resId+"|"+"PACKRES"+"|"+data.conType+"|"+data.packVal;
 	var conAttrVal2=data.resId+"|"+"PAGERES"+"|"+data.conPeriod+"|"+data.pageVal;

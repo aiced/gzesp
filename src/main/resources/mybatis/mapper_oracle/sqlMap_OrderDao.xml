@@ -14,14 +14,9 @@
             <if test="keyword != null">
                and a.serial_number like '%'||#{keyword}||'%'
             </if>
-          <choose>
-		    <when test="eparchy_code != null">
+		    <if test="eparchy_code != null">
 			  and a.eparchy_code = #{eparchy_code}
-			</when>  
-		    <otherwise>
-			  and a.eparchy_code = '850'
-		    </otherwise>
-	      </choose>            
+			</if>              
             <if test="nice_rule != null">
                and a.nice_rule = #{nice_rule}
             </if>

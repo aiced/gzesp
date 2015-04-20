@@ -60,6 +60,51 @@ public class UnionPayParam {
      */
     private String sign_code;
     
+    /**
+     * 调用绑定接口的系统跟踪号
+     */
+    private String bind_sys_trade_no;
+    
+    /**
+     * 调用绑定接口的请求时间戳
+     */
+    private String bind_time_stamp;
+    
+    /**
+     * 调用绑定接口 业务类型
+     */
+    private String bind_trade_type;
+    
+    /**
+     * 调用支付接口的系统跟踪号
+     */
+    private String pay_sys_trade_no;
+    
+    /**
+     * 调用支付接口的请求时间戳
+     */
+    private String pay_time_stamp;
+    
+    /**
+     * 调用支付接口 业务类型
+     */
+    private String pay_trade_type;    
+    
+    /**
+     * 调用绑定解除接口的系统跟踪号
+     */
+    private String bindCacnel_sys_trade_no;
+    
+    /**
+     * 调用绑定解除接口的请求时间戳
+     */
+    private String bindCacnel_time_stamp;
+    
+    /**
+     * 调用绑定解除接口 业务类型
+     */
+    private String bindCacnel_trade_type;    
+    
     
     public UnionPayParam(){
         //空构造，spring 转换对象时需要
@@ -144,7 +189,79 @@ public class UnionPayParam {
     public void setSign_code(String sign_code) {
         this.sign_code = sign_code;
     }
-    
-    
+
+	public String getBind_sys_trade_no() {
+		return bind_sys_trade_no;
+	}
+
+	public void setBind_sys_trade_no(String bind_sys_trade_no) {
+		this.bind_sys_trade_no = bind_sys_trade_no;
+	}
+
+	public String getBind_time_stamp() {
+		return bind_time_stamp;
+	}
+
+	public void setBind_time_stamp(String bind_time_stamp) {
+		this.bind_time_stamp = bind_time_stamp;
+	}
+
+	public String getPay_sys_trade_no() {
+		return pay_sys_trade_no;
+	}
+
+	public void setPay_sys_trade_no(String pay_sys_trade_no) {
+		this.pay_sys_trade_no = pay_sys_trade_no;
+	}
+
+	public String getPay_time_stamp() {
+		return pay_time_stamp;
+	}
+
+	public void setPay_time_stamp(String pay_time_stamp) {
+		this.pay_time_stamp = pay_time_stamp;
+	}
+
+	public String getBind_trade_type() {
+		return bind_trade_type;
+	}
+
+	public void setBind_trade_type(String bind_trade_type) {
+		this.bind_trade_type = bind_trade_type;
+	}
+
+	public String getPay_trade_type() {
+		return pay_trade_type;
+	}
+
+	public void setPay_trade_type(String pay_trade_type) {
+		this.pay_trade_type = pay_trade_type;
+	}
+
+	public String getBindCacnel_sys_trade_no() {
+		return bindCacnel_sys_trade_no;
+	}
+
+	public void setBindCacnel_sys_trade_no(String bindCacnel_sys_trade_no) {
+		this.bindCacnel_sys_trade_no = bindCacnel_sys_trade_no;
+	}
+
+	public String getBindCacnel_time_stamp() {
+		return bindCacnel_time_stamp;
+	}
+
+	public void setBindCacnel_time_stamp(String bindCacnel_time_stamp) {
+		this.bindCacnel_time_stamp = bindCacnel_time_stamp;
+	}
+
+	public String getBindCacnel_trade_type() {
+		return bindCacnel_trade_type;
+	}
+
+	public void setBindCacnel_trade_type(String bindCacnel_trade_type) {
+		this.bindCacnel_trade_type = bindCacnel_trade_type;
+	}
+	
+	
 
 }

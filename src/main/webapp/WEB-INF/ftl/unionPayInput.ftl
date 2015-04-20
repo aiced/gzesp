@@ -518,7 +518,7 @@
                            id_card_no:$('#txtCCPersonId').val(), phone_no:$('#txtCCphonenum').val(), full_name:$('#txtCCname').val()};            
             }
             //弹出gif动画，支付中请等待
-            $('#myModal').modal({
+            $('#paying').modal({
                keyboard: false,
                backdrop: 'static'
             }) ;            
@@ -526,12 +526,18 @@
 	        $.ajax({
 		      type: "POST",
 		      contentType:"application/json", //发送给服务器的内容编码类型
-		      url: "${base}/pay/unionPay/pay/${order_id}/${fee}",
+		      url: "${base}/pay/unionPay/pay",
 		      dataType:"json", //预期服务器返回的数据类型
 		      data: JSON.stringify(param), //服务器只能接收json字符串
 		      success: function(data){
-			    alert(data.status);
-			    $('#myModal').modal('toggle');
+			    $('#paying').modal('toggle'); //关闭gif
+			    //alert(data.detail);
+			    $('#payResultDetail').html(data.status + ':' + data.detail);
+			    //弹出支付结果框
+			    $('#payResult').modal({
+                  keyboard: false,
+                  backdrop: 'static'
+                }) ;            
 		      }
 		    });
         }	
@@ -592,7 +598,7 @@
 							<!--输入有效期-->
 							<div class="form-group-lg" id="div_txtXYDate">
 								<label for="txtXYDate" class="sr-only"></label>
-								<input type="text" class="form-control" id="txtXYDate" placeholder="请输入信用卡有效期例如:0115" >
+								<input type="text" class="form-control" id="txtXYDate" placeholder="信用卡有效期年份月份如:1504" >
 							</div>
 							<br/>
 							<!--输入手机号-->
@@ -672,12 +678,30 @@
 	</div>
 
     <!-- 正在支付弹出框 -->    
-    <div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div id="paying" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content" style="padding:5px;height:180px;text-align:center">
             <img src="${resRoot}/image/paying.gif" alt="" />
         </div>
       </div>
-    </div>  
+    </div>
+    <!-- 支付结果弹出框 -->    
+    <div id="payResult" class="modal fadebs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">支付结果</h4>
+          </div>
+          <div class="modal-body">
+            <p id="payResultDetail" ></p>
+          </div>
+          <div class="modal-footer">
+            <a class="btn btn-warning" href="${base}/customer/custOrderQuery" role="button">订单查询</a>
+            <a class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">再去逛逛</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->    
+           
 </body>
 </html>

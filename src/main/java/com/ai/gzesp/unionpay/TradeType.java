@@ -15,6 +15,7 @@ public enum TradeType {
     payProxy("0250", "代付请求"),
     payCancel("0970", "支付撤消(指当日交易撤消)请求"),
     payRefund("0900", "支付退款(非当日交易)请求"),
+    bindCancel("0150", "银行卡绑定关系撤销"),
     
     bindQry("0100", "银行卡绑定关系查询请求"),
     payQry("0300", "支付结果查询请求"),
@@ -28,6 +29,7 @@ public enum TradeType {
     payProxyRsp("0260", "代付响应"),
     payCancelRsp("0980", "支付撤消(指当日交易撤消)响应"),
     payRefundRsp("0910", "支付退款(非当日交易)响应"),
+    bindCancelRsp("0160", "银行卡绑定关系撤销响应"),
     
     bindQryRsp("0110", "银行卡绑定关系查询响应"),
     payQryRsp("0210", "支付结果查询响应"),

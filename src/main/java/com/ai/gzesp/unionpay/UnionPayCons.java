@@ -13,7 +13,7 @@ public class UnionPayCons {
     /**
      * 银联服务端ip
      */
-    public static String SERVER_HOST = "58.16.16.10"; // 58.16.16.10  58.16.11.245
+    public static String SERVER_HOST = "58.16.16.10"; // 58.16.16.10  58.16.11.245 127.0.0.1
     
     /**
      * 银联服务端端口
@@ -105,6 +105,6 @@ public class UnionPayCons {
     /**
      * 银联接口请求发出后，轮询等待结果的超时时间 毫秒
      */
-    public static int WAIT_TIMEOUT = 20*1000;
+    public static int WAIT_TIMEOUT = 40*1000;
 
 }

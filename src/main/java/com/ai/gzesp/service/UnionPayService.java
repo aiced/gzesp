@@ -1,8 +1,8 @@
 package com.ai.gzesp.service;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,6 @@ import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayAttrs;
 import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.unionpay.UnionPayUtil;
-import com.ai.gzesp.utils.DESUtil;
 import com.ai.gzesp.utils.DateUtils;
 import com.ai.gzesp.utils.MD5Util;
 
@@ -259,7 +258,7 @@ public class UnionPayService {
                 e.printStackTrace();
             } //每次轮询等待4秒钟
             Map<String, String> row = unionPayDao.queryPaylog(param.getPay_sys_trade_no()); //查询支付日志表里是否已经有银联返回的结果了
-            if(row != null && row.get("RESULT_CODE") != null){
+            if(row != null && StringUtils.isBlank(row.get("RESULT_CODE"))){
                 if(UnionPayCons.RESULT_CODE_SUCCESS.equals(row.get("RESULT_CODE"))){
                     result.put("status", UnionPayCons.RESULT_CODE_SUCCESS);
                     result.put("detail", "支付成功！");

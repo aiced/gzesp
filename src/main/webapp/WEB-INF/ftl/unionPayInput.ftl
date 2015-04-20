@@ -598,7 +598,7 @@
 							<!--输入有效期-->
 							<div class="form-group-lg" id="div_txtXYDate">
 								<label for="txtXYDate" class="sr-only"></label>
-								<input type="text" class="form-control" id="txtXYDate" placeholder="请输入信用卡有效期例如:0115" >
+								<input type="text" class="form-control" id="txtXYDate" placeholder="信用卡有效期年份月份如:1504" >
 							</div>
 							<br/>
 							<!--输入手机号-->

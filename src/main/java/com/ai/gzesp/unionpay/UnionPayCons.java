@@ -13,7 +13,7 @@ public class UnionPayCons {
     /**
      * 银联服务端ip
      */
-    public static String SERVER_HOST = "127.0.0.1"; // 58.16.16.10  58.16.11.245
+    public static String SERVER_HOST = "127.0.0.1"; // 58.16.16.10  58.16.11.245 127.0.0.1
     
     /**
      * 银联服务端端口
@@ -61,7 +61,8 @@ public class UnionPayCons {
     public static String desKey = "yvo0sovt414fakqwvchs70b3";   
  
     /**
-     * 银联接口md5加密密钥:，长度为32字节
+     * 银联接口md5加密密钥:，长度为32字节，
+     * 此秘钥不能随便改，签约表里存放的签约号是通过此秘钥加密的,改了之后解密就不对了
      */
     public static String md5Key = "8396596f6e94b58f03d1cbaa800b2bd0";       
     
@@ -92,9 +93,14 @@ public class UnionPayCons {
     public static String RESULT_CODE_SUCCESS = "00";
     
     /**
-     * 银联接口请求发出后，轮询等待结果的间隔时间 毫秒
+     * 银联绑定接口请求发出后，轮询等待结果的间隔时间 毫秒，银联绑定接口返回很快，所以1秒比较合适
      */
-    public static int SLEEP_INTERVAL = 5*1000;
+    public static int SLEEP_INTERVAL_BIND = 1000;
+    
+    /**
+     * 银联支付接口请求发出后，轮询等待结果的间隔时间 毫秒，银联支付接口要12秒左右才能返回结果，4秒一循环比较合适
+     */
+    public static int SLEEP_INTERVAL_PAY = 4*1000;
     
     /**
      * 银联接口请求发出后，轮询等待结果的超时时间 毫秒

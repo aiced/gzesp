@@ -20,6 +20,7 @@ import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.unionpay.UnionPayUtil;
 import com.ai.gzesp.utils.DESUtil;
 import com.ai.gzesp.utils.DateUtils;
+import com.ai.gzesp.utils.MD5Util;
 
 /**
  * 支付入口<br> 
@@ -97,7 +98,7 @@ public class PayController {
     }   
 
     /**
-     * 银联支付：调用支付接口 <br>
+     * 银联支付：调用绑定和支付接口 <br>
      * 〈功能详细描述〉
      *
      * @param param
@@ -105,28 +106,73 @@ public class PayController {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    @RequestMapping("/unionPay/pay/{order_id}/{fee}")
+    @RequestMapping("/unionPay/pay")
     @ResponseBody
     public Map<String, String> unionPayPay(@RequestBody UnionPayParam param){
-        Map<String, String> result;
+        Map<String, String> result = new HashMap<String, String>();
         
         //判断校验参数
-
-        try {
-            result = unionPayService.bindAndPay(param);
-        } catch (Exception e) {
-            e.printStackTrace();
-            result = new HashMap<String, String>();
-            result.put("status", "E00");
-            result.put("detail", "支付失败！");
-        }
         
-        //如果支付成功返回成功页面,失败返回失败页面
-/*        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
+        //逻辑放controller是因为service里都有事务控制，没法分开
+        try {
+			//查询是否有签约号，如果有直接用来调支付接口，没有则调绑定接口获取签约号，然后再支付接口
+			Map<String, String> signCodeRow = unionPayService.querySignCode(param.getBank_card_no());
+			
+			if(signCodeRow == null){
+				unionPayService.insertBindlogAndSignCode(param, result); //插日志
+				if(!result.isEmpty()){
+					return result; //非空表示有错误代码了，返回给界面，不继续往下执行了
+				}
+				unionPayService.sendBindReq(param, result);  //调绑定接口
+				if(!result.isEmpty()){
+					return result; 
+				}
+				unionPayService.waitForBindResp(param, result); //等待绑定返回签约号
+				if(!result.isEmpty()){
+					return result; 
+				}
+				
+				//以上签约都成功了，则开始调用支付接口
+				unionPayService.insertPaylog(param, result);
+				if(!result.isEmpty()){
+					return result; 
+				}
+				unionPayService.sendPayReq(param, result);
+				if(!result.isEmpty()){
+					return result; 
+				}
+				unionPayService.waitForPayResp(param, result);
+				if(!result.isEmpty()){
+					return result; 
+				}
+			}
+			else{
+			    //如果根据卡号捞到记录，则要校验输入的值和表里的信息是否都一致
+			    //boolean flag = checkParam(param, signCodeRow, result);
+			    
+			    param.setSign_code(MD5Util.convertMD5(signCodeRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
+				
+			    unionPayService.insertPaylog(param, result);
+				if(!result.isEmpty()){
+					return result; 
+				}
+				unionPayService.sendPayReq(param, result);
+				if(!result.isEmpty()){
+					return result; 
+				}
+				unionPayService.waitForPayResp(param, result);
+				if(!result.isEmpty()){
+					return result; 
+				}
+			}
+			
+			result.put("status", "E11");
+            result.put("detail", "支付失败！");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			result.put("status", "E12");
+            result.put("detail", "支付失败！");
+		}      
         
         return result;
     }
@@ -219,5 +265,55 @@ public class PayController {
         return null;
     } 
         
+    }
+    
+    @RequestMapping("/unionPay/bindCancel/{bank_card_no}")
+    @ResponseBody
+    public Map<String, String> bindCancel(@PathVariable("bank_card_no") String bank_card_no){
+        Map<String, String> result = new HashMap<String, String>();
+        
+        UnionPayParam param = new UnionPayParam();
+        param.setBank_card_no(bank_card_no);
+        
+        //查询是否有签约号
+		Map<String, String> signCodeRow = unionPayService.querySignCode(bank_card_no);
+		if(signCodeRow == null){
+			result.put("status", "E11");
+        	result.put("detail", "支付失败！银行卡绑定解除没找到相应签约号");
+		}
+		else{
+			param.setSign_code(MD5Util.convertMD5(signCodeRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
+			unionPayService.insertBindCancellog(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.sendBindCancelReq(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.waitForBindCancelResp(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+		}
+        
+        return result;
+    }
+    
+    /**
+     * 支付结束后，选择再去逛逛，回到能人店铺的首页
+     * 根据order_id 查询 能人id，然后再跳转
+     * @param order_id
+     * @param fee
+     * @return
+     */
+    @RequestMapping("/goToWeShopIndex/{order_id}")
+    public ModelAndView goToWeShopIndex(@PathVariable("order_id") String order_id){
+    	Map<Object, Object> userInfo = unionPayService.queryUserIdByOrderId(order_id);
+    	
+        ModelAndView mav = new ModelAndView("redirect:/esp/weShop/index/"+userInfo.get("USER_ID"));
+    	//ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+"2015000000000000");
+        
+        return mav;
     }
 }

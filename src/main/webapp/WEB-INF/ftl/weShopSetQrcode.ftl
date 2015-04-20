@@ -35,8 +35,7 @@
       <div style="width:100%;height:20px;">
     </div>
      <div style="width:100%;height:244px;margin-left:0px;margin-bottom:20px;" >   	
-     		<div style="background-color:red;width:200px;height:200px ;line-height:44px;margin:auto;">
-     		<img src="${resRoot}/image/weShop/erweima.png"  style="background-color:gray;display:block; width:100%;height:100%;">
+     		<div id = "qrcodeDiv" style="background-color:red;width:200px;height:200px ;line-height:44px;margin:auto;">
      </div>	
      		
      	
@@ -55,6 +54,23 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
      <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
      <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/qrcode.js?v=${resVer}"></script>
+
+ 	 <script>
+       //获取当前页面url并生成二维码展示在 xx的微店
+       var thisUrl = window.location.href;
+       $('#qrcodeDiv').qrcode({
+		render:"canvas", //默认canvas方式，性能好
+		text: thisUrl, //设置二维码内容
+		width:200,     //设置宽度  
+        height:200,     //设置高度 
+        typeNumber:-1,  //计算模式 
+        correctLevel:QRErrorCorrectLevel.H,//纠错等级  
+        background:"#ffffff",//背景颜色  
+        foreground:"#000000" //前景颜色
+	});	
+    </script>
 
     
   </body>

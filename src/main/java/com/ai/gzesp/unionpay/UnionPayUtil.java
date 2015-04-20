@@ -37,12 +37,12 @@ public class UnionPayUtil {
         Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
-        xmlMap.put(UnionPayAttrs.TradeType, TradeType.bind.getTradeType()); //交易类型银行卡绑定（0120）
+        xmlMap.put(UnionPayAttrs.TradeType, param.getBind_trade_type()); //交易类型银行卡绑定（0120）
         xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
         xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
         xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
         xmlMap.put(UnionPayAttrs.timeStamp, DateUtils.getCurentTime()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
-        xmlMap.put(UnionPayAttrs.sysTradeNo, genSysTradeNo(TradeType.bind.getTradeType()));//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.sysTradeNo, param.getBind_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
         xmlMap.put(UnionPayAttrs.accNo, param.getBank_card_no());  //银行卡号
         xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn());
         xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
@@ -97,15 +97,15 @@ public class UnionPayUtil {
         Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
         xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
-        xmlMap.put(UnionPayAttrs.TradeType, TradeType.pay.getTradeType()); //交易类型支付请求（0200）
+        xmlMap.put(UnionPayAttrs.TradeType, param.getPay_trade_type()); //交易类型支付请求（0200）
         xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
         xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
         xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
         xmlMap.put(UnionPayAttrs.BusiType, BusiType.type001.getCode()); //业务类型，001：购买电子产品
-        xmlMap.put(UnionPayAttrs.AccountID, null); //帐单号（根据业务类型的需求来填写）,可以为空
-        xmlMap.put(UnionPayAttrs.AreaCode, null); //地区代码 发起交易的地区区号（根据不同业务类型需要来填写）,可以为空
-        xmlMap.put(UnionPayAttrs.timeStamp, DateUtils.getCurentTime()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
-        xmlMap.put(UnionPayAttrs.sysTradeNo, genSysTradeNo(TradeType.pay.getTradeType()));//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.AccountID, ""); //帐单号（根据业务类型的需求来填写）,可以为空
+        xmlMap.put(UnionPayAttrs.AreaCode, ""); //地区代码 发起交易的地区区号（根据不同业务类型需要来填写）,可以为空
+        xmlMap.put(UnionPayAttrs.timeStamp, param.getPay_time_stamp()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, param.getPay_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
         xmlMap.put(UnionPayAttrs.signCode, param.getSign_code()); //签约号
         xmlMap.put(UnionPayAttrs.orderId, param.getOrder_id()); //支付订单号
         xmlMap.put(UnionPayAttrs.industryType, UnionPayCons.industryType); //支付行业类型
@@ -307,6 +307,24 @@ public class UnionPayUtil {
         //return genByteReq(xmlMap);
         return xmlMap;
     }*/
+    
+    public static Map<String, String> genBindCancelReq(UnionPayParam param){
+        log.debug("【银联支付：创建bindCancelReq请求原始数据map】");
+        //原始请求报文map
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
+        xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
+        xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
+        xmlMap.put(UnionPayAttrs.TradeType, param.getBindCacnel_trade_type()); //交易类型退货交易查询（0350）
+        xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
+        xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
+        xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
+        xmlMap.put(UnionPayAttrs.timeStamp, param.getBindCacnel_time_stamp()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, param.getBindCacnel_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号。此处填订单号
+        xmlMap.put(UnionPayAttrs.signCode, param.getSign_code()); // 签约号
+
+        //return genByteReq(xmlMap);
+        return xmlMap;
+    }
     
     /**
      * 根据请求参数的map 生成对应的请求 byte[]报文<br>
@@ -534,6 +552,9 @@ public class UnionPayUtil {
         StringBuffer sb = new StringBuffer(16);
         if(TradeType.bind.getTradeType().equals(tradeType)){
             sb.append("10");
+        }
+        else if(TradeType.bindCancel.getTradeType().equals(tradeType)){
+            sb.append("11");
         }
         else if(TradeType.pay.getTradeType().equals(tradeType)){
             sb.append("20");

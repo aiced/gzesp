@@ -278,7 +278,7 @@ function netInfo_checkData() {
 	 }
     
 
-//    if($('#secondCard').attr("src") =='/esp/resources/image/order/card01.png'){
+//    if($('#firstCard').attr("src") =='/esp/resources/image/order/card01.png'){
 //    	alert("证件照片不能为空");   	
 //    	return false;
 //    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
@@ -323,10 +323,10 @@ function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
 	
-	orderFormParams.originalPrice = $('#goodsPrice').val();
+	orderFormParams.originalPrice = $('#totalPrice').val();
 	orderFormParams.couponMoney = $('#couponMoney').val();
 	orderFormParams.manMadeMoney = orderFormParams.originalPrice;
-	orderFormParams.topayMoney = orderFormParams.originalPrice;
+	orderFormParams.topayMoney = $('#totalPrice').val();
 	
 	orderFormParams.userId = $('#userId').val();
 	orderFormParams.invoiceTitle = $('#invoiceTitle').val();
@@ -359,17 +359,41 @@ function getParams() {
 		+ $('#serialNumber').val() + ',' 
 		+ $('#conPeriod').val() + ',' 
 		+ $('#conType').val();
-	orderFormParams.unitPrice = orderFormParams.originalPrice;
-	orderFormParams.topayFee= orderFormParams.originalPrice;
+	orderFormParams.unitPrice = $('#goodsPrice').val();
+	orderFormParams.topayFee= $('#goodsPrice').val();
 }
 
-//function uploadPic(){
-//	
-//	var params = {
-//			"idCardNum": $('#userCard').val()
-//	};
-//	
-//}
+function uploadPic(){
+	
+	var params = {
+			"idCardNum": $('#userCard').val()
+	};
+	 $.ajaxFileUpload({  
+	        url : "../common/uploadFile", 
+	        async:false, 
+	        secureuri : false,  
+	        fileElementId : "file-front",  
+	        dataType : 'json',
+			data: params,
+	        success : function(rtdata, status) { 
+	        	alert(rtdata.url);
+	        	orderFormParams.cardPic1 = rtdata.url;
+	        },  
+	    });  
+	 
+	 $.ajaxFileUpload({  
+	        url : "../common/uploadFile", 
+	        async:false, 
+	        secureuri : false,  
+	        fileElementId : "file-back",  
+	        dataType : 'json',
+			data: params,
+	        success : function(rtdata, status) { 
+	        	alert(rtdata.url);
+	        	orderFormParams.cardPic2 = rtdata.url;
+	        },  
+	    });  
+};
 
 function nextPage() {
 	
@@ -398,7 +422,7 @@ function nextPage() {
 //		return;
 //	}
 	
-//	uploadPic();
+	uploadPic();
 //	
 //	setTimeout('formSubmit()', 2000);
 	

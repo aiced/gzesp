@@ -117,7 +117,7 @@
 	
 	        <div class="list-group">
 	            <a href="javascript:void(0)" class="list-group-item">
-	                <label class="label-sm">商品金额</label><span class="list_gou">￥ ${goodsPrice}</span>
+	                <label class="label-sm">商品金额</label><span class="list_gou">￥ ${totalPrice}</span>
 	            </a>
 	            <a href="javascript:void(0)" class="list-group-item">
 	            	<input id="postFee" type="hidden" value="0">
@@ -129,7 +129,7 @@
 	            </a>
 	            <a href="javascript:void(0)" class="list-group-item">
 	            	<input id="topayMoney" type="hidden" value="">
-	                <label class="label-sm">应付总额</label><span class="list_gou">￥ ${goodsPrice}</span>
+	                <label class="label-sm">应付总额</label><span class="list_gou">￥ ${totalPrice}</span>
 	            </a>
 	        </div>
 	        <br/>
@@ -144,6 +144,7 @@
 		<input type="hidden" id="goodsName" value="${goodsName}">
 	    <input type="hidden" id="goodsDisc" value="${goodsDisc}">
 	    <input type="hidden" id="goodsPrice" value="${goodsPrice}">
+	    <input type="hidden" id="totalPrice" value="${totalPrice}">
 	    <input type="hidden" id="attrVal" value="${attrVal}">
 	    <input type="hidden" id="serialNumber" value="${serialNumber}">
 	    <#if conPeriod?exists>
@@ -157,6 +158,7 @@
 	    <#else>
 	    	<input type="hidden" id="conType" value="">
 	    </#if>
+	    
 	</div>
 	
 	<!-- 入网资料页 -->

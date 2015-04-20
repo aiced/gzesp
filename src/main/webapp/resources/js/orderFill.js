@@ -376,7 +376,7 @@ function uploadPic(){
 	        dataType : 'json',
 			data: params,
 	        success : function(rtdata, status) { 
-	        	//alert(rtdata.url);
+	        	alert(rtdata.url);
 	        	orderFormParams.cardPic1 = rtdata.url;
 	        },  
 	    });  
@@ -389,7 +389,7 @@ function uploadPic(){
 	        dataType : 'json',
 			data: params,
 	        success : function(rtdata, status) { 
-	        	//alert(rtdata.url);
+	        	alert(rtdata.url);
 	        	orderFormParams.cardPic2 = rtdata.url;
 	        },  
 	    });  

@@ -68,7 +68,10 @@ function afterUpdateNumber(data) {
 	var attrVal=$('#num_resId').val()+"|"+"NUMBERS"+"|"+ data.serial_number +"|"+data.serial_number;
 	$('#attr_number').val(attrVal);
 	
-	var tmp = {serialNumber:data.serial_number};
+	var totalPrice = $('#goods_price').val()*1 + data.nice_fee*1;
+	$('#topayFeeSpan').html(totalPrice);
+	
+	var tmp = {serialNumber:data.serial_number, totalPrice:totalPrice};
 	params = $.extend({}, params, tmp );
 	
 	

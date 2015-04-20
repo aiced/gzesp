@@ -132,8 +132,8 @@ public class OrderController {
     	
     	String orderId = CommonUtil.generateOrderId();
     	String payLogId = CommonUtil.generatePayLogId();
-    	String topayMoney = paramsMap.get("topayMoney");
-    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney));
+    	String originalPrice = paramsMap.get("originalPrice");
+    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice));
     	paramsMap.put("orderId", orderId);
     	paramsMap.put("payLogId", payLogId);
     	

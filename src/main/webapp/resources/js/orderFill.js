@@ -323,10 +323,10 @@ function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
 	
-	orderFormParams.originalPrice = $('#goodsPrice').val();
+	orderFormParams.originalPrice = $('#totalPrice').val();
 	orderFormParams.couponMoney = $('#couponMoney').val();
 	orderFormParams.manMadeMoney = orderFormParams.originalPrice;
-	orderFormParams.topayMoney = orderFormParams.originalPrice;
+	orderFormParams.topayMoney = $('#totalPrice').val();
 	
 	orderFormParams.userId = $('#userId').val();
 	orderFormParams.invoiceTitle = $('#invoiceTitle').val();
@@ -359,8 +359,8 @@ function getParams() {
 		+ $('#serialNumber').val() + ',' 
 		+ $('#conPeriod').val() + ',' 
 		+ $('#conType').val();
-	orderFormParams.unitPrice = orderFormParams.originalPrice;
-	orderFormParams.topayFee= orderFormParams.originalPrice;
+	orderFormParams.unitPrice = $('#goodsPrice').val();
+	orderFormParams.topayFee= $('#goodsPrice').val();
 }
 
 //function uploadPic(){

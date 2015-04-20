@@ -109,7 +109,7 @@
             <li style="font-size:15px;">微信：${developer.WEIXIN_ID}</li>
           </ul>  
     	</div>
-    	<div class="col-xs-3" style="padding:5px" id="qrcodeDiv">
+    	<div class="col-xs-3" style="padding:0px" id="qrcodeDiv">
     	</div>    		    		
       </div>	            
     </div>

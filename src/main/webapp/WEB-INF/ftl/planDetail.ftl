@@ -167,13 +167,13 @@
               </#if>
             </li>
             <!-- A/B/C 套餐 -->
-            <#if attrs.PACKRES??>
+            <#if attrs.PCKPLAN??>
               <li id="planList" class="num-info-li" >
                   <!--<a href="#subpage_4" onclick="showSubpage('subpage_4')"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a> -->
                   <p style="margin-bottom: 0px;"><label>套餐</label></p>
                   <div class="tabs-box">
                       <ul class="tabslist" attr_val="">
-                        <#list attrs.PACKRES as item>
+                        <#list attrs.PCKPLAN as item>
                           <#if item_index==0>
                             <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" attr_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>

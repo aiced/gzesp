@@ -28,7 +28,8 @@ public class RespPayHandler implements IDealUnionPayResp {
     public void dealResp(Map<String, String> respMap) {
         //更新paylog日志表里的接口调用日志
         int r1 = unionPayService.updatePaylog(respMap);
-        
+        //更新订单基本表里的 订单状态
+        int r2 = unionPayService.updatePayState(respMap);
     }
 
 }

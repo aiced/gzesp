@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ai.gzesp.service.UnionPayService;
 
 /**
- * 处理 支付接口 响应报文<br> 
+ * 处理 解除绑定接口 响应报文<br> 
  * 〈功能详细描述〉
  *
  * @author xmh
@@ -16,7 +16,7 @@ import com.ai.gzesp.service.UnionPayService;
  * @since [产品/模块版本] （可选）
  */
 @Service
-public class RespPayHandler implements IDealUnionPayResp {
+public class RespBindCancelHandler implements IDealUnionPayResp {
     
     /**
      * 业务逻辑处理service
@@ -27,9 +27,9 @@ public class RespPayHandler implements IDealUnionPayResp {
     @Override
     public void dealResp(Map<String, String> respMap) {
         //更新paylog日志表里的接口调用日志
-        int r1 = unionPayService.updatePaylog(respMap);
-        //更新订单基本表里的 订单状态
-        int r2 = unionPayService.updatePayState(respMap);
+        int r1 = unionPayService.updateBindCancellog(respMap);
+        //更新签约信息表里的 valid_flag 为0
+        int r2 = unionPayService.updateSignCodeValidFlag(respMap);
     }
 
 }

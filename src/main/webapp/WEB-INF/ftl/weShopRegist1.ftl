@@ -352,7 +352,7 @@
 	            <!--输入微信号-->
 	            <div class="form-group" id="div_weichat">
 	                <label for="txtwechataccount" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtwechataccount" name="txtwechataccount" placeholder="请输入微信号">
+	                <input type="text" class="form-control" id="txtwechataccount" name="txtwechataccount" placeholder="请输入微信号(选填)">
 	            </div>
 	            <!--输入密码-->
 	            <div class="form-group" id="div_password">

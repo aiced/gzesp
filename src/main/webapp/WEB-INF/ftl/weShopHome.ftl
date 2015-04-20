@@ -240,51 +240,50 @@
 	            <table class="table table-striped table-condensed">
 	                <tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日访问：<br/>0</td>
-		                    <td class="month_view">本月访问：0<br/></td>
-		                    <td class="total_view">累计访问：0<br/></td>
+		                    <td class="yesterday_view">昨日访问(次)<br/><div style="text-align: center;">0</div></td>
+		                    <td class="month_view">本月访问(次)<br/><div style="text-align: center;">0</div></td>
+		                    <td class="total_view">累计访问(次)<br/><div style="text-align: center;">0</div></td>
 		                <#else>
 	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_view">昨日访问：<br/>${item.yesterday_view}</td>
-	                    		<td class="month_view">本月访问：<br/>${item.month_view}</td>
-	                    		<td class="total_view">累计访问：<br/>${item.total_count}</td>
+	                	    	<td class="yesterday_view">昨日访问(次)<br/><div style="text-align: center;">${item.yesterday_view}</div></td>
+	                    		<td class="month_view">本月访问(次)<br/><div style="text-align: center;">${item.month_view}</div></td>
+	                    		<td class="total_view">累计访问(次)<br/><div style="text-align: center;">${item.total_count}</div></td>
 	                		</#list>
 	                	</#if>
 					</tr>
 
 	                <tr>
 	                	<#if saleList?size==0>
-		                    <td class="yesterday_sale">昨日销售：0<br/></td>
-		                    <td class="month_sale">本月销售：0<br/></td>
-		                    <td class="total_sale">累计销售：0<br/></td>          		
+		                    <td class="yesterday_sale">昨日销售(件)<br/><div style="text-align: center;">0</div></td>
+		                    <td class="month_sale">本月销售(件)<br/><div style="text-align: center;">0</div></td>
+		                    <td class="total_sale">累计销售(件)<br/><div style="text-align: center;">0</div></td>          		
 		                <#else>
 	                		<#list saleList as item>
-	                	    	<td class="yesterday_sale">昨日销售：<br/>${item.yesterday_count}</td>
-	                    		<td class="month_sale">本月销售：<br/>${item.month_count}</td>
-	                    		<td class="total_sale">累计销售：<br/>${item.total_count}</td>
+	                	    	<td class="yesterday_sale">昨日销售(件)<br/><div style="text-align: center;">${item.yesterday_count}</div></td>
+	                    		<td class="month_sale">本月销售(件)<br/><div style="text-align: center;">${item.month_count}</div></td>
+	                    		<td class="total_sale">累计销售(件)<br/><div style="text-align: center;">${item.total_count}</div></td>
 	                		</#list>
 	                	</#if>
 					</tr>
-					<tr>
+					<#-- <tr>
 	                	<#if commissionList?size==0>
-		                    <td class="yesterday_money">昨日佣金：<br/>0</td>
-		                    <td class="month_money">本月佣金：<br/>0</td>
-		                    <td class="total_money">累计佣金：<br/>0</td>	                		
+		                    <td class="yesterday_money">昨日收益(元)<br/><div style="text-align: center;">0</div></td>
+		                    <td class="month_money">本月收益(元)<br/><div style="text-align: center;">0</div></td>
+		                    <td class="total_money">累计收益(元)<br/><div style="text-align: center;">0</div></td>	                		
 		                <#else>
 	                		<#list commissionList as item>
-	                	    	<td class="yesterday_money">昨日佣金：<br/>${item.yesterday_commison}</td>
-	                    		<td class="month_money">本月佣金：<br/>${item.month_commison}</td>
-	                    		<td class="total_money">累计佣金：<br/>${item.total_count}</td>
+	                	    	<td class="yesterday_money">昨日收益(元)<br/><div style="text-align: center;">${(item.yesterday_commison/1000)?string("#.##")}</div></td>
+	                    		<td class="month_money">本月收益(元)<br/><div style="text-align: center;">${(item.month_commison/1000)?string("#.##")}</div></td>
+	                    		<td class="total_money">累计收益(元)<br/><div style="text-align: center;">${(item.total_count/1000)?string("#.##")}</div></td>
 	                		</#list>
 	                	</#if>
-					</tr>
-	
+					</tr> -->
 	            </table>
 	        </div>
 	        <div class="list-group">
 	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item">商品管理<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
-	            <a href="commissionQuery?userid=${userid}" class="list-group-item">佣金查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+	            <a href="commissionQuery?userid=${userid}" class="list-group-item">收益查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	        </div>
 	        <br/>
 	        <div class="list-group">

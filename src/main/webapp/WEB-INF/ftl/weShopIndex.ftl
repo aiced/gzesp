@@ -20,9 +20,9 @@
         <div class="col-xs-4" >
           <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
         </div>
-        <!-- <div class="col-xs-2 col-xs-offset-6" style="padding-top:2px;">
-          <a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/weShop/fenxiang.png" class="img-responsive" alt="" /></a>
-        </div> -->        
+        <div class="col-xs-2 col-xs-offset-6" style="padding-top:5px;" >
+        	<a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+        </div>       
       </div>
     </div>
   
@@ -109,7 +109,7 @@
             <li style="font-size:15px;">微信：${developer.WEIXIN_ID}</li>
           </ul>  
     	</div>
-    	<div class="col-xs-3" style="padding:5px" id="qrcodeDiv">
+    	<div class="col-xs-3" style="padding:0px" id="qrcodeDiv">
     	</div>    		    		
       </div>	            
     </div>

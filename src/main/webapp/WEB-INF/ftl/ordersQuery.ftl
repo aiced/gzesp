@@ -368,25 +368,25 @@
 		                   <div class="order_contain_top">
 		                   	   <!-- ,苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器 -->
 		                       <h5><div class="order_contain_title">${item.GOODS_NAME}</div></h5>
-		                       <#if (item.ORDER_STATE=='0')>
+		                       <#if (item.ORDER_STATE=='00')>
 		                       	<h5><div class="order_contain_statue">待支付</div></h5>
-		                       <#elseif (item.ORDER_STATE=='1')>
+		                       <#elseif (item.ORDER_STATE=='01')>
 		                       	<h5><div class="order_contain_statue">待分配</div></h5>
-		                       <#elseif (item.ORDER_STATE=='2')>
+		                       <#elseif (item.ORDER_STATE=='02')>
 		                       	<h5><div class="order_contain_statue">待处理</div></h5>
-		                       <#elseif (item.ORDER_STATE=='3')>
+		                       <#elseif (item.ORDER_STATE=='03')>
 		                       	<h5><div class="order_contain_statue">处理中</div></h5>
-		                       <#elseif (item.ORDER_STATE=='4')>
+		                       <#elseif (item.ORDER_STATE=='04')>
 		                       	<h5><div class="order_contain_statue">待发货</div></h5>
-		                       <#elseif (item.ORDER_STATE=='5')>
+		                       <#elseif (item.ORDER_STATE=='05')>
 		                       <h5><div class="order_contain_statue">发货中</div></h5>
-		                       <#elseif (item.ORDER_STATE=='6')>
+		                       <#elseif (item.ORDER_STATE=='06')>
 		                       <h5><div class="order_contain_statue">物流在途</div></h5>
-		                       <#elseif (item.ORDER_STATE=='7')>
+		                       <#elseif (item.ORDER_STATE=='07')>
 		                       <h5><div class="order_contain_statue">待归档</div></h5>
-		                       <#elseif (item.ORDER_STATE=='8')>
+		                       <#elseif (item.ORDER_STATE=='08')>
 		                       <h5><div class="order_contain_statue">成功关闭（已归档）</div></h5>
-		                       <#elseif (item.ORDER_STATE=='9')>
+		                       <#elseif (item.ORDER_STATE=='09')>
 		                       <h5><div class="order_contain_statue">订单处理退单</div></h5>
 		                       <#elseif (item.ORDER_STATE=='10')>
 								<h5><div class="order_contain_statue">客户拒收退单</div></h5>

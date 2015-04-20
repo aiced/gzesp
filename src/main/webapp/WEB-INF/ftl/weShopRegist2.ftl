@@ -27,9 +27,7 @@
     <script type="text/javascript">
     	var bRet1=false;
     	var bRet2=false;
-    	var bRet3=false;
-    	
-    
+ 
     	function checkData()
     	{
     		/*if(!$("#txtname").val())
@@ -63,15 +61,6 @@
     		{
     			return false;
     		}
-    		if(!bRet3)
-    		{
-				return false;    			
-    		}
-    		if(!$('#chkRight').is(':checked')) {
-    			alert("请勾选用户注册协议");
-    		    return false;
-    		}
-    			
     		return true;
     		
     	}
@@ -139,7 +128,7 @@
 		  });
 		   
 		  //[银行卡号]文本框失去焦点
-		  $("#txtbankcardid").blur(function(){
+		 /* $("#txtbankcardid").blur(function(){
 		  	//在这里操作 银行卡号 文本框失去焦点
 		  	if(!$("#txtbankcardid").val())
 		  	{
@@ -162,7 +151,7 @@
 		  		bRet3=true;
 		  		return;
 		  	}
-		  });
+		  });*/
 		   
 		});
     </script>
@@ -171,7 +160,11 @@
         {
             margin: 15px;
         }
-
+		.breadcrumb
+		{
+			background-color: #cccccc;
+			font-size: 12px;
+		}
 
     </style>
 </head>
@@ -185,7 +178,9 @@
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
-	
+		<ol class="breadcrumb">
+			<label style="color:green;">1.输入手机号</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label style="color:green;">2.身份信息填写</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label>3.设置密码</label>
+		</ol>
 	    <div class="container-fluid">
 	        <form action="reg_step2_postdata" method="post">
 	        	<span style="color: #ff0000">为保证收益的准确发放，以下请填写真实信息!</span>
@@ -211,8 +206,13 @@
 	                <label for="txtpersonalid" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtpersonalid" name="txtpersonalid" placeholder="请输入身份证号">
 	            </div>
+	            <!--输入微信号-->
+	            <div class="form-group" id="div_weichat">
+	                <label for="txtwechataccount" class="sr-only"></label>
+	                <input type="text" class="form-control" id="txtwechataccount" name="txtwechataccount" placeholder="请输入微信号(选填)">
+	            </div>
 	            <!--开户银行-->
-	            <div class="form-group">
+	            <#-- <div class="form-group">
 	                <select class="form-control" name="selBank">
 			      		<#if (bankList?size==0)>
 							<option value="数据加载失败">数据加载失败</option>
@@ -222,27 +222,27 @@
 							</#list>
 			 			</#if>
 	                </select>
-	            </div>
+	            </div> -->
 	            <!--银行卡号-->
-	            <div class="form-group" id="div_bankcardid">
+	            <!-- <div class="form-group" id="div_bankcardid">
 	                <label for="txtbankcardid" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtbankcardid" name="txtbankcardid" placeholder="请输入银行卡号">
-	            </div>
+	            </div> -->
 				<!-- 用户注册协议 -->
-				<div style="float:right;font-size: 12px;">
+				<!-- <div style="float:right;font-size: 12px;">
 					<input type="checkbox" name="chkRight" id="chkRight" checked="true"><a href="regProtocol">用户注册协议</a>
-				</div>
+				</div> -->
 				<br/>
 				<br/>
-				<br/>
-	            <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">提交</button>
+	            <button class="btn btn-warning btn-block " type="submit" name="btnSubmit" id="btnSubmit">下一步</button>
 	        	
 	        	<input type="hidden" name="selArea" value="${area}" />
 	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />
-	        	<input type="hidden" name="txtwechataccount" value="${weixin}" />
-	        	<input type="hidden" name="txtpassword" value="${pwd}" />
 	        	<input type="hidden" name="txtopenid" value="${openid}" />
 
+
+
+				
 	        </form>
 	    </div>
 	</div>

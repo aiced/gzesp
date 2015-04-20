@@ -32,9 +32,6 @@
 		var bRet1=true;
 		var bRet2=false;
 		var bRet3=false;
-		var bRet4=true;//微信选填
-		var bRet5=false;
-		var bRet6=false;
 		//判断输入的是否是手机号
     	function isPhoneNum(strPhoneNum)
     	{
@@ -60,25 +57,16 @@
 				
 				return false;
 			}
-			//if(!bRet4)
-			//{
-			//	alert("微信号不能为空");
-			//	return false;
-			//}
-			if(!bRet5)
+			if($("#selArea").val()=="请选择您所在的地区")
 			{
-				//alert("请输入登录密码");
+				alert("请选择您所在的区域");
 				return false;
 			}
-			if(!bRet6)
-			{
-				//alert("请再次输入登录密码");
-				return false;
-			}
-
+    		if(!$('#chkRight').is(':checked')) {
+    			alert("请勾选用户注册协议");
+    		    return false;
+    		}
 			return true;
-			
-			
 		}
 	
     	function getNowDate()
@@ -122,7 +110,7 @@
 			  {
 			  	//这里开始做验证码操作
 			  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode");
-
+			  	bRet1=true;//这个地方要删掉，切记切记！！！！！
 				//按钮禁用
 			  	//$("#btnCode").attr('disabled',true);
 			  	//=true;
@@ -220,7 +208,7 @@
 		  	}
 		  });*/
 		  //[登录密码]文本框失去焦点
-		  $("#txtpassword").blur(function(){
+		  /*$("#txtpassword").blur(function(){
 		  	//在这里操作 登录密码文本框失去焦点
 		  	if(!$("#txtpassword").val())
 		  	{
@@ -242,9 +230,9 @@
 		  		bRet5=true;
 		  		return;
 		  	}
-		  });
+		  });*/
 		  //[再次设置登录密码]文本框失去焦点
-		  $("#txtrepassword").blur(function(){
+		  /*$("#txtrepassword").blur(function(){
 		  	//在这里操作 再次设置登录密码 文本框失去焦点
 		  	if(!$("#txtrepassword").val())
 		  	{
@@ -272,7 +260,7 @@
 		  		bRet6=true;
 		  		return;
 		  	}
-		  });
+		  });*/
 		  //[下一步]按钮点击
 		  $("#btnStep1").click(function(){
 			//在这里操作 [下一步]按钮点击
@@ -303,7 +291,11 @@
 		padding: 6px 0px;
 		height: 34px;
 	}
-
+	.breadcrumb
+	{
+		background-color: #cccccc;
+		font-size: 12px;
+	}
 
     </style>
 </head>
@@ -317,28 +309,34 @@
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
+		<ol class="breadcrumb">
+			<label style="color:green;">1.输入手机号</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label>2.身份信息填写</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label>3.设置密码</label>
+		</ol>
+		
 	    <div class="container-fluid">
 	        <form action="reg_step1_postdata" method="post">
+    	       <div class="input-group" id="div_phonenum">
+                    <span class="input-group-addon" id="txtnum">+86</span>
+                    <input type="text" class="form-control" id="txtphonenum" name="txtphonenum" aria-describedby="txtnum" placeholder="请输入联通手机号">
+                </div><!-- /input-group -->
+	            <br/>
+	            <!--输入验证码-->
 	            <div class="row">
-	                <div class="col-xs-8 col-sm-8 col-md-8">
-	                    <div class="input-group" id="div_phonenum">
-	                        <span class="input-group-addon" id="txtnum">+86</span>
-	                        <input type="text" class="form-control" id="txtphonenum" name="txtphonenum" aria-describedby="txtnum" placeholder="请输入联通手机号">
-	                    </div><!-- /input-group -->
+	                <div class="col-xs-7 col-sm-7 col-md-7">
+			            <div class="form-group" id="div_yanzhengma">
+			                <label for="txtyanzhengma" class="sr-only"></label>
+			                <input type="text" class="form-control" id="txtyanzhengma" name="txtyanzhengma" placeholder="请输入验证码">
+			            </div>
 	                </div>
-	                <div class="col-xs-4 col-sm-4 col-md-4">
+	                <div class="col-xs-5 col-sm-5 col-md-5">
 	                    <button class="btn-primary btn-block btn btn-code" type="button" id="btnCode">获取验证码</button>
 	                </div>
 	            </div>
-	            <br/>
-	            <!--输入验证码-->
-	            <div class="form-group" id="div_yanzhengma">
-	                <label for="txtyanzhengma" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtyanzhengma" name="txtyanzhengma" placeholder="请输入验证码">
-	            </div>
+	            
 	            <div class="input-group">
 	                <span class="input-group-addon" id="sizing-addon2">地区</span>
 	                <select name="selArea" id="selArea" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon2">
+		      		<option value="请选择您所在的地区">请选择您所在的地区</option>
 		      		<#if (cityList?size==0)>
 						<option value="数据加载失败">数据加载失败</option>
 		        	<#else>
@@ -350,25 +348,29 @@
 	            </div>
 	            <br/>
 	            <!--输入微信号-->
-	            <div class="form-group" id="div_weichat">
+	            <!-- <div class="form-group" id="div_weichat">
 	                <label for="txtwechataccount" class="sr-only"></label>
 	                <input type="text" class="form-control" id="txtwechataccount" name="txtwechataccount" placeholder="请输入微信号(选填)">
-	            </div>
+	            </div> -->
 	            <!--输入密码-->
-	            <div class="form-group" id="div_password">
+	            <!-- <div class="form-group" id="div_password">
 	                <label for="txtpassword" class="sr-only">Password</label>
 	                <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="请设置登录密码(至少6位)">
-	            </div>
+	            </div> -->
 	            <!--再次输入验证码-->
-	            <div class="form-group" id="div_repassword">
+	            <!-- <div class="form-group" id="div_repassword">
 	                <label for="txtrepassword" class="sr-only">Password</label>
 	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
-	            </div>
+	            </div> -->
 	            <br/>
 	            <input type="hidden" value='${openId}' id="hide_openid" name="hide_openid">
 	            <input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 	            <button class="btn-warning btn-block btn" type="submit" id="btnStep1" name="btnStep1">下一步</button>
-
+	            <br/>
+				<!-- 用户注册协议 -->
+				<div style="float:left;font-size: 14px;">
+					<input type="checkbox" name="chkRight" id="chkRight" checked="true">我已阅读并同意 &nbsp;&nbsp;<a href="regProtocol" style="color:green">用户注册协议</a>
+				</div>
 	        </form>
 	    </div>
 	</div>

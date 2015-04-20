@@ -106,19 +106,12 @@ public class WeShopRegist1Controller {
     	System.out.println(inputParams);
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
-    	//Double bId=getID();
     	String strArea=paramsMap.get("selArea");//地区
     	String strPhoneNum = paramsMap.get("txtphonenum");//手机号
-    	//String stryanzhengma=paramsMap.get("txtyanzhengma");//验证码
-    	String strwecharaccount=paramsMap.get("txtwechataccount");//微信号
-    	String strPwd=paramsMap.get("txtpassword");//密码
     	String strOpenId=paramsMap.get("hide_openid");
     	
-    	//System.out.println(bId);
     	System.out.println(strArea);
     	System.out.println(strPhoneNum);
-    	System.out.println(strwecharaccount);
-    	System.out.println(strPwd);
     	System.out.println(strOpenId);
     	
     	ModelAndView mav = new ModelAndView("weShopRegist2.ftl");
@@ -126,14 +119,12 @@ public class WeShopRegist1Controller {
     	mav.addObject("title", "注册微店"); //页面title
         mav.addObject("area",strArea);//销售区域
         mav.addObject("phonenum", strPhoneNum); 
-        mav.addObject("weixin", strwecharaccount); 
-        mav.addObject("pwd", strPwd); 
         mav.addObject("openid",strOpenId);
 
-        List<Map<String, Object>> bankList=registSql.getBankList("BANK_TYPE");
-        
-        mav.addObject("bankList", bankList);
-        
+//        List<Map<String, Object>> bankList=registSql.getBankList("BANK_TYPE");
+//        
+//        mav.addObject("bankList", bankList);
+//        
         return mav;
     }
 

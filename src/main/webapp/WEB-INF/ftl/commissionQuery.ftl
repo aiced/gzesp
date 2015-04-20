@@ -303,6 +303,7 @@
         {
             width:25%;
             float: left;
+            display: none;
         }
         select
         {
@@ -312,8 +313,8 @@
 
         .query_info_top_middle
         {
-            width:70%;
-            float: right;
+            width:100%;
+            float: left;
 
         }
         .query_info_top_right
@@ -347,7 +348,7 @@
         .order_top_middle1
         {
             float: left;
-            width: 48%;
+            width: 48%%;
         }
         .order_top_middle2
         {
@@ -397,24 +398,24 @@
 	             
 	             
 	              <!-- <h4><div class="query_info_top_left"><label>收益帐期</label></div></h4> -->
-	              	<div class="query_info_top_left">
+	              <!-- <div class="query_info_top_left">
 		                <select name="selSearch" id="selSearch">
 		                		<option value="2">订单日期</option>
-								<!-- <option value="1">收益帐期</option> -->
+								<option value="1">收益帐期</option>
 								
 		                </select>
-	           		</div>
+	           		</div> -->
 	                <div class="query_info_top_middle">
 	                	<input  id="zhangqiTime"  name="zhangqiTime" value="" style="display:none" />
 		                <!--<div id="datePlugin"></div>-->
 		                <!-- 隐藏控件用于保存userid -->
 						<div class="order_top_middle" >
 							<div class="order_top_middle1">
-								<input id="beginTime"  name="beginTime" value="" />
+								<input id="beginTime"  name="beginTime" value="" placeholder="订单开始时间"/>
 							</div>
 							<div class="order_top_middle2">—</div>
 							<div class="order_top_middle3">
-								<input id="endTime" name="endTime" value="" />
+								<input id="endTime" name="endTime" value="" placeholder="订单结束时间"/>
 							</div>
 							<!-- 这句和日历控件有关千万别忘掉 -->
 						</div>
@@ -507,14 +508,18 @@
 				</table>
 				</#if>
 	        </div><!-- commmiss_query_info_end -->
-
+			
 	    </div>
-		<div >
+	    <br/>
+	    <br/>
+	    <br/>
+	    <br/>
+		<div>
+			<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
 	        <!-- <div class="query_info_bottom">
 				温馨提示：我们每天凌晨4点根据用户状态计算收益收益，处于冻结状态的收益可能是未到计算时点或号码还没有激活。
 	    	</div> -->
 		</div>
-
 	</div>
 	
 

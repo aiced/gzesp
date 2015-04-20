@@ -26,7 +26,7 @@ public class RegistSql {
 
 		return cityList;
 	}
-	//获得银行
+	//获得银行列表
 	public List<Map<String, Object>> getBankList(String strParam_type)
 	{
 		StringBuffer sb=new StringBuffer();
@@ -38,4 +38,5 @@ public class RegistSql {
 
 		return bankList;
 	}
+
 }

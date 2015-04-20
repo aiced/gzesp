@@ -392,7 +392,7 @@ public class GoodsSql {
 		
 		StringBuffer sb = new StringBuffer();
 		sb.append("select distinct "
-				+ "t1.CREATE_DATE as create_date,"
+				+ "to_char(t1.CREATE_DATE,'yyyy/mm/dd') as create_date,"
 				+ "t1.IMAGE_ADDRESS as image_address,"
 				+ "t1.TITLE as title,"
 				+ "t1.SUBTITLE as subtitle,"

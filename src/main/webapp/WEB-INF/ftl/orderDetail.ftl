@@ -52,30 +52,30 @@
                 <a href="#" class="list-group-item"><h5>支付方式：${PAY_MODE}</h5></a>
                 <a href="#" class="list-group-item">
                 <h5>订单状态:
-				<#if (ORDER_STATE=='0')>
+				<#if (ORDER_STATE=='00')>
                 	待支付
-                <#elseif (ORDER_STATE=='1')>
+                <#elseif (ORDER_STATE=='01')>
                 	待分配
-                <#elseif (ORDER_STATE=='2')>
+                <#elseif (ORDER_STATE=='02')>
                 	待处理
-                <#elseif (ORDER_STATE=='3')>
+                <#elseif (ORDER_STATE=='03')>
                 	处理中
-                <#elseif (ORDER_STATE=='4')>
+                <#elseif (ORDER_STATE=='04')>
                 	待发货
-                <#elseif (ORDER_STATE=='5')>
+                <#elseif (ORDER_STATE=='05')>
                 	发货中
-                <#elseif (ORDER_STATE=='6')>
+                <#elseif (ORDER_STATE=='06')>
                 	物流在途
-                <#elseif (ORDER_STATE=='7')>
+                <#elseif (ORDER_STATE=='07')>
                 	待归档
-                <#elseif (ORDER_STATE=='8')>
+                <#elseif (ORDER_STATE=='08')>
                 	成功关闭（已归档）
-                <#elseif (ORDER_STATE=='9')>
+                <#elseif (ORDER_STATE=='09')>
                 	订单处理退单
                 <#elseif (ORDER_STATE=='10')>
 					客户拒收退单
 				<#else>
-					${ORDER_STATE}
+					未知
                 </#if>
                 </h5>
                 </a>

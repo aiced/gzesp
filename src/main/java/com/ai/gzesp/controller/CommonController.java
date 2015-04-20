@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdSysPCITY;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
+import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdSysPCITYDao;
 import com.ai.gzesp.sgip.SgipService;
 import com.ai.sysframe.utils.CommonUtil;
@@ -38,6 +39,9 @@ public class CommonController {
     
     @Resource
     TdAurDAUTHINFODao tdAurDAUTHINFODao;
+    @Resource
+    TdOrdDREFUNDDao tdOrdDREFUNDDao;
+    
 	@Resource 
 	SgipService sgipService;
 	 protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -186,7 +190,26 @@ public class CommonController {
     	String strcode=paramsMap.get("code");
     	return sgipService.smsSend(new String[]{strphone},"微店注册验证码："+strcode+"，祝您开店顺利！【贵州联通】。");
     }
-	
+	//edit_by_wenh_2015_4_19
+	@RequestMapping("/common/checkRefundOrderId")
+	@ResponseBody
+	public Boolean checkRefundOrderId(@RequestBody String strParam) {
+		Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+		String PhoneNum = paramsMap.get("orderid");
+		System.out.println(PhoneNum);
+		Criteria myCriteria = new Criteria();
+		myCriteria.createConditon().andEqualTo("ORDER_ID", PhoneNum);
+		int count = tdOrdDREFUNDDao.countByExample(myCriteria);
+		System.out.println(count);
+		if (count >= 1) {
+			return false; // 该账户已经注册了
+
+		} else {
+			return true;// 没有注册过
+		}
+	}
+    
+    
 	@RequestMapping("/error")
 	@ResponseBody
 	public ModelAndView error(@RequestBody String inputParams)	{

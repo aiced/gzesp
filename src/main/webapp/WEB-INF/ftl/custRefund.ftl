@@ -102,7 +102,10 @@
 			alert("请退款原因");
 			return false;    			
 		}
-
+		if(!checkRefundOrderId($("#hide_order_id").val()))
+		{
+			return false;
+		}
 		return true;
 		
 	}
@@ -162,12 +165,12 @@
 					  	bRet2=false;
 					  	return;
 					}
-					else if(!checkPhoneNum($("#txtphone").val()))
-					{
-						  $("#div_txtphone").addClass("has-error");
-						  bRet2=false;
-						  return;
-					}
+					//else if(!checkPhoneNum($("#txtphone").val()))
+					//{
+					//	  $("#div_txtphone").addClass("has-error");
+					//	  bRet2=false;
+					//	  return;
+					//}
 					else
 					{
 				  		$("#div_txtphone").removeClass("has-error");

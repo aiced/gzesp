@@ -208,6 +208,31 @@ function  checkPhoneNum(strPhoneNum)
 		});
 	return bReturn;
 }
+//判断订单号是否已经申请过退款
+function  checkRefundOrderId(strOrderId)
+{
+	var bReturn=false;
+	var param = {"orderid":strOrderId};
+	$.ajax({
+		   type: "POST",
+		   url: "/esp/common/checkRefundOrderId",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   //alert(bRet);
+			   if (!bRet) {
+				   alert("您已经提交过申请，请勿重复提交");
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   bReturn=true;
+			   }
+		   }
+		});
+	return bReturn;
+}
+
 //判断微信号是否已经注册过
 function checkWeChat(strWeChat)
 {

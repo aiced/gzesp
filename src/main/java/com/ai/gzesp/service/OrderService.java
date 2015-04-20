@@ -12,8 +12,10 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.beans.TdOrdDCUST;
 import com.ai.gzesp.dao.beans.TdOrdDDEAL;
@@ -75,6 +77,9 @@ public class OrderService {
     
     @Resource 
     CommissionSql commissionSql;
+    
+    @Autowired
+    private OrderDao orderDao;
     
     public String GetGoodsNumAttr(String goodsId) {
     	return goodsSql.GetGoodsNumAttr(goodsId);
@@ -393,6 +398,16 @@ public class OrderService {
     	record.setTxnAmt(CommonUtil.toDbPrice(CommonUtil.string2Long(topayFee)));
     	
     	tdOrdDREFUNDDao.insertSelective(record);
+	}
+	
+	/**
+	 * 订单提交后
+	 */
+	public int updateGoodsAmount(String goods_id){
+		//2个方法在一个事务里,库存减1，销售加1
+		//orderDao.storeDelOne();
+		//orderDao.salesAddOne();
+		return orderDao.updateGoodsAmount(goods_id);
 	}
     	
 }

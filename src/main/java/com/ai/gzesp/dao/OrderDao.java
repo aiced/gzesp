@@ -15,4 +15,6 @@ public interface OrderDao {
     public List<Map<Object, Object>> getNumberRules(); 
     
     public int updateNumberState(@Param("serial_number") String serial_number); 
+    
+    public int updateGoodsAmount(@Param("goods_id") String goods_id);
 }

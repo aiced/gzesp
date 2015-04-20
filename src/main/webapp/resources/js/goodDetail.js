@@ -77,6 +77,10 @@ function planGotoOrderMain(){
 
 //合约购机 商品详情页面 新号入网 按钮跳转到订单填写页面
 function phoneGotoOrderMainNew(){
+	//先检查有货没货，没货不进入订单填写页面
+	if(parseInt($('#amountChange_id').attr('goods_amount')) <= 0){
+		return false;
+	}
     var attr_val = getAttrVal();
     $('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();

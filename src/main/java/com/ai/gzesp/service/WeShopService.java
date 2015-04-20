@@ -201,4 +201,8 @@ public class WeShopService {
         return sb.toString();
     }
     
+    public Map<Object, Object> getStoreNum(String goods_id){
+        return weShopDao.getStoreNum(goods_id);
+    }
+    
 }

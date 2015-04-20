@@ -224,5 +224,12 @@
               )	 
 	</insert>
 				
-
+	<select id="getStoreNum" resultType="java.util.HashMap">
+         select a.goods_id  goods_id, 
+                a.goods_amount goods_amount
+           from GDS_D_AMOUNT a
+          where a.amount_type = '1' 
+            and a.goods_id = ${goods_id}
+	</select>
+	
 </mapper>

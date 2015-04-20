@@ -66,4 +66,13 @@
           and a.code_state = '1'
 	</update>
 	
+	<update id="updateGoodsAmount" >
+      update gds_d_amount
+         set goods_amount = 
+            (case when amount_type='1' then goods_amount-1 
+                  when amount_type='2' then goods_amount+1 
+                  else 0 end)
+        where goods_id = ${goods_id}
+	</update>	
+	
 </mapper>

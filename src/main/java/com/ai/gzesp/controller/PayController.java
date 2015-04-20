@@ -311,7 +311,7 @@ public class PayController {
     public ModelAndView goToWeShopIndex(@PathVariable("order_id") String order_id){
     	Map<Object, Object> userInfo = unionPayService.queryUserIdByOrderId(order_id);
     	
-        ModelAndView mav = new ModelAndView("redirect:/esp/weShop/index/"+userInfo.get("USER_ID"));
+        ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+userInfo.get("USER_ID"));
     	//ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+"2015000000000000");
         
         return mav;

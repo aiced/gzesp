@@ -79,7 +79,9 @@ public class GoodDetailController {
         List<Map<Object, Object>> citys = weShopService.getCitys();
         mav.addObject("citys", citys);
         
-        //默认都有货
+        //查看有货无货
+        Map<Object, Object> store = weShopService.getStoreNum(goods_id);
+        mav.addObject("store", store);
         
         //版本 颜色 内存 优惠活动    这些都是通过商品关联物品获取物品属性
         Map<Object, List<Map<Object, Object>>> attrs = weShopService.getAttrs(goods_id);

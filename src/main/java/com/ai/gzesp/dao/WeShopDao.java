@@ -32,4 +32,6 @@ public interface WeShopDao {
             @Param("sort") String sort, @Param("sortCol") String sortCol);
     
     public int insertVisitLog(@Param("log_id") String log_id,@Param("partition_id") String partition_id,@Param("store_id") String store_id, @Param("user_id") String user_id);
+
+    public Map<Object, Object> getStoreNum(@Param("goods_id") String goods_id);
 }

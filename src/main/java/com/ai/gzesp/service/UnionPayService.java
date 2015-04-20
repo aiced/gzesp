@@ -258,7 +258,7 @@ public class UnionPayService {
                 e.printStackTrace();
             } //每次轮询等待4秒钟
             Map<String, String> row = unionPayDao.queryPaylog(param.getPay_sys_trade_no()); //查询支付日志表里是否已经有银联返回的结果了
-            if(row != null && StringUtils.isBlank(row.get("RESULT_CODE"))){
+            if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
                 if(UnionPayCons.RESULT_CODE_SUCCESS.equals(row.get("RESULT_CODE"))){
                     result.put("status", UnionPayCons.RESULT_CODE_SUCCESS);
                     result.put("detail", "支付成功！");
@@ -441,7 +441,7 @@ public class UnionPayService {
                 e.printStackTrace();
             } //每次轮询等待4秒钟
             Map<String, String> row = unionPayDao.queryPaylog(param.getBindCacnel_sys_trade_no()); //查询支付日志表里是否已经有银联返回的结果了
-            if(row != null && row.get("RESULT_CODE") != null){
+            if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
                 if(UnionPayCons.RESULT_CODE_SUCCESS.equals(row.get("RESULT_CODE"))){
                     result.put("status", UnionPayCons.RESULT_CODE_SUCCESS);
                     result.put("detail", "绑定解除成功！");

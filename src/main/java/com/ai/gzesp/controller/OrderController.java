@@ -139,6 +139,9 @@ public class OrderController {
     	
     	orderService.insertOrder(paramsMap);
     	
+    	//20150420 ximh add，订单生成成功后需要库存数量-1，销量+1，用于后面判断有货无货
+    	orderService.updateGoodsAmount(paramsMap.get("goodsId"));
+    	
     	String url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
     	ModelAndView mav = new ModelAndView(url);
     	

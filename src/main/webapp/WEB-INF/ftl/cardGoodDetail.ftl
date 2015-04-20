@@ -159,8 +159,12 @@
                           </#if>
                         </select>
                     </span>
-                    <em id="amountChange_id" class="store in-store">有货</em>
-                    <em class="dispatch">(省内配送)</em>
+                    <#if ((store.GOODS_AMOUNT?number)>0)>
+                      <em id="amountChange_id" class="store in-store">有货</em>
+                      <em class="dispatch">(省内配送)</em>
+                    <#else>
+                      <em id="amountChange_id" class="store no-store">无货</em>
+                    </#if>
                 </p>
                 <p id="articleInfo" class="s-tip"></p>
             </li>

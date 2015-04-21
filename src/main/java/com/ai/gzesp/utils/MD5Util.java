@@ -112,7 +112,7 @@ public class MD5Util {
       return md5s2(plainText + key);
     }
 
-    private static String md5s2(String plainText)
+    public static String md5s2(String plainText)
     {
       StringBuffer buf = new StringBuffer("");
       try {

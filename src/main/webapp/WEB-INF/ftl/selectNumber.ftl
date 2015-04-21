@@ -46,8 +46,8 @@
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-3" style="padding:0px;margin:0px;text-align:center">
     	  <div class="dropdown">
-            <button id="btnCity" type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" eparchy_code="850">
-                        贵阳
+            <button id="btnCity" type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" eparchy_code="%">
+                        全省
             <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">

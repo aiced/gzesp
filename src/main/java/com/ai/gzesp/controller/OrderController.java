@@ -57,24 +57,35 @@ public class OrderController {
         mav.addObject("title", "新号入网"); 
         mav.addObject("num_resId", num_resId); 
         
-        selectNumberData(mav);
+        selectNumberData(mav, goods_id);
         selectContractData(mav, goods_id);
         
         return mav;
     }
     
-    private void selectNumberData(ModelAndView mav){
+    private void selectNumberData(ModelAndView mav, String goods_id){
     	 //商品归属地市下拉框  
         List<Map<Object, Object>> citys = weShopService.getCitys();
+        //20150421 ximh 修改 ，选号码页面下拉地市加 全省选项
+        //ess_city_code city_code, city_name, ess_province_code province_code
+        Map<Object, Object> all = new HashMap<Object, Object>(); //加入全省选项
+        all.put("CITY_CODE", "%");
+        all.put("CITY_NAME", "全省");
+        all.put("PROVINCE_CODE", "85");
+        citys.add(0, all);
         mav.addObject("citys", citys);
         
         //获取靓号规则下拉框
         List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
         mav.addObject("rules", rules);
         
+        //先根据商品id获取网络类型
+        Map<Object, Object> netTypeRow =  selectNumberService.getNetTypeByGoodsId(goods_id);
+        String net_type = (String) netTypeRow.get("ATTR_CODE"); //物品属性表里的 NETTYPE属性的值是 2G/3G/4G/CARD
         //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
-        List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null);
-        mav.addObject("numbers", numbers);	
+        List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null, net_type);
+        mav.addObject("numbers", numbers);
+        mav.addObject("net_type", net_type);	//加入网络类型变量
     }
     
     private void selectContractData(ModelAndView mav,String goodsId){

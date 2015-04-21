@@ -1,5 +1,6 @@
 package com.ai.gzesp.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,17 +38,10 @@ public class GoodDetailController {
     @RequestMapping("/goodDetail/{user_id}/{ctlg_code}/{goods_id}")
     public ModelAndView goodDetail(@PathVariable("user_id") String user_id, @PathVariable("ctlg_code") String ctlg_code, @PathVariable("goods_id") String goods_id){
         ModelAndView mav = null;
+        
+        //根据不同商品类目，跳转到不同页面
         if(Constants.CTLG_CODE_XHRW_5.equals(ctlg_code) || Constants.CTLG_CODE_XHRW_10.equals(ctlg_code)){
             mav = new ModelAndView("planDetail.ftl"); //新号入网
-            
-            //号码选择子页面需要下面 靓号规则和号码列表
-            //获取靓号规则下拉框
-            List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
-            mav.addObject("rules", rules);
-            
-            //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
-            List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null);
-            mav.addObject("numbers", numbers);
         }
         else if(Constants.CTLG_CODE_HYGJ_4.equals(ctlg_code) || Constants.CTLG_CODE_HYGJ_9.equals(ctlg_code)){
             mav = new ModelAndView("phoneGoodDetail.ftl"); //合约购机
@@ -77,6 +71,12 @@ public class GoodDetailController {
         
         //商品归属地市下拉框  
         List<Map<Object, Object>> citys = weShopService.getCitys();
+        //ess_city_code city_code, city_name, ess_province_code province_code
+        Map<Object, Object> all = new HashMap<Object, Object>(); //加入全省选项
+        all.put("CITY_CODE", "%");
+        all.put("CITY_NAME", "全省");
+        all.put("PROVINCE_CODE", "85");
+        citys.add(0, all);
         mav.addObject("citys", citys);
         
         //查看有货无货
@@ -88,6 +88,22 @@ public class GoodDetailController {
         mav.addObject("attrs", attrs);
         
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
+        
+        //如果是新号入网，因为要include 号码选择子页，还需要查询出号码选择列表的信息
+        if(Constants.CTLG_CODE_XHRW_5.equals(ctlg_code) || Constants.CTLG_CODE_XHRW_10.equals(ctlg_code)){
+            //号码选择子页面需要下面 靓号规则和号码列表
+            //获取靓号规则下拉框
+            List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
+            mav.addObject("rules", rules);
+            
+            String net_type = null;
+            if(attrs.get("NETTYPE") != null){
+            	net_type = (String) attrs.get("NETTYPE").get(0).get("ATTR_CODE"); //网络类别2G/3G/4G/CARD
+            }
+            //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
+            List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null, net_type);
+            mav.addObject("numbers", numbers);
+        }
         
         //edit_by_wenh_2015_4_18
         weShopService.insertVisitLog(user_id);

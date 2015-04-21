@@ -97,7 +97,7 @@
       <!-- 号码排序 价格排序-->
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-5" style="padding:0px;margin:0px;text-align:center">
-    	  <button type="button" id="serial_number" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortNumberList('serial_number')">
+    	  <button type="button" id="btn_serial_number" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortNumberList('serial_number')">
                         号码 <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
           </button>
     	</div>  	
@@ -105,7 +105,7 @@
     	  <div class="shuxian"></div> 
     	</div>
     	<div class="col-xs-5" style="padding:0px;text-align:center">
-    	  <button type="button" id="nice_fee" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortNumberList('nice_fee')">
+    	  <button type="button" id="btn_nice_fee" class="btn btn-default btn-sm"  aria-haspopup="true" aria-expanded="false" clicktimes="0" onclick="sortNumberList('nice_fee')">
                         价格 <span class="glyphicon glyphicon-sort" aria-hidden="true"></span>
           </button>    	  
     	</div>  		    		

@@ -93,7 +93,7 @@ function sortNumberList(sortCol){
 function sortNumberListPublic(sortCol){
 	var eparchy_code= $('#btnCity').attr('eparchy_code');
 	var pageSize = $('#datagrid .row .p-td-number').length; //当前已经展示了多少商品数目
-	var btn = $('#' +sortCol);
+	var btn = $('#btn_' +sortCol);
 	btn.attr('clicktimes', parseInt(btn.attr('clicktimes'))+1); //点击计数器+1
 	var clicktimes = parseInt(btn.attr('clicktimes')); //排序按钮点击的次数，约定奇数表示升序，偶数表示降序,默认0降序
 	var keyword = $('#keyword').val();

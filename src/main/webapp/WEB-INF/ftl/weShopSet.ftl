@@ -32,6 +32,14 @@
 				data: parms
      	    });  
 		  });  
+		  $("#qrBank").click(function(){
+			location.href="${base}/shopManage/bindBankCard?userid="+$("#hideTag").val();
+		  });
+		   
+		   
+		   
+		   
+		   
 		  //店铺名称文本框失去焦点
 		  $("#storeName").focus(function(){
 			  $("#storeName").val("");
@@ -214,6 +222,15 @@
 	</div>
 	<!-- edit_wenh_2015_3_27 -->
 	<input type="hidden" value=${info.phoneNumber} id="hide_phonenumber" />
+	<!--绑定银行卡  -->
+	<div id="qrBank" class="cellDiv">
+		<h5><div class="cellRightLable">绑定银行卡</div></h5>
+		<img class="arrow"
+			src="${resRoot}/image/goodsManager/goodSelectArrow.png"> 
+		<div class="cellTopLine"></div>
+	</div>
+	<!-- edit_wenh_2015_4_21 -->
+
 	<!--微信号   -->
 	<div class="cellDiv">
 		<h5><div class="cellRightLable">微信号</div></h5>

@@ -69,6 +69,7 @@ public class OrdersSql {
 				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
 				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
 				+" and ORD_D_DEAL.USER_ID="+strUserID
+				+" and ORD_D_PAYLOG.req_trade_type='0200'"
 				+" order by ORD_D_BASE.Order_Time DESC"
 				);
 		System.out.println(sb.toString());
@@ -108,6 +109,7 @@ public class OrdersSql {
 				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
 				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
 				+" and ORD_D_DEAL.ORDER_ID='"+strOrderID+"'"
+				+" and ORD_D_PAYLOG.req_trade_type='0200'"
 				+" order by ORD_D_BASE.Order_Time DESC"
 				);
 		System.out.println(sb.toString());
@@ -156,6 +158,7 @@ public class OrdersSql {
 				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.Album_Id"
 				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
 				+" and ORD_D_DEAL.USER_ID="+strUserID
+				+" and ORD_D_PAYLOG.req_trade_type='0200'"
 				);
 		if (strOrderID.length()<=0 && startDate.length()<=0) //订单id为空 ,时间为空，查全部的
 		{

@@ -375,8 +375,17 @@
 
 		.dropdown-menu
 		{
-			min-width:80px;
+			min-width:60px;
 		}
+		.dropdown-menu li {
+			width:60px;
+		}
+		.dropdown-menu li a
+		{
+			padding:3px;
+			text-align: center;
+		}
+}
 
     </style>
 </head>
@@ -448,26 +457,24 @@
 				        <th><div class="th_title">订单详情</div></th>
 				        <th><div class="th_title">收益(元)</div></th>
 				        <th>
-							<div class="btn-group" role="group" aria-label="...">
-								<div class="btn-group" role="group">
-									<div class="dropdown-toggle"
-										data-toggle="dropdown" aria-expanded="false">
-										状态
-										<span class="caret"></span>
-									</div>
-									<ul class="dropdown-menu" role="menu">
-										<!--<li><a href="#">可领取</a></li>
-										<li role="presentation" class="divider"></li>
-										<li><a href="#">冻结</a></li> -->
-										<li onclick="doStatusClick(this);"><a href="#">可提现</a></li>
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">无效单</a></li>
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
-									</ul>
-								</div>
+							<div class="dropdown" style="padding:0px;">
+								<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+								    	状态
+								    <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu">
+									<!-- <li><a href="#">可领取</a></li>
+									<li role="presentation" class="divider"></li>
+									<li><a href="#">冻结</a></li>
+									 -->
+									<li onclick="doStatusClick(this);"><a href="#">可提现</a></li>
+									<li role="presentation" class="divider"></li>
+									<li onclick="doStatusClick(this);"><a href="#">无效单</a></li>
+									<li role="presentation" class="divider"></li>
+									<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
+									<li role="presentation" class="divider"></li>
+									<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
+								</ul>
 							</div>
 						</th>
 				    </tr>
@@ -512,14 +519,14 @@
 	    </div>
 	    <br/>
 	    <br/>
-	    <br/>
-	    <br/>
 		<div>
 			<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
 	        <!-- <div class="query_info_bottom">
 				温馨提示：我们每天凌晨4点根据用户状态计算收益收益，处于冻结状态的收益可能是未到计算时点或号码还没有激活。
 	    	</div> -->
 		</div>
+		<br/>
+	    <br/>
 	</div>
 	
 

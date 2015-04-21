@@ -363,7 +363,7 @@
 	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
 	            </div> -->
 	            <br/>
-	            <input type="hidden" value='${openId}' id="hide_openid" name="hide_openid">
+	            <input type="hidden" value='${openid}' id="hide_openid" name="hide_openid">
 	            <input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 	            <button class="btn-warning btn-block btn" type="submit" id="btnStep1" name="btnStep1">下一步</button>
 	            <br/>

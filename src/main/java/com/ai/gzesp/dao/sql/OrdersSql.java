@@ -249,7 +249,7 @@ public class OrdersSql {
 		StringBuffer sb=new StringBuffer();
 		sb.append("select distinct"
 				+ "	a.ORDER_ID, h.EXPRESS_COMPNAY,"
-				+ " b.ORDER_STATE as ORDER_STATE_CODE, b.POST_FEE, b.ORDER_TIME,"
+				+ " b.ORDER_STATE as ORDER_STATE_CODE, b.POST_FEE, b.ORDER_TIME, b.TOPAY_MONEY/1000 as TOPAY_MONEY,"
 				+ " CASE WHEN b.ORDER_STATE='00' then '待支付'"
 				+ " WHEN b.ORDER_STATE='01' then '待分配'"
 				+ " WHEN b.ORDER_STATE='02' then '待处理'"

@@ -14,7 +14,7 @@
          //如果选择了A/B/C 套餐 还需要展示描述, 要有attr_desc的属性才触发
          if(typeof($(this).attr('attr_desc')) != 'undefined'){
         	 $('#package_detail').show();
-        	 $('#package_detail').val($(this).attr('attr_desc'));
+        	 $('#package_detail').html($(this).attr('attr_desc'));
          }
        });
        
@@ -68,6 +68,7 @@ function planGotoOrderMain(){
     	return false;
     }
     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val'); //再加上网络类型 2G/3G/4G/CARD}
 	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
@@ -82,6 +83,7 @@ function phoneGotoOrderMainNew(){
 		return false;
 	}
     var attr_val = getAttrVal();
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val'); //再加上网络类型 2G/3G/4G/CARD}
     $('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc);     
@@ -94,6 +96,7 @@ function phoneGotoOrderMainNew(){
 function phoneGotoOrderMainOld(){
 	var attr_val = getAttrVal();
 	$('#attr_val').val(attr_val); 
+	if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val'); //再加上网络类型 2G/3G/4G/CARD}
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
 	$('#form1').attr('action', $('#form1').attr('url2')); //替换action路径，新号和老用户跳转路径不一样
@@ -134,6 +137,7 @@ function afterUpdateNumber(data){
 		$('#nice_fee').val(data.nice_fee); //靓号预存款
 		$('#total_price').val( parseInt($('#goods_price').val()) + parseInt($('#nice_fee').val()) ); //订单总价=商品价格+靓号预存款
 
+		$('#current_price').val($('#total_price').val()); //商品的总价格也要跟着改变
 		back2Main(); //回到主页面 隐藏子页面
 	}
 	else{

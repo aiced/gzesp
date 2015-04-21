@@ -174,7 +174,9 @@
 	            
 	            <input type="hidden" name="selArea" value="${area}" />
 	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />
-
+				<input type="hidden" name="txtopenid" value="${openid}" />
+				
+				
 	        	
 	            <input type="hidden" name="wecharaccount" value="${wecharaccount}" />
 	        	<input type="hidden" name="name" value="${name}" />

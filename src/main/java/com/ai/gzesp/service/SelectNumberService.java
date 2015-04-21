@@ -26,15 +26,35 @@ public class SelectNumberService {
      * @param keyword
      * @param sort
      * @param sortCol
+     * @param net_type
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public List<Map<Object, Object>> queryNumberListByPage(String eparchy_code, String nice_rule, int nice_fee_start,
-            int nice_fee_end, int pageNum, int pageSize, String keyword, String sort, String sortCol) {
-        return orderDao.queryNumberListByPage(eparchy_code, nice_rule, nice_fee_start, nice_fee_end, pageNum, pageSize,
-                keyword, sort, sortCol);
-    }
+	public List<Map<Object, Object>> queryNumberListByPage(String eparchy_code,
+			String nice_rule, int nice_fee_start, int nice_fee_end,
+			int pageNum, int pageSize, String keyword, String sort,
+			String sortCol, String net_type) {
+		//此处只能写死对应关系 01:3G，02:2G，03 4G，04:CARD。
+		//物品属性表里的 NETTYPE属性的值是 2G/3G/4G/CARD,号码表里的net_type_code是01/02/03/04,
+		String net_type_code = "01";
+		if("2G".equals(net_type)){
+			net_type_code = "02";
+		}
+		else if("3G".equals(net_type)){
+			net_type_code = "01";
+		}
+		else if("4G".equals(net_type)){
+			net_type_code = "03";
+		}
+		else if("CARD".equals(net_type)){
+			net_type_code = "04";
+		}
+		
+		return orderDao.queryNumberListByPage(eparchy_code, nice_rule,
+				nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, sort,
+				sortCol, net_type_code);
+	}
     
     /**
      * 功能描述: 获取靓号规则<br>
@@ -50,6 +70,14 @@ public class SelectNumberService {
     
     public int updateNumberState(String serial_number){
         return orderDao.updateNumberState(serial_number);
+    }
+    
+    /**
+     * 根据商品id 查询网络类型 是2G/3G/4G/CARD
+     * @return
+     */
+    public Map<Object, Object> getNetTypeByGoodsId(String goods_id){
+        return orderDao.getNetTypeByGoodsId(goods_id);
     }
 
 }

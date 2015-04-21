@@ -55,6 +55,11 @@ public class SelectNumberQueryCon {
      * 排序字段
      */
     private String sortCol;
+    
+    /**
+     * 网络类型
+     */
+    private String netType;    
 
     
     public String getEparchy_code() {
@@ -146,8 +151,17 @@ public class SelectNumberQueryCon {
         this.sortCol = sortCol;
     }
 
+    public String getNetType() {
+		return netType;
+	}
 
-    public SelectNumberQueryCon(){
+	public void setNetType(String netType) {
+		this.netType = netType;
+	}
+
+	public SelectNumberQueryCon(){
         //空构造，spring转换对象时，进行初始化
     }
+    
+    
 }

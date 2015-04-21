@@ -152,6 +152,14 @@
             <li class="num-info-li">
                 <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
+            <!-- 商品的网络类型 2G/3G/4G/CARD-->
+              <#if attrs.NETTYPE??>
+                <#list attrs.NETTYPE as item>
+                  <#if item_index==0>
+                    <span id="net_type" style="display:none" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_CODE}</span>
+                  </#if>
+                </#list>
+              </#if>
             <!-- 选择号码 -->
             <li class="num-info-li city-li">
               <#if attrs.NUMBERS??>
@@ -207,7 +215,7 @@
               </li>              
             </#if>                     
             <li id="price" class="num-info-li" >
-                <p style="margin-bottom: 0px;color:#999;">商品金额：<strong class="current-price">￥${detail.GOODS_PRICE}</strong></p> 
+                <p style="margin-bottom: 0px;color:#999;">商品金额：<strong class="current-price">￥</strong><strong class="current-price" id="current_price">${detail.GOODS_PRICE}</strong></p> 
             </li>            
         </ul>
     </div>

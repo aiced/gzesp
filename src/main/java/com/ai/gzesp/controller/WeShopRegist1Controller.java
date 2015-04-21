@@ -51,7 +51,7 @@ public class WeShopRegist1Controller {
         	stropenId="";
 		}
         System.out.println("openid="+stropenId);
-        mav.addObject("openId", stropenId);
+        mav.addObject("openid", stropenId);
         return mav;
     }
 //    @RequestMapping("/register/checkPhoneNum")

@@ -1,21 +1,25 @@
 
-//$(document).ready(function (){  
-//	//滚动加载
-//	$(window).scroll(function () {
-//        var scrollTop = $(this).scrollTop();
-//        var scrollHeight = $(document).height();
-//        var windowHeight = $(this).height();
-//        if (scrollTop + windowHeight == scrollHeight) {
-//        //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-//        //alert($('#datagrid').attr('pageNum'));
-//        var eparchy_code= $('#btnCity').attr('eparchy_code');	
-//        var keyword = $('#keyword').val();	
-//        var pageNum = parseInt($('#datagrid').attr('pageNum'))+1; //下拉表示要加载下一页
-//        queryNumbersPublic(eparchy_code, null, 0, nice_fee[1], pageNum, pageSize, keyword, null, null);	 //每次加载20条
-//        $('#datagrid').attr('pageNum', pageNum); //加载成功后页数+1
-//        }
-//    }); 
-//});
+$(document).ready(function (){  
+	//滚动加载
+	$(window).scroll(function () {
+        var scrollTop = $(this).scrollTop();
+        var scrollHeight = $(document).height();
+        var windowHeight = $(this).height();
+        if (scrollTop + windowHeight == scrollHeight) {
+        //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+        //alert($('#datagrid').attr('pageNum'));
+        var eparchy_code= $('#btnCity').attr('eparchy_code');	
+        var keyword = $('#keyword').val();	
+        var pageNum = parseInt($('#datagrid').attr('pageNum'))+1; //下拉表示要加载下一页
+    	var pageSize = 20; //默认每次获取20个
+    	var nice_fee_start = 0;
+    	var nice_fee_end = 10000; //靓号预存费范围 0-10000	
+    	var net_type = $('#net_type').html(); //网络类型
+    	queryNumbersPublicAppend(eparchy_code, null, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, null, null, net_type);	 //每次加载20条
+        $('#datagrid').attr('pageNum', pageNum); //加载成功后页数+1
+        }
+    }); 
+});
 
 //地市筛选触发事件
 function eparchyFilter()
@@ -29,8 +33,11 @@ function eparchyFilter()
 	var keyword = $('#keyword').val();
 	var eparchy_code= $('#btnCity').attr('eparchy_code');
 	var pageNum = 1; //搜索查询默认查第一页
-	var pageSize = 20;
-	queryNumbersPublic(eparchy_code, null, 0, 0, pageNum, pageSize, keyword, null, null);
+	var pageSize = 20; //默认每次筛选先获取20个
+	var nice_fee_start = 0;
+	var nice_fee_end = 10000; //靓号预存费范围 0-10000	
+	var net_type = $('#net_type').html(); //网络类型
+	queryNumbersPublic(eparchy_code, null, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, null, null, net_type);
 }
 
 //靓号规则触发筛选
@@ -41,7 +48,10 @@ function ruleFilter(){
 	var eparchy_code= $('#btnCity').attr('eparchy_code');
 	var pageNum = 1; //搜索查询默认查第一页
 	var pageSize = 20;
-	queryNumbersPublic(eparchy_code, nice_rule, 0, 0, pageNum, pageSize, keyword, null, null);	
+	var nice_fee_start = 0;
+	var nice_fee_end = 10000; //靓号预存费范围 0-10000	
+	var net_type = $('#net_type').html(); //网络类型
+	queryNumbersPublic(eparchy_code, nice_rule, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, null, null, net_type);	
 }
 
 //预存费用 触发筛选
@@ -53,7 +63,8 @@ function feeFilter(){
 	var eparchy_code= $('#btnCity').attr('eparchy_code');
 	var pageNum = 1; //搜索查询默认查第一页
 	var pageSize = 20;
-	queryNumbersPublic(eparchy_code, null, nice_fee[0], nice_fee[1], pageNum, pageSize, keyword, null, null);		
+	var net_type = $('#net_type').html(); //网络类型
+	queryNumbersPublic(eparchy_code, null, nice_fee[0], nice_fee[1], pageNum, pageSize, keyword, null, null, net_type);		
 }
 
 //查询 号码选择列表
@@ -66,7 +77,10 @@ function queryNumberList(){
 	var eparchy_code= $('#btnCity').attr('eparchy_code');
 	var pageNum = 1; //搜索查询默认查第一页
 	var pageSize = 20;
-	queryNumbersPublic(eparchy_code, null, 0, 10000, pageNum, pageSize, keyword, null, null); //默认预存0-10000
+	var nice_fee_start = 0;
+	var nice_fee_end = 10000; //靓号预存费范围 0-10000		
+	var net_type = $('#net_type').html(); //网络类型
+	queryNumbersPublic(eparchy_code, null, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, null, null, net_type); //默认预存0-10000
 }
 
 //排序 合约购机列表 排序列的名字和按钮id一样，和数据库字段名一样
@@ -85,16 +99,19 @@ function sortNumberListPublic(sortCol){
 	var keyword = $('#keyword').val();
 	var sort = ( clicktimes%2 == 0 ? "desc" : "asc" );
 	var pageNum = 1; 
-	queryNumbersPublic(eparchy_code, null, 0, 0, pageNum, pageSize, keyword, sort, sortCol);
+	var nice_fee_start = 0;
+	var nice_fee_end = 10000; //靓号预存费范围 0-10000	
+	var net_type = $('#net_type').html(); //网络类型
+	queryNumbersPublic(eparchy_code, null, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, sort, sortCol, net_type);
 }
 
 //ajax查询刷新 公共入口方法
 //筛选 排序 关键字查询搜索 都是调用这个函数
-function queryNumbersPublic(eparchy_code, nice_rule, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, sort, sortCol)
+function queryNumbersPublic(eparchy_code, nice_rule, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, sort, sortCol, netType)
 {
 	var param = {"eparchy_code":eparchy_code, "nice_rule":nice_rule, "nice_fee_start":nice_fee_start, 
 			     "nice_fee_end":nice_fee_end, "pageNum":pageNum, "pageSize":pageSize, 
-			     "keyword":keyword, "sort":sort, "sortCol":sortCol
+			     "keyword":keyword, "sort":sort, "sortCol":sortCol, "netType":netType
 			     };
 	
 	$.ajax({
@@ -111,11 +128,11 @@ function queryNumbersPublic(eparchy_code, nice_rule, nice_fee_start, nice_fee_en
 }
 
 //下拉滚动条时 加载内容，而不是刷新列表区，除了回调函数外，其他参数都和 queryNumbersPublic 一致
-function queryNumbersPublicAppend(eparchy_code, nice_rule, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, sort, sortCol)
+function queryNumbersPublicAppend(eparchy_code, nice_rule, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, sort, sortCol, netType)
 {
 	var param = {"eparchy_code":eparchy_code, "nice_rule":nice_rule, "nice_fee_start":nice_fee_start, 
 			     "nice_fee_end":nice_fee_end, "pageNum":pageNum, "pageSize":pageSize, 
-			     "keyword":keyword, "sort":sort, "sortCol":sortCol
+			     "keyword":keyword, "sort":sort, "sortCol":sortCol, "netType":netType
 			     };
 	
 	$.ajax({

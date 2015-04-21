@@ -111,7 +111,7 @@
 	            
 	            <!--其他-->
 	            <a id="otherInfoTab" href="#" class="list-group-item">
-	                <label>其他</label><label class="label-sm">发票 代金券 备注 推荐人</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
+	                <label>其他</label><label class="label-sm">发票  备注 推荐人</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
 	            </a>
 	        </ul>
 	
@@ -123,10 +123,10 @@
 	            	<input id="postFee" type="hidden" value="0">
 	                <label class="label-sm">运费</label><span class="list_gou">+ ￥00.00</span>
 	            </a>
-	            <a href="javascript:void(0)" class="list-group-item">
-	            	<input id="couponMoney" type="hidden" value="0">
+	            <input id="couponMoney" type="hidden" value="0">
+	            <!-- <a href="javascript:void(0)" class="list-group-item">
 	                <label class="label-sm">代金券</label><span class="list_gou">- ￥00.00</span>
-	            </a>
+	            </a> -->
 	            <a href="javascript:void(0)" class="list-group-item">
 	            	<input id="topayMoney" type="hidden" value="">
 	                <label class="label-sm">应付总额</label><span class="list_gou">￥ ${totalPrice}</span>
@@ -171,7 +171,6 @@
 		<#include "newReceiveAddress.ftl"> 
 	</div>
 		
-	
 	<!-- 其他信息页 -->
 	<div id="otherInfo" style="display:none" >
 		<#include "otherOrderInfo.ftl"> 

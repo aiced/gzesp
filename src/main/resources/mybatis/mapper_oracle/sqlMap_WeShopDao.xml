@@ -167,7 +167,9 @@
 	</select>		
 	
 	<select id="queryGoodListByPage" resultType="java.util.HashMap">
-      select *
+	  select *
+	    from (
+      select m.*, rownum row_num
         from (	
          select a.goods_id  goods_id, 
                 a.ctlg_code ctlg_code, 
@@ -210,9 +212,10 @@
 		    </otherwise>
 	      </choose>
           ) m
+        )
 	<![CDATA[
-        where rownum > (${pageNum}-1)*${pageSize}
-          and rownum <= ${pageNum}*${pageSize}       
+        where row_num > (${pageNum}-1)*${pageSize}
+          and row_num <= ${pageNum}*${pageSize}       
      ]]>
 	</select>
 	

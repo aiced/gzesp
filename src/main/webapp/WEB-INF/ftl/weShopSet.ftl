@@ -25,8 +25,8 @@
 		$(document).ready(function(){  
 		   //[获取验证码]按钮点击
 		  $("#qrCode").click(function(){  
-		  //在这里操作获取验证码
-		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1'};
+		  //在这里操作获取验证码		  
+		  	var parms = {'name':'leoxu', 'age':'1', 'index':'1','userId':$("#hideTag").val()};
 			 $.commonFormSubmit({  
      	        action : '${base}/shopManage/weShopSet/weShopSetQrcode', 
 				data: parms

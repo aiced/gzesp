@@ -106,13 +106,15 @@ public class WeShopSetController {
     
 //   二维码界面。
     @RequestMapping("/weShopSet/weShopSetQrcode")
-    public ModelAndView weShopSetQrcode(){
+    public ModelAndView weShopSetQrcode(@RequestBody String inputParam){
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
         //返回数据表格子页面
+    	String userId = paramsMap.get("userId");
         ModelAndView mav = new ModelAndView("weShopSetQrcode.ftl"); 
         mav.addObject("name", "喻露露");
         mav.addObject("phone", "18685292522"); 
         mav.addObject("weixin", "1306520198@qq.com"); 
-        mav.addObject("title", "二维码");
+        mav.addObject("userId", userId);
         return mav;
     }
 }

@@ -156,6 +156,8 @@
 	<div id="selectNumberPage"  style="display:none">
 		<#include "selectNumber.ftl"> 
 	</div>
+	<!-- 选号页需要一个网络类型隐藏变量-->
+	<span id="net_type" style="display:none">${net_type}</span>
 	
 	<input type="hidden" id="user_id" value="${user_id}"></input>
 	<input type="hidden" id="goods_id" value="${goods_id}"></input>

@@ -22,6 +22,7 @@ import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.gzesp.utils.MD5Util;
 import com.ai.sysframe.utils.StringUtil;
 
 
@@ -52,7 +53,7 @@ public class WeShopLoginController {
     	System.out.println(inputParams);
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	String strPhoneNum = paramsMap.get("inputMobile");
-    	String strPwd=paramsMap.get("inputPassword");
+    	String strPwd=MD5Util.md5s2(paramsMap.get("inputPassword"));
     	System.out.println(strPhoneNum);
     	System.out.println(strPwd);
     	

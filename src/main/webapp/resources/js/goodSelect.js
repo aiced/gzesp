@@ -11,7 +11,7 @@ $(document).ready(function (){
         var keyword = $('#keyword').val();	
         var good_type = $('#good_type').val();	
         var pageNum = parseInt($('#datagrid').attr('pageNum'))+1; //下拉表示要加载下一页
-        queryFilterPublicAppend(good_type, 1, 10, keyword); //每次加载10条
+        queryFilterPublicAppend(good_type, pageNum, 10, keyword); //每次加载10条
         $('#datagrid').attr('pageNum', pageNum); //加载成功后页数+1
         }
     }); 

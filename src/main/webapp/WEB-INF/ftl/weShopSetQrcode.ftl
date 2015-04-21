@@ -35,7 +35,7 @@
       <div style="width:100%;height:20px;">
     </div>
      <div style="width:100%;height:244px;margin-left:0px;margin-bottom:20px;" >   	
-     		<div id = "qrcodeDiv" style="background-color:red;width:200px;height:200px ;line-height:44px;margin:auto;">
+     		<div id = "qrcodeDiv" style="width:200px;height:200px ;line-height:44px;margin:auto;">
      </div>	
      		
      	

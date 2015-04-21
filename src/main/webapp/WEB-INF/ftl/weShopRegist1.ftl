@@ -91,6 +91,9 @@
 			  //在这里操作获取验证码
 			  //alert("发送验证码");
 			  //点击的时候 获得当前时间
+			  
+			  
+			  
 			  $("#hide_code_date").val(getNowDate());
 			  
 			  var bRet=isPhoneNum($("#txtphonenum").val());
@@ -111,6 +114,10 @@
 			  	//这里开始做验证码操作
 			  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode");
 			  	bRet1=true;//这个地方要删掉，切记切记！！！！！
+			  	if(bRet1)
+			  	{
+			  		$("#txtyanzhengma").attr("disabled",false); 
+			  	}
 				//按钮禁用
 			  	//$("#btnCode").attr('disabled',true);
 			  	//=true;
@@ -325,7 +332,7 @@
 	                <div class="col-xs-7 col-sm-7 col-md-7">
 			            <div class="form-group" id="div_yanzhengma">
 			                <label for="txtyanzhengma" class="sr-only"></label>
-			                <input type="text" class="form-control" id="txtyanzhengma" name="txtyanzhengma" placeholder="请输入验证码">
+			                <input type="text" class="form-control" id="txtyanzhengma" name="txtyanzhengma" placeholder="请输入验证码" disabled='true'>
 			            </div>
 	                </div>
 	                <div class="col-xs-5 col-sm-5 col-md-5">

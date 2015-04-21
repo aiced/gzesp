@@ -168,6 +168,15 @@
                 </p>
                 <p id="articleInfo" class="s-tip"></p>
             </li>
+            <!-- 商品的网络类型 2g/3g/4g/上网卡-->
+              <#if attrs.NETTYPE??>
+                <#list attrs.NETTYPE as item>
+                  <#if item_index==0>
+                    <span id="net_type" style="display:none" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}"></span>
+                  </#if>
+                </#list>
+              </#if>
+             <!-- 优惠活动 -->             
             <#if attrs.PACKRES??>
               <li id="activityType" class="num-info-li" >
                   <p style="margin-bottom: 0px;"><label>优惠活动</label></p>

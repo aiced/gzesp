@@ -11,11 +11,14 @@
           from NUM_D_NUMINFO a
          where a.code_state = '1'
            and a.province_code = '85'
+            <if test="net_type_code != null">
+               and a.net_type_code like '%'||#{net_type_code}||'%'
+            </if>           
             <if test="keyword != null">
                and a.serial_number like '%'||#{keyword}||'%'
             </if>
 		    <if test="eparchy_code != null">
-			  and a.eparchy_code = #{eparchy_code}
+			  and a.eparchy_code like '%'||#{eparchy_code}||'%'
 			</if>              
             <if test="nice_rule != null">
                and a.nice_rule = #{nice_rule}
@@ -74,5 +77,21 @@
                   else 0 end)
         where goods_id = ${goods_id}
 	</update>	
+	
+	<select id="getNetTypeByGoodsId" resultType="java.util.HashMap">
+     select a.goods_id ,
+            b.res_id,
+            c.attr_code,
+            c.attr_val_name,
+            c.attr_val_code,
+            c.values1
+       from GDS_D_INFO a ,
+            REL_GOODS_RES b,
+            RES_D_ATTRVAL c
+      where a.goods_id = ${goods_id}
+        and a.goods_id = b.goods_id
+        and b.res_id = c.res_id
+        and c.attr_code = 'NETTYPE'
+	</select>		
 	
 </mapper>

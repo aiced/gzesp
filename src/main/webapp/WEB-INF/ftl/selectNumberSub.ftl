@@ -1,7 +1,7 @@
       <!-- 查询结果无数据或者异常时展示提示信息-->
       <#if  (!numbers?exists || numbers?size=0)>
         <div class="row"> 
-          <p class="p-td-price">查询无结果</p>  	
+          <p class="p-td-price">无更多结果</p>  	
         </div>     
       </#if>
       <!-- 有数据时展示 -->       

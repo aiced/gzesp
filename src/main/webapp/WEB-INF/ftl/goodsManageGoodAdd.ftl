@@ -152,7 +152,7 @@ table{
 								<div style="float:left;width:170px;float:left;height:50px;margin-left:15px;margin-top:10px;text-overflow:clip | ellipsis">								
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">${info.goodsCtlgName}</p> 
 									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E;overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">${info.goodsName}</p> 
-									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">价格:${info.addPrice}</p> 									
+									<p align=left style="width:100%;height:16px;line-height:16px;padding-left:5px;float:left;font-size:10px;color:#807E7E">价格:${info.addPrice/1000}</p> 									
 								</div>
 							</a>
 					</td>

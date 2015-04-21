@@ -46,7 +46,8 @@
 				<div id="top_right">
 	        	    <!--	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="get_t(this); return false;">管理</a> -->
 	        	  <button class="btn btn-primary btn-sm" style="background-color:#21292c;" onclick="get_t(this); return false;">管理</button>	
-	        	</div>	 </div>
+	        	</div>	 
+	   </div>
     <div style="width:100%;height:24px ;margin-top:20px;">
 	 <p style="padding-left:20px;width:260px;height:24px ;line-height:24px;display: block;font-size:13px;color:#6A6969;margin-top:20px;">可选择的不超过四个</p>
     <!--添加图片  -->
@@ -230,6 +231,7 @@
 			});	
 
 		    <#list rcdlist as info>	
+		    	
 				document.getElementById('image${info_index}').src='${imageRoot}${info.photoLinks}';		
 				
 			</#list>

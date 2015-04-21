@@ -38,9 +38,11 @@
  	<div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true">返回</span></div>
 	        	<div id="top_middle">${title}</div>
-				<div id="top_right">
-	        	    	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="saveClick(this); return false;"> 确定 </a>	
-	        	</div>	
+	        	<div id="top_right">
+	        	    <!--	<a style="color:#fff;width:40px;height:20px ;line-height:20px;display: block;text-align:center;font-size:14px;float:right;margin-top:20px;margin-right:10px;border:1px solid #fff;text-decoration:none" onclick="get_t(this); return false;">管理</a> -->
+	        	  <button class="btn btn-primary btn-sm" style="background-color:#21292c;" onclick="saveClick(this); return false;">确定</button>	
+	        	</div>
+	        		
 	</div>
     <!--图片  -->
      <!-- Carousel 广告轮播-->	

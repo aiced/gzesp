@@ -24,6 +24,7 @@ import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
 import com.ai.gzesp.dao.service.TdAurDRELINFODao;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.gzesp.utils.MD5Util;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -69,7 +70,7 @@ public class WeShopRegist3Controller {
     	String strPersonalId=paramsMap.get("personalId");//身份证号
     	String strDefalutImg="/uploader/headimages/touxiang_default.png";
     	String strOpenid=paramsMap.get("txtopenid");
-    	String strPwd=paramsMap.get("txtpassword");
+    	String strPwd=MD5Util.md5s2(paramsMap.get("txtpassword"));
     	
     	
     	System.out.println("打印的数据");

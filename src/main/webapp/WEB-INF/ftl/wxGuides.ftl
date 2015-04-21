@@ -100,10 +100,10 @@
         <br/>
     </legend>
  	<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 0px; padding: 15px; border: 1px solid rgb(235, 164, 50); white-space: normal; border-radius: 5px;">
-    <p style="margin-top: 0px; margin-bottom: 0px; clear: both; font-family: inherit; font-size: 1em; color: rgb(68, 68, 68); padding: 0px; border: currentcolor; text-align: center; line-height: 1.5em; text-decoration: inherit; max-width: 100%; box-sizing: border-box !important; background-image: none; background-color: rgb(255, 255, 255);">
+    <p style="margin-top: 0px; margin-bottom: 0px; clear: both; font-family: inherit; font-size: 1em; color: rgb(68, 68, 68); padding: 0px; border: currentcolor; text-align: center; line-height: 1.5em; text-decoration: inherit; max-width: 100%; box-sizing: border-box !important; background-image: none;">
         <span style="color: rgb(89, 89, 89); font-size: 14px;">不以赚钱为目的的掌柜都是耍流氓</span><span style="color: rgb(89, 89, 89);">！</span>
     </p>
-    <p style="margin-top: 0px; margin-bottom: 0px; clear: both; font-family: inherit; font-size: 1em; color: rgb(68, 68, 68); padding: 0px; border: currentcolor; text-decoration: inherit; max-width: 100%; text-align: center; box-sizing: border-box !important; background-image: none; background-color: rgb(255, 255, 255);">
+    <p style="margin-top: 0px; margin-bottom: 0px; clear: both; font-family: inherit; font-size: 1em; color: rgb(68, 68, 68); padding: 0px; border: currentcolor; text-decoration: inherit; max-width: 100%; text-align: center; box-sizing: border-box !important; background-image: none;">
         <span style="color: rgb(89, 89, 89); font-size: 14px;">精明的掌柜就该明收益、会算账！</span>
     </p>
 </blockquote>

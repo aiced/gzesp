@@ -20,8 +20,9 @@
         <div class="col-xs-4" >
           <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
         </div>
-        <div class="col-xs-2 col-xs-offset-6" style="padding-top:5px;" >
-        	<a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a>
+        <div class="" style="padding-top:5px;" >
+        	<!-- <a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a> -->
+        	<a href="${base}/customer/custOrderQuery" style="color:white;float: right;font-size: 12px;"><u>我的订单</u></a>
         </div>       
       </div>
     </div>

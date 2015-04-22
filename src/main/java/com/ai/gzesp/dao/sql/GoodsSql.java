@@ -73,7 +73,7 @@ public class GoodsSql {
 		sb.append("select distinct "
 				+ "t1.GOODS_ID as goodsId,"
 				+ "t1.GOODS_NAME as goodsName, "
-				+ "t2.ADD_PRICE as addPrice, "
+				+ "t2.ADD_PRICE/1000 as addPrice, "
 				+ "t4.PHOTO_LINKS as photoLinks,"
 				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 				);
@@ -152,7 +152,7 @@ public class GoodsSql {
 			quarySb.append("select distinct "
 					+ "t1.GOODS_ID as goodsId,"
 					+ "t1.GOODS_NAME as goodsName, "
-					+ "t2.ADD_PRICE as addPrice, "
+					+ "t2.ADD_PRICE/1000 as addPrice, "
 					+ "t4.PHOTO_LINKS as photoLinks,"
 					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 					);
@@ -178,7 +178,7 @@ public class GoodsSql {
 			quarySb.append("select distinct "
 					+ "t1.GOODS_ID as goodsId,"
 					+ "t1.GOODS_NAME as goodsName, "
-					+ "t2.ADD_PRICE as addPrice, "
+					+ "t2.ADD_PRICE/1000 as addPrice, "
 					+ "t4.PHOTO_LINKS as photoLinks,"
 					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 					);
@@ -196,13 +196,13 @@ public class GoodsSql {
 			quarySb.append("select distinct "
 					+ "t1.GOODS_ID as goodsId,"
 					+ "t1.GOODS_NAME as goodsName, "
-					+ "t2.ADD_PRICE as addPrice, "
+					+ "t2.ADD_PRICE/1000 as addPrice, "
 					+ "t4.PHOTO_LINKS as photoLinks,"
 					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 					);
 			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2,  GDS_D_PHOTO t4 , GDS_P_CTLG t5");
-			quarySb.append("	where t2.ADD_PRICE <=" + searchHightPrice 
-					+ " and t2.ADD_PRICE >= "+ searchLowPrice
+			quarySb.append("	where t2.ADD_PRICE/1000 <=" + searchHightPrice 
+					+ " and t2.ADD_PRICE/1000 >= "+ searchLowPrice
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
 					+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 					+ " and t4.DEFAULT_TAG = '0'"
@@ -226,7 +226,7 @@ public class GoodsSql {
 		sb.append("select distinct "
 				+ "t1.GOODS_ID as goodsId,"
 				+ "t1.GOODS_NAME as goodsName, "
-				+ "t2.ADD_PRICE as goodsPrice, "
+				+ "t2.ADD_PRICE/1000 as goodsPrice, "
 				+ "t4.PHOTO_LINKS as photoLinks,"
 				+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 				);

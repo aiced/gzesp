@@ -326,14 +326,18 @@ public class CoreService {
         buffer.append(" /::D 欢迎来到沃掌柜大本营！").append("\n");  
         buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n").append("\n");  
         buffer.append("1.  0元免费开店").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
+//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
+        buffer.append("<a href=\"#\">☞点这立即注册！</a>").append("\n").append("\n"); 
         buffer.append("2.  入门须知").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  
+//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  
+        buffer.append("<a href=\"#\" >☞点这立即阅读！</a>").append("\n").append("\n");  
         buffer.append("3.  收益规则").append("\n");  
-        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
+//        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
+        buffer.append("<a href=\"#\" >☞点这立即查看！</a>").append("\n").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >☞点这立即查看！</a>").append("\n").append("\n");  
         buffer.append("4.  收益发放").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >☞点这立即了解！</a>").append("\n").append("\n");  
+//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >☞点这立即了解！</a>").append("\n").append("\n");  
+        buffer.append("<a href=\"#\" >☞点这立即了解！</a>").append("\n").append("\n");  
         
 //        buffer.append("5.  更多互动咨询").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >☞点这立即打开！</a>").append("\n").append("\n");  

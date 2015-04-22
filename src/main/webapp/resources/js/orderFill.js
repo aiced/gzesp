@@ -166,7 +166,8 @@ $(function() {
 	        return;
 	    }
 	    //选择的图片非bmp、jpg、jpeg时，清空文件选择，展示提示框
-	    if(!(type == ".jpg" || type == ".bmp" || /^image\/(jpeg|jpg|bmp)$/.test(type2))){
+	    if(!(type == ".jpg" || type == ".png" || type == ".bmp" || /^image\/(jpeg|jpg|png|bmp)$/.test(type2))){
+	    	alert('只能选择jpg、png格式图片');
 	        return;
 	    }
 	    var reader = new FileReader();
@@ -278,13 +279,13 @@ function netInfo_checkData() {
 	 }
     
 
-//    if($('#firstCard').attr("src") =='/esp/resources/image/order/card01.png'){
-//    	alert("证件照片不能为空");   	
-//    	return false;
-//    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
-//    	alert("证件照片不能为空");   	
-//    	return false;
-//    }
+    if($('#firstCard').attr("src") =='/esp/resources/image/order/card01.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }
     return true;
 }
 //	

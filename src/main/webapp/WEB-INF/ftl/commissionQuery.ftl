@@ -85,21 +85,24 @@
     	//alert($(obj).text());
     	if($(obj).text() == "未激活")
     	{
-    		iStatusflag=4;
-    	}
-    	else if($(obj).text()=="无效单")
-    	{
-    		iStatusflag=2;
+    		iStatusflag='00';
     	}
     	else if($(obj).text()=="结算中")
     	{
-    		iStatusflag=3;
+    		iStatusflag='01';
     	}
-    	else if($(obj).text()=="可提现")
+    	else if($(obj).text()=="已到帐")
     	{
-    		iStatusflag=1;
+    		iStatusflag='02';
+    	}
+    	else if($(obj).text()=="已退货")
+    	{
+    		iStatusflag='03';
     	}	
-    	
+    	else if($(obj).text()=="已失效")
+    	{
+    		iStatusflag='04';
+    	}	
     	//二次查询数据，因为有iStatusflag参数的存在
     	selectData();
     	
@@ -467,13 +470,15 @@
 									<li role="presentation" class="divider"></li>
 									<li><a href="#">冻结</a></li>
 									 -->
-									<li onclick="doStatusClick(this);"><a href="#">可提现</a></li>
-									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">无效单</a></li>
+									<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
 									<li role="presentation" class="divider"></li>
 									<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
 									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
+									<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
+									<li role="presentation" class="divider"></li>
+									<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
+									<li role="presentation" class="divider"></li>
+									<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
 								</ul>
 							</div>
 						</th>
@@ -492,16 +497,18 @@
 						  </td><!-- 预期-->
 					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->
 					      <td>
-					      	<#if (item.ACT_STATUS == "")>
+					      	<#if (item.CMS_STATE == "")>
+					      		<span class="label label-default">未知</span>
+					      	<#elseif (item.CMS_STATE=='00')><!-- 未激活-->
 					      		<span class="label label-default">未激活</span>
-					      	<#elseif (item.ACT_STATUS=='0'  && item.OPENDATE_STATUS=='0')><!-- 没激活没到时间:未激活 -->
-					      		<span class="label label-default">未激活</span>
-					      	<#elseif (item.ACT_STATUS=='0' && item.OPENDATE_STATUS=='1')><!-- 没激活到时间:无效单 -->	
-					      		<span class="label label-primary">无效单</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='0')><!-- 激活没到时间:结算中 -->
-					      		<span class="label label-warning">结算中</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='1')><!-- 激活到时间 :可提现-->
-					      		<span class="label label-success">可提现</span>
+					      	<#elseif (item.CMS_STATE=='01')><!-- 结算中 -->	
+					      		<span class="label label-primary">结算中</span>
+					      	<#elseif (item.CMS_STATE=='02')><!-- 已到帐 -->
+					      		<span class="label label-warning">已到帐</span>
+					      	<#elseif (item.CMS_STATE=='03')><!-- 已退货-->
+					      		<span class="label label-success">已退货</span>
+					      	<#elseif (item.CMS_STATE=='04')><!-- 已失效-->
+					      		<span class="label label-success">已失效</span>	
 					      	</#if>
 					      </td><!-- 状态 -->
 						</tr>
@@ -520,7 +527,7 @@
 	    <br/>
 	    <br/>
 		<div>
-			<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
+			&nbsp;&nbsp;&nbsp;<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
 	        <!-- <div class="query_info_bottom">
 				温馨提示：我们每天凌晨4点根据用户状态计算收益收益，处于冻结状态的收益可能是未到计算时点或号码还没有激活。
 	    	</div> -->

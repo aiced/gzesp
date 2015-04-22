@@ -94,7 +94,7 @@ table{
 			 <img src="${resRoot}/image/goodsManager/xiaLaSanJiao.png" style="width:10px;height:10px;float:left;margin-left:0px;margin-top:10px;"></img>
 		</div>
 		<div style="float:right;width:150px;height:30px">
-			 <a style="width:60px;height:30px;display:block;text-align:center;float:left;line-height:30px;margin-left:20px;font-size:15px;color:#818181" onclick="showFlowView(this); return false;">筛选</a>
+			 <a style="width:60px;height:30px;display:block;text-align:center;float:left;line-height:30px;margin-left:20px;font-size:15px;color:#818181" onclick="showFlowView(); return false;">筛选</a>
 			 <img src="${resRoot}/image/goodsManager/xiaLaSanJiao.png" style="width:10px;height:10px;float:left;margin-left:0px;margin-top:10px;"></img>
 		</div>
 		<div style="background-color:gray;float:left;width:100%;height:1px;margin-top:0px">
@@ -113,11 +113,15 @@ table{
 			    		<p style="width:100%;height:20px;line-height:20px;margin-top:10px;margin-left:5px;float:left;font-size:13px;color:#807E7E">商品类型 </p> 
 			    		<div style="background-color:#C2C2C2;float:left;width:100%;float:left;height:1px;margin-left:0px;margin-top:1px">
 						</div>
-						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(4); return false;">合约购机</a>	
-						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display:block;text-align:center;margin:auto;margin-top:10px;margin-left:35px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(6); return false;">上网卡</a>	
-						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(7); return false;">宽带续约</a>	
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(4,9); return false;">合约购机</a>	
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display:block;text-align:center;margin:auto;margin-top:10px;margin-left:35px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(6,11); return false;">上网卡</a>	
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;margin-top:10px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(7,12); return false;">宽带续约</a>	
 						
-						<a style="color:#7E7D7D;width:65px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:20px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(8); return false;">流量包</a>							
+						<a style="color:#7E7D7D;width:65px;height:20px ;line-height:20px; float:left;display: block;text-align:center;margin-left:5px;margin-top:20px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(8,13); return false;">流量包</a>	
+						
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display:block;text-align:center;margin:auto;margin-top:20px;margin-left:30px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(5,10); return false;">套餐</a>	
+						
+												
 						<div style="float:left;margin-top:20px;width:100%;float:left;height:20px;margin-left:0px">
 						<a style="background-color:#4171BC;color:white;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;font-size:11px " onclick="searchPrice(this); return false;">确定</a>	
 						<a style="background-color:#D0D0D0;color:#808080;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;border:1px solid #7E7D7D;font-size:11px;resetPrice(this)" onclick="resetPrice(this); return false;">重置</a>	
@@ -215,7 +219,8 @@ table{
 			</#list>
 
 			if(goodsId == null){
-				history.back();
+				alert("请选择一件商品");
+				return;
 			}
 			
 			

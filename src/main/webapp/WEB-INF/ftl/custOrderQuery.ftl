@@ -22,18 +22,53 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.validate.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script>
-    
     $(function(){
-    	$('#custOrderQueryForm').submit(function() {
-    		var phone = $('#inputMobile').val();
-        	var passport = $('#inputPassport').val();
-        	//alert(phone + passport);
-        	location.href = "custMyOrder/"+phone+"/"+passport;
-        	return false;
-    	});
+    	
+    		$("#custOrderQueryForm").validate({
+    			//focusInvalid : false,
+    			//onfocusout: false,
+    			 onkeyup: false,
+    			 rules: {
+ 					// simple rule, converted to {required:true}
+ 					inputMobile: {
+ 						required: true,
+ 						number: true
+ 					},
+ 					// compound rule
+ 					inputPassport: {
+	    					required: true
+ 					}
+ 				},
+ 				errorPlacement : function(error, element) {  
+ 	                //element.parent('div').append(error+"--12313123123");  
+ 	            },
+    			 submitHandler: function(form) {
+    				 var phone = $('#inputMobile').val();
+    		        	var passport = $('#inputPassport').val();
+    		        	location.href = "custMyOrder/"+phone+"/"+passport;
+    				 },
+    				 highlight : function(element) {  
+    		                $(element).parent('.form-group').addClass('has-error');  
+    		         },  
+    		  
+   		            success : function(label, element) {  
+   		            	$(element).parent('.form-group').removeClass('has-error');  
+   		            }
+    				
+    		});
     })
+    
+    //     	$('#custOrderQueryForm').submit(function() {
+//     		var phone = $('#inputMobile').val();
+//         	var passport = $('#inputPassport').val();
+//         	//alert(phone + passport);
+//         	location.href = "custMyOrder/"+phone+"/"+passport;
+//         	return false;
+//     	});
+    
 //     function onBtnSubmit() {
 //     	var phone = $('#inputMobile').val();
 //     	var passport = $('#inputPassport').val();
@@ -57,9 +92,15 @@
             <form  id="custOrderQueryForm" class="form-signin" method="post">
                 <br/>
                 <br/>
-                <input type="text"  id="inputMobile" name="inputMobile" class="form-control" placeholder="输入您的手机号"  required autofocus>
+                <div class="form-group">
+	                <label for="inputMobile" class="sr-only"></label>
+	                <input type="text"  id="inputMobile" name="inputMobile" class="form-control" placeholder="输入您的手机号"   autofocus>
+                </div>
                 <br/>
-                <input type="text" id="inputPassport" name="inputPassport" class="form-control" placeholder="输入您的证件号" required>
+                <div class="form-group">
+	                <label for="inputPassport" class="sr-only"></label>
+	                <input type="text" id="inputPassport" name="inputPassport" class="form-control" placeholder="输入您的证件号" >
+                </div>
                 <br/>
                 <br/>
                 <button class="btn btn-warning btn-block "  name="btnSubmit" id="btnSubmit" >提交</button>
@@ -69,4 +110,6 @@
     </div>
     
 </body>
+
+
 </html>

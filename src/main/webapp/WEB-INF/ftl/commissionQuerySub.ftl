@@ -17,13 +17,15 @@
 					<li role="presentation" class="divider"></li>
 					<li><a href="#">冻结</a></li>
 					 -->
-					<li onclick="doStatusClick(this);"><a href="#">可提现</a></li>
-					<li role="presentation" class="divider"></li>
-					<li onclick="doStatusClick(this);"><a href="#">无效单</a></li>
+					<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
 					<li role="presentation" class="divider"></li>
 					<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
 					<li role="presentation" class="divider"></li>
-					<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
+					<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
+					<li role="presentation" class="divider"></li>
+					<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
+					<li role="presentation" class="divider"></li>
+					<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
 				</ul>
 			</div>
 		</th>
@@ -41,16 +43,18 @@
 		  </td><!-- 预期-->
 	     
 	      <td>
-	      	<#if (item.ACT_STATUS == "")>
+	      	<#if (item.CMS_STATE == "")>
+	      		<span class="label label-default">未知</span>
+	      	<#elseif (item.CMS_STATE=='00')><!-- 未激活-->
 	      		<span class="label label-default">未激活</span>
-	      	<#elseif (item.ACT_STATUS=='0'  && item.OPENDATE_STATUS=='0')><!-- 没激活没到时间:未激活 -->
-	      		<span class="label label-default">未激活</span>
-	      	<#elseif (item.ACT_STATUS=='0' && item.OPENDATE_STATUS=='1')><!-- 没激活到时间:无效单 -->	
-	      		<span class="label label-primary">无效单</span>
-	      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='0')><!-- 激活没到时间:结算中 -->
-	      		<span class="label label-warning">结算中</span>
-	      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='1')><!-- 激活到时间 :可提现-->
-	      		<span class="label label-success">可提现</span>
+	      	<#elseif (item.CMS_STATE=='01')><!-- 结算中 -->	
+	      		<span class="label label-primary">结算中</span>
+	      	<#elseif (item.CMS_STATE=='02')><!-- 已到帐 -->
+	      		<span class="label label-warning">已到帐</span>
+	      	<#elseif (item.CMS_STATE=='03')><!-- 已退货-->
+	      		<span class="label label-success">已退货</span>
+	      	<#elseif (item.CMS_STATE=='04')><!-- 已失效-->
+	      		<span class="label label-success">已失效</span>	
 	      	</#if>
 	      </td><!-- 状态 -->
 		</tr>

@@ -56,6 +56,22 @@
 			else
 			{
 				//alert("可以提交了！");
+		       	var bReturn=false;  
+	      		var parms = {'hide_userid':$("#hide_userid").val(),'selBank':$("#selBank").val(),'txtbankcardid':$("#txtbankcardid").val()};
+	      		$.ajax({
+	         		type: "POST",
+	      		 	url: '${base}/shopManage/BankCard_PostData',
+	      		 	data: parms,
+	      		 	async:false,
+	      		 	success: function(bRet){
+					if(bRet)
+					{
+						alert("已经提交成功");
+						location.href="${base}/shopManage/weShopSet?userid="+$("#hide_userid").val();
+					}
+	      		 }
+	      		});
+				
 				return true;
 			}
 		  });		
@@ -103,25 +119,7 @@
       		  	 return;
       		 }
       		});
-          }); 
-          //[提交]按钮点击
-          $("#btnSubmit").click(function(){  
-        	var bReturn=false;  
-      		var parms = {'hide_userid':$("#hide_userid").val(),'selBank':$("#selBank").val(),'txtbankcardid':$("#txtbankcardid").val()};
-      		$.ajax({
-         		type: "POST",
-      		 	url: '${base}/shopManage/BankCard_PostData',
-      		 	data: parms,
-      		 	async:false,
-      		 	success: function(bRet){
-				if(bRet)
-				{
-					alert("已经提交成功");
-				}
-      		 }
-      		});
-          }); 
-		  
+          }); 		  
 		  
 		});
     </script>

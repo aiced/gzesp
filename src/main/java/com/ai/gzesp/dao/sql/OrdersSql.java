@@ -20,31 +20,15 @@ import com.ibm.wsdl.util.StringUtils;
 public class OrdersSql {
 
 	@Resource
-	private CommonDao commonDao;
-	
-//	select ORD_D_DEAL.ORDER_ID,
-	//ORD_D_PROD.GOODS_NAME,
-	//ORD_D_BASE.INCOME_MONEY,
-	//ORD_D_BASE.Order_Time,
-	//ORD_D_POST.RECEIVER_NAME,
-	//ORD_D_POST.POST_ADDR,
-	//ORD_D_POST.MOBILE_PHONE,
-	//ORD_D_POST.DELIVER_TIME_CODE,
-	//ORD_D_PAYLOG.PAY_MODE,
-	//ORD_D_PAYLOG.PAY_STATE,
-	//ORD_D_PAYLOG.PAY_REMARK
-//	 from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST where 
-//	 ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id 
-	//and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id 
-	//and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id 
-	//and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id
-//	 	
+	private CommonDao commonDao;	
 	//通过userid获取商品列表
 	public List<Map<String, Object>> getOrdersListbyUserID(String strUserID)
 	{
 		StringBuffer sb=new StringBuffer();
 		
-		sb.append("select "
+		sb.append("with T1 as"
+				+"("
+				+"select "
 				+"ORD_D_DEAL.ORDER_ID,"//订单id
 				+"ORD_D_PROD.GOODS_NAME,"//商品名称
 				+"ORD_D_BASE.INCOME_MONEY,"//订单金额
@@ -52,26 +36,59 @@ public class OrdersSql {
 				+"ORD_D_POST.RECEIVER_NAME,"//收件人
 				+"ORD_D_POST.POST_ADDR,"//详细地址
 				+"ORD_D_POST.MOBILE_PHONE,"//联系电话
-				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
-				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
-				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
+				+"case when ORD_D_POST.DELIVER_TIME_CODE ='00' then"
+				+"'工作日'"
+				+"when ORD_D_POST.DELIVER_TIME_CODE ='01' then"
+				+"'周末'"
+				+"when ORD_D_POST.DELIVER_TIME_CODE ='02' then" 
+				+"'工作日、周末'"
+				+"else"
+				+"'未知'"
+				+"end" 
+				+" DELIVER_TIME_CODE,"
+				+"case when ORD_D_POST.DELIVER_TYPE_CODE ='00' then"
+				+"'不需要配送'"
+				+"when ORD_D_POST.DELIVER_TYPE_CODE ='01' then"
+				+"'送货'"
+				+"when ORD_D_POST.DELIVER_TYPE_CODE ='02' then" 
+				+"'自提'"
+				+"else"
+				+"'未知'"
+				+"end" 
+				+" DELIVER_TYPE_CODE,"
 				+"ORD_D_BASE.ORDER_STATE,"//订单状态
-				//+"ORD_D_REFUND.REFUND_REASON"//无//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
-				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
 				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
-		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");//GDS_D_PHOTO,GDS_D_INFO 先注释掉后面需要放开注释
+		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
 		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
 				+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
 				+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
-				+" and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id(+)"	
 				+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id" //先注释掉，后面需要放开注释
 				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
 				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
-				+" and ORD_D_DEAL.USER_ID="+strUserID
-				+" and ORD_D_PAYLOG.req_trade_type='0200'"
+				+" and ORD_D_DEAL.USER_ID='"+strUserID+"'"
 				+" order by ORD_D_BASE.Order_Time DESC"
 				);
+		sb.append("),");
+		sb.append("T2 as ("
+				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
+				+ ")");
+		sb.append("select T1.ORDER_ID,"
+				+ "T1.GOODS_NAME,"
+				+ "T1.INCOME_MONEY,"
+				+ "T1.Order_Time,"
+				+ "T1.RECEIVER_NAME,"
+				+ "T1.POST_ADDR,"
+				+ "T1.MOBILE_PHONE,"
+				+ "T1.DELIVER_TIME_CODE,"
+				+ "T1.DELIVER_TYPE_CODE,"
+				+ "T1.ORDER_STATE,"
+				+"T1.PHOTO_LINKS,"
+				+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
+				+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
+				);
+		
+		
 		System.out.println(sb.toString());
 		List<Map<String, Object>> orderList =commonDao.queryForList(sb.toString());
 
@@ -83,35 +100,68 @@ public class OrdersSql {
 	public List getOrderInfobyOrderID(String strOrderID)
 	{
 	StringBuffer sb=new StringBuffer();
-		
-		sb.append("select "
-				+"ORD_D_DEAL.ORDER_ID,"//订单id
-				+"ORD_D_PROD.GOODS_NAME,"//商品名称
-				+"ORD_D_BASE.INCOME_MONEY,"//订单金额
-				+"ORD_D_BASE.Order_Time,"//下单时间
-				+"ORD_D_POST.RECEIVER_NAME,"//收件人
-				+"ORD_D_POST.POST_ADDR,"//详细地址
-				+"ORD_D_POST.MOBILE_PHONE,"//联系电话
-				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
-				//+"ORD_D_POST.DELIVER_TIME_CODE,"//送货时间
-				+"ORD_D_PAYLOG.PAY_MODE,"//支付方式
-				+"ORD_D_BASE.ORDER_STATE,"//订单状态
-				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
-				//+"ORD_D_PAYLOG.PAY_REMARK"//无货处理
-				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
-				);
-		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");//GDS_D_PHOTO,GDS_D_INFO 先注释掉后面需要放开注释
-		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
-				+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
-				+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
-				+" and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id(+)"	
-				+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id" //先注释掉，后面需要放开注释
-				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
-				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
-				+" and ORD_D_DEAL.ORDER_ID='"+strOrderID+"'"
-				+" and ORD_D_PAYLOG.req_trade_type='0200'"
-				+" order by ORD_D_BASE.Order_Time DESC"
-				);
+	sb.append("with T1 as"
+			+"("
+			+"select "
+			+"ORD_D_DEAL.ORDER_ID,"//订单id
+			+"ORD_D_PROD.GOODS_NAME,"//商品名称
+			+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+			+"ORD_D_BASE.Order_Time,"//下单时间
+			+"ORD_D_POST.RECEIVER_NAME,"//收件人
+			+"ORD_D_POST.POST_ADDR,"//详细地址
+			+"ORD_D_POST.MOBILE_PHONE,"//联系电话
+			+"case when ORD_D_POST.DELIVER_TIME_CODE ='00' then"
+			+"'工作日'"
+			+"when ORD_D_POST.DELIVER_TIME_CODE ='01' then"
+			+"'周末'"
+			+"when ORD_D_POST.DELIVER_TIME_CODE ='02' then" 
+			+"'工作日、周末'"
+			+"else"
+			+"'未知'"
+			+"end" 
+			+" DELIVER_TIME_CODE,"
+			+"case when ORD_D_POST.DELIVER_TYPE_CODE ='00' then"
+			+"'不需要配送'"
+			+"when ORD_D_POST.DELIVER_TYPE_CODE ='01' then"
+			+"'送货'"
+			+"when ORD_D_POST.DELIVER_TYPE_CODE ='02' then" 
+			+"'自提'"
+			+"else"
+			+"'未知'"
+			+"end" 
+			+" DELIVER_TYPE_CODE,"
+			+"ORD_D_BASE.ORDER_STATE,"//订单状态
+			+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
+			);
+	sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
+	sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
+			+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
+			+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
+			+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id" //先注释掉，后面需要放开注释
+			+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
+			+" and GDS_D_PHOTO.DEFAULT_TAG=0"
+			+" and ORD_D_DEAL.ORDER_ID='"+strOrderID+"'"
+			+" order by ORD_D_BASE.Order_Time DESC"
+			);
+	sb.append("),");
+	sb.append("T2 as ("
+			+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
+			+ ")");
+	sb.append("select T1.ORDER_ID,"
+			+ "T1.GOODS_NAME,"
+			+ "T1.INCOME_MONEY,"
+			+ "T1.Order_Time,"
+			+ "T1.RECEIVER_NAME,"
+			+ "T1.POST_ADDR,"
+			+ "T1.MOBILE_PHONE,"
+			+ "T1.DELIVER_TIME_CODE,"
+			+ "T1.DELIVER_TYPE_CODE,"
+			+ "T1.ORDER_STATE,"
+			+"T1.PHOTO_LINKS,"
+			+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
+			+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
+			);	
+	
 		System.out.println(sb.toString());
 		List<Map<String, Object>> orderList =commonDao.queryForList(sb.toString());
 
@@ -133,32 +183,47 @@ public class OrdersSql {
 		}
 		StringBuffer sb=new StringBuffer();
 		
-		sb.append("select "
-				+"ORD_D_DEAL.ORDER_ID,"
-				+"ORD_D_PROD.GOODS_NAME,"
-				+"ORD_D_BASE.INCOME_MONEY,"
-				+"ORD_D_BASE.Order_Time,"
-				+"ORD_D_POST.RECEIVER_NAME,"
-				+"ORD_D_POST.POST_ADDR,"
-				+"ORD_D_POST.MOBILE_PHONE,"
-				+"NVL(ORD_D_POST.DELIVER_TIME_CODE,'0') as Deliver_Time_Code,"
-				//+"ORD_D_POST.DELIVER_TIME_CODE,"
-				+"ORD_D_PAYLOG.PAY_MODE,"
-				+"ORD_D_BASE.ORDER_STATE,"
-				//+"NVL(ORD_D_PAYLOG.PAY_REMARK,'0') as PAY_REMARK,"
-				//+"ORD_D_PAYLOG.PAY_REMARK"
-				+"GDS_D_PHOTO.PHOTO_LINKS"
+		sb.append("with T1 as"
+				+"("
+				+"select "
+				+"ORD_D_DEAL.ORDER_ID,"//订单id
+				+"ORD_D_PROD.GOODS_NAME,"//商品名称
+				+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+				+"ORD_D_BASE.Order_Time,"//下单时间
+				+"ORD_D_POST.RECEIVER_NAME,"//收件人
+				+"ORD_D_POST.POST_ADDR,"//详细地址
+				+"ORD_D_POST.MOBILE_PHONE,"//联系电话
+				+"case when ORD_D_POST.DELIVER_TIME_CODE ='00' then"
+				+"'工作日'"
+				+"when ORD_D_POST.DELIVER_TIME_CODE ='01' then"
+				+"'周末'"
+				+"when ORD_D_POST.DELIVER_TIME_CODE ='02' then" 
+				+"'工作日、周末'"
+				+"else"
+				+"'未知'"
+				+"end" 
+				+" DELIVER_TIME_CODE,"
+				+"case when ORD_D_POST.DELIVER_TYPE_CODE ='00' then"
+				+"'不需要配送'"
+				+"when ORD_D_POST.DELIVER_TYPE_CODE ='01' then"
+				+"'送货'"
+				+"when ORD_D_POST.DELIVER_TYPE_CODE ='02' then" 
+				+"'自提'"
+				+"else"
+				+"'未知'"
+				+"end" 
+				+" DELIVER_TYPE_CODE,"
+				+"ORD_D_BASE.ORDER_STATE,"//订单状态
+				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
 				);
-		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_PAYLOG,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
+		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
 		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
 				+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
 				+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
-				+" and ORD_D_POST.Order_Id=ORD_D_PAYLOG.Order_Id(+)"
-				+" and GDS_D_INFO.GOODS_ID=ORD_D_PROD.Goods_Id"
-				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.Album_Id"
+				+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id" //先注释掉，后面需要放开注释
+				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
 				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
-				+" and ORD_D_DEAL.USER_ID="+strUserID
-				+" and ORD_D_PAYLOG.req_trade_type='0200'"
+				+" and ORD_D_DEAL.USER_ID='"+strUserID+"'"
 				);
 		if (strOrderID.length()<=0 && startDate.length()<=0) //订单id为空 ,时间为空，查全部的
 		{
@@ -179,6 +244,24 @@ public class OrdersSql {
 			sb.append(" and ORD_D_DEAL.ORDER_ID=" + strOrderID);
 		}
 		sb.append(" order by ORD_D_BASE.Order_Time DESC");
+		sb.append("),");
+		sb.append("T2 as ("
+				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
+				+ ")");
+		sb.append("select T1.ORDER_ID,"
+				+ "T1.GOODS_NAME,"
+				+ "T1.INCOME_MONEY,"
+				+ "T1.Order_Time,"
+				+ "T1.RECEIVER_NAME,"
+				+ "T1.POST_ADDR,"
+				+ "T1.MOBILE_PHONE,"
+				+ "T1.DELIVER_TIME_CODE,"
+				+ "T1.DELIVER_TYPE_CODE,"
+				+ "T1.ORDER_STATE,"
+				+"T1.PHOTO_LINKS,"
+				+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
+				+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
+				);	
 		System.out.println(sb.toString());
 		List orderList =commonDao.queryForList(sb.toString());
 	

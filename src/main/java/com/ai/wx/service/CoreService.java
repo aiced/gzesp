@@ -154,22 +154,22 @@ public class CoreService {
         //String respContent = "处理文本类型消息请求异常";
         
         try {
-//        	Field[] fields = RequestTextMessage.class.getDeclaredFields();
-            Field[] fields = MessageUtil.getFields(RequestTextMessage.class);
-            // 转换成 RequestTextMessage 文本请求
-            RequestTextMessage message = RegexUtils.xml2bean(xml, fields, RequestTextMessage.class);
-            //回复文本消息
-            ResponseTextMessage resp = new ResponseTextMessage();
-            
-            resp.setFromUserName(message.getToUserName());
-            resp.setToUserName(message.getFromUserName());
-            resp.setCreateTime(new Date().getTime());
-            //文本内容可以根据用户输入的内容修改，比如输入1,2,3选项回复不同内容
-            resp.setContent(message.getContent()+"--你好，再见"); 
-            resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
-            resp.setFuncFlag(0);
-            
-            respMessage = XmlUtils.textMessageToXml(resp);
+//            Field[] fields = MessageUtil.getFields(RequestTextMessage.class);
+//            // 转换成 RequestTextMessage 文本请求
+//            RequestTextMessage message = RegexUtils.xml2bean(xml, fields, RequestTextMessage.class);
+//            //回复文本消息
+//            ResponseTextMessage resp = new ResponseTextMessage();
+//            
+//            resp.setFromUserName(message.getToUserName());
+//            resp.setToUserName(message.getFromUserName());
+//            resp.setCreateTime(new Date().getTime());
+//            //文本内容可以根据用户输入的内容修改，比如输入1,2,3选项回复不同内容
+//            resp.setContent(message.getContent()+"--你好，再见"); 
+//            resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
+//            resp.setFuncFlag(0);
+//            
+//            respMessage = XmlUtils.textMessageToXml(resp);
+        	respMessage="";
         } catch (Exception e) {
             log.error("处理文本类型消息请求异常", e);
         }
@@ -232,12 +232,13 @@ public class CoreService {
         //String respContent = "处理文本类型消息请求异常";
         
         try {
-            Field[] fields = RequestClickMessage.class.getDeclaredFields();
+//            Field[] fields = RequestClickMessage.class.getDeclaredFields();
+        	 Field[] fields = MessageUtil.getFields(RequestClickMessage.class);
             // 转换成 RequestClickMessage 事件请求
             RequestClickMessage message = RegexUtils.xml2bean(xml, fields, RequestClickMessage.class);
             
             //对应 MenuService.buildMenu()创建的菜单里的eventKey值，进行回复内容
-            if(message.getEventKey().equals("22")){
+            if(message.getEventKey().equals("keyN")){
                 ResponseNewsMessage resp = new ResponseNewsMessage();
                 resp.setFromUserName(message.getToUserName());
                 resp.setToUserName(message.getFromUserName());
@@ -246,7 +247,7 @@ public class CoreService {
                 resp.setFuncFlag(0);
                 
                 List<Article> articleList = new ArrayList<Article>();  
-                Article article1 = new Article();  
+                Article article1 = new Article();
                 article1.setTitle("单条图文消息demo");  
                 article1.setDescription("奚敏辉");  
                 article1.setPicUrl("http://0.xiaoqrobot.duapp.com/images/avatar_liufeng.jpg"); //要改 
@@ -262,16 +263,16 @@ public class CoreService {
                 resp.setArticleCount(articleList.size());
                 
                 respMessage = XmlUtils.newsMessageToXml(resp);
-            }
-            else {
-                ResponseTextMessage resp = new ResponseTextMessage();
-                resp.setFromUserName(message.getToUserName());
-                resp.setToUserName(message.getFromUserName());
-                resp.setCreateTime(new Date().getTime());
-                resp.setContent("[难过] /得意  /::D"); 
-                resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
-                resp.setFuncFlag(0);
-                respMessage = XmlUtils.textMessageToXml(resp);
+            } else {
+//                ResponseTextMessage resp = new ResponseTextMessage();
+//                resp.setFromUserName(message.getToUserName());
+//                resp.setToUserName(message.getFromUserName());
+//                resp.setCreateTime(new Date().getTime());
+//                resp.setContent("[难过] /得意  /::D"); 
+//                resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
+//                resp.setFuncFlag(0);
+//                respMessage = XmlUtils.textMessageToXml(resp);
+            	respMessage = "";
             }
 
         } catch (Exception e) {
@@ -327,17 +328,17 @@ public class CoreService {
         buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n").append("\n");  
         buffer.append("1.  0元免费开店").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
-        buffer.append("<a href=\"#\">☞点这立即注册！</a>").append("\n").append("\n"); 
+        buffer.append("☞点这立即注册！").append("\n").append("\n"); 
         buffer.append("2.  入门须知").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  
-        buffer.append("<a href=\"#\" >☞点这立即阅读！</a>").append("\n").append("\n");  
+        buffer.append("☞点这立即阅读！").append("\n").append("\n");  
         buffer.append("3.  收益规则").append("\n");  
 //        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
-        buffer.append("<a href=\"#\" >☞点这立即查看！</a>").append("\n").append("\n");  
+        buffer.append("☞点这立即查看！").append("\n").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >☞点这立即查看！</a>").append("\n").append("\n");  
         buffer.append("4.  收益发放").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >☞点这立即了解！</a>").append("\n").append("\n");  
-        buffer.append("<a href=\"#\" >☞点这立即了解！</a>").append("\n").append("\n");  
+        buffer.append("☞点这立即了解！").append("\n").append("\n");  
         
 //        buffer.append("5.  更多互动咨询").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >☞点这立即打开！</a>").append("\n").append("\n");  

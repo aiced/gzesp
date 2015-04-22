@@ -248,7 +248,7 @@ public class OrdersSql {
 	public Map getCustOrderDetail(String orderId) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("select distinct"
-				+ "	a.ORDER_ID, h.EXPRESS_COMPNAY,"
+				+ "	a.ORDER_ID, "
 				+ " b.ORDER_STATE as ORDER_STATE_CODE, b.POST_FEE, b.ORDER_TIME, b.TOPAY_MONEY/1000 as TOPAY_MONEY,"
 				+ " CASE WHEN b.ORDER_STATE='00' then '待支付'"
 				+ " WHEN b.ORDER_STATE='01' then '待分配'"
@@ -266,7 +266,11 @@ public class OrdersSql {
 				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
 				+ " d.INVOCE_TITLE, d.INVOCE_CONTENT,"
 				+ " e.USER_IMG, e.STORE_NAME,  g.PHOTO_LINKS,"
-				+ " h.RECEIVER_NAME, h.MOBILE_PHONE, h.EXPRESS_ID,"
+				+ " h.RECEIVER_NAME, h.MOBILE_PHONE, h.EXPRESS_ID, h.EXPRESS_COMPNAY as EXPRESS_COMPNAY_CODE,"
+				+ " CASE WHEN h.EXPRESS_COMPNAY = '1' THEN '顺丰速运'"
+				+ " 	 WHEN h.EXPRESS_COMPNAY = '2' THEN '宅急送' "
+				+ " 	 ELSE '未知'"
+				+ " END EXPRESS_COMPNAY ,"
 				+ " CASE WHEN i.pay_type = '00' THEN '在线支付'"
 				+ " 	 WHEN i.pay_type = '01' THEN '货到付款' "
 				+ " 	 ELSE '未知'"

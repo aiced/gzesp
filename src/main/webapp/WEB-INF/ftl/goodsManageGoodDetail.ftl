@@ -94,7 +94,7 @@
      						</div>
      						<!--
      						<div style=" width:100%;height:25px;float:none;">
-     		     				<p style="padding:5px;margin-bottom:0px;font-size:15px;color:#717171;float:left;">商品佣金:</p> <p style="padding:5px;margin-bottom:0px;float:left; font-size:17px;color:red">¥${info.goodsPrice}</p>	    	    		
+     		     				<p style="padding:5px;margin-bottom:0px;font-size:15px;color:#717171;float:left;">商品佣金:</p> <p style="padding:5px;margin-bottom:0px;float:left; font-size:17px;color:red">¥${info.goodsPrice/1000}</p>	    	    		
      						</div>  
      						 -->
      								

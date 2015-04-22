@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -73,7 +74,8 @@ public class GoodsManageGoodSelectController {
     @RequestMapping("/goodsManageGoodSelectDelete")
     @ResponseBody
 
-    public void goodsManageGoodSelectDelete(@RequestBody String inputParam){
+    public ModelAndView goodsManageGoodSelectDelete(@RequestBody String inputParam){
+
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	//根据index 检索数据库，加载数据。
     	String goodsId = paramsMap.get("goodsId");
@@ -84,6 +86,12 @@ public class GoodsManageGoodSelectController {
         	criteria.createConditon().andEqualTo("USER_ID", userId);
         	int res = tdGdsDABLERCDDao.deleteByExample(criteria);   
     	}
+    	
+    	//保存完数据库后再重定向到上一步商品添加页面
+    	ModelMap mmap = new ModelMap();
+    	mmap.addAttribute("userId", userId);
+        return new ModelAndView("redirect:/shopManage/goodsManageGoodSelect", mmap);
+    	
     }
     
 }

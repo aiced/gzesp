@@ -215,7 +215,8 @@ table{
 			</#list>
 
 			if(goodsId == null){
-				history.back();
+				alert("请选择一件商品");
+				return;
 			}
 			
 			

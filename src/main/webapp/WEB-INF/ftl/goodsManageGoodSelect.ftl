@@ -91,7 +91,7 @@
 		if(checkboxval == 0){
 		
 		}else{
-				 window.location.reload(); 
+			//	 window.location.reload(); 
 		}
      
 		$(document).ready(function(){ 
@@ -121,16 +121,14 @@
 		   $("#image00").click(function(){  
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==0){
-		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
-				$.ajax({
-		  			 type: "POST",
-		  			 url: "goodsManageGoodSelectDelete",
-		  			 data: parms,
-		 			 success: function(data){
-		  			   window.location.reload(); 
-		 		  }
-				});				  
+		   	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
+				$.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodSelectDelete', 
+				data: parms,
+     	        success : function(rtdata, status) { 
+     	        }  
+     	    });  	
+	  		  
 		  		  }	
 			</#list>
 			});	
@@ -153,16 +151,14 @@
 		   $("#image01").click(function(){  
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==1){
-		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
-				$.ajax({
-		  			 type: "POST",
-		  			 url: "goodsManageGoodSelectDelete",
-		  			 data: parms,
-		 			 success: function(data){
-		  			   window.location.reload(); 
-		 		  }
-				});				  
+		   	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
+				$.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodSelectDelete', 
+				data: parms,
+     	        success : function(rtdata, status) { 
+     	        }  
+     	    });  	
+	  			  
 		  		  }	
 			</#list>
 			});	
@@ -184,16 +180,14 @@
 		   $("#image02").click(function(){  
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==2){
-		   	 	 //ajax 操作，刷新本界面数据     	  		
-		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
-				$.ajax({
-		  			 type: "POST",
-		  			 url: "goodsManageGoodSelectDelete",
-		  			 data: parms,
-		 			 success: function(data){
-		  			   window.location.reload(); 
-		 		  }
-				});				  
+		   	 	 var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
+				$.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodSelectDelete', 
+				data: parms,
+     	        success : function(rtdata, status) { 
+     	        }  
+     	    });  	
+	  				  
 		  		  }	
 			</#list>
 			});	
@@ -216,16 +210,14 @@
 		   $("#image03").click(function(){  
 		   	 <#list rcdlist as info>	
 		   	 	 if(${info_index}==3){
-		   	 	 //ajax 操作，刷新本界面数据     	  		
 		  	 	var parms = {'goodsId':${info.goodsId}, 'userId':${userId}};
-				$.ajax({
-		  			 type: "POST",
-		  			 url: "goodsManageGoodSelectDelete",
-		  			 data: parms,
-		 			 success: function(data){
-		  			   window.location.reload(); 
-		 		  }
-				});				  
+				$.commonFormSubmit({  
+     	        action : '${base}/shopManage/goodsManageGoodSelectDelete', 
+				data: parms,
+     	        success : function(rtdata, status) { 
+     	        }  
+     	    });  	
+	  
 		  		  }	
 			</#list>
 			});	
@@ -239,9 +231,7 @@
 	 	</#if>
   
 		});
-		
-		
-		
+
 	</script>
     
 

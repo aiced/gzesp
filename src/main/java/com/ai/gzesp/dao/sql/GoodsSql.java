@@ -116,7 +116,8 @@ public class GoodsSql {
 	 */
 	public List<Map<String, Object>> getGoodsListWithCondition(Map rspMap) {
 		String searchKey = null;           
-		String searchType= null;           
+		String searchType1= null;    
+		String searchType2= null;           
 		String searchLowPrice= null;          
 		String searchHightPrice= null;          
 		String key;           
@@ -128,8 +129,10 @@ public class GoodsSql {
 		        value=entry.getValue().toString();           
 		        if(key.equals("searchKey")){
 		        	searchKey = value;
-		        }else if(key.equals("searchType")){
-		        	searchType = value;
+		        }else if(key.equals("searchType1")){
+		        	searchType1 = value;
+		        }else if(key.equals("searchType2")){
+		        	searchType2 = value;
 		        }else if(key.equals("searchLowPrice")){
 		        	searchLowPrice = value;
 		        }else if(key.equals("searchHightPrice")){
@@ -138,11 +141,11 @@ public class GoodsSql {
 		        System.out.println(key+"===="+value);                     
 		}   
 		StringBuffer quarySb = new StringBuffer();
-		StringBuffer sb = new StringBuffer();
-		String sbStr = null;
-
-		sb.append("'%");
-		if(searchKey !=null){
+	
+		if(searchKey != null){
+			StringBuffer sb = new StringBuffer();
+			String sbStr = null;
+			sb.append("'%");
 			sb.append(searchKey);
 			sb.append("%'");
 			sbStr = sb.toString();
@@ -162,7 +165,16 @@ public class GoodsSql {
 					+ " and t1.GOODS_STATE = '1'"
 					+ " order by t1.GOODS_ID");
 			
-		}else if(searchType != null){
+		}else if(searchType1 != null){			
+			StringBuffer sb = new StringBuffer();
+			String sbStr = null;
+			sb.append("(");
+			sb.append(searchType1);
+			sb.append(",");
+			sb.append(searchType2);
+			sb.append(")");
+			sbStr = sb.toString();
+			
 			quarySb.append("select distinct "
 					+ "t1.GOODS_ID as goodsId,"
 					+ "t1.GOODS_NAME as goodsName, "
@@ -171,7 +183,7 @@ public class GoodsSql {
 					+ "t5.GOODS_CTLG_NAME as goodsCtlgName"
 					);
 			quarySb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2,  GDS_D_PHOTO t4 , GDS_P_CTLG t5");
-			quarySb.append("	where t1.CTLG_CODE =" +searchType
+			quarySb.append("	where t1.CTLG_CODE in" +sbStr
 					+ " and t1.GOODS_ID = t2.GOODS_ID "
 					+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 					+ " and t4.DEFAULT_TAG = '0'"

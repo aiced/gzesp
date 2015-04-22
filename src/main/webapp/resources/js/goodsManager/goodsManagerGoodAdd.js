@@ -14,7 +14,7 @@ function searchWord(obj) {
     		   }
     		});	    	
     }else{
-    	var param = {"searchKey":searchKey};
+    	var param = {"searchKey":searchKey.value};
     	$.ajax({
     		   type: "POST",
     		   url: "queryGoodsByAjax",
@@ -31,9 +31,10 @@ function searchWord(obj) {
 
 
 //显示筛选条件
-function showFlowView(whichpic) {
+function showFlowView() {
 // alert("I am an alert box!!");
 //	getElementById
+
   var aMark = document.getElementById("searchMark");
   if (aMark.style.display == "none"){
 	  aMark.style.display = "block";
@@ -107,7 +108,7 @@ function searchPrice(obj) {
 		   data: param,
 		   success: function(data){
 		     $('#datagrid').html(data);
-		     showFlowView(obj);
+		     showFlowView();
 		   }
 		});
 	
@@ -130,17 +131,19 @@ function resetPrice(obj) {
 //2:上网卡
 //3:宽带预约
 //4:特色流量包
-function setTagCondition(obj) {
+function setTagCondition(obj1,obj2) {
 	
-	var searchType = obj;
-    var param = {"searchType":searchType};
+	var searchType1 = obj1;
+	var searchType2 = obj2;
+    var param = {"searchType1":searchType1,"searchType2":searchType2};
 	$.ajax({
 		   type: "POST",
 		   url: "queryGoodsByAjax",
 		   data: param,
 		   success: function(data){
 		     $('#datagrid').html(data);
-		     showFlowView(obj);
+		     showFlowView();
+		     
 		   }
 		});
 }

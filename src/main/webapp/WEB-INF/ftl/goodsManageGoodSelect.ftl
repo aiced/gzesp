@@ -54,22 +54,22 @@
      <div style="height:270px;margin:20px;position:relative;" >  
      				<!-- 当没有图片时候，会有边框，表示这里有个图片。  --> 
      		<div id="first_row_left" style="width:40%;height:40%;display: block;position:absolute;left:5px;top:5px">
-     		 	  		    <img id = "image0" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
+     		 	  		    <img id = "image0" src="${resRoot}/image/goodsManager/addGoods.png"  style="width:100%;height:100%;display: block;position:absolute;">
      						<img id = "image00" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
      		 </div> 
          	<div id="first_row_right" style="width:40%;height:40%;display: block;position:absolute;right:5px;top:5px">
-         	     		    <img id = "image1" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
+         	     		    <img id = "image1" src="${resRoot}/image/goodsManager/addGoods.png"  style="width:100%;height:100%;display: block;position:absolute;">
          	     			<img id = "image01" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
          	
          	</div>           		
 
        		<div id="second_row_left" style="width:40%;height:40%;display: block;position:absolute;left:5px;bottom:5px">
-       		     		    <img id = "image2" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
+       		     		    <img id = "image2" src="${resRoot}/image/goodsManager/addGoods.png"  style="width:100%;height:100%;display: block;position:absolute;">
        		     			<img id = "image02" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
        		
        		</div>  
        		<div id="second_row_right" style="width:40%;height:40%;display: block;position:absolute;right:5px;bottom:5px">
-       		     	         <img id = "image3" src="${resRoot}/image/goodsManager/addGoods.png" onerror="this.src='http://s8.51cto.com/wyfs02/M00/12/34/wKiom1L9bvvxg3qRAAEf2nVs_4E709.png'", style="width:100%;height:100%;display: block;position:absolute;">
+       		     	         <img id = "image3" src="${resRoot}/image/goodsManager/addGoods.png"  style="width:100%;height:100%;display: block;position:absolute;">
        		     			 <img id = "image03" src="${resRoot}/image/goodsManager/addGoodsDelete.png", style="width:20px;height:20px;display: none;position:absolute;right:-10px;top:-10px">
        		</div>
        		<input id = "hideTag" type = "hidden" name = 'hideTag' value = ${hideTag}>

@@ -85,14 +85,7 @@ public class GoodsManageGoodAddController {
 
     	rspMap.put("title", "选择商品"); 
     	return new ModelAndView("goodsManageGoodAdd.ftl", rspMap);
-    	
-//        ModelAndView mav = new ModelAndView("goodsManageGoodAdd.ftl");
-//        //从数据库获取信息赋值
-//        mav.addObject("name", "喻露露");
-//        mav.addObject("phone", "18685292522"); 
-//        mav.addObject("weixin", "1306520198@qq.com"); 
-//        return mav;
-    }
+     }
     
     @RequestMapping("/goodsManageGoodAddInsert")
     //@ResponseBody
@@ -125,7 +118,10 @@ public class GoodsManageGoodAddController {
 		//返回数据表格子页面
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String searchKey = paramsMap.get("searchKey");
-    	String searchType = paramsMap.get("searchType");
+    	String searchType1 = paramsMap.get("searchType1");
+    	String searchType2 = paramsMap.get("searchType2");
+
+    	
     	String searchLowPrice = paramsMap.get("searchLowPrice");
     	String searchHightPrice = paramsMap.get("searchHightPrice");
 
@@ -133,9 +129,11 @@ public class GoodsManageGoodAddController {
 
     	if(searchKey!=null){
     		rspMap.put("searchKey",searchKey);
-    	}else if(searchType!=null ||searchLowPrice !=null){
-    		if(searchType !=null){
-        		rspMap.put("searchType",searchType);    			
+    	}else if(searchType1!=null ||searchLowPrice !=null){
+    		if(searchType1 !=null){
+        		rspMap.put("searchType1",searchType1);
+        		rspMap.put("searchType2",searchType2);    			
+
     		}
     		if(searchLowPrice!=null){
         		rspMap.put("searchLowPrice",searchLowPrice);

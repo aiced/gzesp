@@ -1,7 +1,7 @@
       <!-- 查询结果无数据或者异常时展示提示信息-->
       <#if (!goodList?exists || goodList?size=0)>
         <div class="row" id="nullresult" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;"> 
-          <p class="p-td-price">无更多结果</p>  	
+          <#-- <p class="p-td-price">无更多结果</p> --> 	
         </div>
       </#if>
       <!-- 有数据时展示 -->    

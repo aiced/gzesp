@@ -4,7 +4,9 @@
 
 	
 	<select id="queryNumberListByPage" resultType="java.util.HashMap">
-      select *
+	  select *
+	    from (	
+      select m.*, rownum row_num
         from (	
         select a.serial_number, 
                a.nice_fee/1000 nice_fee
@@ -51,9 +53,10 @@
 		    </otherwise>
 	      </choose>
           ) m
+         )
 	<![CDATA[
-        where rownum > (${pageNum}-1)*${pageSize}
-          and rownum <= ${pageNum}*${pageSize}       
+        where row_num > (${pageNum}-1)*${pageSize}
+          and row_num <= ${pageNum}*${pageSize}       
      ]]>
 	</select>	
 	

@@ -27,10 +27,10 @@
                     <input type="text" class="form-control" id="invoiceTitle" name="invoiceTitle" placeholder="请输入发票抬头">
                 </div>
                 <!--输入代金券-->
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="txtcash" class="sr-only">Password</label>
                     <input type="text" class="form-control" id="txtcash" name="txtcash" placeholder="请选择代金券">
-                </div>
+                </div> -->
                 <!--推荐人-->
                 <div class="form-group">
                     <label for="txtreferences" class="sr-only">Password</label>

@@ -245,12 +245,13 @@
                     <div class="media-body">
                         <div><label>${GOODS_NAME}</label></div>
                         <div>
-                        	 <#if (PAY_STATE_CODE=='0') || (PAY_STATE_CODE=='2')>
+							<label></label>
+                        	 <#if (ORDER_STATE_CODE=='00') || (ORDER_STATE_CODE=='02')>
 	                            	<div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="${base}/pay/selectPayMode/${ORDER_ID}/${TOPAY_MONEY*1000}">去支付</a></div>
-		                       <#elseif (PAY_STATE_CODE=='1')>
+		                     <#elseif (ORDER_STATE_CODE=='01')>
 	                            	<div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="../custRefund?orderid=${ORDER_ID}">退款</a></div>
-		                       </#if>
-                        
+		                     </#if>
+                        	
                         </div>
                         <div class="div_clear"></div>
                         <br/>

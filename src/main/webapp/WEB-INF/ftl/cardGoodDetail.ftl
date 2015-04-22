@@ -149,6 +149,7 @@
             </li>
             <li class="num-info-li city-li"  style="height:50px;">
                 <p>
+                    <#--
                     <label class="fl">商品归属：</label>
                     <span class="select-w">
                         <select class="select-style" id="numberBelong" provinceCode="">
@@ -159,6 +160,8 @@
                           </#if>
                         </select>
                     </span>
+                    -->
+                    <label class="fl">库存状态：</label>
                     <#if ((store.GOODS_AMOUNT?number)>0)>
                       <em id="amountChange_id" class="store in-store">有货</em>
                       <em class="dispatch">(省内配送)</em>

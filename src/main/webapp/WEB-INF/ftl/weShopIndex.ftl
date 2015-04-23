@@ -11,6 +11,26 @@
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/weShopIndex.css?v=${resVer}" rel="stylesheet">
     
+    <!-- edit_by_wenh_2015_4_23 -->
+    <style type="text/css">
+		.carousel-indicators
+		{
+			bottom:-10%;
+		}
+		.carousel-indicators li
+		{
+			width:5px;
+			height:5px;
+			margin:0px;
+		}
+		.carousel-indicators .active
+		{
+			width:5px;
+			height:5px;
+		}
+}
+    </style>
+
   </head>
 
   <body>
@@ -48,8 +68,8 @@
     </div>  
 
     <!-- Carousel 广告轮播-->	
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a;height:150px">
-      <ol class="carousel-indicators" style="margin-bottom: 0px;bottom: 0px;">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" >
+      <ol class="carousel-indicators">
         <#list banners as item>  
           <#if item_index=0>
             <li data-target="#myCarousel" data-slide-to="${item_index}" class="active"></li>
@@ -61,11 +81,11 @@
       <div class="carousel-inner" role="listbox">
         <#list banners as item>
           <#if item_index=0>
-            <div class="item active" style="height:150px">
+            <div class="item active">
           <#else>
-            <div class="item" style="height:150px">
+            <div class="item">
           </#if>
-              <a href="${base}${item.banner_href}/${user_id}"><img src="${item.banner_url}" alt="" style="height:150px"/></a>
+              <a href="${base}${item.banner_href}/${user_id}"><img src="${item.banner_url}" alt="" style="height:120px;width:100%;"/></a>
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -220,7 +240,7 @@
     <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#e6ffd6;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px">
-    	  <img src="${resRoot}/image/weShop/rxhy.png" alt="" class="img-responsive" />  
+    	  <img src="${resRoot}/image/weShop/rxtc.png" alt="" class="img-responsive" />  
     	</div> 		    		
       </div>     	            
     </div>
@@ -285,6 +305,7 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/qrcode.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
     
     <script>
        //获取当前页面url并生成二维码展示在 xx的微店
@@ -299,6 +320,14 @@
         background:"#ffffff",//背景颜色  
         foreground:"#000000" //前景颜色
 	});	
+       //手势滑动操作
+       $('#myCarousel').hammer().on('swipeleft', function(){
+     	  $(this).carousel('next');
+     	});
+     	$('#myCarousel').hammer().on('swiperight', function(){
+     	  $(this).carousel('prev');
+     	});
+       
     </script>
   </body>
 </html>

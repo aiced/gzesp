@@ -81,6 +81,8 @@ $(function() {
 	$('#netInfoBtn').bind("click",function(){
 		if(netInfo_checkData()) {
 			orderStat.netInfoStat = 1;
+			$('#netInfoTab').find('img:first').addClass("hide");
+			$('#netInfoTab').find('img:last').removeClass("hide");
 			$('#netInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -97,6 +99,8 @@ $(function() {
 	$('#receiveInfoBtn').bind("click",function(){
 		if(addres_checkData()) {
 			orderStat.receiveInfoStat = 1;
+			$('#receiveInfoTab').find('img:first').addClass("hide");
+			$('#receiveInfoTab').find('img:last').removeClass("hide");
 			$('#receiveInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -124,6 +128,8 @@ $(function() {
 	$('#otherInfoBtn').bind("click",function(){
 //		if(otherOrder_checkData()) {
 			orderStat.otherInfoStat = 1;
+			$('#otherInfoTab').find('img:first').addClass("hide");
+			$('#otherInfoTab').find('img:last').removeClass("hide");
 			$('#otherInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 //		}

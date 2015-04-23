@@ -38,9 +38,8 @@
         {
             margin: 15px;
         }
-        .list-group
-        {
-            font-size: 12px;
+        .lableFontSize label{
+            font-size: 16px;
         }
         .list_gou
         {
@@ -52,6 +51,7 @@
             margin-left: 20px;
             color: #c0c0c0;
         }
+        
     </style>
 </head>
 <body>
@@ -76,10 +76,14 @@
 	            </div>
 	        </div>
 	        <br/>
-	        <ul class="list-group">
+	        <ul class="list-group lableFontSize">
 	            <!--入网资料-->
 	            <a id="netInfoTab" href="#" class="list-group-item">
-	                <label>入网资料</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
+	                <label>入网资料（必填）</label>
+	                <span class="list_gou">
+	                	<img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15">
+	                	<img class="hide" src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
+                	</span>
 	            </a>
 	            <!--配送方式-->
 	            <div id="deliverInfoTab" class="list-group-item">
@@ -106,12 +110,20 @@
 	            
 	            <!--收获信息-->
 	            <a id="receiveInfoTab" href="#" class="list-group-item">
-	                <label>收货信息</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
+	                <label>收货信息（必填）</label>
+	                 <span class="list_gou">
+	                	<img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15">
+	                	<img class="hide" src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
+                	</span>
 	            </a>
 	            
 	            <!--其他-->
 	            <a id="otherInfoTab" href="#" class="list-group-item">
-	                <label>其他</label><label class="label-sm">发票  备注 推荐人</label><span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15"></span>
+	                <label>其他</label><label class="label-sm">发票  备注 推荐人</label>
+	                 <span class="list_gou">
+	                	<img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15">
+	                	<img class="hide" src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
+                	</span>
 	            </a>
 	        </ul>
 	

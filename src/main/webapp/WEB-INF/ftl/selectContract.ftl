@@ -14,7 +14,7 @@
 		    <div class="col-xs-6" style="line-height:3;border-right:solid 1px #f4f4f4;" >
  		     	<button style="width:100%;height:50px;display: block;text-align:center;background-color:white;" class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> 
 			    	<label id="packName" class="text-center label-sm">套餐资费选择</label>
-					<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
+					<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou3.png" width="10" height="10"></span>
  			 	 </button> 
 	           <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1" style="margin:-1px 0px 0px 2px">
 	           			<#if (pkgList?? && pkgList?size>0)>
@@ -38,7 +38,7 @@
 	        <div class="col-xs-6"  style="line-height:3;">
 	         	<button style="padding:2px;margin-top:3px;width:100%;height:50px;display: block;text-align:center;background-color:white;" class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true"> 
 			    	<label id="pageName" class="text-center label-sm">合约期限选择</label>
-			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou2.jpg" width="10" height="10"></span>
+			    	<span class="list_gou"><img src="${resRoot}/image/fillOrderMain/jiantou3.png" width="10" height="10"></span>
 		    </button> 
 		    	
 <!-- 	       		<button class="btn btn-default  btn-lg btn-block dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true"> -->

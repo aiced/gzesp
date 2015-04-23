@@ -401,7 +401,8 @@
 		                       </div>
 		                       <div class="order_contain_middle_middle">
 		                           <h5><div>订单编号：${item.ORDER_ID}</div></h5>
-		                           <h5><div>订单金额：${item.INCOME_MONEY}元</div></h5>
+		                           
+		                           <h5><div>订单金额(¥)：${(item.TOPAY_FEE/1000)?string("#.##")}</div></h5>
 		                           <h5><div>下单时间：${item.ORDER_TIME}</div></h5>
 		                       </div>
 		                       <div class="order_contain_middle_right">

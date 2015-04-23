@@ -13,9 +13,14 @@
           from NUM_D_NUMINFO a
          where a.code_state = '1'
            and a.province_code = '85'
-            <if test="net_type_code != null">
-               and a.net_type_code like '%'||#{net_type_code}||'%'
-            </if>           
+          <choose>
+		    <when test="net_type_code != null">
+			  and a.net_type_code like '%'||#{net_type_code}||'%'
+			</when>  
+		    <otherwise>
+			  and a.net_type_code != '04'
+		    </otherwise>
+	      </choose>           
             <if test="keyword != null">
                and a.serial_number like '%'||#{keyword}||'%'
             </if>

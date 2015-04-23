@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,8 +38,47 @@ public class GoodDetailController {
      */
     @RequestMapping("/goodDetail/{user_id}/{ctlg_code}/{goods_id}")
     public ModelAndView goodDetail(@PathVariable("user_id") String user_id, @PathVariable("ctlg_code") String ctlg_code, @PathVariable("goods_id") String goods_id){
-        ModelAndView mav = null;
-        
+    	//调用公共业务逻辑获取各种信息
+    	ModelAndView mav = getGoodDetailPublic(user_id, ctlg_code, goods_id);
+
+        //edit_by_wenh_2015_4_18
+        weShopService.insertVisitLog(user_id);
+        return mav;
+    }
+    
+    /**
+     * banner图片如果是单个商品则跳转到商品详情页
+     * 后台配置banner图的跳转href链接：/weShop/bannerGoodDetail/{goods_id} , {user_id}会在weShopIndex.ftl 里动态拼接
+     * @param user_id
+     * @param ctlg_code
+     * @param goods_id
+     * @return
+     */
+    @RequestMapping("/bannerGoodDetail/{goods_id}/{user_id}")
+    public ModelAndView bannerGoodDetail(@PathVariable("goods_id") String goods_id, @PathVariable("user_id") String user_id){
+    	ModelAndView mav = null;
+        //先根据商品id获取商品类目
+        Map<String, String> ctlg = weShopService.getCtlgCode(goods_id);
+        //如果根据商品id没捞到商品类目，则返回首页
+        if(ctlg == null || ctlg.isEmpty()){
+        	mav = new ModelAndView("redirect:/weShop/index/"+user_id);
+        }
+        String ctlg_code = ctlg.get("CTLG_CODE");
+        //调用公共业务逻辑获取各种信息
+        mav = getGoodDetailPublic(user_id, ctlg_code, goods_id);
+        //从banner跳到商品详情页就不记录访问日志了
+        return mav;
+    }   
+    
+    /**
+     * 获取商品详情的公共业务逻辑
+     * @param user_id
+     * @param ctlg_code
+     * @param goods_id
+     * @return
+     */
+    private ModelAndView getGoodDetailPublic(String user_id, String ctlg_code, String goods_id){
+    	ModelAndView mav = null;
         //根据不同商品类目，跳转到不同页面
         if(Constants.CTLG_CODE_XHRW_5.equals(ctlg_code) || Constants.CTLG_CODE_XHRW_10.equals(ctlg_code)){
             mav = new ModelAndView("planDetail.ftl"); //新号入网
@@ -106,7 +146,8 @@ public class GoodDetailController {
         }
         
         //edit_by_wenh_2015_4_18
-        weShopService.insertVisitLog(user_id);
+        //weShopService.insertVisitLog(user_id);   	
+        
         return mav;
     }
 }

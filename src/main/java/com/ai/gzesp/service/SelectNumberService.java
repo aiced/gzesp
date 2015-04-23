@@ -37,7 +37,9 @@ public class SelectNumberService {
 			String sortCol, String net_type) {
 		//此处只能写死对应关系 01:3G，02:2G，03 4G，04:CARD。
 		//物品属性表里的 NETTYPE属性的值是 2G/3G/4G/CARD,号码表里的net_type_code是01/02/03/04,
-		String net_type_code = "01";
+		//20150423 需求又改，iphone5s可以选3g又可以选4g号码，2g不会有，所以这边只需要在sql里限制排除上网卡号码
+		String net_type_code = null;
+/*		String net_type_code = "01";
 		if("2G".equals(net_type)){
 			net_type_code = "02";
 		}
@@ -49,7 +51,7 @@ public class SelectNumberService {
 		}
 		else if("CARD".equals(net_type)){
 			net_type_code = "04";
-		}
+		}*/
 		
 		return orderDao.queryNumberListByPage(eparchy_code, nice_rule,
 				nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, sort,

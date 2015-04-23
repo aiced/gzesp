@@ -43,7 +43,8 @@
 	  <div id="top_right"></div>
 	</div>       
 
-  
+    <!-- 如果是banner跳到商品列表页的，就给页面传这个属性，隐藏查询条件部分-->
+    <#if (!isBanner?exists)>
     <!-- 销量价格筛选，排序 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;">
       <!-- 输入筛选-->
@@ -85,6 +86,7 @@
     	</div>  		    		
       </div>
     </div>
+    </#if> 
     
     <!-- 套餐展示表格-->
     <div class="container-fluid" style="margin:10px;padding:0px" id="datagrid" pageNum="1">

@@ -30,7 +30,7 @@ public class GoodSelectController {
      * 店铺主页-宽带续费-产品选择页面
      * 店铺主页-特色流量包-产品选择页面
      *
-     * @param goodType
+     * @param goodType 是在页面里写死传过来的
      * @param user_id
      * @return
      * @see [相关类/方法](可选)
@@ -67,7 +67,7 @@ public class GoodSelectController {
         List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 10, null, null, null);
         mav.addObject("goodList", goodList);
 
-        mav.addObject("good_type", goodType); //能人id赋给页面,后面一路传下去至订单完成
+        mav.addObject("good_type", goodType); //good_type是给ajax查询用的
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
         return mav;
     }
@@ -112,6 +112,28 @@ public class GoodSelectController {
                 con.getPageSize(), con.getKeyword().toLowerCase(), con.getSort(), con.getSortCol());
         mav.addObject("goodList", goodList);
 
+        return mav;
+    }
+    
+    /**
+     * banner图片如果是一组商品的活动，需要跳转到商品选择列表页面，同时隐藏掉筛选条件部分，只展示列表
+     * 后台banner配置时 href路径配置成:/weShop/bannerGoodSelect/2015040110073801-2015031819213400-2015032015520404
+     * @param goodList
+     * @return
+     */
+    @RequestMapping("/bannerGoodSelect/{goods_list}/{user_id}")
+    public ModelAndView bannerGoodSelect(@PathVariable("goods_list") String goods_list, @PathVariable("user_id") String user_id){
+        ModelAndView mav = mav = new ModelAndView("goodSelect.ftl");
+        String[] goods = goods_list.split("[-]"); //分出商品数组
+        
+        //从数据库按分页查询，默认第一页,一页10个
+        List<Map<Object, Object>> goodList = weShopService.queryGoodListById(goods);
+        mav.addObject("goodList", goodList);
+
+        //mav.addObject("good_type", goodType); //good_type是ajax查询用的，banner进到列表会把查询条件都隐藏，不会吊ajax
+        mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
+        mav.addObject("isBanner", "1"); //判断是否是banner跳到商品列表页的，如果是就给页面传这个属性，隐藏查询条件部分
+        
         return mav;
     }
 

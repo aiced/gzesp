@@ -48,8 +48,8 @@
     </div>  
 
     <!-- Carousel 广告轮播-->	
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a">
-      <ol class="carousel-indicators">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a;height:150px">
+      <ol class="carousel-indicators" style="margin-bottom: 0px;bottom: 0px;">
         <#list banners as item>  
           <#if item_index=0>
             <li data-target="#myCarousel" data-slide-to="${item_index}" class="active"></li>
@@ -61,11 +61,11 @@
       <div class="carousel-inner" role="listbox">
         <#list banners as item>
           <#if item_index=0>
-            <div class="item active">
+            <div class="item active" style="height:150px">
           <#else>
-            <div class="item">
+            <div class="item" style="height:150px">
           </#if>
-              <img src="${item.banner_url}" alt="" />
+              <a href="${base}${item.banner_href}/${user_id}"><img src="${item.banner_url}" alt="" style="height:150px"/></a>
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -215,6 +215,40 @@
         </#list>                   	            
       </#if>                  	            
     </div>         
+
+   <!--热销套餐-->
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#e6ffd6;">
+      <div class="row">
+        <div class="col-xs-12" style="padding-left:10px">
+    	  <img src="${resRoot}/image/weShop/rxhy.png" alt="" class="img-responsive" />  
+    	</div> 		    		
+      </div>     	            
+    </div>
+    <div class="container-fluid" style="margin:0px;padding-top:0px;">
+      <#if (rxtc?? && rxtc?size>0)>
+        <#list rxtc as item>  
+          <#if item_index%2==0>
+            <div class="row">
+              <div class="col-xs-6" style="padding:10px">
+          <#else>
+              <div class="col-xs-6" style="padding:10px">
+          </#if>
+    	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
+    	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
+    	        </a>
+    	      <!-- <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> -->
+    	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
+    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
+    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	      </div>
+          <#if (item_index%2==1 || !item_has_next)>
+            </div> 
+          </#if>
+        </#list>                   	            
+      </#if>                  	            
+    </div> 
+
+
 
     <!--热销网卡 -->
     <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#d3dbff;">

@@ -34,4 +34,8 @@ public interface WeShopDao {
     public int insertVisitLog(@Param("log_id") String log_id,@Param("partition_id") String partition_id,@Param("store_id") String store_id, @Param("user_id") String user_id);
 
     public Map<Object, Object> getStoreNum(@Param("goods_id") String goods_id);
+    
+    public Map<String, String> getCtlgCode(@Param("goods_id") String goods_id);
+    
+    public List<Map<Object, Object>> queryGoodListById(@Param("goods_list") String[] goods_list);
 }

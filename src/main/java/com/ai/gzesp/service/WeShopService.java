@@ -193,6 +193,10 @@ public class WeShopService {
     }
     
     
+    /**
+     * 记录页面访问日志
+     * @return
+     */
     public String getVisitLogNo(){
         StringBuffer sb = new StringBuffer(16);
         sb.append(System.currentTimeMillis()); //13位
@@ -201,8 +205,34 @@ public class WeShopService {
         return sb.toString();
     }
     
+    /**
+     * 根据商品id查询库存数量
+     * @param goods_id
+     * @return
+     */
     public Map<Object, Object> getStoreNum(String goods_id){
         return weShopDao.getStoreNum(goods_id);
+    }
+    
+    /**
+     * 根据商品id获取商品类目
+     *
+     * @param goods_id
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public Map<String, String> getCtlgCode(String goods_id){
+        return weShopDao.getCtlgCode(goods_id);
+    } 
+    
+    /**
+     * 根据商品id数组查询出商品信息
+     * @param goods_list
+     * @return
+     */
+    public List<Map<Object, Object>> queryGoodListById(String[] goods_list){
+    	return weShopDao.queryGoodListById(goods_list);
     }
     
 }

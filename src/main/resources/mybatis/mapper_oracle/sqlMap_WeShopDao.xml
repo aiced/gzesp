@@ -235,4 +235,35 @@
             and a.goods_id = ${goods_id}
 	</select>
 	
+	<select id="getCtlgCode" resultType="java.util.HashMap">
+         select to_char(a.goods_id)  goods_id, 
+                to_char(a.ctlg_code) ctlg_code
+           from gds_d_info a
+          where a.goods_id = ${goods_id}
+	</select>
+	
+	<select id="queryGoodListById" resultType="java.util.HashMap">
+         select a.goods_id  goods_id, 
+                a.ctlg_code ctlg_code, 
+                a.goods_name goods_name, 
+                c.add_price/1000 goods_price, 
+                b.goods_amount goods_amount,  
+                f.photo_links photo_links  
+           from GDS_D_INFO a,
+                GDS_D_AMOUNT b,
+                GDS_D_PRICE c,
+                GDS_D_PHOTO f
+          where a.goods_id in 
+                <foreach collection="goods_list" item="goods_id" index="index"
+                  open="(" close=")" separator=",">
+                   ${goods_id}
+                </foreach>
+            and a.goods_id = b.goods_id
+            and b.amount_type = '2' 
+            and a.goods_id = c.goods_id
+            and a.album_id = f.album_id
+            and f.default_tag = '0'  
+          order by a.goods_name
+	</select>		
+	
 </mapper>

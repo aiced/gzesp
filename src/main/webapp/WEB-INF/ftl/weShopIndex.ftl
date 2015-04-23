@@ -48,8 +48,8 @@
     </div>  
 
     <!-- Carousel 广告轮播-->	
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a">
-      <ol class="carousel-indicators">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a;height:150px">
+      <ol class="carousel-indicators" style="margin-bottom: 0px;">
         <#list banners as item>  
           <#if item_index=0>
             <li data-target="#myCarousel" data-slide-to="${item_index}" class="active"></li>
@@ -61,11 +61,11 @@
       <div class="carousel-inner" role="listbox">
         <#list banners as item>
           <#if item_index=0>
-            <div class="item active">
+            <div class="item active" style="height:150px">
           <#else>
-            <div class="item">
+            <div class="item" style="height:150px">
           </#if>
-              <img src="${item.banner_url}" alt="" />
+              <a href="${base}${item.banner_href}/${user_id}"><img src="${item.banner_url}" alt="" style="height:150px"/></a>
               <div class="container">
                 <div class="carousel-caption">
               </div>

@@ -28,7 +28,6 @@
 			width:5px;
 			height:5px;
 		}
-}
     </style>
 
   </head>
@@ -85,7 +84,7 @@
           <#else>
             <div class="item">
           </#if>
-              <a href="${base}${item.banner_href}/${user_id}"><img src="${item.banner_url}" alt="" style="height:120px;width:100%;"/></a>
+              <a href="${base}${item.banner_href}/${user_id}?imgsrc='${item.banner_url}'"><img src="${item.banner_url}" alt="" style="height:120px;width:100%;"/></a>
               <div class="container">
                 <div class="carousel-caption">
               </div>

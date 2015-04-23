@@ -122,7 +122,7 @@ public class GoodSelectController {
      * @return
      */
     @RequestMapping("/bannerGoodSelect/{goods_list}/{user_id}")
-    public ModelAndView bannerGoodSelect(@PathVariable("goods_list") String goods_list, @PathVariable("user_id") String user_id){
+    public ModelAndView bannerGoodSelect(@PathVariable("goods_list") String goods_list, @PathVariable("user_id") String user_id,@PathVariable("imgsrc") String imgsrc){
         ModelAndView mav = mav = new ModelAndView("goodSelect.ftl");
         String[] goods = goods_list.split("[-]"); //分出商品数组
         
@@ -134,6 +134,8 @@ public class GoodSelectController {
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
         mav.addObject("isBanner", "1"); //判断是否是banner跳到商品列表页的，如果是就给页面传这个属性，隐藏查询条件部分
         
+        //edit_by_wenh_2014_4_23
+        mav.addObject("imgsrc",imgsrc);
         return mav;
     }
 

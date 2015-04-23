@@ -51,7 +51,10 @@
     		
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
      </div>
-     
+     <div id="third_row" style="width:100%;height:50px;padding-top:5px;padding-left:15px;margin-left:0px;border-bottom:1px solid #A6A6A6; background:#dcdcdc;color:#aaa;" >   	
+     		<p style="float:left;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热销套餐（敬请期待）	</p>
+    		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  
+     </div>
      <div id="third_row" style="width:100%;height:50px;padding-top:5px;padding-left:15px;margin-left:0px;border-bottom:1px solid #A6A6A6; background:#dcdcdc;color:#aaa;" >   	
      		<p style="float:left;line-height:44px;text-align:center;font-size:18px;color:#6A6969;">热销网卡（敬请期待）	</p>
     		<img src="${resRoot}/image/goodsManager/goodSelectArrow.png", style="width:9px;height:16px;float:right;margin-right:10px;margin-top:10px;">  

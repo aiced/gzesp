@@ -31,7 +31,7 @@ public class OrdersSql {
 				+"select "
 				+"ORD_D_DEAL.ORDER_ID,"//订单id
 				+"ORD_D_PROD.GOODS_NAME,"//商品名称
-				+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+				+"ORD_D_PROD.TOPAY_FEE,"//订单金额
 				+"ORD_D_BASE.Order_Time,"//下单时间
 				+"ORD_D_POST.RECEIVER_NAME,"//收件人
 				+"ORD_D_POST.POST_ADDR,"//详细地址
@@ -75,7 +75,7 @@ public class OrdersSql {
 				+ ")");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
-				+ "T1.INCOME_MONEY,"
+				+ "T1.TOPAY_FEE,"
 				+ "T1.Order_Time,"
 				+ "T1.RECEIVER_NAME,"
 				+ "T1.POST_ADDR,"
@@ -105,7 +105,7 @@ public class OrdersSql {
 			+"select "
 			+"ORD_D_DEAL.ORDER_ID,"//订单id
 			+"ORD_D_PROD.GOODS_NAME,"//商品名称
-			+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+			+"ORD_D_PROD.TOPAY_FEE,"//订单金额
 			+"ORD_D_BASE.Order_Time,"//下单时间
 			+"ORD_D_POST.RECEIVER_NAME,"//收件人
 			+"ORD_D_POST.POST_ADDR,"//详细地址
@@ -149,7 +149,7 @@ public class OrdersSql {
 			+ ")");
 	sb.append("select T1.ORDER_ID,"
 			+ "T1.GOODS_NAME,"
-			+ "T1.INCOME_MONEY,"
+			+ "T1.TOPAY_FEE,"
 			+ "T1.Order_Time,"
 			+ "T1.RECEIVER_NAME,"
 			+ "T1.POST_ADDR,"
@@ -188,7 +188,7 @@ public class OrdersSql {
 				+"select "
 				+"ORD_D_DEAL.ORDER_ID,"//订单id
 				+"ORD_D_PROD.GOODS_NAME,"//商品名称
-				+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+				+"ORD_D_PROD.TOPAY_FEE,"//订单金额
 				+"ORD_D_BASE.Order_Time,"//下单时间
 				+"ORD_D_POST.RECEIVER_NAME,"//收件人
 				+"ORD_D_POST.POST_ADDR,"//详细地址
@@ -250,7 +250,7 @@ public class OrdersSql {
 				+ ")");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
-				+ "T1.INCOME_MONEY,"
+				+ "T1.TOPAY_FEE,"
 				+ "T1.Order_Time,"
 				+ "T1.RECEIVER_NAME,"
 				+ "T1.POST_ADDR,"

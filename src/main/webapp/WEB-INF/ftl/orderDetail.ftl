@@ -38,8 +38,8 @@
 		<!--top_end-->
         <div class="orderinfo">
             <div class="list-group">
-                <a href="#" class="list-group-item"><h5>订单编号：${ORDER_ID}</h5></a>
-                <a href="#" class="list-group-item"><h5>订单金额：${INCOME_MONEY}元</h5></a>
+                <a href="#" class="list-group-item"><h5>订单编号：${ORDER_ID}</h5></a> 
+                <a href="#" class="list-group-item"><h5>订单金额(¥)：${(TOPAY_FEE/1000)?string("#.##")}</h5></a>
                 <a href="#" class="list-group-item"><h5>下单时间：${Order_Time}</h5></a>
             </div>
             <div class="list-group">

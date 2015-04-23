@@ -5,7 +5,7 @@
     <tr>
         <th><div class="th_title">商品名称</div></th>
         <th><div class="th_title">订单详情</div></th>
-        <th><div class="th_title">收益(元)</div></th>
+        <th><div class="th_title">收益(¥)</div></th>
         <th>
 			<div class="dropdown" style="padding:0px;">
 				<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
@@ -50,11 +50,11 @@
 	      	<#elseif (item.CMS_STATE=='01')><!-- 结算中 -->	
 	      		<span class="label label-primary">结算中</span>
 	      	<#elseif (item.CMS_STATE=='02')><!-- 已到帐 -->
-	      		<span class="label label-warning">已到帐</span>
+	      		<span class="label label-success">已到帐</span>
 	      	<#elseif (item.CMS_STATE=='03')><!-- 已退货-->
-	      		<span class="label label-success">已退货</span>
+	      		<span class="label label-warning">已退货</span>
 	      	<#elseif (item.CMS_STATE=='04')><!-- 已失效-->
-	      		<span class="label label-success">已失效</span>	
+	      		<span class="label label-danger">已失效</span>	
 	      	</#if>
 	      </td><!-- 状态 -->
 		</tr>

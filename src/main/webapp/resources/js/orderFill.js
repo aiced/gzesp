@@ -369,37 +369,29 @@ function uploadPic(){
 	var params = {
 			"idCardNum": $('#userCard').val()
 	};
-	 $.ajaxFileUpload({  
+	
+	 $.ajaxFileUpload({
 	        url : "../common/uploadFile", 
 	        async:false, 
 	        secureuri : false,  
-	        fileElementId : "file-front",  
+	        fileElementIds : ["file-front", "file-back"],  
 	        dataType : 'json',
 			data: params,
 	        success : function(rtdata, status) { 
-	        	alert(rtdata.url);
-	        	orderFormParams.cardPic1 = rtdata.url;
+	        	//alert(rtdata);
+	        	if(rtdata.rspCode=='0000') {
+	        		orderFormParams.cardPic1 = rtdata.fileInfoList[0].url;
+	        		orderFormParams.cardPic2 = rtdata.fileInfoList[1].url;
+	        		formSubmit();
+	        	} else {
+	        		alert('身份证照上传失败');
+	        	}
 	        },  
 	    });  
 	 
-	 $.ajaxFileUpload({  
-	        url : "../common/uploadFile", 
-	        async:false, 
-	        secureuri : false,  
-	        fileElementId : "file-back",  
-	        dataType : 'json',
-			data: params,
-	        success : function(rtdata, status) { 
-	        	alert(rtdata.url);
-	        	orderFormParams.cardPic2 = rtdata.url;
-	        },  
-	    });  
 };
 
 function nextPage() {
-	
-//	uploadPic();
-//	return;
 	
 	if(orderStat.netInfoStat==0) {
 		alert('请完整入网资料');
@@ -424,10 +416,6 @@ function nextPage() {
 //	}
 	
 	uploadPic();
-//	
-//	setTimeout('formSubmit()', 2000);
-	
-	formSubmit();
 }
 
 function formSubmit() {

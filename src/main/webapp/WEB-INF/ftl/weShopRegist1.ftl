@@ -369,9 +369,13 @@
 	                <label for="txtrepassword" class="sr-only">Password</label>
 	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
 	            </div> -->
-	            <br/>
 	            <input type="hidden" value='${openid}' id="hide_openid" name="hide_openid">
 	            <input type="hidden" value='' id="hide_code_date" name="hide_code_date">
+	            <div style="float:right;font-size: 14px;">
+					<a href="${base}/auth/login" style="color:blue"><u>已有帐号去登录</u></a>
+				</div>
+				<br/>
+				<br/>
 	            <button class="btn-warning btn-block btn" type="submit" id="btnStep1" name="btnStep1">下一步</button>
 	            <br/>
 				<!-- 用户注册协议 -->

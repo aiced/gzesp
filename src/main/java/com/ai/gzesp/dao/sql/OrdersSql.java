@@ -31,7 +31,7 @@ public class OrdersSql {
 				+"select "
 				+"ORD_D_DEAL.ORDER_ID,"//订单id
 				+"ORD_D_PROD.GOODS_NAME,"//商品名称
-				+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+				+"ORD_D_PROD.TOPAY_FEE,"//订单金额
 				+"ORD_D_BASE.Order_Time,"//下单时间
 				+"ORD_D_POST.RECEIVER_NAME,"//收件人
 				+"ORD_D_POST.POST_ADDR,"//详细地址
@@ -75,7 +75,7 @@ public class OrdersSql {
 				+ ")");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
-				+ "T1.INCOME_MONEY,"
+				+ "T1.TOPAY_FEE,"
 				+ "T1.Order_Time,"
 				+ "T1.RECEIVER_NAME,"
 				+ "T1.POST_ADDR,"
@@ -105,7 +105,7 @@ public class OrdersSql {
 			+"select "
 			+"ORD_D_DEAL.ORDER_ID,"//订单id
 			+"ORD_D_PROD.GOODS_NAME,"//商品名称
-			+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+			+"ORD_D_PROD.TOPAY_FEE,"//订单金额
 			+"ORD_D_BASE.Order_Time,"//下单时间
 			+"ORD_D_POST.RECEIVER_NAME,"//收件人
 			+"ORD_D_POST.POST_ADDR,"//详细地址
@@ -149,7 +149,7 @@ public class OrdersSql {
 			+ ")");
 	sb.append("select T1.ORDER_ID,"
 			+ "T1.GOODS_NAME,"
-			+ "T1.INCOME_MONEY,"
+			+ "T1.TOPAY_FEE,"
 			+ "T1.Order_Time,"
 			+ "T1.RECEIVER_NAME,"
 			+ "T1.POST_ADDR,"
@@ -188,7 +188,7 @@ public class OrdersSql {
 				+"select "
 				+"ORD_D_DEAL.ORDER_ID,"//订单id
 				+"ORD_D_PROD.GOODS_NAME,"//商品名称
-				+"ORD_D_BASE.INCOME_MONEY,"//订单金额
+				+"ORD_D_PROD.TOPAY_FEE,"//订单金额
 				+"ORD_D_BASE.Order_Time,"//下单时间
 				+"ORD_D_POST.RECEIVER_NAME,"//收件人
 				+"ORD_D_POST.POST_ADDR,"//详细地址
@@ -250,7 +250,7 @@ public class OrdersSql {
 				+ ")");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
-				+ "T1.INCOME_MONEY,"
+				+ "T1.TOPAY_FEE,"
 				+ "T1.Order_Time,"
 				+ "T1.RECEIVER_NAME,"
 				+ "T1.POST_ADDR,"
@@ -349,7 +349,11 @@ public class OrdersSql {
 				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
 				+ " d.INVOCE_TITLE, d.INVOCE_CONTENT,"
 				+ " e.USER_IMG, e.STORE_NAME,  g.PHOTO_LINKS,"
-				+ " h.RECEIVER_NAME, h.MOBILE_PHONE, h.EXPRESS_ID,"
+				+ " h.RECEIVER_NAME, h.MOBILE_PHONE, h.EXPRESS_ID, h.EXPRESS_COMPNAY as EXPRESS_COMPNAY_CODE,"
+				+ " CASE WHEN h.EXPRESS_COMPNAY = '1' THEN '顺丰速运'"
+				+ " 	 WHEN h.EXPRESS_COMPNAY = '2' THEN '宅急送' "
+				+ " 	 ELSE '未知'"
+				+ " END EXPRESS_COMPNAY ,"
 				+ " CASE WHEN i.pay_type = '00' THEN '在线支付'"
 				+ " 	 WHEN i.pay_type = '01' THEN '货到付款' "
 				+ " 	 ELSE '未知'"

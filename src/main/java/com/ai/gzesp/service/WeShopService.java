@@ -82,6 +82,17 @@ public class WeShopService {
     public List<Map<Object, Object>> getRxhy(){
         return weShopDao.getRxhy();
     }
+    /**
+     * 功能描述: 查询热销套餐的商品信息<br>
+     *
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public List<Map<Object, Object>> getRxtc(){
+        return weShopDao.getRxtc();
+    }    
+    
     
     /**
      * 功能描述: 查询热销网卡的商品信息<br>

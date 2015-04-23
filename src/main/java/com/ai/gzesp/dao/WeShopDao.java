@@ -16,7 +16,9 @@ public interface WeShopDao {
     public List<Map<Object, Object>> getDztj(@Param("user_id") String user_id);
 
     public List<Map<Object, Object>> getRxhy();
-
+    //edit_by_wenh_2015_4_23
+    public List<Map<Object, Object>> getRxtc();
+    
     public List<Map<Object, Object>> getRxwk();
 
     public List<Map<Object, Object>> getGoodPhotos(@Param("goods_id") String goods_id);

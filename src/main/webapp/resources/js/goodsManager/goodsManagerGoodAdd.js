@@ -2,18 +2,18 @@
 function searchWord(obj) {
 //	搜索框：searchInput
 	var searchKey = document.getElementById('searchInput');
-    if (searchKey.value.length == 0){
-    	var param = null;
-    	$.ajax({
-    		   type: "POST",
-    		   url: "reloadGoodsByAjax",
-    		   data: param,
-    		   success: function(data){
-    			   //alert(data);
-    		     $('#datagrid').html(data);
-    		   }
-    		});	    	
-    }else{
+//    if (searchKey.value.length == 0){
+//    	var param = null;
+//    	$.ajax({
+//    		   type: "POST",
+//    		   url: "queryGoodsByAjax",
+//    		   data: param,
+//    		   success: function(data){
+//    			   //alert(data);
+//    		     $('#datagrid').html(data);
+//    		   }
+//    		});	    	
+//    }else{
     	var param = {"searchKey":searchKey.value};
     	$.ajax({
     		   type: "POST",
@@ -24,7 +24,7 @@ function searchWord(obj) {
     		     $('#datagrid').html(data);
     		   }
     		});	
-    }   
+//    }   
 	
 
 }
@@ -40,14 +40,22 @@ function showFlowView() {
 	  aMark.style.display = "block";
    }else{
 	   aMark.style.display = "none";
-	   var startInput = document.getElementById('searchInput');
-	   startInput.value = null;
+//	   var startInput = document.getElementById('searchInput');
+//	   startInput.value = null;
   }  
 }
 
 //	综合排序
 function multipleSoft(obj) {
-	window.location.reload(); 
+//	window.location.reload(); 
+//	window.location = window.location;
+	 var parms = {'userId':$('#userId').val()}; 	
+		$.commonFormSubmit({  
+		        action : window.location.href, 
+		        data: parms,
+		        success : function(rtdata, status) { 
+		        }  
+		    }); 
 }
 
 
@@ -81,49 +89,58 @@ function showSelectedView(obj,list_size) {
 
 
 
-// 点击确定，重置
-function searchPrice(obj) {
-//	奖励区间开始：startInput
-//	奖励区间结束：endInput	
-	var startInput = document.getElementById('startInput');
-	var endInput = document.getElementById('endInput');
-    if (startInput.value.length == 0){
-    	alert("起始价格不能为空");   	
-    	return;
-    }else if(endInput.value.length == 0){
-    	alert("终止价格不能为空");   	
-    	return;
-    }else if(startInput.value >= endInput.value){
-    	alert("起始价格 要小于 终止价格");   	
-    	return;
-    }
-	var searchLowPrice = startInput.value;
-	var searchHightPrice = endInput.value;
- 	alert("起始价格:"+searchLowPrice + "终止价格："+ searchHightPrice );   	
-
-    var param = {"searchLowPrice":searchLowPrice,"searchHightPrice":searchHightPrice};
-	$.ajax({
-		   type: "POST",
-		   url: "queryGoodsByAjax",
-		   data: param,
-		   success: function(data){
-		     $('#datagrid').html(data);
-		     showFlowView();
-		   }
-		});
-	
-
-}
+//// 点击确定，重置
+//function searchPrice(obj) {
+////	奖励区间开始：startInput
+////	奖励区间结束：endInput	
+//	var startInput = document.getElementById('startInput');
+//	var endInput = document.getElementById('endInput');
+//    if (startInput.value.length == 0){
+//    	alert("起始价格不能为空");   	
+//    	return;
+//    }else if(endInput.value.length == 0){
+//    	alert("终止价格不能为空");   	
+//    	return;
+//    }else if(startInput.value >= endInput.value){
+//    	alert("起始价格 要小于 终止价格");   	
+//    	return;
+//    }
+//	var searchLowPrice = startInput.value;
+//	var searchHightPrice = endInput.value;
+// 	alert("起始价格:"+searchLowPrice + "终止价格："+ searchHightPrice );   	
+//
+//    var param = {"searchLowPrice":searchLowPrice,"searchHightPrice":searchHightPrice};
+//	$.ajax({
+//		   type: "POST",
+//		   url: "queryGoodsByAjax",
+//		   data: param,
+//		   success: function(data){
+//		     $('#datagrid').html(data);
+//		     showFlowView();
+//		   }
+//		});
+//}
 
 
 
-function resetPrice(obj) {
-	var startInput = document.getElementById('startInput');
-	startInput.value = null;
-	var endInput = document.getElementById('endInput');
-	endInput.value = null;
-	window.location.reload(); 
+//function resetPrice(obj) {
+//	var startInput = document.getElementById('startInput');
+//	startInput.value = null;
+//	var endInput = document.getElementById('endInput');
+//	endInput.value = null;
+//	window.location.reload(); 
+//}
 
+function reset(obj) {
+//	window.location.reload();
+//	window.location = window.location;
+	 var parms = {'userId':$('#userId').val()}; 	
+	$.commonFormSubmit({  
+	        action : window.location.href, 
+	        data: parms,
+	        success : function(rtdata, status) { 
+	        }  
+	    });  
 }
 
 //  选择类型：

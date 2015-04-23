@@ -49,7 +49,7 @@
 
     <!-- Carousel 广告轮播-->	
     <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a;height:150px">
-      <ol class="carousel-indicators" style="margin-bottom: 0px;">
+      <ol class="carousel-indicators" style="margin-bottom: 0px;bottom: 0px;">
         <#list banners as item>  
           <#if item_index=0>
             <li data-target="#myCarousel" data-slide-to="${item_index}" class="active"></li>

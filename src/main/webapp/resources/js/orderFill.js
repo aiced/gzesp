@@ -166,7 +166,8 @@ $(function() {
 	        return;
 	    }
 	    //选择的图片非bmp、jpg、jpeg时，清空文件选择，展示提示框
-	    if(!(type == ".jpg" || type == ".bmp" || /^image\/(jpeg|jpg|bmp)$/.test(type2))){
+	    if(!(type == ".jpg" || type == ".png" || type == ".bmp" || /^image\/(jpeg|jpg|png|bmp)$/.test(type2))){
+	    	alert('只能选择jpg、png格式图片');
 	        return;
 	    }
 	    var reader = new FileReader();
@@ -278,13 +279,13 @@ function netInfo_checkData() {
 	 }
     
 
-//    if($('#firstCard').attr("src") =='/esp/resources/image/order/card01.png'){
-//    	alert("证件照片不能为空");   	
-//    	return false;
-//    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
-//    	alert("证件照片不能为空");   	
-//    	return false;
-//    }
+    if($('#firstCard').attr("src") =='/esp/resources/image/order/card01.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }
     return true;
 }
 //	
@@ -368,37 +369,29 @@ function uploadPic(){
 	var params = {
 			"idCardNum": $('#userCard').val()
 	};
-	 $.ajaxFileUpload({  
+	
+	 $.ajaxFileUpload({
 	        url : "../common/uploadFile", 
 	        async:false, 
 	        secureuri : false,  
-	        fileElementId : "file-front",  
+	        fileElementIds : ["file-front", "file-back"],  
 	        dataType : 'json',
 			data: params,
 	        success : function(rtdata, status) { 
-	        	alert(rtdata.url);
-	        	orderFormParams.cardPic1 = rtdata.url;
+	        	//alert(rtdata);
+	        	if(rtdata.rspCode=='0000') {
+	        		orderFormParams.cardPic1 = rtdata.fileInfoList[0].url;
+	        		orderFormParams.cardPic2 = rtdata.fileInfoList[1].url;
+	        		formSubmit();
+	        	} else {
+	        		alert('身份证照上传失败');
+	        	}
 	        },  
 	    });  
 	 
-	 $.ajaxFileUpload({  
-	        url : "../common/uploadFile", 
-	        async:false, 
-	        secureuri : false,  
-	        fileElementId : "file-back",  
-	        dataType : 'json',
-			data: params,
-	        success : function(rtdata, status) { 
-	        	alert(rtdata.url);
-	        	orderFormParams.cardPic2 = rtdata.url;
-	        },  
-	    });  
 };
 
 function nextPage() {
-	
-//	uploadPic();
-//	return;
 	
 	if(orderStat.netInfoStat==0) {
 		alert('请完整入网资料');
@@ -423,10 +416,6 @@ function nextPage() {
 //	}
 	
 	uploadPic();
-//	
-//	setTimeout('formSubmit()', 2000);
-	
-	formSubmit();
 }
 
 function formSubmit() {

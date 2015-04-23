@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
 import com.ai.gzesp.dao.beans.TdOrdDCUST;
 import com.ai.gzesp.dao.beans.TdOrdDDEAL;
 import com.ai.gzesp.dao.beans.TdOrdDPAYLOG;
@@ -25,6 +26,7 @@ import com.ai.gzesp.dao.beans.TdOrdDPROD;
 import com.ai.gzesp.dao.beans.TdOrdDREFUND;
 import com.ai.gzesp.dao.beans.TdOrdDRES;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
+import com.ai.gzesp.dao.service.TdOrdDCMSSTATEDao;
 import com.ai.gzesp.dao.service.TdOrdDCUSTDao;
 import com.ai.gzesp.dao.service.TdOrdDDEALDao;
 import com.ai.gzesp.dao.service.TdOrdDPAYLOGDao;
@@ -68,6 +70,9 @@ public class OrderService {
     
     @Resource 
     TdOrdDREFUNDDao tdOrdDREFUNDDao;
+    
+    @Resource 
+    TdOrdDCMSSTATEDao tdOrdDCMSSTATEDao;
     
     @Resource 
     GoodsSql goodsSql;
@@ -186,6 +191,7 @@ public class OrderService {
     	insertOrderResInfo(paramsMap);
     	cacuCMSPreFee(paramsMap);
     	insertOrderProdInfo(paramsMap);
+    	insertOrderCMSInfo(paramsMap);
 //    	insertOrderReFundInfo(paramsMap);
     }
     
@@ -398,6 +404,19 @@ public class OrderService {
     	record.setTxnAmt(CommonUtil.toDbPrice(CommonUtil.string2Long(topayFee)));
     	
     	tdOrdDREFUNDDao.insertSelective(record);
+	}
+	
+	private void insertOrderCMSInfo(Map<String, String> paramsMap) {
+		String orderId = paramsMap.get("orderId");
+    	
+    	TdOrdDCMSSTATE record = new TdOrdDCMSSTATE();
+    	record.setOrderId(CommonUtil.string2Long(orderId));
+    	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+    	record.setCmsType("0");
+    	record.setCmsState("00");
+    	record.setAddTime(DateUtil.getNow());
+    	
+    	tdOrdDCMSSTATEDao.insertSelective(record);
 	}
 	
 	/**

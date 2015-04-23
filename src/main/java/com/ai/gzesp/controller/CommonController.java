@@ -2,9 +2,11 @@ package com.ai.gzesp.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -60,51 +62,62 @@ public class CommonController {
   @RequestMapping(value="/common/uploadFile",method = RequestMethod.POST)
   public void uploadFile(
   		@RequestParam(value = "idCardNum", required = true)String idCardNum, 
-  		@RequestParam(value = "uploadFile", required = true)MultipartFile imgFile, 
+  		@RequestParam(value = "uploadFile", required = true)MultipartFile[] imgFiles, 
   		HttpServletRequest request,HttpServletResponse response) throws IOException {
   	
-      Map<String, Object> map = new HashMap<String, Object>();
-      //判断上传文件是否为空
-      if (imgFile == null || imgFile.getOriginalFilename() == null || "".equals(imgFile.getOriginalFilename())) {
-          map.put("rspCode", "9999");
-          map.put("message","error");
-          String text = JSON.toJSONString(map);
-          response.getWriter().write(text);
-          return;
+      Map<String, Object> resultMap = new HashMap<String, Object>();
+      List fileInfoList = new ArrayList();
+      for(MultipartFile imgFile : imgFiles) {
+	      //判断上传文件是否为空
+	      if (imgFile == null || imgFile.getOriginalFilename() == null || "".equals(imgFile.getOriginalFilename())) {
+	    	  resultMap.put("rspCode", "9999");
+	    	  resultMap.put("message","error");
+	          String text = JSON.toJSONString(resultMap);
+	          response.getWriter().write(text);
+	          return;
+	      }
+	    
+	      //上传原文件名
+	      String imgFileName = imgFile.getOriginalFilename();
+	      String size = imgFile.getSize()/1024+"KB";
+	      
+	      // 上传地址
+	//      String upToPath = PathUtil.getFileUploadPath("FILE",request.getParameter("uploadType"));
+	//      String appWebPath = upToPath.substring(upToPath.indexOf(PathUtil.WEB_TYPE));
+	      
+	      String upToPath = PathUtil.WEB_ROOT_PATH + PathUtil.WEB_UPLOAD_PATH + idCardNum + File.separator;
+	      
+	      logger.debug("upToPath"+upToPath);
+	      
+	      File upFile= new File(upToPath);
+	      
+	      if (!upFile.exists()) {
+	          upFile.mkdirs();
+			}
+
+			Random r = new Random();
+			int rint = r.nextInt(99);
+			String rStr = StringUtil.paddingLeft(String.valueOf(rint), '0', 2);
+ 	
+	//      String fileName = new SimpleDateFormat("HHmmssSSS").format(new Date())+ imgFileName.substring(imgFileName.lastIndexOf("."), imgFileName.length() );
+	      String fileName = DateUtil.now().getTime() + rStr + imgFileName.substring(imgFileName.lastIndexOf("."), imgFileName.length());
+	      //拷贝文件
+	      FileCopyUtils.copy(imgFile.getBytes(), new File(upToPath + fileName));
+	
+	      //url路径
+	//      String basePath = appWebPath + fileName;
+	      Map fileInfo = new HashMap();
+	      fileInfo.put("url", File.separator + PathUtil.WEB_UPLOAD_PATH + idCardNum + File.separator + fileName);
+	      fileInfo.put("size", size);
+	      fileInfo.put("originalFilename", imgFileName);
+	      fileInfoList.add(fileInfo);
       }
-    
-      //上传原文件名
-      String imgFileName = imgFile.getOriginalFilename();
-      String size = imgFile.getSize()/1024+"KB";
-      
-      // 上传地址
-//      String upToPath = PathUtil.getFileUploadPath("FILE",request.getParameter("uploadType"));
-//      String appWebPath = upToPath.substring(upToPath.indexOf(PathUtil.WEB_TYPE));
-      
-      String upToPath = PathUtil.WEB_ROOT_PATH + PathUtil.WEB_UPLOAD_PATH + idCardNum + File.separator;
-      
-      logger.debug("upToPath"+upToPath);
-      
-      File upFile= new File(upToPath);
-      
-      if (!upFile.exists()) {
-          upFile.mkdirs();
-      }
-//      String fileName = new SimpleDateFormat("HHmmssSSS").format(new Date())+ imgFileName.substring(imgFileName.lastIndexOf("."), imgFileName.length() );
-      String fileName = DateUtil.now().getTime() + imgFileName.substring(imgFileName.lastIndexOf("."), imgFileName.length());
-      //拷贝文件
-      FileCopyUtils.copy(imgFile.getBytes(), new File(upToPath + fileName));
+      resultMap.put("rspCode", "0000");
+      resultMap.put("rspDesc", "success");
+      resultMap.put("fileInfoList", fileInfoList);
+     
 
-      //url路径
-//      String basePath = appWebPath + fileName;
-
-      map.put("rspCode", "0000");
-      map.put("rspDesc", "success");
-      map.put("url", File.separator + PathUtil.WEB_UPLOAD_PATH + idCardNum + File.separator + fileName);
-      map.put("size", size);
-      map.put("originalFilename", imgFileName);
-
-      String text = JSON.toJSONString(map);
+      String text = JSON.toJSONString(resultMap);
       response.setContentType("text/html");
       response.getWriter().write(text);
   }

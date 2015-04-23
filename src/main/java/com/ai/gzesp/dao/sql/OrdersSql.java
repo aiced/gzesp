@@ -331,7 +331,7 @@ public class OrdersSql {
 	public Map getCustOrderDetail(String orderId) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("select distinct"
-				+ "	a.ORDER_ID, h.EXPRESS_COMPNAY,"
+				+ "	a.ORDER_ID, "
 				+ " b.ORDER_STATE as ORDER_STATE_CODE, b.POST_FEE, b.ORDER_TIME, b.TOPAY_MONEY/1000 as TOPAY_MONEY,"
 				+ " CASE WHEN b.ORDER_STATE='00' then '待支付'"
 				+ " WHEN b.ORDER_STATE='01' then '待分配'"

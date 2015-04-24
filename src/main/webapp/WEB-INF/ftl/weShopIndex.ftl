@@ -84,7 +84,7 @@
           <#else>
             <div class="item">
           </#if>
-              <a href="${base}${item.banner_href}/${user_id}?imgsrc='${item.banner_url}'"><img src="${item.banner_url}" alt="" style="height:120px;width:100%;"/></a>
+              <a href="${base}${item.banner_href}/${user_id}?imgsrc=${item.banner_url}"><img src="${item.banner_url}" alt="" style="height:120px;width:100%;"/></a>
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -173,7 +173,7 @@
     </div>    
     
     <!--店长推荐 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#ffd3d3;">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px;">
     	  <img src="${resRoot}/image/weShop/dztj.png" alt="" class="img-responsive">  
@@ -204,7 +204,7 @@
     </div> 
     
     <!--热销合约 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#e6ffd6;">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px">
     	  <img src="${resRoot}/image/weShop/rxhy.png" alt="" class="img-responsive" />  
@@ -236,7 +236,7 @@
     </div>         
 
    <!--热销套餐-->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#e6ffd6;">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px">
     	  <img src="${resRoot}/image/weShop/rxtc.png" alt="" class="img-responsive" />  
@@ -270,7 +270,7 @@
 
 
     <!--热销网卡 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#d3dbff;">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px">
     	  <img src="${resRoot}/image/weShop/rxwk.png" alt="" class="img-responsive" />  

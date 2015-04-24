@@ -15,7 +15,7 @@
     </div> 
     
 
-    <div class="container-fluid" style="padding:50px 10px 10px 0px;">
+    <div class="container-fluid" style="padding:50px 10px 0px 10px;">
       ${detail.CONTENT}
     </div>    
     <script>

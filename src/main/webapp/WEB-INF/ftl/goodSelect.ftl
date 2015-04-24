@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
- 	<#if (!isBanner?exists)>
+ 	<#if (isBanner == "0")>
  		<title>商品选择</title>
     <#else>
         <title>当月热推--来自沃掌柜</title>
@@ -20,6 +20,7 @@
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
     <input type="hidden" id="good_type" value="${good_type}"></input>
+    <input type="hidden" id="isBanner" value="${isBanner}"></input>
   	<!-- nav bar -->
   	<!--
     <div class="container-fluid" style="background-color:#21292c;height:38px;">
@@ -47,7 +48,7 @@
 	</div>       
 
     <!-- 如果是banner跳到商品列表页的，就给页面传这个属性，隐藏查询条件部分-->
-    <#if (!isBanner?exists)>
+    <#if (isBanner == "0")>
     <!-- 销量价格筛选，排序 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;">
       <!-- 输入筛选-->

@@ -204,7 +204,7 @@
                         <!-- A/B/C 套餐  描述-->
                         <#list attrs.PCKPLAN as item>
                           <#if item_index==0>
-                            <p id="pckplan_desc" style="margin-bottom: 0px;color:#999;"></p>  
+                            <p id="pckplan_desc" style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>  
                           </#if>
                         </#list>                  
               </li>              
@@ -230,7 +230,7 @@
                         <!--不同 套餐月费 描述 -->
                         <#list attrs.PACKRES as item>
                           <#if item_index==0>
-                            <p id="package_desc" style="margin-bottom: 0px;color:#999;"></p>                           
+                            <p id="package_desc" style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>                           
                           </#if>
                         </#list>                  
               </li>              

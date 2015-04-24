@@ -142,6 +142,7 @@
                     </span>
                 </p>
             </li>
+            <#--
             <li class="num-info-li">
                 <a id="goodsAssess" href="javascript:void();">
                     <b class="list-arr"></b>
@@ -149,6 +150,7 @@
                     <label>商品评价</label>
                 </a>
             </li>
+            -->
             <li class="num-info-li">
                 <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
@@ -187,12 +189,17 @@
                           <#elseif item_index%3==2>
                             <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" attr_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
                   </div>
-                  <p id="pckplan_desc" style="margin-bottom: 0px;color:#999;display:none;"></p>  
+                        <!-- A/B/C 套餐  描述-->
+                        <#list attrs.PCKPLAN as item>
+                          <#if item_index==0>
+                            <p id="pckplan_desc" style="margin-bottom: 0px;color:#999;"></p>  
+                          </#if>
+                        </#list>                  
               </li>              
             </#if>
             <!-- 不同 套餐月费 -->
@@ -208,12 +215,17 @@
                           <#elseif item_index%3==2>
                             <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" attr_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
                   </div>
-                  <p id="package_desc" style="margin-bottom: 0px;color:#999;display:none;"></p>  
+                        <!--不同 套餐月费 描述 -->
+                        <#list attrs.PACKRES as item>
+                          <#if item_index==0>
+                            <p id="package_desc" style="margin-bottom: 0px;color:#999;"></p>                           
+                          </#if>
+                        </#list>                  
               </li>              
             </#if>                
             <!-- 普通卡/微卡/Nano卡-->        

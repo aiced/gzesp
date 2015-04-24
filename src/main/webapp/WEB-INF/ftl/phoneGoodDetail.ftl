@@ -137,6 +137,7 @@
                     </span>
                 </p>
             </li>
+            <#--
             <li class="num-info-li">
                 <a id="goodsAssess" href="javascript:void();">
                     <b class="list-arr"></b>
@@ -144,6 +145,7 @@
                     <label>商品评价</label>
                 </a>
             </li>
+            -->
             <li class="num-info-li">
                 <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>

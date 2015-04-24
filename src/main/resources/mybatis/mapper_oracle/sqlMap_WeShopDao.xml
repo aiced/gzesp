@@ -215,6 +215,7 @@
             <if test="keyword != null">
                and lower(a.goods_name) like '%'||#{keyword}||'%'
             </if>
+            and a.goods_state = '1'
             and a.goods_id = b.goods_id
             and b.amount_type = '2' 
             and a.goods_id = c.goods_id
@@ -284,6 +285,7 @@
                   open="(" close=")" separator=",">
                    ${goods_id}
                 </foreach>
+            and a.goods_state = '1'
             and a.goods_id = b.goods_id
             and b.amount_type = '2' 
             and a.goods_id = c.goods_id

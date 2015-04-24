@@ -131,5 +131,14 @@ public class SelectNumberService {
         }
         
     }
+    
+    /**
+     * 根据order_id 查找是否用了手机号码
+     * @param order_id
+     * @return
+     */
+    public Map<Object, Object> getNumberByOrderId(String order_id){
+        return orderDao.getNumberByOrderId(order_id);
+    }
 
 }

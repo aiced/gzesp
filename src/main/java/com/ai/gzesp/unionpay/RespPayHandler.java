@@ -2,9 +2,12 @@ package com.ai.gzesp.unionpay;
 
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.UnionPayService;
 
 /**
@@ -23,14 +26,23 @@ public class RespPayHandler implements IDealUnionPayResp {
      */
     @Autowired
     private UnionPayService unionPayService;
+    
+    @Autowired
+    private SelectNumberService selectNumberService;
 
     @Override
     public void dealResp(Map<String, String> respMap) {
+    	
         //更新paylog日志表里的接口调用日志
         int r1 = unionPayService.updatePaylog(respMap);
         //更新订单基本表里的 订单状态
         int r2 = unionPayService.updatePayState(respMap);
         
+        //先根据返回报文里的order_id 获取到订单当时是否有选择号码
+/*        Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(respMap.get(UnionPayAttrs.orderId));
+        if(MapUtils.isNotEmpty(numberRow)){
+        	
+        }*/
         //号码预占表删掉号码记录
     }
 

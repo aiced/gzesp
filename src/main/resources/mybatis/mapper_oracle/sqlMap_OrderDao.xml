@@ -9,7 +9,7 @@
       select m.*, rownum row_num
         from (	
         select a.serial_number, 
-               a.nice_fee/1000 nice_fee
+               nvl(a.nice_fee,0)/1000 nice_fee
           from NUM_D_NUMINFO a
          where a.code_state = '1'
            and a.province_code = '85'
@@ -32,12 +32,12 @@
             </if>
             <if test="nice_fee_start != null">
                <![CDATA[ 
-                 and a.nice_fee >= #{nice_fee_start}*1000
+                 and (a.nice_fee is null or a.nice_fee >= #{nice_fee_start}*1000)
                   ]]>
             </if>
             <if test="nice_fee_end != null">
                <![CDATA[ 
-               and a.nice_fee <= #{nice_fee_end}*1000
+               and (a.nice_fee is null or a.nice_fee <= #{nice_fee_end}*1000)
                ]]>
             </if>
           order by 
@@ -135,5 +135,12 @@
                    #{serial_number}
               </foreach>
 	</delete>	
+	
+	<select id="getNumberByOrderId" resultType="java.util.HashMap">
+      select RES_ATTR_VAL serial_number
+        from ORD_D_RES
+       where order_id = ${order_id}
+         and RES_ATTR_CODE = 'NUMBERS'
+	</select>	
 	
 </mapper>

@@ -45,7 +45,7 @@
 	<bean id="releaseNumberTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
         <property name="jobDetail" ref="releaseNumberJob" />  
 		<property name="startDelay" value="60000"/><!-- 应用启动后延迟1分钟开始调度 -->  
-		<property name="repeatInterval" value="1800000" /><!-- 每半小时 30*60*1000毫秒调度一次 -->  
+		<property name="repeatInterval" value="1800000" /><!-- 每半小时 30*60*1000毫秒调度一次,此设置不能小于sql里queryNumbersTimeout()的间隔 -->  
     </bean>  	
 		
  	 <!-- 定时列表 -->

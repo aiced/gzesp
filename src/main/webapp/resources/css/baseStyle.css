@@ -83,3 +83,12 @@
 		color: #E8742B;
 		background: none repeat scroll 0% 0% #FFC;
 		box-shadow: -1px 1px 1px #DDD;}
+		
+.top-bar-fix{
+position:fixed;
+top:0;
+_position:absolute; 
+_top:expression(eval(document.documentElement.scrollTop)); 
+overflow:auto;
+z-index:9999; 
+}

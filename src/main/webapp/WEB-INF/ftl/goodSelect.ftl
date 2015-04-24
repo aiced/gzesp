@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
  	<#if (!isBanner?exists)>
-    	<title>优惠套餐--来自沃掌柜</title>
+ 		<title>商品选择</title>
     <#else>
-        <title>商品选择</title>
+        <title>当月热推--来自沃掌柜</title>
 	</#if> 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -48,12 +48,6 @@
 
     <!-- 如果是banner跳到商品列表页的，就给页面传这个属性，隐藏查询条件部分-->
     <#if (!isBanner?exists)>
-    <!-- 浏览器分享 -->
-    <div style="height:1px;overflow:hidden;”>
-    	<img src='${imgsrc}' alt="商品" text="我是一个商品" />
-	</div> 
-    
-    
     <!-- 销量价格筛选，排序 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;">
       <!-- 输入筛选-->
@@ -95,6 +89,11 @@
     	</div>  		    		
       </div>
     </div>
+    <#else>
+    <div style="height:1px;overflow:hidden;">
+    		  <img src='${imgsrc}' alt="" class="img-responsive"/>
+	</div> 
+    
     </#if> 
     
     <!-- 套餐展示表格-->
@@ -106,10 +105,17 @@
         </div>
       </#if>
       <!-- 有数据时展示 -->
+
+      
+      
       <#list goodList as item>
         <div class="row" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;" onclick="gotoGoodDetail(${item.CTLG_CODE}, ${item.GOODS_ID});">
           <div class="col-xs-4" style="padding:1px;">
-      	    <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" /> 
+          <!-- <img src='${imgsrc}' alt="" class="img-responsive"/> -->
+
+
+      	   <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
+      	     
       	  </div>
           <div class="col-xs-8" style="padding:0px;">
       	    <p class="p-td">${item.GOODS_NAME}</p>
@@ -122,5 +128,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/goodSelect.js?v=${resVer}"></script>
+
+    
   </body>
 </html>

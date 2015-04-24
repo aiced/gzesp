@@ -206,10 +206,10 @@
 	                </div>
 	            </div>
 	            <div class="head_bottom">
-	                <div class="head_bottom_share"><a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/shopHome/shopshare.png" width="24" height="24">店铺分享<img/></a></div>
+	                 <!--<div class="head_bottom_share"><a href="#" data-toggle="modal" data-target="#myModal"><img src="${resRoot}/image/shopHome/shopshare.png" width="24" height="24">店铺分享<img/></a></div>
 	                <div class="head_bottom_line"></div>
-	                <div class="head_bottom_show"><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></div>
-	            </div>
+	                <div class="head_bottom_show"><a href="#" id="copyUrl" ><img src="${resRoot}/image/shopHome/shoppreview.png" width="24" height="24">复制链接</a></div>-->
+	            </div> 
 	            <div class="head_user"><img src="${imageRoot}${userimage}" alt="头像" class="img-circle" width="90" height="90"></div>
 	        </div>
 	        

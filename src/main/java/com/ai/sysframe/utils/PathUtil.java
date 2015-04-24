@@ -12,6 +12,7 @@ public class PathUtil {
      * @Fields WEB_ROOT_PATH : web工程的根目录
      */
     public static final String WEB_ROOT_PATH = getWebRoot();
+    public static final String WEB_ROOT_PARENT_PATH = getWebParentPath();
     /**
      * @Fields WEB_INFO_PATH : web工程的web-inf目录
      */
@@ -22,7 +23,7 @@ public class PathUtil {
 
     public static final String fileseparator="/";
 
-    public static final String WEB_UPLOAD_PATH =  "mappUpload" + fileseparator;
+    public static final String WEB_UPLOAD_PATH =  "uploadfile/uploader/idCardNum" + fileseparator;
 
     public static final String WEB_TYPE = "mappUpload";
     
@@ -46,6 +47,15 @@ public class PathUtil {
             throw new BaseException("43", new Object[] { "WEB-INF/classes", path });
         }
         return path;
+    }
+    private static String getWebParentPath() {
+    	String path = getWebClassesPath(PathUtil.class);
+    	if (path.indexOf("esp/WEB-INF") > 0) {
+    		path = path.substring(0, path.indexOf("esp/WEB-INF"));
+    	} else {
+    		throw new BaseException("43", new Object[] { "esp/WEB-INF", path });
+    	}
+    	return path;
     }
     
     /**

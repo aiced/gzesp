@@ -85,7 +85,12 @@ public class CommonController {
 	//      String upToPath = PathUtil.getFileUploadPath("FILE",request.getParameter("uploadType"));
 	//      String appWebPath = upToPath.substring(upToPath.indexOf(PathUtil.WEB_TYPE));
 	      
-	      String upToPath = PathUtil.WEB_ROOT_PATH + PathUtil.WEB_UPLOAD_PATH + idCardNum + File.separator;
+	      String upToPath = PathUtil.WEB_ROOT_PARENT_PATH 
+	    		  + PathUtil.WEB_UPLOAD_PATH 
+	    		  + DateUtil.getCurrentYearMonth()
+	    		  + File.separator
+	    		  + idCardNum 
+	    		  + File.separator;
 	      
 	      logger.debug("upToPath"+upToPath);
 	      
@@ -107,7 +112,7 @@ public class CommonController {
 	      //url路径
 	//      String basePath = appWebPath + fileName;
 	      Map fileInfo = new HashMap();
-	      fileInfo.put("url", File.separator + PathUtil.WEB_UPLOAD_PATH + idCardNum + File.separator + fileName);
+	      fileInfo.put("url", File.separator + PathUtil.WEB_UPLOAD_PATH  + DateUtil.getCurrentYearMonth()  + File.separator+ idCardNum + File.separator + fileName);
 	      fileInfo.put("size", size);
 	      fileInfo.put("originalFilename", imgFileName);
 	      fileInfoList.add(fileInfo);

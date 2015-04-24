@@ -35,14 +35,26 @@
 				<value>0 */30 * * * ?</value>
 		</property>
 	</bean>
-    
+
+    <!-- 号码预占释放 定时任务 每隔半小时执行一次 -->    
+	<bean id="releaseNumberJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="releaseNumberTask"/>
+		<property name="targetMethod" value="doJob"/>
+	</bean>
 	
+	<bean id="releaseNumberTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+        <property name="jobDetail" ref="releaseNumberJob" />  
+		<property name="startDelay" value="60000"/><!-- 应用启动后延迟1分钟开始调度 -->  
+		<property name="repeatInterval" value="1800000" /><!-- 每半小时 30*60*1000毫秒调度一次 -->  
+    </bean>  	
+		
  	 <!-- 定时列表 -->
 	<bean id="myScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="OneTimeTask"/>
 				<ref bean="RepeatTask"/>
+				<ref bean="releaseNumberTrigger"/>
 			</list>
 		</property>
 	</bean>

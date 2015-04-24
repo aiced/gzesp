@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.common.Constants;
@@ -122,7 +123,7 @@ public class GoodSelectController {
      * @return
      */
     @RequestMapping("/bannerGoodSelect/{goods_list}/{user_id}")
-    public ModelAndView bannerGoodSelect(@PathVariable("goods_list") String goods_list, @PathVariable("user_id") String user_id,@PathVariable("imgsrc") String imgsrc){
+    public ModelAndView bannerGoodSelect(@PathVariable("goods_list") String goods_list, @PathVariable("user_id") String user_id,@RequestParam(value="imgsrc", required= false) String imgsrc){
         ModelAndView mav = mav = new ModelAndView("goodSelect.ftl");
         String[] goods = goods_list.split("[-]"); //分出商品数组
         

@@ -77,6 +77,12 @@
           and a.code_state = '1'
 	</update>
 	
+	<insert id="insertNumberReserve">
+       insert into NUM_D_RESERVE
+              (serial_number, code_state, add_time)
+       values(#{serial_number}, #{code_state}, sysdate)	
+	</insert>
+	
 	<update id="updateGoodsAmount" >
       update gds_d_amount
          set goods_amount = 
@@ -100,6 +106,34 @@
         and a.goods_id = b.goods_id
         and b.res_id = c.res_id
         and c.attr_code = 'NETTYPE'
-	</select>		
+	</select>	
+	
+	<select id="queryNumbersTimeout" resultType="java.util.HashMap">
+      <![CDATA[
+     select serial_number, code_state
+       from NUM_D_RESERVE
+      where add_time <= sysdate - 1/(24*2)
+        and code_state = '2'
+         ]]>    
+	</select>	
+	
+	<update id="releaseNumberState" >
+	   update num_d_numinfo a
+          set a.code_state = '1'
+        where serial_number in
+              <foreach collection="numbers" item="serial_number" index="index"
+                  open="(" close=")" separator=",">
+                   #{serial_number}
+              </foreach>
+	</update>	
+	
+	<delete id="deleteNumberReserve">
+	   delete from NUM_D_RESERVE
+        where serial_number in
+              <foreach collection="numbers" item="serial_number" index="index"
+                  open="(" close=")" separator=",">
+                   #{serial_number}
+              </foreach>
+	</delete>	
 	
 </mapper>

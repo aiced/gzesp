@@ -423,11 +423,11 @@
 		                <!-- 隐藏控件用于保存userid -->
 						<div class="order_top_middle" >
 							<div class="order_top_middle1">
-								<input id="beginTime"  name="beginTime" value="" placeholder="订单开始时间"/>
+								<input id="beginTime"  name="beginTime" value="" placeholder="开始时间"/>
 							</div>
 							<div class="order_top_middle2">—</div>
 							<div class="order_top_middle3">
-								<input id="endTime" name="endTime" value="" placeholder="订单结束时间"/>
+								<input id="endTime" name="endTime" value="" placeholder="结束时间"/>
 							</div>
 							<!-- 这句和日历控件有关千万别忘掉 -->
 						</div>
@@ -448,7 +448,7 @@
 	    </form>
 
 	    <div class="query_info_detail">
-	        <h5><label>当月收益明细</label></h5>
+	        <h5><label>收益明细</label></h5>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
 					您没有收益

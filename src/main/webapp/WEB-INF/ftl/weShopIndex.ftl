@@ -155,12 +155,14 @@
       </div>
       <div class="row" style="margin-top:0px;">
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="${base}/weShop/goodSelect/flow/${user_id}">
+    	<#-- ${base}/weShop/goodSelect/flow/${user_id} -->
+    	  <a href="#">
     	    <img src="${resRoot}/image/weShop/tsllb4.png" alt="" class="img-rounded img-responsive" />
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="${base}/weShop/goodSelect/band/${user_id}">
+    	<#-- ${base}/weShop/goodSelect/band/${user_id} -->
+    	  <a href="#">
     	    <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>  
     	</div>

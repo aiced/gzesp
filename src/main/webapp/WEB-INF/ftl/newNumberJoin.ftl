@@ -132,7 +132,7 @@
 	                </section>
 			  </li>
 			  <li id="amountTab" class="list-group-item">
-			  	 	<strong class="order-fee">商品金额：<span id="topayFeeSpan">${goods_price}</span></strong>
+			  	 	<strong class="order-fee">商品金额：￥<span id="topayFeeSpan">${goods_price}</span></strong>
 <!-- 	                <p class="fee-detail">（其中：合约机4699元+预存话费1200元）</p> -->
 			  </li>
 			</ul>

@@ -81,8 +81,6 @@ $(function() {
 	$('#netInfoBtn').bind("click",function(){
 		if(netInfo_checkData()) {
 			orderStat.netInfoStat = 1;
-			$('#netInfoTab').find('img:first').addClass("hide");
-			$('#netInfoTab').find('img:last').removeClass("hide");
 			$('#netInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -99,8 +97,6 @@ $(function() {
 	$('#receiveInfoBtn').bind("click",function(){
 		if(addres_checkData()) {
 			orderStat.receiveInfoStat = 1;
-			$('#receiveInfoTab').find('img:first').addClass("hide");
-			$('#receiveInfoTab').find('img:last').removeClass("hide");
 			$('#receiveInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 		}
@@ -128,8 +124,8 @@ $(function() {
 	$('#otherInfoBtn').bind("click",function(){
 //		if(otherOrder_checkData()) {
 			orderStat.otherInfoStat = 1;
-			$('#otherInfoTab').find('img:first').addClass("hide");
-			$('#otherInfoTab').find('img:last').removeClass("hide");
+//			$('#otherInfoTab').find('img:first').addClass("hide");
+//			$('#otherInfoTab').find('img:last').removeClass("hide");
 			$('#otherInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 //		}
@@ -162,6 +158,7 @@ $(function() {
 	//选择文件
 	$("input[type='file']").change(function(evt){
 	    if(evt.target.files.length == 0){
+//	    	alert('1');
 	        return;
 	    }
 //	    $(".mask").show().height($(document).height());
@@ -169,6 +166,7 @@ $(function() {
 	    if(type2==""){
 //	        $(".mask").show().height($(document).height());
 //	        $(".img-select-wrong").show().vCenter();
+//	    	alert('2');
 	        return;
 	    }
 	    //选择的图片非bmp、jpg、jpeg时，清空文件选择，展示提示框
@@ -176,14 +174,17 @@ $(function() {
 	    	alert('只能选择jpg、png格式图片');
 	        return;
 	    }
+//	    alert('3');
 	    var reader = new FileReader();
 	    $(reader).load(function() {
 	    	 var dataURL = this.result;
 	    	 var preview = $this.siblings("img");
 	    	 preview.attr("src", dataURL);
+//	    	 alert('4');
 	    });
 	    //读取文件的缓冲数组流，读取完毕后执行onload
 	    reader.readAsDataURL(f);
+//	    alert('5');
 	});
 	
 	

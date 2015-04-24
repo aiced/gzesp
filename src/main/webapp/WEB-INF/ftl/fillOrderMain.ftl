@@ -81,8 +81,7 @@
 	            <a id="netInfoTab" href="#" class="list-group-item">
 	                <label>入网资料（必填）</label>
 	                <span class="list_gou">
-	                	<img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15">
-	                	<img class="hide" src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
+	                	<img src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
                 	</span>
 	            </a>
 	            <!--配送方式-->
@@ -112,8 +111,7 @@
 	            <a id="receiveInfoTab" href="#" class="list-group-item">
 	                <label>收货信息（必填）</label>
 	                 <span class="list_gou">
-	                	<img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15">
-	                	<img class="hide" src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
+	                	<img  src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
                 	</span>
 	            </a>
 	            
@@ -121,8 +119,7 @@
 	            <a id="otherInfoTab" href="#" class="list-group-item">
 	                <label>其他</label><label class="label-sm">发票  备注 推荐人</label>
 	                 <span class="list_gou">
-	                	<img src="${resRoot}/image/fillOrderMain/jiantou.png" width="9" height="15">
-	                	<img class="hide" src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
+	                	<img src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
                 	</span>
 	            </a>
 	        </ul>

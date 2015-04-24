@@ -86,6 +86,7 @@ public class CommonController {
 	//      String appWebPath = upToPath.substring(upToPath.indexOf(PathUtil.WEB_TYPE));
 	      
 	      String upToPath = PathUtil.WEB_ROOT_PARENT_PATH 
+	    		  + "uploadfile/"
 	    		  + PathUtil.WEB_UPLOAD_PATH 
 	    		  + DateUtil.getCurrentYearMonth()
 	    		  + File.separator

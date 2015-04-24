@@ -23,7 +23,7 @@ public class PathUtil {
 
     public static final String fileseparator="/";
 
-    public static final String WEB_UPLOAD_PATH =  "uploadfile/uploader/idCardNum" + fileseparator;
+    public static final String WEB_UPLOAD_PATH =  "uploader/idCardNum" + fileseparator;
 
     public static final String WEB_TYPE = "mappUpload";
     

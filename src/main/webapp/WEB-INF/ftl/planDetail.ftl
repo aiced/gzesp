@@ -24,7 +24,7 @@
     <style type="text/css">
     	.carousel-indicators
 		{
-			bottom:-2%;
+			bottom:-10%;
 		}
     </style>
   </head>

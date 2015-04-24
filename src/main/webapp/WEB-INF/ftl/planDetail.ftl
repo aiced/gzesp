@@ -20,6 +20,13 @@
     <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
     <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>   
     
+    
+    <style type="text/css">
+    	.carousel-indicators
+		{
+			bottom:-2%;
+		}
+    </style>
   </head>
 
   <body>

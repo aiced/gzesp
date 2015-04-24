@@ -15,7 +15,17 @@
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet"> 
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>      
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>     
+    
+    
+    
+    
+    <style type="text/css">
+    	.carousel-indicators
+		{
+			bottom:-2%;
+		}
+    </style> 
   </head>
 
   <body>

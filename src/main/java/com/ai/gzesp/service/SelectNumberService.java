@@ -3,13 +3,16 @@ package com.ai.gzesp.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
+import com.ai.gzesp.task.ReleaseNumberTask;
 
 @Service
 public class SelectNumberService {
+	private static Logger log = Logger.getLogger(SelectNumberService.class); 
     
     @Autowired
     private OrderDao orderDao;
@@ -70,8 +73,20 @@ public class SelectNumberService {
         return orderDao.getNumberRules();
     }
     
-    public int updateNumberState(String serial_number){
-        return orderDao.updateNumberState(serial_number);
+    public boolean updateNumberState(String serial_number){
+    	//更新号码信息表里状态为预占
+    	int r1 = orderDao.updateNumberState(serial_number);
+    	int r2 = 0;
+    	if(r1 > 0){
+    		//号码预占表里新增一条预占记录，用于后面 定时任务 释放 超时未支付而预占的号码
+    		r2 = orderDao.insertNumberReserve(serial_number, "2"); //2表示预占
+    	}
+    	if(r1 > 0 && r2 > 0){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
     }
     
     /**
@@ -80,6 +95,41 @@ public class SelectNumberService {
      */
     public Map<Object, Object> getNetTypeByGoodsId(String goods_id){
         return orderDao.getNetTypeByGoodsId(goods_id);
+    }
+    
+    /**
+     * 查询超时预占的号码列表，sql里写死了超时时间为半小时 
+     * @return
+     */
+    public List<Map<Object, Object>> queryNumbersTimeout(){
+    	List<Map<Object, Object>> list = orderDao.queryNumbersTimeout();
+        log.debug("【号码预占释放定时任务：查询到超时预占号码 " + list.size() + " 个】");
+        return list;
+    }
+    
+    /**
+     * 释放预占超时的号码，事务控制
+     * @param numbers
+     * @return
+     */
+    public boolean releaseNumberState(String[] numbers){
+    	//先更新号码信息表状态为上架
+        int r1 = orderDao.releaseNumberState(numbers);
+        log.debug("【号码预占释放定时任务：号码信息表update " + r1 + " 条记录】");
+        int r2 = 0;
+        if(r1 > 0){
+        	//再删除号码预占表里的记录
+        	r2 = orderDao.deleteNumberReserve(numbers);
+        	log.debug("【号码预占释放定时任务：号码预占表delete " + r2 + " 条记录】");
+        }
+        
+        if(r1>0 && r2>0){
+        	return true;
+        }
+        else{
+        	return false;
+        }
+        
     }
 
 }

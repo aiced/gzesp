@@ -5,8 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>商品选择</title>
-
+ 	<#if (!isBanner?exists)>
+    	<title>优惠套餐--来自沃掌柜</title>
+    <#else>
+        <title>商品选择</title>
+	</#if> 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/goodSelect.css?v=${resVer}" rel="stylesheet">
@@ -45,6 +48,12 @@
 
     <!-- 如果是banner跳到商品列表页的，就给页面传这个属性，隐藏查询条件部分-->
     <#if (!isBanner?exists)>
+    <!-- 浏览器分享 -->
+    <div style="height:1px;overflow:hidden;”>
+    	<img src='${imgsrc}' alt="商品" text="我是一个商品" />
+	</div> 
+    
+    
     <!-- 销量价格筛选，排序 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;">
       <!-- 输入筛选-->

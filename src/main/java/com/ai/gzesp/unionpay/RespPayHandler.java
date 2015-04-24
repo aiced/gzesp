@@ -30,6 +30,8 @@ public class RespPayHandler implements IDealUnionPayResp {
         int r1 = unionPayService.updatePaylog(respMap);
         //更新订单基本表里的 订单状态
         int r2 = unionPayService.updatePayState(respMap);
+        
+        //号码预占表删掉号码记录
     }
 
 }

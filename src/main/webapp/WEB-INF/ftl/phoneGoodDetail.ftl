@@ -16,6 +16,9 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>   
+    <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.hammer.js?v=${resVer}"></script> 
+        
     <style type="text/css">
     	.carousel-indicators
 		{

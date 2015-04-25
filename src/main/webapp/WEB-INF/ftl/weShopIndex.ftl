@@ -307,6 +307,7 @@
     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.hammer.js?v=${resVer}"></script>
     
     <script>
        //获取当前页面url并生成二维码展示在 xx的微店

@@ -33,6 +33,11 @@
   </head>
 
   <body>
+    <!-- 手机浏览器分享会用到的图片 -->
+    <div style="height:1px;overflow:hidden;">
+    		  <img src='http://res.gz10010.xyz/uploader/share_logo.png' alt="" class="img-responsive"/>
+	</div> 
+  
     <!-- head bar -->
     <div class="container-fluid" style="background-color:#f1791a;padding:5px">
       <div class="row" style="margin:0px;">     
@@ -307,6 +312,7 @@
     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.hammer.js?v=${resVer}"></script>
     
     <script>
        //获取当前页面url并生成二维码展示在 xx的微店

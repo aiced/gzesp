@@ -43,7 +43,43 @@
     		return true;
     		
     	}
+    	
+    	function checkCardcode()
+    	{
+		  	//在这里操作 银行卡号 文本框失去焦点
+		  	if(!$("#txtbankcardid").val())
+		  	{
+		  		$("#div_bankcardid").addClass("has-error");
+		  		bRet1=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		
+	    		if (!checkBankCard($("#txtbankcardid").val())) {
+			  		$("#div_bankcardid").removeClass("has-error");
+			  		bRet1=false;
+					return;
+				}
+	    		
+		  		$("#div_bankcardid").removeClass("has-error");
+		  		$("#div_bankcardid").addClass("has-success");
+
+		  		bRet1=true;
+		  		return;
+		  	}
+    		
+    		
+    		
+    	}
+    	
+    	
 		$(document).ready(function(){ 
+		   //第一次加载的时候 进行判断文本框是否为空
+		   
+			checkCardcode();
+			
+			
 		   //[提交]按钮点击
 		  $("#btnSubmit").click(function(){  
 			  //在这里操作提交
@@ -79,8 +115,10 @@
 		  
 		  //[银行卡号]文本框失去焦点
 		  $("#txtbankcardid").blur(function(){
+			  
+			  checkCardcode();
 		  	//在这里操作 银行卡号 文本框失去焦点
-		  	if(!$("#txtbankcardid").val())
+		  	/*if(!$("#txtbankcardid").val())
 		  	{
 		  		$("#div_bankcardid").addClass("has-error");
 		  		bRet1=false;
@@ -100,7 +138,7 @@
 
 		  		bRet1=true;
 		  		return;
-		  	}
+		  	}*/
 		  });
 		   
 		  

@@ -198,7 +198,7 @@
 	<!--店铺图标   -->
 	<#list userlist as info> <#if (info_index<=0) >
 	<div class="cellDiv">
-		<h5<div class="cellRightLable">店铺图标</div></h5>
+		<h5><div class="cellRightLable">店铺图标</div></h5>
 		<!-- edit_by_wenh_2015_3_31 通过根据该字段的字符串的长度是否大于5来进行显示相关图片，已经路径的长度肯定大于5，5是随便写的，后续可以修改 -->
 		<#if ('${info.avatar}'?length gt 5) > 
 			<img class="avatar img-circle" src='${imageRoot}${info.avatar}'> 

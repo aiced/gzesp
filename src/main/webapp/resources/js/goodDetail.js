@@ -23,7 +23,7 @@
          }         
        });
        
-       //激活图文详情页面tab导航
+       //激活图文详情页面tab导航 图文详情不用tab页了
        $('#myTab a').click(function (e) {
           e.preventDefault();
           $(this).tab('show');
@@ -33,7 +33,15 @@
 	          e.relatedTarget // previous active tab
 	          //$(this).css('background-color', '#ffa200');
 	          //$(e.relatedTarget).css('background-color', '#f4f4f4');
-	        });       
+	        });      
+	    
+	    //轮播广告添加hammer.js 滑动手势功能
+	       $('#myCarousel').hammer().on('swipeleft', function(){
+	     	  $(this).carousel('next');
+	     	});
+	     	$('#myCarousel').hammer().on('swiperight', function(){
+	     	  $(this).carousel('prev');
+	     	});	    
        
      });
      

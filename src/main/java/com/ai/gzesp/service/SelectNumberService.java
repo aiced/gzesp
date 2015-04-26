@@ -73,6 +73,11 @@ public class SelectNumberService {
         return orderDao.getNumberRules();
     }
     
+    /**
+     * 选择号码后预占号码信息表状态改为预占，号码预占表里新增一条预占记录
+     * @param serial_number
+     * @return
+     */
     public boolean updateNumberState(String serial_number){
     	//更新号码信息表里状态为预占
     	int r1 = orderDao.updateNumberState(serial_number);
@@ -139,6 +144,23 @@ public class SelectNumberService {
      */
     public Map<Object, Object> getNumberByOrderId(String order_id){
         return orderDao.getNumberByOrderId(order_id);
+    }
+
+
+    /**
+     * 支付成功后删除号码预占表里的记录
+     * @param numbers
+     * @return
+     */
+    public int deleteNumberReserve(String[] numbers){
+    	int r2 = orderDao.deleteNumberReserve(numbers);
+    	StringBuffer sb = new StringBuffer();
+    	for(String number : numbers){
+    		sb.append(numbers);
+    		sb.append(", ");
+    	}
+    	log.debug("【支付成功：号码预占表delete " + r2 + " 条记录," + sb.toString() + "】");
+    	return r2;
     }
 
 }

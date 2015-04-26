@@ -39,11 +39,12 @@ public class RespPayHandler implements IDealUnionPayResp {
         int r2 = unionPayService.updatePayState(respMap);
         
         //先根据返回报文里的order_id 获取到订单当时是否有选择号码
-/*        Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(respMap.get(UnionPayAttrs.orderId));
+        Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(respMap.get(UnionPayAttrs.orderId));
         if(MapUtils.isNotEmpty(numberRow)){
-        	
-        }*/
-        //号码预占表删掉号码记录
+        	//号码预占表删掉号码记录
+        	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
+        	int r3 = selectNumberService.deleteNumberReserve(numbers);
+        }
     }
 
 }

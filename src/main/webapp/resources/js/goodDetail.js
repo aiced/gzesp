@@ -12,18 +12,18 @@
          
          //如果选择了A/B/C 套餐 还需要展示描述, 要有pckplan_desc的属性才触发
          if(typeof($(this).attr('pckplan_desc')) != 'undefined'){
-        	 $('#pckplan_desc').show();
+        	 //$('#pckplan_desc').show();
         	 $('#pckplan_desc').html($(this).attr('pckplan_desc'));
          }
          
          //如果选择了不同套餐月费 还需要展示描述, 要有attr_desc的属性才触发
          if(typeof($(this).attr('package_desc')) != 'undefined'){
-        	 $('#package_desc').show();
+        	 //$('#package_desc').show();
         	 $('#package_desc').html($(this).attr('package_desc'));
          }         
        });
        
-       //激活图文详情页面tab导航
+       //激活图文详情页面tab导航 图文详情不用tab页了
        $('#myTab a').click(function (e) {
           e.preventDefault();
           $(this).tab('show');
@@ -33,7 +33,15 @@
 	          e.relatedTarget // previous active tab
 	          //$(this).css('background-color', '#ffa200');
 	          //$(e.relatedTarget).css('background-color', '#f4f4f4');
-	        });       
+	        });      
+	    
+	    //轮播广告添加hammer.js 滑动手势功能
+	       $('#myCarousel').hammer().on('swipeleft', function(){
+	     	  $(this).carousel('next');
+	     	});
+	     	$('#myCarousel').hammer().on('swiperight', function(){
+	     	  $(this).carousel('prev');
+	     	});	    
        
      });
      

@@ -15,7 +15,16 @@
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet"> 
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>    
+    <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>   
+    <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.hammer.js?v=${resVer}"></script> 
+        
+    <style type="text/css">
+    	.carousel-indicators
+		{
+			bottom:-2%;
+		}
+    </style> 
   </head>
 
   <body>
@@ -137,6 +146,7 @@
                     </span>
                 </p>
             </li>
+            <#--
             <li class="num-info-li">
                 <a id="goodsAssess" href="javascript:void();">
                     <b class="list-arr"></b>
@@ -144,6 +154,7 @@
                     <label>商品评价</label>
                 </a>
             </li>
+            -->
             <li class="num-info-li">
                 <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>

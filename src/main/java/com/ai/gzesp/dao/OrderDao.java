@@ -28,4 +28,6 @@ public interface OrderDao {
     public int releaseNumberState(@Param("numbers") String[] numbers); 
     
     public int deleteNumberReserve(@Param("numbers") String[] numbers); 
+    
+    public Map<Object, Object> getNumberByOrderId(@Param("order_id") String order_id); 
 }

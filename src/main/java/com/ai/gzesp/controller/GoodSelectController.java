@@ -70,6 +70,7 @@ public class GoodSelectController {
 
         mav.addObject("good_type", goodType); //good_type是给ajax查询用的
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
+        mav.addObject("isBanner", "0"); //判断是否是banner跳到商品列表页的，如果是就给页面传这个属性，隐藏查询条件部分
         return mav;
     }
     

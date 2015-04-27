@@ -43,6 +43,10 @@ public interface UnionPayDao {
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
             @Param("resp_time") String resp_time, @Param("sys_trade_no") String sys_trade_no);
     
+    public int updateBindlogNew(@Param("resp_trade_type") String resp_trade_type,
+            @Param("result_code") String result_code, @Param("result_desc") String result_desc,
+            @Param("resp_time") String resp_time, @Param("sys_trade_no") String sys_trade_no, @Param("pay_acunt_no") String pay_acunt_no);
+    
     public int updatePaylog(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
             @Param("resp_time") String resp_time, @Param("pay_state") String pay_state,
@@ -81,5 +85,7 @@ public interface UnionPayDao {
     public int updateSignCodeValidFlag(@Param("sign_code") String sign_code, @Param("valid_flag") String valid_flag);
     
     public Map<Object, Object> queryUserIdByOrderId(@Param("order_id") String order_id);
+    
+    public Map<String, String> queryBindSuccessRow(@Param("sys_trade_no") String sys_trade_no);
 
 }

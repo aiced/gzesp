@@ -33,6 +33,11 @@
   </head>
 
   <body>
+    <!-- 手机浏览器分享会用到的图片 -->
+    <div style="height:1px;overflow:hidden;">
+    		  <img src='http://res.gz10010.xyz/uploader/share_logo.png' alt="" class="img-responsive"/>
+	</div> 
+  
     <!-- head bar -->
     <div class="container-fluid" style="background-color:#f1791a;padding:5px">
       <div class="row" style="margin:0px;">     
@@ -155,12 +160,14 @@
       </div>
       <div class="row" style="margin-top:0px;">
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="${base}/weShop/goodSelect/flow/${user_id}">
+    	<#-- ${base}/weShop/goodSelect/flow/${user_id} -->
+    	  <a href="#">
     	    <img src="${resRoot}/image/weShop/tsllb4.png" alt="" class="img-rounded img-responsive" />
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="${base}/weShop/goodSelect/band/${user_id}">
+    	<#-- ${base}/weShop/goodSelect/band/${user_id} -->
+    	  <a href="#">
     	    <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>  
     	</div>
@@ -193,7 +200,14 @@
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
-    	  	  <p style="font-size:14px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
     	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
@@ -225,8 +239,15 @@
     	        </a>
     	      <!-- <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> -->
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
-    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
-    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
+    	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
             </div> 
@@ -257,8 +278,15 @@
     	        </a>
     	      <!-- <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> -->
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
-    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
-    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>    	  	    
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
+    	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
             </div> 
@@ -266,8 +294,6 @@
         </#list>                   	            
       </#if>                  	            
     </div> 
-
-
 
     <!--热销网卡 -->
     <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
@@ -290,8 +316,15 @@
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
-    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
-    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>    	  	    
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
+    	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
             </div> 
@@ -305,6 +338,7 @@
     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.hammer.js?v=${resVer}"></script>
     
     <script>
        //获取当前页面url并生成二维码展示在 xx的微店

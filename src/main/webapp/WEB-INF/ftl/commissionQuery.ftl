@@ -423,11 +423,11 @@
 		                <!-- 隐藏控件用于保存userid -->
 						<div class="order_top_middle" >
 							<div class="order_top_middle1">
-								<input id="beginTime"  name="beginTime" value="" placeholder="订单开始时间"/>
+								<input id="beginTime"  name="beginTime" value="" placeholder="开始时间"/>
 							</div>
 							<div class="order_top_middle2">—</div>
 							<div class="order_top_middle3">
-								<input id="endTime" name="endTime" value="" placeholder="订单结束时间"/>
+								<input id="endTime" name="endTime" value="" placeholder="结束时间"/>
 							</div>
 							<!-- 这句和日历控件有关千万别忘掉 -->
 						</div>
@@ -448,10 +448,48 @@
 	    </form>
 
 	    <div class="query_info_detail">
-	        <h5><label>当月收益明细</label></h5>
+	        <h5><label>收益明细</label></h5>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
-					您没有收益
+					<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
+					    <tr>
+					        <th><div class="th_title">商品名称</div></th>
+					        <th><div class="th_title">订单详情</div></th>
+					        <th><div class="th_title">收益(¥)</div></th>
+					        <th>
+								<div class="dropdown" style="padding:0px;">
+									<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+									    	状态
+									    <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<!-- <li><a href="#">可领取</a></li>
+										<li role="presentation" class="divider"></li>
+										<li><a href="#">冻结</a></li>
+										 -->
+										<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
+									</ul>
+								</div>
+							</th>
+					    </tr>
+						<tr>
+							<td colspan="4">您没有收益</td>
+						</tr>
+						<tr id="totalRowCount">
+					
+					   	</tr>
+					    <tr id="totalRow">
+					
+					    </tr>
+					</table>	
 				<#else>
 				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
 				    <tr>

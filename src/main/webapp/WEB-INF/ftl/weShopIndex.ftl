@@ -39,16 +39,16 @@
 	</div> 
   
     <!-- head bar -->
-    <div class="container-fluid" style="background-color:#f1791a;padding:5px">
-      <div class="row" style="margin:0px;">     
-        <div class="col-xs-4" >
-          <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
-        </div>
-        <div class="" style="padding-top:5px;" >
-        	<!-- <a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a> -->
-        	<a href="${base}/customer/custOrderQuery" style="color:white;float: right;font-size: 12px;"><u>我的订单</u></a>
-        </div>       
-      </div>
+    <div style="background-color:#f1791a;padding:5px;height:45px;line-height: 35px;">
+       <div style="float: left;">
+         <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="width:80px;height: 30px;"/>
+       </div>
+       <div style="float:left;font-size: 10px;color: white;margin-left:10px;margin-top: 4px;">内测版</div>
+       <div style="float:right;" >
+       	<!-- <a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a> -->
+       	<a href="${base}/customer/custOrderQuery" style="color:white;float: right;font-size: 12px;"><u>我的订单</u></a>
+       </div>
+       <div style="clear:both;"></div>       
     </div>
   
     <!-- 分享到弹出框 -->    

@@ -141,8 +141,16 @@
    		}
    		else if(iflag==2)
    		{
-   			var param = {"iflag":iflag,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   			if($("#beginTime").val()=='' || $("#endTime").val()=='')//没有点击查询直接进行二次筛选
+   			{
+   				var param = {"iflag":0,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   			}
+   			else
+   			{
+   				var param = {"iflag":iflag,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   			}
    		}
+
    		
    		$.ajax({
    			   type: "POST",

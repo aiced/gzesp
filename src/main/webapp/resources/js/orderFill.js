@@ -156,35 +156,31 @@ $(function() {
 	
 	
 	//选择文件
-	$("input[type='file']").change(function(evt){
-	    if(evt.target.files.length == 0){
-//	    	alert('1');
+	$(':file').change(function(event){
+    	if(this.files.length == 0){
 	        return;
 	    }
-//	    $(".mask").show().height($(document).height());
-	    var f = evt.target.files[0], $this = $(this), type = this.value.substr(this.value.lastIndexOf(".")).toLowerCase() ,type2 = f.type;
-	    if(type2==""){
-//	        $(".mask").show().height($(document).height());
-//	        $(".img-select-wrong").show().vCenter();
-//	    	alert('2');
-	        return;
-	    }
+	    var f = this.files[0],thisFileEle = $(this), type = this.value.substr(this.value.lastIndexOf(".")).toLowerCase() ,type2 = f.type;
+	    
 	    //选择的图片非bmp、jpg、jpeg时，清空文件选择，展示提示框
 	    if(!(type == ".jpg" || type == ".png" || type == ".bmp" || /^image\/(jpeg|jpg|png|bmp)$/.test(type2))){
 	    	alert('只能选择jpg、png格式图片');
 	        return;
 	    }
-//	    alert('3');
 	    var reader = new FileReader();
-	    $(reader).load(function() {
-	    	 var dataURL = this.result;
-	    	 var preview = $this.siblings("img");
-	    	 preview.attr("src", dataURL);
-//	    	 alert('4');
-	    });
+	    reader.onload = function(event){ 
+//	    	$('#picsHolder').append(event.target.result) ;
+	    	var dataURL = this.result;
+//	    	 alert(dataURL.length);
+	    	if(!dataURL.match(/^data:image/)) {
+	    		dataURL = dataURL.replace(/^data:/,"data:image/"+type+";");
+	    	}
+	    	 var preview = thisFileEle.siblings("img");
+//	    	 alert(dataURL.length);
+	    	 preview.attr('title', f.name).attr("src", dataURL);
+	    };
 	    //读取文件的缓冲数组流，读取完毕后执行onload
-	    reader.readAsDataURL(f);
-//	    alert('5');
+        reader.readAsDataURL(f);
 	});
 	
 	

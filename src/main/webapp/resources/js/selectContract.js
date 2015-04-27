@@ -29,6 +29,11 @@ $(function() {
 })
 
 function selectPeriod(selectedPeriod) {
+	if(contract.conType == "") {
+    	alert('请选择套餐');
+    	return;
+    }
+	
 	var pageVal = $(selectedPeriod).find("#pageVal_hidden").val();
 	contract.pageVal = pageVal;
 	
@@ -37,9 +42,10 @@ function selectPeriod(selectedPeriod) {
 	
 	$('#pageName').text(pageName);
 	
-	
 	var tmp = {'fromPage':'selectContract' };
     var parms = $.extend({}, tmp, contract);
+    
+
     selConBack2Main(parms);
 }
 

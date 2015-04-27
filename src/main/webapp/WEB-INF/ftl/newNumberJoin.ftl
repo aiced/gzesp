@@ -77,6 +77,7 @@
         }
          .label-sm {
             margin-left: 5px;
+            margin-right:10px;
         }
         
 		.pack-detail{width:100%;font-size:13px;overflow:hidden;}

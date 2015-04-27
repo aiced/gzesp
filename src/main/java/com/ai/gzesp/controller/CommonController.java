@@ -221,10 +221,10 @@ public class CommonController {
 		int count = tdOrdDREFUNDDao.countByExample(myCriteria);
 		System.out.println(count);
 		if (count >= 1) {
-			return false; // 该账户已经注册了
+			return false; //已经申请过退过款了
 
 		} else {
-			return true;// 没有注册过
+			return true;// 没有申请退款
 		}
 	}
     

@@ -40,7 +40,7 @@
     <div>
     	<!--top_start-->
         <div id="top">
-        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>返回</div>
+        	<div id="top_left"></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
@@ -55,6 +55,10 @@
         <div class="div3">
            	 我们将于1-3个工作日完成审核内容，审核通过后，将短信通知您。
         </div>
+        <br/>
+        <br/>
+        <div style="text-align: center;"><h5><a href="${base}/customer/custOrderDetail/${orderid}"><label><u>返回订单详情</u></label></a></h5></div>
+        <input type="hidden" id="hide_orderid" name="hide_orderid" value='${orderid}'>
     </div>
 
     <!-- Bootstrap core JavaScript

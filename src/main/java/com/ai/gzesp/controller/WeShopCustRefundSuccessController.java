@@ -3,6 +3,7 @@ package com.ai.gzesp.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
@@ -13,11 +14,12 @@ public class WeShopCustRefundSuccessController {
     @Autowired
     private WeShopService weShopService;
 	   @RequestMapping("/custRefundSuccess")
-	    public ModelAndView index(){
+	    public ModelAndView index(@RequestParam(value = "orderid", required = false)String strOrderid){
 	    	ModelAndView mav = new ModelAndView("custRefundSuccess.ftl");
 	        //从数据库获取信息赋值
 	        
 	        mav.addObject("title", "申请退款");
+	        mav.addObject("orderid",strOrderid);
 	//	        mav.addObject("weixin", "1306520198@qq.com"); 
 	        
 	        return mav;

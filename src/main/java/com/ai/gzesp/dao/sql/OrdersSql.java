@@ -366,10 +366,18 @@ public class OrdersSql {
 				+ " 	 WHEN i.pay_state = '4' THEN '冲正失败' "
 				+ " 	 ELSE '未知'"
 				+ " END PAY_STATE ,"
-				+ " j.CITY_NAME||j.DISTRICT_NAME|| h.POST_ADDR ADDRESS" );
+				+ " j.CITY_NAME||j.DISTRICT_NAME|| h.POST_ADDR ADDRESS,"
+				+ "CASE WHEN k.refund_state='00' THEN '未审核'"
+                +"WHEN k.refund_state='01' THEN '审核未通过'"
+                +"WHEN k.refund_state='02' THEN '审核通过未退款'"
+                +"WHEN k.refund_state='03' THEN '审核通过已退款'"
+                +"ELSE '未知'"
+                +"END refund_state");
 		sb.append("	from ORD_D_CUST a, ORD_D_BASE b, ORD_D_PROD c, ORD_D_DEAL d, AUR_D_AUTHINFO e,"
 				+ " GDS_D_INFO f, GDS_D_PHOTO g,"
-				+ " ORD_D_POST h LEFT JOIN ORD_D_PAYLOG i ON   h.ORDER_ID = i.ORDER_ID AND i.REQ_TRADE_TYPE = '0200',"
+				+ " ORD_D_POST h "
+				+ "LEFT JOIN ORD_D_REFUND k on h.order_id=k.order_id "
+				+ "LEFT JOIN ORD_D_PAYLOG i ON   h.ORDER_ID = i.ORDER_ID AND i.REQ_TRADE_TYPE = '0200',"
 				+ "	 (select t1.CITY_NAME, t1.CITY_CODE, t2.DISTRICT_CODE, t2.DISTRICT_NAME" 
 					+ " from SYS_P_WEB_CITY t1, SYS_P_WEB_DISTRICT t2"
 					+ " where t1.ESS_PROVINCE_CODE = '85'" 
@@ -385,6 +393,7 @@ public class OrdersSql {
 				+ " and g.DEFAULT_TAG = '0'"
 				+ "	and a.ORDER_ID = h.ORDER_ID"
 				+ " and h.DISTRICT_CODE = j.DISTRICT_CODE" );
+		System.out.println("客户查询："+sb.toString());
 		
 		Map custOrderDetail =commonDao.queryForMap(sb.toString());
 		

@@ -246,10 +246,15 @@
                         <div><label>${GOODS_NAME}</label></div>
                         <div>
 							<label></label>
-                        	 <#if (ORDER_STATE_CODE=='00') || (ORDER_STATE_CODE=='02')>
+                        	 <#if (ORDER_STATE_CODE=='00')>
 	                            	<div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="${base}/pay/selectPayMode/${ORDER_ID}/${TOPAY_MONEY*1000}">去支付</a></div>
-		                     <#elseif (ORDER_STATE_CODE=='01')>
+		                     <#else>
+		                     	<#if (REFUND_STATE =='未知')><!-- 没有申请过 -->
 	                            	<div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="../custRefund?orderid=${ORDER_ID}">退款</a></div>
+								<#else><!-- 申请过了显示退单状态 -->
+									<div style="text-align: center;float: right;width: 120px;color:#91CA7D">${REFUND_STATE}</div>
+								</#if>		                     
+		                     
 		                     </#if>
                         	
                         </div>
@@ -329,5 +334,22 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
 
+	<script type="text/javascript">
+	//未审核：00
+	//审核未通过：01
+	//审核通过未退款：02
+	//审核通过已退款：03
+	
+	 //var RefundStatus=0; 
+	 //if(!checkRefundOrderId(${ORDER_ID}))
+	 //{
+	//	 RefundStatus=1;
+	 //}
+	 //else
+	 //{
+	//	 RefundStatus=1;
+	 //}
+
+	</script>
 </body>
 </html>

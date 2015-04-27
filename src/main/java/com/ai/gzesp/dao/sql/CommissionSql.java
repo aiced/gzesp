@@ -214,6 +214,7 @@ public class CommissionSql {
 		{
 			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(b.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id");			
 			sb.append(" and a.CREATE_TIME >=to_date('"+strStartDate+"','yyyy-mm-dd') and a.CREATE_TIME < to_date('"+strEndDate+"','yyyy-mm-dd')+1");
+			//sb.append(" and a.create_time >= trunc(sysdate, 'month') and a.create_time < trunc(add_months(sysdate, 1), 'month')");
 		}
 		else //刚一进来，默认是当天的时间 
 		{

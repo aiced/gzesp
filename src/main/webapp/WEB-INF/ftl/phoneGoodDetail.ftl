@@ -76,11 +76,12 @@
 	</div>       
   
     <!-- 分享到弹出框 -->    
+    <#--
     <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content" style="padding:5px;height:60px;">
     	    分享到：
-          <!-- Baidu Button BEGIN -->
+          <!-- Baidu Button BEGIN -- >
           <div class="bdsharebuttonbox">
             <a class="bds_more" href="#" data-cmd="more"></a>
             <a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a>
@@ -89,10 +90,11 @@
             <a title="分享到人人网" class="bds_renren" href="#" data-cmd="renren"></a>
             <a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a></div>
           <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-          <!-- Baidu Button END -->   
+          <!-- Baidu Button END -- >   
         </div>
       </div>
     </div>  
+    -->
 
     <!-- Carousel 广告轮播-->	
     <div id="myCarousel" class="carousel slide" data-ride="carousel">

@@ -160,23 +160,23 @@
       </div>
       <div class="row" style="margin-top:0px;">
     	<div class="col-xs-4" style="padding:2px">
-    	<#-- ${base}/weShop/goodSelect/flow/${user_id} -->
-    	  <a href="#">
+     	<#-- ${base}/weShop/goodSelect/flow/${user_id}-->
+    	  <a href="#" onclick="Tishi();">
     	    <img src="${resRoot}/image/weShop/tsllb4.png" alt="" class="img-rounded img-responsive" />
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	<#-- ${base}/weShop/goodSelect/band/${user_id} -->
-    	  <a href="#">
+    	<#--${base}/weShop/goodSelect/band/${user_id}-->
+    	  <a href="#" onclick="Tishi();">
     	    <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="#">
+    	  <a href="#" onclick="Tishi();">
     	    <img src="${resRoot}/image/weShop/sjpj4.png" alt="" class="img-rounded img-responsive" />
     	  </a>    
     	</div>
-      </div>
+      </div> 
     </div>    
     
     <!--店长推荐 -->
@@ -361,6 +361,12 @@
      	  $(this).carousel('prev');
      	});
        
+     	
+     	function Tishi()
+     	{
+     		alert("敬请期待！");
+     	}
+
     </script>
   </body>
 </html>

@@ -15,6 +15,8 @@
 					<li role="presentation" class="divider"></li>
 					<li><a href="#">冻结</a></li>
 					 -->
+					<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
+					<li role="presentation" class="divider"></li>
 					<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
 					<li role="presentation" class="divider"></li>
 					<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
@@ -57,6 +59,8 @@
 					<li role="presentation" class="divider"></li>
 					<li><a href="#">冻结</a></li>
 					 -->
+					<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
+					<li role="presentation" class="divider"></li>
 					<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
 					<li role="presentation" class="divider"></li>
 					<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>

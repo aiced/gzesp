@@ -103,6 +103,10 @@
     	{
     		iStatusflag='04';
     	}	
+    	else if($(obj).text()=="全部")
+    	{
+    		iStatusflag='05';
+    	}
     	//二次查询数据，因为有iStatusflag参数的存在
     	selectData();
     	
@@ -213,6 +217,21 @@
 	  	 //检验输入数值是否正确
         function checkData()
         {
+	  		 
+        	if(!$("#beginTime").val())
+			{
+        		alert("请输入起始日期");
+        		return false;
+			}
+	  		 
+	  		if(!$("#endTime").val())
+	  		{
+	  			alert("请输入截至日期");
+	  			return false;
+	  		}
+	  			
+	  		 
+	  		 
         	if($("#beginTime").val())
 			{
         		if(!$("#endTime").val())
@@ -467,6 +486,8 @@
 										<li role="presentation" class="divider"></li>
 										<li><a href="#">冻结</a></li>
 										 -->
+										<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
+										<li role="presentation" class="divider"></li>
 										<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
 										<li role="presentation" class="divider"></li>
 										<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
@@ -508,6 +529,8 @@
 									<li role="presentation" class="divider"></li>
 									<li><a href="#">冻结</a></li>
 									 -->
+									<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
+									<li role="presentation" class="divider"></li>
 									<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
 									<li role="presentation" class="divider"></li>
 									<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>

@@ -315,7 +315,7 @@
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
                 <div class="bottom_1_div2">
-                    <label>实付款：</label><span style="color: red">${RECV_FEE}</span>
+                    <label>实付款：</label><span style="color: red">￥${RECV_FEE}</span>
                 </div>
                 <div class="bottom_1_div3">
                    	 下单时间：${ORDER_TIME}

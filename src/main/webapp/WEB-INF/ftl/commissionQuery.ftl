@@ -129,7 +129,7 @@
 	    }); 
 	    $('#totalRowCount').append('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
 	    $('#totalRow').append('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td>');
-	    $('#totalRow').append('<td><h5><label>'+totalSale+'(¥)</label></h5></td>');
+	    $('#totalRow').append('<td><h5><label>'+totalSale.toFixed(2)+'(¥)</label></h5></td>');
 	    $('#totalRow').append('<td><h5><label></label></h5></td>');
     }
     

@@ -1,7 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
 
-  <body>
     <!-- nav bar -->
      <div id="top">
        	<div id="selectContractBackBtn"><div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div></div>
@@ -9,7 +6,7 @@
        	<div id="top_right"></div>
      </div>
     
-    <div class="container-fluid" style="background-color:#e5e5e5;margin-top:1px;padding:3px">
+    <div class="container-fluid" style="background-color:#e5e5e5;margin-top:1px;">
 	    <div class="row" >
 		    <div class="col-xs-6" style="border-right:solid 1px #f4f4f4;" >
  		     	<button style="padding:2px;margin-top:3px;width:100%;height:36px;display: block;text-align:center;background-color:#e5e5e5;" class="btn dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true"> 
@@ -77,5 +74,3 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
      <script src="${resRoot}/js/selectContract.js?v=${resVer}"></script>
-  </body>
-</html>

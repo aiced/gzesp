@@ -212,6 +212,15 @@ function getDistrictListByCityCode(cityCode) {
 		});	
 }
 
+function isPhoneNum(strPhoneNum)
+{
+	if(strPhoneNum && /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/.test(strPhoneNum)){
+	    return true;//是手机号
+	} else{
+	    return false; //不是手机号
+	}
+}
+
 //wenhui_newReceiveAddress_数值校验
 function addres_checkData()
 {
@@ -224,6 +233,12 @@ function addres_checkData()
 	{
 		alert("请输入手机号码");
 		return false;
+	} else {
+		var flag = isPhoneNum($("#txtphone").val());
+		if(!flag) {
+			alert("手机号码格式错误");
+			return false;
+		}
 	}
 	if(!$("#txtaddress").val())
 	{

@@ -34,8 +34,8 @@
 
   <body>
     <!-- 手机浏览器分享会用到的图片 -->
-    <div style="height:1px;overflow:hidden;">
-    		  <img src='http://res.gz10010.xyz/uploader/share_logo.png' alt="" class="img-responsive"/>
+    <div style="display: none;">
+    	<img src='http://res.gz10010.xyz/uploader/share_logo.png' alt="" class="img-responsive"/>
 	</div> 
   
     <!-- head bar -->

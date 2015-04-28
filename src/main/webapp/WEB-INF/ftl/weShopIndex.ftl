@@ -134,8 +134,10 @@
             <li style="font-size:15px;">微信：${developer.WEIXIN_ID}</li>
           </ul>  
     	</div>
+    	
     	<div class="col-xs-3" style="padding:0px" id="qrcodeDiv">
-    	</div>    		    		
+    	</div>
+    	   		    		
       </div>	            
     </div>
     
@@ -332,7 +334,7 @@
         </#list>                   	            
       </#if>           	            
     </div>
-      
+   
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>

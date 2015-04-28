@@ -44,12 +44,12 @@ public class UnionPayUtil {
         xmlMap.put(UnionPayAttrs.timeStamp, DateUtils.getCurentTime()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
         xmlMap.put(UnionPayAttrs.sysTradeNo, param.getBind_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
         xmlMap.put(UnionPayAttrs.accNo, param.getBank_card_no());  //银行卡号
-        xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn());
+        xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn() == null ? "" : param.getBank_card_cvn()); //储蓄卡没有cvn，null在后面getbyte方法会报错
         xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
         xmlMap.put(UnionPayAttrs.Nbr, param.getPhone_no()); //手机号
         xmlMap.put(UnionPayAttrs.Name, param.getFull_name()); //姓名
         xmlMap.put(UnionPayAttrs.certificateCode, param.getId_card_no());  //身份证号
-        xmlMap.put(UnionPayAttrs.expireDate, param.getBank_card_expire_date()); //有效期
+        xmlMap.put(UnionPayAttrs.expireDate, param.getBank_card_expire_date() == null ? "" : param.getBank_card_expire_date()); //储蓄卡没有有效期
         xmlMap.put(UnionPayAttrs.cardType, param.getCard_type()); //卡类型（信用卡:01或借记卡:02）
 
         //return genByteReq(xmlMap);

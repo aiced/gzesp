@@ -163,9 +163,9 @@ public class OrderService {
     		return "";
     	}
     	
-    	String[] rows = resAttrStr.split("\\^");
+    	String[] rows = resAttrStr.split("\\^", -1);
     	for(String row : rows) {
-    		String[] col = row.split("\\|");
+    		String[] col = row.split("\\|", -1);
     		if(col.length < 3) {
     			continue;
     		}
@@ -368,9 +368,9 @@ public class OrderService {
     		return;
     	}
     	
-    	String[] rows = resAttrStr.split("\\^");
+    	String[] rows = resAttrStr.split("\\^", -1);
     	for(String row : rows) {
-    		String[] col = row.split("\\|");
+    		String[] col = row.split("\\|", -1);
     		if(col.length < 3) {
     			continue;
     		}

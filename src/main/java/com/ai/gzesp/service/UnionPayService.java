@@ -315,9 +315,10 @@ public class UnionPayService {
      * @since [产品/模块版本](可选)
      */
     public int updateBindlogNew(Map<String, String> respMap) {
+    	String sign_code = MD5Util.convertMD5(respMap.get(UnionPayAttrs.signCode)); //表里存放md5加密的签约号
         return unionPayDao.updateBindlogNew(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
                 respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
-                respMap.get(UnionPayAttrs.sysTradeNo), respMap.get(UnionPayAttrs.signCode));
+                respMap.get(UnionPayAttrs.sysTradeNo), sign_code);
     } 
     
     /**

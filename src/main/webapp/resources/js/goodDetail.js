@@ -120,7 +120,7 @@ function phoneGotoOrderMainOld(){
 //上网卡 商品详情页面 立即购买 按钮跳转到订单填写页面
 function cardGotoOrderMain(){
     var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
-   
+    attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
     if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
 	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();

@@ -212,7 +212,14 @@
                   </div>
               </li>              
             </#if>
-
+            <!-- 选择号码  虽然不用选号码但是后台生产的时候需要号码补录等 所以下订单的时候还是需要号码属性 值插空就行 -->
+              <#if attrs.NUMBERS??>
+                <#list attrs.NUMBERS as item>
+                  <#if item_index==0>
+                      <span style="display:none;" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}||">请选择号码</span>
+                  </#if>
+                </#list>
+              </#if>
         </ul>
     </div>
 

@@ -131,16 +131,24 @@ public class OrdersSql {
 			+"end" 
 			+" DELIVER_TYPE_CODE,"
 			+"ORD_D_BASE.ORDER_STATE,"//订单状态
-			+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
+			+"GDS_D_PHOTO.PHOTO_LINKS,"//先注释掉，后面需要放开注释
+			+"case when ORD_D_RES.RES_ATTR_VAL is null then"
+			+" '无号码'"
+			+" else "
+			+" ORD_D_RES.RES_ATTR_VAL"
+			+" end "
+			+ " RES_ATTR_VAL"
 			);
-	sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
+	sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO,ORD_D_RES");
 	sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
 			+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
 			+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
+			+" and ORD_D_PROD.Order_Id=ORD_D_RES.Order_Id"
 			+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id" //先注释掉，后面需要放开注释
 			+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
 			+" and GDS_D_PHOTO.DEFAULT_TAG=0"
 			+" and ORD_D_DEAL.ORDER_ID='"+strOrderID+"'"
+			+" and ORD_D_RES.RES_ATTR_CODE='NUMBERS'"
 			+" order by ORD_D_BASE.Order_Time DESC"
 			);
 	sb.append("),");
@@ -158,7 +166,8 @@ public class OrdersSql {
 			+ "T1.DELIVER_TYPE_CODE,"
 			+ "T1.ORDER_STATE,"
 			+"T1.PHOTO_LINKS,"
-			+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
+			+"T2.PAY_MODE,T2.REQ_TRADE_TYPE,"
+			+ "T1.RES_ATTR_VAL "
 			+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
 			);	
 	

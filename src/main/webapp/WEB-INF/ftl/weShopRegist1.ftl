@@ -113,7 +113,7 @@
 			  {
 			  	//这里开始做验证码操作
 			  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode");
-			  	bRet1=true;//这个地方要删掉，切记切记！！！！！
+			  	//bRet1=true;//这个地方要删掉，切记切记！！！！！
 			  	if(bRet1)
 			  	{
 			  		$("#txtyanzhengma").attr("disabled",false); 
@@ -168,13 +168,13 @@
 		  		//alert("验证码不能为空");
 		  		return;
 		  	}
-		  	//else if($("#txtyanzhengma").val()!=code)
-		  	//{
-		  	//	alert("输入的验证码与短信中的验证码不匹配");
-		  	//	$("#div_yanzhengma").addClass("has-error");
-		  	//	bRet3=false;
-		  	//	return;
-		  	//}
+		  	else if($("#txtyanzhengma").val()!=code)
+		  	{
+		  		alert("输入的验证码与短信中的验证码不匹配");
+		  		$("#div_yanzhengma").addClass("has-error");
+		  		bRet3=false;
+		  		return;
+		  	}
 		  	else if(getNowDate() - $("#hide_code_date").val()>1800)
 		  	{
 		  		$("#div_yanzhengma").addClass("has-error");

@@ -29,7 +29,6 @@ import com.ai.gzesp.dao.beans.TdSysPCITY;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdSysPCITYDao;
-import com.ai.gzesp.sgip.SgipService;
 import com.ai.gzesp.utils.SmsUtils;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
@@ -45,8 +44,8 @@ public class CommonController {
     @Resource
     TdOrdDREFUNDDao tdOrdDREFUNDDao;
     
-	@Resource 
-	SgipService sgipService;
+	//@Resource 
+	//SgipService sgipService;
 	 protected Logger logger = LoggerFactory.getLogger(getClass());
 	 
 	 @Resource

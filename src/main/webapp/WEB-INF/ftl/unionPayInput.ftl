@@ -532,7 +532,19 @@
 		      success: function(data){
 			    $('#paying').modal('toggle'); //关闭gif
 			    //alert(data.detail);
-			    $('#payResultDetail').html(data.status + ':' + data.detail);
+			    //修改支付结果 失败的时候显示 选择其他方式支付 按钮，成功的时候显示 查询订单 和 再去逛逛 2个按钮
+			    if(data.status == '00'){
+			      $('.modal-title').html('支付成功');
+			      $('#btn_other').hide();
+			      $('#btn_qry').show();
+			      $('#btn_home').show();
+			    }else{
+			      $('.modal-title').html('支付失败');
+			      $('#btn_other').show();
+			      $('#btn_qry').hide();
+			      $('#btn_home').hide();
+			    }
+			    $('#payResultDetail').html(data.status + ':' + data.detail); //修改支付状态和支付结果描述
 			    //弹出支付结果框
 			    $('#payResult').modal({
                   keyboard: false,
@@ -693,11 +705,13 @@
             <h4 class="modal-title">支付结果</h4>
           </div>
           <div class="modal-body">
+            <p id="payOrderInfo">订单编号：${order_id}，金额：${fee?number/1000}元</p>
             <p id="payResultDetail" ></p>
           </div>
           <div class="modal-footer">
-            <a class="btn btn-warning" href="${base}/customer/custOrderQuery" role="button">订单查询</a>
-            <a class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">再去逛逛</a>
+            <a id="btn_other" class="btn btn-warning" href="${base}/pay/selectPayMode/${order_id}/${fee}" role="button">选择其他支付方式</a>
+            <a id="btn_qry" class="btn btn-warning" href="${base}/customer/custOrderQuery" role="button">订单查询</a>
+            <a id="btn_home" class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">再去逛逛</a>
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->

@@ -86,6 +86,6 @@ public interface UnionPayDao {
     
     public Map<Object, Object> queryUserIdByOrderId(@Param("order_id") String order_id);
     
-    public Map<String, String> queryBindSuccessRow(@Param("sys_trade_no") String sys_trade_no);
+    public Map<String, String> queryBindResultRow(@Param("sys_trade_no") String sys_trade_no);
 
 }

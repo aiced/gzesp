@@ -81,7 +81,8 @@ function planGotoOrderMain(){
     	return false;
     }
     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
-    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+    if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
 	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
@@ -96,7 +97,8 @@ function phoneGotoOrderMainNew(){
 		return false;
 	}
     var attr_val = getAttrVal();
-    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+    if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
     $('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc);     
@@ -109,7 +111,8 @@ function phoneGotoOrderMainNew(){
 function phoneGotoOrderMainOld(){
 	var attr_val = getAttrVal();
 	$('#attr_val').val(attr_val); 
-	if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
+	if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+	if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
 	$('#form1').attr('action', $('#form1').attr('url2')); //替换action路径，新号和老用户跳转路径不一样
@@ -121,7 +124,8 @@ function phoneGotoOrderMainOld(){
 function cardGotoOrderMain(){
     var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
-    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+    if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
 	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	

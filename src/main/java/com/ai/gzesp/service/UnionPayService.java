@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.UnionPayDao;
 import com.ai.gzesp.dto.UnionPayParam;
+import com.ai.gzesp.unionpay.ClientHandler;
 import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayAttrs;
 import com.ai.gzesp.unionpay.UnionPayCons;
@@ -31,6 +32,9 @@ public class UnionPayService {
     
     @Autowired
     private UnionPayDao unionPayDao;
+    
+    @Autowired
+    private ClientHandler clientHandler;
     
     
 /*    public Map<Object, Object> getSignCode(String bank_card_no, String bank_card_expire_date, String bank_card_cvn,
@@ -122,7 +126,8 @@ public class UnionPayService {
             
             //调用mina客户端发送报文
             if(xmlSend != null){
-            	isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }
             
             if(!isSuccess){
@@ -224,7 +229,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){
@@ -433,7 +439,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){

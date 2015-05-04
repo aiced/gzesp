@@ -23,9 +23,9 @@ public class ClientHandler extends IoHandlerAdapter {
     
     private static Logger log = Logger.getLogger(ClientHandler.class); 
     
-    private static NioSocketConnector connector;
-    private static ConnectFuture cf;
-    public static boolean stopHeartBeat = false;
+    private NioSocketConnector connector;
+    private ConnectFuture cf;
+    private HeartBeatThread heartBeatThread; //当前的心跳线程
     
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
@@ -38,9 +38,10 @@ public class ClientHandler extends IoHandlerAdapter {
     public void sessionClosed(IoSession session) throws Exception {
         log.debug("【银联支付：客户端链接关闭 sessionId： " + session.getId() + "】");
         
-        stopHeartBeat();
-        initConnector();
-        startHeartBeat(cf);
+        stopHeartBeat(heartBeatThread);  //停止原有socket链接的心跳线程
+        disconnect(); //断开原有socket连接，并释放资源
+        initConnector(); //esp客户端如果断链了要重连
+        startHeartBeat(); //开启新socket链接的心跳线程
       super.sessionClosed(session);
     }
 
@@ -68,13 +69,20 @@ public class ClientHandler extends IoHandlerAdapter {
       super.sessionOpened(session);
     }  
     
+    /**
+     * 初始化，在applicationContext-mina.xml 里创建客户端clientHandler的bean后调用
+     * 先初始化连接，然后启动心跳线程
+     */
     public void init()
     {
       initConnector();
-      startHeartBeat(cf);
+      startHeartBeat();
     }
 
-    private static void initConnector()
+    /**
+     * 初始化socket连接
+     */
+    private void initConnector()
     {
       connector = new NioSocketConnector();
       connector.getFilterChain().addLast("logger", new LoggingFilter());
@@ -85,27 +93,46 @@ public class ClientHandler extends IoHandlerAdapter {
       cf = connector.connect(new InetSocketAddress(UnionPayCons.SERVER_HOST, UnionPayCons.SERVER_PORT));
 
       cf.awaitUninterruptibly();
+      log.debug("【银联支付：esp创建连接成功】");
     }
 
-    private void startHeartBeat(ConnectFuture cf)
+    /**
+     * 开启心跳线程
+     */
+    private void startHeartBeat()
     {
-      stopHeartBeat = false;
-      HeartBeatThread heartThread = new HeartBeatThread(cf);
+      //stopHeartBeat = false;
+      //HeartBeatThread heartThread = new HeartBeatThread(cf);
+      HeartBeatThread heartThread = new HeartBeatThread(this);
+      this.heartBeatThread = heartThread;
       Thread t = new Thread(heartThread);
       t.start();
+      log.debug("【银联支付：esp开启新socket链接的心跳线程】");
     }
 
-    private void stopHeartBeat() {
-      stopHeartBeat = true;
+    /**
+     * 停止原有socket连接的心跳线程
+     * @param heartBeatThread
+     */
+    private void stopHeartBeat(HeartBeatThread heartBeatThread) {
+    	heartBeatThread.stopHeartBeat(); 
+    	log.debug("【银联支付：esp停止原有socket链接的心跳线程】");
     }
 
-    private static void disconnect() {
+    /**
+     * 断开socket连接，并释放资源
+     */
+    private void disconnect() {
       cf.getSession().close(true);
       cf.getSession().getCloseFuture().awaitUninterruptibly();
       connector.dispose();
+      log.debug("【银联支付：esp断开原有连接】");
     }
 
-    private static void checkConnector()
+    /**
+     * 检查socket连接是否正常，如果断掉了需要重连
+     */
+    private void checkConnector()
     {
       if (!connector.isActive()) {
         log.debug("【银联支付：connector.isActive()=false,断开原有连接重新创建连接】");
@@ -116,15 +143,31 @@ public class ClientHandler extends IoHandlerAdapter {
       }
     }
 
-    public static ConnectFuture getConnectFuture()
+    public ConnectFuture getConnectFuture()
     {
       checkConnector();
       return cf;
     }
 
-    public static void sendMsg(byte[] xmlSend) {
+    /**
+     * 发送byte[] 报文至银联服务端
+     * @param xmlSend
+     * @return
+     */
+    public boolean sendMsg(byte[] xmlSend) {
       checkConnector();
+      boolean isSuccess = true;
+      try {
       cf.getSession().write(xmlSend);
+      return isSuccess;
+      } catch (Exception e) {
+          log.debug("【银联支付：生成最终请求报文后发送异常！！！】");
+          isSuccess = false;
+          e.printStackTrace();
+          return isSuccess;
+      }
     }
+    
+    
     
 }

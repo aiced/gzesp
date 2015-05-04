@@ -71,8 +71,9 @@ public class ServerHandler extends IoHandlerAdapter {
         //String msgStr = new String(msg);
         log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "， message：" + new String(msg) + "】");
         //super.messageReceived(session, message);
+        //先从返回数据包里解密获取xml报文
+        String xmlResp = UnionPayUtil.getXmlFromMsg(msg);
         //根据返回的交易类型更新数据库记录状态
-        String xmlResp = UnionPayUtil.recvMsg(msg);
         
         //返回响应报文给请求端 ,此处只有心跳返回，其实心跳报文银联也不需要我返回
 /*        if(rspHeart != null){
@@ -81,12 +82,12 @@ public class ServerHandler extends IoHandlerAdapter {
         }*/
         
         //根据respMap里交易类型进行业务处理
-/*        if (xmlResp != null) {
+        if (xmlResp != null) {
             Map<String, String> respMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
             //IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap, unionPayService);
             IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
             respHanler.dealResp(respMap);
-        }*/
+        }
     }
 
     public UnionPayService getUnionPayService() {

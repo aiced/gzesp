@@ -314,7 +314,7 @@ public class OrdersSql {
 				+ " ELSE '未知'"
 				+ " END ORDER_STATE," 
 				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
-				+ " e.USER_IMG, e.STORE_NAME,  g.PHOTO_LINKS" );
+				+ " e.USER_IMG, e.STORE_NAME,  g.PHOTO_LINKS,b.Order_Time" );
 		sb.append("	from ORD_D_CUST a, ORD_D_BASE b, ORD_D_PROD c, ORD_D_DEAL d, AUR_D_AUTHINFO e,"
 				+ " GDS_D_INFO f, GDS_D_PHOTO g");
 		sb.append(" where "
@@ -331,7 +331,7 @@ public class OrdersSql {
 			sb.append(" and (a.ORDER_ID like '%"+keyword+"%'"
 					+ " 	or c.GOODS_NAME like '%"+keyword+"%')" );
 		}
-		
+		sb.append(" order by b.Order_Time DESC");
 		List custMyOrderList =commonDao.queryForList(sb.toString());
 
 		return custMyOrderList;

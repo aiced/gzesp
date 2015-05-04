@@ -250,13 +250,13 @@
 		<div class="cellTopLine"></div>
 	</div>
 	<!--店铺皮肤   -->
-	<div class="cellDiv">
+	<!-- <div class="cellDiv">
 		<h5><div class="cellRightLable">店铺皮肤</div></h5>
 		<img class="arrow"
 			src="${resRoot}/image/goodsManager/goodSelectArrow.png"> <img
 			class="skin" src="${resRoot}/image/goodsManager/skin.png">
 		<div class="cellTopLine"></div>
-	</div>
+	</div> -->
 	<br/>
 	<div style="margin: 20px;">
 		<button class="btn btn-warning btn-block" type="button" onclick="doneClick(this);"> 确定</button>

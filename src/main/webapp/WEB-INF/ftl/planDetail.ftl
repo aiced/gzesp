@@ -186,8 +186,8 @@
                 <#list attrs.NUMBERS as item>
                   <#if item_index==0>
                     <a href="#subpage_3" onclick="showSubpage('subpage_3')">
-                      <b class="list-arr"></b>
-                      <span class="detail-info" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|">请选择号码</span>
+                      <b class="list-arr" style="margin-top: 12px;"></b>
+                      <span class="detail-info" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|" style="font-size: 14px;color:#ec7218;margin-top: 5px;">请选择号码</span>
                       <label color="#F70909">选择号码</label>
                     </a>
                   </#if>

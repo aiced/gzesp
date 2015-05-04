@@ -80,10 +80,22 @@
 	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 		  <td>
 	      	<#if (item.SUM_CMS_MONEY== '')>
-	      		${(item.CMS_PRE_FEE/1000)?string("#.##")}
-	      	<#else>
-	      		${(item.SUM_CMS_MONEY/1000)?string("#.##")}
-	      	</#if>      
+		      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
+		      			${(item.CMS_PRE_FEE/1000)?string("#.##")} <!-- 预期 -->
+		      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
+		      			${(item.CMS_PRE_FEE/1000)?string("#.##")}<label style="color: red;">(奖)</label> <!-- 预期 -->
+		      		<#else><!-- 未知 -->
+		      			未知
+		      		</#if>
+		      	<#else>
+		      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
+		      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 -->
+		      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
+		      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 --><label style="color: red;">(奖)</label> <!-- 预期 -->
+		      		<#else><!-- 未知 -->
+		      			未知
+		      		</#if>
+		      	</#if>      
 		  </td><!-- 预期-->
 	     
 	      <td>

@@ -1,5 +1,5 @@
 <#if (commList?size==0)>
-<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
+<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
     <tr>
         <th><div class="th_title">商品名称</div></th>
         <th><div class="th_title">订单详情</div></th>
@@ -43,13 +43,13 @@
 	
 	
 <#else>
-<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
+<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
     <tr>
         <th><div class="th_title">商品名称</div></th>
         <th><div class="th_title">订单详情</div></th>
         <th><div class="th_title">收益(¥)</div></th>
         <th>
-			<div class="dropdown" style="padding:0px;">
+			<div class="dropdown th_title" style="padding:0px;">
 				<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
 				    	状态
 				    <span class="caret"></span>

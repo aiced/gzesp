@@ -193,6 +193,14 @@
                   </#if>
                 </#list>
               </#if>
+            <!-- 商品的预存款，应该只有4g商品才会插这个属性，用于按预存款算佣金-->
+              <#if attrs.SAVEMEY??>
+                <#list attrs.SAVEMEY as item>
+                  <#if item_index==0>
+                    <span id="save_money" style="display:none" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_CODE}</span>
+                  </#if>
+                </#list>
+              </#if>               
              <!-- 优惠活动 -->             
             <#if attrs.PACKRES??>
               <li id="activityType" class="num-info-li" >
@@ -212,7 +220,14 @@
                   </div>
               </li>              
             </#if>
-
+            <!-- 选择号码  虽然不用选号码但是后台生产的时候需要号码补录等 所以下订单的时候还是需要号码属性 值插空就行 -->
+              <#if attrs.NUMBERS??>
+                <#list attrs.NUMBERS as item>
+                  <#if item_index==0>
+                      <span style="display:none;" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}||">请选择号码</span>
+                  </#if>
+                </#list>
+              </#if>
         </ul>
     </div>
 

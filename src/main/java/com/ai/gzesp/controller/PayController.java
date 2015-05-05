@@ -237,7 +237,7 @@ public class PayController {
         return result;
     }    
     
-    @RequestMapping("/unionPay/testResp/{sys_trade_no}/{resp_trade_type}")
+/*    @RequestMapping("/unionPay/testResp/{sys_trade_no}/{resp_trade_type}")
     @ResponseBody
     public Map<String, String> test(@PathVariable("sys_trade_no") String sys_trade_no, @PathVariable("resp_trade_type") String resp_trade_type){
         Map<String, String> result = new HashMap<String, String>();
@@ -303,10 +303,10 @@ public class PayController {
         try {
             //3DES加密 报文
             byte[] xmlByte = DESUtil.encryptMode(xmlStr2.getBytes(UnionPayCons.charCode));
-            /*        if(xmlByte == null)
+                    if(xmlByte == null)
         {
             log.error("【加密XML失败,xmlStr = " + xmlStr2);
-        }*/
+        }
             
             //4位报文体字节长度+渠道号（16位）+加密后的xml报文体。如：0231+渠道号（16位）+加密后的xml报文体（215字节）
             //转化为4位长度字节数据以供另一端读取,长度不足4字节要补0
@@ -325,7 +325,7 @@ public class PayController {
         return null;
     } 
         
-    }
+    }*/
     
     @RequestMapping("/unionPay/bindCancel/{bank_card_no}")
     @ResponseBody

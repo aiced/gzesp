@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.UnionPayDao;
 import com.ai.gzesp.dto.UnionPayParam;
+import com.ai.gzesp.unionpay.ClientHandler;
 import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayAttrs;
 import com.ai.gzesp.unionpay.UnionPayCons;
@@ -31,6 +32,9 @@ public class UnionPayService {
     
     @Autowired
     private UnionPayDao unionPayDao;
+    
+    @Autowired
+    private ClientHandler clientHandler;
     
     
 /*    public Map<Object, Object> getSignCode(String bank_card_no, String bank_card_expire_date, String bank_card_cvn,
@@ -122,7 +126,8 @@ public class UnionPayService {
             
             //调用mina客户端发送报文
             if(xmlSend != null){
-            	isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }
             
             if(!isSuccess){
@@ -224,7 +229,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){
@@ -315,9 +321,13 @@ public class UnionPayService {
      * @since [产品/模块版本](可选)
      */
     public int updateBindlogNew(Map<String, String> respMap) {
+    	String sign_code = null; //表里存放md5加密的签约号,如果返回成功需要更新，返回失败更新成null
+    	if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
+    		sign_code = MD5Util.convertMD5(respMap.get(UnionPayAttrs.signCode)); //表里存放md5加密的签约号
+        }
         return unionPayDao.updateBindlogNew(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
                 respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
-                respMap.get(UnionPayAttrs.sysTradeNo), respMap.get(UnionPayAttrs.signCode));
+                respMap.get(UnionPayAttrs.sysTradeNo), sign_code);
     } 
     
     /**
@@ -429,7 +439,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){
@@ -573,7 +584,7 @@ public class UnionPayService {
             while(true){
                 if(timeout >= UnionPayCons.WAIT_TIMEOUT){
                     result.put("status", "E03");
-                    result.put("detail", "支付失败！发送绑定接口报文后未接收到银联响应或应答码错误");
+                    result.put("detail", "支付失败！发送绑定接口报文后未接收到银联响应");
                     break;
                 }
                 try {
@@ -584,9 +595,16 @@ public class UnionPayService {
                 } //每次轮询等待1秒钟
                 //Map<String, String> row = unionPayDao.querySignCode(param.getBank_card_no()); //查询签约表里是否已经有银联返回的结果了
                 //查询绑定接口日志表里是否已经有银联返回的结果了
-                Map<String, String> bindSuccessRow = unionPayDao.queryBindSuccessRow(param.getBind_sys_trade_no()); 
-                if(bindSuccessRow != null){
-                    param.setSign_code(MD5Util.convertMD5(bindSuccessRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
+                Map<String, String> bindResultRow = unionPayDao.queryBindResultRow(param.getBind_sys_trade_no()); 
+                if(bindResultRow != null){
+                	//如果绑定返回码是00成功,如果失败则返回错误码和错误提示
+                	if(UnionPayCons.RESULT_CODE_SUCCESS.equals(bindResultRow.get("RESULT_CODE"))){
+                		param.setSign_code(MD5Util.convertMD5(bindResultRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
+                	}
+                	else{
+                		result.put("status", bindResultRow.get("RESULT_CODE"));
+                        result.put("detail", bindResultRow.get("RESULT_DESC"));
+                	}
                     break;
                 }
             }

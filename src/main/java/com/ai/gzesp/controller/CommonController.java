@@ -29,7 +29,7 @@ import com.ai.gzesp.dao.beans.TdSysPCITY;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdSysPCITYDao;
-import com.ai.gzesp.sgip.SgipService;
+import com.ai.gzesp.utils.SmsUtils;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.PathUtil;
@@ -44,8 +44,8 @@ public class CommonController {
     @Resource
     TdOrdDREFUNDDao tdOrdDREFUNDDao;
     
-	@Resource 
-	SgipService sgipService;
+	//@Resource 
+	//SgipService sgipService;
 	 protected Logger logger = LoggerFactory.getLogger(getClass());
 	 
 	 @Resource
@@ -205,9 +205,30 @@ public class CommonController {
     public Boolean sendYanzhenma(@RequestBody String strParam)
     {
     	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
-    	String strphone = "86"+paramsMap.get("phone");
+    	String strphone = paramsMap.get("phone");
     	String strcode=paramsMap.get("code");
-    	return sgipService.smsSend(new String[]{strphone},"微店注册验证码："+strcode+"，祝您开店顺利！【贵州联通】。");
+    	
+    	//新版
+    	//String strMobile,String strTempid,String strContent
+    	 String strRet=SmsUtils.doSendMessage(strphone,"MB-2013102300","@1@="+strcode);//
+    	 System.out.println("短信返回值："+strRet);
+    	 if (strRet != null && strRet.split("#").length==3)
+    	 {
+    		 return true; //发送成功 值:0#1#1
+    	 }
+    	 else {
+        	 return false;
+		 }
+    	 
+
+    	//旧版
+//    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+//    	String strphone = "86"+paramsMap.get("phone");
+//    	String strcode=paramsMap.get("code");
+//    	return sgipService.smsSend(new String[]{strphone},"微店注册验证码："+strcode+"，祝您开店顺利！【贵州联通】。");
+    	
+    
+    	
     }
 	//edit_by_wenh_2015_4_19
 	@RequestMapping("/common/checkRefundOrderId")

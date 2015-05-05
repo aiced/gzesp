@@ -172,14 +172,22 @@
                   </#if>
                 </#list>
               </#if>
+            <!-- 商品的预存款，应该只有4g商品才会插这个属性，用于按预存款算佣金-->
+              <#if attrs.SAVEMEY??>
+                <#list attrs.SAVEMEY as item>
+                  <#if item_index==0>
+                    <span id="save_money" style="display:none" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_CODE}</span>
+                  </#if>
+                </#list>
+              </#if>              
             <!-- 选择号码 -->
             <li class="num-info-li city-li">
               <#if attrs.NUMBERS??>
                 <#list attrs.NUMBERS as item>
                   <#if item_index==0>
                     <a href="#subpage_3" onclick="showSubpage('subpage_3')">
-                      <b class="list-arr"></b>
-                      <span class="detail-info" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|">请选择号码</span>
+                      <b class="list-arr" style="margin-top: 12px;"></b>
+                      <span class="detail-info" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|" style="font-size: 14px;color:#ec7218;margin-top: 5px;">请选择号码</span>
                       <label color="#F70909">选择号码</label>
                     </a>
                   </#if>

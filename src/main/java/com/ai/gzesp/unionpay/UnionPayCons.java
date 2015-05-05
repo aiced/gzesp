@@ -68,9 +68,9 @@ public class UnionPayCons {
     
     
     /**
-     * 心跳发送间隔时间，这边设置2分钟
+     * 心跳发送间隔时间，这边设置1分钟，银联是3分钟收不到心跳就主动断开连接
      */
-    public static int HEART_INTERVAL = 2;
+    public static int HEART_INTERVAL = 60*1000;
     
     /**
      * 心跳包请求后 等待反馈超时时间
@@ -93,17 +93,17 @@ public class UnionPayCons {
     public static String RESULT_CODE_SUCCESS = "00";
     
     /**
-     * 银联绑定接口请求发出后，轮询等待结果的间隔时间 毫秒，银联绑定接口返回很快，所以1秒比较合适
+     * 银联绑定接口请求发出后，轮询等待结果的间隔时间 毫秒，银联绑定接口返回1-2秒，所以2秒比较合适
      */
-    public static int SLEEP_INTERVAL_BIND = 1000;
+    public static int SLEEP_INTERVAL_BIND = 2000;
     
     /**
-     * 银联支付接口请求发出后，轮询等待结果的间隔时间 毫秒，银联支付接口要12秒左右才能返回结果，4秒一循环比较合适
+     * 银联支付接口请求发出后，轮询等待结果的间隔时间 毫秒，银联支付接口要2秒左右才能返回结果，2秒一循环比较合适
      */
-    public static int SLEEP_INTERVAL_PAY = 4*1000;
+    public static int SLEEP_INTERVAL_PAY = 2000;
     
     /**
-     * 银联接口请求发出后，轮询等待结果的超时时间 毫秒
+     * 银联接口请求发出后，轮询等待结果的超时时间 毫秒，银联约定40秒超时
      */
     public static int WAIT_TIMEOUT = 40*1000;
 

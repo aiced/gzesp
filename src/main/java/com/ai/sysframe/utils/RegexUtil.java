@@ -41,6 +41,23 @@ public class RegexUtil {
     }
     
     /**
+     *  reward rule
+     * @param elementString
+     * @return
+     */
+    public static  String[] getRewardRule(String elementString) {
+    	String[] result = null;
+    	Pattern p = Pattern.compile("=CON\\(ACT&([\\S]*)\\)[\\S]*=FINAL\\(([0-9]*)\\)");
+    	Matcher m = p.matcher(elementString);
+    	if (m.find()) {
+    		result = new String[2];
+        	result[0] = m.group(1);
+        	result[1] = m.group(2);
+    	}
+    	return result;
+    }
+    
+    /**
      *  money
      * @param elementString
      * @return

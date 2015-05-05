@@ -323,6 +323,8 @@ public class CommissionSql {
 				+ " FROM cms_p_goods_rule a, cms_p_rule b"
 				+ " WHERE a.GOODS_ID = '" + goodsId + "'"
 				+ " AND a.RULE_ID = b.ID"
+				+ " AND b.STATUS = '1'"
+				+ " AND b.CMS_TYPE = '0'"
 				);
 		List<Map<String, Object>> ruleList = commonDao.queryForList(sb.toString());
 		if(ruleList.size() > 0) {
@@ -330,6 +332,43 @@ public class CommissionSql {
 			return String.valueOf(info.get("COMMISSION_RULE"));
 		}
 		return "";
+	}
+	
+	public String getRewardRuleByGoodsId(String goodsId, String rewardKeyWord) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(" SELECT distinct "
+				+ " a.GOODS_ID, b.COMMISSION_RULE "
+				+ " FROM cms_p_goods_rule a, cms_p_rule b"
+				+ " WHERE a.GOODS_ID = '" + goodsId + "'"
+				+ " AND a.RULE_ID = b.ID"
+				+ " AND b.STATUS = '1'"
+				+ " AND b.CMS_TYPE = '1'"
+				+ " and sysdate >= a.BEGIN_DATE "
+				+ "	and sysdate <= a.END_DATE "
+//				+ " AND b.COMMISSION_RULE like '%"+rewardKeyWord+"%'"
+//				sb.append(" and a.CREATE_TIME >=to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') and a.CREATE_TIME < to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')+1");
+				);
+		List<Map<String, Object>> ruleList = commonDao.queryForList(sb.toString());
+		if(ruleList.size() > 0) {
+			Map info = ruleList.get(0);
+			return String.valueOf(info.get("COMMISSION_RULE"));
+		}
+		return "";
+	}
+	
+	public int getUserOrdNum(String goodsId, String userId) {
+		StringBuffer sb = new StringBuffer();
+		sb.append("	select count(1) NUM from " 
+			+ " CMS_P_GOODS_RULE a  "
+	    	+ " inner join CMS_P_RULE b on a.RULE_ID = b.ID AND b.STATUS = '1'    	AND b.CMS_TYPE = '1'  and b.COMMISSION_RULE like '%SINGLE%' "
+	    	+ " inner join 	ORD_D_PRECMSFEE c on a.GOODS_ID = c.GOODS_ID and c.CMS_TYPE='1' "
+	    	+ " inner join  ORD_D_DEAL d on c.ORDER_ID = d.ORDER_ID and d.USER_ID = '"+ userId +"' "
+	    	+ " where a.GOODS_ID = '"+ goodsId +"' "
+	    	+ " and sysdate > a.BEGIN_DATE  "
+	    	+ " and sysdate < a.END_DATE " 
+    	);
+    	Map<String, Object> map = commonDao.queryForMap(sb.toString());
+		return Integer.parseInt(String.valueOf(map.get("NUM")));
 	}
 	
 }

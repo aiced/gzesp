@@ -205,12 +205,12 @@ public class CommonController {
     public Boolean sendYanzhenma(@RequestBody String strParam)
     {
     	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
-    	String strphone = "86"+paramsMap.get("phone");
+    	String strphone = paramsMap.get("phone");
     	String strcode=paramsMap.get("code");
     	
     	//新版
     	//String strMobile,String strTempid,String strContent
-    	 String strRet=SmsUtils.doSendMessage("18551855717","MB-2013102300","@1@="+strcode);//
+    	 String strRet=SmsUtils.doSendMessage(strphone,"MB-2013102300","@1@="+strcode);//
     	 System.out.println("短信返回值："+strRet);
     	 if (strRet != null && strRet.split("#").length==3)
     	 {

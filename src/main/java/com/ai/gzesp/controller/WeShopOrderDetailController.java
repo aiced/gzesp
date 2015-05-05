@@ -51,7 +51,7 @@ public class WeShopOrderDetailController {
             mav.addObject("title", "订单详情");
             mav.addObject("ORDER_ID","没有数据");
             mav.addObject("GOODS_NAME","没有数据");
-            mav.addObject("TOPAY_FEE","没有数据");
+            mav.addObject("TOPAY_FEE",0);
             mav.addObject("Order_Time","没有数据");
             mav.addObject("RECEIVER_NAME","没有数据");
             mav.addObject("POST_ADDR","没有数据");

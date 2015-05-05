@@ -7,6 +7,8 @@ var orderStat = {
 }
 
 var orderFormParams = {
+		token:"",
+		
 		orderFrom:"01",
 		originalPrice:"",
 		couponMoney:"",
@@ -80,6 +82,8 @@ $(function() {
 	//子页确认事件
 	$('#netInfoBtn').bind("click",function(){
 		if(netInfo_checkData()) {
+			uploadPic(this);
+			
 			orderStat.netInfoStat = 1;
 			$('#netInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
@@ -178,6 +182,8 @@ $(function() {
 	    	 var preview = thisFileEle.siblings("img");
 //	    	 alert(dataURL.length);
 	    	 preview.attr('title', f.name).attr("src", dataURL);
+	    	 
+//	    	console.log($.isCanvasSupported());
 	    };
 	    //读取文件的缓冲数组流，读取完毕后执行onload
         reader.readAsDataURL(f);
@@ -339,6 +345,8 @@ function checkPostSelect() {
 
 
 function getParams() {
+	orderFormParams.token = $('#token').val();
+	
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
 	
@@ -382,7 +390,15 @@ function getParams() {
 	orderFormParams.topayFee= $('#goodsPrice').val();
 }
 
-function uploadPic(){
+function uploadPic(btn){
+	
+	if(orderFormParams.cardPic1.length != 0
+			&& orderFormParams.cardPic2 != 0) {
+		//alert('照片已经上传');
+		return;
+	}
+	
+	$(btn).attr('disabled', true);
 	
 	var params = {
 			"idCardNum": $('#userCard').val()
@@ -400,9 +416,11 @@ function uploadPic(){
 	        	if(rtdata.rspCode=='0000') {
 	        		orderFormParams.cardPic1 = rtdata.fileInfoList[0].url;
 	        		orderFormParams.cardPic2 = rtdata.fileInfoList[1].url;
-	        		formSubmit();
+	        		$(btn).removeAttr("disabled"); 
+	        		//formSubmit();
 	        	} else {
-	        		alert('身份证照上传失败');
+	        		alert('网络不给力哦,请重新上传');
+	        		$(btn).removeAttr("disabled"); 
 	        	}
 	        },  
 	    });  
@@ -433,7 +451,9 @@ function nextPage() {
 //		return;
 //	}
 	
-	uploadPic();
+//	$('#submitOrdBtn').attr('disabled', true);
+//	uploadPic();
+	formSubmit();
 }
 
 function formSubmit() {

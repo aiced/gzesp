@@ -133,9 +133,7 @@ public class OrderService {
     			} else if("PAGERES".equals(code)) {
     				pageList.add(info);
     			}
-    			
     		}
-    		
     	}
     	
     	return result;

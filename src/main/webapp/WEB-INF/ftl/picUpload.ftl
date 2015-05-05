@@ -76,7 +76,8 @@
      	        	 <img id ="secondCard" src="${resRoot}/image/order/card02.png" style="display:block;width:175px;height:110px;margin:0px auto;" />
      	         	<input class="file-input select-file" type="file" id="file-back" name="uploadFile" accept="image/*"/>
        		 	</div>
-       		     <button id="netInfoBtn" class="btn btn-warning btn-block " type="submit" >同意协议并确定</button>
+<!--        		     <button id="netInfoBtn" class="btn btn-warning btn-block " type="submit" >同意协议并确定</button> -->
+       		     <button id="netInfoBtn" class="btn btn-warning btn-block " type="submit" >上传证件照</button>
     	</div>
      	
      </div>

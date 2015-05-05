@@ -145,9 +145,10 @@
 	
 	        <div style="font-size: 12px;text-align: center;"><a href="#"><u>为保障您的权益，下单请阅读并确定相关协议</u></a></div>
 	        <br/>
-	        <button class="btn btn-warning btn-block " type="button" onclick="nextPage()">提交订单</button>
+	        <button id="submitOrdBtn" class="btn btn-warning btn-block " type="button" onclick="nextPage()">提交订单</button>
 	    </div>
 	    
+	     <input type="hidden" id="token" name="token" value="${token}" />
 	    <input type="hidden" id="userId"  value="${userId}">
 		<input type="hidden" id="goodsId" value="${goodsId}">
 		<input type="hidden" id="goodsName" value="${goodsName}">

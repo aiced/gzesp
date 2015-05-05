@@ -60,6 +60,7 @@
     	<mapper resource="mybatis/mapper_oracle/TdOrdDBASEMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDCUSTMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDCMSSTATEMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDPRECMSFEEMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDDEALMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDPAYLOGMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDPOSTMapper.xml" /> 

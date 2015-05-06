@@ -39,9 +39,12 @@
         <div class="orderinfo">
             <div class="list-group">
                 <a href="#" class="list-group-item"><h5>订单编号：${ORDER_ID}</h5></a> 
+                <a href="#" class="list-group-item"><h5>商品名称：<br/><br/>${GOODS_NAME}</h5></a> 
+				<a href="#" class="list-group-item"><h5>套餐月费(¥)：${RES_ATTR_VAL_3}</h5></a>
                 <a href="#" class="list-group-item"><h5>订单金额(¥)：${(TOPAY_FEE/1000)?string("#.##")}</h5></a>
-                <a href="#" class="list-group-item"><h5>订购号码：${RES_ATTR_VAL}</h5></a>
-                <a href="#" class="list-group-item"><h5>下单时间：${Order_Time}</h5></a>
+                <a href="#" class="list-group-item"><h5>商品面值(¥)：${RES_ATTR_VAL_2}</h5></a>
+                <a href="#" class="list-group-item"><h5>订购号码：${RES_ATTR_VAL_1}</h5></a>
+                
             </div>
             <div class="list-group">
                 <a href="#" class="list-group-item"><h5>收货人姓名：${RECEIVER_NAME}</h5></a>
@@ -92,6 +95,7 @@
                 </#if>
                 </h5>
                 </a>
+                <a href="#" class="list-group-item"><h5>下单时间：${Order_Time}</h5></a>
                 <!-- <a href="#" class="list-group-item"><h5>缺货处理：${PAY_REMARK}</h5></a> -->
             </div>
         </div>

@@ -168,7 +168,7 @@
 <p style="font-family: 微软雅黑;">
     <span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">第一时间快速了解店铺访问量信息、销量情况。</span>
 </p>
-<p style="text-align: left;">
+<p style="text-align: center;">
     <span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">        <img src="${resRoot}/image/wx/dianpufazhan.png" title="1429178919104623.png" alt="blob.png" style="width: 80%; height: auto !important;"/><br/>
 </span>
 </p>
@@ -178,9 +178,10 @@
 <p style="font-family: 微软雅黑;">
     <span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">查询相应订单详情，包括商品、编号、金额、下单时间、买家等信息：</span>
 </p>
-<p style="font-family: 微软雅黑;">
-    <span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"> <img data-s="300,640" data-type="png" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbPmlnVspegoicahY8XppIH6eia4caiafsmiaq9WYcLZctOfnWv5aqIzOueA/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbPmlnVspegoicahY8XppIH6eia4caiafsmiaq9WYcLZctOfnWv5aqIzOueA/0?wx_fmt=png" width="240" height="400"><br/>
-</span>
+<p style="font-family: 微软雅黑;text-align: center;">
+    <span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"> 
+    	<img data-s="300,640" data-type="png" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbPmlnVspegoicahY8XppIH6eia4caiafsmiaq9WYcLZctOfnWv5aqIzOueA/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbPmlnVspegoicahY8XppIH6eia4caiafsmiaq9WYcLZctOfnWv5aqIzOueA/0?wx_fmt=png" width="240" height="400"><br/>
+	</span>
 </p>
 <ul class="custom_dot list-paddingleft-1">
     <li class="list-dot list-dot-paddingleft">
@@ -200,7 +201,7 @@
 <p>
     <span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">通过“收益查询”可根据所选日期，查询相应时段内的收益情况。</span>
 </p>
-<p>
+<p style="text-align: center">
 <span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px;"> 
 	<img data-s="300,640" data-type="jpeg" width="240" height="550" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbYg4aJ7yUgPR0KKYeVKTm0CguFvhXwKcJevO3wpKlHB230xNiagGp12A/0?wx_fmt=jpeg" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbYg4aJ7yUgPR0KKYeVKTm0CguFvhXwKcJevO3wpKlHB230xNiagGp12A/0?wx_fmt=jpeg">
 </span>
@@ -282,7 +283,7 @@
 			<p style="font-family: 微软雅黑; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
 			    <span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;">【<span style="color: rgb(192, 0, 0);"><strong>入口1：</strong></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px; orphans: 2; widows: 2;">“贵州联通沃掌柜”微信号——我要开店——店铺管理——右上角设置键</span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;"></span>】</span><br/>
 			</p>
-			<p style="font-family: 微软雅黑; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			<p style="font-family: 微软雅黑; line-height: 24px; orphans: 2; white-space: normal; widows: 2;text-align: center;">
 			    <span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;">
 				<img data-s="300,640" data-type="png" width="240" height="400" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFb2Fknf6zFmIVea1iazPI8LicmQMQuh3IDIFwBdlCCV22d4070O7as46RA/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFb2Fknf6zFmIVea1iazPI8LicmQMQuh3IDIFwBdlCCV22d4070O7as46RA/0?wx_fmt=png" style="" data-ratio="1.8010204081632653" data-w="392">
 
@@ -291,7 +292,7 @@
 			<p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
 			    <span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;"><span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2;">【</span><span style="font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; color: rgb(192, 0, 0);"><strong>入口2：</strong></span></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;"><span style="color: rgb(89, 89, 89); font-size: 14px;">“贵州联通沃掌柜”微信号——我要开店——店铺管</span></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); font-size: 14px;">理——收益查询</span><span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px; text-align: justify;">】</span>
 			</p>
-			<p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			<p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;text-align: center;">
 			    <img data-s="300,640" data-type="png" width="240" height="400" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbMC3PFyiaOQOGVSsgOUicobsAtpWFupZPyonb7UbCTbJick5f8SzDJfBDw/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbMC3PFyiaOQOGVSsgOUicobsAtpWFupZPyonb7UbCTbJick5f8SzDJfBDw/0?wx_fmt=png" style="" data-ratio="1.7763819095477387" data-w="398">
 			    
 			    <span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px; text-align: justify;"><br/></span>
@@ -335,7 +336,7 @@
             </p>
         </li>
     </ul>
-    <p style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 24px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; text-align: left;">
+    <p style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 24px; font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; text-align: center;">
         <img data-s="300,640" data-type="png" width="260" height="280" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbeMUwcl6fJKU6R0RoYrF6yeyic0wnic7EPJqh1A10oickj3N9hy0QFJHAQ/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbeMUwcl6fJKU6R0RoYrF6yeyic0wnic7EPJqh1A10oickj3N9hy0QFJHAQ/0?wx_fmt=png" data-ratio="0.905811623246493" data-w="499"><br/>
     </p>
 </fieldset>
@@ -441,9 +442,9 @@
             </p>
         </li>
     </ul>
-    <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
+    <p style="text-align: center;font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
         <span style="font-family: 微软雅黑, helvetica, sans-serif; line-height: 25px;text-align: center;">  
-			<img data-s="300,640" data-type="png" width="222" height="320" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFb4KCo4FPtIBGBia0mvO4h1tNPxWmzSvBib46hS9lLic0wTa1SgCpUEC2Mg/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFb4KCo4FPtIBGBia0mvO4h1tNPxWmzSvBib46hS9lLic0wTa1SgCpUEC2Mg/0?wx_fmt=png">
+			<img data-s="300,640" data-type="png" width="222" height="340" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFb4KCo4FPtIBGBia0mvO4h1tNPxWmzSvBib46hS9lLic0wTa1SgCpUEC2Mg/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFb4KCo4FPtIBGBia0mvO4h1tNPxWmzSvBib46hS9lLic0wTa1SgCpUEC2Mg/0?wx_fmt=png">
         <br/>
 		</span>
     </p>
@@ -481,7 +482,7 @@
         </li>
         <li class="list-dot list-dot-paddingleft">
             <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-                <strong style="font-family: 仿宋; font-size: 14px;"><span style="font-family: 微软雅黑, helvetica, sans-serif;"><span style="font-size: 14px; color: rgb(192, 0, 0);">特别提醒：</span></span></strong><span style="font-size: 14px; font-family: 微软雅黑, helvetica, sans-serif;"><span style="font-size: 14px;">用户下单后，记得提醒用户关注”贵州联通沃掌柜“——自助服务——订单查询，输入订单信息中手机号或身份证号查询物流状态。</span></span>
+                <strong style="font-family: 仿宋; font-size: 14px;"><span style="font-family: 微软雅黑, helvetica, sans-serif;"><span style="font-size: 14px; color: rgb(192, 0, 0);">特别提醒：</span></span></strong><span style="font-size: 14px; font-family: 微软雅黑, helvetica, sans-serif;"><span style="font-size: 14px;">用户下单后，记得提醒用户通过店铺右上角“订单查询”入口，获取商品的订单编号及物流公司，去相应物流公司官网查询物流状态哦！</span></span>
             </p>
         </li>
     </ul>

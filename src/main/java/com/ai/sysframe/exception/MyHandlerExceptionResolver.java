@@ -19,12 +19,14 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
         log.warn("Handle exception: " + ex.getClass().getName());
         String path =  CommonUtil.appResource.getString("base");
         
+        String userId = String.valueOf(request.getSession(true).getAttribute("userId"));
+        
         if(ex instanceof org.apache.shiro.authz.UnauthenticatedException) {
         	return new ModelAndView("forward:"+path+"/notLogin");
         } else if(ex instanceof org.apache.shiro.authz.UnauthorizedException) {
         	return new ModelAndView("forward:"+path+"/unauthorized");
         } else {
-        	return new ModelAndView("redirect:/error");
+        	return new ModelAndView("redirect:/error?userId="+userId+"&code="+ReturnCode.SERVER_RUN_ERR);
         }
     }
 }

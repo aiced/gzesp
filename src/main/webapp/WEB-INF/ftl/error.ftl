@@ -26,8 +26,9 @@
          
     <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
       <div>
-        <p>赶快联系管理员大哥吧。。</p> 
-      </div>       
+        <p>${msg}</p> 
+      </div>
+      <button  class="btn btn-warning btn-block " type="submit" onclick="${action}" >走你</button>
     </div>
     
     

@@ -2,7 +2,8 @@ package com.ai.gzesp.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
-import com.ai.gzesp.unionpay.TradeType;
 
 /**
  * 一级功能：wap端<br> 
@@ -38,7 +38,7 @@ public class WeShopController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("/index/{user_id}")
-    public ModelAndView index(@PathVariable("user_id") String user_id){
+    public ModelAndView index(HttpServletRequest request, @PathVariable("user_id") String user_id){
         ModelAndView mav = new ModelAndView("weShopIndex.ftl");
         //根据shopId获取 能人信息 店铺名称 手机 微信
         Map<Object, Object> developer = weShopService.getDevloperInfo(user_id);
@@ -72,6 +72,10 @@ public class WeShopController {
         
         
         mav.addObject("user_id", user_id); //能人id赋给页面,后面一路传下去至订单完成
+        
+		// keep userid in session --add by leoxu --2015/5/6
+		request.getSession(true).setAttribute("userId", user_id);
+		
         return mav;
     }
 

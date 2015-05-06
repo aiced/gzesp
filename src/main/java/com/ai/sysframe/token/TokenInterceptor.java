@@ -9,14 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.ai.sysframe.exception.ReturnCode;
+import com.ai.sysframe.utils.CommonUtil;
 
 
 public class TokenInterceptor extends HandlerInterceptorAdapter {
 	 private static final Logger logger = LoggerFactory.getLogger(TokenInterceptor.class);
 
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		logger.info("preHandle()");
+//		logger.debug("preHandle()");
 		
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -30,11 +34,14 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
                 boolean needRemoveSession = annotation.remove();
                 if (needRemoveSession) {
                     if (isRepeatSubmit(request)) {
-                    	// TODO
-                    	response.getWriter().write("请不要重复提交");
+//                    	response.setContentType("text/html");
+//                    	response.getWriter().write("请不要重复提交");
+                    	 String path =  CommonUtil.appResource.getString("base");
+                    	String userId = String.valueOf(request.getSession(true).getAttribute("userId"));
+                    	response.sendRedirect(path +"/error?userId="+userId+"&code="+ReturnCode.REPEAT_SUBMIT);
                         return false;
                     }
-                    request.getSession(false).removeAttribute("token");
+                    request.getSession(true).removeAttribute("token");
                 }
             }
             return true;

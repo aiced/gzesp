@@ -30,6 +30,7 @@ import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdSysPCITYDao;
 import com.ai.gzesp.utils.SmsUtils;
+import com.ai.sysframe.exception.ReturnCode;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.PathUtil;
@@ -243,7 +244,6 @@ public class CommonController {
 		System.out.println(count);
 		if (count >= 1) {
 			return false; //已经申请过退过款了
-
 		} else {
 			return true;// 没有申请退款
 		}
@@ -252,7 +252,27 @@ public class CommonController {
     
 	@RequestMapping("/error")
 	@ResponseBody
-	public ModelAndView error(@RequestBody String inputParams)	{
-		return new ModelAndView("error.ftl");
+	public ModelAndView error(HttpServletRequest request, 
+			@RequestParam(value="code") String errorCode, @RequestParam(value="userId") String userId)	{
+		String msg = "";
+		String action = "";
+		
+		if(ReturnCode.SERVER_RUN_ERR.equals(errorCode)) {
+			msg = "赶快联系管理员大哥吧。。";
+		} else if(ReturnCode.REPEAT_SUBMIT.equals(errorCode)) {
+			msg = "放心！已经操作成功了，再逛逛吧。。";
+		} else if(ReturnCode.NOT_LOGIN.equals(errorCode)) {
+			msg = "赶快登录去吧。。";
+		} else {
+			msg = "赶快联系管理员大哥吧。。";
+		}
+		
+		action = "location.href = \'./weShop/index/"+userId+"\'";
+		
+		ModelAndView mav = new ModelAndView("error.ftl");
+		mav.addObject("userId", userId);
+		mav.addObject("msg", msg);
+		mav.addObject("action", action);
+		return mav;
 	} 
 }

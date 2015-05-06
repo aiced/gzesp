@@ -1,17 +1,17 @@
 package com.ai.gzesp.sgip;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Service;
-
-import com.huawei.insa2.comm.sgip.message.SGIPMessage;
-import com.huawei.insa2.comm.sgip.message.SGIPSubmitMessage;
-import com.huawei.insa2.comm.sgip.message.SGIPSubmitRepMessage;
-import com.huawei.insa2.util.Args;
-import com.huawei.smproxy.SGIPSMProxy;
+//import java.io.IOException;
+//import java.io.UnsupportedEncodingException;
+//import java.math.BigInteger;
+//
+//import org.apache.log4j.Logger;
+//import org.springframework.stereotype.Service;
+//
+//import com.huawei.insa2.comm.sgip.message.SGIPMessage;
+//import com.huawei.insa2.comm.sgip.message.SGIPSubmitMessage;
+//import com.huawei.insa2.comm.sgip.message.SGIPSubmitRepMessage;
+//import com.huawei.insa2.util.Args;
+//import com.huawei.smproxy.SGIPSMProxy;
 
 /**
  * 联通sgip短信发送服务类，使用华为的smproxy包<br>
@@ -21,12 +21,12 @@ import com.huawei.smproxy.SGIPSMProxy;
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-@Service
+//@Service
 public class SgipService {
-
+/*
     private Logger log = Logger.getLogger(this.getClass());
 
-    /**
+    *//**
      * 功能描述: 发送短信至联通短信平台<br>
      * 〈功能详细描述〉
      *
@@ -34,7 +34,7 @@ public class SgipService {
      * @param content
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
-     */
+     *//*
     public boolean smsSend(String[] numbers, String content) {
         log.debug("【短信：调用短信发送接口开始......手机号：" + numbers[0] + "，内容：" + content + "】");
         //String[] UserNumber = { "8618686619970","8618686619977"};
@@ -164,5 +164,5 @@ public class SgipService {
         //断开连接
         sgipsmproxy.close();
         log.debug("【短信：断开连接】");
-    }
+    }*/
 }

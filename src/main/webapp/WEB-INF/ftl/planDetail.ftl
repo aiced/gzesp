@@ -19,7 +19,15 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/goodDetail.js?v=${resVer}"></script>
     <script src="${resRoot}/js/selectNumber.js?v=${resVer}"></script>   
+    <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.hammer.js?v=${resVer}"></script>     
     
+    <style type="text/css">
+    	.carousel-indicators
+		{
+			bottom:-2%;
+		}
+    </style>
   </head>
 
   <body>
@@ -71,11 +79,12 @@
 	</div>    
   
     <!-- 分享到弹出框 -->    
+    <#--
     <div id="myModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content" style="padding:5px;height:80px;">
     	    分享到：
-          <!-- Baidu Button BEGIN -->
+          <!-- Baidu Button BEGIN -- >
           <div class="bdsharebuttonbox">
             <a class="bds_more" href="#" data-cmd="more"></a>
             <a title="分享到QQ空间" class="bds_qzone" href="#" data-cmd="qzone"></a>
@@ -85,10 +94,11 @@
             <a title="分享到微信" class="bds_weixin" href="#" data-cmd="weixin"></a>
           </div>
           <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"32"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-          <!-- Baidu Button END -->   
+          <!-- Baidu Button END -- >   
         </div>
       </div>
-    </div>  
+    </div> 
+    --> 
 
     <!-- Carousel 广告轮播-->	
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -142,6 +152,7 @@
                     </span>
                 </p>
             </li>
+            <#--
             <li class="num-info-li">
                 <a id="goodsAssess" href="javascript:void();">
                     <b class="list-arr"></b>
@@ -149,6 +160,7 @@
                     <label>商品评价</label>
                 </a>
             </li>
+            -->
             <li class="num-info-li">
                 <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
@@ -160,14 +172,22 @@
                   </#if>
                 </#list>
               </#if>
+            <!-- 商品的预存款，应该只有4g商品才会插这个属性，用于按预存款算佣金-->
+              <#if attrs.SAVEMEY??>
+                <#list attrs.SAVEMEY as item>
+                  <#if item_index==0>
+                    <span id="save_money" style="display:none" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_CODE}</span>
+                  </#if>
+                </#list>
+              </#if>              
             <!-- 选择号码 -->
             <li class="num-info-li city-li">
               <#if attrs.NUMBERS??>
                 <#list attrs.NUMBERS as item>
                   <#if item_index==0>
                     <a href="#subpage_3" onclick="showSubpage('subpage_3')">
-                      <b class="list-arr"></b>
-                      <span class="detail-info" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|">请选择号码</span>
+                      <b class="list-arr" style="margin-top: 12px;"></b>
+                      <span class="detail-info" id="phone_number" attr_val="${item.RES_ID}|${item.ATTR_CODE}|" style="font-size: 14px;color:#ec7218;margin-top: 5px;">请选择号码</span>
                       <label color="#F70909">选择号码</label>
                     </a>
                   </#if>
@@ -183,18 +203,49 @@
                       <ul class="tabslist" attr_val="">
                         <#list attrs.PCKPLAN as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" attr_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" attr_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" attr_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
                   </div>
-                  <p id="package_detail" style="margin-bottom: 0px;color:#999;display:none;"></p>  
+                        <!-- A/B/C 套餐  描述-->
+                        <#list attrs.PCKPLAN as item>
+                          <#if item_index==0>
+                            <p id="pckplan_desc" style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>  
+                          </#if>
+                        </#list>                  
               </li>              
-            </#if>    
+            </#if>
+            <!-- 不同 套餐月费 -->
+            <#if attrs.PACKRES??>
+              <li id="planList" class="num-info-li" >
+                  <!--<a href="#subpage_4" onclick="showSubpage('subpage_4')"><b class="list-arr"></b><span class="detail-info">套餐详情</span><label>套餐</label></a> -->
+                  <p style="margin-bottom: 0px;"><label>套餐</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist" attr_val="">
+                        <#list attrs.PACKRES as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+                        <!--不同 套餐月费 描述 -->
+                        <#list attrs.PACKRES as item>
+                          <#if item_index==0>
+                            <p id="package_desc" style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>                           
+                          </#if>
+                        </#list>                  
+              </li>              
+            </#if>                
             <!-- 普通卡/微卡/Nano卡-->        
             <#if attrs.SIMSIZE??>
               <li id="simTypeList" class="num-info-li" >

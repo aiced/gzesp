@@ -2,24 +2,28 @@
 $(document).ready(function (){  
 	//滚动加载
 	$(window).scroll(function () {
-        var scrollTop = $(this).scrollTop();
-        var scrollHeight = $(document).height();
-        var windowHeight = $(this).height();
-        if (scrollTop + windowHeight == scrollHeight) {
-        //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-        //alert($('#datagrid').attr('pageNum'));
-        var keyword = $('#keyword').val();	
-        var good_type = $('#good_type').val();	
-        var pageNum = parseInt($('#datagrid').attr('pageNum'))+1; //下拉表示要加载下一页
-        queryFilterPublicAppend(good_type, pageNum, 10, keyword); //每次加载10条
-        $('#datagrid').attr('pageNum', pageNum); //加载成功后页数+1
+		//如果是banner图片跳转到商品选择页面的，则不让ajax下拉刷新加载，会报错
+		if ($('#isBanner').val() == "0") {
+			var scrollTop = $(this).scrollTop();
+			var scrollHeight = $(document).height();
+			var windowHeight = $(this).height();
+			if (scrollTop + windowHeight == scrollHeight) {
+				// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+				// alert($('#datagrid').attr('pageNum'));
+				var keyword = $('#keyword').val();
+				var good_type = $('#good_type').val();
+				var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页
+
+				queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
+				$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
+			}
         }
     }); 
 });   
 
 
 
-//地市筛选触发事件
+// 地市筛选触发事件
 function cityFilter()
 {
 	//alert($(event.srcElement).attr('city_code'));

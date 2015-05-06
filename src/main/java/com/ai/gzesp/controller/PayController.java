@@ -87,7 +87,7 @@ public class PayController {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    @RequestMapping("/unionPay/bind/{order_id}/{fee}")
+/*    @RequestMapping("/unionPay/bind/{order_id}/{fee}")
     public ModelAndView unionPayBind(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
         ModelAndView mav = new ModelAndView("unionPayInput.ftl");
         
@@ -95,18 +95,20 @@ public class PayController {
         mav.addObject("order_id", order_id);
         mav.addObject("fee", fee);
         return mav;
-    }   
+    }   */
 
     /**
      * 银联支付：调用绑定和支付接口 <br>
-     * 〈功能详细描述〉
+     * 此方法作废，因为后来银联根据我们的要求改造代码
+     * 改造前esp系统单独有个签约信息表，每次支付前先查询是否曾经绑定成功过，有就直接取出签约号支付，没有则先绑定接口再支付接口，重复绑定会返回错误码
+     * 改造后每次支付我们都先绑定然后支付，不管是否曾经绑定成功，只要5要素都正确，绑定接口银联都返回成功和签约号，然后再用返回的签约号调支付接口
      *
      * @param param
      * @return
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    @RequestMapping("/unionPay/pay")
+/*    @RequestMapping("/unionPay/pay")
     @ResponseBody
     public Map<String, String> unionPayPay(@RequestBody UnionPayParam param){
         Map<String, String> result = new HashMap<String, String>();
@@ -175,9 +177,67 @@ public class PayController {
 		}      
         
         return result;
-    }
+    }*/
     
-    @RequestMapping("/unionPay/testResp/{sys_trade_no}/{resp_trade_type}")
+    /**
+     * 银联支付：调用绑定和支付接口 <br>
+     * 此为银联改造后的新的方法
+     * 改造前esp系统单独有个签约信息表，每次支付前先查询是否曾经绑定成功过，有就直接取出签约号支付，没有则先绑定接口再支付接口，重复绑定会返回错误码
+     * 改造后每次支付我们都先绑定然后支付，不管是否曾经绑定成功，只要5要素都正确，绑定接口银联都返回成功和签约号，然后再用返回的签约号调支付接口
+     *
+     * @param param
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    @RequestMapping("/unionPay/pay")
+    @ResponseBody
+    public Map<String, String> unionPayPay(@RequestBody UnionPayParam param){
+        Map<String, String> result = new HashMap<String, String>();
+        
+        //判断校验参数
+        
+        //逻辑放controller是因为service里都有事务控制，没法分开
+        try {
+        	unionPayService.insertBindlog(param, result); //插绑定日志, 此处用新的方法
+			if(!result.isEmpty()){
+				return result; //非空表示有错误代码了，返回给界面，不继续往下执行了
+			}
+			unionPayService.sendBindReq(param, result);  //调绑定接口
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.waitForBindRespNew(param, result); //等待绑定返回签约号 ,此处用新的方法
+			if(!result.isEmpty()){
+				return result; 
+			}
+			
+			//以上签约都成功了，则开始调用支付接口
+			unionPayService.insertPaylog(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.sendPayReq(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.waitForPayResp(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			
+			result.put("status", "E11");
+            result.put("detail", "支付失败！");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			result.put("status", "E12");
+            result.put("detail", "支付失败！");
+		}      
+        
+        return result;
+    }    
+    
+/*    @RequestMapping("/unionPay/testResp/{sys_trade_no}/{resp_trade_type}")
     @ResponseBody
     public Map<String, String> test(@PathVariable("sys_trade_no") String sys_trade_no, @PathVariable("resp_trade_type") String resp_trade_type){
         Map<String, String> result = new HashMap<String, String>();
@@ -243,10 +303,10 @@ public class PayController {
         try {
             //3DES加密 报文
             byte[] xmlByte = DESUtil.encryptMode(xmlStr2.getBytes(UnionPayCons.charCode));
-            /*        if(xmlByte == null)
+                    if(xmlByte == null)
         {
             log.error("【加密XML失败,xmlStr = " + xmlStr2);
-        }*/
+        }
             
             //4位报文体字节长度+渠道号（16位）+加密后的xml报文体。如：0231+渠道号（16位）+加密后的xml报文体（215字节）
             //转化为4位长度字节数据以供另一端读取,长度不足4字节要补0
@@ -265,7 +325,7 @@ public class PayController {
         return null;
     } 
         
-    }
+    }*/
     
     @RequestMapping("/unionPay/bindCancel/{bank_card_no}")
     @ResponseBody

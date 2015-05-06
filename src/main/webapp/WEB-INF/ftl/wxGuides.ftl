@@ -114,7 +114,7 @@
     <p style="clear: both;">
         <span style="color: rgb(192, 0, 0);"><strong>收益发放原则:</strong></span>
     </p>
-    <ul class=" list-paddingleft-2" style="list-style-type: square;">
+    <ul class=" list-paddingleft-2" style="list-style-type: square;margin:10px;">
         <li>
             <p style="clear: both; line-height: normal;">
                 <span style="color: rgb(89, 89, 89);">只为有效发展订单结算收益，即通过店铺发展，且用户卡号激活使用；</span>
@@ -144,46 +144,28 @@
 </section>
 <p></p>
 <p style="clear: both; white-space: normal;">
-    <span style="color: rgb(12, 12, 12);"><span style="font-family: arial, helvetica, sans-serif; font-size: 14px;">&nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">存一得三产品＝套餐月费＊40%</span>
+    <span style="color: rgb(12, 12, 12);"><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><br/><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">存一得三产品＝套餐月费＊40%</span>
 </p>
 <p style="clear: both; white-space: normal;">
-    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;校园沃派套餐收益＝套餐月费＊40%</span>
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">校园沃派套餐收益＝套餐月费＊40%</span>
 </p>
 <p style="clear: both; white-space: normal;">
-    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4G组合套餐产品收益＝号卡零售价＊20%<br/></span>
+    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">4G组合套餐产品收益＝号卡零售价＊20%<br/></span>
 </p>
-<p style="clear: both; white-space: normal;">
-    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);"><br/></span>
-</p>
+
 <p style="margin-top: 8px; margin-bottom: 0px; clear: both; white-space: normal; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-family: 微软雅黑;">
     <span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;"><span class="wxqq-bg" style="padding: 4px 10px; border-radius: 80% 100% 90% 20%; color: rgb(255, 255, 255); margin-right: 8px; background-color: rgb(235, 164, 50);">2</span><strong class="wxqq-color" style="color: rgb(235, 164, 50);">合约购机</strong></span><span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;"><img data-s="300,640" data-type="jpeg" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lz2Fa0B5sFcALp8SXQIChqXR7aEo41lY9tIdyePiciaFmrwSgNiaTJsuW5bNBG3oUzWhkZ9BK1jSHtaw/0?wxfmt=jpeg" data-ratio="1.4880952380952381" data-w="504" url="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lz2Fa0B5sFcALp8SXQIChqXR7aEo41lY9tIdyePiciaFmrwSgNiaTJsuW5bNBG3oUzWhkZ9BK1jSHtaw/0?wxfmt=jpeg" file_id="203936759" format="jpeg" source="lib" style="max-width: 100%; height: auto !important; text-align: center; font-family: sans-serif;"/></span>
 </p>
 <p style="clear: both; white-space: normal;">
-    <span style="color: rgb(12, 12, 12);"><span style="font-family: arial, helvetica, sans-serif; font-size: 14px;">&nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">合约购机产品收益=套餐月费*40%</span>
+    <span style="color: rgb(12, 12, 12);"><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">合约购机产品收益=套餐月费*40%</span>
 </p>
-<p style="clear: both; white-space: normal;">
-    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);"><br/></span>
-</p>
+
 <p style="margin-top: 8px; margin-bottom: 0px; clear: both; white-space: normal; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-family: 微软雅黑;">
     <span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;"><span class="wxqq-bg" style="padding: 4px 10px; border-radius: 80% 100% 90% 20%; color: rgb(255, 255, 255); margin-right: 8px; background-color: rgb(235, 164, 50);">3</span><strong class="wxqq-color" style="color: rgb(235, 164, 50);">无线上网卡</strong></span><span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;"><img data-s="300,640" data-type="png" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lz2Fa0B5sFcALp8SXQIChqXtqeiacUGJZtzBtUD2cfn6EzAWh65je16J9aAj18GAuV21ysPjJic6cMQ/0?wxfmt=png" data-ratio="0.2777777777777778" data-w="504" url="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lz2Fa0B5sFcALp8SXQIChqXtqeiacUGJZtzBtUD2cfn6EzAWh65je16J9aAj18GAuV21ysPjJic6cMQ/0?wxfmt=png" file_id="203936319" format="png" source="lib" style="max-width: 100%; height: auto !important; text-align: center; font-family: sans-serif;"/></span>
 </p>
 <p style="clear: both; white-space: normal;">
-    <span style="color: rgb(12, 12, 12);"><span style="font-family: arial, helvetica, sans-serif; font-size: 14px;">&nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">无线上网卡收益＝上网卡原价面值＊10%</span>
+    <span style="color: rgb(12, 12, 12);"><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">无线上网卡收益＝上网卡原价面值＊10%</span>
 </p>
-<p style="clear: both; white-space: normal;">
-    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);"><br/></span>
-</p>
-<hr class="wxqq-borderTopColor" style="white-space: normal; border-width: 5px 0px 0px; margin: 0px; border-top-color: rgb(235, 164, 50); border-top-style: dashed;"/>
-<p style="clear: both; white-space: normal;">
-    <br/>
-</p>
-<blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin: 0px; padding: 20px 15px 15px 48px; border: 1px solid rgb(235, 164, 50); white-space: normal; border-radius: 5px; line-height: 1.5; background-image: url(https://mmbiz.qlogo.cn/mmbiz/6xsuhALdNEr8ZmVegySCLnxIFNbiapIkjzQtojyF4Yc6cqozUlj2iaWK6yhTuFgUGK7ibNVaqFdMbMA1eLo2nAjVA/0/mmbizgif); background-position: 10px 11px; background-repeat: no-repeat;">
-    <p class="ue_t" style="clear: both;">
-        <strong style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 21px;">更多产品持续更新中，敬请期待……</strong>
-    </p>
-   
-</blockquote>
- 	
  
 </div>
       	<a  data-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample3"><p class="wxqq-color wxqq-borderLeftColor" style="margin-bottom: 13px; white-space: normal; border-width: 0px 0px 0px 5px;margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; border-left-color: rgb(235, 164, 50); border-left-style: solid; -webkit-font-smoothing: antialiased;">
@@ -200,7 +182,7 @@
 <p style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px; color: rgb(89, 89, 89); max-width: 100%;">
     <span style="color: rgb(192, 0, 0);"></span>
 </p>
-<p style="font-family: 微软雅黑; margin: 8px 0px 0px; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
+<p style="font-family: 微软雅黑; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
     <span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(0, 187, 236); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><span class="wxqq-bg" style="margin: 0px 8px 0px 0px; padding: 4px 10px; border-top-left-radius: 80%; border-top-right-radius: 100%; border-bottom-right-radius: 90%; border-bottom-left-radius: 20%; color: rgb(255, 255, 255); max-width: 100%; background-color: rgb(235, 161, 50);">1</span></span><span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(38, 38, 38); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%; font-size: 14px; font-family: arial, helvetica, sans-serif;"><strong class="wxqq-color" style="color: rgb(235, 161, 50); line-height: 24px; max-width: 100%;">总览：店铺发展信息</strong></span>
 </p>
 <p style="font-family: 宋体;">
@@ -210,7 +192,8 @@
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">        <img src="${resRoot}/image/wx/dianpufazhan.png" title="1429178919104623.png" alt="blob.png" style="width: 80%; height: auto !important;"/><br/>
 </span>
 </p>
-<p style="font-family: 微软雅黑; margin: 8px 0px 0px; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
+<br/>
+<p style="font-family: 微软雅黑; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
     <span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(0, 187, 236); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><span class="wxqq-bg" style="margin: 0px 8px 0px 0px; padding: 4px 10px; border-top-left-radius: 80%; border-top-right-radius: 100%; border-bottom-right-radius: 90%; border-bottom-left-radius: 20%; color: rgb(255, 255, 255); max-width: 100%; background-color: rgb(235, 161, 50);">2</span></span><span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(38, 38, 38); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%; font-size: 14px; font-family: arial, helvetica, sans-serif;"><strong class="wxqq-color" style="color: rgb(235, 161, 50); line-height: 24px; max-width: 100%;">订单查询</strong></span>
 </p>
 <p style="font-family: 宋体;">
@@ -232,10 +215,7 @@
         </p>
     </li>
 </ul>
-<p>
-    <br/>
-</p>
-<hr/>
+<br/>
 <p style="margin: 8px 0px 0px; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-family: 微软雅黑; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%;">
     <span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(0, 187, 236); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><span class="wxqq-bg" style="margin: 0px 8px 0px 0px; padding: 4px 10px; border-top-left-radius: 80%; border-top-right-radius: 100%; border-bottom-right-radius: 90%; border-bottom-left-radius: 20%; color: rgb(255, 255, 255); max-width: 100%; background-color: rgb(235, 161, 50);">3</span></span><span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(38, 38, 38); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><strong class="wxqq-color" style="color: rgb(235, 161, 50); line-height: 24px; max-width: 100%;">收益查询</strong></span>
 </p>
@@ -310,36 +290,51 @@
 
 
     
-      	<a  data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4"><p><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
+      	<a  data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample4">
+      	<p><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
             	<strong><span style="color:rgb(0, 176, 80); font-family: arial, helvetica, sans-serif; font-size: 14px;">问题4：平台每月如何发放收益？</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"><br/></span><strong>
 </p></p></a>
-		<div class="collapse" id="collapseExample4"><fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
-    <legend style="margin: 0px; padding: 0px; text-align: center; font-size: medium; -ms-word-wrap: break-word !important; max-width: 100%;">
-        <br/>
-    </legend>
-   <ul class="custom_dot list-paddingleft-1">
-        <li class="list-dot list-dot-paddingleft">
-            <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);">沃掌柜将在<span style="color: rgb(192, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(255, 255, 0);"><strong>每月10号</strong></span>结算上上月发展用户的佣金；</span>
-            </p>
-        </li>
-        <li class="list-dot list-dot-paddingleft">
-            <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);">沃掌柜将以<span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(255, 255, 0);"><strong><span style="color: rgb(192, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 14px;">现金账户付款方式</span></strong></span>汇入掌柜注册时填写的银行账户内。</span>
-            </p>
-            <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);"></span>
-            </p>
-        </li>
-    </ul>
-    <p style="font: 14px/24px 微软雅黑, Microsoft YaHei; color: rgb(89, 89, 89); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%; orphans: 2; widows: 2; font-size-adjust: none; font-stretch: normal; -webkit-text-stroke-width: 0px;">
-        <span style="color: rgb(192, 0, 0);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);">特别提醒</span></strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);">：</span></span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);">为了保证您的收益发放，请确保在注册时填写的是正确的银行卡号哦~</span>
-    </p>
-</fieldset>
-</div>
-
-
-    
+		<div class="collapse" id="collapseExample4">
+		<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-weight: normal; font-size: 16px; line-height: 24px; font-family: 微软雅黑; margin: 10px; padding: 15px; border: 1px solid rgb(235, 164, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; font-stretch: normal; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+		    <p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 5px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; white-space: normal; -webkit-font-smoothing: antialiased;">
+	   			 收益发放方式
+			</p>
+		    <ul class=" list-paddingleft-2" style="list-style-type: square;padding:10px;margin-bottom: -10px;">
+		        <li>
+		            <p style="font-size: 14px; line-height: 24px; white-space: normal;">
+		                <strong><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">发放时间：</span></strong><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89);">沃掌柜将在<strong><span style="color: rgb(192, 0, 0); background-color: rgb(255, 255, 0);">每月10号</span></strong>结算<strong>上上月发展用户的佣金</strong>；<br/></span>
+		            </p>
+		        </li>
+		        <li>
+		            <p style="font-size: 14px; line-height: 24px; white-space: normal;">
+		                <strong><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;">发放方式：</span></strong><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89);">沃掌柜将以<span style="background-color: rgb(255, 255, 0);"><strong><span style="color: rgb(192, 0, 0);">现金账户付款方式</span></strong></span>汇入您绑定的银行卡账户内。</span>
+		            </p>
+		        </li>
+		    </ul>
+		    <p style="font-size: 14px; line-height: 24px; white-space: normal;">
+		        <span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89);"><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px; color: rgb(192, 0, 0); line-height: 24px; orphans: 2; widows: 2; background-color: rgb(255, 255, 255);"><strong>特别提醒</strong>：</span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px; color: rgb(89, 89, 89); background-color: rgb(255, 255, 255);"><span style="line-height: 24px; orphans: 2; widows: 2;"></span><span style="line-height: 24px; orphans: 2; widows: 2;">为了保证您的收益发放，请确保在时填写的是正确的银行卡号哦~</span></span></span>
+		    </p>
+			<hr class="wxqq-borderTopColor" style="border-width: 2px 0px 0px; margin: 0px; border-top-color: rgb(235, 164, 50); border-top-style: solid;"/>
+			<p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px; padding: 0px 10px; color: rgb(235, 164, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px;  white-space: normal; -webkit-font-smoothing: antialiased;">
+		    	银行卡绑定入口
+			</p>
+			<p style="font-family: 微软雅黑; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			    <span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;">【<span style="color: rgb(192, 0, 0);"><strong>入口1：</strong></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px; orphans: 2; widows: 2;">“贵州联通沃掌柜”微信号——我要开店——店铺管理——右上角设置键</span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;"></span>】</span><br/>
+			</p>
+			<p style="font-family: 微软雅黑; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			    <span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;"><img src="/ueditor/php/upload/image/20150505/1430831061110953.png" title="1430831061110953.png" alt="blob.png" width="230" height="397" style="width: 230px; height: 397px;"/></span>
+			</p>
+			<p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			    <span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px;"><span style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2;">【</span><span style="font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; color: rgb(192, 0, 0);"><strong>入口2：</strong></span></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;;"><span style="color: rgb(89, 89, 89); font-size: 14px;">“贵州联通沃掌柜”微信号——我要开店——店铺管</span></span><span style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; color: rgb(89, 89, 89); font-size: 14px;">理——收益查询</span><span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px; text-align: justify;">】</span>
+			</p>
+			<p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			    <img src="/ueditor/php/upload/image/20150505/1430831211241924.png" title="1430831211241924.png" alt="blob.png" width="238" height="385" style="width: 238px; height: 385px;"/><span style="font-family: 微软雅黑, helvetica, sans-serif; color: rgb(89, 89, 89); font-size: 14px; line-height: 25px; text-align: justify;"><br/></span>
+			</p>
+			<p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			    <br/>
+			</p>
+		</fieldset>
+		</div>
       	<a  data-toggle="collapse" href="#collapseExample5" aria-expanded="false" aria-controls="collapseExample5"><p class="wxqq-color wxqq-borderLeftColor" style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: 25px; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
             	<strong><span style="color:rgb(0, 176, 80); font-family: arial, helvetica, sans-serif; font-size: 14px;">问题5：服务号里，【我的店铺】和【店铺管理】有什么区别？</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"><br/></span><strong>
 </p></a>
@@ -354,7 +349,7 @@
     <p style="margin: 8px 0px 0px; padding: 0px; border: 0px currentColor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px; font-weight: normal; white-space: normal;">
         <span class="wxqq-color wxqq-borderBottomColor" style="padding: 0px 2px 3px; color: rgb(235, 161, 50); line-height: 28px; font-size: 14px; font-weight: bold; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; font-family: 微软雅黑, sans-serif !important;">我的店铺</span>
     </p>
-    <ul class=" list-paddingleft-2" style="list-style-type: square;">
+    <ul class=" list-paddingleft-2" style="list-style-type: square;margin:1px;">
         <li>
             <p>
                 <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;"><strong><span style="color: rgb(192, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">对用户开放</span></strong>的店铺销售主页，<strong>掌柜和用户均可看</strong>到当前在售的商品，见图①；</span>
@@ -367,7 +362,7 @@
     <p style="margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
         <span class="wxqq-color wxqq-borderBottomColor" style="padding: 0px 2px 3px; color: rgb(235, 161, 50); line-height: 28px; font-size: 14px; font-weight: bold; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; font-family: 微软雅黑, sans-serif !important;">店铺管理</span>
     </p>
-    <ul class=" list-paddingleft-2" style="list-style-type: square;">
+    <ul class=" list-paddingleft-2" style="list-style-type: square;margin:1px;">
         <li>
             <p>
                 <span style="color: rgb(192, 0, 0);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">对掌柜开放</span></strong></span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">的店铺管理页面，<strong>仅掌柜可见</strong>，在此进行商品管理、订单查询、佣金查询等操作，见图②；</span>
@@ -392,36 +387,76 @@
                     	<strong><span style="color:rgb(0, 176, 80); font-family: arial, helvetica, sans-serif; font-size: 14px;">问题6：预装店铺太单调，如何编辑美化？</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"><br/></span><strong>
 </p></a>
 		<div class="collapse" id="collapseExample7">
-			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; font-size: 16px; line-height: 24px; font-family: 宋体; margin: 5px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
-    <legend style="font-weight: normal; margin: 0px; padding: 0px; text-align: center; font-size: medium; max-width: 100%;">
-        <br/>
-    </legend>
-   <p style="font-family: 宋体; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
-    <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;"><span style="color:#595959">【</span></span><span style="color: rgb(192, 0, 0);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">设置途径</span></strong></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;"><span style="color: rgb(192, 0, 0);">：</span></span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">“贵州联通沃掌柜”微信号——我要开店——店铺管理—</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">—右上角设置键】</span><br/>
-</p>
-<ul class="custom_dot list-paddingleft-1">
-    <li class="list-dot list-dot-paddingleft">
-        <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
-            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">通过美化编辑，给小店改个个性的名字，记得填写真实的手机号、微信号，方便用户与您联系。</span>
-        </p>
-        <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
-            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"></span>
-        </p>
-    </li>
-</ul>
-<p style="text-align:center">
-        <img src="${resRoot}/image/wx/dianpushezhi.png" title="1429178919104623.png" alt="blob.png" style="width: 80%; height: auto !important;"/><br/>
-</p>
-<ul class="custom_dot list-paddingleft-1">
-    <li class="list-dot list-dot-paddingleft">
-        <p>
-            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"><strong>沃掌柜正在努力开发更多美化功能，敬请期待……</strong></span>
-        </p>
-    </li>
-</ul>
-<p>
-    <br/>
-</p>
+			<fieldset class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="font-style: normal; font-variant: normal; margin: 0px; padding: 15px; border: 1px solid rgb(235, 161, 50); text-transform: none; text-indent: 0px; letter-spacing: normal; word-spacing: 0px; white-space: normal; max-width: 100%; orphans: 2; widows: 2; -webkit-text-stroke-width: 0px; background-color: rgb(239, 239, 239);">
+			    <legend style="font-family: 宋体; font-size: medium; line-height: 24px; font-weight: normal; margin: 0px; padding: 0px; text-align: center; max-width: 100%;">
+			        <br/>
+			    </legend>
+			    <p style="font-family: 宋体; font-size: 16px; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			        <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;"><span style="color:#595959"></span></span>
+			    </p>
+			    <p style="font-family: 微软雅黑; font-size: 16px; line-height: 18px;  padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
+			        <span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(0, 187, 236); line-height: 28px; border-bottom-color: rgb(235, 164, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><span class="wxqq-bg" style="margin: 0px 8px 0px 0px; padding: 4px 10px; border-top-left-radius: 80%; border-top-right-radius: 100%; border-bottom-right-radius: 90%; border-bottom-left-radius: 20%; color: rgb(255, 255, 255); max-width: 100%; background-color: rgb(235, 164, 50);">1</span></span><span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(38, 38, 38); line-height: 28px; border-bottom-color: rgb(235, 164, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><strong class="wxqq-color" style="color: rgb(235, 164, 50); line-height: 24px; max-width: 100%;">店铺美化装修</strong></span>
+			    </p>
+			    <p style="font-family: 宋体; font-size: 16px; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+			        <span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;"><span style="color:#595959">【</span></span><span style="color: rgb(192, 0, 0);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">设置途径</span></strong></span><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;"><span style="color: rgb(192, 0, 0);">：</span></span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">“贵州联通沃掌柜”微信号——我要开店——店铺管理—</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">—右上角设置键】</span><br/>
+			    </p>
+			    <ul class="custom_dot list-paddingleft-1" style="font-family: 宋体; font-size: 16px; line-height: 24px;margin:-10px;">
+			        <li class="list-dot list-dot-paddingleft">
+			            <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
+			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">通过美化编辑，给小店改个个性的名字，记得填写真实的手机号、微信号，方便用户与您联系。</span>
+			            </p>
+			            <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
+			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"></span>
+			            </p>
+			        </li>
+			    </ul>
+			    <br/>
+			    <p style="font-family: 宋体; font-size: 16px; line-height: 24px; text-align: center;">
+			        <img src="/ueditor/php/upload/image/20150419/1429433833139225.png" title="1429433833139225.png" alt="4.png"  style="width: 200px; height: 300px;"/>
+			    </p>
+			    <br/>
+			    <ul class="custom_dot list-paddingleft-1" style="font-family: 宋体; font-size: 16px; line-height: 24px;margin:-10px;">
+			        <li class="list-dot list-dot-paddingleft">
+			            <p>
+			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"><strong>沃掌柜正在努力开发更多美化功能，敬请期待……</strong></span>
+			            </p>
+			            <p>
+			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"></span>
+			            </p>
+			        </li>
+			    </ul>
+			    <p style="font-family: 宋体; font-size: 16px; line-height: 24px;">
+			        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"></span>
+			    </p>
+			    <br/>
+				<hr class="wxqq-borderTopColor" style="border-width: 2px 0px 0px; margin: 0px; border-top-color: rgb(235, 164, 50); border-top-style: solid;"/>
+			    <br/>
+			    <p style="font-family: 微软雅黑; font-size: 16px; line-height: 18px; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
+			        <span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(0, 187, 236); line-height: 28px; border-bottom-color: rgb(235, 164, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><span class="wxqq-bg" style="margin: 0px 8px 0px 0px; padding: 4px 10px; border-top-left-radius: 80%; border-top-right-radius: 100%; border-bottom-right-radius: 90%; border-bottom-left-radius: 20%; color: rgb(255, 255, 255); max-width: 100%; background-color: rgb(235, 164, 50);">2</span></span><span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(38, 38, 38); line-height: 28px; border-bottom-color: rgb(235, 164, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><strong class="wxqq-color" style="color: rgb(235, 164, 50); line-height: 24px; max-width: 100%;">个性商品推荐展示</strong></span>
+			    </p>
+			    <p style="font-family: 宋体; font-size: 16px; line-height: 24px;">
+			        <span style="orphans: 2; widows: 2; font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; background-color: rgb(239, 239, 239);"><span style="color: rgb(89, 89, 89);">【</span></span><span style="font-family: 宋体; line-height: 24px; orphans: 2; widows: 2; color: rgb(192, 0, 0); background-color: rgb(239, 239, 239);"><strong><span style="font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px;">设置途径</span></strong></span><span style="orphans: 2; widows: 2; font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; background-color: rgb(239, 239, 239);"><span style="color: rgb(192, 0, 0);">：</span></span><span style="orphans: 2; widows: 2; color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; background-color: rgb(239, 239, 239);">“贵州联通沃掌柜”微信号——我要开店——店铺管理—</span><span style="orphans: 2; widows: 2; color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; background-color: rgb(239, 239, 239);">—商品管理——店长推荐】</span>
+			    </p>
+			    <ul class="custom_dot list-paddingleft-1" style="font-family: 宋体; font-size: 16px; line-height: 24px; width: 529.140625px; orphans: 2; white-space: normal; widows: 2;margin:-10px;">
+			        <li class="list-dot list-dot-paddingleft">
+			            <p style="margin-top: 8px; margin-bottom: 0px; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 1.5em; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
+			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; background-color: rgb(239, 239, 239);">通过选择您认为好卖或热销的商品，<br/>个性化展现在我的店铺“店长推荐“模块。</span><img src="http://www.weixinbianjiqi.com/ue/themes/default/images/spacer.gif" word_img="file:///C:\Users\Daiwen\AppData\Roaming\Tencent\Users\491982157\QQ\WinTemp\RichOle\LZA$YZ)7PYZ2U`5TSM0@_@T.png" style="font-family: 宋体; font-size: 16px; line-height: 24px; border: 1px solid rgb(221, 221, 221); background: url(http://www.weixinbianjiqi.com/ue/lang/zh-cn/images/localimage.png) 50% 50% no-repeat;"/>
+			            </p>
+			        </li>
+			    </ul>
+			    <br/>
+			    <br/>
+			    <p style="font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px; line-height: 1.5em; margin-top: 8px; margin-bottom: 0px; padding: 0px; border: 0px currentcolor; height: 32px;">
+			        <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 12px;  background-color: rgb(239, 239, 239);">（1）<strong>商品新增：</strong>进入“店长推荐”，点击空白”+“，进入商品选择界面，选择商品；</span>
+			    </p>
+			    <p style="margin-top: 8px; margin-bottom: 0px; padding: 0px; border: 0px currentcolor; height: 32px;">
+			        <span style="font-family:微软雅黑, 宋体, tahoma, arial"><span style="font-size: 12px; line-height: 1.5em;">&nbsp;（2）</span></span><strong style="font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px; line-height: 1.5em;">商品删除：</strong><span style="color:#595959;font-family:arial, helvetica, sans-serif"><span style="font-size: 12px;">点击右上角”管理“按键，商品图右侧出现删除图标”—“，点击即可删除。</span></span>
+			    </p>
+			    <br/>
+			    <p style="font-family: 宋体; font-size: 16px; line-height: 24px; text-align: center;">
+			        <img src="/ueditor/php/upload/image/20150430/1430380939426444.jpg" title="1430380939426444.jpg" alt="QQ图片20150430160051.jpg" width="568" height="328" style="width: 200px; height: 300px;"/>
+			    </p>
+			</fieldset>
 		</div>
     
     

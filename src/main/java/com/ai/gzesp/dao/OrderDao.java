@@ -17,7 +17,17 @@ public interface OrderDao {
     
     public int updateNumberState(@Param("serial_number") String serial_number); 
     
+    public int insertNumberReserve(@Param("serial_number") String serial_number, @Param("code_state") String code_state); 
+    
     public int updateGoodsAmount(@Param("goods_id") String goods_id);
     
     public Map<Object, Object> getNetTypeByGoodsId(@Param("goods_id") String goods_id); 
+    
+    public List<Map<Object, Object>> queryNumbersTimeout(); 
+    
+    public int releaseNumberState(@Param("numbers") String[] numbers); 
+    
+    public int deleteNumberReserve(@Param("numbers") String[] numbers); 
+    
+    public Map<Object, Object> getNumberByOrderId(@Param("order_id") String order_id); 
 }

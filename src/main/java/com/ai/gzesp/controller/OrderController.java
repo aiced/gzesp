@@ -24,6 +24,7 @@ import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.token.Token;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -113,6 +114,7 @@ public class OrderController {
         return mav;
     }
     
+    @Token(save=true)
     @RequestMapping("/fillOrderMain")
     public ModelAndView fillOrderMain(@RequestBody String inputParams){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
@@ -137,6 +139,7 @@ public class OrderController {
         return mav;
     }
     
+    @Token(remove=true)
     @RequestMapping("/submitFilledOrder")
     public ModelAndView submitFilledOrder(@RequestBody String inputParams) throws UnsupportedEncodingException{
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);

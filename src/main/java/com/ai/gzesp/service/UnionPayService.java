@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.UnionPayDao;
 import com.ai.gzesp.dto.UnionPayParam;
+import com.ai.gzesp.unionpay.ClientHandler;
 import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayAttrs;
 import com.ai.gzesp.unionpay.UnionPayCons;
@@ -31,6 +32,9 @@ public class UnionPayService {
     
     @Autowired
     private UnionPayDao unionPayDao;
+    
+    @Autowired
+    private ClientHandler clientHandler;
     
     
 /*    public Map<Object, Object> getSignCode(String bank_card_no, String bank_card_expire_date, String bank_card_cvn,
@@ -122,7 +126,8 @@ public class UnionPayService {
             
             //调用mina客户端发送报文
             if(xmlSend != null){
-            	isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }
             
             if(!isSuccess){
@@ -224,7 +229,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){
@@ -278,11 +284,17 @@ public class UnionPayService {
 
     }
     
+    /**
+     * 根据银行卡号查询是否有绑定成功的签约号
+     * @param bank_card_no
+     * @return
+     */
     public Map<String, String> querySignCode(String bank_card_no) {
         //查询是否有签约号，如果有直接用来调支付接口，没有则调绑定接口获取签约号，然后再支付接口
         Map<String, String> signCodeRow = unionPayDao.querySignCode(bank_card_no);
         return signCodeRow;
     }
+
     
     /**
      * 收到银联绑定接口的返回后，更新paylog日志表<br>
@@ -297,6 +309,25 @@ public class UnionPayService {
         return unionPayDao.updateBindlog(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
                 respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
                 respMap.get(UnionPayAttrs.sysTradeNo));
+    } 
+    
+    /**
+     * 收到银联绑定接口的返回后，更新paylog日志表<br>
+     * 此为银联改造后新的逻辑方法，绑定接口返回后不再更新 签约信息表，只更新绑定接口日志，并且把签约号字段pay_acunt_no更新上
+     *
+     * @param respMap
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public int updateBindlogNew(Map<String, String> respMap) {
+    	String sign_code = null; //表里存放md5加密的签约号,如果返回成功需要更新，返回失败更新成null
+    	if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
+    		sign_code = MD5Util.convertMD5(respMap.get(UnionPayAttrs.signCode)); //表里存放md5加密的签约号
+        }
+        return unionPayDao.updateBindlogNew(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
+                respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
+                respMap.get(UnionPayAttrs.sysTradeNo), sign_code);
     } 
     
     /**
@@ -408,7 +439,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	isSuccess = clientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){
@@ -486,7 +518,97 @@ public class UnionPayService {
         return unionPayDao.updateSignCodeValidFlag(sign_code, "3"); //0:还未绑定 1:绑定成功 2:绑定失败 3:绑定解除
     }
     
+    /**
+     * 根据orderid查询能人店铺id
+     * @param order_id
+     * @return
+     */
     public Map<Object, Object> queryUserIdByOrderId(String order_id) {
         return unionPayDao.queryUserIdByOrderId(order_id);
+    }
+    
+    
+    /**
+     * 插入绑定日志记录 签约号先空着等待绑定接口返回后更新，
+     * 此方法为银联改造后新的逻辑，发送绑定接口前不再插签约信息表
+     * @param param
+     * @return
+     */
+    public void insertBindlog(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        boolean isSuccess = false;
+
+            String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.bind.getTradeType()); //系统跟踪号
+            param.setBind_sys_trade_no(sysTradeNo);
+            String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
+            param.setBind_time_stamp(timeStamp);
+            String tradeType = TradeType.bind.getTradeType(); //业务类型
+            param.setBind_trade_type(tradeType);
+            
+            //调用绑定接口前插订单支付日志表
+            int n2 = unionPayDao.insertBindlog(param.getBind_sys_trade_no(), //pay_id
+            		param.getBind_sys_trade_no().substring(14, 16), //partition_id
+            		"01",  //pay_type
+            		param.getCard_type().equals("01") ? "11" : "12", //pay_mode
+            				"0", //pay_state 初始0已发起支付
+            				param.getBind_time_stamp(), //req_time
+            				"00", //isSuccess ? "00" : "01",  //req_status  这边有点问题，其实还没发送出去，就写了发送成功状态
+            						param.getBind_trade_type(), //req_trade_type
+            						param.getBind_sys_trade_no(), //sys_trade_no
+            						param.getOrder_id(),
+            						param.getFee()  //订单传过来是厘，传给银联单位是分 需要乘以10
+            		);
+
+            if(n2>0){
+            	//成功则result为空
+            }
+            else{
+                result.put("status", "E01");
+                result.put("detail", "支付失败！绑定日志插入失败");
+                //return result; //直接返回
+            }   
+        
+        //return result;
+    }
+    
+    /**
+     * 绑定成功发送后等待银联返回签约号
+     * 此方法为银联改造后新的逻辑
+     * @param param
+     * @param result
+     */
+    public void waitForBindRespNew(UnionPayParam param, Map<String, String> result){
+    	//Map<String, String> result = new HashMap<String, String>();
+        //如果绑定接口调用成功就要开始等待银联返回签约号了，如果超时未返回则支付失败
+            int timeout = 0;
+            while(true){
+                if(timeout >= UnionPayCons.WAIT_TIMEOUT){
+                    result.put("status", "E03");
+                    result.put("detail", "支付失败！发送绑定接口报文后未接收到银联响应");
+                    break;
+                }
+                try {
+                    Thread.sleep(UnionPayCons.SLEEP_INTERVAL_BIND);
+                    timeout += UnionPayCons.SLEEP_INTERVAL_BIND;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } //每次轮询等待1秒钟
+                //Map<String, String> row = unionPayDao.querySignCode(param.getBank_card_no()); //查询签约表里是否已经有银联返回的结果了
+                //查询绑定接口日志表里是否已经有银联返回的结果了
+                Map<String, String> bindResultRow = unionPayDao.queryBindResultRow(param.getBind_sys_trade_no()); 
+                if(bindResultRow != null){
+                	//如果绑定返回码是00成功,如果失败则返回错误码和错误提示
+                	if(UnionPayCons.RESULT_CODE_SUCCESS.equals(bindResultRow.get("RESULT_CODE"))){
+                		param.setSign_code(MD5Util.convertMD5(bindResultRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
+                	}
+                	else{
+                		result.put("status", bindResultRow.get("RESULT_CODE"));
+                        result.put("detail", bindResultRow.get("RESULT_DESC"));
+                	}
+                    break;
+                }
+            }
+        
+        //return result;
     }
 }

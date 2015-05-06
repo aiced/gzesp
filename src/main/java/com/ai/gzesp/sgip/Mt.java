@@ -1,12 +1,12 @@
 package com.ai.gzesp.sgip;
 
-import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
-import com.huawei.insa2.comm.sgip.message.SGIPMessage;
-import com.huawei.insa2.comm.sgip.message.SGIPSubmitMessage;
-import com.huawei.insa2.comm.sgip.message.SGIPSubmitRepMessage;
-import com.huawei.insa2.util.Args;
-import com.huawei.smproxy.SGIPSMProxy;
+//import java.io.UnsupportedEncodingException;
+//import java.math.BigInteger;
+//import com.huawei.insa2.comm.sgip.message.SGIPMessage;
+//import com.huawei.insa2.comm.sgip.message.SGIPSubmitMessage;
+//import com.huawei.insa2.comm.sgip.message.SGIPSubmitRepMessage;
+//import com.huawei.insa2.util.Args;
+//import com.huawei.smproxy.SGIPSMProxy;
 
 /**
  * 短信上行：esp系统发送内容给联通短信中心<br> 
@@ -18,7 +18,7 @@ import com.huawei.smproxy.SGIPSMProxy;
  */
 public class Mt {
 
-    private static String SPNumber = "1065579112";//接入号码
+/*    private static String SPNumber = "1065579112";//接入号码
     private static String ChargeNumber = "000000000000000000000"; // 计费号码，我们是白名单
     private static String ServiceType = "JXHD";//服务类型
     private static String host = "192.168.88.156"; // 主机名，网关IP
@@ -111,6 +111,6 @@ public class Mt {
             System.out.println("发送成功：：：");
         }
         return repMsg.getResult();
-    }
+    }*/
 
 }

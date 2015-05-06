@@ -51,7 +51,7 @@ public class WeShopOrderDetailController {
             mav.addObject("title", "订单详情");
             mav.addObject("ORDER_ID","没有数据");
             mav.addObject("GOODS_NAME","没有数据");
-            mav.addObject("INCOME_MONEY","没有数据");
+            mav.addObject("TOPAY_FEE",0);
             mav.addObject("Order_Time","没有数据");
             mav.addObject("RECEIVER_NAME","没有数据");
             mav.addObject("POST_ADDR","没有数据");
@@ -60,20 +60,23 @@ public class WeShopOrderDetailController {
             mav.addObject("PAY_MODE","没有数据");
             mav.addObject("ORDER_STATE","没有数据");      
             //mav.addObject("PAY_REMARK","没有数据");
+            mav.addObject("RES_ATTR_VAL","没有数据"); 
 		
 		}
         else {
             mav.addObject("title", "订单详情");
             mav.addObject("ORDER_ID",strOrderid);
             mav.addObject("GOODS_NAME",orderList.get(0).get("GOODS_NAME"));
-            mav.addObject("INCOME_MONEY",orderList.get(0).get("INCOME_MONEY"));
+            mav.addObject("TOPAY_FEE",orderList.get(0).get("TOPAY_FEE"));
             mav.addObject("Order_Time",orderList.get(0).get("Order_Time"));
             mav.addObject("RECEIVER_NAME",orderList.get(0).get("RECEIVER_NAME"));
             mav.addObject("POST_ADDR",orderList.get(0).get("POST_ADDR"));
             mav.addObject("MOBILE_PHONE",orderList.get(0).get("MOBILE_PHONE"));
             mav.addObject("DELIVER_TIME_CODE",orderList.get(0).get("DELIVER_TIME_CODE"));
             mav.addObject("PAY_MODE",orderList.get(0).get("PAY_MODE"));
-            mav.addObject("ORDER_STATE",orderList.get(0).get("ORDER_STATE"));      
+            mav.addObject("ORDER_STATE",orderList.get(0).get("ORDER_STATE")); 
+            mav.addObject("RES_ATTR_VAL",orderList.get(0).get("RES_ATTR_VAL")); 
+            
            // mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
 		
 		}

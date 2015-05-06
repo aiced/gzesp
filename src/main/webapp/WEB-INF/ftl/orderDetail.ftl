@@ -38,18 +38,31 @@
 		<!--top_end-->
         <div class="orderinfo">
             <div class="list-group">
-                <a href="#" class="list-group-item"><h5>订单编号：${ORDER_ID}</h5></a>
-                <a href="#" class="list-group-item"><h5>订单金额：${INCOME_MONEY}元</h5></a>
+                <a href="#" class="list-group-item"><h5>订单编号：${ORDER_ID}</h5></a> 
+                <a href="#" class="list-group-item"><h5>订单金额(¥)：${(TOPAY_FEE/1000)?string("#.##")}</h5></a>
+                <a href="#" class="list-group-item"><h5>订购号码：${RES_ATTR_VAL}</h5></a>
                 <a href="#" class="list-group-item"><h5>下单时间：${Order_Time}</h5></a>
             </div>
             <div class="list-group">
                 <a href="#" class="list-group-item"><h5>收货人姓名：${RECEIVER_NAME}</h5></a>
                 <a href="#" class="list-group-item"><h5>收获地址：${POST_ADDR}</h5></a>
                 <a href="#" class="list-group-item"><h5>联系电话：${MOBILE_PHONE}</h5></a>
-                <a href="#" class="list-group-item"><h5>送货日：${DELIVER_TIME_CODE}</h5></a>
+                <!--<a href="#" class="list-group-item"><h5>送货日：${DELIVER_TIME_CODE}</h5></a>-->
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item"><h5>支付方式：${PAY_MODE}</h5></a>
+                <a href="#" class="list-group-item">
+                <h5>支付方式：
+				<#if (PAY_MODE=='11')>
+                	银联信用卡
+                <#elseif (PAY_MODE=='12')>
+                	银联储蓄卡
+                <#elseif (PAY_MODE=='21')>
+                	支付宝
+				<#else>
+					未知
+                </#if>
+                </h5>
+                </a>
                 <a href="#" class="list-group-item">
                 <h5>订单状态:
 				<#if (ORDER_STATE=='00')>

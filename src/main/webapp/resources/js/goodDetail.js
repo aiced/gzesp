@@ -10,14 +10,20 @@
          $(this).addClass('tab-on'); 
          $(this).siblings().removeClass('tab-on');
          
-         //如果选择了A/B/C 套餐 还需要展示描述, 要有attr_desc的属性才触发
-         if(typeof($(this).attr('attr_desc')) != 'undefined'){
-        	 $('#package_detail').show();
-        	 $('#package_detail').html($(this).attr('attr_desc'));
+         //如果选择了A/B/C 套餐 还需要展示描述, 要有pckplan_desc的属性才触发
+         if(typeof($(this).attr('pckplan_desc')) != 'undefined'){
+        	 //$('#pckplan_desc').show();
+        	 $('#pckplan_desc').html($(this).attr('pckplan_desc'));
          }
+         
+         //如果选择了不同套餐月费 还需要展示描述, 要有attr_desc的属性才触发
+         if(typeof($(this).attr('package_desc')) != 'undefined'){
+        	 //$('#package_desc').show();
+        	 $('#package_desc').html($(this).attr('package_desc'));
+         }         
        });
        
-       //激活图文详情页面tab导航
+       //激活图文详情页面tab导航 图文详情不用tab页了
        $('#myTab a').click(function (e) {
           e.preventDefault();
           $(this).tab('show');
@@ -27,7 +33,15 @@
 	          e.relatedTarget // previous active tab
 	          //$(this).css('background-color', '#ffa200');
 	          //$(e.relatedTarget).css('background-color', '#f4f4f4');
-	        });       
+	        });      
+	    
+	    //轮播广告添加hammer.js 滑动手势功能
+	       $('#myCarousel').hammer().on('swipeleft', function(){
+	     	  $(this).carousel('next');
+	     	});
+	     	$('#myCarousel').hammer().on('swiperight', function(){
+	     	  $(this).carousel('prev');
+	     	});	    
        
      });
      
@@ -67,7 +81,8 @@ function planGotoOrderMain(){
     	return false;
     }
     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
-    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+    if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
 	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
@@ -82,7 +97,8 @@ function phoneGotoOrderMainNew(){
 		return false;
 	}
     var attr_val = getAttrVal();
-    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+    if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
     $('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc);     
@@ -95,10 +111,24 @@ function phoneGotoOrderMainNew(){
 function phoneGotoOrderMainOld(){
 	var attr_val = getAttrVal();
 	$('#attr_val').val(attr_val); 
-	if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD}
+	if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+	if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
 	$('#form1').attr('action', $('#form1').attr('url2')); //替换action路径，新号和老用户跳转路径不一样
+	$('#form1').submit();
+	//alert($('#attrs').val());
+}
+
+//上网卡 商品详情页面 立即购买 按钮跳转到订单填写页面
+function cardGotoOrderMain(){
+    var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
+    attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
+    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+    if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
+	$('#attr_val').val(attr_val); 
+    var goods_disc = getGoodsDisc();
+    $('#goods_disc').val(goods_disc); 	
 	$('#form1').submit();
 	//alert($('#attrs').val());
 }

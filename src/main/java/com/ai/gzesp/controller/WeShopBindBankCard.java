@@ -77,7 +77,7 @@ public class WeShopBindBankCard {
     	record.setBankName(strBankName);
     	record.setBankAcct(strBankCard);
     	int icount=tdAurDBASEINFODao.updateByExampleSelective(record, example);
-    	
+    	System.out.println("icount="+icount);
     	if (icount>0) {
 			return true;
 		}
@@ -96,7 +96,7 @@ public class WeShopBindBankCard {
     	
     	String strUserID=paramsMap.get("hide_userid");
     	//http://localhost:8080/esp/shopManage/commissionQuery?userid=2015042002370671
-        ModelAndView mav =new ModelAndView("redirect:/shopManage/commissionQuery?userid="+strUserID);
+        ModelAndView mav =new ModelAndView("redirect:/shopManage/weShopSet?userid="+strUserID);
     
 
         return mav;

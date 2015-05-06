@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-   
-  
 
-</head>
-<body>
 
     	<!--top_start-->
         <div id="top">
@@ -29,7 +22,7 @@
                 
                      <div class="input-group ">
                           <span class="input-group-addon" id="sizing-addon1">省</span>
-		                <select name="selProvince" id="selProvince" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon1">
+		                <select  name="selProvince" id="selProvince" class="form-control" placeholder="请选择地区" aria-describedby="sizing-addon1">
 			      			<option value="85">贵州</option>
 		                </select>
                      </div>
@@ -60,7 +53,3 @@
                 <br/>
                 <button id="receiveInfoBtn" class="btn btn-warning btn-block " type="button" name="receiveInfoBtn" >确定</button>
         </div>
-
-
-</body>
-</html>

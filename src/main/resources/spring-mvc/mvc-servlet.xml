@@ -15,9 +15,12 @@
     <context:annotation-config />  
   
     <!-- 配置注解驱动的Spring MVC Controller 的编程模型.注:次标签只在 Servlet MVC工作! -->  
-    <mvc:annotation-driven />
+<!--     <mvc:annotation-driven /> -->
     
     <context:component-scan base-package="com.ai" />
+
+<!--     <bean id="clientHandler" class="com.ai.gzesp.unionpay.ClientHandler" />   -->
+    
 <!--     <context:component-scan base-package="com.ai" > -->
 <!--     	<context:exclude-filter type="regex" expression=".gzesp.unionpay.*"/> -->
 <!--     </context:component-scan> -->

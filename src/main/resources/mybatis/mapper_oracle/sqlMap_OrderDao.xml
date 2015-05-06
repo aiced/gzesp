@@ -9,13 +9,18 @@
       select m.*, rownum row_num
         from (	
         select a.serial_number, 
-               a.nice_fee/1000 nice_fee
+               nvl(a.nice_fee,0)/1000 nice_fee
           from NUM_D_NUMINFO a
          where a.code_state = '1'
            and a.province_code = '85'
-            <if test="net_type_code != null">
-               and a.net_type_code like '%'||#{net_type_code}||'%'
-            </if>           
+          <choose>
+		    <when test="net_type_code != null">
+			  and a.net_type_code like '%'||#{net_type_code}||'%'
+			</when>  
+		    <otherwise>
+			  and a.net_type_code != '04'
+		    </otherwise>
+	      </choose>           
             <if test="keyword != null">
                and a.serial_number like '%'||#{keyword}||'%'
             </if>
@@ -27,12 +32,12 @@
             </if>
             <if test="nice_fee_start != null">
                <![CDATA[ 
-                 and a.nice_fee >= #{nice_fee_start}*1000
+                 and (a.nice_fee is null or a.nice_fee >= #{nice_fee_start}*1000)
                   ]]>
             </if>
             <if test="nice_fee_end != null">
                <![CDATA[ 
-               and a.nice_fee <= #{nice_fee_end}*1000
+               and (a.nice_fee is null or a.nice_fee <= #{nice_fee_end}*1000)
                ]]>
             </if>
           order by 
@@ -72,6 +77,12 @@
           and a.code_state = '1'
 	</update>
 	
+	<insert id="insertNumberReserve">
+       insert into NUM_D_RESERVE
+              (serial_number, code_state, add_time)
+       values(#{serial_number}, #{code_state}, sysdate)	
+	</insert>
+	
 	<update id="updateGoodsAmount" >
       update gds_d_amount
          set goods_amount = 
@@ -95,6 +106,41 @@
         and a.goods_id = b.goods_id
         and b.res_id = c.res_id
         and c.attr_code = 'NETTYPE'
-	</select>		
+	</select>	
+	
+	<select id="queryNumbersTimeout" resultType="java.util.HashMap">
+      <![CDATA[
+     select serial_number, code_state
+       from NUM_D_RESERVE
+      where add_time <= sysdate - 1/(24*2)
+        and code_state = '2'
+         ]]>    
+	</select>	
+	
+	<update id="releaseNumberState" >
+	   update num_d_numinfo a
+          set a.code_state = '1'
+        where serial_number in
+              <foreach collection="numbers" item="serial_number" index="index"
+                  open="(" close=")" separator=",">
+                   #{serial_number}
+              </foreach>
+	</update>	
+	
+	<delete id="deleteNumberReserve">
+	   delete from NUM_D_RESERVE
+        where serial_number in
+              <foreach collection="numbers" item="serial_number" index="index"
+                  open="(" close=")" separator=",">
+                   #{serial_number}
+              </foreach>
+	</delete>	
+	
+	<select id="getNumberByOrderId" resultType="java.util.HashMap">
+      select RES_ATTR_VAL serial_number
+        from ORD_D_RES
+       where order_id = ${order_id}
+         and RES_ATTR_CODE = 'NUMBERS'
+	</select>	
 	
 </mapper>

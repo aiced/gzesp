@@ -7,6 +7,8 @@ var orderStat = {
 }
 
 var orderFormParams = {
+		token:"",
+		
 		orderFrom:"01",
 		originalPrice:"",
 		couponMoney:"",
@@ -80,6 +82,8 @@ $(function() {
 	//子页确认事件
 	$('#netInfoBtn').bind("click",function(){
 		if(netInfo_checkData()) {
+			uploadPic(this);
+			
 			orderStat.netInfoStat = 1;
 			$('#netInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
@@ -124,6 +128,8 @@ $(function() {
 	$('#otherInfoBtn').bind("click",function(){
 //		if(otherOrder_checkData()) {
 			orderStat.otherInfoStat = 1;
+//			$('#otherInfoTab').find('img:first').addClass("hide");
+//			$('#otherInfoTab').find('img:last').removeClass("hide");
 			$('#otherInfo').css({ "display":"none" });
 			$('#orderMain').css({ "display":"block" });
 //		}
@@ -154,29 +160,33 @@ $(function() {
 	
 	
 	//选择文件
-	$("input[type='file']").change(function(evt){
-	    if(evt.target.files.length == 0){
+	$(':file').change(function(event){
+    	if(this.files.length == 0){
 	        return;
 	    }
-//	    $(".mask").show().height($(document).height());
-	    var f = evt.target.files[0], $this = $(this), type = this.value.substr(this.value.lastIndexOf(".")).toLowerCase() ,type2 = f.type;
-	    if(type2==""){
-//	        $(".mask").show().height($(document).height());
-//	        $(".img-select-wrong").show().vCenter();
-	        return;
-	    }
+	    var f = this.files[0],thisFileEle = $(this), type = this.value.substr(this.value.lastIndexOf(".")).toLowerCase() ,type2 = f.type;
+	    
 	    //选择的图片非bmp、jpg、jpeg时，清空文件选择，展示提示框
-	    if(!(type == ".jpg" || type == ".bmp" || /^image\/(jpeg|jpg|bmp)$/.test(type2))){
+	    if(!(type == ".jpg" || type == ".png" || type == ".bmp" || /^image\/(jpeg|jpg|png|bmp)$/.test(type2))){
+	    	alert('只能选择jpg、png格式图片');
 	        return;
 	    }
 	    var reader = new FileReader();
-	    $(reader).load(function() {
-	    	 var dataURL = this.result;
-	    	 var preview = $this.siblings("img");
-	    	 preview.attr("src", dataURL);
-	    });
+	    reader.onload = function(event){ 
+//	    	$('#picsHolder').append(event.target.result) ;
+	    	var dataURL = this.result;
+//	    	 alert(dataURL.length);
+	    	if(!dataURL.match(/^data:image/)) {
+	    		dataURL = dataURL.replace(/^data:/,"data:image/"+type+";");
+	    	}
+	    	 var preview = thisFileEle.siblings("img");
+//	    	 alert(dataURL.length);
+	    	 preview.attr('title', f.name).attr("src", dataURL);
+	    	 
+//	    	console.log($.isCanvasSupported());
+	    };
 	    //读取文件的缓冲数组流，读取完毕后执行onload
-	    reader.readAsDataURL(f);
+        reader.readAsDataURL(f);
 	});
 	
 	
@@ -208,6 +218,15 @@ function getDistrictListByCityCode(cityCode) {
 		});	
 }
 
+function isPhoneNum(strPhoneNum)
+{
+	if(strPhoneNum && /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/.test(strPhoneNum)){
+	    return true;//是手机号
+	} else{
+	    return false; //不是手机号
+	}
+}
+
 //wenhui_newReceiveAddress_数值校验
 function addres_checkData()
 {
@@ -220,6 +239,12 @@ function addres_checkData()
 	{
 		alert("请输入手机号码");
 		return false;
+	} else {
+		var flag = isPhoneNum($("#txtphone").val());
+		if(!flag) {
+			alert("手机号码格式错误");
+			return false;
+		}
 	}
 	if(!$("#txtaddress").val())
 	{
@@ -278,13 +303,13 @@ function netInfo_checkData() {
 	 }
     
 
-//    if($('#firstCard').attr("src") =='/esp/resources/image/order/card01.png'){
-//    	alert("证件照片不能为空");   	
-//    	return false;
-//    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
-//    	alert("证件照片不能为空");   	
-//    	return false;
-//    }
+    if($('#firstCard').attr("src") =='/esp/resources/image/order/card01.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }else if($('#secondCard').attr("src") =='/esp/resources/image/order/card02.png'){
+    	alert("证件照片不能为空");   	
+    	return false;
+    }
     return true;
 }
 //	
@@ -320,6 +345,8 @@ function checkPostSelect() {
 
 
 function getParams() {
+	orderFormParams.token = $('#token').val();
+	
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
 	
@@ -363,42 +390,44 @@ function getParams() {
 	orderFormParams.topayFee= $('#goodsPrice').val();
 }
 
-function uploadPic(){
+function uploadPic(btn){
+	
+	if(orderFormParams.cardPic1.length != 0
+			&& orderFormParams.cardPic2 != 0) {
+		//alert('照片已经上传');
+		return;
+	}
+	
+	$(btn).attr('disabled', true);
 	
 	var params = {
 			"idCardNum": $('#userCard').val()
 	};
-	 $.ajaxFileUpload({  
+	
+	 $.ajaxFileUpload({
 	        url : "../common/uploadFile", 
 	        async:false, 
 	        secureuri : false,  
-	        fileElementId : "file-front",  
+	        fileElementIds : ["file-front", "file-back"],  
 	        dataType : 'json',
 			data: params,
 	        success : function(rtdata, status) { 
-	        	alert(rtdata.url);
-	        	orderFormParams.cardPic1 = rtdata.url;
+	        	//alert(rtdata);
+	        	if(rtdata.rspCode=='0000') {
+	        		orderFormParams.cardPic1 = rtdata.fileInfoList[0].url;
+	        		orderFormParams.cardPic2 = rtdata.fileInfoList[1].url;
+	        		$(btn).removeAttr("disabled"); 
+	        		//formSubmit();
+	        	} else {
+	        		alert('网络不给力哦,请重新上传');
+	        		$(btn).removeAttr("disabled"); 
+	        	}
 	        },  
 	    });  
 	 
-	 $.ajaxFileUpload({  
-	        url : "../common/uploadFile", 
-	        async:false, 
-	        secureuri : false,  
-	        fileElementId : "file-back",  
-	        dataType : 'json',
-			data: params,
-	        success : function(rtdata, status) { 
-	        	alert(rtdata.url);
-	        	orderFormParams.cardPic2 = rtdata.url;
-	        },  
-	    });  
 };
 
 function nextPage() {
-	
-//	uploadPic();
-//	return;
 	
 	if(orderStat.netInfoStat==0) {
 		alert('请完整入网资料');
@@ -422,10 +451,8 @@ function nextPage() {
 //		return;
 //	}
 	
-	uploadPic();
-//	
-//	setTimeout('formSubmit()', 2000);
-	
+//	$('#submitOrdBtn').attr('disabled', true);
+//	uploadPic();
 	formSubmit();
 }
 

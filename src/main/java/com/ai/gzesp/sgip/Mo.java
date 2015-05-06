@@ -1,10 +1,10 @@
 package com.ai.gzesp.sgip;
 
-import com.huawei.insa2.comm.sgip.message.SGIPDeliverMessage;
-import com.huawei.insa2.comm.sgip.message.SGIPMessage;
-import com.huawei.insa2.comm.sgip.message.SGIPSubmitRepMessage;
-import com.huawei.insa2.util.Args;
-import com.huawei.smproxy.SGIPSMProxy;
+//import com.huawei.insa2.comm.sgip.message.SGIPDeliverMessage;
+//import com.huawei.insa2.comm.sgip.message.SGIPMessage;
+//import com.huawei.insa2.comm.sgip.message.SGIPSubmitRepMessage;
+//import com.huawei.insa2.util.Args;
+//import com.huawei.smproxy.SGIPSMProxy;
 
 /**
  *  短信下行：联通短信中心发送给esp<br> 
@@ -14,9 +14,12 @@ import com.huawei.smproxy.SGIPSMProxy;
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-public class Mo extends SGIPSMProxy {
+//public class Mo extends SGIPSMProxy {
+public class Mo{
+	//如果下面打开注释，就删掉此行
 
-    //SMG服务器信息
+
+/*    //SMG服务器信息
     private static String serHost = "192.168.88.156";
     private static int serviceport = 8801;
     
@@ -45,27 +48,27 @@ public class Mo extends SGIPSMProxy {
         
         Mo mymo=new Mo(argstr);        
     }
-    /**
+    *//**
      * 收到用户回复的短信(上行)。
      * 
      * @param msg
      *            收到的消息
      * @return 返回的相应消息。
-     */
+     *//*
     public SGIPMessage onDeliver(SGIPDeliverMessage msg) {
-        /** @todo do some thing to handle this message. then return a response */
+        *//** @todo do some thing to handle this message. then return a response *//*
 
         ProcessRecvDeliverMsg(msg);
         System.out.println("正在等待接收.......");
         return super.onDeliver(msg);
     }
 
-    /**
+    *//**
      * 对收到短讯中心下发的短消息的处理。 收到用户信息
      * 
      * @param msg
      *            短讯中心下发的短消息
-     */
+     *//*
     public void ProcessRecvDeliverMsg(SGIPMessage msg) {
         if (msg instanceof SGIPSubmitRepMessage) {
             System.out.println("返回下发短信的相应消息");
@@ -95,5 +98,5 @@ public class Mo extends SGIPSMProxy {
                 }
             }
         }
-    }
+    }*/
 }

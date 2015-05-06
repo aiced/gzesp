@@ -11,20 +11,44 @@
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/weShopIndex.css?v=${resVer}" rel="stylesheet">
     
+    <!-- edit_by_wenh_2015_4_23 -->
+    <style type="text/css">
+		.carousel-indicators
+		{
+			bottom:-10%;
+		}
+		.carousel-indicators li
+		{
+			width:5px;
+			height:5px;
+			margin:0px;
+		}
+		.carousel-indicators .active
+		{
+			width:5px;
+			height:5px;
+		}
+    </style>
+
   </head>
 
   <body>
+    <!-- 手机浏览器分享会用到的图片 -->
+    <div style="display: none;">
+    	<img src='http://res.gz10010.xyz/uploader/share_logo.png' alt="" class="img-responsive"/>
+	</div> 
+  
     <!-- head bar -->
-    <div class="container-fluid" style="background-color:#f1791a;padding:5px">
-      <div class="row" style="margin:0px;">     
-        <div class="col-xs-4" >
-          <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="position:static;+position:relative;top:-50%;left:-50%;"/>
-        </div>
-        <div class="" style="padding-top:5px;" >
-        	<!-- <a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a> -->
-        	<a href="${base}/customer/custOrderQuery" style="color:white;float: right;font-size: 12px;"><u>我的订单</u></a>
-        </div>       
-      </div>
+    <div style="background-color:#f1791a;padding:5px;height:45px;line-height: 35px;">
+       <div style="float: left;">
+         <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="width:80px;height: 30px;"/>
+       </div>
+       <div style="float:left;font-size: 10px;color: white;margin-left:10px;margin-top: 4px;">内测版</div>
+       <div style="float:right;" >
+       	<!-- <a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a> -->
+       	<a href="${base}/customer/custOrderQuery" style="color:white;float: right;font-size: 12px;"><u>我的订单</u></a>
+       </div>
+       <div style="clear:both;"></div>       
     </div>
   
     <!-- 分享到弹出框 -->    
@@ -48,7 +72,7 @@
     </div>  
 
     <!-- Carousel 广告轮播-->	
-    <div id="myCarousel" class="carousel slide" data-ride="carousel" style="background-color:#f1791a">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" >
       <ol class="carousel-indicators">
         <#list banners as item>  
           <#if item_index=0>
@@ -65,7 +89,7 @@
           <#else>
             <div class="item">
           </#if>
-              <img src="${item.banner_url}" alt="" />
+              <a href="${base}${item.banner_href}/${user_id}?imgsrc=${item.banner_url}"><img src="${item.banner_url}" alt="" style="height:120px;width:100%;"/></a>
               <div class="container">
                 <div class="carousel-caption">
               </div>
@@ -110,8 +134,10 @@
             <li style="font-size:15px;">微信：${developer.WEIXIN_ID}</li>
           </ul>  
     	</div>
+    	
     	<div class="col-xs-3" style="padding:0px" id="qrcodeDiv">
-    	</div>    		    		
+    	</div>
+    	   		    		
       </div>	            
     </div>
     
@@ -136,25 +162,27 @@
       </div>
       <div class="row" style="margin-top:0px;">
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="${base}/weShop/goodSelect/flow/${user_id}">
+     	<#-- ${base}/weShop/goodSelect/flow/${user_id}-->
+    	  <a href="#" onclick="Tishi();">
     	    <img src="${resRoot}/image/weShop/tsllb4.png" alt="" class="img-rounded img-responsive" />
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="${base}/weShop/goodSelect/band/${user_id}">
+    	<#--${base}/weShop/goodSelect/band/${user_id}-->
+    	  <a href="#" onclick="Tishi();">
     	    <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	  <a href="#">
+    	  <a href="#" onclick="Tishi();">
     	    <img src="${resRoot}/image/weShop/sjpj4.png" alt="" class="img-rounded img-responsive" />
     	  </a>    
     	</div>
-      </div>
+      </div> 
     </div>    
     
     <!--店长推荐 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#ffd3d3;">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px;">
     	  <img src="${resRoot}/image/weShop/dztj.png" alt="" class="img-responsive">  
@@ -174,7 +202,14 @@
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
-    	  	  <p style="font-size:14px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
     	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
@@ -185,7 +220,7 @@
     </div> 
     
     <!--热销合约 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#e6ffd6;">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px">
     	  <img src="${resRoot}/image/weShop/rxhy.png" alt="" class="img-responsive" />  
@@ -206,8 +241,15 @@
     	        </a>
     	      <!-- <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> -->
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
-    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
-    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
+    	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
             </div> 
@@ -216,8 +258,47 @@
       </#if>                  	            
     </div>         
 
+   <!--热销套餐-->
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
+      <div class="row">
+        <div class="col-xs-12" style="padding-left:10px">
+    	  <img src="${resRoot}/image/weShop/rxtc.png" alt="" class="img-responsive" />  
+    	</div> 		    		
+      </div>     	            
+    </div>
+    <div class="container-fluid" style="margin:0px;padding-top:0px;">
+      <#if (rxtc?? && rxtc?size>0)>
+        <#list rxtc as item>  
+          <#if item_index%2==0>
+            <div class="row">
+              <div class="col-xs-6" style="padding:10px">
+          <#else>
+              <div class="col-xs-6" style="padding:10px">
+          </#if>
+    	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
+    	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
+    	        </a>
+    	      <!-- <h4 style="font-size:14px;font-weight:bold;">${item.GOODS_NAME}</h4> -->
+    	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>    	  	    
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
+    	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
+    	      </div>
+          <#if (item_index%2==1 || !item_has_next)>
+            </div> 
+          </#if>
+        </#list>                   	            
+      </#if>                  	            
+    </div> 
+
     <!--热销网卡 -->
-    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;background-color:#d3dbff;">
+    <div class="container-fluid" style="margin:10px;margin-bottom:0px;padding:5px;padding-top:0px;padding-bottom:0px;">
       <div class="row">
         <div class="col-xs-12" style="padding-left:10px">
     	  <img src="${resRoot}/image/weShop/rxwk.png" alt="" class="img-responsive" />  
@@ -237,8 +318,15 @@
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
-    	  	  <p style="font-size:10px;">合约价:<font class="price-red-bold">${item.GOODS_PRICE}</font></p>
-    	  	  <p style="font-size:10px;">销量:${item.GOODS_AMOUNT}</p>
+    	  	  <p style="font-size:14px;">
+    	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>
+                                   合约价:
+                <#else>
+                                   销售价:
+                </#if>    	  	    
+    	  	    <font class="price-red-bold">${item.GOODS_PRICE}</font>
+    	  	  </p>
+    	  	  <p style="font-size:14px;">销量:${item.GOODS_AMOUNT}</p>
     	      </div>
           <#if (item_index%2==1 || !item_has_next)>
             </div> 
@@ -246,11 +334,13 @@
         </#list>                   	            
       </#if>           	            
     </div>
-      
+   
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>
     <script src="${resRoot}/js/qrcode.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/hammer.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/jquery.hammer.js?v=${resVer}"></script>
     
     <script>
        //获取当前页面url并生成二维码展示在 xx的微店
@@ -265,6 +355,20 @@
         background:"#ffffff",//背景颜色  
         foreground:"#000000" //前景颜色
 	});	
+       //手势滑动操作
+       $('#myCarousel').hammer().on('swipeleft', function(){
+     	  $(this).carousel('next');
+     	});
+     	$('#myCarousel').hammer().on('swiperight', function(){
+     	  $(this).carousel('prev');
+     	});
+       
+     	
+     	function Tishi()
+     	{
+     		alert("敬请期待！");
+     	}
+
     </script>
   </body>
 </html>

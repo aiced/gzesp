@@ -85,21 +85,28 @@
     	//alert($(obj).text());
     	if($(obj).text() == "未激活")
     	{
-    		iStatusflag=4;
-    	}
-    	else if($(obj).text()=="无效单")
-    	{
-    		iStatusflag=2;
+    		iStatusflag='00';
     	}
     	else if($(obj).text()=="结算中")
     	{
-    		iStatusflag=3;
+    		iStatusflag='01';
     	}
-    	else if($(obj).text()=="可提现")
+    	else if($(obj).text()=="已到帐")
     	{
-    		iStatusflag=1;
+    		iStatusflag='02';
+    	}
+    	else if($(obj).text()=="已退货")
+    	{
+    		iStatusflag='03';
     	}	
-    	
+    	else if($(obj).text()=="已失效")
+    	{
+    		iStatusflag='04';
+    	}	
+    	else if($(obj).text()=="全部")
+    	{
+    		iStatusflag='05';
+    	}
     	//二次查询数据，因为有iStatusflag参数的存在
     	selectData();
     	
@@ -122,7 +129,7 @@
 	    }); 
 	    $('#totalRowCount').append('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
 	    $('#totalRow').append('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td>');
-	    $('#totalRow').append('<td><h5><label>'+totalSale+'(元)</label></h5></td>');
+	    $('#totalRow').append('<td><h5><label>'+totalSale.toFixed(2)+'(¥)</label></h5></td>');
 	    $('#totalRow').append('<td><h5><label></label></h5></td>');
     }
     
@@ -134,8 +141,16 @@
    		}
    		else if(iflag==2)
    		{
-   			var param = {"iflag":iflag,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   			if($("#beginTime").val()=='' || $("#endTime").val()=='')//没有点击查询直接进行二次筛选
+   			{
+   				var param = {"iflag":0,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   			}
+   			else
+   			{
+   				var param = {"iflag":iflag,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   			}
    		}
+
    		
    		$.ajax({
    			   type: "POST",
@@ -210,6 +225,21 @@
 	  	 //检验输入数值是否正确
         function checkData()
         {
+	  		 
+        	if(!$("#beginTime").val())
+			{
+        		alert("请输入起始日期");
+        		return false;
+			}
+	  		 
+	  		if(!$("#endTime").val())
+	  		{
+	  			alert("请输入截至日期");
+	  			return false;
+	  		}
+	  			
+	  		 
+	  		 
         	if($("#beginTime").val())
 			{
         		if(!$("#endTime").val())
@@ -385,6 +415,14 @@
 			padding:3px;
 			text-align: center;
 		}
+		.th_title
+		{
+			text-align: center;
+		}
+		#totalRowCount
+		{
+			text-align: left;
+		}
 }
 
     </style>
@@ -420,11 +458,11 @@
 		                <!-- 隐藏控件用于保存userid -->
 						<div class="order_top_middle" >
 							<div class="order_top_middle1">
-								<input id="beginTime"  name="beginTime" value="" placeholder="订单开始时间"/>
+								<input id="beginTime"  name="beginTime" value="" placeholder="开始时间"/>
 							</div>
 							<div class="order_top_middle2">—</div>
 							<div class="order_top_middle3">
-								<input id="endTime" name="endTime" value="" placeholder="订单结束时间"/>
+								<input id="endTime" name="endTime" value="" placeholder="结束时间"/>
 							</div>
 							<!-- 这句和日历控件有关千万别忘掉 -->
 						</div>
@@ -445,19 +483,59 @@
 	    </form>
 
 	    <div class="query_info_detail">
-	        <h5><label>当月收益明细</label></h5>
+	        <h5><label>收益明细</label></h5>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
-					您没有收益
+					<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
+					    <tr>
+					        <th><div class="th_title">商品名称</div></th>
+					        <th><div class="th_title">订单详情</div></th>
+					        <th><div class="th_title">收益(¥)</div></th>
+					        <th>
+								<div class="dropdown" style="padding:0px;">
+									<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+									    	状态
+									    <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<!-- <li><a href="#">可领取</a></li>
+										<li role="presentation" class="divider"></li>
+										<li><a href="#">冻结</a></li>
+										 -->
+										<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
+										<li role="presentation" class="divider"></li>
+										<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
+									</ul>
+								</div>
+							</th>
+					    </tr>
+						<tr>
+							<td colspan="4">您没有收益</td>
+						</tr>
+						<tr id="totalRowCount">
+					
+					   	</tr>
+					    <tr id="totalRow">
+					
+					    </tr>
+					</table>	
 				<#else>
-				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
+				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
 				    <tr>
 				        <!--<th>序号</th>-->
 				        <th><div class="th_title">商品名称</div></th>
 				        <th><div class="th_title">订单详情</div></th>
-				        <th><div class="th_title">收益(元)</div></th>
+				        <th><div class="th_title">收益(¥)</div></th>
 				        <th>
-							<div class="dropdown" style="padding:0px;">
+							<div class="dropdown th_title" style="padding:0px;">
 								<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
 								    	状态
 								    <span class="caret"></span>
@@ -467,13 +545,17 @@
 									<li role="presentation" class="divider"></li>
 									<li><a href="#">冻结</a></li>
 									 -->
-									<li onclick="doStatusClick(this);"><a href="#">可提现</a></li>
+									<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
 									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">无效单</a></li>
+									<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
 									<li role="presentation" class="divider"></li>
 									<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
 									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
+									<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
+									<li role="presentation" class="divider"></li>
+									<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
+									<li role="presentation" class="divider"></li>
+									<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
 								</ul>
 							</div>
 						</th>
@@ -485,23 +567,37 @@
 					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
 						  <td>
 					      	<#if (item.SUM_CMS_MONEY== '')>
-					      		${(item.CMS_PRE_FEE/1000)?string("#.##")}
+					      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
+					      			${(item.CMS_PRE_FEE/1000)?string("#.##")} <!-- 预期 -->
+					      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
+					      			${(item.CMS_PRE_FEE/1000)?string("#.##")}<label style="color: red;">(奖)</label> <!-- 预期 -->
+					      		<#else><!-- 未知 -->
+					      			未知
+					      		</#if>
 					      	<#else>
-					      		${(item.SUM_CMS_MONEY/1000)?string("#.##")}
+					      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
+					      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 -->
+					      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
+					      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 --><label style="color: red;">(奖)</label> <!-- 预期 -->
+					      		<#else><!-- 未知 -->
+					      			未知
+					      		</#if>
 					      	</#if>      
 						  </td><!-- 预期-->
 					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->
 					      <td>
-					      	<#if (item.ACT_STATUS == "")>
+					      	<#if (item.CMS_STATE == "")>
+					      		<span class="label label-default">未知</span>
+					      	<#elseif (item.CMS_STATE=='00')><!-- 未激活-->
 					      		<span class="label label-default">未激活</span>
-					      	<#elseif (item.ACT_STATUS=='0'  && item.OPENDATE_STATUS=='0')><!-- 没激活没到时间:未激活 -->
-					      		<span class="label label-default">未激活</span>
-					      	<#elseif (item.ACT_STATUS=='0' && item.OPENDATE_STATUS=='1')><!-- 没激活到时间:无效单 -->	
-					      		<span class="label label-primary">无效单</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='0')><!-- 激活没到时间:结算中 -->
-					      		<span class="label label-warning">结算中</span>
-					      	<#elseif (item.ACT_STATUS=='1' && item.OPENDATE_STATUS=='1')><!-- 激活到时间 :可提现-->
-					      		<span class="label label-success">可提现</span>
+					      	<#elseif (item.CMS_STATE=='01')><!-- 结算中 -->	
+					      		<span class="label label-primary">结算中</span>
+					      	<#elseif (item.CMS_STATE=='02')><!-- 已到帐 -->
+					      		<span class="label label-success">已到帐</span>
+					      	<#elseif (item.CMS_STATE=='03')><!-- 已退货-->
+					      		<span class="label label-warning">已退货</span>
+					      	<#elseif (item.CMS_STATE=='04')><!-- 已失效-->
+					      		<span class="label label-danger">已失效</span>	
 					      	</#if>
 					      </td><!-- 状态 -->
 						</tr>
@@ -520,7 +616,7 @@
 	    <br/>
 	    <br/>
 		<div>
-			<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
+			&nbsp;&nbsp;&nbsp;<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
 	        <!-- <div class="query_info_bottom">
 				温馨提示：我们每天凌晨4点根据用户状态计算收益收益，处于冻结状态的收益可能是未到计算时点或号码还没有激活。
 	    	</div> -->

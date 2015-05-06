@@ -113,7 +113,7 @@
 			  {
 			  	//这里开始做验证码操作
 			  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode");
-			  	bRet1=true;//这个地方要删掉，切记切记！！！！！
+			  	//bRet1=true;//这个地方要删掉，切记切记！！！！！
 			  	if(bRet1)
 			  	{
 			  		$("#txtyanzhengma").attr("disabled",false); 
@@ -168,13 +168,13 @@
 		  		//alert("验证码不能为空");
 		  		return;
 		  	}
-		  	//else if($("#txtyanzhengma").val()!=code)
-		  	//{
-		  	//	alert("输入的验证码与短信中的验证码不匹配");
-		  	//	$("#div_yanzhengma").addClass("has-error");
-		  	//	bRet3=false;
-		  	//	return;
-		  	//}
+		  	else if($("#txtyanzhengma").val()!=code)
+		  	{
+		  		alert("输入的验证码与短信中的验证码不匹配");
+		  		$("#div_yanzhengma").addClass("has-error");
+		  		bRet3=false;
+		  		return;
+		  	}
 		  	else if(getNowDate() - $("#hide_code_date").val()>1800)
 		  	{
 		  		$("#div_yanzhengma").addClass("has-error");
@@ -369,9 +369,13 @@
 	                <label for="txtrepassword" class="sr-only">Password</label>
 	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
 	            </div> -->
-	            <br/>
 	            <input type="hidden" value='${openid}' id="hide_openid" name="hide_openid">
 	            <input type="hidden" value='' id="hide_code_date" name="hide_code_date">
+	            <div style="float:right;font-size: 14px;">
+					<a href="${base}/auth/login" style="color:blue"><u>已有帐号去登录</u></a>
+				</div>
+				<br/>
+				<br/>
 	            <button class="btn-warning btn-block btn" type="submit" id="btnStep1" name="btnStep1">下一步</button>
 	            <br/>
 				<!-- 用户注册协议 -->

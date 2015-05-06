@@ -77,6 +77,7 @@
         }
          .label-sm {
             margin-left: 5px;
+            margin-right:10px;
         }
         
 		.pack-detail{width:100%;font-size:13px;overflow:hidden;}
@@ -132,7 +133,7 @@
 	                </section>
 			  </li>
 			  <li id="amountTab" class="list-group-item">
-			  	 	<strong class="order-fee">商品金额：<span id="topayFeeSpan">${goods_price}</span></strong>
+			  	 	<strong class="order-fee">商品金额：￥<span id="topayFeeSpan">${goods_price}</span></strong>
 <!-- 	                <p class="fee-detail">（其中：合约机4699元+预存话费1200元）</p> -->
 			  </li>
 			</ul>

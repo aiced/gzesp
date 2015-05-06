@@ -44,12 +44,12 @@ public class UnionPayUtil {
         xmlMap.put(UnionPayAttrs.timeStamp, DateUtils.getCurentTime()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
         xmlMap.put(UnionPayAttrs.sysTradeNo, param.getBind_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
         xmlMap.put(UnionPayAttrs.accNo, param.getBank_card_no());  //银行卡号
-        xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn());
+        xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn() == null ? "" : param.getBank_card_cvn()); //储蓄卡没有cvn，null在后面getbyte方法会报错
         xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
         xmlMap.put(UnionPayAttrs.Nbr, param.getPhone_no()); //手机号
         xmlMap.put(UnionPayAttrs.Name, param.getFull_name()); //姓名
         xmlMap.put(UnionPayAttrs.certificateCode, param.getId_card_no());  //身份证号
-        xmlMap.put(UnionPayAttrs.expireDate, param.getBank_card_expire_date()); //有效期
+        xmlMap.put(UnionPayAttrs.expireDate, param.getBank_card_expire_date() == null ? "" : param.getBank_card_expire_date()); //储蓄卡没有有效期
         xmlMap.put(UnionPayAttrs.cardType, param.getCard_type()); //卡类型（信用卡:01或借记卡:02）
 
         //return genByteReq(xmlMap);
@@ -389,7 +389,7 @@ public class UnionPayUtil {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    public static boolean sendMsg(byte[] xmlSend){
+/*    public static boolean sendMsg(byte[] xmlSend){
         boolean isSuccess = true;
         try {
             //设置心跳过滤器链
@@ -423,7 +423,7 @@ public class UnionPayUtil {
             return isSuccess;
         }
         
-    }
+    }*/
     
     
     /**
@@ -496,7 +496,13 @@ public class UnionPayUtil {
         return xmlResp;
     }*/
     
-    public static String recvMsg(byte[] msg){
+    /**
+     * 获取byte[]数据包后，解密并获取里面的xml原始报文
+     * 如果是心跳包则返回null
+     * @param msg
+     * @return
+     */
+    public static String getXmlFromMsg(byte[] msg){
       //如果收到的是心跳报文0000,则返回 0000响应,心跳报文银联也不需要我返回
         if(msg.length == 0){
             log.debug("【银联支付：服务端收到报文 长度=0, 是心跳报文】");
@@ -530,11 +536,11 @@ public class UnionPayUtil {
         }
         
         //根据respMap里交易类型进行业务处理
-        if(xmlResp != null ){
+/*        if(xmlResp != null ){
             Map<String, String> respMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
             IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
             respHanler.dealResp(respMap);
-        }
+        }*/
         
         return xmlResp;
     }

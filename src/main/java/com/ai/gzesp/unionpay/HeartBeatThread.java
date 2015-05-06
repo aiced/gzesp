@@ -17,15 +17,24 @@ import org.apache.mina.core.future.ConnectFuture;
 public class HeartBeatThread implements Runnable {
     private static Logger log = Logger.getLogger(HeartBeatThread.class);
     
-    private ConnectFuture cf;
+    private boolean isStop = false; //线程是否需要终止标志
     
-    public HeartBeatThread(ConnectFuture cf)
+    private ClientHandler clientHandler;
+    
+    //private ConnectFuture cf;
+    
+    public HeartBeatThread(ClientHandler clientHandler)
+    {
+      this.clientHandler = clientHandler;
+    }
+    
+/*  public HeartBeatThread(ConnectFuture cf)
     {
       this.cf = cf;
     }
     
     @Override
-/*    public void run() {
+    public void run() {
         log.debug("【银联支付：esp维持长连接，线程启动，初始化开始。。。】");
         
         String tip = "循环中。。。";
@@ -101,18 +110,19 @@ public class HeartBeatThread implements Runnable {
       String tip = "循环中。。。";
       int times = 0;
 
-      while (!ClientHandler.stopHeartBeat)
+      while (!isStop)
       {
         try
         {
-          log.debug("【银联支付：esp维持长连接，" + tip + "】");
+          log.debug("【银联支付：esp维持长连接...isStop=" + isStop + "】");
 
           byte[] heart = new byte[4];
           heart = String.valueOf(UnionPayCons.HEARTBEAT_REQ).getBytes(UnionPayCons.charCode);
 
-          UnionPayUtil.sendMsg(heart);
-          log.debug("【银联支付：esp维持长连接，发送心跳报文0000成功，2分钟后again】");
-          Thread.sleep(120000L);
+          //UnionPayUtil.sendMsg(heart);
+          clientHandler.sendMsg(heart);
+          log.debug("【银联支付：esp维持长连接，发送心跳报文0000成功，" + UnionPayCons.HEART_INTERVAL/1000 + "秒钟后again】");
+          Thread.sleep(UnionPayCons.HEART_INTERVAL);
         } catch (UnsupportedEncodingException e) {
           log.debug("【银联支付：ERROR！！！esp维持长连接，生成心跳报文异常，5分钟后retry重新尝试连接！！！】");
           e.printStackTrace();
@@ -145,6 +155,17 @@ public class HeartBeatThread implements Runnable {
         }
       }
     }
+
+	public boolean isStop() {
+		return isStop;
+	}
+
+	/**
+	 * 停止心跳线程
+	 */
+	public void stopHeartBeat() {
+		this.isStop = true;
+	}
     
 /*    private NioSocketConnector getConnector() throws Exception{
         //如果connector处于不活动状态则重新连接
@@ -176,5 +197,6 @@ public class HeartBeatThread implements Runnable {
         return connector;
     }*/
 
+    
 
 }

@@ -10,6 +10,7 @@ import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
  * 客户端心跳请求实现类<br> 
  * 客户端会定时发送心跳请求（注意定时时间必须小于，服务器端的IDLE监控时间）,
  * 同时需要监听心跳反馈，以此来判断是否与服务器丢失连接。对于服务器的心跳请求不给与反馈。
+ * 放弃此方法，是因为银联不返回心跳的响应，而mina的心跳机制需要判断心跳是否响应超时，超时了就会自动断链
  *
  * @author xmh
  * @see [相关类/方法]（可选）

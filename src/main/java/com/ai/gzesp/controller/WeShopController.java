@@ -56,6 +56,12 @@ public class WeShopController {
         List<Map<Object, Object>> rxhy = weShopService.getRxhy();
         mav.addObject("rxhy", rxhy);
         
+        //获取热销套餐商品
+        List<Map<Object, Object>> rxtc = weShopService.getRxtc();
+        mav.addObject("rxtc", rxtc);
+        
+        
+        
         //获取热销网卡商品
         List<Map<Object, Object>> rxwk = weShopService.getRxwk();
         mav.addObject("rxwk", rxwk);

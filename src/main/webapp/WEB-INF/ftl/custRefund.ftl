@@ -30,7 +30,7 @@
         .top_container
         {
             margin:30px 10px 10px 10px;
-            height: 100px;
+            height: 60px;
         }
         .top_container div{
             font-size: 12px;
@@ -217,7 +217,7 @@
 	        <form action="insertRefund" method="post">
 	            <div class="top_container">
 	                <div>订单编号：${refundInfo.order_id}</div>
-	                <div>退款金额：${refundInfo.unit_price}元</div>
+	                <div>退款金额(¥)：${(refundInfo.unit_price/1000)?string("#.##")}</div>
 	                <!-- <div style="font-weight: bolder">退款方式：</div>
 	                <div>原路返回（按照您原来支付的方式进行原来退回退款）</div> -->
 	                <input type="hidden" value='${refundInfo.order_id}' id="hide_order_id" name="hide_order_id">
@@ -231,25 +231,34 @@
 	            </div>
 	            <div class="mid_container">
 	                <div class="input-group">
-	                    <div class="div1"><img src="${resRoot}/image/custRefund/bixuan.png" height="16" width="16"></div>
+	                    <div class="div1"><img src="${resRoot}/image/custRefund/bixuan.png" height="8" width="8"></div>
 	                    <div class="div2">申请人姓名：</div>
 	                    <div class="div3" id="div_txtname"> <input type="text" class="form-control" id="txtname" name="txtname" placeholder="请输入姓名"></div>
 	                </div>
 	                <br/>
 	                <div class="input-group">
-	                    <div class="div1"><img src="${resRoot}/image/custRefund/bixuan.png" height="16" width="16"></div>
+	                    <div class="div1"><img src="${resRoot}/image/custRefund/bixuan.png" height="8" width="8"></div>
 	                    <div class="div2">手机号码：</div>
 	                    <div class="div3" id="div_txtphone"><input type="text" class="form-control" id="txtphone" name="txtphone" placeholder="请输入手机号"></div>
 	                </div>
 	                <br/>
 	                <div class="input-group">
-	                    <div class="div1"><img src="${resRoot}/image/custRefund/bixuan.png" height="16" width="16"></div>
+	                    <div class="div1"><img src="${resRoot}/image/custRefund/bixuan.png" height="8" width="8"></div>
 	                    <div class="div2">退款原因：</div>
-	                    <div class="div3" id="div_txtreason"><input type="text" class="form-control" id="txtreason" name="txtreason" placeholder="请退款原因"></div>
+	                    <div class="div3">
+	                    <!--	<textarea class="form-control" rows="3" placeholder="请退款原因" id="txtreason" name="txtreason"></textarea>-->
+	                    <input type="text" class="form-control"  placeholder="请退款原因" style="visibility:hidden;"> 
+	                    </div>
 	                </div>
+	                
+	                    <div id="div_txtreason" >
+	                    	<textarea class="form-control" rows="3" placeholder="请退款原因" id="txtreason" name="txtreason"></textarea>
+	                    <!-- <input type="text" class="form-control" id="txtreason" name="txtreason" placeholder="请退款原因"> -->
+	                    </div>
+	                
 	            </div>
 	            <div class="div_clear"></div>
-	            <div class="divstart"><img src="${resRoot}/image/custRefund/bixuan.png" height="16" width="16">为必填选项</div>
+	            <div class="divstart"><img src="${resRoot}/image/custRefund/bixuan.png" height="8" width="8">为必填选项</div>
 	            <br/>
 	            <br/>
 	            <button class="btn btn-warning btn-block " type="submit" name="btnsubmit" id="btnsubmit">提交申请</button>

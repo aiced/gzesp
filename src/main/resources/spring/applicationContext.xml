@@ -113,9 +113,14 @@
         	<aop:after-throwing method="logException" pointcut-ref="serviceOperation" />
         </aop:aspect>
          -->
-        
-        
     </aop:config>
+ 
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+            <bean class="com.ai.sysframe.token.TokenInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 
     <!-- scan mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

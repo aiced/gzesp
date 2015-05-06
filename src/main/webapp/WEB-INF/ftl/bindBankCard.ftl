@@ -43,26 +43,9 @@
     		return true;
     		
     	}
-		$(document).ready(function(){ 
-		   //[提交]按钮点击
-		  $("#btnSubmit").click(function(){  
-			  //在这里操作提交
-			  //alert(!checkData());
-			if(!checkData())
-			{
-				//alert("有错误不可以提交");
-				return false;
-			}
-			else
-			{
-				//alert("可以提交了！");
-				return true;
-			}
-		  });		
-		
-		  
-		  //[银行卡号]文本框失去焦点
-		  $("#txtbankcardid").blur(function(){
+    	
+    	function checkCardcode()
+    	{
 		  	//在这里操作 银行卡号 文本框失去焦点
 		  	if(!$("#txtbankcardid").val())
 		  	{
@@ -85,6 +68,77 @@
 		  		bRet1=true;
 		  		return;
 		  	}
+    		
+    		
+    		
+    	}
+    	
+    	
+		$(document).ready(function(){ 
+		   //第一次加载的时候 进行判断文本框是否为空
+		   
+			checkCardcode();
+			
+			
+		   //[提交]按钮点击
+		  $("#btnSubmit").click(function(){  
+			  //在这里操作提交
+			  //alert(!checkData());
+			if(!checkData())
+			{
+				//alert("有错误不可以提交");
+				return false;
+			}
+			else
+			{
+				//alert("可以提交了！");
+		       	var bReturn=false;  
+	      		var parms = {'hide_userid':$("#hide_userid").val(),'selBank':$("#selBank").val(),'txtbankcardid':$("#txtbankcardid").val()};
+	      		$.ajax({
+	         		type: "POST",
+	      		 	url: '${base}/shopManage/BankCard_PostData',
+	      		 	data: parms,
+	      		 	async:false,
+	      		 	success: function(bRet){
+					if(bRet)
+					{
+						alert("已经提交成功");
+						location.href="${base}/shopManage/weShopSet?userid="+$("#hide_userid").val();
+					}
+	      		 }
+	      		});
+				
+				return true;
+			}
+		  });		
+		
+		  
+		  //[银行卡号]文本框失去焦点
+		  $("#txtbankcardid").blur(function(){
+			  
+			  checkCardcode();
+		  	//在这里操作 银行卡号 文本框失去焦点
+		  	/*if(!$("#txtbankcardid").val())
+		  	{
+		  		$("#div_bankcardid").addClass("has-error");
+		  		bRet1=false;
+		  		return;
+		  	}
+		  	else
+		  	{
+		  		
+	    		if (!checkBankCard($("#txtbankcardid").val())) {
+			  		$("#div_bankcardid").removeClass("has-error");
+			  		bRet1=false;
+					return;
+				}
+	    		
+		  		$("#div_bankcardid").removeClass("has-error");
+		  		$("#div_bankcardid").addClass("has-success");
+
+		  		bRet1=true;
+		  		return;
+		  	}*/
 		  });
 		   
 		  
@@ -103,25 +157,7 @@
       		  	 return;
       		 }
       		});
-          }); 
-          //[提交]按钮点击
-          $("#btnSubmit").click(function(){  
-        	var bReturn=false;  
-      		var parms = {'hide_userid':$("#hide_userid").val(),'selBank':$("#selBank").val(),'txtbankcardid':$("#txtbankcardid").val()};
-      		$.ajax({
-         		type: "POST",
-      		 	url: '${base}/shopManage/BankCard_PostData',
-      		 	data: parms,
-      		 	async:false,
-      		 	success: function(bRet){
-				if(bRet)
-				{
-					alert("已经提交成功");
-				}
-      		 }
-      		});
-          }); 
-		  
+          }); 		  
 		  
 		});
     </script>

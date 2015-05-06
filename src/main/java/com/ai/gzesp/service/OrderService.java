@@ -12,23 +12,29 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
 import com.ai.gzesp.dao.beans.TdOrdDCUST;
 import com.ai.gzesp.dao.beans.TdOrdDDEAL;
 import com.ai.gzesp.dao.beans.TdOrdDPAYLOG;
 import com.ai.gzesp.dao.beans.TdOrdDPOST;
+import com.ai.gzesp.dao.beans.TdOrdDPRECMSFEE;
 import com.ai.gzesp.dao.beans.TdOrdDPROD;
 import com.ai.gzesp.dao.beans.TdOrdDREFUND;
 import com.ai.gzesp.dao.beans.TdOrdDRES;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
+import com.ai.gzesp.dao.service.TdOrdDCMSSTATEDao;
 import com.ai.gzesp.dao.service.TdOrdDCUSTDao;
 import com.ai.gzesp.dao.service.TdOrdDDEALDao;
 import com.ai.gzesp.dao.service.TdOrdDPAYLOGDao;
 import com.ai.gzesp.dao.service.TdOrdDPOSTDao;
+import com.ai.gzesp.dao.service.TdOrdDPRECMSFEEDao;
 import com.ai.gzesp.dao.service.TdOrdDPRODDao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdOrdDRESDao;
@@ -44,6 +50,8 @@ import com.alibaba.fastjson.JSONObject;
 
 @Service
 public class OrderService {
+	
+	 protected Logger logger = LoggerFactory.getLogger(getClass());
 	
     @Resource 
     TdOrdDBASEDao tdOrdDBASEDao;
@@ -68,6 +76,12 @@ public class OrderService {
     
     @Resource 
     TdOrdDREFUNDDao tdOrdDREFUNDDao;
+    
+    @Resource 
+    TdOrdDCMSSTATEDao tdOrdDCMSSTATEDao;
+    
+    @Resource 
+    TdOrdDPRECMSFEEDao tdOrdDPRECMSFEEDao;
     
     @Resource 
     GoodsSql goodsSql;
@@ -119,9 +133,7 @@ public class OrderService {
     			} else if("PAGERES".equals(code)) {
     				pageList.add(info);
     			}
-    			
     		}
-    		
     	}
     	
     	return result;
@@ -131,7 +143,9 @@ public class OrderService {
     private void cacuCMSPreFee(Map<String, String> paramsMap) {
     	// get cms rules
     	String goodsId = paramsMap.get("goodsId");
+    	String originalPrice = paramsMap.get("originalPrice");
     	String cmsRule = commissionSql.getCmsRuleByGoodsId(goodsId);
+    	logger.debug("cmsRule:"+cmsRule);
     	// no need to check con for pre Fee
     	// SAVEMEY( 4G组合套餐，还是ORD_D_RES表中  	这个商品去取RES_ATTR_CODE='SAVEMEY'),PACKMEY(ORD_D_RES表中套餐面值),PRODMEY(上网卡的价格,是直接取商品价格还是说需要配置一个物品属性,需要确认)
     	String[] result = RegexUtil.getCMSRule(cmsRule);
@@ -142,12 +156,54 @@ public class OrderService {
     		} else if("PACKMEY".equals(result[0])) {
     			money = getOriginMoneyByAttrCode("PACKRES", paramsMap);
     		} else if("PRODMEY".equals(result[0])) {
-    			
+    			money = originalPrice;
     		}
-    		
     		
     		float cmsPreFee = Long.parseLong("".equals(money)?"0":money)*Float.parseFloat(result[1]);
 			paramsMap.put("cmsPreFee", String.valueOf(cmsPreFee));
+			
+			logger.debug(result[0]+"---"+result[1]+"---"+cmsPreFee);
+    	}
+    }
+    
+    private void cacuReward(Map<String, String> paramsMap) {
+    	String goodsId = paramsMap.get("goodsId");
+    	String userId = paramsMap.get("userId");
+    	String rewardRule = "";
+//    	if(isUserSingleOrd(goodsId, userId)) {
+//    		rewardRule = commissionSql.getRewardRuleByGoodsId(goodsId, "SINGLE");
+//    	} else {
+//    		rewardRule = commissionSql.getRewardRuleByGoodsId(goodsId, "EVERY");
+//    	}
+    	rewardRule = commissionSql.getRewardRuleByGoodsId(goodsId, "");
+    	logger.debug("rewardRule:"+rewardRule);
+    	String[] result = RegexUtil.getRewardRule(rewardRule);
+    	if(result != null) {
+    		String money = "";
+    		if("SINGLE".equals(result[0]) ) {
+    			if(isUserSingleOrd(goodsId, userId)) {
+    				money = result[1];
+    	    	} else {
+    	    		return;
+    	    	}
+    		} else if("EVERY".equals(result[0])) {
+    			money = result[1];
+    		} else {
+    			return;
+    		}
+			paramsMap.put("reward", String.valueOf("".equals(money)?"0":money));
+			
+			logger.debug(result[0]+"---"+result[1]+"---"+money);
+    	}
+    }
+    
+    private boolean isUserSingleOrd(String goodsId, String userId) {
+    	//CMS_P_GOODS_RULE(goodsId&sysdate{begind,end})-->CMS_P_RULE(rule{single})---->ORD_D_PROD(orderId&goodsId)-->ORD_D_DEAL(orderId&userId)
+    	int ordNum = commissionSql.getUserOrdNum(goodsId, userId);
+    	if(ordNum == 0) {
+    		return true;
+    	} else {
+    		return false;
     	}
     }
     
@@ -158,9 +214,9 @@ public class OrderService {
     		return "";
     	}
     	
-    	String[] rows = resAttrStr.split("\\^");
+    	String[] rows = resAttrStr.split("\\^", -1);
     	for(String row : rows) {
-    		String[] col = row.split("\\|");
+    		String[] col = row.split("\\|", -1);
     		if(col.length < 3) {
     			continue;
     		}
@@ -185,7 +241,10 @@ public class OrderService {
     	insertOrderPostInfo(paramsMap);
     	insertOrderResInfo(paramsMap);
     	cacuCMSPreFee(paramsMap);
+    	cacuReward(paramsMap);
     	insertOrderProdInfo(paramsMap);
+    	insertOrderCMSStateInfo(paramsMap);
+    	insertOrderPreCMSFeeInfo(paramsMap);
 //    	insertOrderReFundInfo(paramsMap);
     }
     
@@ -334,7 +393,7 @@ public class OrderService {
     	String derateReason = paramsMap.get("derateReason");
     	String recvFee = paramsMap.get("recvFee");
     	String goodsDisc = paramsMap.get("goodsDisc");
-    	String cmsPreFee = paramsMap.get("cmsPreFee");
+//    	String cmsPreFee = paramsMap.get("cmsPreFee");
     	
     	TdOrdDPROD record = new TdOrdDPROD();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -348,7 +407,7 @@ public class OrderService {
     	record.setDerateReason(derateReason);
     	record.setRecvFee(CommonUtil.toDbPrice(CommonUtil.string2Long(recvFee)));
     	record.setResInfo(goodsDisc);
-    	record.setCmsPreFee(CommonUtil.toDbPrice(CommonUtil.string2Float(cmsPreFee)));
+//    	record.setCmsPreFee(CommonUtil.toDbPrice(CommonUtil.string2Float(cmsPreFee)));
     	
     	
     	tdOrdDPRODDao.insertSelective(record);
@@ -362,9 +421,9 @@ public class OrderService {
     		return;
     	}
     	
-    	String[] rows = resAttrStr.split("\\^");
+    	String[] rows = resAttrStr.split("\\^", -1);
     	for(String row : rows) {
-    		String[] col = row.split("\\|");
+    		String[] col = row.split("\\|", -1);
     		if(col.length < 3) {
     			continue;
     		}
@@ -398,6 +457,48 @@ public class OrderService {
     	record.setTxnAmt(CommonUtil.toDbPrice(CommonUtil.string2Long(topayFee)));
     	
     	tdOrdDREFUNDDao.insertSelective(record);
+	}
+	
+	private void insertOrderCMSStateInfo(Map<String, String> paramsMap) {
+		String orderId = paramsMap.get("orderId");
+    	
+    	TdOrdDCMSSTATE record = new TdOrdDCMSSTATE();
+    	record.setOrderId(CommonUtil.string2Long(orderId));
+    	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+    	record.setCmsType("0");
+    	record.setCmsState("00");
+    	record.setAddTime(DateUtil.getNow());
+    	
+    	tdOrdDCMSSTATEDao.insertSelective(record);
+	}
+	
+	private void insertOrderPreCMSFeeInfo(Map<String, String> paramsMap) {
+		String orderId = paramsMap.get("orderId");
+		String goodsId = paramsMap.get("goodsId");
+		
+		if(paramsMap.containsKey("cmsPreFee")) {
+			String cmsPreFee = paramsMap.get("cmsPreFee");
+			TdOrdDPRECMSFEE record = new TdOrdDPRECMSFEE();
+			record.setOrderId(CommonUtil.string2Long(orderId));
+			record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+			record.setGoodsId(CommonUtil.string2Long(goodsId));
+			record.setCmsType("0");
+			record.setCmsPreFee(CommonUtil.toDbPrice(CommonUtil.string2Float(cmsPreFee)));
+			tdOrdDPRECMSFEEDao.insertSelective(record);
+		}
+		
+		if(paramsMap.containsKey("reward")) {
+			String reward = paramsMap.get("reward");
+			TdOrdDPRECMSFEE record = new TdOrdDPRECMSFEE();
+			record.setOrderId(CommonUtil.string2Long(orderId));
+			record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+			record.setGoodsId(CommonUtil.string2Long(goodsId));
+			record.setCmsType("1");
+			record.setCmsPreFee(CommonUtil.string2Long(reward));
+			tdOrdDPRECMSFEEDao.insertSelective(record);
+		}
+		
+		
 	}
 	
 	/**

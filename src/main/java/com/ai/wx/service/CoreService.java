@@ -337,7 +337,7 @@ public class CoreService {
         buffer.append("☞点这立即查看！").append("\n").append("\n");  
 //        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >☞点这立即查看！</a>").append("\n").append("\n");  
         buffer.append("4.  收益发放").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/cashRule\" >☞点这立即了解！</a>").append("\n").append("\n");  
+        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=204322183&idx=1&sn=cba85430b9e9ef22634dd95992c4d8f6#rd\" >☞点这立即了解！</a>").append("\n").append("\n");  
         buffer.append("☞点这立即了解！").append("\n").append("\n");  
     
         buffer.append("5.  更多咨询，请直接回复【提问：“问题描述”】").append("\n");  

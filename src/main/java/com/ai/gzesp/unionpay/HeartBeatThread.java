@@ -19,14 +19,14 @@ public class HeartBeatThread implements Runnable {
     
     private boolean isStop = false; //线程是否需要终止标志
     
-    private ClientHandler clientHandler;
+    //private ClientHandler clientHandler;
     
     //private ConnectFuture cf;
     
-    public HeartBeatThread(ClientHandler clientHandler)
+/*    public HeartBeatThread(ClientHandler clientHandler)
     {
       this.clientHandler = clientHandler;
-    }
+    }*/
     
 /*  public HeartBeatThread(ConnectFuture cf)
     {
@@ -120,7 +120,7 @@ public class HeartBeatThread implements Runnable {
           heart = String.valueOf(UnionPayCons.HEARTBEAT_REQ).getBytes(UnionPayCons.charCode);
 
           //UnionPayUtil.sendMsg(heart);
-          clientHandler.sendMsg(heart);
+          ClientHandler.sendMsg(heart);
           log.debug("【银联支付：esp维持长连接，发送心跳报文0000成功，" + UnionPayCons.HEART_INTERVAL/1000 + "秒钟后again】");
           Thread.sleep(UnionPayCons.HEART_INTERVAL);
         } catch (UnsupportedEncodingException e) {

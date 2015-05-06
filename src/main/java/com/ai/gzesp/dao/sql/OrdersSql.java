@@ -96,7 +96,7 @@ public class OrdersSql {
 		
 	}
 	
-	//通过orderid获取商品信息
+	//通过orderid获取商品信息:订单详情
 	public List getOrderInfobyOrderID(String strOrderID)
 	{
 	StringBuffer sb=new StringBuffer();
@@ -132,12 +132,9 @@ public class OrdersSql {
 			+" DELIVER_TYPE_CODE,"
 			+"ORD_D_BASE.ORDER_STATE,"//订单状态
 			+"GDS_D_PHOTO.PHOTO_LINKS,"//先注释掉，后面需要放开注释
-			+"case when ORD_D_RES.RES_ATTR_VAL is null then"
-			+" '无号码'"
-			+" else "
-			+" ORD_D_RES.RES_ATTR_VAL"
-			+" end "
-			+ " RES_ATTR_VAL"
+			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='NUMBERS') as RES_ATTR_VAL_1,"
+			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='SAVEMEY') as RES_ATTR_VAL_2,"
+			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='PACKRES') as RES_ATTR_VAL_3"
 			);
 	sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO,ORD_D_RES");
 	sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
@@ -155,7 +152,7 @@ public class OrdersSql {
 	sb.append("T2 as ("
 			+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
 			+ ")");
-	sb.append("select T1.ORDER_ID,"
+	sb.append("select distinct T1.ORDER_ID,"
 			+ "T1.GOODS_NAME,"
 			+ "T1.TOPAY_FEE,"
 			+ "T1.Order_Time,"
@@ -167,8 +164,25 @@ public class OrdersSql {
 			+ "T1.ORDER_STATE,"
 			+"T1.PHOTO_LINKS,"
 			+"T2.PAY_MODE,T2.REQ_TRADE_TYPE,"
-			+ "T1.RES_ATTR_VAL "
-			+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
+			+ "case"
+			+ " when RES_ATTR_VAL_1 is null then"
+            + "'无号码'"
+            + " else"
+            + " RES_ATTR_VAL_1"
+            + " end RES_ATTR_VAL_1,"
+			+ "case"
+			+ " when RES_ATTR_VAL_2 is null then"
+            + "'无'"
+            + " else"
+            + " RES_ATTR_VAL_2"
+            + " end RES_ATTR_VAL_2,"
+			+ "case"
+			+ " when RES_ATTR_VAL_3 is null then"
+            + "'无'"
+            + " else"
+            + " RES_ATTR_VAL_3"
+            + " end RES_ATTR_VAL_3"  
+			+ " from T1,T2 where T1.Order_id=T2.Order_id(+)"
 			);	
 	
 		System.out.println(sb.toString());

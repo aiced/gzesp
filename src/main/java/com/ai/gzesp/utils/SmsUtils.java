@@ -1,14 +1,22 @@
 package com.ai.gzesp.utils;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class SmsUtils {
@@ -65,6 +73,13 @@ public class SmsUtils {
 				int len=in.read(echo);
 				responseContent=(new String(echo,0,len).trim());
 				int code = url_con.getResponseCode();
+				
+				System.out.println("params:"+ params);
+				//System.out.println("url:"+ strwenh);
+				System.out.println(url_con.getRequestMethod());
+				System.out.println(url_con.getErrorStream());
+				System.out.println("responseContent:"+responseContent);
+				
 				if (code != 200) {
 					responseContent = "ERROR" + code;
 				}
@@ -159,9 +174,9 @@ public class SmsUtils {
 			url_con.setConnectTimeout(SmsUtils.connectTimeOut);
 			url_con.setReadTimeout(SmsUtils.readTimeOut);
 			url_con.setDoOutput(true);
-			//url_con.setRequestProperty("Content-Type", "plain/text; charset=UTF-8"); 
-			url_con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
-			byte[] b = params.toString().getBytes();
+			//url_con.setRequestProperty("Content-Type", "plain/text; charset=utf-8"); 
+			//url_con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
+			byte[] b = params.toString().getBytes(vchartset);
 			url_con.getOutputStream().write(b, 0, b.length);
 			url_con.getOutputStream().flush();
 			url_con.getOutputStream().close();
@@ -172,9 +187,11 @@ public class SmsUtils {
 			responseContent = (new String(echo, 0, len)).trim();
 			int code = url_con.getResponseCode();
 			String strwenh = url_con.getResponseMessage();
+			System.out.println("params:"+ params);
 			System.out.println("strwenh:"+ strwenh);
 			System.out.println(url_con.getRequestMethod());
 			System.out.println(url_con.getErrorStream());
+			System.out.println("responseContent:"+responseContent);
 			if (code != 200) {
 				responseContent = "ERROR" + code;
 			}
@@ -198,7 +215,7 @@ public class SmsUtils {
 	 */
 	public static String  doSendMessage(String strMobile,String strTempid,String strContent)
 	{
-		Map<String, String> map = new HashMap<String, String>();
+/*		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", "JSMB260920");//此处填写用户账号
 		map.put("scode", "593483");//此处填写用户密码
 		//map.put("mobile","18551855717");//此处填写发送号码
@@ -209,10 +226,63 @@ public class SmsUtils {
 		map.put("tempid",strTempid);//此处填写模板短信编号
 		//map.put("extcode","1234");
 		map.put("content",strContent);//此处填写模板短信内容
+*/		
+		//String strRet = SmsUtils.doPost("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp",map, "utf-8");
+		//String strRet = SmsUtils.doGet("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp",map, "utf-8");
+		String strRet = "";
+			//strurl = "http://mssms.cn:8000/msm/sdk/http/sendsms.jsp";
+			StringBuffer strurl=new StringBuffer();
+			//http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?content=%401%40%3D701447&username=JSMB260920&tempid=MB-2013102300&scode=593483&mobile=18551855717
+			strurl.append("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?");
+			strurl.append("content=");
+			strurl.append(strContent); //URLEncoder.encode(strContent, "utf-8")
+			strurl.append("&username=JSMB260920");
+			strurl.append("&tempid=");
+			strurl.append(strTempid);
+			strurl.append("&scode=593483");
+			strurl.append("&mobile=");
+			strurl.append(strMobile);
+			System.out.println("url:" + strurl);//
+			//strRet = SmsUtils.doGet(strurl.toString() , "utf-8");
+			strRet = httpclientGet(strurl.toString() , "utf-8");
+			System.out.println("值:" + strRet);//此处为短信发送的返回值
 		
-		String strRet = SmsUtils.doPost("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp",map, "utf-8");
-		System.out.println("值:" + strRet);//此处为短信发送的返回值
 		return strRet;
+	}
+	
+	private static String httpclientGet(String reqUrl, String recvEncoding){
+		BufferedReader in = null;
+		String content = null;  
+		try {
+			// 定义HttpClient  
+			HttpClient client = new DefaultHttpClient();  
+			// 实例化HTTP方法  
+			HttpGet request = new HttpGet();  
+			request.setURI(new URI(reqUrl));  
+			HttpResponse response = client.execute(request);  
+			in = new BufferedReader(new InputStreamReader(response.getEntity()  
+			        .getContent()));  
+			StringBuffer sb = new StringBuffer();  
+			String line = "";  
+			String NL = System.getProperty("line.separator");  
+			while ((line = in.readLine()) != null) {  
+			    sb.append(line + NL);  
+			}  
+			in.close();  
+			content = sb.toString();
+			System.out.println("返回content:" + content);
+		} catch (Exception e) {
+			if (in != null) {  
+                try {  
+                    in.close();// 最后要关闭BufferedReader  
+                } catch (Exception e1) {  
+                    e1.printStackTrace();  
+                }  
+            }  
+
+		}  
+
+       return content;
 	}
 	
 //	public static void main(String[] args) throws UnsupportedEncodingException {

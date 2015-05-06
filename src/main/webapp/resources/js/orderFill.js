@@ -83,10 +83,6 @@ $(function() {
 	$('#netInfoBtn').bind("click",function(){
 		if(netInfo_checkData()) {
 			uploadPic(this);
-			
-			orderStat.netInfoStat = 1;
-			$('#netInfo').css({ "display":"none" });
-			$('#orderMain').css({ "display":"block" });
 		}
 		
 		return false;
@@ -395,6 +391,8 @@ function uploadPic(btn){
 	if(orderFormParams.cardPic1.length != 0
 			&& orderFormParams.cardPic2 != 0) {
 		//alert('照片已经上传');
+		$('#netInfo').css({ "display":"none" });
+		$('#orderMain').css({ "display":"block" });
 		return;
 	}
 	
@@ -417,6 +415,10 @@ function uploadPic(btn){
 	        		orderFormParams.cardPic1 = rtdata.fileInfoList[0].url;
 	        		orderFormParams.cardPic2 = rtdata.fileInfoList[1].url;
 	        		$(btn).removeAttr("disabled"); 
+	        		
+	        		orderStat.netInfoStat = 1;
+	    			$('#netInfo').css({ "display":"none" });
+	    			$('#orderMain').css({ "display":"block" });
 	        		//formSubmit();
 	        	} else {
 	        		alert('网络不给力哦,请重新上传');

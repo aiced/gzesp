@@ -77,7 +77,7 @@
 	<#list commList as item>
 		<tr>
 	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:74px;">${item.GOODS_NAME}</td><!--商品名称 -->
-	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
+	      <td style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;width:59px;" onclick="doneClick(this);"><span style="border-bottom:1px solid #999999;">${item.RECEIVER_NAME}-${item.ORDER_ID}</span></td><!-- 订单号-->
 		  <td>
 	      	<#if (item.SUM_CMS_MONEY== '')>
 		      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->

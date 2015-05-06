@@ -159,7 +159,7 @@ public class SmsUtils {
 			url_con.setConnectTimeout(SmsUtils.connectTimeOut);
 			url_con.setReadTimeout(SmsUtils.readTimeOut);
 			url_con.setDoOutput(true);
-			url_con.setRequestProperty("Content-Type", "plain/text; charset=utf-8"); 
+			//url_con.setRequestProperty("Content-Type", "plain/text; charset=utf-8"); 
 			//url_con.setRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 5.0; Windows NT; DigExt)");
 			byte[] b = params.toString().getBytes();
 			url_con.getOutputStream().write(b, 0, b.length);

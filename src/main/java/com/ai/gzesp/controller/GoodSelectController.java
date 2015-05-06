@@ -65,7 +65,8 @@ public class GoodSelectController {
         }
         
         //从数据库按分页查询，默认第一页,一页10个
-        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 10, null, null, null);
+        //如果第四个参数传null，出来的排序rownum跟下面ajax函数出来的不一致，导致下拉刷新出现重复的商品
+        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 10, "", null, null); 
         mav.addObject("goodList", goodList);
 
         mav.addObject("good_type", goodType); //good_type是给ajax查询用的

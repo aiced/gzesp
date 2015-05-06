@@ -60,8 +60,9 @@ public class WeShopOrderDetailController {
             mav.addObject("PAY_MODE","没有数据");
             mav.addObject("ORDER_STATE","没有数据");      
             //mav.addObject("PAY_REMARK","没有数据");
-            mav.addObject("RES_ATTR_VAL","没有数据"); 
-		
+            mav.addObject("RES_ATTR_VAL_1","没有数据"); 
+            mav.addObject("RES_ATTR_VAL_2","没有数据"); 
+            mav.addObject("RES_ATTR_VAL_3","没有数据"); 
 		}
         else {
             mav.addObject("title", "订单详情");
@@ -75,8 +76,9 @@ public class WeShopOrderDetailController {
             mav.addObject("DELIVER_TIME_CODE",orderList.get(0).get("DELIVER_TIME_CODE"));
             mav.addObject("PAY_MODE",orderList.get(0).get("PAY_MODE"));
             mav.addObject("ORDER_STATE",orderList.get(0).get("ORDER_STATE")); 
-            mav.addObject("RES_ATTR_VAL",orderList.get(0).get("RES_ATTR_VAL")); 
-            
+            mav.addObject("RES_ATTR_VAL_1",orderList.get(0).get("RES_ATTR_VAL_1")); 
+            mav.addObject("RES_ATTR_VAL_2",orderList.get(0).get("RES_ATTR_VAL_2")); 
+            mav.addObject("RES_ATTR_VAL_3",orderList.get(0).get("RES_ATTR_VAL_3")); 
            // mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
 		
 		}

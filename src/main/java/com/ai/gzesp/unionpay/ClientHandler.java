@@ -23,9 +23,9 @@ public class ClientHandler extends IoHandlerAdapter {
     
     private static Logger log = Logger.getLogger(ClientHandler.class); 
     
-    private NioSocketConnector connector;
-    private ConnectFuture cf;
-    private HeartBeatThread heartBeatThread; //当前的心跳线程
+    private static NioSocketConnector connector;
+    private static ConnectFuture cf;
+    private static HeartBeatThread heartBeatThread; //当前的心跳线程
     
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
@@ -82,7 +82,7 @@ public class ClientHandler extends IoHandlerAdapter {
     /**
      * 初始化socket连接
      */
-    private void initConnector()
+    private static void initConnector()
     {
       connector = new NioSocketConnector();
       connector.getFilterChain().addLast("logger", new LoggingFilter());
@@ -99,12 +99,13 @@ public class ClientHandler extends IoHandlerAdapter {
     /**
      * 开启心跳线程
      */
-    private void startHeartBeat()
+    private static void startHeartBeat()
     {
       //stopHeartBeat = false;
       //HeartBeatThread heartThread = new HeartBeatThread(cf);
-      HeartBeatThread heartThread = new HeartBeatThread(this);
-      this.heartBeatThread = heartThread;
+      //HeartBeatThread heartThread = new HeartBeatThread(this);
+      HeartBeatThread heartThread = new HeartBeatThread();
+      heartBeatThread = heartThread;
       Thread t = new Thread(heartThread);
       t.start();
       log.debug("【银联支付：esp开启新socket链接的心跳线程】");
@@ -114,7 +115,7 @@ public class ClientHandler extends IoHandlerAdapter {
      * 停止原有socket连接的心跳线程
      * @param heartBeatThread
      */
-    private void stopHeartBeat(HeartBeatThread heartBeatThread) {
+    private static void stopHeartBeat(HeartBeatThread heartBeatThread) {
     	heartBeatThread.stopHeartBeat(); 
     	log.debug("【银联支付：esp停止原有socket链接的心跳线程】");
     }
@@ -122,7 +123,7 @@ public class ClientHandler extends IoHandlerAdapter {
     /**
      * 断开socket连接，并释放资源
      */
-    private void disconnect() {
+    private static void disconnect() {
       cf.getSession().close(true);
       cf.getSession().getCloseFuture().awaitUninterruptibly();
       connector.dispose();
@@ -132,7 +133,7 @@ public class ClientHandler extends IoHandlerAdapter {
     /**
      * 检查socket连接是否正常，如果断掉了需要重连
      */
-    private void checkConnector()
+    private static void checkConnector()
     {
       if (!connector.isActive()) {
         log.debug("【银联支付：connector.isActive()=false,断开原有连接重新创建连接】");
@@ -154,8 +155,9 @@ public class ClientHandler extends IoHandlerAdapter {
      * @param xmlSend
      * @return
      */
-    public boolean sendMsg(byte[] xmlSend) {
+/*    public static boolean sendMsg(byte[] xmlSend) {
       checkConnector();
+      //cf.getSession().write(xmlSend);
       boolean isSuccess = true;
       try {
       cf.getSession().write(xmlSend);
@@ -166,8 +168,12 @@ public class ClientHandler extends IoHandlerAdapter {
           e.printStackTrace();
           return isSuccess;
       }
-    }
+    }*/
     
+    public static void sendMsg(byte[] xmlSend) {
+        checkConnector();
+        cf.getSession().write(xmlSend);
+      }
     
     
 }

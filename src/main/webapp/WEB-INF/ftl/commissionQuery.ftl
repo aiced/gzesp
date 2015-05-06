@@ -415,6 +415,14 @@
 			padding:3px;
 			text-align: center;
 		}
+		.th_title
+		{
+			text-align: center;
+		}
+		#totalRowCount
+		{
+			text-align: left;
+		}
 }
 
     </style>
@@ -478,7 +486,7 @@
 	        <h5><label>收益明细</label></h5>
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
-					<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
+					<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
 					    <tr>
 					        <th><div class="th_title">商品名称</div></th>
 					        <th><div class="th_title">订单详情</div></th>
@@ -520,14 +528,14 @@
 					    </tr>
 					</table>	
 				<#else>
-				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;">
+				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
 				    <tr>
 				        <!--<th>序号</th>-->
 				        <th><div class="th_title">商品名称</div></th>
 				        <th><div class="th_title">订单详情</div></th>
 				        <th><div class="th_title">收益(¥)</div></th>
 				        <th>
-							<div class="dropdown" style="padding:0px;">
+							<div class="dropdown th_title" style="padding:0px;">
 								<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
 								    	状态
 								    <span class="caret"></span>
@@ -556,7 +564,7 @@
 						<tr>
 					      <!-- <td>${item_index}</td> --><!-- 序号 -->
 					      <td style="width:74px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.GOODS_NAME}</td><!--商品名称 -->
-					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);">${item.RECEIVER_NAME}-${item.ORDER_ID}</td><!-- 订单号-->
+					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);"><span style="border-bottom:1px solid #999999;">${item.RECEIVER_NAME}-${item.ORDER_ID}</span></td><!-- 订单号-->
 						  <td>
 					      	<#if (item.SUM_CMS_MONEY== '')>
 					      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->

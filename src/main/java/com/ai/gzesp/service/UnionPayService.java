@@ -33,8 +33,8 @@ public class UnionPayService {
     @Autowired
     private UnionPayDao unionPayDao;
     
-    @Autowired
-    private ClientHandler clientHandler;
+/*    @Autowired
+    private ClientHandler clientHandler;*/
     
     
 /*    public Map<Object, Object> getSignCode(String bank_card_no, String bank_card_expire_date, String bank_card_cvn,
@@ -126,8 +126,8 @@ public class UnionPayService {
             
             //调用mina客户端发送报文
             if(xmlSend != null){
-            	//isSuccess = UnionPayUtil.sendMsg(xmlSend);
-            	isSuccess = clientHandler.sendMsg(xmlSend);
+            	isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = ClientHandler.sendMsg(xmlSend);
             }
             
             if(!isSuccess){
@@ -229,8 +229,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
-            	isSuccess = clientHandler.sendMsg(xmlSend);
+                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = ClientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){
@@ -439,8 +439,8 @@ public class UnionPayService {
             byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
             //调用mina客户端发送报文
             if(xmlSend != null){
-                //isSuccess = UnionPayUtil.sendMsg(xmlSend);
-            	isSuccess = clientHandler.sendMsg(xmlSend);
+                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = ClientHandler.sendMsg(xmlSend);
             }    
             
             if(!isSuccess){

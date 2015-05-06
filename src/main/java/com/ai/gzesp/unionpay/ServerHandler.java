@@ -39,7 +39,7 @@ public class ServerHandler extends IoHandlerAdapter {
         log.debug("【银联支付：服务端esp sessionOpened sessionId： " + session.getId() + "，sessionMap里原来有" + sessionMap.entrySet().size() + "个；链接】");
         for (Map.Entry entry : this.sessionMap.entrySet()) {
             IoSession s = ((IoSession) entry.getValue());
-            log.debug("【银联支付：服务端esp sessionMap里原来有: " + s.getId() +"】");
+            log.debug("【银联支付：服务端esp sessionMap里原来有IoSession的id: " + s.getId() +"】");
             s.close(true);
         }
         this.sessionMap.clear();
@@ -64,7 +64,7 @@ public class ServerHandler extends IoHandlerAdapter {
     }
 
     
-    @Override
+/*    @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
         log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "】");
         byte[] msg = (byte[])message;
@@ -76,10 +76,10 @@ public class ServerHandler extends IoHandlerAdapter {
         //根据返回的交易类型更新数据库记录状态
         
         //返回响应报文给请求端 ,此处只有心跳返回，其实心跳报文银联也不需要我返回
-/*        if(rspHeart != null){
+        if(rspHeart != null){
             log.debug("【银联支付：服务端esp收到心跳后，返回心跳 sessionId： " + session.getId() + "， message：" + rspHeart + "】");
             session.write(rspHeart.getBytes(UnionPayCons.charCode));
-        }*/
+        }
         
         //根据respMap里交易类型进行业务处理
         if (xmlResp != null) {
@@ -88,6 +88,31 @@ public class ServerHandler extends IoHandlerAdapter {
             IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
             respHanler.dealResp(respMap);
         }
+    }*/
+    
+    @Override
+    public void messageReceived(IoSession session, Object message) throws Exception {
+        log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "】");
+        byte[] msg = (byte[])message;
+        //String msgStr = new String(msg);
+        log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "， message：" + new String(msg) + "】");
+        //super.messageReceived(session, message);
+        String xmlResp = UnionPayUtil.recvMsg(msg);
+        //根据返回的交易类型更新数据库记录状态
+        
+        //返回响应报文给请求端 ,此处只有心跳返回，其实心跳报文银联也不需要我返回
+/*        if(rspHeart != null){
+            log.debug("【银联支付：服务端esp收到心跳后，返回心跳 sessionId： " + session.getId() + "， message：" + rspHeart + "】");
+            session.write(rspHeart.getBytes(UnionPayCons.charCode));
+        }*/
+        
+        //根据respMap里交易类型进行业务处理
+/*        if (xmlResp != null) {
+            Map<String, String> respMap = (Map<String, String>) XmlUtils.fromXML(xmlResp);
+            //IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap, unionPayService);
+            IDealUnionPayResp respHanler = RespHandlerFactory.create(respMap);
+            respHanler.dealResp(respMap);
+        }*/
     }
 
     public UnionPayService getUnionPayService() {

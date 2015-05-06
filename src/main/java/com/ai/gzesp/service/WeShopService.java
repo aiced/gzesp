@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -80,7 +81,23 @@ public class WeShopService {
      * @since [产品/模块版本](可选)
      */
     public List<Map<Object, Object>> getRxhy(){
-        return weShopDao.getRxhy();
+    	//如果在 wap通用参数表 SYS_D_ESPPARAM里配置了需要优先展示的热销产品，则不用按销量排名取前4的产品
+    	List<Map<Object, Object>> rxhy = weShopDao.getRxhySpecial();
+    	if(CollectionUtils.isNotEmpty(rxhy)){
+    		//如果配置参数表里小于4条，那还要去销量里面补足4个产品，页面共展示4个产品
+    		if (rxhy.size() < 4){
+    			String[] goodsArray = new String[rxhy.size()];
+    			for(int i = 0; i < rxhy.size(); i++){
+    				goodsArray[i] = (String)rxhy.get(i).get("GOODS_ID");
+    			}
+    			List<Map<Object, Object>> rxhy2 = weShopDao.getRxhyRest(goodsArray, 4-rxhy.size());
+    			rxhy.addAll(rxhy2);//加到一起
+    		}
+    		return rxhy;
+    	}
+    	else{
+    		return weShopDao.getRxhyRest(null, 4); //如果rxhy空，则取销量前4商品
+    	}
     }
     /**
      * 功能描述: 查询热销套餐的商品信息<br>
@@ -90,7 +107,24 @@ public class WeShopService {
      * @since [产品/模块版本](可选)
      */
     public List<Map<Object, Object>> getRxtc(){
-        return weShopDao.getRxtc();
+        //return weShopDao.getRxtc();
+    	//如果在 wap通用参数表 SYS_D_ESPPARAM里配置了需要优先展示的热销产品，则不用按销量排名取前4的产品
+    	List<Map<Object, Object>> rxtc = weShopDao.getRxtcSpecial();
+    	if(CollectionUtils.isNotEmpty(rxtc)){
+    		//如果配置参数表里小于4条，那还要去销量里面补足4个产品，页面共展示4个产品
+    		if (rxtc.size() < 4){
+    			String[] goodsArray = new String[rxtc.size()];
+    			for(int i = 0; i < rxtc.size(); i++){
+    				goodsArray[i] = (String)rxtc.get(i).get("GOODS_ID");
+    			}
+    			List<Map<Object, Object>> rxtc2 = weShopDao.getRxtcRest(goodsArray, 4-rxtc.size());
+    			rxtc.addAll(rxtc2);//加到一起
+    		}
+    		return rxtc;
+    	}
+    	else{
+    		return weShopDao.getRxtcRest(null, 4); //如果rxtc空，则取销量前4商品
+    	}
     }    
     
     
@@ -102,7 +136,24 @@ public class WeShopService {
      * @since [产品/模块版本](可选)
      */
     public List<Map<Object, Object>> getRxwk(){
-        return weShopDao.getRxwk();
+        //return weShopDao.getRxwk();
+    	//如果在 wap通用参数表 SYS_D_ESPPARAM里配置了需要优先展示的热销产品，则不用按销量排名取前4的产品
+    	List<Map<Object, Object>> rxwk = weShopDao.getRxwkSpecial();
+    	if(CollectionUtils.isNotEmpty(rxwk)){
+    		//如果配置参数表里小于4条，那还要去销量里面补足4个产品，页面共展示4个产品
+    		if (rxwk.size() < 4){
+    			String[] goodsArray = new String[rxwk.size()];
+    			for(int i = 0; i < rxwk.size(); i++){
+    				goodsArray[i] = (String)rxwk.get(i).get("GOODS_ID");
+    			}
+    			List<Map<Object, Object>> rxwk2 = weShopDao.getRxwkRest(goodsArray, 4-rxwk.size());
+    			rxwk.addAll(rxwk2);//加到一起
+    		}
+    		return rxwk;
+    	}
+    	else{
+    		return weShopDao.getRxwkRest(null, 4); //如果rxwk空，则取销量前4商品
+    	}
     }
     
     /**

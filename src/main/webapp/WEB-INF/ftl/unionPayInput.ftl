@@ -692,7 +692,7 @@
     <!-- 正在支付弹出框 -->    
     <div id="paying" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="padding:5px;height:180px;text-align:center">
+        <div class="modal-content" style="padding:5px;height:200px;text-align:center">
             <img src="${resRoot}/image/paying.gif" alt="" />
         </div>
       </div>

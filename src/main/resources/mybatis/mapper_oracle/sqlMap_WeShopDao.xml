@@ -47,8 +47,7 @@
      ]]>
 	</select>
 
-	<select id="getRxhy" resultType="java.util.HashMap">
-	<![CDATA[
+	<select id="getRxhyRest" resultType="java.util.HashMap">
         select *
         from (
          select a.goods_id  goods_id, 
@@ -67,15 +66,84 @@
             and b.ctlg_code in (4, 9) 
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
-            and f.default_tag = '0'  
+            and f.default_tag = '0' 
+            <if test="goodsArray != null">
+            and b.goods_id not in 
+                <foreach collection="goodsArray" item="goodsId" index="index"
+                  open="(" close=")" separator=",">
+                   ${goodsId}
+                </foreach>
+            </if> 
           order by a.goods_amount desc
+          ) m
+     <![CDATA[     
+        where rownum <= ${rest_num}
+     ]]>
+	</select>
+	
+	<select id="getRxhySpecial" resultType="java.util.HashMap">
+	<![CDATA[
+        select *
+        from (
+         select a.PARAM_VALUE  goods_id, 
+                b.ctlg_code ctlg_code, 
+                b.goods_name goods_name, 
+                c.add_price/1000 goods_price, 
+                e.goods_amount goods_amount,  
+                f.photo_links photo_links  
+           from SYS_D_ESPPARAM a,
+                GDS_D_INFO b,
+                GDS_D_PRICE c,
+                GDS_D_PHOTO f,
+                GDS_D_AMOUNT e
+          where a.PARAM_TYPE = 'RXHY' 
+            and a.PARAM_VALUE is not null
+            and a.PARAM_VALUE = b.goods_id
+            and b.goods_state = '1'
+            and b.ctlg_code in (4, 9) 
+            and a.PARAM_VALUE = c.goods_id
+            and b.album_id = f.album_id
+            and f.default_tag = '0'  
+            and e.amount_type = '2' 
+            and a.PARAM_VALUE = e.goods_id
+          order by a.PARAM_CODE 
+          ) m
+        where rownum <= 4
+     ]]>
+	</select>	
+	
+	<select id="getRxtcSpecial" resultType="java.util.HashMap">
+	<![CDATA[
+        select *
+        from (
+         select a.PARAM_VALUE  goods_id, 
+                b.ctlg_code ctlg_code, 
+                b.goods_name goods_name, 
+                c.add_price/1000 goods_price, 
+                e.goods_amount goods_amount,  
+                f.photo_links photo_links  
+           from SYS_D_ESPPARAM a,
+                GDS_D_INFO b,
+                GDS_D_PRICE c,
+                GDS_D_PHOTO f,
+                GDS_D_AMOUNT e
+          where a.PARAM_TYPE = 'RXTC' 
+            and a.PARAM_VALUE is not null
+            and a.PARAM_VALUE = b.goods_id
+            and b.goods_state = '1'
+            and b.ctlg_code in (5, 10) 
+            and a.PARAM_VALUE = c.goods_id
+            and b.album_id = f.album_id
+            and f.default_tag = '0'  
+            and e.amount_type = '2' 
+            and a.PARAM_VALUE = e.goods_id
+          order by a.PARAM_CODE 
           ) m
         where rownum <= 4
      ]]>
 	</select>
 	
-	<select id="getRxtc" resultType="java.util.HashMap">
-	<![CDATA[
+	<select id="getRxtcRest" resultType="java.util.HashMap">
         select *
         from (
          select a.goods_id  goods_id, 
@@ -95,13 +163,52 @@
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0'  
+          <if test="goodsArray != null">
+            and b.goods_id not in 
+                <foreach collection="goodsArray" item="goodsId" index="index"
+                  open="(" close=")" separator=",">
+                   ${goodsId}
+                </foreach>
+            </if> 
           order by a.goods_amount desc
           ) m
-        where rownum <= 4
+     <![CDATA[     
+        where rownum <= ${rest_num}
      ]]>
 	</select>
-	<select id="getRxwk" resultType="java.util.HashMap">
+		
+	<select id="getRxwkSpecial" resultType="java.util.HashMap">
 	<![CDATA[
+        select *
+        from (
+         select a.PARAM_VALUE  goods_id, 
+                b.ctlg_code ctlg_code, 
+                b.goods_name goods_name, 
+                c.add_price/1000 goods_price, 
+                e.goods_amount goods_amount,  
+                f.photo_links photo_links  
+           from SYS_D_ESPPARAM a,
+                GDS_D_INFO b,
+                GDS_D_PRICE c,
+                GDS_D_PHOTO f,
+                GDS_D_AMOUNT e
+          where a.PARAM_TYPE = 'RXWK' 
+            and a.PARAM_VALUE is not null
+            and a.PARAM_VALUE = b.goods_id
+            and b.goods_state = '1'
+            and b.ctlg_code in (6, 11)  
+            and a.PARAM_VALUE = c.goods_id
+            and b.album_id = f.album_id
+            and f.default_tag = '0'  
+            and e.amount_type = '2' 
+            and a.PARAM_VALUE = e.goods_id
+          order by a.PARAM_CODE
+          ) m
+        where rownum <= 4       
+     ]]>
+	</select>
+	
+	<select id="getRxwkRest" resultType="java.util.HashMap">
         select *
         from (	
          select a.goods_id  goods_id, 
@@ -121,11 +228,19 @@
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0'  
+         <if test="goodsArray != null">
+            and b.goods_id not in 
+                <foreach collection="goodsArray" item="goodsId" index="index"
+                  open="(" close=")" separator=",">
+                   ${goodsId}
+                </foreach>
+            </if> 
           order by a.goods_amount desc
           ) m
-        where rownum <= 4          
+     <![CDATA[     
+        where rownum <= ${rest_num}        
      ]]>
-	</select>
+	</select>	
 	
 	<select id="getGoodPhotos" parameterType="String" resultType="java.util.HashMap">
 	<![CDATA[

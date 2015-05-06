@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.service.CommonDao;
+import com.ai.sysframe.utils.DateUtil;
 
 @Service
 public class CommissionSql {
@@ -345,8 +346,10 @@ public class CommissionSql {
 				+ " AND a.RULE_ID = b.ID"
 				+ " AND b.STATUS = '1'"
 				+ " AND b.CMS_TYPE = '1'"
-				+ " and sysdate >= a.BEGIN_DATE "
-				+ "	and sysdate <= a.END_DATE "
+//				+ " and sysdate >= a.BEGIN_DATE "
+//				+ "	and sysdate <= a.END_DATE "
+				+ " and TO_DATE("+ DateUtil.getNowyyyyMMdd()+ ", 'yyyymmdd') >= a.BEGIN_DATE "
+				+ "	and TO_DATE("+ DateUtil.getNowyyyyMMdd()+ ", 'yyyymmdd') <= a.END_DATE "
 //				+ " AND b.COMMISSION_RULE like '%"+rewardKeyWord+"%'"
 //				sb.append(" and a.CREATE_TIME >=to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') and a.CREATE_TIME < to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')+1");
 				);
@@ -365,9 +368,10 @@ public class CommissionSql {
 	    	+ " inner join CMS_P_RULE b on a.RULE_ID = b.ID AND b.STATUS = '1'    	AND b.CMS_TYPE = '1'  and b.COMMISSION_RULE like '%SINGLE%' "
 	    	+ " inner join 	ORD_D_PRECMSFEE c on a.GOODS_ID = c.GOODS_ID and c.CMS_TYPE='1' "
 	    	+ " inner join  ORD_D_DEAL d on c.ORDER_ID = d.ORDER_ID and d.USER_ID = '"+ userId +"' "
+	    	+ " inner join  ORD_D_BASE e on c.ORDER_ID = e.ORDER_ID "
 	    	+ " where a.GOODS_ID = '"+ goodsId +"' "
-	    	+ " and sysdate > a.BEGIN_DATE  "
-	    	+ " and sysdate < a.END_DATE " 
+	    	+ " and TO_DATE("+ DateUtil.getNowyyyyMMdd()+ ", 'yyyymmdd') >= a.BEGIN_DATE "
+			+ "	and TO_DATE("+ DateUtil.getNowyyyyMMdd()+ ", 'yyyymmdd') <= a.END_DATE "
     	);
     	Map<String, Object> map = commonDao.queryForMap(sb.toString());
 		return Integer.parseInt(String.valueOf(map.get("NUM")));

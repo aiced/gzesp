@@ -175,6 +175,7 @@ public class SmsUtils {
 			System.out.println("strwenh:"+ strwenh);
 			System.out.println(url_con.getRequestMethod());
 			System.out.println(url_con.getErrorStream());
+			System.out.println("responseContent:"+responseContent);
 			if (code != 200) {
 				responseContent = "ERROR" + code;
 			}

@@ -41,9 +41,7 @@
         </p>
     </blockquote>
 </fieldset>
-<p>
-    <br/>
-</p>
+
 
 
 <p style="padding: 0px;margin-left: 5px;margin-right: 5px; border-top-color: rgb(235, 161, 50); border-top-width: 2px; border-top-style: solid; white-space: normal; min-height: 1.5em; max-width: 100%; box-sizing: border-box !important; line-height: normal;">
@@ -85,11 +83,7 @@
         </li>
     </ul>
 </fieldset>
-<p>
-    <br/>
-</p></div>
-
-
+</div>
       	<a  data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample2"><p style="border-width: 0px 0px 0px 5px; margin: 5px 0px 13px 5px; padding: 0px 10px; color: rgb(235, 161, 50); line-height: normal; font-family: 微软雅黑; font-size: 16px; border-left-color: rgb(235, 161, 50); border-left-style: solid; white-space: normal; -webkit-font-smoothing: antialiased;">
     	<strong><span style="color:rgb(0, 176, 80); font-family: arial, helvetica, sans-serif; font-size: 14px;">问题2：每款商品收益如何计算？</span><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"><br/></span><strong>
 </p></a>
@@ -107,9 +101,7 @@
         <span style="color: rgb(89, 89, 89); font-size: 14px;">精明的掌柜就该明收益、会算账！</span>
     </p>
 </blockquote>
-<p style="clear: both; white-space: normal;">
-    <br/>
-</p>
+
 <blockquote class="wxqq-borderLeftColor" style="margin: 0px; padding: 15px 25px; border-left-width: 10px; border-left-style: solid; border-left-color: rgb(235, 164, 50); white-space: normal; top: 0px; line-height: 24px; font-size: 14px; vertical-align: baseline; max-width: 100%; background-color: rgb(239, 239, 239);">
     <p style="clear: both;">
         <span style="color: rgb(192, 0, 0);"><strong>收益发放原则:</strong></span>
@@ -192,7 +184,6 @@
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">        <img src="${resRoot}/image/wx/dianpufazhan.png" title="1429178919104623.png" alt="blob.png" style="width: 80%; height: auto !important;"/><br/>
 </span>
 </p>
-<br/>
 <p style="font-family: 微软雅黑; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; max-width: 100%;">
     <span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(0, 187, 236); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><span class="wxqq-bg" style="margin: 0px 8px 0px 0px; padding: 4px 10px; border-top-left-radius: 80%; border-top-right-radius: 100%; border-bottom-right-radius: 90%; border-bottom-left-radius: 20%; color: rgb(255, 255, 255); max-width: 100%; background-color: rgb(235, 161, 50);">2</span></span><span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(38, 38, 38); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%; font-size: 14px; font-family: arial, helvetica, sans-serif;"><strong class="wxqq-color" style="color: rgb(235, 161, 50); line-height: 24px; max-width: 100%;">订单查询</strong></span>
 </p>
@@ -215,7 +206,6 @@
         </p>
     </li>
 </ul>
-<br/>
 <p style="margin: 8px 0px 0px; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-family: 微软雅黑; font-size: 16px; font-weight: normal; border-bottom-color: rgb(227, 227, 227); border-bottom-width: 1px; border-bottom-style: solid; white-space: normal; -ms-word-wrap: break-word !important; max-width: 100%;">
     <span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(0, 187, 236); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><span class="wxqq-bg" style="margin: 0px 8px 0px 0px; padding: 4px 10px; border-top-left-radius: 80%; border-top-right-radius: 100%; border-bottom-right-radius: 90%; border-bottom-left-radius: 20%; color: rgb(255, 255, 255); max-width: 100%; background-color: rgb(235, 161, 50);">3</span></span><span class="wxqq-borderBottomColor" style="margin: 0px; padding: 0px 2px 3px; color: rgb(38, 38, 38); line-height: 28px; border-bottom-color: rgb(235, 161, 50); border-bottom-width: 2px; border-bottom-style: solid; float: left; display: block; max-width: 100%;"><strong class="wxqq-color" style="color: rgb(235, 161, 50); line-height: 24px; max-width: 100%;">收益查询</strong></span>
 </p>
@@ -226,66 +216,74 @@
     <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"> <img src="${resRoot}/image/wx/yongjinchaxun.png" title="1429178919104623.png" alt="blob.png" style="width: 80%; height: auto !important;"/><br/>
 </span>
 </p>
+
+
 <p>
-    <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">如图示，根据订单完成的不同状态，存在4种收益状态：</span></span>
+    <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px;"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">如图示，根据订单完成的不同状态，存在5种收益状态：</span></span>
 </p>
 <ul class="custom_dot list-paddingleft-1">
     <li class="list-dot list-dot-paddingleft">
         <p>
-            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">未激活：<span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">未到出账期 + 号卡未激活</span></span>
+            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">未激活：<span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">号卡未激活使用</span></span>
         </p>
+     
     </li>
 </ul>
 <p>
-    <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">&nbsp; <span style="color: rgb(192, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">（若物流显示用户已签收，请及时联系用户激活使用）</span></span>
+    <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">&nbsp; <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(255, 255, 0);">【<span style="color: rgb(192, 0, 0); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2;">若物流显示用户已签收，请及时联系用户激活使用】</span></span></span>
 </p>
 <ul class="custom_dot list-paddingleft-1">
     <li class="list-dot list-dot-paddingleft">
         <p>
-            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">结算中：</span>未到出账期 + 号卡已激活</span>
+            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">结算中：</span>未到结算日， 号卡激活使用</span>
         </p>
         <p>
             <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"></span>
         </p>
+
     </li>
 </ul>
 <p>
-    &nbsp;（<span style="color:#c00000;font-family:arial, helvetica, sans-serif"><span style="font-size: 14px;">收益计算中，至次次月10号出账日可提取收益</span></span>）
+    &nbsp;（<span style="color:#c00000;font-family:arial, helvetica, sans-serif"><span style="font-size: 14px;">收益计算中，至次次月10号结算日可提取收益</span></span>）
 </p>
 <ul class="custom_dot list-paddingleft-1" style="width: 529.140625px; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
     <li class="list-dot list-dot-paddingleft">
         <p>
-            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">无效单：</span>已到出账期 + 号卡未激活</span>
+            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">已失效：订单生产后</span>两个月内<span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">号卡</span>未激活使用</span>
         </p>
         <p>
             <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);"></span>
         </p>
+     
     </li>
 </ul>
 <p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
-    &nbsp;（<span style="color:#c00000;font-family:arial, helvetica, sans-serif"><span style="font-size: 14px;">号卡至次次月未激活，则订单作废，无法结算收益</span></span>）
+    &nbsp;（<span style="color:#c00000;font-family:arial, helvetica, sans-serif"><span style="font-size: 14px;">号卡至次次月未激活，订单作废，无法结算收益</span></span>）
 </p>
 <ul class="custom_dot list-paddingleft-1" style="width: 529.140625px; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
     <li class="list-dot list-dot-paddingleft">
         <p>
-            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">可提现：</span>已到出账期 + 号卡已激活</span>
+            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);"><span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 24px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">已到账：到结算日，号卡激活使用</span></span>
         </p>
         <p>
             <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);"></span>
         </p>
+ 
     </li>
 </ul>
 <p style="line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
-    &nbsp;（<span style="color:#c00000;font-family:arial, helvetica, sans-serif"><span style="font-size: 14px;">该笔收益全部归集在可提现收益中</span></span>）
+    &nbsp;（<span style="color:#c00000;font-family:arial, helvetica, sans-serif"><span style="font-size: 14px;">次次月10号结算日发放收益后，变更为已到账</span></span>）
 </p>
-<p style="font-family: 微软雅黑, &#39;Microsoft YaHei&#39;; font-size: 14px; color: rgb(89, 89, 89); max-width: 50%;">
-    <span style="color: rgb(192, 0, 0);"></span>
-</p>
-    
-    
+<ul class="custom_dot list-paddingleft-1" style="width: 529.140625px; line-height: 24px; orphans: 2; white-space: normal; widows: 2;">
+    <li class="list-dot list-dot-paddingleft">
+        <p>
+            <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; background-color: rgb(239, 239, 239);">已退货：用户申请退货通过</span>
+        </p>
+    </li>
+</ul>
+
     
 <p style="white-space: normal; line-height: 1.5em;">
-    <br/>
 </p></div>
 
 
@@ -403,7 +401,7 @@
 			    <ul class="custom_dot list-paddingleft-1" style="font-family: 宋体; font-size: 16px; line-height: 24px;margin:-10px;">
 			        <li class="list-dot list-dot-paddingleft">
 			            <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
-			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">通过美化编辑，给小店改个个性的名字，记得填写真实的手机号、微信号，方便用户与您联系。</span>
+			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);">通过美化编辑，给小店改个个性的名字，记得填写真实的手机号、微信号，方便用户与您联系。为了保证您的收益发放，请确保绑定正确的银行卡哦~</span>
 			            </p>
 			            <p style="font-weight: normal; margin-top: 8px; margin-bottom: 0px; orphans: 2; white-space: normal; widows: 2; padding: 0px; border: 0px currentcolor; height: 32px; line-height: 18px; font-family: 微软雅黑, 宋体, tahoma, arial; font-size: 12px;">
 			                <span style="color: rgb(89, 89, 89); font-family: arial, helvetica, sans-serif; font-size: 14px; line-height: 25px; orphans: 2; widows: 2; background-color: rgb(239, 239, 239);"></span>

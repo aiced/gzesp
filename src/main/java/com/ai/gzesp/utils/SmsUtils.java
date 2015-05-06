@@ -136,6 +136,7 @@ public class SmsUtils {
 	}
 	public static String doPost(String reqUrl, Map<String, String> parameters, String recvEncoding) {
 		HttpURLConnection url_con = null;
+ 
 		String responseContent = null;
 		String vchartset=recvEncoding==""?SmsUtils.requestEncoding:recvEncoding;
 		try {
@@ -158,6 +159,8 @@ public class SmsUtils {
 			url_con.setConnectTimeout(SmsUtils.connectTimeOut);
 			url_con.setReadTimeout(SmsUtils.readTimeOut);
 			url_con.setDoOutput(true);
+			//url_con.setRequestProperty("Content-Type", "plain/text; charset=UTF-8"); 
+			
 			byte[] b = params.toString().getBytes();
 			url_con.getOutputStream().write(b, 0, b.length);
 			url_con.getOutputStream().flush();
@@ -168,6 +171,10 @@ public class SmsUtils {
 			int len = in.read(echo);
 			responseContent = (new String(echo, 0, len)).trim();
 			int code = url_con.getResponseCode();
+			String strwenh = url_con.getResponseMessage();
+			System.out.println("strwenh:"+ strwenh);
+			System.out.println(url_con.getRequestMethod());
+			System.out.println(url_con.getErrorStream());
 			if (code != 200) {
 				responseContent = "ERROR" + code;
 			}

@@ -15,12 +15,19 @@ public interface WeShopDao {
 
     public List<Map<Object, Object>> getDztj(@Param("user_id") String user_id);
 
-    public List<Map<Object, Object>> getRxhy();
-    //edit_by_wenh_2015_4_23
-    public List<Map<Object, Object>> getRxtc();
+    public List<Map<Object, Object>> getRxhySpecial();
+   
+    public List<Map<Object, Object>> getRxhyRest(@Param("goodsArray") String[] goodsArray, @Param("rest_num") int rest_num);
     
-    public List<Map<Object, Object>> getRxwk();
-
+    //edit_by_wenh_2015_4_23
+    public List<Map<Object, Object>> getRxtcSpecial();
+    
+    public List<Map<Object, Object>> getRxtcRest(@Param("goodsArray") String[] goodsArray, @Param("rest_num") int rest_num);
+    
+    public List<Map<Object, Object>> getRxwkSpecial();
+    
+    public List<Map<Object, Object>> getRxwkRest(@Param("goodsArray") String[] goodsArray, @Param("rest_num") int rest_num);
+    
     public List<Map<Object, Object>> getGoodPhotos(@Param("goods_id") String goods_id);
 
     public GoodsDetailResult getGoodDetail(@Param("goods_id") String goods_id, @Param("user_id") String user_id);

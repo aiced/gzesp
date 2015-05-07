@@ -15,6 +15,7 @@ import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dto.GoodsDetailResult;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.token.Token;
 
 @Controller
 @RequestMapping("/weShop")
@@ -36,6 +37,7 @@ public class GoodDetailController {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
+    @Token(save=true)
     @RequestMapping("/goodDetail/{user_id}/{ctlg_code}/{goods_id}")
     public ModelAndView goodDetail(@PathVariable("user_id") String user_id, @PathVariable("ctlg_code") String ctlg_code, @PathVariable("goods_id") String goods_id){
     	//调用公共业务逻辑获取各种信息
@@ -54,6 +56,7 @@ public class GoodDetailController {
      * @param goods_id
      * @return
      */
+    @Token(save=true)
     @RequestMapping("/bannerGoodDetail/{goods_id}/{user_id}")
     public ModelAndView bannerGoodDetail(@PathVariable("goods_id") String goods_id, @PathVariable("user_id") String user_id){
     	ModelAndView mav = null;

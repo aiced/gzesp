@@ -114,7 +114,6 @@ public class OrderController {
         return mav;
     }
     
-    @Token(save=true)
     @RequestMapping("/fillOrderMain")
     public ModelAndView fillOrderMain(@RequestBody String inputParams){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);

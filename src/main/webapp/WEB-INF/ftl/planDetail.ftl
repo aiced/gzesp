@@ -278,19 +278,19 @@
   <!-- 第一页 商品详情主页end -->
   
   <!-- 第二页 图文详情页start -->   
-  <div id="subpage_2" class="bg-white" data-role="page" style="display:none;">
+  <div id="subpage_2" class="bg-white" style="display:none;">
     <#include "imageAndTextDetail.ftl"> 
   </div>    
   <!-- 第二页 图文详情页end -->   
   
   <!-- 第三页 选择号码start -->
-  <div id="subpage_3" class="bg-gray" data-role="page" style="display:none;"> 
+  <div id="subpage_3" class="bg-gray" style="display:none;"> 
     <#include "selectNumber.ftl">
   </div>    
   <!-- 第三页 选择号码end -->     
   
   <!-- 第四页 ABC套餐详情start 暂定作废 -->
-  <div id="subpage_4" class="bg-white" data-role="page" style="display:none;"> 
+  <div id="subpage_4" class="bg-white" style="display:none;"> 
   </div>       
   <!-- 第四页 ABC套餐详情end -->  
          

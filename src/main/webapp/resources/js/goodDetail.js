@@ -58,10 +58,9 @@ function cityFilter()
 
 //子页面显示 隐藏其他子页面和主页面
 function showSubpage(pageId){
-    //控制图文详情div 隐藏与显示 
-      $('#' + pageId).show(); //图文详情页展示
-      //$('#page_main').hide(); //主页面隐藏
-      $('#' + pageId).siblings().hide();//隐藏其他兄弟页面包括主页面
+    //控制图文详情div 隐藏与显示
+    $('#' + pageId).show(); //图文详情页展示
+    $('#' + pageId).siblings().hide();//隐藏其他兄弟页面包括主页面
 }
 
 //回到主页面 隐藏子页面

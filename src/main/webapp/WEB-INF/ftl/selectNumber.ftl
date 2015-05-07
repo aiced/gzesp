@@ -46,8 +46,8 @@
       <div class="row" style="margin:5px 0px 5px 0px;">
     	<div class="col-xs-3" style="padding:0px;margin:0px;text-align:center">
     	  <div class="dropdown">
-            <button id="btnCity" type="button" class="btn btn-default btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" eparchy_code="%">
-                        全省
+            <button id="btnCity" type="button" class="btn btn-success btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" eparchy_code="-">
+                       请选地市
             <span class="caret"></span>
             </button>
             <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -126,22 +126,23 @@
       <#if  (!numbers?exists || numbers?size=0)>
         <div class="row"> 
           <p class="p-td-price">查询无结果</p>  	
-        </div>     
+        </div>
+      <#else>
+        <!-- 有数据时展示 -->       
+        <#list numbers as item>  
+          <#if item_index%2==0>
+            <div class="row">
+              <div class="col-xs-6 border-td-left" style="padding:0px;" >
+          <#else>
+              <div class="col-xs-6 border-td-right" style="padding:0px;">
+          </#if>
+    	        <p class="p-td-number" onclick="clickOneNumber(this)">${item.SERIAL_NUMBER[0..2]} ${item.SERIAL_NUMBER[3..6]} ${item.SERIAL_NUMBER[7..10]}</p>
+    	        <p class="p-td-price" nice_fee="${item.NICE_FEE}">预存话费:${item.NICE_FEE}</p>
+    	      </div>
+          <#if (item_index%2==1 || !item_has_next)>
+            </div> 
+          </#if>
+        </#list>            
       </#if>
-      <!-- 有数据时展示 -->       
-      <#list numbers as item>  
-        <#if item_index%2==0>
-          <div class="row">
-            <div class="col-xs-6 border-td-left" style="padding:0px;" >
-        <#else>
-            <div class="col-xs-6 border-td-right" style="padding:0px;">
-        </#if>
-    	      <p class="p-td-number" onclick="clickOneNumber(this)">${item.SERIAL_NUMBER[0..2]} ${item.SERIAL_NUMBER[3..6]} ${item.SERIAL_NUMBER[7..10]}</p>
-    	      <p class="p-td-price" nice_fee="${item.NICE_FEE}">预存话费:${item.NICE_FEE}</p>
-    	    </div>
-        <#if (item_index%2==1 || !item_has_next)>
-          </div> 
-        </#if>
-      </#list>            
     </div>    
 

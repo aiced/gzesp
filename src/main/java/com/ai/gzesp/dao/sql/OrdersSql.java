@@ -302,7 +302,7 @@ public class OrdersSql {
 		sb.append("count(1) total_count");
 		sb.append(" from ORD_D_BASE a,ORD_D_DEAL b");
 		sb.append(" where a.order_id=b.order_id");
-		sb.append(" and b.user_id=" + strUserID);
+		sb.append(" and b.user_id='" + strUserID+"'");
 		sb.append(" group by b.user_id");
 		System.out.println(sb.toString());
 		List saleList =commonDao.queryForList(sb.toString());

@@ -12,9 +12,12 @@
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
   </head>
   <body style = "background-color:rgb(240, 240, 240)">
-<p>
-    &nbsp &nbsp <span style="font-size: 24px; font-family: arial, helvetica, sans-serif;">菜鸟掌柜——销售进阶之道！</span><br/>
-</p>
+	<p style="white-space: normal; text-align: center;line-height: 15px;width:100%;height:15px;display:block;">
+    </p>  
+    
+	<p>
+    	&nbsp &nbsp <span style="font-size: 22px; font-family: arial, helvetica, sans-serif;">菜鸟掌柜——销售进阶之道！</span><br/>
+	</p>
 
 <blockquote class="wxqq-borderTopColor wxqq-borderRightColor wxqq-borderBottomColor wxqq-borderLeftColor" style="margin-left: 10px;margin-right: 10px; padding: 15px; border: 1px solid rgb(235, 164, 50);">
     <p style="white-space: normal; text-align: center;line-height: 15px;width:100%;height:15px;display:block;">

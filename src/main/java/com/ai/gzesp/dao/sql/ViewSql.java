@@ -27,7 +27,7 @@ public class ViewSql {
 		sb.append("count(case when visit_time>=trunc(sysdate, 'month') and visit_time<trunc(add_months(sysdate, 1), 'month') then 1 else null end) month_view,");
 		sb.append("count(1) total_count ");
 		sb.append(" from AUR_D_VISIT_LOG a ");
-		sb.append("where user_id ="+strUserID);
+		sb.append("where user_id ='"+strUserID+"'");
 
 		System.out.println(sb.toString());
 		List viewList =commonDao.queryForList(sb.toString());

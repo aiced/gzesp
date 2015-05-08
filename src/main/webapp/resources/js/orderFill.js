@@ -62,6 +62,10 @@ var orderFormParams = {
 // 初始化按钮点击事件
 $(function() {
 	
+
+
+	
+	
 	$('#netInfoTab').bind("click",function(){
   	  $('#netInfo').css({ "display":"block" }).siblings().css({ "display":"none" });
   	  return false;
@@ -194,7 +198,25 @@ $(function() {
 	
 	initSelect();
 	
+	
+
+	
 })
+//edit_by_wenh_2015_5_8 入网资料-入网协议
+//toggle替代方法
+var proxyflag=1;
+function proxyClick()
+{
+    if(proxyflag==1){
+    	proxyflag=0;
+    	$("#ruwangxieyi b").css("background-image","url(/esp/resources/image/order/arr_up.png)");
+    }else{
+    	proxyflag=1;
+        $("#ruwangxieyi b").css("background-image","url(/esp/resources/image/order/arr_down.png)");
+
+    }
+}
+
 
 function initSelect() {
 	var cityCode = $("#selCity").val();

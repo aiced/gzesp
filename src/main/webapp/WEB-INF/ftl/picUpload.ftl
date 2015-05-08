@@ -42,7 +42,13 @@
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 }
-  	    
+ 	.list-arr{
+ 	float:right;width:6px;height:10px;margin-top:5px;margin-right:5px;background:url(/esp/resources/image/order/arr_down.png) no-repeat;-webkit-background-size:6px 10px;-moz-background-size:6px 10px;background-size:6px 10px;}
+ 	
+ 	
+ 	a:focus {
+	text-decoration: none;
+}
 </style>
 
   <body >
@@ -64,12 +70,13 @@
 
      <!-- 工信部实名登记规定 start-->
      <div class="container">
-       <a class="btn-block" style="background-color:#cccccc;" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                《入网协议》
-       </a>     
+       <a id="ruwangxieyi" onclick="proxyClick()" class="btn-block" style="border-bottom: solid 1px #ccc;" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+             	《入网协议》<b class="list-arr"></b>
+       </a>  
+         
        <div class="collapse" id="collapseExample">
          <div class="well">
-                   根据国家工信部<a href="#renda" data-toggle="modal" data-target="#lawTip">《电话用户真实身份信息登记规定》（工业和信息化部令25号）</a>要求，用户在我司网上营业厅办理电话开户过户等入网手续需进行实名制登记。中国联通将保证此<strong class="cf60 ">身份证照片</strong>仅用于本次入网使用。
+                   根据国家工信部<a href="#renda" data-toggle="modal" data-target="#lawTip">《电话用户真实身份信息登记规定》（工业和信息化部令25号）</a>要求，用户在贵州联通沃掌柜办理电话开户过户等入网手续需进行实名制登记。中国联通将保证此<strong class="cf60 ">身份证照片</strong>仅用于本次入网使用。
          </div>
          <div class="well">
                    在您签收时，请入网人持本人<strong class="cf60">身份证件原件</strong>签收，严禁代收，请您提前准备好<strong class="cf60">复印件</strong>，并可在<strong class="cf60">复印件</strong>上标注“仅限中国联通入网使用”字样及日期，中国联通将保证此<strong class="cf60">复印件</strong>仅用于本次入网使用。
@@ -122,7 +129,7 @@
       </div>
      </div>
      <!-- 《电话用户真实身份信息登记规定》（工业和信息化部令25号） -->  
-     
+     <br/>
      <div class="container">
      <!--上传文字  -->
      	<div style="height:70px;" >

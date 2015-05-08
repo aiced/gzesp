@@ -5,8 +5,8 @@
     
     <!-- 如果是安卓手机&&当前是微信内置浏览器 则弹出遮罩层提示更换浏览器 begin -->
     <div class="div-mask" >
-      <img src="http://res.mall.10010.com/mall/mobile/images/weixin-mask.png?resVer=20150507220914" width="283px">
-      <a onclick="hideMask()"><img src="http://res.mall.10010.com/mall/mobile/images/iknow-btn.png?resVer=20150507220914" width="93px"></a>
+      <img src="${resRoot}/image/weixin-mask.png" width="283px">
+      <a onclick="hideMask()"><img src="${resRoot}/image/iknow-btn.png" width="93px"></a>
     </div>
     <!-- 如果是安卓手机&&当前是微信内置浏览器 则弹出遮罩层提示更换浏览器 end -->
     

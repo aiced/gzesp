@@ -34,7 +34,7 @@ public class WeShopCommissQueryController {
     	
     	//这里从数据库查询数据
     	
-       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup("0",strUserID,"","","","-1",8);//默认显示8条数据
+       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup("0",strUserID,"","","","-1",16);//默认显示8条数据
     	
 
     	

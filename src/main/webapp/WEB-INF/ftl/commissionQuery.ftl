@@ -109,7 +109,7 @@
     	}
     	//二次查询数据，因为有iStatusflag参数的存在
     	
-    	$("#hidepageindex").val(8);
+    	$("#hidepageindex").val(16);
     	selectData();
     	
     	
@@ -277,7 +277,7 @@
         	}
         	else
         	{
-        		$("#hidepageindex").val(8);
+        		$("#hidepageindex").val(16);
        	    	selectData();
         	}
    	    });
@@ -300,7 +300,7 @@
 
    	    
    	//常量_记录每页分4条
-        $("#hidepageindex").val(8);
+        $("#hidepageindex").val(16);
         //第一次进来分页查询
         function queryCommissionInfo_Page()
         {
@@ -343,7 +343,7 @@
         $("#order_middle_info_contain").scroll(function(){
  			 if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height())) 
             	{
-    				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+8);
+    				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+16);
        				queryCommissionInfo_Page();
 				}                
             });

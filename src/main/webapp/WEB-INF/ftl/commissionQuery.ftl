@@ -108,6 +108,8 @@
     		iStatusflag='05';
     	}
     	//二次查询数据，因为有iStatusflag参数的存在
+    	
+    	$("#hidepageindex").val(4);
     	selectData();
     	
     	
@@ -137,17 +139,17 @@
     {
   		if(iflag == 1)
    		{
-   			var param = {"iflag":iflag,"zhangqiTime":$("#zhangqiTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   			var param = {"iflag":iflag,"zhangqiTime":$("#zhangqiTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag,"hidepageindex":$("#hidepageindex").val()};
    		}
    		else if(iflag==2)
    		{
    			if($("#beginTime").val()=='' || $("#endTime").val()=='')//没有点击查询直接进行二次筛选
    			{
-   				var param = {"iflag":0,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   				var param = {"iflag":0,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag,"hidepageindex":$("#hidepageindex").val()};
    			}
    			else
    			{
-   				var param = {"iflag":iflag,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag};
+   				var param = {"iflag":iflag,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag,"hidepageindex":$("#hidepageindex").val()};
    			}
    		}
 
@@ -275,6 +277,7 @@
         	}
         	else
         	{
+        		$("#hidepageindex").val(4);
        	    	selectData();
         	}
    	    });
@@ -295,6 +298,70 @@
    	    	}
    	    });
 
+   	    
+   	//常量_记录每页分4条
+        $("#hidepageindex").val(4);
+        //第一次进来分页查询
+        function queryCommissionInfo_Page()
+        {
+    		//在这里操作数据库查询的
+    		var bRetrun=false;
+
+      		if(iflag == 1)
+       		{
+       			var param = {"iflag":iflag,"zhangqiTime":$("#zhangqiTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag,"hidepageindex":$("#hidepageindex").val()};
+       		}
+       		else if(iflag==2)
+       		{
+       			if($("#beginTime").val()=='' || $("#endTime").val()=='')//没有点击查询直接进行二次筛选
+       			{
+       				var param = {"iflag":0,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag,"hidepageindex":$("#hidepageindex").val()};
+       			}
+       			else
+       			{
+       				var param = {"iflag":iflag,"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"userID":$("#hideuserid").val(),"iStatusflag":iStatusflag,"hidepageindex":$("#hidepageindex").val()};
+       			}
+       		}
+    		
+    		
+    		
+    		$.ajax({
+    			   type: "POST",
+    			   url: "selectCommissions_Page",
+    			   data: param,
+    			   async: false,
+    			   success: function(bRet){
+    				   //alert(bRet);
+    				   $("#commmiss_query_info").html(bRet);
+ 				  	 	//调用计算总和方法
+ 				  	 	countTotal();
+    			   }
+    			});
+        	
+        }
+        
+    	//滚动加载
+    	$(window).scroll(function () {
+   			var scrollTop = $(this).scrollTop();
+   			var scrollHeight = $(document).height();
+   			var windowHeight = $(this).height();
+   			if (scrollTop + windowHeight == scrollHeight) {
+   				// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+   				// alert($('#datagrid').attr('pageNum'));
+   				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+   				queryCommissionInfo_Page();
+
+   				//var keyword = $('#keyword').val();
+   				//var good_type = $('#good_type').val();
+   				//var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页
+
+   				//queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
+   				//$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
+   			}
+        }); 
+   	    
+   	    
+   	    
    	});
 
     </script>
@@ -378,7 +445,7 @@
         .order_top_middle1
         {
             float: left;
-            width: 48%%;
+            width: 48%;
         }
         .order_top_middle2
         {
@@ -476,6 +543,8 @@
 	                </div>
 
             		<input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
+            		<input type="hidden" id="hidepageindex" name="hidepageindex" value=0>
+            		
 	            </div>
 	            <div class="query_info_top_clear"></div>
 

@@ -1,7 +1,5 @@
         	<#if (orderList?size==0)>
-	        	<div class="order_middle">
-	        		<h5>您还没有订单</h5>
-	        	</div>
+
         	<#else>
 				<#list orderList as item>
 		           <div class="order_middle" onclick="doneClick(this);">

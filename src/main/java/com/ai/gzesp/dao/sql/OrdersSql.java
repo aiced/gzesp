@@ -73,6 +73,10 @@ public class OrdersSql {
 		sb.append("T2 as ("
 				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
 				+ ")");
+
+		
+		sb.append("select * from ("
+				+ "select tt.*,ROWNUM as rowno from (");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
 				+ "T1.TOPAY_FEE,"
@@ -87,7 +91,9 @@ public class OrdersSql {
 				+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
 				+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
 				);
-		
+		sb.append(" ) tt");
+		sb.append(" where Rownum <="+4+") table_alias");
+		sb.append("	where table_alias.rowno >="+1);
 		
 		System.out.println(sb.toString());
 		List<Map<String, Object>> orderList =commonDao.queryForList(sb.toString());
@@ -192,7 +198,7 @@ public class OrdersSql {
 	}
 	
 	//通过userid获取商品列表
-	public List getOrdersList(String strUserID,String strOrderID,String startDate,String endDate)
+	public List getOrdersList(String strUserID,String strOrderID,String startDate,String endDate,int strHidePageIndex)
 	{
 		if (strOrderID==null) {
 			strOrderID="";
@@ -271,6 +277,10 @@ public class OrdersSql {
 		sb.append("T2 as ("
 				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
 				+ ")");
+		
+		
+		sb.append("select * from ("
+				+ "select tt.*,ROWNUM as rowno from (");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
 				+ "T1.TOPAY_FEE,"
@@ -284,7 +294,11 @@ public class OrdersSql {
 				+"T1.PHOTO_LINKS,"
 				+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
 				+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
-				);	
+				);
+		sb.append(" ) tt");
+		sb.append(" where Rownum <="+(strHidePageIndex+3)+") table_alias");
+		sb.append("	where table_alias.rowno >="+strHidePageIndex);
+		
 		System.out.println(sb.toString());
 		List orderList =commonDao.queryForList(sb.toString());
 	

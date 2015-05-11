@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.ai.gzesp.dao.sql.CommissionSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.StringUtil;
@@ -33,7 +34,7 @@ public class WeShopCommissQueryController {
     	
     	//这里从数据库查询数据
     	
-       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup("0",strUserID,"","","","-1");
+       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup("0",strUserID,"","","","-1",4);//默认显示4条数据
     	
 
     	
@@ -48,10 +49,9 @@ public class WeShopCommissQueryController {
         
         return mav;
     }
-    
-    @RequestMapping("/selectCommissions")
+    @RequestMapping("/selectCommissions_Page")
     @ResponseBody
-    public ModelAndView queryOrdersByDate(@RequestBody String strParam)
+    public ModelAndView queryOrdersByDate_Page(@RequestBody String strParam)
     {
     	String strzhangqiTime="";
     	String strStartDate="";
@@ -61,6 +61,7 @@ public class WeShopCommissQueryController {
     	String strFlag=paramsMap.get("iflag");
     	String strUserID=paramsMap.get("userID");
     	String strStatusflag=paramsMap.get("iStatusflag");
+    	String strHidePageIndex=paramsMap.get("hidepageindex");
     	
     	if (strFlag.equals("1")) {
     		strzhangqiTime=paramsMap.get("zhangqiTime");
@@ -81,10 +82,52 @@ public class WeShopCommissQueryController {
     	System.out.println(strStartDate);
     	System.out.println(strEndDate);
     	System.out.println(strStatusflag);
-    	
+    	System.out.println(strHidePageIndex);
     	//这里从数据库查询数据
     	
-       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,strStatusflag);
+       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,strStatusflag,Integer.valueOf(strHidePageIndex));
+    	
+        ModelAndView mav = new ModelAndView("commissionQuerySub.ftl");
+        mav.addObject("commList",commList);
+        return mav;
+    }
+    @RequestMapping("/selectCommissions")
+    @ResponseBody
+    public ModelAndView queryOrdersByDate(@RequestBody String strParam)
+    {
+    	String strzhangqiTime="";
+    	String strStartDate="";
+    	String strEndDate="";
+    	
+    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+    	String strFlag=paramsMap.get("iflag");
+    	String strUserID=paramsMap.get("userID");
+    	String strStatusflag=paramsMap.get("iStatusflag");
+    	String strHidePageIndex=paramsMap.get("hidepageindex");
+    	
+    	if (strFlag.equals("1")) {
+    		strzhangqiTime=paramsMap.get("zhangqiTime");
+    		//strzhangqiTime=strzhangqiTime.replace("-", "");
+		}
+    	else if(strFlag.equals("2"))
+    	{
+        	strStartDate=paramsMap.get("startDate");
+        	strEndDate=paramsMap.get("endDate");
+        	
+        	//strStartDate=strStartDate.replace("-", "");
+        	//strEndDate=strEndDate.replace("-", "");
+    	}
+    	
+    	System.out.println(strFlag);
+    	System.out.println(strUserID);
+    	System.out.println(strzhangqiTime);
+    	System.out.println(strStartDate);
+    	System.out.println(strEndDate);
+    	System.out.println(strStatusflag);
+    	System.out.println(strHidePageIndex);
+    	//这里从数据库查询数据
+    	
+       	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,strStatusflag,Integer.valueOf(strHidePageIndex));
     	
         ModelAndView mav = new ModelAndView("commissionQuerySub.ftl");
         mav.addObject("commList",commList);

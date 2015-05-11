@@ -157,7 +157,7 @@
 	    </div>
 	    
 	    <!-- 套餐展示表格-->
-		<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:550px;">
+		<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:500px;">
 	    
 	    <div class="container-fluid" style="margin:10px;padding:0px" id="datagrid" pageNum="1">
 	      <!-- 查询结果无数据或者异常时展示提示信息-->

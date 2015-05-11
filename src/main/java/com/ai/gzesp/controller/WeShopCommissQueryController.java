@@ -35,7 +35,7 @@ public class WeShopCommissQueryController {
     	//这里从数据库查询数据
     	
        	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup("0",strUserID,"","","","-1",16);//默认显示8条数据
-    	
+    	String strTotalMoney=commissionSql.getCommTotalbySelectGroup("0",strUserID,"","","","-1",16);
 
     	
     	
@@ -45,6 +45,7 @@ public class WeShopCommissQueryController {
         mav.addObject("title", "收益查询");
         mav.addObject("hideuserid", strUserID); 
         mav.addObject("commList",commList);
+        mav.addObject("totalmoney",Integer.valueOf(strTotalMoney));
 //        mav.addObject("weixin", "1306520198@qq.com"); 
         
         return mav;

@@ -42,12 +42,7 @@
 	    $(function(){
 	    	//常量_记录每页分4条
             $("#hidepageindex").val(5);
-	    	
-	    	
-      		$('#scroll-top-msg').html($("#order_middle_info_contain")[0].scrollTop);
-      		$('#scroll-height-msg').html($("#order_middle_info_contain")[0].scrollHeight);
-
-	    	
+	    
 	    	
     	    function custOrderFilter_Page() {
     	    	var param = {"keyword": $('#keyword').val(),
@@ -69,15 +64,35 @@
     	 		});
     	    }
             //div滚动加载
-            $("#order_middle_info_contain").scroll(function(){ 
-            	//此处代码非常牛逼，一般人理解不了
-            	//第一个判断是是否到底部。第二个判断是内部div比较要高于外部div而且当查询是会因为html函数导致内部div数据情况 出现0=0 的情况 所以要加第二个判断.就不会触发滚动条的代码了
-            	if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height()) && ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height()) !=0) 
-                	{
-         					custOrderFilter_Page();
-       						$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
-                	}                
-                });
+            //$("#order_middle_info_contain").scroll(function(){ 
+            //	//此处代码非常牛逼，一般人理解不了
+            //	//第一个判断是是否到底部。第二个判断是内部div比较要高于外部div而且当查询是会因为html函数导致内部div数据情况 出现0=0 的情况 所以要加第二个判断.就不会触发滚动条的代码了
+            //	if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height()) && ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height()) !=0) 
+            //   	{
+         	//				custOrderFilter_Page();
+       		//				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+            //   	}                
+            //    });
+           	//滚动加载
+        	$(window).scroll(function () {
+       			var scrollTop = $(this).scrollTop();
+       			var scrollHeight = $(document).height();
+       			var windowHeight = $(this).height();
+       			if (scrollTop + windowHeight == scrollHeight) {
+       				// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+       				// alert($('#datagrid').attr('pageNum'));
+       				
+       				custOrderFilter_Page();
+       				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+       				//var keyword = $('#keyword').val();
+       				//var good_type = $('#good_type').val();
+       				//var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页/
+
+       				//queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
+       				//$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
+       			}
+            }); 
+            
 	    });
 	    function showCustOrderDetail(orderId) {
         	//alert(orderId);
@@ -157,8 +172,7 @@
 	    </div>
 	    
 	    <!-- 套餐展示表格-->
-		<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:420px;">
-	    
+
 	    <div class="container-fluid" style="margin:10px;padding:0px" id="datagrid" pageNum="1">
 	      <!-- 查询结果无数据或者异常时展示提示信息-->
 	      <#if  (!custMyOrderList?exists || custMyOrderList?size=0)>
@@ -201,7 +215,6 @@
 		      </#list>
 	      </#if>
 	    </div> 
-	    </div>
     </div> 
     
     <input type="hidden" id="cust_passport" name="cust_passport" value="${cust_passport}" />

@@ -191,26 +191,38 @@
         			});
             	
             }
-            
+            //div滚动价值
+            $("#order_middle_info_contain").scroll(function(){
+            	
+                $('#scroll-to-bottom-msg').html('');
+            	$('#scroll-top-msg').html($("#order_middle_info_contain")[0].scrollTop);
+            	$('#scroll-height-msg').html($("#order_middle_info_contain")[0].scrollHeight);
+            	//parseInt($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height(),10);//将值转化为十进制
+     			 if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height())) 
+                	{
+     				 	queryOrderInfo_Page();
+   						$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+                	}                
+                });
         	//滚动加载
-        	$(window).scroll(function () {
-       			var scrollTop = $(this).scrollTop();
-       			var scrollHeight = $(document).height();
-       			var windowHeight = $(this).height();
-       			if (scrollTop + windowHeight == scrollHeight) {
-       				// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-       				// alert($('#datagrid').attr('pageNum'));
+        	//$(window).scroll(function () {
+       		//	var scrollTop = $(this).scrollTop();
+       		//	var scrollHeight = $(document).height();
+       		//	var windowHeight = $(this).height();
+       		//	if (scrollTop + windowHeight == scrollHeight) {
+       		//		// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+       		//		// alert($('#datagrid').attr('pageNum'));
        				
-       				queryOrderInfo_Page();
-       				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
-       				//var keyword = $('#keyword').val();
-       				//var good_type = $('#good_type').val();
-       				//var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页
+       		//		queryOrderInfo_Page();
+       		//		$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+       		//		//var keyword = $('#keyword').val();
+       		//		//var good_type = $('#good_type').val();
+       		//		//var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页/
 
-       				//queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
-       				//$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
-       			}
-            }); 
+       		//		//queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
+       		//		//$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
+       		//	}
+            //}); 
         });
     </script>
 
@@ -395,8 +407,8 @@
         <br/>
 		<br/>
 		<br/>
-        <div id="order_middle_info">
-        
+		<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:400px;">
+        <div id="order_middle_info" >
         	<#if (orderList?size==0)>
 	        	<div class="order_middle">
 	        		<h5>您还没有订单</h5>
@@ -471,6 +483,7 @@
 				</#list>
  			</#if>
         </div><!-- order_middle_info_end -->
+        </div>
     </div>
 
 

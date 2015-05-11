@@ -109,7 +109,7 @@
     	}
     	//二次查询数据，因为有iStatusflag参数的存在
     	
-    	$("#hidepageindex").val(4);
+    	$("#hidepageindex").val(8);
     	selectData();
     	
     	
@@ -277,7 +277,7 @@
         	}
         	else
         	{
-        		$("#hidepageindex").val(4);
+        		$("#hidepageindex").val(8);
        	    	selectData();
         	}
    	    });
@@ -300,7 +300,7 @@
 
    	    
    	//常量_记录每页分4条
-        $("#hidepageindex").val(4);
+        $("#hidepageindex").val(8);
         //第一次进来分页查询
         function queryCommissionInfo_Page()
         {
@@ -339,26 +339,33 @@
     			});
         	
         }
-        
+        //div滚动价值
+        $("#order_middle_info_contain").scroll(function(){
+ 			 if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height())) 
+            	{
+    				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+8);
+       				queryCommissionInfo_Page();
+				}                
+            });
     	//滚动加载
-    	$(window).scroll(function () {
-   			var scrollTop = $(this).scrollTop();
-   			var scrollHeight = $(document).height();
-   			var windowHeight = $(this).height();
-   			if (scrollTop + windowHeight == scrollHeight) {
-   				// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-   				// alert($('#datagrid').attr('pageNum'));
-   				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
-   				queryCommissionInfo_Page();
+    	//$(window).scroll(function () {
+   		//	var scrollTop = $(this).scrollTop();
+   		//	var scrollHeight = $(document).height();
+   		//	var windowHeight = $(this).height();
+   		//	if (scrollTop + windowHeight == scrollHeight) {
+   		//		// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+   		//		// alert($('#datagrid').attr('pageNum'));
+   		//		$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+   		//		queryCommissionInfo_Page();
 
-   				//var keyword = $('#keyword').val();
-   				//var good_type = $('#good_type').val();
-   				//var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页
+   		//		//var keyword = $('#keyword').val();
+   		//		//var good_type = $('#good_type').val();
+   		//		//var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页
 
-   				//queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
-   				//$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
-   			}
-        }); 
+   		//		//queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
+   		//		//$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
+   		//	}
+        //}); 
    	    
    	    
    	    
@@ -553,6 +560,8 @@
 
 	    <div class="query_info_detail">
 	        <h5><label>收益明细</label></h5>
+			<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:300px;">
+	        
 	        <div id="commmiss_query_info">
 				<#if (commList?size==0)>
 					<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
@@ -680,7 +689,7 @@
 				</table>
 				</#if>
 	        </div><!-- commmiss_query_info_end -->
-			
+			</div>
 	    </div>
 	    <br/>
 	    <br/>

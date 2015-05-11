@@ -36,7 +36,49 @@
 // 				return false;
 // 			});
 // 	    })
-	    
+
+
+
+	    $(function(){
+	    	//常量_记录每页分4条
+            $("#hidepageindex").val(5);
+	    	
+	    	
+      		$('#scroll-top-msg').html($("#order_middle_info_contain")[0].scrollTop);
+      		$('#scroll-height-msg').html($("#order_middle_info_contain")[0].scrollHeight);
+
+	    	
+	    	
+    	    function custOrderFilter_Page() {
+    	    	var param = {"keyword": $('#keyword').val(),
+    	    			"cust_passport": $('#cust_passport').val(),
+    	    			"cust_phone": $('#cust_phone').val(),
+    	    			"hidepageindex":$("#hidepageindex").val()	
+    	    		};
+    	    	$.ajax({
+    	 		   type: "POST",
+    	 		   async: false,
+    	 		   contentType:"application/json", //发送给服务器的内容编码类型
+    	 		   url: "${base}/customer/custOrderFilterByAjax_Page",
+    	 		   //dataType:"json", //预期服务器返回的数据类型
+    	 		   data: JSON.stringify(param), //服务器只能接收json字符串
+    	 		   success: function(data){
+    	 			   //alert(data);
+    	 			   $('#datagrid').append(data);
+    	 		   }
+    	 		});
+    	    }
+            //div滚动加载
+            $("#order_middle_info_contain").scroll(function(){ 
+            	//此处代码非常牛逼，一般人理解不了
+            	//第一个判断是是否到底部。第二个判断是内部div比较要高于外部div而且当查询是会因为html函数导致内部div数据情况 出现0=0 的情况 所以要加第二个判断.就不会触发滚动条的代码了
+            	if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height()) && ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height()) !=0) 
+                	{
+         					custOrderFilter_Page();
+       						$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+                	}                
+                });
+	    });
 	    function showCustOrderDetail(orderId) {
         	//alert(orderId);
         	location.href = "${base}/customer/custOrderDetail/"+orderId;
@@ -44,14 +86,19 @@
 	    }
 	    
 	    function custOrderFilter() {
+            $("#hidepageindex").val(1);
+            
 	    	var param = {"keyword": $('#keyword').val(),
 	    			"cust_passport": $('#cust_passport').val(),
-	    			"cust_phone": $('#cust_phone').val()};
+	    			"cust_phone": $('#cust_phone').val(),
+	    			"hidepageindex":$("#hidepageindex").val()	
+	    		};
 	    	$.ajax({
 	 		   type: "POST",
 	 		   contentType:"application/json", //发送给服务器的内容编码类型
 	 		   url: "${base}/customer/custOrderFilterByAjax",
 	 		   //dataType:"json", //预期服务器返回的数据类型
+	 		   async: false,
 	 		   data: JSON.stringify(param), //服务器只能接收json字符串
 	 		   success: function(data){
 	 			   //alert(data);
@@ -110,6 +157,8 @@
 	    </div>
 	    
 	    <!-- 套餐展示表格-->
+		<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:550px;">
+	    
 	    <div class="container-fluid" style="margin:10px;padding:0px" id="datagrid" pageNum="1">
 	      <!-- 查询结果无数据或者异常时展示提示信息-->
 	      <#if  (!custMyOrderList?exists || custMyOrderList?size=0)>
@@ -152,11 +201,12 @@
 		      </#list>
 	      </#if>
 	    </div> 
+	    </div>
     </div> 
     
     <input type="hidden" id="cust_passport" name="cust_passport" value="${cust_passport}" />
     <input type="hidden" id="cust_phone" name="cust_phone" value="${cust_phone}" />
-    
+	<input type="hidden" id="hidepageindex" name="hidepageindex" value=0>
      
   </body>
 </html>

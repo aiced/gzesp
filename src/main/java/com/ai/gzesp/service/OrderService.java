@@ -103,8 +103,8 @@ public class OrderService {
     	return goodsSql.GetGoodsDefaultPhoto(goodsId);
     }
     
-    public List getCustMyOrder(String passport, String phone, String keyword) {
-    	return ordersSql.getCustMyOrder(passport, phone, keyword);
+    public List getCustMyOrder(String passport, String phone, String keyword,int iHidePageIndex) {
+    	return ordersSql.getCustMyOrder(passport, phone, keyword, iHidePageIndex);
     }
     
     public Map getCustOrderDetail(String orderId) {

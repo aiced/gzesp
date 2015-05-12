@@ -125,7 +125,7 @@
       <!-- 查询结果无数据或者异常时展示提示信息-->
       <#if  (!numbers?exists || numbers?size=0)>
         <div class="row"> 
-          <p class="p-td-price">查询无结果</p>  	
+          <p class="p-td-price">查询无结果,请选择地市或其他筛选条件</p>  	
         </div>
       <#else>
         <!-- 有数据时展示 -->       

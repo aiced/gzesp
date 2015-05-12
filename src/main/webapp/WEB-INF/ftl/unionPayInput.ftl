@@ -30,7 +30,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script language="javascript" type="text/javascript" src="${resRoot}/My97DatePicker/WdatePicker.js"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js"></script>
   
   
 	<script type="text/javascript">
@@ -272,12 +273,12 @@
 						  	bRet5=false;
 						  	return;
 						}
-						else if(!checkPhoneNum($("#txtXYphonenum").val()))
-						{
-							  $("#div_txtXYphonenum").addClass("has-error");
-							  bRet5=false;
-							  return;
-						}
+						//else if(!checkPhoneNum($("#txtXYphonenum").val()))
+						//{
+							//  $("#div_txtXYphonenum").addClass("has-error");
+							//  bRet5=false;
+							//  return;
+						//}
 						else
 						{
 					  		$("#div_txtXYphonenum").removeClass("has-error");
@@ -299,11 +300,11 @@
 				  	bRet6=false;
 				  	return;
 				  }
-				  else if(!checkPhoneNum($("#txtXYphonenum").val()))
-				  {
-					  bRet6=false;
-					  return;
-				  }
+				  //else if(!checkPhoneNum($("#txtXYphonenum").val()))
+				  //{
+				//	  bRet6=false;
+				//	  return;
+				  //}
 				  else
 				  {
 				  	//这里开始做验证码操作
@@ -319,13 +320,13 @@
 			  		bRet7=false;
 			  		return;
 			  	}
-			  	//else if($("#XYyanzhengma").val()!=code)
-			  	//{
-			  	//	alert("输入的验证码与短信中的验证码不匹配");
-			  	//	$("#div_XYyanzhengma").addClass("has-error");
-			  	//	bRet7=false;
-			  	//	return;
-			  	//}
+			  	else if($("#XYyanzhengma").val()!=code)
+			  	{
+			  		alert("输入的验证码与短信中的验证码不匹配");
+			  		$("#div_XYyanzhengma").addClass("has-error");
+			  		bRet7=false;
+			  		return;
+			  	}
 			  	else
 			  	{
 			  		$("#div_XYyanzhengma").removeClass("has-error");
@@ -401,7 +402,7 @@
 			  		return;
 			  	}
 			  });
-			  //[信用卡——手机号]文本框失去焦点
+			  //[储蓄卡——手机号]文本框失去焦点
 			  $("#txtCCphonenum").blur(function(){
 				  	if(!$("#txtCCphonenum").val())
 				  	{
@@ -420,12 +421,12 @@
 						  	bRet11=false;
 						  	return;
 						}
-						else if(!checkPhoneNum($("#txtCCphonenum").val()))
-						{
-							  $("#div_txtCCphonenum").addClass("has-error");
-							  bRet11=false;
-							  return;
-						}
+						//else if(!checkPhoneNum($("#txtCCphonenum").val()))
+						//{
+						//	  $("#div_txtCCphonenum").addClass("has-error");
+						//	  bRet11=false;
+						//	  return;
+						//}
 						else
 						{
 					  		$("#div_txtCCphonenum").removeClass("has-error");
@@ -435,7 +436,7 @@
 						}
 				  	}
 				});
-			   //[信用卡——获取验证码]按钮点击
+			   //[储蓄卡——获取验证码]按钮点击
 			  $("#btnCCCode").click(function(){  
 				  //在这里操作获取验证码
 				  //alert("发送验证码");
@@ -447,11 +448,11 @@
 				  	bRet12=false;
 				  	return;
 				  }
-				  else if(!checkPhoneNum($("#txtCCphonenum").val()))
-				  {
-					  bRet12=false;
-					  return;
-				  }
+				  //else if(!checkPhoneNum($("#txtCCphonenum").val()))
+				  //{
+					//  bRet12=false;
+					//  return;
+				  //}
 				  else
 				  {
 				  	//这里开始做验证码操作
@@ -467,13 +468,13 @@
 			  		bRet13=false;
 			  		return;
 			  	}
-			  	//else if($("#CCyanzhengma").val()!=code)
-			  	//{
-			  	//	alert("输入的验证码与短信中的验证码不匹配");
-			  	//	$("#div_CCyanzhengma").addClass("has-error");
-			  	//	bRet13=false;
-			  	//	return;
-			  	//}
+			  	else if($("#CCyanzhengma").val()!=code)
+			  	{
+			  		alert("输入的验证码与短信中的验证码不匹配");
+			  		$("#div_CCyanzhengma").addClass("has-error");
+			  		bRet13=false;
+			  		return;
+			  	}
 			  	else
 			  	{
 			  		$("#div_CCyanzhengma").removeClass("has-error");
@@ -526,7 +527,7 @@
 	        $.ajax({
 		      type: "POST",
 		      contentType:"application/json", //发送给服务器的内容编码类型
-		      url: "${base}/pay/unionPay/pay",
+		      url: "${base}/pay/unionPay/payNew", // 全要素支付接口路径 /unionPay/payNew
 		      dataType:"json", //预期服务器返回的数据类型
 		      data: JSON.stringify(param), //服务器只能接收json字符串
 		      success: function(data){

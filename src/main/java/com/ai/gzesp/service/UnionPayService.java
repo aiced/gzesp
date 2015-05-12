@@ -216,6 +216,48 @@ public class UnionPayService {
     }
     
     /**
+     * 调用全要素支付接口前插支付日志表
+     * @param param
+     * @param result
+     * @return
+     */
+    public void insertPayNewlog(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        boolean isSuccess = false;
+        
+            String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.payNew.getTradeType()); //系统跟踪号
+            param.setPay_sys_trade_no(sysTradeNo);
+            String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
+            param.setPay_time_stamp(timeStamp);
+            String tradeType = TradeType.payNew.getTradeType(); //业务类型
+            param.setPay_trade_type(tradeType);
+             
+            //调用全要素支付接口前插订单支付日志表
+            int n2 = unionPayDao.insertPaylog(param.getPay_sys_trade_no(), //pay_id
+            		param.getPay_sys_trade_no().substring(14, 16), //partition_id
+                    "01",  //pay_type
+                    param.getCard_type().equals("01") ? "11" : "12", //pay_mode
+                            "0", //pay_state 初始0已发起支付
+                            null, //银联支付接口时插入md5 加密后的签约号,用于退款时知道退到哪个账户, 全要素支付接口不需要传签约号
+                            param.getPay_time_stamp(), //req_time
+                            "00", //isSuccess ? "00" : "01",  //req_status  这边其实有点问题，还没发送，就写发送成功状态
+                                    param.getPay_trade_type(), //req_trade_type
+                                    param.getPay_sys_trade_no(), //sys_trade_no
+                                    param.getOrder_id(),
+                                    param.getFee()
+                    );
+            
+            if(n2 <= 0){
+            	//都成功则result为空
+            	result.put("status", "E04");
+            	result.put("detail", "支付失败！全要素支付日志流水插入失败");
+            	//return result; //直接返回
+            }
+        
+        //return result;
+    }
+    
+    /**
      * 获取到签约号后发送支付接口
      * @param param
      * @param result
@@ -241,6 +283,33 @@ public class UnionPayService {
             
         //return result;
     }
+    
+    /**
+     * 发送全要素支付接口
+     * @param param
+     * @param result
+     * @return
+     */
+    public void sendPayNewReq(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        boolean isSuccess = false;
+            //银行卡支付接口 参数封装成map,转换层xml，生成md5摘要，3des加密,生成可发送的报文
+            Map<String, String> xmlMap = UnionPayUtil.genPayNewReq(param);
+            byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
+            //调用mina客户端发送报文
+            if(xmlSend != null){
+                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = ClientHandler.sendMsg(xmlSend);
+            }    
+            
+            if(!isSuccess){
+            	result.put("status", "E05");
+            	result.put("detail", "支付失败！发送支付接口报文失败");
+            	//return result; //直接返回
+            }
+            
+        //return result;
+    }    
     
     /**
      * 发送支付接口后等待支付结果返回
@@ -357,11 +426,12 @@ public class UnionPayService {
      * @param respMap
      * @return
      */
-    public int updatePayState(Map<String, String> respMap) {
+    public int updatePayStateAndIncomeMoney(Map<String, String> respMap) {
     	int r2 = 0;
         if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
         	String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
-        	r2 = unionPayDao.updatePayState(respMap.get(UnionPayAttrs.orderId), order_state);
+        	int income_money = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt))*10; //银联是分，表里是厘
+        	r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
         }
         return r2;
     }
@@ -611,4 +681,5 @@ public class UnionPayService {
         
         //return result;
     }
+    
 }

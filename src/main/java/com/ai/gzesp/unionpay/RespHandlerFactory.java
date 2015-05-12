@@ -38,6 +38,10 @@ public class RespHandlerFactory implements ApplicationContextAware{
             //respHanler = new RespPayHandler(respMap, unionPayService);
             respHanler = (IDealUnionPayResp) ctx.getBean("respPayHandler");
         }
+        else if(TradeType.payNewRsp.getTradeType().equals(respMap.get(UnionPayAttrs.TradeType))){
+            //respHanler = new RespPayHandler(respMap, unionPayService);
+            respHanler = (IDealUnionPayResp) ctx.getBean("respPayHandler"); //全要素支付接口的处理函数和 老的支付接口 业务逻辑一致
+        }
         else if(TradeType.payProxyRsp.getTradeType().equals(respMap.get(UnionPayAttrs.TradeType))){
             //respHanler = new RespPayProxyHandler(respMap, unionPayService);
             respHanler = (IDealUnionPayResp) ctx.getBean("respPayProxyHandler");

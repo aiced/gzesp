@@ -13,12 +13,12 @@ public class UnionPayCons {
     /**
      * 银联服务端ip
      */
-    public static String SERVER_HOST = "58.16.16.10"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
+    public static String SERVER_HOST = "144.180.70.53"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
     
     /**
      * 银联服务端端口
      */
-    public static int SERVER_PORT = 10004; //测试：10004 正式(任选一个连接)：10012 10013
+    public static int SERVER_PORT = 10012; //测试：10004 正式(任选一个连接)：10012 10013
     
     /**
      * 银联接口请求参数:编码方式，推荐用gbk
@@ -33,7 +33,7 @@ public class UnionPayCons {
     /**
      * 银联接口请求参数:发送渠道号
      */
-    public static String ChannelID = "7651444882235483";
+    public static String ChannelID = "9900000008510001"; //测试：7651444882235483  正式：9900000008510001
     
     /**
      * 银联接口请求参数:商户类型 填01表示直连，填02表示转接
@@ -43,7 +43,7 @@ public class UnionPayCons {
     /**
      * 银联接口请求参数:前置平台获批后分配的商户身份ID
      */
-    public static String bmMerId = "1000000000009904";    
+    public static String bmMerId = "301520160129499"; //测试：1000000000009904 正式：301520160129499   
     
     /**
      * 银联接口请求参数:交易货币代码（156）
@@ -58,13 +58,13 @@ public class UnionPayCons {
     /**
      * 银联接口des加密密钥:，长度为24字节
      */
-    public static String desKey = "yvo0sovt414fakqwvchs70b3";   
+    public static String desKey = "e036hlqtculakx38tjw2u9gs";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
  
     /**
      * 银联接口md5加密密钥:，长度为32字节，
      * 此秘钥不能随便改，签约表里存放的签约号是通过此秘钥加密的,改了之后解密就不对了
      */
-    public static String md5Key = "8396596f6e94b58f03d1cbaa800b2bd0";       
+    public static String md5Key = "0aad781d015ca667d6eba25e60952c23"; //测试：   正式：0aad781d015ca667d6eba25e60952c23       
     
     
     /**

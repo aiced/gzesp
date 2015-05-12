@@ -35,8 +35,8 @@ public class RespPayHandler implements IDealUnionPayResp {
     	
         //更新paylog日志表里的接口调用日志
         int r1 = unionPayService.updatePaylog(respMap);
-        //更新订单基本表里的 订单状态
-        int r2 = unionPayService.updatePayState(respMap);
+        //更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
+        int r2 = unionPayService.updatePayStateAndIncomeMoney(respMap);
         
         //先根据返回报文里的order_id 获取到订单当时是否有选择号码
         Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(respMap.get(UnionPayAttrs.orderId));

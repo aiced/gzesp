@@ -624,7 +624,7 @@
 			    </tr>
 				<tr>
 					<td colspan="4">
-						<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:100px;">
+						<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:300px;">
 	        			<div id="commmiss_query_info">
 							<#if (commList?size==0)>
 								

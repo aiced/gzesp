@@ -25,13 +25,13 @@ public class ByteArrayEncoder extends ProtocolEncoderAdapter {
     @Override
     public void encode(IoSession session, Object message, ProtocolEncoderOutput out) throws Exception {
       byte[] dataBytes = (byte[])message;
-      byte[] sizeBytes = NumberUtil.int2bytes(dataBytes.length);
+      //byte[] sizeBytes = NumberUtil.int2bytes(dataBytes.length);
       
       IoBuffer buffer = IoBuffer.allocate(256); 
       buffer.setAutoExpand(true);
       //buffer.order(ByteOrder.BIG_ENDIAN);
       
-      buffer.put(sizeBytes);
+      //buffer.put(sizeBytes);
       buffer.put(dataBytes);
       
       buffer.flip();

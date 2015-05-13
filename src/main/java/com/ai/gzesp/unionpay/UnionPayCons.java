@@ -64,7 +64,7 @@ public class UnionPayCons {
      * 银联接口md5加密密钥:，长度为32字节，
      * 此秘钥不能随便改，签约表里存放的签约号是通过此秘钥加密的,改了之后解密就不对了
      */
-    public static String md5Key = "0aad781d015ca667d6eba25e60952c23"; //测试：   正式：0aad781d015ca667d6eba25e60952c23       
+    public static String md5Key = "0aad781d015ca667d6eba25e60952c23"; //测试：8396596f6e94b58f03d1cbaa800b2bd0   正式：0aad781d015ca667d6eba25e60952c23       
     
     
     /**

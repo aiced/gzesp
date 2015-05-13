@@ -1,5 +1,4 @@
 <#if (commList?size==0)>
-<input type="hidden" id="hiddentotalmoney" name="hiddentotalmoney" value=${totalmoney} />
 <#else>
 <table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
 	<#list commList as item>
@@ -43,6 +42,5 @@
 	      </td><!-- 状态 -->
 		</tr>
 	</#list>
-	<input type="hidden" id="hiddentotalmoney" name="hiddentotalmoney" value=${totalmoney} />
 	</table>
 </#if>

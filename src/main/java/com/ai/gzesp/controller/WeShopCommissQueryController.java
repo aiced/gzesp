@@ -130,11 +130,57 @@ public class WeShopCommissQueryController {
     	
        	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,strStatusflag,Integer.valueOf(strHidePageIndex));
     	
-    	String strTotalMoney=commissionSql.getCommTotalbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,"-1",16);//-1的参数不要动
+    	//String strTotalMoney=commissionSql.getCommTotalbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,"-1",16);//-1的参数不要动
 
         ModelAndView mav = new ModelAndView("commissionQuerySub.ftl");
         mav.addObject("commList",commList);
-        mav.addObject("totalmoney",Integer.valueOf(strTotalMoney));
+        //mav.addObject("totalmoney",Integer.valueOf(strTotalMoney));
         return mav;
     }
+    
+    @RequestMapping("/selectCommissionsTotal")
+    @ResponseBody
+    public int queryOrderstotalByDate(@RequestBody String strParam)
+    {
+    	String strzhangqiTime="";
+    	String strStartDate="";
+    	String strEndDate="";
+    	
+    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+    	String strFlag=paramsMap.get("iflag");
+    	String strUserID=paramsMap.get("userID");
+    	String strStatusflag=paramsMap.get("iStatusflag");
+    	String strHidePageIndex=paramsMap.get("hidepageindex");
+    	
+    	if (strFlag.equals("1")) {
+    		strzhangqiTime=paramsMap.get("zhangqiTime");
+    		//strzhangqiTime=strzhangqiTime.replace("-", "");
+		}
+    	else if(strFlag.equals("2"))
+    	{
+        	strStartDate=paramsMap.get("startDate");
+        	strEndDate=paramsMap.get("endDate");
+        	
+        	//strStartDate=strStartDate.replace("-", "");
+        	//strEndDate=strEndDate.replace("-", "");
+    	}
+    	
+    	System.out.println(strFlag);
+    	System.out.println(strUserID);
+    	System.out.println(strzhangqiTime);
+    	System.out.println(strStartDate);
+    	System.out.println(strEndDate);
+    	System.out.println(strStatusflag);
+    	System.out.println(strHidePageIndex);
+    	//这里从数据库查询数据
+    	
+       	//List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,strStatusflag,Integer.valueOf(strHidePageIndex));
+    	
+    	String strTotalMoney=commissionSql.getCommTotalbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,"-1",16);//-1的参数不要动
+    	return Integer.valueOf(strTotalMoney);
+        //ModelAndView mav = new ModelAndView("commissionQuerySub.ftl");
+        //mav.addObject("commList",commList);
+        //mav.addObject("totalmoney",Integer.valueOf(strTotalMoney));
+        //return mav;
+    }    
 }

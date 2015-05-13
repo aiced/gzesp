@@ -165,6 +165,23 @@
   				  	 	countTotal();
    			   }
    			});
+   		$.ajax({
+			   type: "POST",
+			   url: "selectCommissionsTotal",
+			   data: param,
+			   async: false,
+			   success: function(bRet){
+				   //alert(bRet);
+				   //alert(bRet);
+				   //$("#commmiss_query_info").html(bRet);
+					//$("#commmiss_query_info").html(bRet);
+				    	//调用计算总和方法
+				  	// 	countTotal();
+				  //$('#totalRow').html('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td><td><h5><label>'+(bRet/1000).toFixed(2)+'(¥)</label></h5></td><td><h5><label></label></h5></td>');
+				  $('#totalRow').html('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td><td><h5><label>'+(bRet/1000).toFixed(2)+'(¥)</label></h5></td><td><h5><label></label></h5></td>');
+				  $('#hiddentotalmoney').val(bRet);
+			   }
+			});   		
     }
     
     
@@ -238,9 +255,6 @@
 	  			alert("请输入截至日期");
 	  			return false;
 	  		}
-	  			
-	  		 
-	  		 
         	if($("#beginTime").val())
 			{
         		if(!$("#endTime").val())
@@ -610,10 +624,10 @@
 			    </tr>
 				<tr>
 					<td colspan="4">
-						<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:300px;">
+						<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:100px;">
 	        			<div id="commmiss_query_info">
 							<#if (commList?size==0)>
-								<input type="hidden" id="hiddentotalmoney" name="hiddentotalmoney" value=${totalmoney} />
+								
 							<#else>	
 								<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
 							<#list commList as item>
@@ -659,7 +673,7 @@
 								</tr>
 							</#list>	
 							</table>
-							<input type="hidden" id="hiddentotalmoney" name="hiddentotalmoney" value=${totalmoney} />
+							
 							</#if>
 						</div>
 						</div>
@@ -672,6 +686,7 @@
 			    <tr id="totalRow">
 			    </tr>
 			</table>
+			<input type="hidden" id="hiddentotalmoney" name="hiddentotalmoney" value=${totalmoney} />
 	    </div>
 	    <br/>
 	    <br/>

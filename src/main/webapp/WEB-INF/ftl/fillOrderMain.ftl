@@ -122,6 +122,24 @@
 	                	<img src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
                 	</span>
 	            </a>
+	            
+	            <#if showFMonthD?exists && showFMonthD>
+	            <!--首月资费-->
+	            <div id="firstMonthFeeInfoTab" href="#" class="list-group-item">
+	                <label>首月资费</label>
+	                <div id="firstMonthFee-select" class="p-list">
+                        <a href="javascript:void(0);" data-descId="fMonthDesc1" value="扣全月"  class="selected">扣全月</a>
+                        <a href="javascript:void(0);" data-descId="fMonthDesc2" value="扣半月"  >扣半月</a>
+                        <a href="javascript:void(0);" data-descId="fMonthDesc3" value="不扣套餐"  >不扣套餐</a>
+                    </div>
+                    <div>
+                        <p id="fMonthDesc1"  style="font-size: 12px;color:#c0c0c0;">立即生效  适合月初开通的用户，按照您选择的套餐正常计费并享受套餐内容</p>
+                        <p id="fMonthDesc2" style="font-size: 12px;color:#c0c0c0;" class="hide" >半月生效  适合月中开通的用户，按照您选择的套餐收取一半的费用，享受一半的套餐内容，从次月起恢复正常</p>
+                        <p id="fMonthDesc3"style="font-size: 12px;color:#c0c0c0;"  class="hide" >次月生效  适合月底开通的用户，开通当月按照标准资费依据使用量进行计费，从次月起恢复正常 </p>
+                    </div>
+	            </div>
+	            </#if>
+	            
 	        </ul>
 	
 	        <div class="list-group">
@@ -157,6 +175,13 @@
 	    <input type="hidden" id="totalPrice" value="${totalPrice}">
 	    <input type="hidden" id="attrVal" value="${attrVal}">
 	    <input type="hidden" id="serialNumber" value="${serialNumber}">
+	    
+	    <#if showFMonthD?exists && showFMonthD>
+	   		<input type="hidden" id="fMonthDResId" value="${fMonthDResId}">
+    	<#else>
+	    	<input type="hidden" id="fMonthDResId" value="">
+	    </#if>
+	    
 	    <#if conPeriod?exists>
 	    	<input type="hidden" id="conPeriod" value="${conPeriod}">
     	<#else>

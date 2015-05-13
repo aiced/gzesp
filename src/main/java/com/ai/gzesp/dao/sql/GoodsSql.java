@@ -264,6 +264,27 @@ public class GoodsSql {
 		return resId;
 	}
 	
+	/*
+	 * 得到商品首月资费属性数据
+	 */
+	public String GetGoodsFMonthDAttr(String goodsId) {
+		StringBuffer sb = new StringBuffer();
+		
+		sb.append("select distinct a.res_id ");
+		sb.append(" from REL_GOODS_RES a , RES_D_ATTRVAL b");
+		sb.append(" where  a.goods_id = " + goodsId
+				+ "	and a.res_id = b.res_id "
+				+ " and b.attr_code = 'FMONTHD'" );
+		
+		List<Map<String, Object>> list = commonDao.queryForList(sb.toString());
+		
+		String resId = "-1";
+		if(list.size()>0) {
+			resId = String.valueOf(list.get(0).get("RES_ID"));
+		}
+		return resId;
+	}
+	
 	public List GetGoodsDetailPhotos(String goodsId) {
 		StringBuffer sb = new StringBuffer();
 		

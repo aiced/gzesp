@@ -158,6 +158,15 @@ $(function() {
 		return false;
 	});
 	
+	//首月资费
+	$('#firstMonthFee-select a').bind("click",function(){
+  	  $(this).addClass("selected").siblings().removeClass("selected");
+  	  var descId = $(this).attr("data-descId");
+  	  $('#'+descId).removeClass("hide").siblings().addClass("hide");
+  	  
+  	  return false;
+    });
+	
 	
 	//选择文件
 	$(':file').change(function(event){
@@ -395,8 +404,13 @@ function getParams() {
 	orderFormParams.cityCode=$("#selCity").val();
 	orderFormParams.districtCode=$("#selDistrict").val();
 	
-	
-	orderFormParams.resAttr = $('#attrVal').val();
+	if($('#fMonthDResId').val().length != 0) {
+		var fMonthDVal = $('#firstMonthFee-select').find('a.selected').attr("value");
+		var fMonthD_attrVal=$('#fMonthDResId').val()+"|"+"FMONTHD"+"|"+ fMonthDVal +"|"+fMonthDVal;
+		orderFormParams.resAttr = $('#attrVal').val() + '^' + fMonthD_attrVal;
+	} else {
+		orderFormParams.resAttr = $('#attrVal').val();
+	}
 	
 	orderFormParams.goodsId= $('#goodsId').val();
 	orderFormParams.goodsName= $('#goodsName').val();

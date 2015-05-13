@@ -99,6 +99,10 @@ public class OrderService {
     	return goodsSql.GetGoodsNumAttr(goodsId);
     }
     
+    public String GetGoodsFMonthDAttr(String goodsId) {
+    	return goodsSql.GetGoodsFMonthDAttr(goodsId);
+    }
+    
     public Map getGoodsDefaultPhoto(String goodsId) {
     	return goodsSql.GetGoodsDefaultPhoto(goodsId);
     }

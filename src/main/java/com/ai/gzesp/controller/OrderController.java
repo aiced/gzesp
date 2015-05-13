@@ -117,6 +117,7 @@ public class OrderController {
     @RequestMapping("/fillOrderMain")
     public ModelAndView fillOrderMain(@RequestBody String inputParams){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+    	boolean showFMonthD = true;
     	String fromPage = paramsMap.get("fromPage");
     	if(fromPage != null &&
     			("planDetail".equals(fromPage) || "cardGoodDetail".equals(fromPage) )) {
@@ -124,6 +125,14 @@ public class OrderController {
     	}
     	
     	String goodsId = paramsMap.get("goodsId");
+    	String fMonthDResId = "";
+    	if("cardGoodDetail".equals(fromPage)) {
+    		showFMonthD = false;
+    	} else {
+    		fMonthDResId = orderService.GetGoodsFMonthDAttr(goodsId);
+    	}
+    	
+    	
     	Map info = orderService.getGoodsDefaultPhoto(goodsId);
     	
     	List<Map<Object, Object>> citys = weShopService.getCitys();
@@ -135,6 +144,8 @@ public class OrderController {
         mav.getModel().putAll(info);
         mav.getModel().putAll(paramsMap);
         mav.addObject("citys", citys);
+        mav.addObject("showFMonthD", showFMonthD);
+        mav.addObject("fMonthDResId", fMonthDResId);
         return mav;
     }
     

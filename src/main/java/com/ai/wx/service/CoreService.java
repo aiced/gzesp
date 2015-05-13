@@ -327,7 +327,8 @@ public class CoreService {
         buffer.append(" /::D 欢迎来到沃掌柜大本营！").append("\n");  
         buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n").append("\n");  
         buffer.append("1.  0元免费开店").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
+//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
+        buffer.append("<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx52db41a405183edb&redirect_uri=http%3A%2F%2Fwap.gz10010.xyz%2Fesp%2Fwx%2Fauth&response_type=code&scope=snsapi_base&state=register#wechat_redirect\">☞点这立即注册！</a>").append("\n").append("\n"); 
 //        buffer.append("☞点这立即注册！").append("\n").append("\n"); 
         buffer.append("2.  入门须知").append("\n");  
         buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  

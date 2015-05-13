@@ -63,6 +63,7 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_1","没有数据"); 
             mav.addObject("RES_ATTR_VAL_2","没有数据"); 
             mav.addObject("RES_ATTR_VAL_3","没有数据"); 
+            mav.addObject("RES_ATTR_VAL_4","没有数据"); 
 		}
         else {
             mav.addObject("title", "订单详情");
@@ -79,6 +80,7 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_1",orderList.get(0).get("RES_ATTR_VAL_1")); 
             mav.addObject("RES_ATTR_VAL_2",orderList.get(0).get("RES_ATTR_VAL_2")); 
             mav.addObject("RES_ATTR_VAL_3",orderList.get(0).get("RES_ATTR_VAL_3")); 
+            mav.addObject("RES_ATTR_VAL_4",orderList.get(0).get("RES_ATTR_VAL_4")); 
            // mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
 		
 		}

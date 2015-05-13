@@ -140,7 +140,8 @@ public class OrdersSql {
 			+"GDS_D_PHOTO.PHOTO_LINKS,"//先注释掉，后面需要放开注释
 			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='NUMBERS') as RES_ATTR_VAL_1,"
 			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='SAVEMEY') as RES_ATTR_VAL_2,"
-			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='PACKRES') as RES_ATTR_VAL_3"
+			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='PACKRES') as RES_ATTR_VAL_3,"
+			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='FMONTHD') as RES_ATTR_VAL_4"
 			);
 	sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO,ORD_D_RES");
 	sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
@@ -187,7 +188,13 @@ public class OrdersSql {
             + "'无'"
             + " else"
             + " RES_ATTR_VAL_3"
-            + " end RES_ATTR_VAL_3"  
+            + " end RES_ATTR_VAL_3,"  
+			+ "case"
+			+ " when RES_ATTR_VAL_4 is null then"
+            + "'无'"
+            + " else"
+            + " RES_ATTR_VAL_4"
+            + " end RES_ATTR_VAL_4"            
 			+ " from T1,T2 where T1.Order_id=T2.Order_id(+)"
 			);	
 	

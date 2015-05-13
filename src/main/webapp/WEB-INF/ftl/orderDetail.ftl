@@ -41,6 +41,7 @@
                 <a href="#" class="list-group-item"><h5>订单编号：${ORDER_ID}</h5></a> 
                 <a href="#" class="list-group-item"><h5>商品名称：<br/><br/>${GOODS_NAME}</h5></a> 
 				<a href="#" class="list-group-item"><h5>套餐月费(¥)：${RES_ATTR_VAL_3}</h5></a>
+				<a href="#" class="list-group-item"><h5>生效时间：${RES_ATTR_VAL_4}</h5></a>
                 <a href="#" class="list-group-item"><h5>订单金额(¥)：${(TOPAY_FEE/1000)?string("#.##")}</h5></a>
                 <a href="#" class="list-group-item"><h5>商品面值(¥)：${RES_ATTR_VAL_2}</h5></a>
                 <a href="#" class="list-group-item"><h5>订购号码：${RES_ATTR_VAL_1}</h5></a>

@@ -235,6 +235,49 @@ public class PayController {
 		}      
         
         return result;
+    }   
+    
+    /**
+     * 银联支付：调用全要素支付接口 <br>
+     * 此为银联改造后的新的方法
+     * 不用 先调绑定接口再获取签约号然后再调支付接口了，直接全要素上传调支付接口
+     *
+     * @param param
+     * @return
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    @RequestMapping("/unionPay/payNew")
+    @ResponseBody
+    public Map<String, String> unionPayPayNew(@RequestBody UnionPayParam param){
+        Map<String, String> result = new HashMap<String, String>();
+        
+        //判断校验参数
+        
+        //逻辑放controller是因为service里都有事务控制，没法分开
+        try {
+			unionPayService.insertPayNewlog(param, result); //新的方法
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.sendPayNewReq(param, result); //新的方法
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.waitForPayResp(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			
+			result.put("status", "E11");
+            result.put("detail", "支付失败！");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			result.put("status", "E12");
+            result.put("detail", "支付失败！");
+		}      
+        
+        return result;
     }    
     
 /*    @RequestMapping("/unionPay/testResp/{sys_trade_no}/{resp_trade_type}")

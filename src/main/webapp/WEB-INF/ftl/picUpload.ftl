@@ -88,7 +88,12 @@
      <!-- 《电话用户真实身份信息登记规定》（工业和信息化部令25号） -->    
      <div id="lawTip" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="padding:5px;height:1500px;text-align:center">
+        <div class="modal-content" style="padding:5px;height:1550px;text-align:center">
+            <div class="modal-header" style="padding:0px;">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		    	<h5 class="modal-title" id="myModalLabel" style="visibility: hidden;">Modal title</h5>
+		    </div>
+            
             <p><strong class="cf60">《全国人民代表大会常务委员会关于加强网络信息保护的决定》</strong></p>
             <p><strong class="cf60">（２０１２年１２月２８日第十一届全国人民代表大会常务委员会第三十次会议通过）</strong></p>
             <p>为了保护网络信息安全，保障公民、法人和其他组织的合法权益，维护国家安全和社会公共利益，特作如下决定： </p>
@@ -124,7 +129,11 @@
             <p>
                 十一、对有违反本决定行为的，依法给予警告、罚款、没收违法所得、吊销许可证或者取消备案、关闭网站、禁止有关责任人员从事网络服务业务等处罚，记入社会信用档案并予以公布；构成违反治安管理行为的，依法给予治安管理处罚。构成犯罪的，依法追究刑事责任。侵害他人民事权益的，依法承担民事责任。</p>
 
-            <p> 十二、本决定自公布之日起施行。</p>            
+            <p> 十二、本决定自公布之日起施行。</p>  
+
+
+
+
         </div>
       </div>
      </div>

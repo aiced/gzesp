@@ -109,7 +109,7 @@
     	}
     	//二次查询数据，因为有iStatusflag参数的存在
     	
-    	$("#hidepageindex").val(8);
+    	$("#hidepageindex").val(16);
     	selectData();
     	
     	
@@ -120,7 +120,7 @@
 	    var totalSale = 0;
 	    var totalCommission=0;
 	    var totalRowCount=0;
-	    $('table tr:gt(0)').each(function() { 
+	    $('#commmiss_query_info table tr').each(function() { 
 	    	$(this).find('td:eq(2)').each(function(){ 
 	    		totalRowCount=totalRowCount+1;
 	    		totalSale += parseFloat($(this).text()); 
@@ -129,10 +129,8 @@
 	    	//	totalCommission += parseFloat($(this).text()); 
 	    	//}); 
 	    }); 
-	    $('#totalRowCount').append('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
-	    $('#totalRow').append('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td>');
-	    $('#totalRow').append('<td><h5><label>'+totalSale.toFixed(2)+'(¥)</label></h5></td>');
-	    $('#totalRow').append('<td><h5><label></label></h5></td>');
+	    $('#totalRowCount').html('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
+
     }
     
     function selectData()
@@ -161,8 +159,9 @@
    			   async: false,
    			   success: function(bRet){
    				   //alert(bRet);
-   				   $("#commmiss_query_info").html(bRet);
-  				  	 	//调用计算总和方法
+   				   //$("#commmiss_query_info").html(bRet);
+   					$("#commmiss_query_info").html(bRet);
+   				    	//调用计算总和方法
   				  	 	countTotal();
    			   }
    			});
@@ -277,7 +276,7 @@
         	}
         	else
         	{
-        		$("#hidepageindex").val(8);
+        		$("#hidepageindex").val(16);
        	    	selectData();
         	}
    	    });
@@ -300,7 +299,7 @@
 
    	    
    	//常量_记录每页分4条
-        $("#hidepageindex").val(8);
+        $("#hidepageindex").val(16);
         //第一次进来分页查询
         function queryCommissionInfo_Page()
         {
@@ -343,7 +342,7 @@
         $("#order_middle_info_contain").scroll(function(){
  			 if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height())) 
             	{
-    				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+8);
+    				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+16);
        				queryCommissionInfo_Page();
 				}                
             });
@@ -560,136 +559,100 @@
 
 	    <div class="query_info_detail">
 	        <h5><label>收益明细</label></h5>
-			<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:300px;">
-	        
-	        <div id="commmiss_query_info">
-				<#if (commList?size==0)>
-					<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
-					    <tr>
-					        <th><div class="th_title">商品名称</div></th>
-					        <th><div class="th_title">订单详情</div></th>
-					        <th><div class="th_title">收益(¥)</div></th>
-					        <th>
-								<div class="dropdown" style="padding:0px;">
-									<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-									    	状态
-									    <span class="caret"></span>
-									</button>
-									<ul class="dropdown-menu" role="menu">
-										<!-- <li><a href="#">可领取</a></li>
-										<li role="presentation" class="divider"></li>
-										<li><a href="#">冻结</a></li>
-										 -->
-										<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
-										<li role="presentation" class="divider"></li>
-										<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
-									</ul>
-								</div>
-							</th>
-					    </tr>
-						<tr>
-							<td colspan="4">您没有收益</td>
-						</tr>
-						<tr id="totalRowCount">
-					
-					   	</tr>
-					    <tr id="totalRow">
-					
-					    </tr>
-					</table>	
-				<#else>
-				<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
-				    <tr>
-				        <!--<th>序号</th>-->
-				        <th><div class="th_title">商品名称</div></th>
-				        <th><div class="th_title">订单详情</div></th>
-				        <th><div class="th_title">收益(¥)</div></th>
-				        <th>
-							<div class="dropdown th_title" style="padding:0px;">
-								<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-								    	状态
-								    <span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu" role="menu">
-									<!-- <li><a href="#">可领取</a></li>
-									<li role="presentation" class="divider"></li>
-									<li><a href="#">冻结</a></li>
-									 -->
-									<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
-									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
-									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
-									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
-									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
-									<li role="presentation" class="divider"></li>
-									<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
-								</ul>
-							</div>
-						</th>
-				    </tr>
-					<#list commList as item>
-						<tr>
-					      <!-- <td>${item_index}</td> --><!-- 序号 -->
-					      <td style="width:74px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.GOODS_NAME}</td><!--商品名称 -->
-					      <td style="width:59px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);"><span style="border-bottom:1px solid #999999;">${item.RECEIVER_NAME}-${item.ORDER_ID}</span></td><!-- 订单号-->
-						  <td>
-					      	<#if (item.SUM_CMS_MONEY== '')>
-					      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
-					      			${(item.CMS_PRE_FEE/1000)?string("#.##")} <!-- 预期 -->
-					      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
-					      			${(item.CMS_PRE_FEE/1000)?string("#.##")}<label style="color: red;">(奖)</label> <!-- 预期 -->
-					      		<#else><!-- 未知 -->
-					      			未知
-					      		</#if>
-					      	<#else>
-					      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
-					      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 -->
-					      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
-					      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 --><label style="color: red;">(奖)</label> <!-- 预期 -->
-					      		<#else><!-- 未知 -->
-					      			未知
-					      		</#if>
-					      	</#if>      
-						  </td><!-- 预期-->
-					     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->
-					      <td>
-					      	<#if (item.CMS_STATE == "")>
-					      		<span class="label label-default">未知</span>
-					      	<#elseif (item.CMS_STATE=='00')><!-- 未激活-->
-					      		<span class="label label-default">未激活</span>
-					      	<#elseif (item.CMS_STATE=='01')><!-- 结算中 -->	
-					      		<span class="label label-primary">结算中</span>
-					      	<#elseif (item.CMS_STATE=='02')><!-- 已到帐 -->
-					      		<span class="label label-success">已到帐</span>
-					      	<#elseif (item.CMS_STATE=='03')><!-- 已退货-->
-					      		<span class="label label-warning">已退货</span>
-					      	<#elseif (item.CMS_STATE=='04')><!-- 已失效-->
-					      		<span class="label label-danger">已失效</span>	
-					      	</#if>
-					      </td><!-- 状态 -->
-						</tr>
-					</#list>
-					<tr id="totalRowCount">
+			<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
+			    <tr>
+			        <th><div class="th_title">商品名称</div></th>
+			        <th><div class="th_title">订单详情</div></th>
+			        <th><div class="th_title">收益(¥)</div></th>
+			        <th>
+						<div class="dropdown" style="margin-left: 20px;">
+							<button class="btn dropdown-toggle" style="background-color: transparent;padding: 0px;margin: 0px;font-weight: bold;" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+							    	状态
+							    <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<!-- <li><a href="#">可领取</a></li>
+								<li role="presentation" class="divider"></li>
+								<li><a href="#">冻结</a></li>
+								 -->
+								<li onclick="doStatusClick(this);"><a href="#">全部</a></li> 
+								<li role="presentation" class="divider"></li>
+								<li onclick="doStatusClick(this);"><a href="#">未激活</a></li>
+								<li role="presentation" class="divider"></li>
+								<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
+								<li role="presentation" class="divider"></li>
+								<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
+								<li role="presentation" class="divider"></li>
+								<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
+								<li role="presentation" class="divider"></li>
+								<li onclick="doStatusClick(this);"><a href="#">已失效</a></li>
+							</ul>
+						</div>
+					</th>
+			    </tr>
+				<tr>
+					<td colspan="4">
+						<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:300px;">
+	        			<div id="commmiss_query_info">
+							<#if (commList?size==0)>
+							<#else>	
+								<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
+							<#list commList as item>
+								<tr>
+							      <!-- <td>${item_index}</td> --><!-- 序号 -->
+							      <td style="width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.GOODS_NAME}</td><!--商品名称 -->
+							      <td style="width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" onclick="doneClick(this);"><span style="border-bottom:1px solid #999999;">${item.RECEIVER_NAME}-${item.ORDER_ID}</span></td><!-- 订单号-->
+								  <td>
+							      	<#if (item.SUM_CMS_MONEY== '')>
+							      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
+							      			${(item.CMS_PRE_FEE/1000)?string("#.##")} <!-- 预期 -->
+							      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
+							      			${(item.CMS_PRE_FEE/1000)?string("#.##")}<label style="color: red;">(奖)</label> <!-- 预期 -->
+							      		<#else><!-- 未知 -->
+							      			未知
+							      		</#if>
+							      	<#else>
+							      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
+							      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 -->
+							      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
+							      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 --><label style="color: red;">(奖)</label> <!-- 预期 -->
+							      		<#else><!-- 未知 -->
+							      			未知
+							      		</#if>
+							      	</#if>      
+								  </td><!-- 预期-->
+							     <!-- 记录状态 筛选 1可提现 2无效单 3结算中4未激活 -->
+							      <td>
+							      	<#if (item.CMS_STATE == "")>
+							      		<span class="label label-default">未知</span>
+							      	<#elseif (item.CMS_STATE=='00')><!-- 未激活-->
+							      		<span class="label label-default">未激活</span>
+							      	<#elseif (item.CMS_STATE=='01')><!-- 结算中 -->	
+							      		<span class="label label-primary">结算中</span>
+							      	<#elseif (item.CMS_STATE=='02')><!-- 已到帐 -->
+							      		<span class="label label-success">已到帐</span>
+							      	<#elseif (item.CMS_STATE=='03')><!-- 已退货-->
+							      		<span class="label label-warning">已退货</span>
+							      	<#elseif (item.CMS_STATE=='04')><!-- 已失效-->
+							      		<span class="label label-danger">已失效</span>	
+							      	</#if>
+							      </td><!-- 状态 -->
+								</tr>
+							</#list>	
+							</table>
+							</#if>
+						</div>
+						</div>
+					</td>
 
-				    </tr>
-				    <tr id="totalRow">
-
-				    </tr>
-				</table>
-				</#if>
-	        </div><!-- commmiss_query_info_end -->
-			</div>
+				</tr>
+				<tr id="totalRowCount">
+			
+			   	</tr>
+			    <tr id="totalRow">
+					<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td><td><h5><label>${(totalmoney/1000)?string("#.##")}(¥)</label></h5></td><td><h5><label></label></h5></td>
+			    </tr>
+			</table>
 	    </div>
 	    <br/>
 	    <br/>

@@ -2,9 +2,9 @@
 	    <!-- 套餐展示表格-->
 	      <!-- 查询结果无数据或者异常时展示提示信息-->
 	      <#if  (!custMyOrderList?exists || custMyOrderList?size=0)>
-	        <div class="row" id="nullresult" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;"> 
+	       <!--  <div class="row" id="nullresult" style="margin:0 0 10px 0;padding:0px;background-color:#ffffff;"> 
 	          <p class="p-td-price">查询无结果</p>  	
-	        </div>
+	        </div> -->
 	      <#else>
 	      <!-- 有数据时展示 -->
 		      <#list custMyOrderList as item>

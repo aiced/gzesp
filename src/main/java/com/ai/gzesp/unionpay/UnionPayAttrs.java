@@ -46,5 +46,7 @@ public class UnionPayAttrs {
     public static String txnAmt = "txnAmt"; //交易金额（单位：分）
     public static String Version = "Version" ; //接口版本号（2.0.1）
     public static String IcData = "IcData"; //IC卡数据
+    public static String ifInstal = "ifInstal"; //是否做分期付款（0表示不分期1表示分期）
+    public static String instalTransInfo = "instalTransInfo"; //分期付款期数（两位数字，比如分为6期取值为06）
 
 }

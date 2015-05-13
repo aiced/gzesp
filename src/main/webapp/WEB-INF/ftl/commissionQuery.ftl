@@ -130,7 +130,7 @@
 	    	//}); 
 	    }); 
 	    $('#totalRowCount').html('<td colspan="4"><h5>共'+totalRowCount+'条数据</h5></td>');
-
+		$('#totalRow').html('<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td><td><h5><label>'+($('#hiddentotalmoney').val()/1000).toFixed(2)+'(¥)</label></h5></td><td><h5><label></label></h5></td>');
     }
     
     function selectData()
@@ -386,12 +386,17 @@
         .query_info_detail
         {
             background: #ffffff;
-            margin-top: 40px;
+        }
+        .query_info_detail>h5
+        {
+        	height:30px;
+        	padding:0px;
+        	margin: 0px 0px 0px 10px;
+        	line-height: 30px;
         }
 
         h5
         {
-            padding-top: 15px;
             margin-left: 10px;
         }
         .query_info_left
@@ -496,6 +501,14 @@
 		{
 			text-align: left;
 		}
+		#totalRowCount>td {
+			padding:0px;
+		}
+		#totalRow>td
+		{	
+			padding:0px;
+			margin:0px;
+		}
 }
 
     </style>
@@ -556,7 +569,12 @@
 
 	        </div>
 	    </form>
-
+		<div style="text-align:right;margin: 10px;">
+			&nbsp;&nbsp;&nbsp;<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
+	        <!-- <div class="query_info_bottom">
+				温馨提示：我们每天凌晨4点根据用户状态计算收益收益，处于冻结状态的收益可能是未到计算时点或号码还没有激活。
+	    	</div> -->
+		</div>
 	    <div class="query_info_detail">
 	        <h5><label>收益明细</label></h5>
 			<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
@@ -595,6 +613,7 @@
 						<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:300px;">
 	        			<div id="commmiss_query_info">
 							<#if (commList?size==0)>
+								<input type="hidden" id="hiddentotalmoney" name="hiddentotalmoney" value=${totalmoney} />
 							<#else>	
 								<table class="table table-hover table-striped table-condensed" style="table-layout: fixed;text-align: center;">
 							<#list commList as item>
@@ -640,6 +659,7 @@
 								</tr>
 							</#list>	
 							</table>
+							<input type="hidden" id="hiddentotalmoney" name="hiddentotalmoney" value=${totalmoney} />
 							</#if>
 						</div>
 						</div>
@@ -650,20 +670,12 @@
 			
 			   	</tr>
 			    <tr id="totalRow">
-					<td colspan="2"><h5><label class="query_info_left">合计</label></h5></td><td><h5><label>${(totalmoney/1000)?string("#.##")}(¥)</label></h5></td><td><h5><label></label></h5></td>
 			    </tr>
 			</table>
 	    </div>
 	    <br/>
 	    <br/>
-		<div>
-			&nbsp;&nbsp;&nbsp;<label>还没有绑定银行卡？</label>&nbsp;&nbsp;&nbsp;<label><a style="color:green;" href="${base}/shopManage/bindBankCard?userid=${hideuserid}"><u>点此去绑定</u></a></label>
-	        <!-- <div class="query_info_bottom">
-				温馨提示：我们每天凌晨4点根据用户状态计算收益收益，处于冻结状态的收益可能是未到计算时点或号码还没有激活。
-	    	</div> -->
-		</div>
-		<br/>
-	    <br/>
+
 	</div>
 	
 

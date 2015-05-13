@@ -37,7 +37,7 @@ public class WeShopCommissQueryController {
        	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup("0",strUserID,"","","","-1",16);//默认显示8条数据
     	String strTotalMoney=commissionSql.getCommTotalbySelectGroup("0",strUserID,"","","","-1",16);
 
-    	
+
     	
     	ModelAndView mav = new ModelAndView("commissionQuery.ftl");
         //从数据库获取信息赋值
@@ -130,8 +130,11 @@ public class WeShopCommissQueryController {
     	
        	List<Map<String, Object>> commList=commissionSql.getCommListbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,strStatusflag,Integer.valueOf(strHidePageIndex));
     	
+    	String strTotalMoney=commissionSql.getCommTotalbySelectGroup(strFlag,strUserID,strzhangqiTime,strStartDate,strEndDate,"-1",16);//-1的参数不要动
+
         ModelAndView mav = new ModelAndView("commissionQuerySub.ftl");
         mav.addObject("commList",commList);
+        mav.addObject("totalmoney",Integer.valueOf(strTotalMoney));
         return mav;
     }
 }

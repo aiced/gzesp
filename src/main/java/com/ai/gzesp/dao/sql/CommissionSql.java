@@ -366,7 +366,7 @@ public class CommissionSql {
 		sb.append(" from T1, T2");
 		sb.append(" where T1.order_id(+) = T2.order_id and T1.CMS_TYPE_DAILLY(+)= T2.CMS_TYPE and T2.USER_ID ='"+strUserID+"'),");
 		sb.append("T4 as (select CMS_STATE,ORDER_ID from ORD_D_CMSSTATE)");
-		sb.append("select sum(case when SUM_CMS_MONEY is null then CMS_PRE_FEE else SUM_CMS_MONEY end) TotalMoney from T3, T4 where T3.order_id = T4.order_id(+)");
+		sb.append("select nvl(sum(case when SUM_CMS_MONEY is null then CMS_PRE_FEE else SUM_CMS_MONEY end),0) TotalMoney from T3, T4 where T3.order_id = T4.order_id(+)");
 			
 		System.out.println(sb.toString());
 		List<Map<String, Object>> CommList =commonDao.queryForList(sb.toString());

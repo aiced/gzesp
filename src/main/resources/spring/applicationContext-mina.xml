@@ -14,7 +14,7 @@
       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd"
       >
   <!-- 加这句是为了下面 serverHandler 里 注入 unionPayService 注解与配置混合使用-->
-  <context:component-scan base-package="com.ai" />
+  <!-- <context:component-scan base-package="com.ai" /> -->
   
   <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
     <property name="customEditors">

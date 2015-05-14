@@ -69,7 +69,7 @@ public class UnionPayService {
      * @param param
      * @return
      */
-    public void insertBindlogAndSignCode(UnionPayParam param, Map<String, String> result){
+    public void insertBindlogAndSignCodeTx(UnionPayParam param, Map<String, String> result){
         //Map<String, String> result = new HashMap<String, String>();
         boolean isSuccess = false;
 

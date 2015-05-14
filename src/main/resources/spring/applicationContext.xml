@@ -14,6 +14,8 @@
       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd"
       >
 
+  <context:component-scan base-package="com.ai" />
+  
 	<!-- 缓存注解驱动 -->
 <!-- 	<cache:annotation-driven cache-manager="ehCacheManager" /> -->
 	<!-- 启动aop切面编程注解 -->
@@ -105,7 +107,10 @@
  
 	<!-- 需要事务拦截的路径 -->
     <aop:config>
-        <aop:pointcut id="serviceOperation" expression="execution(* com.ai.gzesp.service.*.*(..))" />
+        <aop:pointcut id="serviceOperation" expression="execution(* com.ai.gzesp.service.OrderService.*(..)) 
+                          or execution(* com.ai.gzesp.service.SelectNumberService.*(..)) 
+                          or execution(* com.ai.gzesp.service.UnionPayService.*Tx(..))
+                          or execution(* com.ai.gzesp.service.WeShopService.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
        <!-- 
         <aop:aspect ref="exceptionHandler" >

@@ -126,7 +126,7 @@
 	            <#if showFMonthD?exists && showFMonthD && fMonthDList>
 	            <!--首月资费-->
 	            <div id="firstMonthFeeInfoTab" href="#" class="list-group-item">
-	                <label>首月资费</label>
+	                <label>套餐生效时间</label>
 	                <div id="firstMonthFee-select" class="p-list">
 	        	  	<#list fMonthDList as item>
 		        	  	<#if item_index == 0>

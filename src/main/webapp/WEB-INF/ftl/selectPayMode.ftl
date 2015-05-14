@@ -178,6 +178,12 @@
             </div>
         </div>
         <br/>
+        <div style="font-size: 12px;margin: 10px;line-height: 20px;">
+			<b style="font-size: 14px;">已接入银行</b></br>
+			<b>储蓄卡：</b>工商银行、农业银行、光大银行、邮储银行等</br>
+			<b>信用卡：</b>中国银行等</br>
+			<i><b>其他银行陆续接入，敬请期待～</b></i>
+        </div>
         <div id="payInfoBtn" style="margin: 15px">
             <button class="btn btn-warning btn-block" id="btnsubmit" onclick="unionPayInput()">确定</button>
         </div>

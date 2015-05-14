@@ -91,6 +91,11 @@
     	  	$("#beginTime").mobiscroll($.extend(opt['date'], opt['default_main']));
     	  	$("#endTime").mobiscroll($.extend(opt['date'], opt['default_main']));
 
+			$("#txtorderid").blur(function(){
+				
+
+			});
+    	  	
 
             
             
@@ -136,6 +141,11 @@
             		alert("截至日期不能大于等于起始日期");
             		return false;
             	}
+            	
+	    	  	if(isNaN($("#txtorderid").val())){
+		      	  	  alert("订单号必须为数字");
+		      	  	  return false;
+		      	  	}
             	return true;
             }
             //[点击订单列表]

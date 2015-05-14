@@ -46,7 +46,19 @@
         <property name="jobDetail" ref="releaseNumberJob" />  
 		<property name="startDelay" value="60000"/><!-- 应用启动后延迟1分钟开始调度 -->  
 		<property name="repeatInterval" value="1800000" /><!-- 每半小时 30*60*1000毫秒调度一次 -->  
-    </bean>  	
+    </bean> 
+    
+    <!-- 订单超半小时未支付 商品库存数量释放销量减一 定时任务 每隔半小时执行一次 -->    
+	<bean id="reverseGoodsAmountJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="goodsAmountReverseTask"/>
+		<property name="targetMethod" value="doJob"/>
+	</bean>
+	
+	<bean id="reverseGoodsAmountTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">  
+        <property name="jobDetail" ref="reverseGoodsAmountJob" />  
+		<property name="startDelay" value="120000"/><!-- 应用启动后延迟2分钟开始调度 -->  
+		<property name="repeatInterval" value="1800000" /><!-- 每半小时 30*60*1000毫秒调度一次 -->  
+    </bean>  	 	
 		
  	 <!-- 定时列表 -->
 	<bean id="myScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -55,6 +67,7 @@
 				<ref bean="OneTimeTask"/>
 				<ref bean="RepeatTask"/>
 				<ref bean="releaseNumberTrigger"/>
+				<ref bean="reverseGoodsAmountTrigger"/>
 			</list>
 		</property>
 	</bean>

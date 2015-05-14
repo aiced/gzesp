@@ -21,13 +21,35 @@ public interface OrderDao {
     
     public int updateGoodsAmount(@Param("goods_id") String goods_id);
     
+    public int updateGoodsAmountReverse(@Param("goodIds") String[] goodIds);
+    
     public Map<Object, Object> getNetTypeByGoodsId(@Param("goods_id") String goods_id); 
     
     public List<Map<Object, Object>> queryNumbersTimeout(); 
+    
+    public List<Map<Object, Object>> queryOrdersTimeout(); 
     
     public int releaseNumberState(@Param("numbers") String[] numbers); 
     
     public int deleteNumberReserve(@Param("numbers") String[] numbers); 
     
     public Map<Object, Object> getNumberByOrderId(@Param("order_id") String order_id); 
+    
+    public int deleteOrderBaseInfo(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderCustInfo(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderDealInfo(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderPostInfo(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderResInfo(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderCMSPreFee(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderProdInfo(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderCMSStateInfo(@Param("orderIds") String[] orderIds);
+    
+    public int deleteOrderPreCMSFeeInfo(@Param("orderIds") String[] orderIds);
 }

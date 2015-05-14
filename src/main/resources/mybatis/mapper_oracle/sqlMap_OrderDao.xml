@@ -90,7 +90,20 @@
                   when amount_type='2' then goods_amount+1 
                   else 0 end)
         where goods_id = ${goods_id}
-	</update>	
+	</update>
+	
+	<update id="updateGoodsAmountReverse" >
+      update gds_d_amount
+         set goods_amount = 
+            (case when amount_type='1' then goods_amount+1 
+                  when amount_type='2' then goods_amount-1 
+                  else 0 end)
+        where goods_id in
+              <foreach collection="goodIds" item="goods_id" index="index"
+                  open="(" close=")" separator=",">
+                   ${goods_id}
+              </foreach>
+	</update>			
 	
 	<select id="getNetTypeByGoodsId" resultType="java.util.HashMap">
      select a.goods_id ,
@@ -117,6 +130,20 @@
          ]]>    
 	</select>	
 	
+	<select id="queryOrdersTimeout" resultType="java.util.HashMap">
+      <![CDATA[
+      select to_char(a.order_id) order_id,
+             to_char(c.goods_id) goods_id
+        from ord_d_base a,
+             ord_d_paylog b,
+             ord_d_prod c
+       where a.order_id = b.order_id(+)
+         and a.create_time <= sysdate - 1/(24*2)
+         and b.pay_id is null 
+         and a.order_id = c.order_id
+         ]]>    
+	</select>		
+	
 	<update id="releaseNumberState" >
 	   update num_d_numinfo a
           set a.code_state = '1'
@@ -142,5 +169,86 @@
        where order_id = ${order_id}
          and RES_ATTR_CODE = 'NUMBERS'
 	</select>	
+	
+	<delete id="deleteOrderBaseInfo">
+	   delete from ORD_D_BASE
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>
+	
+	<delete id="deleteOrderCustInfo">
+	   delete from ORD_D_CUST
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>	
+	
+	<delete id="deleteOrderDealInfo">
+	   delete from ORD_D_DEAL
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>	
+	
+	<delete id="deleteOrderPostInfo">
+	   delete from ORD_D_POST
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>
+	
+	<delete id="deleteOrderResInfo">
+	   delete from ORD_D_RES
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>
+	
+	<delete id="deleteOrderCMSPreFee">
+	   delete from ORD_D_PRECMSFEE
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>
+	
+	<delete id="deleteOrderProdInfo">
+	   delete from ORD_D_PROD
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>
+	
+	<delete id="deleteOrderCMSStateInfo">
+	   delete from ORD_D_CMSSTATE
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>	
+	
+	<delete id="deleteOrderPreCMSFeeInfo">
+	   delete from ORD_D_PRECMSFEE
+        where order_id in
+              <foreach collection="orderIds" item="order_id" index="index"
+                  open="(" close=")" separator=",">
+                   #{order_id}
+              </foreach>
+	</delete>												
 	
 </mapper>

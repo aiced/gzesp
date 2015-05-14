@@ -110,7 +110,6 @@
 <p style="clear: both; white-space: normal;">
     <strong style="color: rgb(89, 89, 89); font-family: 微软雅黑, helvetica, sans-serif;"><span style="font-size: 14px; line-height: 24px; text-align: center; background-color: rgb(255, 255, 255);"></span></strong>
 </p>
-<hr style="white-space: normal;"/>
 <p style="clear: both; white-space: normal;">
     <span style="font-size: 14px;"><strong><span style="color: rgb(89, 89, 89);">以下是沃掌柜收益说明表，请各位掌柜细细品读：</span></strong></span>
 </p>
@@ -119,7 +118,7 @@
     <section style="margin: 0.8em 0px 0.5em; overflow: hidden; max-width: 100%; box-sizing: border-box !important;">
         <span style="font-family: sans-serif;"><p style="margin-top: 8px; margin-bottom: 0px; clear: both; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-family: 微软雅黑;">
             <span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;"><span class="wxqq-bg" style="padding: 4px 10px; border-radius: 80% 100% 90% 20%; color: rgb(255, 255, 255); margin-right: 8px; background-color: rgb(235, 164, 50);">1</span><strong class="wxqq-color" style="color: rgb(235, 164, 50);">单卡产品</strong></span><span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;">
-			<img data-s="300,640" data-type="png" width="274" height="177"src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbIN53jjRf00VpiaqmHViaXwb6OcEGFUgbUK9pmtia6Il9Zrh0gch5Y2kkg/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbIN53jjRf00VpiaqmHViaXwb6OcEGFUgbUK9pmtia6Il9Zrh0gch5Y2kkg/0?wx_fmt=png" style="">
+			<img data-s="300,640" data-type="png" width="274" height="177" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lydZbUPbXO1jBib2XWBlplu2x9W2jzpeJyVCoGFtcYK8QW481lQ8xL5mNPD5LibtSx3xcAv6tuqpxEg/0?wx_fmt=png" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lydZbUPbXO1jBib2XWBlplu2x9W2jzpeJyVCoGFtcYK8QW481lQ8xL5mNPD5LibtSx3xcAv6tuqpxEg/0?wx_fmt=png" data-ratio="0.66600790513834" data-w="">
         </p></span>
     </section>
 </section>
@@ -136,7 +135,7 @@
 
 <p style="margin-top: 8px; margin-bottom: 0px; clear: both; white-space: normal; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-family: 微软雅黑;">
     <span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;"><span class="wxqq-bg" style="padding: 4px 10px; border-radius: 80% 100% 90% 20%; color: rgb(255, 255, 255); margin-right: 8px; background-color: rgb(235, 164, 50);">2</span><strong class="wxqq-color" style="color: rgb(235, 164, 50);">合约购机</strong></span><span style="padding: 0px 2px 3px; line-height: 28px; float: left; display: block;">
-	<img data-s="300,640" data-type="jpeg" width="274" height="408" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbjy8bZYx8A9xY0O8RnNibcREIfDcXrP9HeLWcSD55U99VLtflbVRDAXg/0?wx_fmt=jpeg" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lwWJjw27Byh1GFdS9BdJuFbjy8bZYx8A9xY0O8RnNibcREIfDcXrP9HeLWcSD55U99VLtflbVRDAXg/0?wx_fmt=jpeg" style="" data-ratio="1.482213438735178" data-w="">
+	<img data-s="300,640" data-type="jpeg" width="274" height="408" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lydZbUPbXO1jBib2XWBlplu2vZI0wgXrO8UI5RW97dD0jpr3YLsicSXhhkBdvoJdy95NukSIQk8qgHA/0?wx_fmt=jpeg" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lydZbUPbXO1jBib2XWBlplu2vZI0wgXrO8UI5RW97dD0jpr3YLsicSXhhkBdvoJdy95NukSIQk8qgHA/0?wx_fmt=jpeg" data-ratio="1.6561264822134387" data-w="">
 </p>
 <p style="clear: both; white-space: normal;">
     <span style="color: rgb(12, 12, 12);"><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">合约购机产品收益=套餐月费*40%</span>

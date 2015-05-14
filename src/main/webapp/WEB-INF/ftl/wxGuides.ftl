@@ -138,7 +138,10 @@
 	<img data-s="300,640" data-type="jpeg" width="274" height="408" src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lydZbUPbXO1jBib2XWBlplu2vZI0wgXrO8UI5RW97dD0jpr3YLsicSXhhkBdvoJdy95NukSIQk8qgHA/0?wx_fmt=jpeg" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lydZbUPbXO1jBib2XWBlplu2vZI0wgXrO8UI5RW97dD0jpr3YLsicSXhhkBdvoJdy95NukSIQk8qgHA/0?wx_fmt=jpeg" data-ratio="1.6561264822134387" data-w="">
 </p>
 <p style="clear: both; white-space: normal;">
-    <span style="color: rgb(12, 12, 12);"><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">合约购机产品收益=套餐月费*40%</span>
+    <span style="color: rgb(12, 12, 12);"><span style="font-size: 14px;"><strong>奖励规则：</strong></span></span><span style="font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">合约购机产品收益=套餐月费*40%</span><br/>
+    <span style="color: rgb(12, 12, 12);"><span style="font-size: 14px;"></span></span><span style="font-family: 微软雅黑, helvetica, sans-serif; font-size: 14px; color: rgb(89, 89, 89);">（注：具体机型以店铺展示机型为准）</span>
+
+
 </p>
 
 <p style="margin-top: 8px; margin-bottom: 0px; clear: both; white-space: normal; padding: 0px; height: 32px; text-align: justify; color: rgb(0, 187, 236); line-height: 18px; font-family: 微软雅黑;">

@@ -126,10 +126,12 @@ public class OrderController {
     	
     	String goodsId = paramsMap.get("goodsId");
     	String fMonthDResId = "";
+    	List fMonthDList = null;
     	if("cardGoodDetail".equals(fromPage)) {
     		showFMonthD = false;
     	} else {
     		fMonthDResId = orderService.GetGoodsFMonthDAttr(goodsId);
+    		fMonthDList = orderService.GetGoodsFMonthDList(fMonthDResId);
     	}
     	
     	
@@ -146,6 +148,7 @@ public class OrderController {
         mav.addObject("citys", citys);
         mav.addObject("showFMonthD", showFMonthD);
         mav.addObject("fMonthDResId", fMonthDResId);
+        mav.addObject("fMonthDList", fMonthDList);
         return mav;
     }
     

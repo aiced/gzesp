@@ -404,20 +404,26 @@ function getParams() {
 	orderFormParams.cityCode=$("#selCity").val();
 	orderFormParams.districtCode=$("#selDistrict").val();
 	
-	if($('#fMonthDResId').val().length != 0) {
+	if($('#fMonthDResId').val().length != 0 && $('#fMonthDResId').val() != "-1") {
 		var fMonthDVal = $('#firstMonthFee-select').find('a.selected').attr("value");
 		var fMonthD_attrVal=$('#fMonthDResId').val()+"|"+"FMONTHD"+"|"+ fMonthDVal +"|"+fMonthDVal;
 		orderFormParams.resAttr = $('#attrVal').val() + '^' + fMonthD_attrVal;
+		orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
+			+ $('#serialNumber').val() + ',' 
+			+ $('#conPeriod').val() + ',' 
+			+ $('#conType').val() + ','
+			+ fMonthDVal;
 	} else {
 		orderFormParams.resAttr = $('#attrVal').val();
+		orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
+			+ $('#serialNumber').val() + ',' 
+			+ $('#conPeriod').val() + ',' 
+			+ $('#conType').val();
 	}
 	
 	orderFormParams.goodsId= $('#goodsId').val();
 	orderFormParams.goodsName= $('#goodsName').val();
-	orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
-		+ $('#serialNumber').val() + ',' 
-		+ $('#conPeriod').val() + ',' 
-		+ $('#conType').val();
+	
 	orderFormParams.unitPrice = $('#goodsPrice').val();
 	orderFormParams.topayFee= $('#goodsPrice').val();
 }

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
+import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
 import com.ai.gzesp.dao.beans.TdOrdDCUST;
@@ -38,6 +39,7 @@ import com.ai.gzesp.dao.service.TdOrdDPRECMSFEEDao;
 import com.ai.gzesp.dao.service.TdOrdDPRODDao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.service.TdOrdDRESDao;
+import com.ai.gzesp.dao.service.TdResDATTRVALDao;
 import com.ai.gzesp.dao.sql.CommissionSql;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.dao.sql.OrdersSql;
@@ -84,6 +86,9 @@ public class OrderService {
     TdOrdDPRECMSFEEDao tdOrdDPRECMSFEEDao;
     
     @Resource 
+    TdResDATTRVALDao tdResDATTRVALDao;
+    
+    @Resource 
     GoodsSql goodsSql;
     
     @Resource 
@@ -101,6 +106,13 @@ public class OrderService {
     
     public String GetGoodsFMonthDAttr(String goodsId) {
     	return goodsSql.GetGoodsFMonthDAttr(goodsId);
+    }
+    
+    public List GetGoodsFMonthDList(String resId) {
+    	Criteria example = new Criteria();
+    	example.createConditon().andEqualTo("RES_ID", resId);
+    	example.setOrderByClause("SEQ_NUM");
+    	return tdResDATTRVALDao.selectByExample(example);
     }
     
     public Map getGoodsDefaultPhoto(String goodsId) {

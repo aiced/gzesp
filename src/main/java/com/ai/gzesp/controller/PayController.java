@@ -280,7 +280,59 @@ public class PayController {
         return result;
     }    
     
-/*    @RequestMapping("/unionPay/testResp/{sys_trade_no}/{resp_trade_type}")
+
+    
+    @RequestMapping("/unionPay/bindCancel/{bank_card_no}")
+    @ResponseBody
+    public Map<String, String> bindCancel(@PathVariable("bank_card_no") String bank_card_no){
+        Map<String, String> result = new HashMap<String, String>();
+        
+        UnionPayParam param = new UnionPayParam();
+        param.setBank_card_no(bank_card_no);
+        
+        //查询是否有签约号
+		Map<String, String> signCodeRow = unionPayService.querySignCode(bank_card_no);
+		if(signCodeRow == null){
+			result.put("status", "E11");
+        	result.put("detail", "支付失败！银行卡绑定解除没找到相应签约号");
+		}
+		else{
+			param.setSign_code(MD5Util.convertMD5(signCodeRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
+			unionPayService.insertBindCancellog(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.sendBindCancelReq(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.waitForBindCancelResp(param, result);
+			if(!result.isEmpty()){
+				return result; 
+			}
+		}
+        
+        return result;
+    }
+    
+    /**
+     * 支付结束后，选择再去逛逛，回到能人店铺的首页
+     * 根据order_id 查询 能人id，然后再跳转
+     * @param order_id
+     * @param fee
+     * @return
+     */
+    @RequestMapping("/goToWeShopIndex/{order_id}")
+    public ModelAndView goToWeShopIndex(@PathVariable("order_id") String order_id){
+    	Map<Object, Object> userInfo = unionPayService.queryUserIdByOrderId(order_id);
+    	
+        ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+userInfo.get("USER_ID"));
+    	//ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+"2015000000000000");
+        
+        return mav;
+    }
+    
+    /*    @RequestMapping("/unionPay/testResp/{sys_trade_no}/{resp_trade_type}")
     @ResponseBody
     public Map<String, String> test(@PathVariable("sys_trade_no") String sys_trade_no, @PathVariable("resp_trade_type") String resp_trade_type){
         Map<String, String> result = new HashMap<String, String>();
@@ -370,53 +422,13 @@ public class PayController {
         
     }*/
     
-    @RequestMapping("/unionPay/bindCancel/{bank_card_no}")
-    @ResponseBody
-    public Map<String, String> bindCancel(@PathVariable("bank_card_no") String bank_card_no){
+    @RequestMapping("/unionPay/test3")
+    public ModelAndView test2(){
+        ModelAndView mav = new ModelAndView("unionPayInput.ftl");
         Map<String, String> result = new HashMap<String, String>();
-        
         UnionPayParam param = new UnionPayParam();
-        param.setBank_card_no(bank_card_no);
-        
-        //查询是否有签约号
-		Map<String, String> signCodeRow = unionPayService.querySignCode(bank_card_no);
-		if(signCodeRow == null){
-			result.put("status", "E11");
-        	result.put("detail", "支付失败！银行卡绑定解除没找到相应签约号");
-		}
-		else{
-			param.setSign_code(MD5Util.convertMD5(signCodeRow.get("SIGN_CODE"))); //md5解密，表里存放的是加密的
-			unionPayService.insertBindCancellog(param, result);
-			if(!result.isEmpty()){
-				return result; 
-			}
-			unionPayService.sendBindCancelReq(param, result);
-			if(!result.isEmpty()){
-				return result; 
-			}
-			unionPayService.waitForBindCancelResp(param, result);
-			if(!result.isEmpty()){
-				return result; 
-			}
-		}
-        
-        return result;
-    }
-    
-    /**
-     * 支付结束后，选择再去逛逛，回到能人店铺的首页
-     * 根据order_id 查询 能人id，然后再跳转
-     * @param order_id
-     * @param fee
-     * @return
-     */
-    @RequestMapping("/goToWeShopIndex/{order_id}")
-    public ModelAndView goToWeShopIndex(@PathVariable("order_id") String order_id){
-    	Map<Object, Object> userInfo = unionPayService.queryUserIdByOrderId(order_id);
-    	
-        ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+userInfo.get("USER_ID"));
-    	//ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+"2015000000000000");
-        
+        param.setPay_sys_trade_no("4014315703022520");
+        unionPayService.waitForPayResp(param, result);
         return mav;
     }
 }

@@ -202,16 +202,18 @@ public class CoreService {
             Field[] fields = RequestEventMessage.class.getDeclaredFields();
             // 转换成 RequestEventMessage 订阅事件请求
             RequestEventMessage message = RegexUtils.xml2bean(xml, fields, RequestEventMessage.class);
-            //回复文本消息
-            ResponseTextMessage resp = new ResponseTextMessage();
+//            //回复文本消息
+//            ResponseTextMessage resp = new ResponseTextMessage();
+//            
+//            resp.setFromUserName(message.getToUserName());
+//            resp.setToUserName(message.getFromUserName());
+//            resp.setCreateTime(new Date().getTime());
+//            resp.setContent(buildWelcomeResp()); //关注的时候主动发送菜单
+//            resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
+//            resp.setFuncFlag(0);
+//            respMessage = XmlUtils.textMessageToXml(resp);
             
-            resp.setFromUserName(message.getToUserName());
-            resp.setToUserName(message.getFromUserName());
-            resp.setCreateTime(new Date().getTime());
-            resp.setContent(buildWelcomeResp()); //关注的时候主动发送菜单
-            resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_TEXT);
-            resp.setFuncFlag(0);
-            respMessage = XmlUtils.textMessageToXml(resp);
+            respMessage = buildWelcomeResp(message);
         } catch (Exception e) {
             log.error("处理订阅事件请求异常", e);
         } 
@@ -322,30 +324,73 @@ public class CoreService {
      *
      * @return
      */
-    private String buildWelcomeResp(){
-        StringBuffer buffer = new StringBuffer();  
-        buffer.append(" /::D 欢迎来到沃掌柜大本营！").append("\n");  
-        buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n").append("\n");  
-        buffer.append("1.  0元免费开店").append("\n");  
-//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
-        buffer.append("<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx52db41a405183edb&redirect_uri=http%3A%2F%2Fwap.gz10010.xyz%2Fesp%2Fwx%2Fauth&response_type=code&scope=snsapi_base&state=register#wechat_redirect\">☞点这立即注册！</a>").append("\n").append("\n"); 
-//        buffer.append("☞点这立即注册！").append("\n").append("\n"); 
-        buffer.append("2.  入门须知").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  
-//        buffer.append("☞点这立即阅读！").append("\n").append("\n");  
-        buffer.append("3.  收益规则").append("\n");  
-        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
-//        buffer.append("☞点这立即查看！").append("\n").append("\n");  
-//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >☞点这立即查看！</a>").append("\n").append("\n");  
-        buffer.append("4.  收益发放").append("\n");  
-        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=204322183&idx=1&sn=cba85430b9e9ef22634dd95992c4d8f6#rd\" >☞点这立即了解！</a>").append("\n").append("\n");  
-//        buffer.append("☞点这立即了解！").append("\n").append("\n");  
-    
-        buffer.append("5.  更多咨询，请直接回复【提问：“问题描述”】").append("\n");  
-//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >☞点这立即打开！</a>").append("\n").append("\n");  
-     
-        return buffer.toString();        
-    }
+    private String buildWelcomeResp(RequestEventMessage message){
+    	
+		ResponseNewsMessage resp = new ResponseNewsMessage();
+		resp.setFromUserName(message.getToUserName());
+		resp.setToUserName(message.getFromUserName());
+		resp.setCreateTime(new Date().getTime());
+		resp.setMsgType(MessageType.RESP_MESSAGE_TYPE_NEWS);
+		resp.setFuncFlag(0);
+
+		List<Article> articleList = new ArrayList<Article>();
+		Article article1 = new Article();
+		article1.setTitle("对不起，我们来晚了！");
+		article1.setDescription("沃掌柜正式上线啦，全城招募ing\n"
+				+"商品优惠、各种惊喜福利一网打尽\n"
+				+"点击关注，免费开店");
+		article1.setPicUrl("https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lzzfqdha6LjvbaVOzbBg8bSJz9CaGicCIahuhuKPD0d0VXACV6osibvLgbp5cBM51QIjqW8cogXh0Zg/0?wx_fmt=jpeg");
+		article1.setUrl("http://http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=204516919&idx=1&sn=a39f0503fd979eef6e4adbc9f1c10cf2#rd");
+
+		 Article article2 = new Article();  
+         article2.setTitle("");  
+         article2.setDescription("1.  0元免费开店");  
+         article2.setPicUrl("https://mp.weixin.qq.com/cgi-bin/getimgdata?mode=large&source=file&fileId=204552443%3E&token=1738675317&lang=zh_CN"); //要改 
+         article2.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx52db41a405183edb&redirect_uri=http%3A%2F%2Fwap.gz10010.xyz%2Fesp%2Fwx%2Fauth&response_type=code&scope=snsapi_base&state=register#wechat_redirect"); 
+         
+         Article article3 = new Article();  
+         article3.setDescription("2.  入门须知");  
+         article3.setPicUrl("https://mp.weixin.qq.com/cgi-bin/getimgdata?mode=large&source=file&fileId=204552443%3E&token=1738675317&lang=zh_CN"); //要改 
+         article3.setUrl("http://wap.gz10010.xyz/esp/wx/guides"); 
+         
+         Article article4 = new Article();  
+         article4.setDescription("5.  更多咨询，请直接回复【提问：“问题描述”】");  
+         
+         articleList.add(article1);
+         articleList.add(article2);
+         articleList.add(article3);
+         articleList.add(article4);
+         
+		resp.setArticles(articleList);
+		resp.setArticleCount(articleList.size());
+
+		String respMessage = XmlUtils.newsMessageToXml(resp);
+		return respMessage;
+	}
+//    private String buildWelcomeResp(){
+//        StringBuffer buffer = new StringBuffer();  
+//        buffer.append(" /::D 欢迎来到沃掌柜大本营！").append("\n");  
+//        buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n").append("\n");  
+//        buffer.append("1.  0元免费开店").append("\n");  
+////        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
+//        buffer.append("<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx52db41a405183edb&redirect_uri=http%3A%2F%2Fwap.gz10010.xyz%2Fesp%2Fwx%2Fauth&response_type=code&scope=snsapi_base&state=register#wechat_redirect\">☞点这立即注册！</a>").append("\n").append("\n"); 
+////        buffer.append("☞点这立即注册！").append("\n").append("\n"); 
+//        buffer.append("2.  入门须知").append("\n");  
+//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  
+////        buffer.append("☞点这立即阅读！").append("\n").append("\n");  
+//        buffer.append("3.  收益规则").append("\n");  
+//        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
+////        buffer.append("☞点这立即查看！").append("\n").append("\n");  
+////        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >☞点这立即查看！</a>").append("\n").append("\n");  
+//        buffer.append("4.  收益发放").append("\n");  
+//        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=204322183&idx=1&sn=cba85430b9e9ef22634dd95992c4d8f6#rd\" >☞点这立即了解！</a>").append("\n").append("\n");  
+////        buffer.append("☞点这立即了解！").append("\n").append("\n");  
+//    
+//        buffer.append("5.  更多咨询，请直接回复【提问：“问题描述”】").append("\n");  
+////        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >☞点这立即打开！</a>").append("\n").append("\n");  
+//     
+//        return buffer.toString();        
+//    }
     
 
 }

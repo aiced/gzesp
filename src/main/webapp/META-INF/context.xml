@@ -6,21 +6,21 @@
 
 	<!-- 数据源定义 -->
 	<!-- GZ -->
-	<!--<Resource name="jdbc/ucr_gz" auth="Container" type="javax.sql.DataSource"
+	<Resource name="jdbc/ucr_gz" auth="Container" type="javax.sql.DataSource"
 		maxActive="100" maxIdle="30" maxWait="10000" username="ucr_gz"
 		password="ucr_gz" driverClassName="oracle.jdbc.OracleDriver"
-		url="jdbc:oracle:thin:@10.81.3.1:1521:ngstatst" />-->
+		url="jdbc:oracle:thin:@10.81.3.1:1521:ngstatst" />
 
 	<!-- NJ -->
-  <Resource name="jdbc/ucr_gz" auth="Container" type="javax.sql.DataSource"
+<!--   <Resource name="jdbc/ucr_gz" auth="Container" type="javax.sql.DataSource"
 		maxActive="100" maxIdle="30" maxWait="10000" username="ucr_gz"
 		password="ucr_gz" driverClassName="oracle.jdbc.OracleDriver"
-		url="jdbc:oracle:thin:@132.224.44.23:1521:ngcrmdev" />  
+		url="jdbc:oracle:thin:@132.224.44.23:1521:ngcrmdev" />   -->
 		
-		<Resource name="jdbc/ucr_gz" auth="Container" type="javax.sql.DataSource"
+<!-- 		<Resource name="jdbc/ucr_gz" auth="Container" type="javax.sql.DataSource"
 		maxActive="100" maxIdle="30" maxWait="10000" username="ucr_gz"
 		password="ucr_gz" driverClassName="oracle.jdbc.OracleDriver"
-		url="jdbc:oracle:thin:@localhost:1521:XE" />  
+		url="jdbc:oracle:thin:@localhost:1521:XE" />   -->
 
 
 

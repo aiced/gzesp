@@ -113,4 +113,28 @@
             and result_code is not null
 	</select>	
 	
+	
+	<insert id="insertPayCancellog">
+        insert into ord_d_paylog(
+        	pay_id, 
+            partition_id,
+            req_time,
+            req_status,
+            req_trade_type,
+            sys_trade_no,
+            orig_order_id,
+            orig_timestamp)
+        values(
+        	${pay_id}, 
+        	${partition_id},  
+        	#{req_time}, 
+        	#{req_status},
+            #{req_trade_type}, 
+            #{sys_trade_no}, 
+            ${orig_order_id}, 
+            #{orig_timestamp}
+              )	    
+	</insert>
+	
+	
 </mapper>

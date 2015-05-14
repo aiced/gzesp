@@ -24,6 +24,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/bankCardCheck.js?v=${resVer}"></script>
     <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
     <script type="text/javascript">
     	var bRet1=false;
@@ -56,8 +57,8 @@
 		  	else
 		  	{
 		  		
-	    		if (!checkBankCard($("#txtbankcardid").val())) {
-			  		$("#div_bankcardid").removeClass("has-error");
+	    		if (!luhmCheck($("#txtbankcardid").val())) {
+			  		$("#div_bankcardid").addClass("has-error");
 			  		bRet1=false;
 					return;
 				}

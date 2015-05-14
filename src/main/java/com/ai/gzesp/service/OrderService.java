@@ -110,7 +110,7 @@ public class OrderService {
     
     public List GetGoodsFMonthDList(String resId) {
     	Criteria example = new Criteria();
-    	example.createConditon().andEqualTo("RES_ID", resId);
+    	example.createConditon().andEqualTo("RES_ID", resId).andEqualTo("ATTR_CODE", "FMONTHD");
     	example.setOrderByClause("SEQ_NUM");
     	return tdResDATTRVALDao.selectByExample(example);
     }

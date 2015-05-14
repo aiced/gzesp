@@ -31,7 +31,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/bankCardCheck.js?v=${resVer}"></script>
   
 	<script type="text/javascript">
@@ -132,7 +132,18 @@
 		}
 	}
 	
-
+	function getNowDate()
+	{
+	  var d = new Date();
+	  var vYear = d.getFullYear();
+	  var vMon = d.getMonth() + 1;
+	  var vDay = d.getDate();
+	  var h = d.getHours(); 
+	  var m = d.getMinutes(); 
+	  var se = d.getSeconds(); 
+	  s=vYear+(vMon<10 ? "0" + vMon : vMon)+(vDay<10 ? "0"+ vDay : vDay)+(h<10 ? "0"+ h : h)+(m<10 ? "0" + m : m)+(se<10 ? "0" +se : se);
+	  return s;	
+	}
 	
 	$(document).ready(function(){
 		
@@ -292,6 +303,9 @@
 			  $("#btnXYCode").click(function(){  
 				  //在这里操作获取验证码
 				  //alert("发送验证码");
+				  
+				  $("#hide_code_date").val(getNowDate());
+				  
 				  var bRet=isPhoneNum($("#txtXYphonenum").val());
 					
 				  if(!bRet)
@@ -324,6 +338,13 @@
 			  	{
 			  		alert("输入的验证码与短信中的验证码不匹配");
 			  		$("#div_XYyanzhengma").addClass("has-error");
+			  		bRet7=false;
+			  		return;
+			  	}
+			  	else if(getNowDate() - $("#hide_code_date").val()>1800)
+			  	{
+			  		$("#div_XYyanzhengma").addClass("has-error");
+			  		alert("验证码过期");
 			  		bRet7=false;
 			  		return;
 			  	}
@@ -440,8 +461,11 @@
 			  $("#btnCCCode").click(function(){  
 				  //在这里操作获取验证码
 				  //alert("发送验证码");
+				  
+				  $("#hide_code_date").val(getNowDate());
+				  
 				  var bRet=isPhoneNum($("#txtCCphonenum").val());
-					
+
 				  if(!bRet)
 				  {
 				  	alert("手机号格式不对，请重新输入。");
@@ -472,6 +496,13 @@
 			  	{
 			  		alert("输入的验证码与短信中的验证码不匹配");
 			  		$("#div_CCyanzhengma").addClass("has-error");
+			  		bRet13=false;
+			  		return;
+			  	}
+			  	else if(getNowDate() - $("#hide_code_date").val()>1800)
+			  	{
+			  		$("#div_CCyanzhengma").addClass("has-error");
+			  		alert("验证码过期");
 			  		bRet13=false;
 			  		return;
 			  	}
@@ -577,7 +608,8 @@
 				<li role="presentation" class="active"><a href="#xinyongka" aria-controls="xinyongka" role="tab" data-toggle="tab">信用卡</a></li>
 				<li role="presentation"><a href="#chuxuka" aria-controls="chuxuka" role="tab" data-toggle="tab">储蓄卡</a></li>
 			</ul>
-		
+			<!-- 用于校验验证码失效时间 -->
+		 	<input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 			<!-- Tab panes -->
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="xinyongka">

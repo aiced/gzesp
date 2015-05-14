@@ -28,6 +28,9 @@ public class RespPayCancelHandler implements IDealUnionPayResp {
     public void dealResp(Map<String, String> respMap) {
         // TODO Auto-generated method stub
 
+    	
+    	
+    	
     }
 
 }

@@ -105,7 +105,15 @@ public class UnionPayParam {
      */
     private String bindCacnel_trade_type;    
     
-    
+    /**
+     * 调用支付撤销/支付退款接口 原订单id
+     */
+    private String orig_order_id;
+    /**
+     * 调用支付撤销/支付退款接口 原订单时间
+     */
+    private String orig_timestamp;
+
     public UnionPayParam(){
         //空构造，spring 转换对象时需要
     }
@@ -260,6 +268,22 @@ public class UnionPayParam {
 
 	public void setBindCacnel_trade_type(String bindCacnel_trade_type) {
 		this.bindCacnel_trade_type = bindCacnel_trade_type;
+	}
+
+	public String getOrig_order_id() {
+		return orig_order_id;
+	}
+
+	public void setOrig_order_id(String orig_order_id) {
+		this.orig_order_id = orig_order_id;
+	}
+
+	public String getOrig_timestamp() {
+		return orig_timestamp;
+	}
+
+	public void setOrig_timestamp(String orig_timestamp) {
+		this.orig_timestamp = orig_timestamp;
 	}
 	
 	

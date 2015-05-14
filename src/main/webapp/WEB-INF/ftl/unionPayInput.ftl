@@ -32,7 +32,7 @@
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/baseJs.js"></script>
-  
+    <script src="${resRoot}/js/bankCardCheck.js?v=${resVer}"></script>
   
 	<script type="text/javascript">
 	
@@ -208,8 +208,8 @@
 		  	}
 		  	else
 		  	{
-	    		if (!checkBankCard($("#txtXYCardCode").val())) {
-			  		$("#div_txtXYCardCode").removeClass("has-error");
+	    		if (!luhmCheck($("#txtXYCardCode").val())) {
+			  		$("#div_txtXYCardCode").addClass("has-error");
 			  		bRet3=false;
 					return;
 				}
@@ -389,8 +389,8 @@
 			  	}
 			  	else
 			  	{
-		    		if (!checkBankCard($("#txtCCCardCode").val())) {
-				  		$("#div_txtCCCardCode").removeClass("has-error");
+		    		if (!luhmCheck($("#txtCCCardCode").val())) {
+				  		$("#div_txtCCCardCode").addClass("has-error");
 				  		bRet10=false;
 						return;
 					}

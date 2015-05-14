@@ -526,5 +526,56 @@ public class OrderService {
 		//orderDao.salesAddOne();
 		return orderDao.updateGoodsAmount(goods_id);
 	}
+	
+	/**
+	 * 如果订单半小时后未支付，释放预占的号码，同时库存数量销量都要相应返销,同时
+	 */
+	public boolean ordersTimeoutReverse(String[] orderIds, String[] goodIds){
+		if(goodIds.length > 0){
+			//几个个方法在一个事务里,库存减+1，销售减-1
+			int r1 = orderDao.updateGoodsAmountReverse(goodIds);
+			logger.debug("【订单超时未支付定时任务：商品数量表update " + r1 + " 条记录】");
+		}
+		
+		if(orderIds.length > 0){
+			//下面是删除订单相关表
+			int r2 = orderDao.deleteOrderBaseInfo(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_BASE表delete " + r2 + " 条记录】");
+			
+			int r3 = orderDao.deleteOrderCustInfo(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_CUST表delete " + r3 + " 条记录】");
+			
+			int r4 = orderDao.deleteOrderDealInfo(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_DEAL表delete " + r4 + " 条记录】");
+			
+			int r5 = orderDao.deleteOrderPostInfo(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_POST表delete " + r5 + " 条记录】");
+			
+			int r6 = orderDao.deleteOrderResInfo(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_RES表delete " + r6 + " 条记录】");
+			
+			int r7 = orderDao.deleteOrderCMSPreFee(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_PRECMSFEE表delete " + r7 + " 条记录】");
+			
+			int r8 = orderDao.deleteOrderProdInfo(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_PROD表delete " + r8 + " 条记录】");
+			
+			int r9 = orderDao.deleteOrderCMSStateInfo(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_CMSSTATE表delete " + r9 + " 条记录】");
+		}
+
+		return true; //只要不报异常就返回true
+		
+	}
+	
+    /**
+     * 查询超时超时未支付的订单，sql里写死了超时时间为半小时 
+     * @return
+     */
+    public List<Map<Object, Object>> queryOrdersTimeout(){
+    	List<Map<Object, Object>> list = orderDao.queryOrdersTimeout();
+    	logger.debug("【订单超时未支付库存释放定时任务：查询到超时未支付订单 " + list.size() + " 个】");
+        return list;
+    }
     	
 }

@@ -678,7 +678,6 @@
 						</div>
 						</div>
 					</td>
-
 				</tr>
 				<tr id="totalRowCount">
 			
@@ -690,9 +689,6 @@
 	    </div>
 	    <br/>
 	    <br/>
-
 	</div>
-	
-
 </body>
 </html>

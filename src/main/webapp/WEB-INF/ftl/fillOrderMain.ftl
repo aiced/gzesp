@@ -123,19 +123,27 @@
                 	</span>
 	            </a>
 	            
-	            <#if showFMonthD?exists && showFMonthD>
+	            <#if showFMonthD?exists && showFMonthD && fMonthDList>
 	            <!--首月资费-->
 	            <div id="firstMonthFeeInfoTab" href="#" class="list-group-item">
 	                <label>首月资费</label>
 	                <div id="firstMonthFee-select" class="p-list">
-                        <a href="javascript:void(0);" data-descId="fMonthDesc1" value="扣全月"  class="selected">扣全月</a>
-                        <a href="javascript:void(0);" data-descId="fMonthDesc2" value="扣半月"  >扣半月</a>
-                        <a href="javascript:void(0);" data-descId="fMonthDesc3" value="不扣套餐"  >不扣套餐</a>
+	        	  	<#list fMonthDList as item>
+		        	  	<#if item_index == 0>
+	                        <a href="javascript:void(0);" data-descId="fMonthDesc_${item_index}" value="${item.attrValCode}"  class="selected">${item.attrValName}</a>
+                        <#else>
+	                        <a href="javascript:void(0);" data-descId="fMonthDesc_${item_index}" value="${item.attrValCode}" >${item.attrValName}</a>
+		        	  	</#if>
+               		</#list> 
                     </div>
                     <div>
-                        <p id="fMonthDesc1"  style="font-size: 12px;color:#c0c0c0;">立即生效  适合月初开通的用户，按照您选择的套餐正常计费并享受套餐内容</p>
-                        <p id="fMonthDesc2" style="font-size: 12px;color:#c0c0c0;" class="hide" >半月生效  适合月中开通的用户，按照您选择的套餐收取一半的费用，享受一半的套餐内容，从次月起恢复正常</p>
-                        <p id="fMonthDesc3"style="font-size: 12px;color:#c0c0c0;"  class="hide" >次月生效  适合月底开通的用户，开通当月按照标准资费依据使用量进行计费，从次月起恢复正常 </p>
+                    <#list fMonthDList as item>
+		        	  	<#if item_index == 0>
+	                        <p id="fMonthDesc_${item_index}" style="font-size: 12px;color:#c0c0c0;">${item.values1}</p>
+		        	  	<#else>
+	                        <p id="fMonthDesc_${item_index}" style="font-size: 12px;color:#c0c0c0;" class="hide" >${item.values1}</p>
+		        	  	</#if>
+               		</#list>
                     </div>
 	            </div>
 	            </#if>

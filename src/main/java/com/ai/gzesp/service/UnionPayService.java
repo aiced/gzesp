@@ -3,6 +3,7 @@ package com.ai.gzesp.service;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -681,5 +682,110 @@ public class UnionPayService {
         
         //return result;
     }
+    
+    
+    /**
+     * 调用退款接口 wenh 插入log
+     * @param param
+     * @param result
+     * @return
+     */
+    public void insertPayCancellog(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        
+	    String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.payCancel.getTradeType()); //系统跟踪号
+	    param.setPay_sys_trade_no(sysTradeNo);
+	    String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
+	    param.setPay_time_stamp(timeStamp);
+	    String tradeType = TradeType.payCancel.getTradeType(); //业务类型
+	    param.setPay_trade_type(tradeType);
+	     
+	    //调用全要素支付接口前插订单支付日志表
+	    int n2 = unionPayDao.insertPayCancellog(   
+	    		param.getPay_sys_trade_no(), //pay_id
+	    		param.getPay_sys_trade_no().substring(14, 16), //partition_id
+	            param.getPay_time_stamp(), //req_time
+	             "00", //isSuccess ? "00" : "01",  //req_status  这边其实有点问题，还没发送，就写发送成功状态
+	            param.getPay_trade_type(), //req_trade_type
+	            param.getPay_sys_trade_no(), //sys_trade_no
+	            param.getOrig_order_id(),
+	            param.getOrig_timestamp()
+	            );
+	    
+	    if(n2 <= 0){
+	    	//都成功则result为空
+	    	result.put("status", "E04");
+	    	result.put("detail", "撤销失败！全要素支付日志流水插入失败");
+	    	//return result; //直接返回
+	    }
+        
+        //return result;
+    }
+    
+    
+    /**
+     * 发送退单 wenh 发送请求
+     * @param param
+     * @param result
+     * @return
+     */
+    public void sendPayCancelReq(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        boolean isSuccess = false;
+            //银行卡支付接口 参数封装成map,转换层xml，生成md5摘要，3des加密,生成可发送的报文
+            Map<String, String> xmlMap = UnionPayUtil.genPayCancelReq(param);
+            byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
+            //调用mina客户端发送报文
+            if(xmlSend != null){
+                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = ClientHandler.sendMsg(xmlSend);
+            }    
+            
+            if(!isSuccess){
+            	result.put("status", "E05");
+            	result.put("detail", "撤销失败！发送支付接口报文失败");
+            	//return result; //直接返回
+            }
+            
+        //return result;
+    }    
+        
+    /**
+     * 等待银联返回数据 wenh
+     * @param param
+     * @param result
+     * @return
+     */
+    public void waitForPayCancelResp(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        int timeout = 0;
+        while(true){
+            if(timeout >= UnionPayCons.WAIT_TIMEOUT){
+                result.put("status", "E06");
+                result.put("detail", "支付失败！发送支付接口报文后未接收到银联响应");
+                break;
+            }
+            try {
+                Thread.sleep(UnionPayCons.SLEEP_INTERVAL_PAY);
+                timeout += UnionPayCons.SLEEP_INTERVAL_PAY;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } //每次轮询等待4秒钟
+            Map<String, String> row = unionPayDao.queryPaylog(param.getPay_sys_trade_no()); //查询支付日志表里是否已经有银联返回的结果了
+            if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
+                if(UnionPayCons.RESULT_CODE_SUCCESS.equals(row.get("RESULT_CODE"))){
+                    result.put("status", UnionPayCons.RESULT_CODE_SUCCESS);
+                    result.put("detail", "支付成功！");
+                }
+                else{
+                    result.put("status", row.get("RESULT_CODE"));
+                    result.put("detail", "支付失败！" + row.get("RESULT_DESC"));
+                }
+                break;
+            }
+        }
+        
+        //return result;
+    }    
     
 }

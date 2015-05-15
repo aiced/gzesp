@@ -63,7 +63,7 @@ public class RegexUtil {
      * @return
      */
     public static String getMoney(String elementString) {
-    	Pattern p = Pattern.compile("([0-9]*)");
+    	Pattern p = Pattern.compile("([0-9]+)");
     	Matcher m = p.matcher(elementString);
     	if (m.find()) {
     		return m.group();

@@ -271,7 +271,7 @@ function SetRemainTime() {
         window.clearInterval(InterValObj);//停止计时器  
         $(m_btnName).removeAttr("disabled");//启用按钮  
         $(m_btnName).text("重新发送");  
-        code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效      
+        //code = ""; //清除验证码。如果不清除，过时间后，输入收到的验证码依然有效      
     }  
     else {  
         curCount--;  
@@ -280,7 +280,7 @@ function SetRemainTime() {
 }  
 
 //发送验证码
-function sendMessage(strPhone,btnName) {  
+function sendMessage(strPhone,btnName,flag) {  
     curCount = count;  
     var phone=strPhone;//手机号码  
     m_btnName=btnName;
@@ -302,7 +302,7 @@ function sendMessage(strPhone,btnName) {
 //        success: function (msg){ }  
 //    });  
 	var bReturn=false;
-	var param = {"phone":strPhone,"code":code};
+	var param = {"phone":strPhone,"code":code,"flag":flag};
 	$.ajax({
 		   type: "POST",
 		   url: "/esp/common/yanzhengma",

@@ -208,10 +208,22 @@ public class CommonController {
     	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
     	String strphone = paramsMap.get("phone");
     	String strcode=paramsMap.get("code");
+    	String strFlag=paramsMap.get("flag");
     	
     	//新版
     	//String strMobile,String strTempid,String strContent
-    	 String strRet=SmsUtils.doSendMessage(strphone,"MB-2013102300","@1@="+strcode);//
+    	
+    	String strRet="";
+    	if (strFlag.equals("0"))//注册模板
+    	{
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2013102300","@1@="+strcode);//
+		}
+    	else if(strFlag.equals("1")) //支付模板
+    	{
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015051550","@1@="+strcode);//
+    	}
+    	
+
     	 System.out.println("短信返回值："+strRet);
     	 if (strRet != null && strRet.split("#").length==3)
     	 {

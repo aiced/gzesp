@@ -280,7 +280,7 @@ function SetRemainTime() {
 }  
 
 //发送验证码
-function sendMessage(strPhone,btnName) {  
+function sendMessage(strPhone,btnName,flag) {  
     curCount = count;  
     var phone=strPhone;//手机号码  
     m_btnName=btnName;
@@ -302,7 +302,7 @@ function sendMessage(strPhone,btnName) {
 //        success: function (msg){ }  
 //    });  
 	var bReturn=false;
-	var param = {"phone":strPhone,"code":code};
+	var param = {"phone":strPhone,"code":code,"flag":flag};
 	$.ajax({
 		   type: "POST",
 		   url: "/esp/common/yanzhengma",

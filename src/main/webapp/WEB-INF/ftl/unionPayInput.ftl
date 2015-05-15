@@ -322,7 +322,7 @@
 				  else
 				  {
 				  	//这里开始做验证码操作
-				  	bRet6=sendMessage($("#txtXYphonenum").val(),"#btnXYCode");
+				  	bRet6=sendMessage($("#txtXYphonenum").val(),"#btnXYCode","1");
 				  	return;
 				  }
 			  });
@@ -480,7 +480,7 @@
 				  else
 				  {
 				  	//这里开始做验证码操作
-				  	bRet12=sendMessage($("#txtCCphonenum").val(),"#btnCCCode");
+				  	bRet12=sendMessage($("#txtCCphonenum").val(),"#btnCCCode","1");
 				  	return;
 				  }
 			  });

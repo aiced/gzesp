@@ -738,7 +738,7 @@
             <h4 class="modal-title">支付结果</h4>
           </div>
           <div class="modal-body">
-            <p id="payOrderInfo">订单编号：${order_id}，金额：${fee?number/1000}元</p>
+            <p id="payOrderInfo">订单编号：${order_id}，金额：${(fee?number/1000)?string('#.##')}元</p>
             <p id="payResultDetail" ></p>
           </div>
           <div class="modal-footer">

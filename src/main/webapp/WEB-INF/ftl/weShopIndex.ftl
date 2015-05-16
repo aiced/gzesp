@@ -135,7 +135,7 @@
           </ul>  
     	</div>
     	
-    	<div class="col-xs-3" style="padding:0px" id="qrcodeDiv">
+    	<div class="col-xs-3" style="padding:0px" id="qrcodeDiv" onclick="doqrcodeClick();">
     	</div>
     	   		    		
       </div>	            
@@ -369,7 +369,10 @@
      	{
      		alert("敬请期待！");
      	}
-
+		function doqrcodeClick()
+		{
+			location.href="${base}/weShop/Qrcode?userid=${user_id}";
+		}
     </script>
 
   <!-- 如果是安卓手机&&当前是微信内置浏览器 则弹出遮罩层提示更换浏览器 start -->   

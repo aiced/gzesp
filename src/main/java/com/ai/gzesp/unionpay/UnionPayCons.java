@@ -68,9 +68,9 @@ public class UnionPayCons {
     
     
     /**
-     * 心跳发送间隔时间，这边设置1分钟，银联是3分钟收不到心跳就主动断开连接
+     * 心跳发送间隔时间，这边设置2分钟，银联是3分钟收不到心跳就主动断开连接
      */
-    public static int HEART_INTERVAL = 60*1000;
+    public static int HEART_INTERVAL = 120*1000;
     
     /**
      * 心跳包请求后 等待反馈超时时间

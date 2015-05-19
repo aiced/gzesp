@@ -577,5 +577,16 @@ public class OrderService {
     	logger.debug("【订单超时未支付库存释放定时任务：查询到超时未支付订单 " + list.size() + " 个】");
         return list;
     }
+    
+    public static void main(String[] args) {
+        	String resAttrStr = "3415041400000014|PACKRES|校园沃派16元套餐|校园沃派16元套餐";
+        	
+        	String[] col = resAttrStr.split("\\|", -1);
+        	String resAttrCode = col[1];
+    		String resAttrVal = col[2];
+        	String money = RegexUtil.getMoney(resAttrVal);
+			System.out.println(money);
+        	System.out.println("bb");
+	}
     	
 }

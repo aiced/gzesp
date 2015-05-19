@@ -575,6 +575,7 @@
 			      $('#btn_other').show();
 			      $('#btn_qry').hide();
 			      $('#btn_home').hide();
+			      $('#payResultTip').html('亲，由于银联通道故障，此订单失败作废，请重新下单并换其他银行卡支付，造成不便，请谅解'); 
 			    }
 			    $('#payResultDetail').html(data.status + ':' + data.detail); //修改支付状态和支付结果描述
 			    //弹出支付结果框
@@ -584,7 +585,7 @@
                 }) ;            
 		      }
 		    });
-        }	
+        }		
 	</script>
 </head>
 
@@ -740,9 +741,11 @@
           <div class="modal-body">
             <p id="payOrderInfo">订单编号：${order_id}，金额：${(fee?number/1000)?string('#.##')}元</p>
             <p id="payResultDetail" ></p>
+            <p id="payResultTip" style="color:red"></p>
           </div>
           <div class="modal-footer">
-            <a id="btn_other" class="btn btn-warning" href="${base}/pay/selectPayMode/${order_id}/${fee}" role="button">选择其他支付方式</a>
+            <#--<a id="btn_other" class="btn btn-warning" href="${base}/pay/selectPayMode/${order_id}/${fee}" role="button">选择其他支付方式</a>-->
+            <a id="btn_other" class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">重新购买</a>
             <a id="btn_qry" class="btn btn-warning" href="${base}/customer/custOrderQuery" role="button">订单查询</a>
             <a id="btn_home" class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">再去逛逛</a>
           </div>

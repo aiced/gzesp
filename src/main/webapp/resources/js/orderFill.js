@@ -62,6 +62,10 @@ var orderFormParams = {
 // 初始化按钮点击事件
 $(function() {
 	
+
+
+	
+	
 	$('#netInfoTab').bind("click",function(){
   	  $('#netInfo').css({ "display":"block" }).siblings().css({ "display":"none" });
   	  return false;
@@ -154,6 +158,15 @@ $(function() {
 		return false;
 	});
 	
+	//首月资费
+	$('#firstMonthFee-select a').bind("click",function(){
+  	  $(this).addClass("selected").siblings().removeClass("selected");
+  	  var descId = $(this).attr("data-descId");
+  	  $('#'+descId).removeClass("hide").siblings().addClass("hide");
+  	  
+  	  return false;
+    });
+	
 	
 	//选择文件
 	$(':file').change(function(event){
@@ -194,7 +207,25 @@ $(function() {
 	
 	initSelect();
 	
+	
+
+	
 })
+//edit_by_wenh_2015_5_8 入网资料-入网协议
+//toggle替代方法
+var proxyflag=1;
+function proxyClick()
+{
+    if(proxyflag==1){
+    	proxyflag=0;
+    	$("#ruwangxieyi b").css("background-image","url(/esp/resources/image/order/arr_up.png)");
+    }else{
+    	proxyflag=1;
+        $("#ruwangxieyi b").css("background-image","url(/esp/resources/image/order/arr_down.png)");
+
+    }
+}
+
 
 function initSelect() {
 	var cityCode = $("#selCity").val();
@@ -373,15 +404,26 @@ function getParams() {
 	orderFormParams.cityCode=$("#selCity").val();
 	orderFormParams.districtCode=$("#selDistrict").val();
 	
-	
-	orderFormParams.resAttr = $('#attrVal').val();
+	if($('#fMonthDResId').val().length != 0 && $('#fMonthDResId').val() != "-1") {
+		var fMonthDVal = $('#firstMonthFee-select').find('a.selected').attr("value");
+		var fMonthD_attrVal=$('#fMonthDResId').val()+"|"+"FMONTHD"+"|"+ fMonthDVal +"|"+fMonthDVal;
+		orderFormParams.resAttr = $('#attrVal').val() + '^' + fMonthD_attrVal;
+		orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
+			+ $('#serialNumber').val() + ',' 
+			+ $('#conPeriod').val() + ',' 
+			+ $('#conType').val() + ','
+			+ fMonthDVal;
+	} else {
+		orderFormParams.resAttr = $('#attrVal').val();
+		orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
+			+ $('#serialNumber').val() + ',' 
+			+ $('#conPeriod').val() + ',' 
+			+ $('#conType').val();
+	}
 	
 	orderFormParams.goodsId= $('#goodsId').val();
 	orderFormParams.goodsName= $('#goodsName').val();
-	orderFormParams.goodsDisc= $('#goodsDisc').val()+ ','
-		+ $('#serialNumber').val() + ',' 
-		+ $('#conPeriod').val() + ',' 
-		+ $('#conType').val();
+	
 	orderFormParams.unitPrice = $('#goodsPrice').val();
 	orderFormParams.topayFee= $('#goodsPrice').val();
 }

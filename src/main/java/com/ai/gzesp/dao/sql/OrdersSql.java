@@ -71,8 +71,12 @@ public class OrdersSql {
 				);
 		sb.append("),");
 		sb.append("T2 as ("
-				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
+				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0202'"
 				+ ")");
+
+		
+		sb.append("select * from ("
+				+ "select tt.*,ROWNUM as rowno from (");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
 				+ "T1.TOPAY_FEE,"
@@ -87,7 +91,9 @@ public class OrdersSql {
 				+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
 				+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
 				);
-		
+		sb.append(" ) tt");
+		sb.append(" where Rownum <="+4+") table_alias");
+		sb.append("	where table_alias.rowno >="+1);
 		
 		System.out.println(sb.toString());
 		List<Map<String, Object>> orderList =commonDao.queryForList(sb.toString());
@@ -134,7 +140,8 @@ public class OrdersSql {
 			+"GDS_D_PHOTO.PHOTO_LINKS,"//先注释掉，后面需要放开注释
 			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='NUMBERS') as RES_ATTR_VAL_1,"
 			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='SAVEMEY') as RES_ATTR_VAL_2,"
-			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='PACKRES') as RES_ATTR_VAL_3"
+			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='PACKRES') as RES_ATTR_VAL_3,"
+			+ "(select RES_ATTR_VAL from ord_d_res where order_id='"+strOrderID+"' and Res_attr_code='FMONTHD') as RES_ATTR_VAL_4"
 			);
 	sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO,ORD_D_RES");
 	sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
@@ -150,7 +157,7 @@ public class OrdersSql {
 			);
 	sb.append("),");
 	sb.append("T2 as ("
-			+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
+			+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0202'"
 			+ ")");
 	sb.append("select distinct T1.ORDER_ID,"
 			+ "T1.GOODS_NAME,"
@@ -181,7 +188,13 @@ public class OrdersSql {
             + "'无'"
             + " else"
             + " RES_ATTR_VAL_3"
-            + " end RES_ATTR_VAL_3"  
+            + " end RES_ATTR_VAL_3,"  
+			+ "case"
+			+ " when RES_ATTR_VAL_4 is null then"
+            + "'无'"
+            + " else"
+            + " RES_ATTR_VAL_4"
+            + " end RES_ATTR_VAL_4"            
 			+ " from T1,T2 where T1.Order_id=T2.Order_id(+)"
 			);	
 	
@@ -192,7 +205,7 @@ public class OrdersSql {
 	}
 	
 	//通过userid获取商品列表
-	public List getOrdersList(String strUserID,String strOrderID,String startDate,String endDate)
+	public List getOrdersList(String strUserID,String strOrderID,String startDate,String endDate,int strHidePageIndex)
 	{
 		if (strOrderID==null) {
 			strOrderID="";
@@ -269,8 +282,12 @@ public class OrdersSql {
 		sb.append(" order by ORD_D_BASE.Order_Time DESC");
 		sb.append("),");
 		sb.append("T2 as ("
-				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0200'"
+				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0202'"
 				+ ")");
+		
+		
+		sb.append("select * from ("
+				+ "select tt.*,ROWNUM as rowno from (");
 		sb.append("select T1.ORDER_ID,"
 				+ "T1.GOODS_NAME,"
 				+ "T1.TOPAY_FEE,"
@@ -284,7 +301,11 @@ public class OrdersSql {
 				+"T1.PHOTO_LINKS,"
 				+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
 				+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
-				);	
+				);
+		sb.append(" ) tt");
+		sb.append(" where Rownum <="+(strHidePageIndex+3)+") table_alias");
+		sb.append("	where table_alias.rowno >="+strHidePageIndex);
+		
 		System.out.println(sb.toString());
 		List orderList =commonDao.queryForList(sb.toString());
 	
@@ -310,8 +331,12 @@ public class OrdersSql {
 		return saleList;
 	}
 	
-	public List getCustMyOrder(String passport, String phone, String keyword) {
+	public List getCustMyOrder(String passport, String phone, String keyword,int iHidePageIndex) {
 		StringBuffer sb=new StringBuffer();
+		sb.append("select * from ("
+				+ "select tt.*,ROWNUM as rowno from (");
+		
+		
 		sb.append("select distinct"
 				+ "	a.ORDER_ID, b.ORDER_STATE as ORDER_STATE_CODE ,"
 				+ " CASE WHEN b.ORDER_STATE='00' then '待支付'"
@@ -346,6 +371,14 @@ public class OrdersSql {
 					+ " 	or c.GOODS_NAME like '%"+keyword+"%')" );
 		}
 		sb.append(" order by b.Order_Time DESC");
+		
+		sb.append(" ) tt");
+		sb.append(" where Rownum <="+(iHidePageIndex+3)+") table_alias");
+		sb.append("	where table_alias.rowno >="+iHidePageIndex);
+		
+		
+		
+		System.out.println(sb.toString());
 		List custMyOrderList =commonDao.queryForList(sb.toString());
 
 		return custMyOrderList;
@@ -400,7 +433,7 @@ public class OrdersSql {
 				+ " GDS_D_INFO f, GDS_D_PHOTO g,"
 				+ " ORD_D_POST h "
 				+ "LEFT JOIN ORD_D_REFUND k on h.order_id=k.order_id "
-				+ "LEFT JOIN ORD_D_PAYLOG i ON   h.ORDER_ID = i.ORDER_ID AND i.REQ_TRADE_TYPE = '0200',"
+				+ "LEFT JOIN ORD_D_PAYLOG i ON   h.ORDER_ID = i.ORDER_ID AND i.REQ_TRADE_TYPE = '0202',"
 				+ "	 (select t1.CITY_NAME, t1.CITY_CODE, t2.DISTRICT_CODE, t2.DISTRICT_NAME" 
 					+ " from SYS_P_WEB_CITY t1, SYS_P_WEB_DISTRICT t2"
 					+ " where t1.ESS_PROVINCE_CODE = '85'" 
@@ -416,6 +449,9 @@ public class OrdersSql {
 				+ " and g.DEFAULT_TAG = '0'"
 				+ "	and a.ORDER_ID = h.ORDER_ID"
 				+ " and h.DISTRICT_CODE = j.DISTRICT_CODE" );
+		
+		
+		
 		System.out.println("客户查询："+sb.toString());
 		
 		Map custOrderDetail =commonDao.queryForMap(sb.toString());

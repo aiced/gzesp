@@ -30,8 +30,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script language="javascript" type="text/javascript" src="${resRoot}/My97DatePicker/WdatePicker.js"></script>
-  
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/bankCardCheck.js?v=${resVer}"></script>
   
 	<script type="text/javascript">
 	
@@ -131,7 +132,18 @@
 		}
 	}
 	
-
+	function getNowDate()
+	{
+	  var d = new Date();
+	  var vYear = d.getFullYear();
+	  var vMon = d.getMonth() + 1;
+	  var vDay = d.getDate();
+	  var h = d.getHours(); 
+	  var m = d.getMinutes(); 
+	  var se = d.getSeconds(); 
+	  s=vYear+(vMon<10 ? "0" + vMon : vMon)+(vDay<10 ? "0"+ vDay : vDay)+(h<10 ? "0"+ h : h)+(m<10 ? "0" + m : m)+(se<10 ? "0" +se : se);
+	  return s;	
+	}
 	
 	$(document).ready(function(){
 		
@@ -207,8 +219,8 @@
 		  	}
 		  	else
 		  	{
-	    		if (!checkBankCard($("#txtXYCardCode").val())) {
-			  		$("#div_txtXYCardCode").removeClass("has-error");
+	    		if (!luhmCheck($("#txtXYCardCode").val())) {
+			  		$("#div_txtXYCardCode").addClass("has-error");
 			  		bRet3=false;
 					return;
 				}
@@ -272,12 +284,12 @@
 						  	bRet5=false;
 						  	return;
 						}
-						else if(!checkPhoneNum($("#txtXYphonenum").val()))
-						{
-							  $("#div_txtXYphonenum").addClass("has-error");
-							  bRet5=false;
-							  return;
-						}
+						//else if(!checkPhoneNum($("#txtXYphonenum").val()))
+						//{
+							//  $("#div_txtXYphonenum").addClass("has-error");
+							//  bRet5=false;
+							//  return;
+						//}
 						else
 						{
 					  		$("#div_txtXYphonenum").removeClass("has-error");
@@ -291,6 +303,9 @@
 			  $("#btnXYCode").click(function(){  
 				  //在这里操作获取验证码
 				  //alert("发送验证码");
+				  
+				  $("#hide_code_date").val(getNowDate());
+				  
 				  var bRet=isPhoneNum($("#txtXYphonenum").val());
 					
 				  if(!bRet)
@@ -299,15 +314,15 @@
 				  	bRet6=false;
 				  	return;
 				  }
-				  else if(!checkPhoneNum($("#txtXYphonenum").val()))
-				  {
-					  bRet6=false;
-					  return;
-				  }
+				  //else if(!checkPhoneNum($("#txtXYphonenum").val()))
+				  //{
+				//	  bRet6=false;
+				//	  return;
+				  //}
 				  else
 				  {
 				  	//这里开始做验证码操作
-				  	bRet6=sendMessage($("#txtXYphonenum").val(),"#btnXYCode");
+				  	bRet6=sendMessage($("#txtXYphonenum").val(),"#btnXYCode","1");
 				  	return;
 				  }
 			  });
@@ -319,13 +334,20 @@
 			  		bRet7=false;
 			  		return;
 			  	}
-			  	//else if($("#XYyanzhengma").val()!=code)
-			  	//{
-			  	//	alert("输入的验证码与短信中的验证码不匹配");
-			  	//	$("#div_XYyanzhengma").addClass("has-error");
-			  	//	bRet7=false;
-			  	//	return;
-			  	//}
+			  	else if($("#XYyanzhengma").val()!=code)
+			  	{
+			  		alert("输入的验证码与短信中的验证码不匹配");
+			  		$("#div_XYyanzhengma").addClass("has-error");
+			  		bRet7=false;
+			  		return;
+			  	}
+			  	else if(getNowDate() - $("#hide_code_date").val()>1800)
+			  	{
+			  		$("#div_XYyanzhengma").addClass("has-error");
+			  		alert("验证码过期");
+			  		bRet7=false;
+			  		return;
+			  	}
 			  	else
 			  	{
 			  		$("#div_XYyanzhengma").removeClass("has-error");
@@ -388,8 +410,8 @@
 			  	}
 			  	else
 			  	{
-		    		if (!checkBankCard($("#txtCCCardCode").val())) {
-				  		$("#div_txtCCCardCode").removeClass("has-error");
+		    		if (!luhmCheck($("#txtCCCardCode").val())) {
+				  		$("#div_txtCCCardCode").addClass("has-error");
 				  		bRet10=false;
 						return;
 					}
@@ -401,7 +423,7 @@
 			  		return;
 			  	}
 			  });
-			  //[信用卡——手机号]文本框失去焦点
+			  //[储蓄卡——手机号]文本框失去焦点
 			  $("#txtCCphonenum").blur(function(){
 				  	if(!$("#txtCCphonenum").val())
 				  	{
@@ -420,12 +442,12 @@
 						  	bRet11=false;
 						  	return;
 						}
-						else if(!checkPhoneNum($("#txtCCphonenum").val()))
-						{
-							  $("#div_txtCCphonenum").addClass("has-error");
-							  bRet11=false;
-							  return;
-						}
+						//else if(!checkPhoneNum($("#txtCCphonenum").val()))
+						//{
+						//	  $("#div_txtCCphonenum").addClass("has-error");
+						//	  bRet11=false;
+						//	  return;
+						//}
 						else
 						{
 					  		$("#div_txtCCphonenum").removeClass("has-error");
@@ -435,27 +457,30 @@
 						}
 				  	}
 				});
-			   //[信用卡——获取验证码]按钮点击
+			   //[储蓄卡——获取验证码]按钮点击
 			  $("#btnCCCode").click(function(){  
 				  //在这里操作获取验证码
 				  //alert("发送验证码");
+				  
+				  $("#hide_code_date").val(getNowDate());
+				  
 				  var bRet=isPhoneNum($("#txtCCphonenum").val());
-					
+
 				  if(!bRet)
 				  {
 				  	alert("手机号格式不对，请重新输入。");
 				  	bRet12=false;
 				  	return;
 				  }
-				  else if(!checkPhoneNum($("#txtCCphonenum").val()))
-				  {
-					  bRet12=false;
-					  return;
-				  }
+				  //else if(!checkPhoneNum($("#txtCCphonenum").val()))
+				  //{
+					//  bRet12=false;
+					//  return;
+				  //}
 				  else
 				  {
 				  	//这里开始做验证码操作
-				  	bRet12=sendMessage($("#txtCCphonenum").val(),"#btnCCCode");
+				  	bRet12=sendMessage($("#txtCCphonenum").val(),"#btnCCCode","1");
 				  	return;
 				  }
 			  });
@@ -467,13 +492,20 @@
 			  		bRet13=false;
 			  		return;
 			  	}
-			  	//else if($("#CCyanzhengma").val()!=code)
-			  	//{
-			  	//	alert("输入的验证码与短信中的验证码不匹配");
-			  	//	$("#div_CCyanzhengma").addClass("has-error");
-			  	//	bRet13=false;
-			  	//	return;
-			  	//}
+			  	else if($("#CCyanzhengma").val()!=code)
+			  	{
+			  		alert("输入的验证码与短信中的验证码不匹配");
+			  		$("#div_CCyanzhengma").addClass("has-error");
+			  		bRet13=false;
+			  		return;
+			  	}
+			  	else if(getNowDate() - $("#hide_code_date").val()>1800)
+			  	{
+			  		$("#div_CCyanzhengma").addClass("has-error");
+			  		alert("验证码过期");
+			  		bRet13=false;
+			  		return;
+			  	}
 			  	else
 			  	{
 			  		$("#div_CCyanzhengma").removeClass("has-error");
@@ -526,7 +558,7 @@
 	        $.ajax({
 		      type: "POST",
 		      contentType:"application/json", //发送给服务器的内容编码类型
-		      url: "${base}/pay/unionPay/pay",
+		      url: "${base}/pay/unionPay/payNew", // 全要素支付接口路径 /unionPay/payNew
 		      dataType:"json", //预期服务器返回的数据类型
 		      data: JSON.stringify(param), //服务器只能接收json字符串
 		      success: function(data){
@@ -543,6 +575,7 @@
 			      $('#btn_other').show();
 			      $('#btn_qry').hide();
 			      $('#btn_home').hide();
+			      $('#payResultTip').html('亲，由于银联通道故障，此订单失败作废，请重新下单并换其他银行卡支付，造成不便，请谅解'); 
 			    }
 			    $('#payResultDetail').html(data.status + ':' + data.detail); //修改支付状态和支付结果描述
 			    //弹出支付结果框
@@ -552,7 +585,7 @@
                 }) ;            
 		      }
 		    });
-        }	
+        }		
 	</script>
 </head>
 
@@ -576,7 +609,8 @@
 				<li role="presentation" class="active"><a href="#xinyongka" aria-controls="xinyongka" role="tab" data-toggle="tab">信用卡</a></li>
 				<li role="presentation"><a href="#chuxuka" aria-controls="chuxuka" role="tab" data-toggle="tab">储蓄卡</a></li>
 			</ul>
-		
+			<!-- 用于校验验证码失效时间 -->
+		 	<input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 			<!-- Tab panes -->
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="xinyongka">
@@ -705,11 +739,13 @@
             <h4 class="modal-title">支付结果</h4>
           </div>
           <div class="modal-body">
-            <p id="payOrderInfo">订单编号：${order_id}，金额：${fee?number/1000}元</p>
+            <p id="payOrderInfo">订单编号：${order_id}，金额：${(fee?number/1000)?string('#.##')}元</p>
             <p id="payResultDetail" ></p>
+            <p id="payResultTip" style="color:red"></p>
           </div>
           <div class="modal-footer">
-            <a id="btn_other" class="btn btn-warning" href="${base}/pay/selectPayMode/${order_id}/${fee}" role="button">选择其他支付方式</a>
+            <#--<a id="btn_other" class="btn btn-warning" href="${base}/pay/selectPayMode/${order_id}/${fee}" role="button">选择其他支付方式</a>-->
+            <a id="btn_other" class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">重新购买</a>
             <a id="btn_qry" class="btn btn-warning" href="${base}/customer/custOrderQuery" role="button">订单查询</a>
             <a id="btn_home" class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">再去逛逛</a>
           </div>

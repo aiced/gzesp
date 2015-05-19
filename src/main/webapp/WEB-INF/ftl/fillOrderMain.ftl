@@ -122,6 +122,32 @@
 	                	<img src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
                 	</span>
 	            </a>
+	            
+	            <#if showFMonthD?exists && showFMonthD && fMonthDList>
+	            <!--首月资费-->
+	            <div id="firstMonthFeeInfoTab" href="#" class="list-group-item">
+	                <label>套餐生效时间</label>
+	                <div id="firstMonthFee-select" class="p-list">
+	        	  	<#list fMonthDList as item>
+		        	  	<#if item_index == 0>
+	                        <a href="javascript:void(0);" data-descId="fMonthDesc_${item_index}" value="${item.attrValCode}"  class="selected">${item.attrValName}</a>
+                        <#else>
+	                        <a href="javascript:void(0);" data-descId="fMonthDesc_${item_index}" value="${item.attrValCode}" >${item.attrValName}</a>
+		        	  	</#if>
+               		</#list> 
+                    </div>
+                    <div>
+                    <#list fMonthDList as item>
+		        	  	<#if item_index == 0>
+	                        <p id="fMonthDesc_${item_index}" style="font-size: 12px;color:#c0c0c0;">${item.values1}</p>
+		        	  	<#else>
+	                        <p id="fMonthDesc_${item_index}" style="font-size: 12px;color:#c0c0c0;" class="hide" >${item.values1}</p>
+		        	  	</#if>
+               		</#list>
+                    </div>
+	            </div>
+	            </#if>
+	            
 	        </ul>
 	
 	        <div class="list-group">
@@ -157,6 +183,13 @@
 	    <input type="hidden" id="totalPrice" value="${totalPrice}">
 	    <input type="hidden" id="attrVal" value="${attrVal}">
 	    <input type="hidden" id="serialNumber" value="${serialNumber}">
+	    
+	    <#if showFMonthD?exists && showFMonthD>
+	   		<input type="hidden" id="fMonthDResId" value="${fMonthDResId}">
+    	<#else>
+	    	<input type="hidden" id="fMonthDResId" value="">
+	    </#if>
+	    
 	    <#if conPeriod?exists>
 	    	<input type="hidden" id="conPeriod" value="${conPeriod}">
     	<#else>

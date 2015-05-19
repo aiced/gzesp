@@ -68,7 +68,7 @@
         	formid.submit();
 	    }
 	  
-	  
+
         $(function(){ 
         	var currYear = (new Date()).getFullYear();	
     		var opt={};
@@ -91,6 +91,11 @@
     	  	$("#beginTime").mobiscroll($.extend(opt['date'], opt['default_main']));
     	  	$("#endTime").mobiscroll($.extend(opt['date'], opt['default_main']));
 
+			$("#txtorderid").blur(function(){
+				
+
+			});
+    	  	
 
             
             
@@ -136,6 +141,11 @@
             		alert("截至日期不能大于等于起始日期");
             		return false;
             	}
+            	
+	    	  	if(isNaN($("#txtorderid").val())){
+		      	  	  alert("订单号必须为数字");
+		      	  	  return false;
+		      	  	}
             	return true;
             }
             //[点击订单列表]
@@ -153,10 +163,11 @@
             	}
             	else
             	{
+            		$("#hidepageindex").val(1);//点击查询 从第一条开始查询
             		//在这里操作数据库查询的
             		var bRetrun=false;
-            		var param = {"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"orderID":$("#txtorderid").val(),"userID":$("#hideuserid").val()};
-            		
+            		var param = {"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"orderID":$("#txtorderid").val(),"userID":$("#hideuserid").val(),"hidepageindex":$("#hidepageindex").val()};
+       				$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
             		$.ajax({
             			   type: "POST",
             			   url: "selectOrders",
@@ -169,8 +180,59 @@
             			});
             	}
             });
-            
-            
+    	  	//常量_记录每页分4条
+            $("#hidepageindex").val(5);
+            //第一次进来分页查询
+            function queryOrderInfo_Page()
+            {
+        		//在这里操作数据库查询的
+        		var bRetrun=false;
+        		var param = {"startDate":$("#beginTime").val(),"endDate":$("#endTime").val(),"orderID":$("#txtorderid").val(),"userID":$("#hideuserid").val(),"hidepageindex":$("#hidepageindex").val()};
+        		
+        		$.ajax({
+        			   type: "POST",
+        			   url: "selectOrders_Page",
+        			   data: param,
+        			   async: false,
+        			   success: function(bRet){
+        				   //alert(bRet);
+        				   $("#order_middle_info").append(bRet);
+        			   }
+        			});
+            	
+            }
+            //div滚动价值
+            $("#order_middle_info_contain").scroll(function(){
+            	
+                $('#scroll-to-bottom-msg').html('');
+            	$('#scroll-top-msg').html($("#order_middle_info_contain")[0].scrollTop);
+            	$('#scroll-height-msg').html($("#order_middle_info_contain")[0].scrollHeight);
+            	//parseInt($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height(),10);//将值转化为十进制
+     			 if($("#order_middle_info_contain")[0].scrollTop >= ($("#order_middle_info_contain")[0].scrollHeight - $("#order_middle_info_contain").height())) 
+                	{
+     				 	queryOrderInfo_Page();
+   						$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+                	}                
+                });
+        	//滚动加载
+        	//$(window).scroll(function () {
+       		//	var scrollTop = $(this).scrollTop();
+       		//	var scrollHeight = $(document).height();
+       		//	var windowHeight = $(this).height();
+       		//	if (scrollTop + windowHeight == scrollHeight) {
+       		//		// 此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+       		//		// alert($('#datagrid').attr('pageNum'));
+       				
+       		//		queryOrderInfo_Page();
+       		//		$("#hidepageindex").val(parseInt($("#hidepageindex").val())+4);
+       		//		//var keyword = $('#keyword').val();
+       		//		//var good_type = $('#good_type').val();
+       		//		//var pageNum = parseInt($('#datagrid').attr('pageNum')) + 1; // 下拉表示要加载下一页/
+
+       		//		//queryFilterPublicAppend(good_type, pageNum, 10, keyword); // 每次加载10条
+       		//		//$('#datagrid').attr('pageNum', pageNum); // 加载成功后页数+1
+       		//	}
+            //}); 
         });
     </script>
 
@@ -348,14 +410,15 @@
             <button class="btn btn-warning btn-block" type="button" name="btnselect" id="btnselect">查询</button>
             <!-- 隐藏控件用于保存userid -->
             <input type="hidden" id="hideuserid" name="hideuserid" value=${hideuserid}>
+            <input type="hidden" id="hidepageindex" name="hidepageindex" value=0>
         </div>        
         <div class="div_clear"></div>
         <br/>
         <br/>
 		<br/>
 		<br/>
-        <div id="order_middle_info">
-        
+		<div id="order_middle_info_contain" style="overflow-y:auto; overflow-x:hidden; height:400px;">
+        <div id="order_middle_info" >
         	<#if (orderList?size==0)>
 	        	<div class="order_middle">
 	        		<h5>您还没有订单</h5>
@@ -430,6 +493,7 @@
 				</#list>
  			</#if>
         </div><!-- order_middle_info_end -->
+        </div>
     </div>
 
 

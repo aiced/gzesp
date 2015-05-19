@@ -56,6 +56,37 @@ public class WeShopOrdersQueryController {
    
         return mav;
     }
+    
+    
+    @RequestMapping("/selectOrders_Page")
+    @ResponseBody
+    public ModelAndView queryOrders_Page(@RequestBody String strParam)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
+    	
+    	String strStartDate=paramsMap.get("startDate");
+    	String strEndDate=paramsMap.get("endDate");
+    	String strOrderID=paramsMap.get("orderID");
+    	String strUserID=paramsMap.get("userID");
+    	String strHidePageIndex=paramsMap.get("hidepageindex");
+    	
+    	System.out.println(strStartDate);
+    	System.out.println(strEndDate);
+    	System.out.println(strOrderID);
+    	System.out.println(strUserID);
+    	System.out.println(strHidePageIndex);
+    	//这里从数据库查询数据
+    	
+       	List<Map<String, Object>> orderList=ordersSql.getOrdersList(strUserID,strOrderID,strStartDate,strEndDate,Integer.valueOf(strHidePageIndex));
+    	
+        ModelAndView mav = new ModelAndView("ordersQuerySub.ftl");
+        
+        mav.addObject("orderList",orderList);
+        return mav;
+    }
+    
+    
+    
     @RequestMapping("/selectOrders")
     @ResponseBody
     public ModelAndView queryOrdersByDate(@RequestBody String strParam)
@@ -66,14 +97,16 @@ public class WeShopOrdersQueryController {
     	String strEndDate=paramsMap.get("endDate");
     	String strOrderID=paramsMap.get("orderID");
     	String strUserID=paramsMap.get("userID");
+    	String strHidePageIndex=paramsMap.get("hidepageindex");
     	
     	System.out.println(strStartDate);
     	System.out.println(strEndDate);
     	System.out.println(strOrderID);
     	System.out.println(strUserID);
+    	System.out.println(strHidePageIndex);	
     	//这里从数据库查询数据
     	
-       	List<Map<String, Object>> orderList=ordersSql.getOrdersList(strUserID,strOrderID,strStartDate,strEndDate);
+       	List<Map<String, Object>> orderList=ordersSql.getOrdersList(strUserID,strOrderID,strStartDate,strEndDate,Integer.valueOf(strHidePageIndex));
     	
     	
         ModelAndView mav = new ModelAndView("ordersQuerySub.ftl");

@@ -2,22 +2,25 @@
 $(document).ready(function (){  
 	//滚动加载
 	$(window).scroll(function () {
-        var scrollTop = $(this).scrollTop();
-        var scrollHeight = $(document).height();
-        var windowHeight = $(this).height();
-        if (scrollTop + windowHeight == scrollHeight) {
-        //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
-        //alert($('#datagrid').attr('pageNum'));
-        var eparchy_code= $('#btnCity').attr('eparchy_code');	
-        var keyword = $('#keyword').val();	
-        var pageNum = parseInt($('#datagrid').attr('pageNum'))+1; //下拉表示要加载下一页
-    	var pageSize = 20; //默认每次获取20个
-    	var nice_fee_start = 0;
-    	var nice_fee_end = 10000; //靓号预存费范围 0-10000	
-    	var net_type = $('#net_type').html(); //网络类型
-    	queryNumbersPublicAppend(eparchy_code, null, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, null, null, net_type);	 //每次加载20条
-        $('#datagrid').attr('pageNum', pageNum); //加载成功后页数+1
-        }
+		//必须是号码子页面里scrollFlag标志为1时才可以下拉滚动刷新，此标志默认是0，展开子页面的时候修改此标志为1
+		//测试时发现新号入网商品详情页太长，不小心下拉导致触发ajax加载号码
+	        var scrollTop = $(this).scrollTop();
+	        var scrollHeight = $(document).height();
+	        var windowHeight = $(this).height();
+	        if (scrollTop + windowHeight == scrollHeight) {
+	        //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+	        //alert($('#datagrid').attr('pageNum'));
+	        var eparchy_code= $('#btnCity').attr('eparchy_code');	
+	        var keyword = $('#keyword').val();	
+	        var pageNum = parseInt($('#datagrid').attr('pageNum'))+1; //下拉表示要加载下一页
+	    	var pageSize = 20; //默认每次获取20个
+	    	var nice_fee_start = 0;
+	    	var nice_fee_end = 10000; //靓号预存费范围 0-10000	
+	    	var net_type = $('#net_type').html(); //网络类型
+	    	queryNumbersPublicAppend(eparchy_code, null, nice_fee_start, nice_fee_end, pageNum, pageSize, keyword, null, null, net_type);	 //每次加载20条
+	        $('#datagrid').attr('pageNum', pageNum); //加载成功后页数+1
+	        }	    	
+
     }); 
 });
 

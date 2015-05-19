@@ -1,5 +1,7 @@
 package com.ai.gzesp.unionpay;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -37,7 +39,7 @@ public class Test {
         System.out.println("1142883333799600".substring(14));
         System.out.println("1142883333799600".substring(14,16));*/
         
-        Map xmlMap = new LinkedHashMap();
+/*        Map xmlMap = new LinkedHashMap();
         xmlMap.put(UnionPayAttrs.charCode, "1");
         xmlMap.put(UnionPayAttrs.Version, "2");
         xmlMap.put(UnionPayAttrs.TradeType, "3");
@@ -61,7 +63,41 @@ public class Test {
 
         String data = UnionPayUtil.getDataFromxmlMap(xmlMap);
 
-        System.out.println(data);
+        System.out.println(data);*/
+    	
+    	byte[] heart = new byte[4];
+        try {
+			heart = String.valueOf("0000").getBytes("GBK");
+			int len = Integer.valueOf(new String(heart,"GBK").trim());
+			
+			System.out.println(new String(heart));
+			System.out.println(Arrays.toString(heart));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+/*        byte [] header = new byte[4];
+		int len=0;
+		try{
+			int tempLen=0;//读取实际的字节数
+			int tempI=4;//
+			while(tempI>0){
+				tempLen=in.read(header, 4-tempI, tempI);
+				tempI=tempI-tempLen;
+			}
+		}catch(IOException io){
+			throw io;
+		}
+		
+		try{
+			try{
+				len=Integer.valueOf(new String(header,"GBK").trim());
+			}catch(NumberFormatException ee){
+				log.error("线程【" + this.getThreadNumber() + "】读取报文消息长度错误" + ee.getMessage());
+				throw ee;
+			}*/
+
     }
 
 }

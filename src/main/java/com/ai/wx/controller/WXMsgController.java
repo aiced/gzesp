@@ -31,6 +31,7 @@ import com.ai.sysframe.utils.XmlUtil;
 import com.ai.wx.consts.DataConstants;
 import com.ai.wx.entity.WebAuthAccessTokenModel;
 import com.ai.wx.service.CoreService;
+import com.ai.wx.service.CustomService;
 import com.ai.wx.service.MenuService;
 import com.ai.wx.service.WXMsgService;
 import com.ai.wx.service.WebAuthService;
@@ -56,6 +57,9 @@ public class WXMsgController {
  	
  	@Resource 
  	WebAuthService webAuthService;
+ 	
+ 	@Resource 
+ 	CustomService customService;
 	
     @RequestMapping(value="/access",method = RequestMethod.GET)
     public void access(@RequestParam(value = "signature", required = true)String signature,
@@ -131,6 +135,8 @@ public class WXMsgController {
         			 mav=new ModelAndView("redirect:/weShop/index/"+userId);    
         		 } else if("weShopHome".equals(state)) {
         			 mav=new ModelAndView("redirect:/shopManage/weShopHome?userid="+userId);    
+        		 } else if("register".equals(state)) {
+        			 mav=new ModelAndView("redirect:/auth/register/step1?openId="+openId);    
         		 } else if("queryInfo".equals(state)) {
         			 
         		 }
@@ -153,18 +159,14 @@ public class WXMsgController {
     @RequestMapping("/createMenuSubmit")
     @ResponseBody
     public boolean createMenuSubmit(@RequestBody String inputParams){
-//    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
-//    	String menuTxt = paramsMap.containsKey("menuTxt")?paramsMap.get("menuTxt"):"";
-//    	inputParams = RegexUtils.getStringNoBlank(inputParams);
     	boolean flag  = menuService.createMenu(DataConstants.accessToken, inputParams);
-    	
     	return flag;
-    	
-//    	JSONObject obj = JSON.parseObject(inputParams);
-//    	menuService.createMenu(DataConstants.accessToken, obj.toJSONString());
-    	
-//    	ModelAndView mav = new ModelAndView("wxCreateMenu.ftl");
-//    	mav.addObject("title", "创建菜单");
+    }
+    
+    @RequestMapping("/custServiceSendMsg")
+    @ResponseBody
+    public void custServiceSendMsg(@RequestBody String inputParams){
+    	customService.sendMsg(DataConstants.accessToken, inputParams);
     }
     
     

@@ -42,11 +42,11 @@ public class SelectNumberController {
         //商品归属地市下拉框  
         List<Map<Object, Object>> citys = weShopService.getCitys();
         //ess_city_code city_code, city_name, ess_province_code province_code
-        Map<Object, Object> all = new HashMap<Object, Object>(); //加入全省选项
+/*        Map<Object, Object> all = new HashMap<Object, Object>(); //加入全省选项
         all.put("CITY_CODE", "%");
         all.put("CITY_NAME", "全省");
         all.put("PROVINCE_CODE", "85");
-        citys.add(0, all);
+        citys.add(0, all);*/
         mav.addObject("citys", citys);
         
         //获取靓号规则下拉框
@@ -54,8 +54,8 @@ public class SelectNumberController {
         mav.addObject("rules", rules);
         
         //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个, 网络类型null默认全部号码都可以选
-        List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null, null);
-        mav.addObject("numbers", numbers);
+        //List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null, null);
+        //mav.addObject("numbers", numbers);
         
         return mav;
     }

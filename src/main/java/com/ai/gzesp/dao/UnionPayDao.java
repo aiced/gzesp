@@ -57,7 +57,18 @@ public interface UnionPayDao {
             @Param("resp_time") String resp_time, 
             @Param("sys_trade_no") String sys_trade_no ); 
     
-    public int updatePayState(@Param("order_id") String order_id, @Param("order_state") String order_state);    
+    public int updatePayStateAndIncomeMoney(@Param("order_id") String order_id, @Param("order_state") String order_state, @Param("income_money") int income_money);    
+    
+    
+    public int insertPayCancellog(
+    		@Param("pay_id") String pay_id,
+            @Param("partition_id") String partition_id,
+            @Param("req_time") String req_time, 
+            @Param("req_status") String req_status,
+            @Param("req_trade_type") String req_trade_type, 
+            @Param("sys_trade_no") String sys_trade_no,
+            @Param("orig_order_id") String orig_order_id,
+            @Param("orig_timestamp") String orig_timestamp);
     
     /**
      * 功能描述: 调用绑定接口前先插记录，签约号sign_code 不填，等待银联接口返回后根据sys_trade_no更新sign_code<br>

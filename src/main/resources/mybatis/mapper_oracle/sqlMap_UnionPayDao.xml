@@ -36,7 +36,7 @@
         insert into ord_d_paylog
               (pay_id, partition_id, pay_type, pay_mode, pay_state, pay_acunt_no, req_time, req_status, req_trade_type,
                sys_trade_no, order_id, txn_amt)
-        values(${pay_id}, ${partition_id}, #{pay_type}, #{pay_mode}, #{pay_state}, #{pay_account_no}, #{req_time}, #{req_status},
+        values(${pay_id}, ${partition_id}, #{pay_type}, #{pay_mode}, #{pay_state}, #{pay_account_no, jdbcType=VARCHAR}, #{req_time}, #{req_status},
                #{req_trade_type}, ${sys_trade_no}, ${order_id}, ${txn_amt}
               )	    
 	</insert>
@@ -76,9 +76,10 @@
           where sys_trade_no = #{sys_trade_no}
 	</update>		
 
-	<update id="updatePayState">
+	<update id="updatePayStateAndIncomeMoney">
          update ord_d_base
-            set order_state = #{order_state}
+            set order_state = #{order_state} ,
+                income_money = ${income_money}
           where order_id = ${order_id}
 	</update>	
 	
@@ -111,5 +112,29 @@
           where sys_trade_no = ${sys_trade_no}
             and result_code is not null
 	</select>	
+	
+	
+	<insert id="insertPayCancellog">
+        insert into ord_d_paylog(
+        	pay_id, 
+            partition_id,
+            req_time,
+            req_status,
+            req_trade_type,
+            sys_trade_no,
+            orig_order_id,
+            orig_timestamp)
+        values(
+        	${pay_id}, 
+        	${partition_id},  
+        	#{req_time}, 
+        	#{req_status},
+            #{req_trade_type}, 
+            #{sys_trade_no}, 
+            ${orig_order_id}, 
+            #{orig_timestamp}
+              )	    
+	</insert>
+	
 	
 </mapper>

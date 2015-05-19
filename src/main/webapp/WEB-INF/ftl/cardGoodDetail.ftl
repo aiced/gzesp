@@ -151,6 +151,7 @@
                     </span>
                 </p>
             </li>
+            <#--
             <li class="num-info-li">
                 <a id="goodsAssess" href="javascript:void();">
                     <b class="list-arr"></b>
@@ -158,6 +159,7 @@
                     <label>商品评价</label>
                 </a>
             </li>
+            -->
             <li class="num-info-li">
                 <a href="#subpage_2" onclick="showSubpage('subpage_2')"><b class="list-arr"></b><span class="detail-info">手机参数，商品信息</span><label>图文详情</label></a>
             </li>
@@ -228,6 +230,25 @@
                   </#if>
                 </#list>
               </#if>
+            <!-- 普通卡/微卡/Nano卡-->        
+            <#if attrs.SIMSIZE??>
+              <li id="simTypeList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>卡类型</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.SIMSIZE as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>              
         </ul>
     </div>
 
@@ -246,6 +267,5 @@
   <!-- 第三页 商品评价start -->   
   <!-- 第三页 商品评价end -->     
  
-    </script>
   </body>
 </html>

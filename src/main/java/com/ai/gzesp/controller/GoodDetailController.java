@@ -15,6 +15,7 @@ import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dto.GoodsDetailResult;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.token.Token;
 
 @Controller
 @RequestMapping("/weShop")
@@ -36,6 +37,7 @@ public class GoodDetailController {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
+    @Token(save=true)
     @RequestMapping("/goodDetail/{user_id}/{ctlg_code}/{goods_id}")
     public ModelAndView goodDetail(@PathVariable("user_id") String user_id, @PathVariable("ctlg_code") String ctlg_code, @PathVariable("goods_id") String goods_id){
     	//调用公共业务逻辑获取各种信息
@@ -54,6 +56,7 @@ public class GoodDetailController {
      * @param goods_id
      * @return
      */
+    @Token(save=true)
     @RequestMapping("/bannerGoodDetail/{goods_id}/{user_id}")
     public ModelAndView bannerGoodDetail(@PathVariable("goods_id") String goods_id, @PathVariable("user_id") String user_id){
     	ModelAndView mav = null;
@@ -112,11 +115,11 @@ public class GoodDetailController {
         //商品归属地市下拉框  
         List<Map<Object, Object>> citys = weShopService.getCitys();
         //ess_city_code city_code, city_name, ess_province_code province_code
-        Map<Object, Object> all = new HashMap<Object, Object>(); //加入全省选项
+/*        Map<Object, Object> all = new HashMap<Object, Object>(); //加入全省选项
         all.put("CITY_CODE", "%");
         all.put("CITY_NAME", "全省");
         all.put("PROVINCE_CODE", "85");
-        citys.add(0, all);
+        citys.add(0, all);*/
         mav.addObject("citys", citys);
         
         //查看有货无货
@@ -136,13 +139,13 @@ public class GoodDetailController {
             List<Map<Object, Object>> rules = selectNumberService.getNumberRules();
             mav.addObject("rules", rules);
             
-            String net_type = null;
-            if(attrs.get("NETTYPE") != null){
-            	net_type = (String) attrs.get("NETTYPE").get(0).get("ATTR_CODE"); //网络类别2G/3G/4G/CARD
-            }
-            //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
-            List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null, net_type);
-            mav.addObject("numbers", numbers);
+//            String net_type = null;
+//            if(attrs.get("NETTYPE") != null){
+//            	net_type = (String) attrs.get("NETTYPE").get(0).get("ATTR_CODE"); //网络类别2G/3G/4G/CARD
+//            }
+//            //数据库分页获取号码列表，默认归属贵阳,预存0-10000，第一页,一页20个,
+//            List<Map<Object, Object>> numbers = selectNumberService.queryNumberListByPage(null, null, 0, 10000, 1, 20, null, null, null, net_type);
+//            mav.addObject("numbers", numbers);
         }
         
         //edit_by_wenh_2015_4_18

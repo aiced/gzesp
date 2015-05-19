@@ -67,7 +67,7 @@ public class WeShopCustRefundController {
 	    	String unit_price=paramsMap.get("hide_unit_price");
 	    	String Partition_Id=paramsMap.get("hide_Partition_Id");
 	    	String order_no=paramsMap.get("hide_order_no");
-	    	String create_time=paramsMap.get("hide_create_time");
+	    	//String create_time=paramsMap.get("hide_create_time");
 	    	String order_from=paramsMap.get("hide_order_from");
 	    	String order_time=paramsMap.get("hide_order_time");
 	    	String order_state=paramsMap.get("hide_order_state");
@@ -78,14 +78,14 @@ public class WeShopCustRefundController {
 //	    	审核通过未退款：02
 //	    	审核通过已退款：03	
 	    	System.out.println(Partition_Id);
-	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss");
+	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    	Date date_create_time=DateUtil.getNow();
-			try {
-				date_create_time = sdf.parse(create_time);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+//			try {
+//				date_create_time = sdf.parse(create_time);
+//			} catch (ParseException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 	    	Date date_order_time=DateUtil.getNow();
 			try {
 				date_order_time = sdf.parse(order_time);
@@ -127,4 +127,10 @@ public class WeShopCustRefundController {
 	    	return mav;
 	    	
 	   }
+	   
+//	   public static void main(String[] args) {
+//	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//	    	Date date_create_time=DateUtil.getNow();
+//	    	System.out.println(date_create_time);
+//	}
 }

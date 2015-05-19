@@ -383,8 +383,8 @@ function getParams() {
 	orderFormParams.topayMoney = $('#totalPrice').val();
 	
 	orderFormParams.userId = $('#userId').val();
-	orderFormParams.invoiceTitle = $('#invoiceTitle').val();
-	
+	//orderFormParams.invoiceTitle = $('#invoiceTitle').val();
+	orderFormParams.invoiceTitle = "默认为您的姓名"; //edit_by_wenh_2015_5_19
 //	orderFormParams.payType = $('input[name="pay_mode"]:checked').val();
 //	switch ($("input[name=pay_mode]:checked").attr("id"))  {
 //         case "pay_mode_1":

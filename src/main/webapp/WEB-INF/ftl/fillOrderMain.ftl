@@ -169,7 +169,7 @@
 	        </div>
 	        <br/>
 	
-	        <div style="font-size: 12px;text-align: center;"><a href="#"><u>为保障您的权益，下单请阅读并确定相关协议</u></a></div>
+	        <div style="font-size: 12px;text-align: left;border:dashed 1px #F0AD4E;color:red;padding:15px;font-weight: bold;">号码选定后我们只为您保留30分钟，请在提交订单后尽快完成支付!</div>
 	        <br/>
 	        <button id="submitOrdBtn" class="btn btn-warning btn-block " type="button" onclick="nextPage()">提交订单</button>
 	    </div>

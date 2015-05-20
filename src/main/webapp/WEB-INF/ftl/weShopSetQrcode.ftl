@@ -59,7 +59,7 @@
 
  	 <script>
        //获取当前页面url并生成二维码展示在 xx的微店
-       var thisUrl = "http://wap.gz10010.xyz/esp/weShop/index/"+${userId};
+       var thisUrl = "${espRoot}/esp/weShop/index/"+${userId};
        $('#qrcodeDiv').qrcode({
 		render:"canvas", //默认canvas方式，性能好
 		text: thisUrl, //设置二维码内容

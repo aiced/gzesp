@@ -14,7 +14,11 @@
     <style type="text/css">
         .container-fluid
         {
-            margin: 15px;
+        	padding:0px;
+            margin: 50px 10px 10px 10px;
+            font-size: 12px;
+            text-align: center;
+            font-weight: bold;
         }
         .div_clear
         {
@@ -50,6 +54,7 @@
             margin: 10px;
             line-height: 30px;
             background:#ffffff;
+            text-align: left;
         }
         .row
         {
@@ -120,43 +125,31 @@
 	    </div>    
 		<!--top_end-->
         <div class="container-fluid">
-            <div class="payInfo">
-                <!--<ul class="choosepaymode">-->
-                    <!--<li id="pay_mode_1">-->
-                        <!--<input type="radio" name="pay_mode" id="pay_mode_one">-->
-                    <!--</li>-->
-                    <!--<li id="pay_mode_2">-->
-                        <!--<input type="radio" name="pay_mode" id="pay_mode_two">-->
-                    <!--</li>-->
-                <!--</ul>-->
+            <#--<div class="payInfo">                
                 <label class="radio-inline">
                     <input type="radio" name="pay_mode" id="pay_mode_1" value="00" checked="checked" data-text="在线支付">在线支付
                 </label>
-                <#--
                 <label class="radio-inline">
                     <input type="radio" name="pay_mode" id="pay_mode_2" value="01" data-text="货到付款">货到付款
                 </label>
-                -->
-            </div>
-            <div id="pay_mode_1_detail">
-                <div class="pay_mode_1_info">
-                    	在线支付，支持信用卡，储蓄卡，支付宝支付
-                </div>
-                <div class="div_line">
-                </div>
-                <div>
-                    <div class="mode_1">
-                            <input type="radio" name="pay_mode_style" id="unionpay" value="银联" checked="checked" >
-                            <img src="${resRoot}/image/selectPayMode/unionpay.png" width="45" height="30"/>&nbsp;&nbsp;银联支付&nbsp;&nbsp;&nbsp;
-                    </div>
-                    <#--
-                    <div class="mode_1">
-                            <input type="radio" name="pay_mode_style" id="zhifubao" value="支付宝">
-                            <img src="${resRoot}/image/selectPayMode/zhifubao.png" width="45" height="30"/>&nbsp;&nbsp;支付宝支付&nbsp;&nbsp;&nbsp;
-                    </div>
-                    -->
-                </div>
-            </div>
+            </div>-->
+            <div class="pay_mode_1_info">
+                 	支持信用卡、储蓄卡、微信支付、沃支付
+             </div>
+             <div class="div_line">
+             </div>
+             <div>
+             <div class="mode_1">
+                     <input type="radio" name="pay_mode_style" id="unionpay" value="银联" checked="checked" >
+                     <img src="${resRoot}/image/selectPayMode/unionpay.png" width="45" height="30"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;银联在线支付&nbsp;&nbsp;&nbsp;
+             </div>
+                 <#--
+                 <div class="mode_1">
+                         <input type="radio" name="pay_mode_style" id="zhifubao" value="支付宝">
+                         <img src="${resRoot}/image/selectPayMode/zhifubao.png" width="45" height="30"/>&nbsp;&nbsp;支付宝支付&nbsp;&nbsp;&nbsp;
+                 </div>
+                 -->
+             </div>
             <div id="pay_mode_2_detail">
                 <div class="pay_mode_2_info">
                     	需先确认地址信息才能选择货到付款，请您验货后付款。

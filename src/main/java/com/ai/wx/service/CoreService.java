@@ -1,6 +1,8 @@
 package com.ai.wx.service;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.wx.consts.MessageType;
 import com.ai.wx.entity.request.RequestClickMessage;
 import com.ai.wx.entity.request.RequestEventMessage;
@@ -368,27 +371,30 @@ public class CoreService {
 //		return respMessage;
 //	}
     private String buildWelcomeResp(){
-        StringBuffer buffer = new StringBuffer();  
-        buffer.append(" /::D 欢迎来到沃掌柜大本营！").append("\n");  
-        buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n").append("\n");  
-        buffer.append("1.  0元免费开店").append("\n");  
-//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/auth/register/step1\">☞点这立即注册！</a>").append("\n").append("\n"); 
-        buffer.append("<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx52db41a405183edb&redirect_uri=http%3A%2F%2Fwap.gz10010.xyz%2Fesp%2Fwx%2Fauth&response_type=code&scope=snsapi_base&state=register#wechat_redirect\">☞点这立即注册！</a>").append("\n").append("\n"); 
-//        buffer.append("☞点这立即注册！").append("\n").append("\n"); 
-        buffer.append("2.  入门须知").append("\n");  
-        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  
-//        buffer.append("☞点这立即阅读！").append("\n").append("\n");  
-        buffer.append("3.  收益规则").append("\n");  
-        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
-//        buffer.append("☞点这立即查看！").append("\n").append("\n");  
-//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/incomeNote\" >☞点这立即查看！</a>").append("\n").append("\n");  
-        buffer.append("4.  收益发放").append("\n");  
-        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=204322183&idx=1&sn=cba85430b9e9ef22634dd95992c4d8f6#rd\" >☞点这立即了解！</a>").append("\n").append("\n");  
-//        buffer.append("☞点这立即了解！").append("\n").append("\n");  
-    
-        buffer.append("5.  更多咨询，请直接回复【提问：“问题描述”】").append("\n");  
-//        buffer.append("<a href=\"http://wap.gz10010.xyz/esp/wx/more\" >☞点这立即打开！</a>").append("\n").append("\n");  
+    	
+    	String espRoot = CommonUtil.appResource.getString("espRoot");
+    	
+        StringBuffer buffer = new StringBuffer();
+        
+        try {
+	        buffer.append(" /::D 欢迎来到沃掌柜大本营！").append("\n");  
+	        buffer.append("官方保证，正品货源，0元免费轻松当掌柜。在接下来的日子里，让我们领福利、学销售，一起做亮闪闪的大掌柜！").append("\n").append("\n");  
+	        buffer.append("1.  0元免费开店").append("\n");  
+			buffer.append("<a href=\"https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx52db41a405183edb&redirect_uri=")
+				.append(URLEncoder.encode(espRoot, "UTF-8"))
+				.append("%2Fesp%2Fwx%2Fauth&response_type=code&scope=snsapi_base&state=register#wechat_redirect\">☞点这立即注册！</a>").append("\n").append("\n");
+	        buffer.append("2.  入门须知").append("\n");  
+	        buffer.append("<a href=\"").append(espRoot).append("/esp/wx/guides\" >☞点这立即阅读！</a>").append("\n").append("\n");  
+	        buffer.append("3.  收益规则").append("\n");  
+	        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
+	        buffer.append("4.  收益发放").append("\n");  
+	        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=204322183&idx=1&sn=cba85430b9e9ef22634dd95992c4d8f6#rd\" >☞点这立即了解！</a>").append("\n").append("\n");  
+	    
+	        buffer.append("5.  更多咨询，请直接回复【提问：“问题描述”】").append("\n");  
      
+        } catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
         return buffer.toString();        
     }
     

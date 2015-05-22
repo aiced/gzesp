@@ -1,5 +1,7 @@
 package com.ai.wx.service;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,6 +30,53 @@ public class WebAuthService {
     
     private static Logger log = LoggerFactory.getLogger(WebAuthService.class);
     
+    /**
+     *  https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx52db41a405183edb&redirect_uri=http%3A%2F%2Fwap.gz10010.xyz%2Fesp%2Fwx%2Fauth&response_type=code&scope=snsapi_base&state=weShopIndex#wechat_redirect
+     * @param appid
+     * @param appsecret
+     * @param code
+     * @return
+     */
+	 public String getRedirectUrl(String appid, String redirect_uri, String state) {
+	        
+        if (StringUtils.isEmpty(appid) || StringUtils.isEmpty(redirect_uri)) {
+            log.error("appid ||redirect_uri");
+            return null; //返回null
+        }
+        
+	 	StringBuilder url = new StringBuilder();
+        url.append("https://open.weixin.qq.com/connect/oauth2/authorize?appid=");
+        url.append(appid);
+        url.append("&redirect_uri=");
+        try {
+			url.append(URLEncoder.encode(redirect_uri,"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+        url.append("&response_type=code");
+        url.append("&scope=snsapi_base");
+//        url.append("&scope=snsapi_userinfo");
+        url.append("&state=");
+        url.append(state);
+        url.append("#wechat_redirect");
+        
+//        String respJson = HttpClientUtil.sendGetSSLRequest(url.toString(), null);
+//        WebAuthAccessTokenModel accessTokenModel = null;
+//        if(StringUtils.isNotBlank(respJson)){
+//            log.debug("获取 accessToken 返回json：" + respJson);
+//            accessTokenModel = JsonUtils.parseJson(respJson, WebAuthAccessTokenModel.class);
+//            if (StringUtils.isNotBlank(accessTokenModel.getAccess_token())) {
+//                accessToken = accessTokenModel.getAccess_token();
+//            } 
+//        }
+//        else {
+//            log.error("获取 accessToken 为空");
+//        }
+
+        return url.toString();
+	 }
+ 
+ 
     /**
      * 获取全局返回码
      *

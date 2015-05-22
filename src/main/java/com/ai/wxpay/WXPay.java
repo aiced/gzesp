@@ -4,6 +4,7 @@ import com.ai.wxpay.business.DownloadBillBusiness;
 import com.ai.wxpay.business.RefundBusiness;
 import com.ai.wxpay.business.RefundQueryBusiness;
 import com.ai.wxpay.business.ScanPayBusiness;
+import com.ai.wxpay.business.UnifiedOrderBusiness;
 import com.ai.wxpay.common.Configure;
 import com.ai.wxpay.protocol.downloadbill_protocol.DownloadBillReqData;
 import com.ai.wxpay.protocol.pay_protocol.ScanPayReqData;
@@ -11,6 +12,7 @@ import com.ai.wxpay.protocol.pay_query_protocol.ScanPayQueryReqData;
 import com.ai.wxpay.protocol.refund_protocol.RefundReqData;
 import com.ai.wxpay.protocol.refund_query_protocol.RefundQueryReqData;
 import com.ai.wxpay.protocol.reverse_protocol.ReverseReqData;
+import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderReqData;
 import com.ai.wxpay.service.DownloadBillService;
 import com.ai.wxpay.service.RefundQueryService;
 import com.ai.wxpay.service.RefundService;
@@ -141,6 +143,10 @@ public class WXPay {
      */
     public static void doDownloadBillBusiness(DownloadBillReqData downloadBillReqData,DownloadBillBusiness.ResultListener resultListener) throws Exception {
         new DownloadBillBusiness().run(downloadBillReqData,resultListener);
+    }
+
+    public static void doUnifiedOrderBusiness(UnifiedOrderReqData reqData, UnifiedOrderBusiness.ResultListener resultListener) throws Exception {
+    	new UnifiedOrderBusiness().run(reqData,resultListener);
     }
 
 

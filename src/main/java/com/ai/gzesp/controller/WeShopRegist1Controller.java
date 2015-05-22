@@ -24,6 +24,7 @@ import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.dao.sql.RegistSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.gzesp.sgip.SgipService;
+import com.ai.sysframe.token.Token;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -38,7 +39,7 @@ public class WeShopRegist1Controller {
     private WeShopService weShopService;
 	@Resource 
 	RegistSql registSql;
-
+	
     @RequestMapping("/register/step1")
     public ModelAndView index(@RequestParam(value = "openId", required = false)String stropenId){
         ModelAndView mav = new ModelAndView("weShopRegist1.ftl");

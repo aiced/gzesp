@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
 import com.ai.gzesp.dao.beans.TdAurDBASEINFO;
 import com.ai.gzesp.dao.beans.TdAurDRELINFO;
@@ -25,6 +26,7 @@ import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
 import com.ai.gzesp.dao.service.TdAurDRELINFODao;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.gzesp.utils.MD5Util;
+import com.ai.sysframe.token.Token;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -44,26 +46,42 @@ public class WeShopRegist3Controller {
     @Resource
     TdAurDBASEINFODao tdAurDBASEINFODao;
 	
+    Long LGId=0L;
 	
 	
 	@RequestMapping("/register/step3")
-    public ModelAndView index(){
+    public ModelAndView index(@RequestParam(value = "userid", required = false)String strUserID,@RequestParam(value = "ispostback", required = false)String strIsPostBack){
         ModelAndView mav = new ModelAndView("weShopRegist3.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "注册微店");
-
+        mav.addObject("userid",strUserID);
+        mav.addObject("ispostback",strIsPostBack);
+        System.out.println("ispostback="+strIsPostBack);
         return mav;
     }
-	
+
     @RequestMapping("/register/reg_step3_postdata")
     public ModelAndView RegStep3_PostData(@RequestBody String inputParams)
     {
     	///插入数据需要用事务来处理：因为涉及到多表插入
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
-    	
-    	Long LId=getID();
-    	String strArea=paramsMap.get("selArea");//地区
+    	ModelAndView mav = null;
+    	ModelMap mmap=new ModelMap();
+
     	String strPhoneNum = paramsMap.get("txtphonenum");//手机号
+    	
+	   	 if (!checkPhoneNum(strPhoneNum)) //已经注册过了
+	   	 {
+	   			mmap.addAttribute("userid",LGId.toString());
+	   			mmap.addAttribute("ispostback","1");//判断是否重复提交注册
+	   			mav=new ModelAndView("redirect:step3",mmap);     
+	   	    	return mav; 
+	   	 }
+    	Long LId=getID();
+    	LGId=LId;
+    	System.out.println("LId="+LId);    	
+    	String strArea=paramsMap.get("selArea");//地区
+
     	String strwecharaccount=paramsMap.get("wecharaccount");//微信号
     	String strName=paramsMap.get("name");//姓名
     	String strSex=paramsMap.get("sex");//性别
@@ -83,6 +101,9 @@ public class WeShopRegist3Controller {
     	System.out.println(strOpenid);
     	System.out.println(strPwd);
     	
+    	
+    	
+
     	
     	//插入能人登录信息表
     	TdAurDAUTHINFO record_aurdauthinfo = new TdAurDAUTHINFO();
@@ -126,30 +147,9 @@ public class WeShopRegist3Controller {
     	//record_aurdbaseinfo.setBankName(strBank);//BANK_NAME
     	//record_aurdbaseinfo.setBankAcct(strBankCardId);//BANK_ACCT
     	tdAurDBASEINFODao.insertSelective(record_aurdbaseinfo);
-    	 	
     	
-    	ModelAndView mav = null;
-    	ModelMap mmap=new ModelMap();
-        //从数据库获取信息赋值
-		//mmap.addAttribute("title", "我的微店");
-//		mmap.addAttribute("id", LId.toString());
 		mmap.addAttribute("userid",LId.toString());
-//		mmap.addAttribute("name", strName);//姓名
-//		mmap.addAttribute("storename", strName+"的店铺");//姓名
-//		mmap.addAttribute("phone", strPhoneNum); //手机号
-//		mmap.addAttribute("weixin", strwecharaccount); //微信
-//		mmap.addAttribute("userimage",strDefalutImg);
-		
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
-    	
-    	//ModelAndView mav = new ModelAndView("weShopLogin.ftl");
-//    	ModelAndView mav = new ModelAndView("redirect:../../shopManage/weShopHome/");
-//    	mav.addObject("title", "登录微店账号");
-//    	mav.addObject("id",);
-//    	mav.addObject("userid", attributeValue)
-//    	mav.addObject("name", attributeValue);
-//    	mav.addObject("phone", attributeValue);
-//    	mav.addObject("weixin", attributeValue);
     	return mav;
     	
     } 
@@ -172,5 +172,18 @@ public class WeShopRegist3Controller {
         return lCode;
 
     }
+    //edit_by_wenh_2015_5_21
+	public Boolean checkPhoneNum( String strPhoneNum) {
+		Criteria myCriteria = new Criteria();
+		myCriteria.createConditon().andEqualTo("PHONE_NUMBER", strPhoneNum);
+		int count = tdAurDAUTHINFODao.countByExample(myCriteria);
+		System.out.println(count);
+		if (count >= 1) {
+			return false; // 该账户已经注册了
+
+		} else {
+			return true;// 没有注册过
+		}
+	}
 	
 }

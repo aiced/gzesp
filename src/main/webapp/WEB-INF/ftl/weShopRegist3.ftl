@@ -151,41 +151,59 @@
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
-		<ol class="breadcrumb">
-			<label style="color:green;">1.输入手机号</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label style="color:green;">2.身份信息填写</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label style="color:green;">3.设置密码</label>
-		</ol>
 		
-	    <div class="container-fluid">
-	        <form action="reg_step3_postdata" method="post">
-    	      
-	            <!--输入密码-->
-	            <div class="form-group" id="div_password">
-	                <label for="txtpassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="请设置登录密码(至少6位)">
-	            </div>
-	            <!--再次输入验证码-->
-	           	<div class="form-group" id="div_repassword">
-	                <label for="txtrepassword" class="sr-only">Password</label>
-	                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
-	            </div>
-	            <br/>
-	            <input type="hidden" value='${openId}' id="hide_openid" name="hide_openid">
-	            <button class="btn-warning btn-block btn" type="submit" id="btnStep3" name="btnStep3">提交</button>
-	            
-	            <input type="hidden" name="selArea" value="${area}" />
-	        	<input type="hidden" name="txtphonenum" value="${phonenum}" />
-				<input type="hidden" name="txtopenid" value="${openid}" />
+		<#if (ispostback==1)>
+			<div style="margin-top:40px;text-align: center;font-weight: bold;padding:20px;">
+				您已经注册成功，请不要重复注册！
+				</br>
+				</br>
+				</br>
+				<div class="list-group">
+					<!--
+					 weShop/index/2015052209532948 
+					${base}/shopManage/weShopHome?userid=${userid}
+					-->
+	            	<a href="${base}/weShop/index/${userid}"><button class="btn btn-warning btn-block" type="button" id="btnGoIntoShop" name="btnGoIntoShop">进入店铺</button></a>
+	        	</div>
+			</div>
 				
-				
-	        	
-	            <input type="hidden" name="wecharaccount" value="${wecharaccount}" />
-	        	<input type="hidden" name="name" value="${name}" />
-	        	<input type="hidden" name="sex" value="${sex}" />
-	            <input type="hidden" name="personalId" value="${personalId}" />
-
-	            <br/>
-	        </form>
-	    </div>
+		<#else>
+			<ol class="breadcrumb">
+				<label style="color:green;">1.输入手机号</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label style="color:green;">2.身份信息填写</label>&nbsp;&nbsp;>&nbsp;&nbsp;<label style="color:green;">3.设置密码</label>
+			</ol>
+			
+		    <div class="container-fluid">
+		        <form action="reg_step3_postdata" method="post">
+	    	      
+		            <!--输入密码-->
+		            <div class="form-group" id="div_password">
+		                <label for="txtpassword" class="sr-only">Password</label>
+		                <input type="password" class="form-control" id="txtpassword" name="txtpassword" placeholder="请设置登录密码(至少6位)">
+		            </div>
+		            <!--再次输入验证码-->
+		           	<div class="form-group" id="div_repassword">
+		                <label for="txtrepassword" class="sr-only">Password</label>
+		                <input type="password" class="form-control" id="txtrepassword" name="txtrepassword" placeholder="请再次设置登录密码(至少6位)">
+		            </div>
+		            <br/>
+		            <input type="hidden" value='${openId}' id="hide_openid" name="hide_openid">
+		            <button class="btn-warning btn-block btn" type="submit" id="btnStep3" name="btnStep3">提交</button>
+		            
+		            <input type="hidden" name="selArea" value="${area}" />
+		        	<input type="hidden" name="txtphonenum" value="${phonenum}" />
+					<input type="hidden" name="txtopenid" value="${openid}" />
+					
+					
+		        	
+		            <input type="hidden" name="wecharaccount" value="${wecharaccount}" />
+		        	<input type="hidden" name="name" value="${name}" />
+		        	<input type="hidden" name="sex" value="${sex}" />
+		            <input type="hidden" name="personalId" value="${personalId}" />
+		            <br/>
+		        </form>
+		    </div>
+		</#if>
+		
 	</div>
 </body>
 </html>

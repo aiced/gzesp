@@ -33,7 +33,7 @@
 
 
 <p>
-    <img style="width: 100%; height: auto !important;" src="http://mmbiz.qpic.cn/mmbiz/icsOibyiaScKichtH5FB3ts3skaghFOyhPRZP6v4V3STNKcwgTuh838PbQg5Lgw0QRud69vbV12nNGGVTLrOH7kbwg/0"/>
+	<img src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lyujmuXqbhZJpgic8ST6d76qDmq8xtLgv6vA4h5ZcibcTxoPBChBonvn7cicCMtsxbiaq1pJAlp9d4VFA/0?wx_fmt=jpeg" _src="https://mmbiz.qlogo.cn/mmbiz/Ve1ibTr1M7lyujmuXqbhZJpgic8ST6d76qDmq8xtLgv6vA4h5ZcibcTxoPBChBonvn7cicCMtsxbiaq1pJAlp9d4VFA/0?wx_fmt=jpeg" data-s="300,640" data-type="jpeg"/>
 </p>
 
 		<#list salelist as info>			

@@ -96,6 +96,7 @@
 				<entry key="resRoot" value="${resRoot}" />
 				<entry key="resVer" value="${resVer}" />
 				<entry key="imageRoot" value="${imageRoot}" />
+				<entry key="espRoot" value="${espRoot}" />
 			</map>
         </property>
     </bean>

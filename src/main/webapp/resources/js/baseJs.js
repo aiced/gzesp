@@ -280,7 +280,8 @@ function SetRemainTime() {
 }  
 
 //发送验证码
-function sendMessage(strPhone,btnName,flag) {  
+function sendMessage(strPhone,btnName,flag) { 
+	code="";
     curCount = count;  
     var phone=strPhone;//手机号码  
     m_btnName=btnName;

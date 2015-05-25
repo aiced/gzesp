@@ -24,7 +24,7 @@
                 <!--输入发票抬头-->
                 <div class="form-group">
                     <label for="invoiceTitle" class="sr-only"></label>
-                    <input type="text" class="form-control" id="invoiceTitle" name="invoiceTitle" placeholder="请输入发票抬头">
+                    <input type="text" class="form-control" id="invoiceTitle" name="invoiceTitle" readonly placeholder="请输入发票抬头" value="发票抬头:默认为您的姓名">
                 </div>
                 <!--输入代金券-->
                 <!-- <div class="form-group">

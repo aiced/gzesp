@@ -126,6 +126,11 @@ public class WXMsgController {
     			 return mav;
     		 }
     		 
+    		 if("custPay".equals(state)) {
+    			 mav=new ModelAndView("redirect:/weShop/wxPay?openId="+openId);
+    			 return mav;
+    		 }
+    		 
     		 // 根据openId获取userId
     		 String userId = service.getUserIdByOpenId(openId);
 //    		 String userId = "2015000000000000";
@@ -147,6 +152,23 @@ public class WXMsgController {
     	 }
     	 return mav;
     }
+    
+    @RequestMapping("/test")
+    public ModelAndView test(){
+        return new ModelAndView("test.ftl");
+    }
+    
+    @RequestMapping("/test1")
+    public ModelAndView test1(){
+    	// 授权回调页限制
+//    	String  redirect_uri = "http://192.168.43.179:8080/esp/wx/auth";
+    	String  redirect_uri = "http://wap.woboss.gz186.com/esp/wx/auth";
+    	String state = "custPay";
+    	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
+//    	String url = "http://baidu.com";
+        return new ModelAndView("redirect:"+url);
+    }
+    
     
     @RequestMapping("/createMenu")
     public ModelAndView createMenu(){

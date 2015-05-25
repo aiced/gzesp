@@ -213,6 +213,8 @@ public class CommonController {
     	//新版
     	//String strMobile,String strTempid,String strContent
     	
+    	System.out.println("短信验证码："+strcode);
+    	
     	String strRet="";
     	if (strFlag.equals("0"))//注册模板
     	{

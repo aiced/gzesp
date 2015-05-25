@@ -40,7 +40,8 @@ public class RespPayHandler implements IDealUnionPayResp {
         
         //先根据返回报文里的order_id 获取到订单当时是否有选择号码
         Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(respMap.get(UnionPayAttrs.orderId));
-        if(MapUtils.isNotEmpty(numberRow)){
+        //如果有号码而且返回响应是成功的则删掉号码预占表信息
+        if(MapUtils.isNotEmpty(numberRow) && UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
         	//号码预占表删掉号码记录
         	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
         	int r3 = selectNumberService.deleteNumberReserve(numbers);

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <title>test</title>
-
+ 	<script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script>
 	  /*
@@ -36,6 +36,8 @@
 	  wx.ready(function () {
 	    // 在这里调用 API
 		  console.log("success---");
+		  console.log(location.href.split('#')[0]);
+		  console.log('${url}');
 		  var images = {
 		  		    localId: [],
 		  		    serverId: []
@@ -44,21 +46,13 @@
   		    wx.chooseImage({
   		      success: function (res) {
   		        images.localId = res.localIds;
-  		        alert('123');
+  		      	console.log(res.localIds);
+  		       // alert(res.localIds);
+	 	    	 $('#firstCard').attr('title', f.name).attr("src", res.localIds[0]);
   		      }
   		    });
   		  };
 
-  		  document.querySelector('#previewImage').onclick = function () {
-  		    wx.previewImage({
-  		      current: 'http://img5.douban.com/view/photo/photo/public/p1353993776.jpg',
-  		      urls: [
-  		        'http://img3.douban.com/view/photo/photo/public/p2152117150.jpg',
-  		        'http://img5.douban.com/view/photo/photo/public/p1353993776.jpg',
-  		        'http://img3.douban.com/view/photo/photo/public/p2152134700.jpg'
-  		      ]
-  		    });
-  		  };
 
   		  document.querySelector('#uploadImage').onclick = function () {
   		    if (images.localId.length == 0) {
@@ -101,13 +95,15 @@
     
          
     <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
-    	<h3 id="menu-image">图像接口</h3>
+  
       <span class="desc">拍照或从手机相册中选图接口</span>
       <button class="btn btn_primary" id="chooseImage">chooseImage</button>
-      <span class="desc">预览图片接口</span>
-      <button class="btn btn_primary" id="previewImage">previewImage</button>
+
       <span class="desc">上传图片接口</span>
       <button class="btn btn_primary" id="uploadImage">uploadImage</button>
+      
+      <img id ="firstCard" src="${resRoot}/image/order/card01.png" style="display:block;width:175px;height:110px;margin:0px auto;">
+      <img id ="ss" src="weixin://resourceid/64a9aad7be62565da5f9e3f55b37852e" style="display:block;width:175px;height:110px;margin:0px auto;">
       <div>
   </body>
 </html>

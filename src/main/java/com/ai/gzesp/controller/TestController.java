@@ -59,7 +59,7 @@ public class TestController {
     	int _total_fee = Integer.parseInt(param.get("fee"))/10;
     	String realIp = req.getHeader("X-Real-IP");
     	String _spbill_create_ip = "".equals(realIp) ? req.getRemoteAddr() : realIp;
-    	String _notify_url = req.getServerPort()+"/"+req.getContextPath()+"/pay/wxPay/callback";
+    	String _notify_url = "http://"+req.getServerName()+"/"+req.getContextPath()+"/pay/wxPay/callback";
     	String _trade_type = "JSAPI";
     	// TODO
     	String _openid = "okhDVstuDQcv9hXYCTwZ2hR6e34s";
@@ -80,7 +80,10 @@ public class TestController {
     public ModelAndView wxjs(@RequestBody String responseString, HttpServletRequest req)	{
     	ModelAndView mav = new ModelAndView("testWXJs.ftl");
     	
-		String url = req.getRequestURL().toString();
+//		String url = req.getRequestURL().toString();
+    	int port = req.getServerPort();
+    	String portStr = (80==port || 443 == port) ? "" : ":"+port;
+		String url =  req.getScheme() + "://" + req.getServerName() + portStr + req.getRequestURI();
 		Map<String, String> signInfo = SignUtils.jsApiSign(DataConstants.jsApiTicket, url);
 		signInfo.put("appId",  DataConstants.appid);  
 		

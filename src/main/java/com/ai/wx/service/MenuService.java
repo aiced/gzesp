@@ -28,45 +28,6 @@ public class MenuService {
     
     private static Logger log = LoggerFactory.getLogger(MenuService.class);
     
-    /**
-     * 获取全局返回码
-     *
-     * @param appid        微信appid
-     * @param appsecret    微信appsecret
-     * @return
-     * @throws Exception
-     */
-    public String getAccessToken(String appid, String appsecret) {
-        log.debug("获取 accessToken");
-        
-        String accessToken = null;
-        
-        if (StringUtils.isEmpty(appid) || StringUtils.isEmpty(appsecret)) {
-            log.error("appid 或者 appsecret 为空");
-            return accessToken; //返回null
-        }
-        
-        // 拼装 获取 access_token的 https的url
-        StringBuilder url = new StringBuilder();
-        url.append("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=");
-        url.append(appid);
-        url.append("&secret=");
-        url.append(appsecret);
-        //获取返回的 json，并转换成bean
-        String respJson = HttpClientUtil.sendGetSSLRequest(url.toString(), null);
-        if(StringUtils.isNotBlank(respJson)){
-            log.debug("获取 accessToken 返回json：" + respJson);
-            AccessTokenModel accessTokenModel = JsonUtils.parseJson(respJson, AccessTokenModel.class);
-            if (StringUtils.isNotBlank(accessTokenModel.getAccess_token())) {
-                accessToken = accessTokenModel.getAccess_token();
-            } 
-        }
-        else {
-            log.error("获取 accessToken 为空");
-        }
-
-        return accessToken;
-    }
     
     /**
      * 发送菜单json，https接口post方式创建菜单 <br>

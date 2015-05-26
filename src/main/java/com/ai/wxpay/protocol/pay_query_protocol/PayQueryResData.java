@@ -5,7 +5,7 @@ package com.ai.wxpay.protocol.pay_query_protocol;
  * Date: 2014/10/25
  * Time: 13:54
  */
-public class ScanPayQueryResData {
+public class PayQueryResData {
 
     //协议层
     private String return_code = "";
@@ -42,12 +42,14 @@ public class ScanPayQueryResData {
     private String trade_type = "";
     private String bank_type = "";
     private String total_fee = "";
+    private String cash_fee  = "";
     private String coupon_fee = "";
     private String fee_type = "";
     private String transaction_id = "";
     private String out_trade_no = "";
     private String attach = "";
     private String time_end = "";
+    private String trade_state_desc = "";
 
     public String getReturn_code() {
         return return_code;
@@ -233,4 +235,20 @@ public class ScanPayQueryResData {
         this.time_end = time_end;
     }
 
+	public String getCash_fee() {
+		return cash_fee;
+	}
+
+	public void setCash_fee(String cash_fee) {
+		this.cash_fee = cash_fee;
+	}
+
+	public String getTrade_state_desc() {
+		return trade_state_desc;
+	}
+
+	public void setTrade_state_desc(String trade_state_desc) {
+		this.trade_state_desc = trade_state_desc;
+	}
+    
 }

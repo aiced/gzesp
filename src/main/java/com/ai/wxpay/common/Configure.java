@@ -1,5 +1,7 @@
 package com.ai.wxpay.common;
 
+import com.ai.wx.consts.DataConstants;
+
 /**
  * User: rizenguo
  * Date: 2014/10/29
@@ -14,7 +16,7 @@ public class Configure {
 	private static String key = "";
 
 	//微信分配的公众号ID（开通公众号之后可以获取到）
-	private static String appID = "wx52db41a405183edb";
+	private static String appID = DataConstants.appid;
 
 	//微信支付分配的商户号ID（开通公众号的微信支付功能之后可以获取到）
 	private static String mchID = "";

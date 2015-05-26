@@ -12,6 +12,7 @@ public class DataConstants {
     public static final int TWENTY_SIX = 26;  
     
     public static String accessToken = "";
+    public static String jsApiTicket = "";
     public static final String appid = "wx52db41a405183edb";
     public static final String appsecret = "8e0b2f05f9962c539c034f5d4ba18f56";
 }

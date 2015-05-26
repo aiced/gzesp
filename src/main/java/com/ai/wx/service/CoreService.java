@@ -7,20 +7,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.wx.consts.MessageType;
+import com.ai.wx.entity.AccessTokenModel;
+import com.ai.wx.entity.JsApiTicketModel;
 import com.ai.wx.entity.request.RequestClickMessage;
 import com.ai.wx.entity.request.RequestEventMessage;
-import com.ai.wx.entity.request.RequestTextMessage;
 import com.ai.wx.entity.request.RequestTicketMessage;
 import com.ai.wx.entity.request.RequestVoiceMessage;
 import com.ai.wx.entity.response.Article;
 import com.ai.wx.entity.response.ResponseNewsMessage;
 import com.ai.wx.entity.response.ResponseTextMessage;
+import com.ai.wx.util.HttpClientUtil;
+import com.ai.wx.util.JsonUtils;
 import com.ai.wx.util.MessageUtil;
 import com.ai.wx.util.RegexUtils;
 import com.ai.wx.util.XmlUtils;
@@ -399,4 +403,81 @@ public class CoreService {
     }
     
 
+    /**
+     * 获取全局返回码
+     *
+     * @param appid        微信appid
+     * @param appsecret    微信appsecret
+     * @return
+     * @throws Exception
+     */
+    public String getAccessToken(String appid, String appsecret) {
+        log.debug("获取 accessToken");
+        
+        String accessToken = null;
+        
+        if (StringUtils.isEmpty(appid) || StringUtils.isEmpty(appsecret)) {
+            log.error("appid 或者 appsecret 为空");
+            return accessToken; //返回null
+        }
+        
+        // 拼装 获取 access_token的 https的url
+        StringBuilder url = new StringBuilder();
+        url.append("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=");
+        url.append(appid);
+        url.append("&secret=");
+        url.append(appsecret);
+        //获取返回的 json，并转换成bean
+        String respJson = HttpClientUtil.sendGetSSLRequest(url.toString(), null);
+        if(StringUtils.isNotBlank(respJson)){
+            log.debug("获取 accessToken 返回json：" + respJson);
+            AccessTokenModel accessTokenModel = JsonUtils.parseJson(respJson, AccessTokenModel.class);
+            if (StringUtils.isNotBlank(accessTokenModel.getAccess_token())) {
+                accessToken = accessTokenModel.getAccess_token();
+            } 
+        }
+        else {
+            log.error("获取 accessToken 为空");
+        }
+
+        return accessToken;
+    }
+    
+    /**
+     * 获取全局返回码
+     *
+     * @param appid        微信appid
+     * @param appsecret    微信appsecret
+     * @return
+     * @throws Exception
+     */
+    public String getJsApiTicket(String accessToken) {
+    	log.debug("获取 getJsApiTicket");
+    	
+    	String jsApiTicket = null;
+    	if (StringUtils.isEmpty(accessToken)) {
+    		log.error("accessToken 为空");
+    		return jsApiTicket; //返回null
+    	}
+    	
+    	// 拼装 获取 jsApiTicket的 https的url
+    	StringBuilder url = new StringBuilder();
+    	url.append("https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=");
+    	url.append(accessToken);
+    	url.append("&type=jsapi");
+    	//获取返回的 json，并转换成bean
+    	String respJson = HttpClientUtil.sendGetSSLRequest(url.toString(), null);
+    	if(StringUtils.isNotBlank(respJson)){
+    		log.debug("获取 getJsApiTicket 返回json：" + respJson);
+    		JsApiTicketModel ticketModel = JsonUtils.parseJson(respJson, JsApiTicketModel.class);
+    		if (StringUtils.isNotBlank(ticketModel.getTicket())) {
+    			jsApiTicket = ticketModel.getTicket();
+    		} 
+    	}
+    	else {
+    		log.error("获取 getJsApiTicket 为空");
+    	}
+    	
+    	return jsApiTicket;
+    }
 }

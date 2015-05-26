@@ -144,11 +144,15 @@ public class MD5Util {
   
     // 测试主函数  
     public static void main(String args[]) {  
-        String s = new String("<requestData><charCode></charCode></requestData>");  
+/*        String s = new String("<requestData><charCode></charCode></requestData>");  
         System.out.println("原始：" + s);  
         System.out.println("MD5后：" + str2MD5(s));  
         System.out.println("加密的：" + convertMD5(s));  
-        System.out.println("解密的：" + convertMD5(convertMD5(s)));  
-  
+        System.out.println("解密的：" + convertMD5(convertMD5(s)));  */
+    	
+    	String s = "123456";
+    	System.out.println("原始：" + s); 
+    	System.out.println(md5s2(s) + "  MD5后没有秘钥：" );
+    	System.out.println(md5s2(s, UnionPayCons.md5Key) + "  MD5后有秘钥：");
     }  
 }

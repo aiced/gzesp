@@ -11,10 +11,14 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.sql.GoodsSql;
+import com.ai.gzesp.service.UserService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
 import com.ai.sysframe.utils.XmlUtil;
@@ -60,6 +65,9 @@ public class WXMsgController {
  	
  	@Resource 
  	CustomService customService;
+	
+	@Autowired
+	private UserService userService;
 	
     @RequestMapping(value="/access",method = RequestMethod.GET)
     public void access(@RequestParam(value = "signature", required = true)String signature,
@@ -132,14 +140,21 @@ public class WXMsgController {
     		 }
     		 
     		 // 根据openId获取userId
-    		 String userId = service.getUserIdByOpenId(openId);
+    		 //String userId = service.getUserIdByOpenId(openId);
 //    		 String userId = "2015000000000000";
+    		 Map<Object, Object> userMap = userService.getUserInfoByOpenId(openId);  //20150526 ximh modify
+    		 
     		 //用户已注册，免登录，根据state值跳页面
-    		 if( userId != null) {
+    		 if( userMap != null) {
     			 if("weShopIndex".equals(state)) {
-        			 mav=new ModelAndView("redirect:/weShop/index/"+userId);    
+        			 mav=new ModelAndView("redirect:/weShop/index/"+ userMap.get("USER_ID"));    
         		 } else if("weShopHome".equals(state)) {
-        			 mav=new ModelAndView("redirect:/shopManage/weShopHome?userid="+userId);    
+        			//调用shiro校验身份，EspRealm.doGetAuthenticationInfo(AuthenticationToken token)
+     				UsernamePasswordToken token = new UsernamePasswordToken((String)userMap.get("PHONE_NUMBER"), (String)userMap.get("USER_PASSWORD"));
+     				Subject subject = SecurityUtils.getSubject();
+     				subject.login(token);
+     				
+        			 mav=new ModelAndView("redirect:/shopManage/weShopHome?userid="+ userMap.get("USER_ID"));    
         		 } else if("register".equals(state)) {
         			 mav=new ModelAndView("redirect:/auth/register/step1?openId="+openId);    
         		 } else if("queryInfo".equals(state)) {

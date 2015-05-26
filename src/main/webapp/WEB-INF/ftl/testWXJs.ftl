@@ -36,6 +36,8 @@
 	  wx.ready(function () {
 	    // 在这里调用 API
 		  console.log("success---");
+		  console.log(location.href.split('#')[0]);
+		  console.log('${url}');
 		  var images = {
 		  		    localId: [],
 		  		    serverId: []

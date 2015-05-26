@@ -39,7 +39,7 @@
 	</div> 
   
     <!-- head bar -->
-    <div style="background-color:#f1791a;padding:5px;height:45px;line-height: 35px;">
+    <div style="background-color:#f1791a;padding:7px;height:50px;line-height: 35px;">
        <div style="float: left;">
          <img src="${resRoot}/image/weShop/logo.png" class="img-responsive" alt="" style="width:80px;height: 30px;"/>
        </div>
@@ -135,7 +135,7 @@
           </ul>  
     	</div>
     	
-    	<div class="col-xs-3" style="padding:0px" id="qrcodeDiv" onclick="doqrcodeClick();">
+    	<div class="col-xs-3" style="padding:10px" id="qrcodeDiv" onclick="doqrcodeClick();">
     	</div>
     	   		    		
       </div>	            

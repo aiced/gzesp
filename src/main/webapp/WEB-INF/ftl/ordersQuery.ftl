@@ -398,7 +398,7 @@
             <div class="order_top_left"><h5><label>订单号</label></h5></div>
             
             <div class="order_top_middle">
-				<input type="text" name="txtorderid" id="txtorderid" value=""/>
+				<input type="text" class="kbtn" name="txtorderid" id="txtorderid" value=""/>
             </div>
             
             <!-- <div class="order_top_right"> -->
@@ -421,7 +421,7 @@
         <div id="order_middle_info" >
         	<#if (orderList?size==0)>
 	        	<div class="order_middle">
-	        		<h5>您还没有订单</h5>
+	        		<h5 style="">您还没有订单</h5>
 	        	</div>
         	<#else>
 				<#list orderList as item>

@@ -177,6 +177,15 @@
         .shopname
         {
             font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .shoptel
+        {
+            margin-bottom: 5px;
+        }
+        .shopweixin
+        {
+            margin-bottom: 5px;
         }
 
     </style>
@@ -186,7 +195,8 @@
 	    <div>
 	    	<!--top_start-->
 	        <div id="top">
-	        	<div style="float:left;width:20%;height:40px;font-size:14px;"></div>
+	        <!--	<div style="float:left;width:20%;height:40px;font-size:14px;"></div> -->
+	        	<div id="top_left"></div>
 	        	<div id="top_middle">${title}</div>
 	        	<div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
 	        </div>
@@ -200,8 +210,8 @@
 	                <div class="head_top_info">
 	                    <div class="head_top_info_details">
 	                        <div class="shopname">${storename}</div>
-	                        <div class="shoptel"><img src="${resRoot}/image/shopHome/tel.png" width="21" height="21"/>&nbsp;&nbsp;${phone}</div>
-	                        <div class="shopweixin"><img src="${resRoot}/image/shopHome/weixin.png" width="21" height="21"/>&nbsp;&nbsp;${weixin}</div>
+	                        <div class="shoptel"><img src="${resRoot}/image/shopHome/tel.png" width="15" height="15"/>&nbsp;&nbsp;${phone}</div>
+	                        <div class="shopweixin"><img src="${resRoot}/image/shopHome/weixin.png" width="17" height="15"/>&nbsp;&nbsp;${weixin}</div>
 	                    </div>
 	                </div>
 	            </div>

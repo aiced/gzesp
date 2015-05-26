@@ -10,7 +10,7 @@ import com.ai.wxpay.common.report.service.ReportService;
 import com.ai.wxpay.protocol.pay_protocol.ScanPayReqData;
 import com.ai.wxpay.protocol.pay_protocol.ScanPayResData;
 import com.ai.wxpay.protocol.pay_query_protocol.ScanPayQueryReqData;
-import com.ai.wxpay.protocol.pay_query_protocol.ScanPayQueryResData;
+import com.ai.wxpay.protocol.pay_query_protocol.PayQueryResData;
 import com.ai.wxpay.protocol.reverse_protocol.ReverseReqData;
 import com.ai.wxpay.protocol.reverse_protocol.ReverseResData;
 import com.ai.wxpay.service.ReverseService;
@@ -262,7 +262,7 @@ public class ScanPayBusiness {
         log.i(payQueryServiceResponseString);
 
         //将从API返回的XML数据映射到Java对象
-        ScanPayQueryResData scanPayQueryResData = (ScanPayQueryResData) Util.getObjectFromXML(payQueryServiceResponseString, ScanPayQueryResData.class);
+        PayQueryResData scanPayQueryResData = (PayQueryResData) Util.getObjectFromXML(payQueryServiceResponseString, PayQueryResData.class);
         if (scanPayQueryResData == null || scanPayQueryResData.getReturn_code() == null) {
             log.i("支付订单查询请求逻辑错误，请仔细检测传过去的每一个参数是否合法");
             return false;

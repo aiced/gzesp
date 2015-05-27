@@ -259,6 +259,18 @@
         <result column="ctlg_code" property="CTLG_CODE"/>  
         <result column="goods_name" property="GOODS_NAME"/>
         <result column="content" property="CONTENT" typeHandler="com.ai.sysframe.mybatis.typehandler.BlobTypeHandler"/> 
+        <result column="album_id" property="ALBUM_ID"/>
+        <result column="ver_no" property="VER_NO"/>
+        <result column="merchant_id" property="MERCHANT_ID"/>
+        <result column="create_time" property="CREATE_TIME"/>
+        <result column="create_staff_id" property="CREATE_STAFF_ID"/>
+        <result column="goods_state" property="GOODS_STATE"/>
+        <result column="recom_tag" property="RECOM_TAG"/>
+        <result column="price_rule" property="PRICE_RULE"/>
+        <result column="begin_time" property="BEGIN_TIME"/>
+        <result column="end_time" property="END_TIME"/>
+        <result column="simp_desc" property="SIMP_DESC"/>
+        <result column="original_price" property="ORIGINAL_PRICE"/>
         <result column="goods_price" property="GOODS_PRICE"/>   
         <result column="aty_title" property="ATY_TITLE"/>  
     </resultMap>  				
@@ -269,6 +281,18 @@
                 b.ctlg_code ctlg_code, 
                 b.goods_name goods_name, 
                 b.content  content,
+                b.album_id album_id,
+                b.ver_no ver_no,
+                b.merchant_id merchant_id,
+                b.create_time create_time,
+                b.create_staff_id create_staff_id,
+                b.goods_state goods_state,
+                b.recom_tag recom_tag,
+                b.price_rule price_rule,
+                b.begin_time begin_time,
+                b.end_time end_time,
+                b.simp_desc simp_desc,
+                c.original_price/1000 original_price,
                 c.add_price/1000 goods_price,
                 nvl(e.aty_title,'') aty_title  
            from GDS_D_INFO b,

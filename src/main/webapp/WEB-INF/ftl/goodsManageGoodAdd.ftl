@@ -84,8 +84,10 @@ table{
 	        </div>
     <!--搜索  -->
     <div style="background-color:white;width:100%;overflow:hidden;margin-top:0px;">
-  			 <input id = "searchInput" type="text" placeholder="请输入商品关键字" style ="width:60%;height:30px;margin-top:10px;float:left;margin-bottom:10px;margin-left:20px;padding-left:15px;border:1px solid #A6A6A6;font-size:14px">
- 			 <a style="width:60px;height:30px;display:block;text-align:center;float:left;line-height:30px;margin-top:10px;margin-bottom:10px;margin-left:20px;border:1px solid #A6A6A6;font-size:12px;" onclick="searchWord(this); return false;">搜索</a>
+         		<div style="width:80%;height:50px;margin:auto;">
+   					 <input id = "searchInput" type="text" placeholder="请输入商品关键字" style ="width:75%;height:30px;margin-top:10px;float:left;margin-bottom:10px;margin-left:0px;padding-left:15px;border:1px solid #A6A6A6;font-size:14px">
+ 					 <a style="width:60px;height:30px;display:block;text-align:center;float:right;line-height:30px;margin-top:10px;margin-bottom:10px;margin-right:0px;border:1px solid #A6A6A6;font-size:12px;" onclick="searchWord(this); return false;">搜索</a>
+    			</div>
 	</div >
     <!--选择  -->
 	<div style="background-color:white;width:100%;height:32px;margin-bottom:0px;position:relative;">
@@ -121,7 +123,7 @@ table{
 						
 						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:left;display:block;text-align:center;margin:auto;margin-top:20px;margin-left:30px;border:1px solid #7E7D7D;font-size:11px;" onclick="setTagCondition(5,10); return false;">套餐</a>	
 						
-						<a style="background-color:#D0D0D0;color:#808080;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-top:20px;margin-right:5px;border:1px solid #7E7D7D;font-size:11px;" onclick="reset(this); return false;">重置</a>	
+						<a style="color:#7E7D7D;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-top:20px;margin-right:5px;border:1px solid #7E7D7D;font-size:11px;" onclick="reset(this); return false;">重置</a>	
 												
 <!-- 						<div style="float:left;margin-top:20px;width:100%;float:left;height:20px;margin-left:0px"> -->
 <!-- 						<a style="background-color:#4171BC;color:white;width:60px;height:20px ;line-height:20px; float:right;display: block;text-align:center;margin-right:5px;font-size:11px " onclick="searchPrice(this); return false;">确定</a>	 -->

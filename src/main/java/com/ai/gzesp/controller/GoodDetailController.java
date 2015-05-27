@@ -106,7 +106,7 @@ public class GoodDetailController {
         List<Map<Object, Object>> banners = weShopService.getGoodPhotos(goods_id);
         mav.addObject("banners", banners);
         
-        //查询商品的 名称 价格 自定义活动
+        //查询商品的 名称 价格 自定义活动 等所有字段属性
         GoodsDetailResult goodDetail = weShopService.getGoodDetail(goods_id, user_id);
         mav.addObject("detail", goodDetail);
         

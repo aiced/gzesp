@@ -377,8 +377,9 @@
             <div class="order_top_middle">
                 <div class="order_top_middle1">
                     <!--<input type="text" id="txtdatefrom" class="form-control">-->
-                    <input  id="beginTime" class="kbtn" name="beginTime" value=""/>
+                    <input  id="beginTime" class="kbtn" name="beginTime" value=""/>                    
                 </div>
+                
                 <div class="order_top_middle2">
                     —
                 </div>
@@ -398,7 +399,7 @@
             <div class="order_top_left"><h5><label>订单号</label></h5></div>
             
             <div class="order_top_middle">
-				<input type="text" class="kbtn" name="txtorderid" id="txtorderid" value=""/>
+				<input type="text" class="kbtn" name="txtorderid" style = "border:1px solid #B7B7B7;" id="txtorderid" value=""/>
             </div>
             
             <!-- <div class="order_top_right"> -->
@@ -421,7 +422,7 @@
         <div id="order_middle_info" >
         	<#if (orderList?size==0)>
 	        	<div class="order_middle">
-	        		<h5 style="">您还没有订单</h5>
+	        		<h5 style="text-align:center;height:140px;line-height:140px;">您还没有订单</h5>
 	        	</div>
         	<#else>
 				<#list orderList as item>

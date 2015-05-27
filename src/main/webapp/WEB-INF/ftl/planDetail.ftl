@@ -284,7 +284,8 @@
     </div>
 
     <div class="btns-box userType">
-        <a id="new-user" class="org-btn w-full fl" onclick="planGotoOrderMain()">立即购买</a>
+        <!-- <a id="new-user" class="org-btn w-full fl" onclick="planGotoOrderMain()">立即购买</a> -->
+        <button id="new-user" class="btn btn-warning btn-block" type="button"  onclick="planGotoOrderMain()"> 立即购买</button>
     </div>
   </div>    
   <!-- 第一页 商品详情主页end -->

@@ -9,6 +9,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -16,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.MvcNamespaceHandler;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
+import com.ai.gzesp.service.UserService;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.gzesp.utils.MD5Util;
 import com.ai.sysframe.utils.StringUtil;
@@ -36,6 +41,9 @@ public class WeShopLoginController {
     @Autowired
     private WeShopService weShopService;
     
+	@Autowired
+	private UserService userService;
+    
     private String ret="";//记录返回的结果
     
     @RequestMapping("/login")
@@ -47,7 +55,9 @@ public class WeShopLoginController {
         ret="";
         return mav;
     }
-    @RequestMapping("/checklogin")
+    
+    
+/*    @RequestMapping("/checklogin")
     @ResponseBody
     public ModelAndView CheckLogin(@RequestBody String inputParams){
     	System.out.println(inputParams);
@@ -82,6 +92,59 @@ public class WeShopLoginController {
     		mav = new ModelAndView("redirect:/auth/login");
     	}
         return mav;
-    }
+    }*/
     
+    
+    /**
+     * 新的登陆入口，用shiro框架验证
+     * @param inputParams
+     * @return
+     */
+    @RequestMapping("/checklogin")
+    @ResponseBody
+    public ModelAndView checkLogin(@RequestBody String inputParams){
+    	//获取入参里的手机号和密码，并将密码md5加密来和数据库比较
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+    	String strPhoneNum = paramsMap.get("inputMobile");
+    	String strPwd = MD5Util.md5s2(paramsMap.get("inputPassword")); //md5加密
+
+        ModelAndView mav = null;
+        ModelMap mmap=null;
+        
+        
+		try {
+			//手机号密码校验放这边了，其实应该放 EspRealm里面
+			Map<Object, Object> userMap = userService.getUserInfoByPhonePassword(strPhoneNum, strPwd);
+			//如果查到记录表示手机号密码正确，shiro里直接验证通过
+			if(userMap != null){
+				//调用shiro校验身份，EspRealm.doGetAuthenticationInfo(AuthenticationToken token)
+				UsernamePasswordToken token = new UsernamePasswordToken(strPhoneNum, strPwd);
+				Subject subject = SecurityUtils.getSubject();
+				subject.login(token);
+				
+				//如果验证成功
+				if (subject.isAuthenticated()) {
+					//mav = new ModelAndView("weShopHome.ftl");
+					mmap=new ModelMap();
+	    		    mmap.addAttribute("userid", userMap.get("USER_ID"));
+					mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
+				}
+				else{
+					ret="账号或密码不存在";
+					mav = new ModelAndView("redirect:/auth/login");
+				}
+			}
+			else{
+				ret="账号或密码不存在";
+				mav = new ModelAndView("redirect:/auth/login");
+			}
+	        
+		} catch (AuthenticationException e) {
+			ret="账号或密码不存在";
+    		mav = new ModelAndView("redirect:/auth/login");
+		}
+
+    	
+        return mav;
+    }
 }

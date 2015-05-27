@@ -38,8 +38,11 @@ public class RespPayHandler implements IDealUnionPayResp {
         //更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
         int r2 = unionPayService.updatePayStateAndIncomeMoney(respMap);
         
+        //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
+    	String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
         //先根据返回报文里的order_id 获取到订单当时是否有选择号码
-        Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(respMap.get(UnionPayAttrs.orderId));
+        //Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(respMap.get(UnionPayAttrs.orderId));
+    	Map<Object, Object> numberRow = selectNumberService.getNumberByOrderId(realOrderId);
         //如果有号码而且返回响应是成功的则删掉号码预占表信息
         if(MapUtils.isNotEmpty(numberRow) && UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
         	//号码预占表删掉号码记录

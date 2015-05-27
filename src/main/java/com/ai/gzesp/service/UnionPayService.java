@@ -432,7 +432,10 @@ public class UnionPayService {
         if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
         	String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
         	int income_money = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt))*10; //银联是分，表里是厘
-        	r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
+        	//20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
+        	String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
+        	//r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
+        	r2 = unionPayDao.updatePayStateAndIncomeMoney(realOrderId, order_state, income_money);
         }
         return r2;
     }

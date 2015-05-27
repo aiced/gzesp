@@ -124,6 +124,10 @@ public class UnionPayUtil {
      */
     public static Map<String, String> genPayNewReq(UnionPayParam param){
         log.debug("【银联支付：创建payNew请求原始数据map】");
+        
+        //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后一位
+        String v_order_id = orderId2newOrderId(param.getOrder_id(), param.getPay_sys_trade_no());
+       
         //原始请求报文map
         Map<String, String> xmlMap = new LinkedHashMap<String, String>();
         xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
@@ -138,7 +142,8 @@ public class UnionPayUtil {
         xmlMap.put(UnionPayAttrs.timeStamp, param.getPay_time_stamp()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
         xmlMap.put(UnionPayAttrs.sysTradeNo, param.getPay_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
         xmlMap.put(UnionPayAttrs.accNo, param.getBank_card_no());  //银行卡号
-        xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn() == null ? "" : param.getBank_card_cvn()); //储蓄卡没有cvn，null在后面getbyte方法会报错
+        //xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn() == null ? "" : param.getBank_card_cvn()); //储蓄卡没有cvn，null在后面getbyte方法会报错
+        xmlMap.put(UnionPayAttrs.cvn2, ""); //20150522修改,银联商务漏申请了，信用卡cvn2不用传，传了报错
         //xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
         xmlMap.put(UnionPayAttrs.Nbr, param.getPhone_no()); //手机号
         xmlMap.put(UnionPayAttrs.Name, param.getFull_name()); //姓名
@@ -146,7 +151,8 @@ public class UnionPayUtil {
         xmlMap.put(UnionPayAttrs.expireDate, param.getBank_card_expire_date() == null ? "" : param.getBank_card_expire_date()); //储蓄卡没有有效期
         xmlMap.put(UnionPayAttrs.cardType, param.getCard_type()); //卡类型（信用卡:01或借记卡:02）
         //xmlMap.put(UnionPayAttrs.signCode, param.getSign_code()); //签约号
-        xmlMap.put(UnionPayAttrs.orderId, param.getOrder_id()); //支付订单号
+        //xmlMap.put(UnionPayAttrs.orderId, param.getOrder_id()); //支付订单号
+        xmlMap.put(UnionPayAttrs.orderId, v_order_id); //20150522修改
         xmlMap.put(UnionPayAttrs.industryType, UnionPayCons.industryType); //支付行业类型
         xmlMap.put(UnionPayAttrs.txnAmt, String.valueOf(Integer.parseInt(param.getFee())/10)); //订单传过来是厘，传给银联单位是分 需要除以10
         xmlMap.put(UnionPayAttrs.ifInstal, "0"); //是否做分期付款（0表示不分期1表示分期）
@@ -731,4 +737,36 @@ public class UnionPayUtil {
       }
       return sb.toString();
     }
+    
+    /**
+     * 根据真实的orderId，生成假的orderid发给银联，
+     * 因为银联挫，如果第一次支付失败，第二次支付时传相同orderid银联会报错，要求每次不能重复
+     * 发给银联的是真实的orderId+sysTradeNo的最后2位
+     * orderId 和 sysTradeNo 都是16位的
+     * @return 
+     */
+    public static String orderId2newOrderId(String orderId, String sysTradeNo){
+       return String.valueOf(Long.parseLong(orderId) + Long.parseLong(sysTradeNo.substring(14)));
+    }
+    
+    /**
+     * 根据银联返回报文里假的orderId，转换成真实的orderid
+     * 因为银联挫，如果第一次支付失败，第二次支付时传相同orderid银联会报错，要求每次不能重复
+     * 真实的orderId = 假的orderId - sysTradeNo的最后2位
+     * @return 
+     */
+    public static String newOrderId2OrderId(String orderId, String sysTradeNo){
+        String v_order_id = String.valueOf(Long.parseLong(orderId) - Long.parseLong(sysTradeNo.substring(14)));
+       return v_order_id;
+    }
+    
+    public static void main(String[] args) {
+    	String orderId = "1234567890123456";
+    	String sysTradeNo = "6543210987654321";
+    	String newOrderId = orderId2newOrderId(orderId, sysTradeNo);
+		System.out.println(orderId);
+		System.out.println(sysTradeNo);
+		System.out.println(newOrderId);
+		System.out.println(newOrderId2OrderId(newOrderId, sysTradeNo));
+	}
 }

@@ -12,23 +12,41 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd  
        http://www.springframework.org/schema/context  http://www.springframework.org/schema/context/spring-context-3.2.xsd"> 
 		
-			<!-- 扫描指定package下所有带有如@controller,@services,@resource,并把所注释的注册为Spring Beans,其他路径可以加,号分隔 -->
-    <context:property-placeholder ignore-unresolvable="true" location="classpath*:/application.properties" />        
-            
-	<!--  
-	<context:component-scan
-		base-package="com.ai.osapp.aop,com.ai.osapp.dao,com.ai.osapp.service,com.ai.osapp.security,com.ai.osapp.remote,com.ai.sysframe,com.ai.upc" />
-	-->	
-	
+    <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的espRealm.java,这里用注解生成bean -->  
+    <!-- <bean id="espRealm" class="com.ai.gzesp.shiro.EspRealm"/> -->
+
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
         <property name="sessionMode" value="native"/>
         <property name="sessionManager" ref="sessionManager"/>
-        <property name="realm" ref="mappRealm"/>
-        <!-- 
-        <property name="cacheManager" ref="ehCacheManager" />
-         -->
+        <property name="realm" ref="espRealm"/>
+        <!-- <property name="cacheManager" ref="ehCacheManager" /> -->
 	</bean>
+	
+	<!-- 安全认证过滤器 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<!-- 要求登录时的链接(可根据项目的URL进行替换),非必须的属性,默认会自动寻找Web工程根目录下的"/login.jsp"页面 -->  
+		<property name="loginUrl" value="/auth/login" />
+		<!-- 登录成功后要跳转的连接(这里用不到,因为登录成功后的跳转页面在WeShopLoginController里了) -->  
+        <!-- <property name="successUrl" value="/system/main"/> -->  
+        <!-- 用户访问未对其授权的资源时,所显示的连接 -->  
+        <!-- <property name="unauthorizedUrl" value="/auth/login"/>  -->   
+        <!--
+		<property name="filters">
+            <map>
+                <entry key="authm" value-ref="manageAuthenticationFilter"/>
+            </map>
+        </property>
+        -->
+		<property name="filterChainDefinitions">
+			<value>
+			    /auth/login = anon
+				<!-- ${adminPath}/manage/** = authm -->
+				/shopManage/** = authc
+		 	</value>
+		</property>
+	</bean>	
 	
     <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
         <property name="interval" value="300000"/>
@@ -42,36 +60,7 @@
     
     <!--         -->
     <bean id="manageAuthenticationFilter" class="com.ai.osapp.security.ManageAuthenticationFilter"/>
-
        
-	<!-- 安全认证过滤器 -->
-	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/mvc/login" />
-		     <!--         -->
-		 <property name="filters">
-            <map>
-            
-                <entry key="authm" value-ref="manageAuthenticationFilter"/>
-            </map>
-        </property>
-
-		<property name="filterChainDefinitions">
-			<value>
-				${adminPath}/manage = anon
-				${adminPath}/manage/login = anon
-				${adminPath}/manage/** = authm
-				${adminPath}/** = authc
-			<!-- 
-				*${adminPath}/manage/** = anon
-				 ${adminPath}/** = anon
-				 -->
-		 	</value>
-		</property>
-	</bean>
-	
-	 			    
- 
 	<!--
 	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">  
 	    <property name="globalSessionTimeout" value="3600000" /> 
@@ -102,17 +91,17 @@
     	<property name="securityManager" ref="securityManager"/>
 	</bean>
     
-    <bean id="mappRealm" class="com.ai.osapp.security.MappRealm">
+<!--     <bean id="mappRealm" class="com.ai.osapp.security.MappRealm">
     <property name="name" value="mappRealm"/>
         <property name="credentialsMatcher">
-            <!-- The 'bootstrapDataPopulator' Sha256 hashes the password
-                 (using the username as the salt) then base64 encodes it: -->
+            The 'bootstrapDataPopulator' Sha256 hashes the password
+                 (using the username as the salt) then base64 encodes it:
             <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
                 <property name="hashAlgorithmName" value="SHA-256"/>
-                <!-- true means hex encoded, false means base64 encoded -->
+                true means hex encoded, false means base64 encoded
                 <property name="storedCredentialsHexEncoded" value="false"/>
             </bean>
         </property>
-    </bean>
+    </bean> -->
     
 </beans>

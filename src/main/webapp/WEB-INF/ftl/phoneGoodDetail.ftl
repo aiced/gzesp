@@ -40,6 +40,18 @@
     <input id="goods_disc" name="goods_disc" value="IPHONE6，64G，黑色，5.5寸 ，5999，18651885060，贵阳"></input>
     <input id="attr_val" name="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
     <input id="fromPage" name="fromPage" value="phoneGoodDetail"></input>
+    <input id="original_price" name="original_price" value="${detail.ORIGINAL_PRICE}"></input>
+    <input id="album_id" name="album_id" value="${detail.ALBUM_ID}"></input>
+    <input id="ver_no" name="ver_no" value="${detail.VER_NO}"></input>
+    <input id="merchant_id" name="merchant_id" value="${detail.MERCHANT_ID}"></input>
+    <input id="create_time" name="create_time" value="${detail.CREATE_TIME}"></input>
+    <input id="create_staff_id" name="create_staff_id" value="${detail.CREATE_STAFF_ID}"></input>
+    <input id="goods_state" name="goods_state" value="${detail.GOODS_STATE}"></input>
+    <input id="recom_tag" name="recom_tag" value="${detail.RECOM_TAG}"></input>
+    <input id="price_rule" name="price_rule" value="${detail.PRICE_RULE}"></input>
+    <input id="begin_time" name="begin_time" value="${detail.BEGIN_TIME}"></input>
+    <input id="end_time" name="end_time" value="${detail.END_TIME}"></input>
+    <input id="simp_desc" name="simp_desc" value="${detail.SIMP_DESC}"></input>
   </form>
     
   <!-- 第一页 商品详情主页start -->

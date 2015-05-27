@@ -1,53 +1,34 @@
 package com.ai.gzesp.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
-import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.gzesp.dto.UnionPayParam;
-import com.ai.gzesp.service.UnionPayService;
-import com.ai.gzesp.unionpay.TradeType;
-import com.ai.gzesp.unionpay.UnionPayAttrs;
-import com.ai.gzesp.unionpay.UnionPayCons;
-import com.ai.gzesp.unionpay.UnionPayUtil;
-import com.ai.gzesp.utils.DESUtil;
-import com.ai.gzesp.utils.DateUtils;
-import com.ai.gzesp.utils.MD5Util;
+import com.ai.sysframe.utils.DateUtil;
+import com.ai.sysframe.utils.PathUtil;
 import com.ai.wx.consts.DataConstants;
+import com.ai.wx.service.MaterialService;
 import com.ai.wx.util.SignUtils;
 import com.ai.wxpay.WXPay;
-import com.ai.wxpay.business.UnifiedOrderBusiness;
-import com.ai.wxpay.common.RandomStringGenerator;
-import com.ai.wxpay.common.Signature;
-import com.ai.wxpay.common.Util;
-import com.ai.wxpay.protocol.pay_query_protocol.PayQueryResData;
 import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderReqData;
-import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderResData;
 
-/**
- * 支付入口<br> 
- * 银联和支付宝都在此类里面
- *
- * @author xmh
- * @see [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
 @Controller
 @RequestMapping("/test")
 public class TestController {
+	
+	@Resource
+	MaterialService materialService;
     
     @RequestMapping("/wxPay/prepay")
     @ResponseBody
@@ -89,6 +70,28 @@ public class TestController {
 		
 		mav.addAllObjects(signInfo);
 		return mav;
+    }
+    
+    @RequestMapping("/getMedia")
+    @ResponseBody
+    public void getMedia(@RequestBody String responseString, HttpServletRequest req) throws IOException	{
+    	String mediaId = "p1CWLaO3MRjrSj5tKgwCfXw6GUoBJUkmEuSvfhiH_4VVNR4WqpFCphMl9j7sAmvm";
+    	byte[] content = materialService.getTempMedia(DataConstants.accessToken, mediaId);
+    	String upToPath = PathUtil.WEB_ROOT_PARENT_PATH 
+	    		  + "uploadfile"
+	    		  + File.separator
+	    		  + PathUtil.WEB_UPLOAD_PATH 
+	    		  + DateUtil.getCurrentYearMonth()
+	    		  + File.separator
+	    		  + "320101198812121234" 
+	    		  + File.separator;
+    	
+		File upFile = new File(upToPath);
+		if (!upFile.exists()) {
+			upFile.mkdirs();
+		}
+	      
+    	 FileCopyUtils.copy(content, new File(upToPath + mediaId));
     }
     
 }

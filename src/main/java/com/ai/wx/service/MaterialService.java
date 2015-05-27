@@ -139,11 +139,29 @@ curl -F media=@test.jpg "https://api.weixin.qq.com/cgi-bin/media/upload?access_t
 //
 //        return respJson;
 //    }
-    
+//    
 //    public String addTempM(String accessToken) {
 //    	ByteArrayBody byteArrayBody = new ByteArrayBody(data, "application/json", "some.json");
 //    	MultipartEntity multipartEntity = new MultipartEntity();
 //    	multipartEntity.addPart("upload", byteArrayBody);
 //    }
+    
+    /**
+     * 获取微信零时文件
+     * http请求方式: GET,https调用
+		https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
+		请求示例（示例为通过curl命令获取多媒体文件）
+		curl -I -G "https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID"
+     */
+    public byte[] getTempMedia(String accessToken, String mediaId) {
+    	StringBuilder url = new StringBuilder();
+	      url.append("https://api.weixin.qq.com/cgi-bin/media/get?access_token=");
+	      url.append(accessToken);
+	      url.append("&media_id=");
+	      url.append(mediaId);
+	      byte[] content = HttpClientUtil.sendGetSSLRequest(url.toString());
+    	return content;
+    }
+    
     
 }

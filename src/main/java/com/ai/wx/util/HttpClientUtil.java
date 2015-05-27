@@ -360,6 +360,48 @@ public class HttpClientUtil {
         return responseContent;
     }
 
+    public static byte[] sendGetSSLRequest(String reqURL) {
+    	long responseLength = 0; // 响应长度
+    	byte[] responseContent = null; // 响应内容
+    	HttpClient httpClient = new DefaultHttpClient(); // 创建默认的httpClient实例
+    	X509TrustManager xtm = new X509TrustManager() {
+    		public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    		}
+    		
+    		public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    		}
+    		
+    		public X509Certificate[] getAcceptedIssuers() {
+    			return null;
+    		}
+    	};
+    	
+    	try {
+    		SSLContext ctx = SSLContext.getInstance("TLS");
+    		ctx.init(null, new TrustManager[] { xtm }, null);
+    		SSLSocketFactory socketFactory = new SSLSocketFactory(ctx);
+    		httpClient.getConnectionManager().getSchemeRegistry().register(new Scheme("https", 443, socketFactory));
+    		
+    		HttpGet httpGet = new HttpGet(reqURL); // 创建org.apache.http.client.methods.HttpGet
+    		HttpResponse response = httpClient.execute(httpGet); // 执行GET请求
+    		HttpEntity entity = response.getEntity(); // 获取响应实体
+    		if (null != entity) {
+    			responseLength = entity.getContentLength();
+    			responseContent = EntityUtils.toByteArray(entity);
+    			EntityUtils.consume(entity); // Consume response content
+    		}
+    		System.out.println("请求地址: " + httpGet.getURI());
+    		System.out.println("响应状态: " + response.getStatusLine());
+    		System.out.println("响应长度: " + responseLength);
+    		System.out.println("响应内容: " + responseContent);
+    	} catch (Exception e) {
+    		logger.error("与[" + reqURL + "]通信过程中发生异常,堆栈信息为", e);
+    	} finally {
+    		httpClient.getConnectionManager().shutdown(); // 关闭连接,释放资源
+    	}
+    	return responseContent;
+    }
+    
     /**
      * 发送HTTP_POST请求
      * 

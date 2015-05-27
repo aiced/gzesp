@@ -202,11 +202,16 @@
 	    	<input type="hidden" id="conType" value="">
 	    </#if>
 	    
+	    <input type="hidden" id="isAndroidWeiXin" value="${isAndroidWeiXin}">
 	</div>
 	
 	<!-- 入网资料页 -->
 	<div id="netInfo" style="display:none" >
-		<#include "picUpload.ftl"> 
+		<#if isAndroidWeiXin?exists && isAndroidWeiXin>
+			<#include "picUpload2.ftl"> 
+		<#else>
+			<#include "picUpload.ftl"> 
+	    </#if>
 	</div>
 	
 	<!-- 收货信息页 -->

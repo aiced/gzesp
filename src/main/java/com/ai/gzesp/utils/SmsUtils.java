@@ -215,37 +215,22 @@ public class SmsUtils {
 	 */
 	public static String  doSendMessage(String strMobile,String strTempid,String strContent)
 	{
-/*		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", "JSMB260920");//此处填写用户账号
-		map.put("scode", "593483");//此处填写用户密码
-		//map.put("mobile","18551855717");//此处填写发送号码
-		//map.put("tempid","MB-2013102300");//此处填写模板短信编号
-		////map.put("extcode","1234");
-		//map.put("content","@1@=123456");//此处填写模板短信内容
-		map.put("mobile",strMobile);//此处填写发送号码
-		map.put("tempid",strTempid);//此处填写模板短信编号
-		//map.put("extcode","1234");
-		map.put("content",strContent);//此处填写模板短信内容
-*/		
-		//String strRet = SmsUtils.doPost("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp",map, "utf-8");
-		//String strRet = SmsUtils.doGet("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp",map, "utf-8");
 		String strRet = "";
-			//strurl = "http://mssms.cn:8000/msm/sdk/http/sendsms.jsp";
-			StringBuffer strurl=new StringBuffer();
-			//http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?content=%401%40%3D701447&username=JSMB260920&tempid=MB-2013102300&scode=593483&mobile=18551855717
-			strurl.append("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?");
-			strurl.append("content=");
-			strurl.append(strContent); //URLEncoder.encode(strContent, "utf-8")
-			strurl.append("&username=JSMB260920");
-			strurl.append("&tempid=");
-			strurl.append(strTempid);
-			strurl.append("&scode=593483");
-			strurl.append("&mobile=");
-			strurl.append(strMobile);
-			System.out.println("url:" + strurl);//
-			//strRet = SmsUtils.doGet(strurl.toString() , "utf-8");
-			strRet = httpclientGet(strurl.toString() , "utf-8");
-			System.out.println("值:" + strRet);//此处为短信发送的返回值
+		StringBuffer strurl=new StringBuffer();
+		//http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?content=%401%40%3D701447&username=JSMB260920&tempid=MB-2013102300&scode=593483&mobile=18551855717
+		strurl.append("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?");
+		strurl.append("content=");
+		strurl.append(strContent); //URLEncoder.encode(strContent, "utf-8")
+		strurl.append("&username=JSMB260920");
+		strurl.append("&tempid=");
+		strurl.append(strTempid);
+		strurl.append("&scode=593483");
+		strurl.append("&mobile=");
+		strurl.append(strMobile);
+		System.out.println("url:" + strurl);//
+		//strRet = SmsUtils.doGet(strurl.toString() , "utf-8");
+		strRet = httpclientGet(strurl.toString() , "utf-8");
+		System.out.println("值:" + strRet);//此处为短信发送的返回值
 		
 		return strRet;
 	}

@@ -246,7 +246,7 @@
                         <div><label>${GOODS_NAME}</label></div>
                         <div>
 							<label></label>
-                        	 <#if (ORDER_STATE_CODE=='00')>
+                        	 <#if (ORDER_STATE_CODE=='01')>
 	                            	<div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="${base}/pay/selectPayMode/${ORDER_ID}/${TOPAY_MONEY*1000}">去支付</a></div>
 		                     <#else>
 		                     	<#if (REFUND_STATE =='未知')><!-- 没有申请过 -->

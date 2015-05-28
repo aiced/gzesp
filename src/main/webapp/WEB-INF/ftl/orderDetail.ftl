@@ -40,10 +40,10 @@
 		
 		$("#stStatus").change(function(){
 			
-	    	var status=$('#stStatus option:selected');//选中的值
-	    	if (status.val()!="-1") 
+	    	var status=$('#stStatus option:selected').val();//选中的值
+	    	if (status!="-1") 
 	    	{
-	    		status.attr("disabled","disabled");  
+	    		$("#stStatus").attr("disabled","disabled");  
 	    	}
 	    	else
 	    	{
@@ -51,18 +51,16 @@
 	    	}
 	    	
 	    	//ajax 操作，刷新本界面数据   
-			var parms = {'order_id':${ORDER_ID},'status':status.val()};
-			$.commonFormSubmit({
+			var parms = {'ORDER_ID':${ORDER_ID},'status':status};
+			$.ajax({
 			 type: "POST",
-			 action: '${base}/shopManage/orderStatusUpdate',
+			 url: '${base}/shopManage/orderStatusUpdate',
 			 data: parms,
 			 success: function(data){
 			  	 //history.back();
 			  	 //alert("ok");
 			  	 //return;
 			  	 alert(data);
-
-			  	 return;
 			 }
 			});
 	    	
@@ -141,6 +139,10 @@
                 	订单处理退单
                 <#elseif (ORDER_STATE=='10')>
 					客户拒收退单
+				<#elseif (ORDER_STATE=='10')>
+					店主通过审核	
+				<#elseif (ORDER_STATE=='10')>
+					店主未通过审核
 				<#else>
 					未知
                 </#if>
@@ -150,15 +152,27 @@
                 <!-- <a href="#" class="list-group-item"><h5>缺货处理：${PAY_REMARK}</h5></a> -->
                 <#if ((REFUND_STATE=="未知") || (REFUND_STATE==""))>
                 <#else>
-                	<a href="#" class="list-group-item">
+                	<div  class="list-group-item">
                 	<h5 style="color: red;">请谨慎选择（不可更改）</h5>
                 	<br/>
-                	<select class="form-control" id="stStatus">
+                	<#if ((REFUND_STATE=="店主审核通过") || (REFUND_STATE=="店主未审核通过"))>
+                		<select class="form-control" id="stStatus" disabled="disabled">
+                	<#else>
+                		<select class="form-control" id="stStatus" >
+                	</#if>
                 	  <option value="-1">请选择是否通过审核</option>
+                	<#if (REFUND_STATE=="店主审核通过")>  
+					  <option value="04" selected="selected">通过审核</option>
+					  <option value="05">不通过审核</option>
+					<#elseif (REFUND_STATE=="店主未审核通过")>
+					  <option value="04">通过审核</option>
+					  <option value="05" selected="selected">不通过审核</option>
+					<#else>
 					  <option value="04">通过审核</option>
 					  <option value="05">不通过审核</option>
+					</#if>
 					</select>
-                	</a>
+                	</div>
                 	<a href="#" class="list-group-item">
                 		退款原因：<br/>
 						<textarea class="form-control" rows="3" disabled>${REFUND_REASON}</textarea>

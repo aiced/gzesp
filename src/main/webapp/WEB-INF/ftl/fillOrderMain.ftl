@@ -184,6 +184,20 @@
 	    <input type="hidden" id="attrVal" value="${attrVal}">
 	    <input type="hidden" id="serialNumber" value="${serialNumber}">
 	    
+	    <input type="hidden" id="ctlgCode" value="${ctlgCode}"></input>
+	    <input type="hidden" id="originalPrice"  value="${originalPrice}"></input>
+	    <input type="hidden" id="albumId"  value="${albumId}"></input>
+	    <input type="hidden" id="verNo"  value="${verNo}"></input>
+	    <input type="hidden" id="merchantId"  value="${merchantId}"></input>
+	    <input type="hidden" id="createTime"  value="${createTime}"></input>
+	    <input type="hidden" id="createStaffId" value="${createStaffId}"></input>
+	    <input type="hidden" id="goodsState"  value="${goodsState}"></input>
+	    <input type="hidden" id="recomTag"  value="${recomTag}"></input>
+	    <input type="hidden" id="priceRule"  value="${priceRule}"></input>
+	    <input type="hidden" id="beginTime" value="${beginTime}"></input>
+	    <input type="hidden" id="endTime"  value="${endTime}"></input>
+	    <input type="hidden" id="simpDesc" value="${simpDesc}"></input>
+	    
 	    <#if showFMonthD?exists && showFMonthD>
 	   		<input type="hidden" id="fMonthDResId" value="${fMonthDResId}">
     	<#else>

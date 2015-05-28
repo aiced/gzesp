@@ -41,6 +41,7 @@
     <input id="attr_val" name="attr_val" value="2015031915263332|COLORRS|深空灰色|简单描述^2015031915263332|PCKPLAN|A计划|电话300分钟　短信0条　流量800M"></input>
     <input id="fromPage" name="fromPage" value="phoneGoodDetail"></input>
     <input id="original_price" name="original_price" value="${detail.ORIGINAL_PRICE}"></input>
+    <input id="ctlg_code" name="ctlg_code" value="${detail.CTLG_CODE}"></input>
     <input id="album_id" name="album_id" value="${detail.ALBUM_ID}"></input>
     <input id="ver_no" name="ver_no" value="${detail.VER_NO}"></input>
     <input id="merchant_id" name="merchant_id" value="${detail.MERCHANT_ID}"></input>

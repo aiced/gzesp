@@ -1,7 +1,8 @@
 package com.ai.gzesp.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -9,29 +10,39 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdGdsDINFO;
 import com.ai.gzesp.dao.service.TdGdsDINFODao;
 import com.ai.gzesp.dao.service.TdSysPWEBDISTRICTDao;
-import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.token.Token;
 import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.DateUtil;
+import com.ai.sysframe.utils.PathUtil;
 import com.ai.sysframe.utils.StringUtil;
+import com.ai.wx.consts.DataConstants;
+import com.ai.wx.service.MaterialService;
+import com.ai.wx.util.RegexUtils;
+import com.ai.wx.util.SignUtils;
+
 
 @Controller
 @RequestMapping("/order")
 public class OrderController {
     
+	private static Logger log = Logger.getLogger(OrderController.class); 
+	
     @Resource
     private WeShopService weShopService;
     
@@ -40,6 +51,9 @@ public class OrderController {
     
     @Resource 
     OrderService orderService;
+    
+	@Resource
+	MaterialService materialService;
     
     @Resource
     TdSysPWEBDISTRICTDao tdSysPWEBDISTRICTDao;
@@ -115,7 +129,7 @@ public class OrderController {
     }
     
     @RequestMapping("/fillOrderMain")
-    public ModelAndView fillOrderMain(@RequestBody String inputParams){
+    public ModelAndView fillOrderMain(@RequestBody String inputParams, HttpServletRequest req){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	boolean showFMonthD = true;
     	String fromPage = paramsMap.get("fromPage");
@@ -139,6 +153,8 @@ public class OrderController {
     	
     	List<Map<Object, Object>> citys = weShopService.getCitys();
        
+    	String userAgent = req.getHeader("user-agent");
+    	boolean isAndroidWeiXin = RegexUtils.isAndroidWeiXin(userAgent);
     	
         ModelAndView mav = new ModelAndView("fillOrderMain.ftl");
         //从数据库获取信息赋值
@@ -149,6 +165,17 @@ public class OrderController {
         mav.addObject("showFMonthD", showFMonthD);
         mav.addObject("fMonthDResId", fMonthDResId);
         mav.addObject("fMonthDList", fMonthDList);
+        mav.addObject("isAndroidWeiXin", isAndroidWeiXin);
+        
+        if(isAndroidWeiXin) {
+        	int port = req.getServerPort();
+        	String portStr = (80==port || 443 == port) ? "" : ":"+port;
+    		String url =  req.getScheme() + "://" + req.getServerName() + portStr + req.getRequestURI();
+    		Map<String, String> signInfo = SignUtils.jsApiSign(DataConstants.jsApiTicket, url);
+    		signInfo.put("appId",  DataConstants.appid);
+    		mav.addAllObjects(signInfo);
+        }
+        
         return mav;
     }
     
@@ -160,6 +187,18 @@ public class OrderController {
     	String orderId = CommonUtil.generateOrderId();
     	String payLogId = CommonUtil.generatePayLogId();
     	String originalPrice = paramsMap.get("originalPrice");
+    	String isAndroidWeiXin = paramsMap.get("isAndroidWeiXin");
+    	if(Boolean.parseBoolean(isAndroidWeiXin)) {
+    		log.debug("create thread download image from wxServer--" + isAndroidWeiXin);
+    		String cardPic1 = paramsMap.get("cardPic1");
+    		String cardPic2 = paramsMap.get("cardPic2");
+    		String idCardNum = paramsMap.get("idCardNum");
+    		String pic1Url = downloadImgFromWxServer(idCardNum, cardPic1);
+    		String pic2Url = downloadImgFromWxServer(idCardNum, cardPic2);
+    		paramsMap.put("cardPic1", pic1Url);
+    		paramsMap.put("cardPic2", pic2Url);
+    	}
+    	
     	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice));
     	paramsMap.put("orderId", orderId);
     	paramsMap.put("payLogId", payLogId);
@@ -188,4 +227,38 @@ public class OrderController {
     	return result;
     }
     
+    private String downloadImgFromWxServer(final String idCardNum, final String mediaId)  {
+		String fileUrl = File.separator + PathUtil.WEB_UPLOAD_PATH
+    			   + DateUtil.getCurrentYearMonth()  + File.separator+ idCardNum 
+    			   + File.separator + mediaId;
+    	   
+    	   
+//    	   String mediaId = "p1CWLaO3MRjrSj5tKgwCfXw6GUoBJUkmEuSvfhiH_4VVNR4WqpFCphMl9j7sAmvm";
+		new Thread() {
+			public void run() {
+				String upToPath = PathUtil.WEB_ROOT_PARENT_PATH
+    		 	    		  + "uploadfile"
+    		 	    		  + File.separator
+    		 	    		  + PathUtil.WEB_UPLOAD_PATH 
+    		 	    		  + DateUtil.getCurrentYearMonth()
+    		 	    		  + File.separator
+    		 	    		  + idCardNum 
+    		 	    		  + File.separator;
+				byte[] content = materialService.getTempMedia(DataConstants.accessToken, mediaId);
+
+				File upFile = new File(upToPath);
+				if (!upFile.exists()) {
+					upFile.mkdirs();
+				}
+    		   	      
+				try {
+					FileCopyUtils.copy(content, new File(upToPath + mediaId));
+				} catch (IOException e) {
+					e.printStackTrace();
+				} 
+			}
+    	}.start();
+       	
+		return fileUrl;
+    }
 }

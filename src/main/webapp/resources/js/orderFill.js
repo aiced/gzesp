@@ -8,6 +8,7 @@ var orderStat = {
 
 var orderFormParams = {
 		token:"",
+		isAndroidWeiXin:"",
 		
 		orderFrom:"01",
 		originalPrice:"",
@@ -373,6 +374,7 @@ function checkPostSelect() {
 
 function getParams() {
 	orderFormParams.token = $('#token').val();
+	orderFormParams.isAndroidWeiXin = $('#isAndroidWeiXin').val();
 	
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
@@ -428,6 +430,20 @@ function getParams() {
 	orderFormParams.topayFee= $('#goodsPrice').val();
 }
 
+function upload(picId, rtnVal) {
+    wx.uploadImage({
+      localId: picId,
+      success: function (res) {
+    	  rtnVal = res.serverId;
+      },
+      fail: function (res) {
+        alert(JSON.stringify(res));
+      }
+    });
+  }
+
+
+
 function uploadPic(btn){
 	
 	if(orderFormParams.cardPic1.length != 0
@@ -444,31 +460,65 @@ function uploadPic(btn){
 			"idCardNum": $('#userCard').val()
 	};
 	
-	 $.ajaxFileUpload({
-	        url : "../common/uploadFile", 
-	        async:false, 
-	        secureuri : false,  
-	        fileElementIds : ["file-front", "file-back"],  
-	        dataType : 'json',
-			data: params,
-	        success : function(rtdata, status) { 
-	        	//alert(rtdata);
-	        	if(rtdata.rspCode=='0000') {
-	        		orderFormParams.cardPic1 = rtdata.fileInfoList[0].url;
-	        		orderFormParams.cardPic2 = rtdata.fileInfoList[1].url;
+	if($('#isAndroidWeiXin').val()) {
+		var localIds = [$('#firstCard').attr("src"), $('#secondCard').attr("src")];
+		var serverIds = [];
+		var i=0;
+		function upload() {
+			   wx.uploadImage({
+			     localId: localIds[i],
+			     success: function (res) {
+			       i++;
+			       serverIds.push(res.serverId);
+			       if (i < length) {
+			         upload();
+			       } else {
+			    	   orderFormParams.cardPic1 = serverIds[0];
+			   	    	orderFormParams.cardPic2 = serverIds[1];
+			   	    	
+			   	    	$(btn).removeAttr("disabled"); 
+		        		
+		        		orderStat.netInfoStat = 1;
+		    			$('#netInfo').css({ "display":"none" });
+		    			$('#orderMain').css({ "display":"block" });
+			       }
+			     },
+			     fail: function (res) {
+			       alert(JSON.stringify(res));
+			       
+			       alert('网络不给力哦,请重新上传');
 	        		$(btn).removeAttr("disabled"); 
-	        		
-	        		orderStat.netInfoStat = 1;
-	    			$('#netInfo').css({ "display":"none" });
-	    			$('#orderMain').css({ "display":"block" });
-	        		//formSubmit();
-	        	} else {
-	        		alert('网络不给力哦,请重新上传');
-	        		$(btn).removeAttr("disabled"); 
-	        	}
-	        },  
-	    });  
-	 
+			     }
+			   });
+			 }
+		upload();
+	    
+	} else {
+		 $.ajaxFileUpload({
+		        url : "../common/uploadFile", 
+		        async:false, 
+		        secureuri : false,  
+		        fileElementIds : ["file-front", "file-back"],  
+		        dataType : 'json',
+				data: params,
+		        success : function(rtdata, status) { 
+		        	//alert(rtdata);
+		        	if(rtdata.rspCode=='0000') {
+		        		orderFormParams.cardPic1 = rtdata.fileInfoList[0].url;
+		        		orderFormParams.cardPic2 = rtdata.fileInfoList[1].url;
+		        		$(btn).removeAttr("disabled"); 
+		        		
+		        		orderStat.netInfoStat = 1;
+		    			$('#netInfo').css({ "display":"none" });
+		    			$('#orderMain').css({ "display":"block" });
+		        		//formSubmit();
+		        	} else {
+		        		alert('网络不给力哦,请重新上传');
+		        		$(btn).removeAttr("disabled"); 
+		        	}
+		        },  
+		    });  
+	}
 };
 
 function nextPage() {

@@ -47,8 +47,8 @@
   		      success: function (res) {
   		        images.localId = res.localIds;
   		      	console.log(res.localIds);
-  		       // alert(res.localIds);
-	 	    	 $('#firstCard').attr('title', f.name).attr("src", res.localIds[0]);
+  		       	alert(res.localIds);
+	 	    	$('#firstCard').attr("src", res.localIds[0]);
   		      }
   		    });
   		  };
@@ -56,7 +56,6 @@
 
   		  document.querySelector('#uploadImage').onclick = function () {
   		    if (images.localId.length == 0) {
-  		      alert('234');
   		      return;
   		    }
   		    var i = 0, length = images.localId.length;
@@ -66,7 +65,6 @@
   		        localId: images.localId[i],
   		        success: function (res) {
   		          i++;
-  		          alert('345' + i + '/' + length);
   		          images.serverId.push(res.serverId);
   		          if (i < length) {
   		            upload();

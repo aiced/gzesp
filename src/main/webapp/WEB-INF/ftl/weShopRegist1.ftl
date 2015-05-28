@@ -91,9 +91,6 @@
 			  //在这里操作获取验证码
 			  //alert("发送验证码");
 			  //点击的时候 获得当前时间
-			  
-			  
-			  
 			  $("#hide_code_date").val(getNowDate());
 			  
 			  var bRet=isPhoneNum($("#txtphonenum").val());

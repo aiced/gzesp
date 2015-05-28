@@ -65,7 +65,7 @@
 	   * 邮件内容说明：用简明的语言描述问题所在，并交代清楚遇到该问题的场景，可附上截屏图片，微信团队会尽快处理你的反馈。
 	   */
 	  wx.config({
-	    debug: true,
+	    debug: false,
 	    appId: '${appId}',
 	    timestamp: ${timestamp},
 	    nonceStr: '${nonceStr}',
@@ -79,65 +79,18 @@
 	  });
 	
 	  wx.ready(function () {
-	    // 在这里调用 API
-		  console.log("success---");
-		  console.log(location.href.split('#')[0]);
-		  console.log('${url}');
-// 		  var images = {
-// 		  		    localId: [],
-// 		  		    serverId: []
-//   		  };
 		  $('.file-input').bind("click",function(){
 			 var img = $(this).siblings("img");
 			  wx.chooseImage({
 	  		      success: function (res) {
-// 	  		        images.localId = res.localIds;
-	  		      	console.log(res.localIds);
-	  		       	//alert(res.localIds);
 	  		      	img.attr("src", res.localIds[0]);
 	  		      }
 	  		    });
 		  });
 		  
-//   		  document.querySelector('#chooseImage').onclick = function () {
-//   		    wx.chooseImage({
-//   		      success: function (res) {
-//   		        images.localId = res.localIds;
-//   		      	console.log(res.localIds);
-//   		       	alert(res.localIds);
-// 	 	    	$('#firstCard').attr("src", res.localIds[0]);
-//   		      }
-//   		    });
-//   		  };
-
-
-//   		  document.querySelector('#uploadImage').onclick = function () {
-//   		    if (images.localId.length == 0) {
-//   		      return;
-//   		    }
-//   		    var i = 0, length = images.localId.length;
-//   		    images.serverId = [];
-//   		    function upload() {
-//   		      wx.uploadImage({
-//   		        localId: images.localId[i],
-//   		        success: function (res) {
-//   		          i++;
-//   		          images.serverId.push(res.serverId);
-//   		          if (i < length) {
-//   		            upload();
-//   		          }
-//   		        },
-//   		        fail: function (res) {
-//   		          alert(JSON.stringify(res));
-//   		        }
-//   		      });
-//   		    }
-//   		    upload();
-//   		  };
 	  });
 	  
 	  wx.error(function(res){
-
 		    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
 			console.log("error---"+res);
 		});

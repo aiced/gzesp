@@ -88,12 +88,13 @@
 // 		  		    serverId: []
 //   		  };
 		  $('.file-input').bind("click",function(){
+			 var img = $(this).siblings("img");
 			  wx.chooseImage({
 	  		      success: function (res) {
 // 	  		        images.localId = res.localIds;
 	  		      	console.log(res.localIds);
 	  		       	//alert(res.localIds);
-	  		      	$(this).siblings("img").attr("src", res.localIds[0]);
+	  		      	img.attr("src", res.localIds[0]);
 	  		      }
 	  		    });
 		  });

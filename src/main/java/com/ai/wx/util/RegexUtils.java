@@ -231,8 +231,8 @@ public class RegexUtils {
     
     public static boolean isAndroidWeiXin(String userAgent) {
     	 if (userAgent != null && !"".equals(userAgent)) {
-//    		 Pattern p = Pattern.compile(".*(Android).*(MicroMessenger)");
-             Pattern p = Pattern.compile(".*(Android).*(HUAWEI).*(MicroMessenger)");
+    		 Pattern p = Pattern.compile(".*(Android).*(MicroMessenger)");
+//             Pattern p = Pattern.compile(".*(Android).*(HUAWEI).*(MicroMessenger)");
              Matcher m = p.matcher(userAgent);
              return m.find();
          } else {

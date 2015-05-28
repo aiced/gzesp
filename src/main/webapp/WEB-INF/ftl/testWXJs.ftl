@@ -42,43 +42,28 @@
 		  		    localId: [],
 		  		    serverId: []
   		  };
-  		  document.querySelector('#chooseImage').onclick = function () {
-  		    wx.chooseImage({
-  		      success: function (res) {
-  		        images.localId = res.localIds;
-  		      	console.log(res.localIds);
-  		       	alert(res.localIds);
-	 	    	$('#firstCard').attr("src", res.localIds[0]);
-  		      }
-  		    });
-  		  };
-
-
-  		  document.querySelector('#uploadImage').onclick = function () {
-  		    if (images.localId.length == 0) {
-  		      return;
-  		    }
-  		    var i = 0, length = images.localId.length;
-  		    images.serverId = [];
-  		    function upload() {
-  		      wx.uploadImage({
-  		        localId: images.localId[i],
-  		        success: function (res) {
-  		          i++;
-  		          images.serverId.push(res.serverId);
-  		          if (i < length) {
-  		            upload();
-  		          }
-  		        },
-  		        fail: function (res) {
-  		          alert(JSON.stringify(res));
-  		        }
-  		      });
-  		    }
-  		    upload();
-  		  };
+		  
+		  console.log($('.file-input'));
+		  console.log($('#file-back'));
+		  $('.file-input').bind("click",function(){
+			  console.log("click---");
+				$(this).siblings("img").attr("src", "");
+				
+// 			  wx.chooseImage({
+// 	  		      success: function (res) {
+// // 	  		        images.localId = res.localIds;
+// 	  		      	console.log(res.localIds);
+// 	  		       	//alert(res.localIds);
+	  		      
+// 	  		      }
+// 	  		    });
+		  });
 	  });
-	  
+		  
+  		 
+
+
+  		 
 	  wx.error(function(res){
 
 		    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
@@ -102,6 +87,11 @@
       
       <img id ="firstCard" src="${resRoot}/image/order/card01.png" style="display:block;width:175px;height:110px;margin:0px auto;">
       <img id ="ss" src="weixin://resourceid/64a9aad7be62565da5f9e3f55b37852e" style="display:block;width:175px;height:110px;margin:0px auto;">
+      
+       <div class="img-w"> 
+  	        	 <img id ="secondCard" src="${resRoot}/image/order/card02.png" style="display:block;width:175px;height:110px;margin:0px auto;" />
+  	        	 <button  class="file-input" id="file-back" name="uploadFile">sdfsdf</button>
+   		</div>
       <div>
   </body>
 </html>

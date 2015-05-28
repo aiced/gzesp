@@ -322,3 +322,5 @@ function sendMessage(strPhone,btnName,flag) {
 		});
 	return bReturn;
 }  
+
+

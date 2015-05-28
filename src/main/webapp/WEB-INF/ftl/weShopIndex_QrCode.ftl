@@ -38,9 +38,10 @@
     	<img src='http://res.gz10010.xyz/uploader/qrcode.png' alt="" class="img-responsive"/>
 	</div> 
      <div style="width:100%;height:244px;margin-left:0px;margin-bottom:20px;" >   	
-     		<div id = "qrcodeDiv" style="width:200px;height:200px ;line-height:44px;margin:auto;">
+     <div id = "qrcodeDiv" style="width:200px;height:200px ;line-height:44px;margin:auto;">
+    	
      </div>	
-     		
+     <!-- <img id="imgqrcode" alt="二维码"/> -->		
      	
      	
     </div>
@@ -73,6 +74,12 @@
         background:"#ffffff",//背景颜色  
         foreground:"#000000" //前景颜色
 	});	
+       
+       
+       //var $ctxtemp=$("#qrcodeDiv").find("canvas");
+       //var ctx=$ctxtemp[0].getContext("2d");
+       //var imgqrcode=document.getElementById("imgqrcode");
+       //ctx.drawImage(imgqrcode,200,200);
     </script>
 
     

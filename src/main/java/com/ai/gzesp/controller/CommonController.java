@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -211,11 +212,9 @@ public class CommonController {
     	String strFlag=paramsMap.get("flag");
     	
     	//新版
-    	//String strMobile,String strTempid,String strContent
-    	
     	System.out.println("短信验证码："+strcode);
-    	
     	String strRet="";
+    	
     	if (strFlag.equals("0"))//注册模板
     	{
     		strRet=SmsUtils.doSendMessage(strphone,"MB-2013102300","@1@="+strcode);//
@@ -224,15 +223,25 @@ public class CommonController {
     	{
     		strRet=SmsUtils.doSendMessage(strphone,"MB-2015051550","@1@="+strcode);//
     	}
+    	else if(strFlag.equals("2"))//支付完成短信通知
+    	{
+    		String order_name=paramsMap.get("order_name");
+    		
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015052754","@1@="+order_name);
+    	}
+    	else if(strFlag.equals("3"))//退款申请短信通知
+    	{
+    		String order_id=paramsMap.get("order_id");
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015052703","@1@="+order_id);
+    	}
     	
-
-    	 System.out.println("短信返回值："+strRet);
-    	 if (strRet != null && strRet.split("#").length==3)
-    	 {
-    		 return true; //发送成功 值:0#1#1
-    	 }
-    	 else {
-        	 return false;
+		 System.out.println("短信返回值："+strRet);
+		 if (strRet != null && strRet.split("#").length==3)
+		 {
+			 return true; //发送成功 值:0#1#1
+		 }
+		 else {
+	    	 return false;
 		 }
     	 
 
@@ -289,4 +298,34 @@ public class CommonController {
 		mav.addObject("action", action);
 		return mav;
 	} 
+	
+	//短信接口改造：方便后台调用
+    @RequestMapping("/common/sendmessage/{phonenum}/{ischeck}")
+    @ResponseBody
+    public String sendMessage(@PathVariable("phonenum") String phonenum, @PathVariable("ischeck") String ischeck)
+    {
+    	System.out.println("发送短信_电话："+phonenum);
+    	System.out.println("发送短信_标志"+ischeck);
+    	//ischeck 是否通过审核 审核通过传1 审核未通过传2
+    	String strRet="";//返回值
+    	if (ischeck.equals("1")) //审核已经通过
+    	{
+    		strRet=SmsUtils.doSendMessage(phonenum,"MB-2015052732","");
+		}
+    	else if(ischeck.equals("2")) //审核未通过
+    	{
+        	strRet=SmsUtils.doSendMessage(phonenum,"MB-2015052713","");
+		}
+    	
+		System.out.println("短信返回值："+strRet);
+		if (strRet != null && strRet.split("#").length==3)
+		{
+			return "发送成功"; //发送成功 值:0#1#1
+		}
+		else {
+	    	return "发送失败";
+		}
+
+    }
+	
 }

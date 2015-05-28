@@ -76,8 +76,8 @@ public class WeShopHomeController {
     	List<Map<String, Object>> ViewCountlist = viewSql.getViewCountByUserID(strUserID);
         //根据userid查询销售量
        	List<Map<String, Object>> SaleList=ordersSql.getOrderCountByUserID(strUserID);
-       	//根据userid查询佣金
-       	List<Map<String, Object>> commissionList=commissionSql.getCommissionCountByUserID(strUserID);
+       	//根据userid查询佣金 屏蔽功能
+       	//List<Map<String, Object>> commissionList=commissionSql.getCommissionCountByUserID(strUserID);
 
 //    	//根据userid查询佣金值
 //    	myCriteria.createConditon().andEqualTo("USER_ID",requestinputParams.getParameter("userid"));
@@ -94,7 +94,7 @@ public class WeShopHomeController {
 //        mav.addObject("userimage",requestinputParams.getParameter("userimage"));
         mav.addObject("viewcountlist",ViewCountlist);
         mav.addObject("saleList", SaleList);
-        mav.addObject("commissionList",commissionList);
+        //mav.addObject("commissionList",commissionList); 屏蔽功能
       //mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap); 
         return mav;
     }

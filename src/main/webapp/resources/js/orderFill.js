@@ -392,7 +392,7 @@ function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
 	
-//	orderFormParams.originalPrice = $('#totalPrice').val();
+	orderFormParams.originalPrice = $('#originalPrice').val();
 	orderFormParams.couponMoney = $('#couponMoney').val();
 	orderFormParams.manMadeMoney = orderFormParams.originalPrice;
 	orderFormParams.topayMoney = $('#totalPrice').val();
@@ -440,7 +440,7 @@ function getParams() {
 	orderFormParams.goodsName= $('#goodsName').val();
 	
 	orderFormParams.ctlgCode= $('#ctlgCode').val();
-	orderFormParams.originalPrice= $('#originalPrice').val();
+//	orderFormParams.originalPrice= $('#originalPrice').val();
 	orderFormParams.albumId= $('#albumId').val();
 	orderFormParams.verNo= $('#verNo').val();
 	orderFormParams.merchantId= $('#merchantId').val();

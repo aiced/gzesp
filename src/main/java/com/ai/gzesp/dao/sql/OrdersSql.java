@@ -367,6 +367,8 @@ public class OrdersSql {
 				+ " WHEN b.ORDER_STATE='08' then '成功关闭（已归档）'"
 				+ " WHEN b.ORDER_STATE='09' then '订单处理退单'"
 				+ " WHEN b.ORDER_STATE='10' then '客户拒收退单'"
+				+ " WHEN b.ORDER_STATE='11' then '店主通过审核'"
+				+ " WHEN b.ORDER_STATE='12' then '店主未通过审核'"
 				+ " ELSE '未知'"
 				+ " END ORDER_STATE," 
 				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"

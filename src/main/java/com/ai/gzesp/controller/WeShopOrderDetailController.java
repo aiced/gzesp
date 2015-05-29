@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,27 +36,20 @@ public class WeShopOrderDetailController {
 	TdOrdDREFUNDDao tdOrdDREFUNDDao;
 	@Resource
 	TdOrdDBASEDao tdOrdDBASEDao;
+	
+	
     @RequestMapping("/orderDetail")
     public ModelAndView index(@RequestBody String inputParams){
     	
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
     	System.out.println(paramsMap);
-        ModelAndView mav = new ModelAndView("orderDetail.ftl");
-
         String strOrderid=paramsMap.get("ORDER_ID");
-//        String strGoodesName=paramsMap.get("GOODS_NAME");
-//        String strInCome_Money=paramsMap.get("INCOME_MONEY");
-//        String strOrder_Time=paramsMap.get("Order_Time");
-//        String strReceiver_Name=paramsMap.get("RECEIVER_NAME");
-//        String strPost_addr=paramsMap.get("POST_ADDR");
-//        String strMobile_phone=paramsMap.get("MOBILE_PHONE");
-//        String strDeliver_time_code=paramsMap.get("DELIVER_TIME_CODE");
-//        String strPay_Mode=paramsMap.get("PAY_MODE");
-//        String strPay_State=paramsMap.get("PAY_STATE");
-//        String strPay_Remark=paramsMap.get("PAY_REMARK");
-        
-        
+        System.out.println("ORDER_ID:"+strOrderid);
+
+    	ModelAndView mav = new ModelAndView("orderDetail.ftl");
+
+
         //从数据库获取信息赋值
     	List<Map<String, Object>> orderList=ordersSql.getOrderInfobyOrderID(strOrderid);
     	
@@ -104,6 +98,10 @@ public class WeShopOrderDetailController {
         return mav;
     }
     
+
+    
+    
+    
     
     @RequestMapping("/orderStatusUpdate")
     @ResponseBody
@@ -136,21 +134,16 @@ public class WeShopOrderDetailController {
         	record_base.setOrderState("12");
     	}
     	
-
     	icount=tdOrdDBASEDao.updateByExampleSelective(record_base, example);
     	System.out.println("icount_base="+icount);
 
-    	if (icount>0) {
-			return "成功";
+    	if (icount>0)
+    	{
+    		return "操作成功";
 		}
     	else {
-			return "失败";
+			return "操作失败";
 		}
-    	
-    	
-    	
-    	
-    	
     }
     
 }

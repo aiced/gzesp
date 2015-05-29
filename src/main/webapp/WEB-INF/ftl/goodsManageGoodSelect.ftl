@@ -260,7 +260,7 @@
  	$(function(){
         //[返回]按钮点击
         $("#top_left").click(function(){  
-    		location.href = "w?userid="+${userId};
+        	location.href = "goodsManageRecommend?userid="+${userId};
         });   
  	})
 	</script>

@@ -135,7 +135,7 @@
           </ul>  
     	</div>
     	
-    	<div class="col-xs-3" style="padding:10px" id="qrcodeDiv" onclick="doqrcodeClick();">
+    	<div class="col-xs-3" style="padding:10px 0px" id="qrcodeDiv" onclick="doqrcodeClick();">
     	</div>
     	   		    		
       </div>	            

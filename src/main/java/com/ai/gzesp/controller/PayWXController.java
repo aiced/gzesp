@@ -55,7 +55,7 @@ public class PayWXController {
     @RequestMapping("/wxPay/prepay_step1/{order_id}/{fee}")
     public ModelAndView prepay_step1(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
     	// 授权回调页限制
-    	String  redirect_uri = CommonUtil.appResource.getString("espRoot")+"/esp/pay/wxPay/prepay_setp2/"+order_id+"/"+fee;
+    	String  redirect_uri = CommonUtil.appResource.getString("espRoot")+"/esp/pay/wxPay/prepay_step2/"+order_id+"/"+fee;
     	log.debug("redirect_uri-----"+redirect_uri);
     	String state = "";
     	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
@@ -75,7 +75,7 @@ public class PayWXController {
 			if (openId == null) {
 				mav = new ModelAndView("redirect:/pay/selectPayMode/"+"order_id"+"/"+fee);
 			} else {
-				mav = new ModelAndView("redirect:/pay/wxPay/prepay_setp3");
+				mav = new ModelAndView("redirect:/pay/wxPay/prepay_step3");
 				String body = "jsapi wx pay from unicom";
 				String _out_trade_no = order_id;
 				int _total_fee = Integer.parseInt(fee)/10;

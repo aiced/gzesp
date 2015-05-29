@@ -74,8 +74,6 @@ public class CustController {
 		   return mav;
 	   }   
     
-    
-    
 	   @RequestMapping("/custOrderFilterByAjax")
 	   public ModelAndView custOrderFilterByAjax(@RequestBody Map<String, String> inputParams){
 		   String cust_passport = inputParams.get("cust_passport");
@@ -90,9 +88,9 @@ public class CustController {
 		   System.out.println(strHidePageIndex);
 		   
 		   List custMyOrderList = orderService.getCustMyOrder(cust_passport, cust_phone, keyword,Integer.valueOf(strHidePageIndex));
-	    	
-	    	ModelAndView mav = new ModelAndView("custMyOrderSub.ftl");
-	    	mav.addObject("custMyOrderList", custMyOrderList);
+	    
+	       ModelAndView mav = new ModelAndView("custMyOrderSub.ftl");
+	       mav.addObject("custMyOrderList", custMyOrderList);
 		   
 		   return mav;
 	   }

@@ -72,6 +72,7 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_4","没有数据"); 
             mav.addObject("REFUND_STATE","未知");
             mav.addObject("REFUND_REASON","无");
+            mav.addObject("ORDER_STATE_REFUND","无");
 		}
         else {
             mav.addObject("title", "订单详情");
@@ -91,8 +92,7 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_4",orderList.get(0).get("RES_ATTR_VAL_4")); 
             mav.addObject("REFUND_STATE",orderList.get(0).get("REFUND_STATE"));
             mav.addObject("REFUND_REASON",orderList.get(0).get("REFUND_REASON"));
-           // mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
-		
+            mav.addObject("ORDER_STATE_REFUND",orderList.get(0).get("ORDER_STATE_REFUND"));
 		}
         
         return mav;
@@ -108,33 +108,27 @@ public class WeShopOrderDetailController {
     public String updateOrderStatus(@RequestBody String Params)
     {
     	Map<String, String> paramsMap = StringUtil.params2Map(Params);
-    	String strorder_id=paramsMap.get("order_id");
+    	String strorder_id=paramsMap.get("ORDER_ID");
     	String strstatus=paramsMap.get("status");
     	
     	System.out.println(strorder_id);
     	System.out.println(strstatus);
     	
-    	Criteria example = new Criteria();
-    	example.createConditon().andEqualTo("ORDER_ID", strorder_id);
+    	Criteria example_refund = new Criteria();
+    	example_refund.createConditon().andEqualTo("ORDER_ID", strorder_id);
     	
     	TdOrdDREFUND record_refund = new TdOrdDREFUND();
     	record_refund.setRefundState(strstatus);
-    	int icount=tdOrdDREFUNDDao.updateByExampleSelective(record_refund, example);
+    	int icount=tdOrdDREFUNDDao.updateByExampleSelective(record_refund, example_refund);
     	System.out.println("icount_refund="+icount);
     	
     	
-    	example.createConditon().andEqualTo("ORDER_ID", strorder_id);
+    	Criteria example_base=new Criteria();
+    	example_base.createConditon().andEqualTo("ORDER_ID", strorder_id);
     	TdOrdDBASE record_base = new TdOrdDBASE();
-    	if (strstatus.equals("04")) //能人通过审核
-    	{
-        	record_base.setOrderState("11");
-		}
-    	else if(strstatus.equals("05"))//能人未通过审核
-    	{
-        	record_base.setOrderState("12");
-    	}
-    	
-    	icount=tdOrdDBASEDao.updateByExampleSelective(record_base, example);
+        record_base.setOrderState(strstatus);
+
+    	icount=tdOrdDBASEDao.updateByExampleSelective(record_base, example_base);
     	System.out.println("icount_base="+icount);
 
     	if (icount>0)

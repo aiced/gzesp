@@ -196,21 +196,17 @@ public class OrdersSql {
             + " RES_ATTR_VAL_4"
             + " end RES_ATTR_VAL_4,"
             + "case"
-            + " when REFUND_STATE = '00' then"
-            + " '未审核'"
-            + " when REFUND_STATE = '01' then"
-            + " '审核未通过'"
-            + " when REFUND_STATE = '02' then"
+            + " when REFUND_STATE = '11' then"
+            + " '店主审核中'"
+            + " when REFUND_STATE = '12' then"
+            + " '管理员审核中'"
+            + " when REFUND_STATE = '13' then"
             + " '审核通过未退款'"
-            + " when REFUND_STATE = '03' then"
+            + " when REFUND_STATE = '14' then"
             + " '审核通过已退款'"
-            + " when REFUND_STATE = '04' then"
-            + " '店主审核通过'"
-            + " when REFUND_STATE = '05' then"
-            + " '店主审核未通过'"
             + " else "
             + " '未知'"
-            + " end REFUND_STATE,REFUND_REASON"
+            + " end REFUND_STATE,REFUND_REASON,T3.ORDER_STATE as ORDER_STATE_REFUND"
 			+ " from T1,T2,ord_d_refund T3 where T1.Order_id=T2.Order_id(+)"
 			+ " and T1.Order_id=T3.Order_id(+)"
 			);	
@@ -367,8 +363,10 @@ public class OrdersSql {
 				+ " WHEN b.ORDER_STATE='08' then '成功关闭（已归档）'"
 				+ " WHEN b.ORDER_STATE='09' then '订单处理退单'"
 				+ " WHEN b.ORDER_STATE='10' then '客户拒收退单'"
-				+ " WHEN b.ORDER_STATE='11' then '店主通过审核'"
-				+ " WHEN b.ORDER_STATE='12' then '店主未通过审核'"
+				+ " WHEN b.ORDER_STATE='11' then '店主审核中'"
+				+ " WHEN b.ORDER_STATE='12' then '管理员审核中'"
+				+ " WHEN b.ORDER_STATE='13' then '审核通过未退款'"
+				+ " WHEN b.ORDER_STATE='14' then '审核通过已退款'"
 				+ " ELSE '未知'"
 				+ " END ORDER_STATE," 
 				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
@@ -419,6 +417,10 @@ public class OrdersSql {
 				+ " WHEN b.ORDER_STATE='08' then '成功关闭（已归档）'"
 				+ " WHEN b.ORDER_STATE='09' then '订单处理退单'"
 				+ " WHEN b.ORDER_STATE='10' then '客户拒收退单'"
+				+ " WHEN b.ORDER_STATE='11' then '店主审核中'"
+				+ " WHEN b.ORDER_STATE='12' then '管理员审核中'"
+				+ " WHEN b.ORDER_STATE='13' then '审核通过未退款'"
+				+ " WHEN b.ORDER_STATE='14' then '审核通过已退款'"
 				+ " ELSE '未知'"
 				+ " END ORDER_STATE," 
 				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
@@ -443,11 +445,10 @@ public class OrdersSql {
 				+ " END PAY_STATE ,"
 				+ " j.CITY_NAME||j.DISTRICT_NAME|| h.POST_ADDR ADDRESS,"
 				+ "CASE WHEN k.refund_state='00' THEN '未审核'"
-                +"WHEN k.refund_state='01' THEN '审核未通过'"
-                +"WHEN k.refund_state='02' THEN '审核通过未退款'"
-                +"WHEN k.refund_state='03' THEN '审核通过已退款'"
-                +"WHEN k.refund_state='04' THEN '店主审核通过'"
-                +"WHEN k.refund_state='05' THEN '店主审核未通过'"
+                +"WHEN k.refund_state='11' THEN '店主审核中'"
+                +"WHEN k.refund_state='12' THEN '店主审核中'"
+                +"WHEN k.refund_state='13' THEN '审核通过未退款'"
+                +"WHEN k.refund_state='14' THEN '审核通过已退款'"
                 +"ELSE '未知'"
                 +"END refund_state");
 		sb.append("	from ORD_D_CUST a, ORD_D_BASE b, ORD_D_PROD c, ORD_D_DEAL d, AUR_D_AUTHINFO e,"
@@ -471,10 +472,7 @@ public class OrdersSql {
 				+ "	and a.ORDER_ID = h.ORDER_ID"
 				+ " and h.DISTRICT_CODE = j.DISTRICT_CODE" );
 		
-		
-		
 		System.out.println("客户查询："+sb.toString());
-		
 		Map custOrderDetail =commonDao.queryForMap(sb.toString());
 		
 		return custOrderDetail;

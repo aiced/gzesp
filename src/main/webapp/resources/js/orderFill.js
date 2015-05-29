@@ -11,7 +11,7 @@ var orderFormParams = {
 		isAndroidWeiXin:"",
 		
 		orderFrom:"01",
-		originalPrice:"",
+//		originalPrice:"",
 		couponMoney:"",
 		manMadeMoney:"",
 		topayMoney:"",
@@ -56,6 +56,19 @@ var orderFormParams = {
 		derateReason:"",
 		recvFee:"",
 		goodsDisc:"",
+		ctlgCode:"",
+		originalPrice:"",
+		albumId:"",
+		verNo:"",
+		merchantId:"",
+		createTime:"",
+		createStaffId:"",
+		goodsState:"",
+		recomTag:"",
+		priceRule:"",
+		beginTime:"",
+		endTime:"",
+		simpDesc:"",
 		
 		resAttr:""
 };
@@ -379,7 +392,7 @@ function getParams() {
 	orderFormParams.custName = $('#userName').val();
 	orderFormParams.idCardNum = $('#userCard').val();
 	
-	orderFormParams.originalPrice = $('#totalPrice').val();
+	orderFormParams.originalPrice = $('#originalPrice').val();
 	orderFormParams.couponMoney = $('#couponMoney').val();
 	orderFormParams.manMadeMoney = orderFormParams.originalPrice;
 	orderFormParams.topayMoney = $('#totalPrice').val();
@@ -425,6 +438,20 @@ function getParams() {
 	
 	orderFormParams.goodsId= $('#goodsId').val();
 	orderFormParams.goodsName= $('#goodsName').val();
+	
+	orderFormParams.ctlgCode= $('#ctlgCode').val();
+//	orderFormParams.originalPrice= $('#originalPrice').val();
+	orderFormParams.albumId= $('#albumId').val();
+	orderFormParams.verNo= $('#verNo').val();
+	orderFormParams.merchantId= $('#merchantId').val();
+	orderFormParams.createTime= $('#createTime').val();
+	orderFormParams.createStaffId= $('#createStaffId').val();
+	orderFormParams.goodsState= $('#goodsState').val();
+	orderFormParams.recomTag= $('#recomTag').val();
+	orderFormParams.priceRule= $('#priceRule').val();
+	orderFormParams.beginTime= $('#beginTime').val();
+	orderFormParams.endTime= $('#endTime').val();
+	orderFormParams.simpDesc= $('#simpDesc').val();
 	
 	orderFormParams.unitPrice = $('#goodsPrice').val();
 	orderFormParams.topayFee= $('#goodsPrice').val();

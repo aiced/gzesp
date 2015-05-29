@@ -15,7 +15,19 @@
     <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
     <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
     <result column="RES_INFO" property="resInfo" jdbcType="VARCHAR" />
-    <result column="CMS_PRE_FEE" property="cmsPreFee" jdbcType="DECIMAL" />
+    <result column="ALBUM_ID" property="albumId" jdbcType="DECIMAL" />
+    <result column="VER_NO" property="verNo" jdbcType="DECIMAL" />
+    <result column="MERCHANT_ID" property="merchantId" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="CREATE_STAFF_ID" property="createStaffId" jdbcType="DECIMAL" />
+    <result column="GOODS_STATE" property="goodsState" jdbcType="CHAR" />
+    <result column="RECOM_TAG" property="recomTag" jdbcType="CHAR" />
+    <result column="PRICE_RULE" property="priceRule" jdbcType="CHAR" />
+    <result column="BEGIN_TIME" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="SIMP_DESC" property="simpDesc" jdbcType="VARCHAR" />
+    <result column="CTLG_CODE" property="ctlgCode" jdbcType="DECIMAL" />
+    <result column="ORIGINAL_PRICE" property="originalPrice" jdbcType="DECIMAL" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -83,7 +95,9 @@
   </sql>
   <sql id="Base_Column_List" >
     GOODS_ID, ORDER_ID, PARTITION_ID, GOODS_NAME, UNIT_PRICE, SALE_NUM, TOPAY_FEE, DERATE_FEE, 
-    DERATE_REASON, RECV_FEE, VALUES1, VALUES2, RES_INFO, CMS_PRE_FEE
+    DERATE_REASON, RECV_FEE, VALUES1, VALUES2, RES_INFO, ALBUM_ID, VER_NO, MERCHANT_ID, 
+    CREATE_TIME, CREATE_STAFF_ID, GOODS_STATE, RECOM_TAG, PRICE_RULE, BEGIN_TIME, END_TIME, 
+    SIMP_DESC, CTLG_CODE, ORIGINAL_PRICE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -124,12 +138,20 @@
       GOODS_NAME, UNIT_PRICE, SALE_NUM, 
       TOPAY_FEE, DERATE_FEE, DERATE_REASON, 
       RECV_FEE, VALUES1, VALUES2, 
-      RES_INFO, CMS_PRE_FEE)
+      RES_INFO, ALBUM_ID, VER_NO, 
+      MERCHANT_ID, CREATE_TIME, CREATE_STAFF_ID, 
+      GOODS_STATE, RECOM_TAG, PRICE_RULE, 
+      BEGIN_TIME, END_TIME, SIMP_DESC, 
+      CTLG_CODE, ORIGINAL_PRICE)
     values (#{goodsId,jdbcType=DECIMAL}, #{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, 
       #{goodsName,jdbcType=VARCHAR}, #{unitPrice,jdbcType=DECIMAL}, #{saleNum,jdbcType=DECIMAL}, 
       #{topayFee,jdbcType=DECIMAL}, #{derateFee,jdbcType=DECIMAL}, #{derateReason,jdbcType=VARCHAR}, 
       #{recvFee,jdbcType=DECIMAL}, #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}, 
-      #{resInfo,jdbcType=VARCHAR}, #{cmsPreFee,jdbcType=DECIMAL})
+      #{resInfo,jdbcType=VARCHAR}, #{albumId,jdbcType=DECIMAL}, #{verNo,jdbcType=DECIMAL}, 
+      #{merchantId,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createStaffId,jdbcType=DECIMAL}, 
+      #{goodsState,jdbcType=CHAR}, #{recomTag,jdbcType=CHAR}, #{priceRule,jdbcType=CHAR}, 
+      #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{simpDesc,jdbcType=VARCHAR}, 
+      #{ctlgCode,jdbcType=DECIMAL}, #{originalPrice,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPROD" >
     insert into ORD_D_PROD
@@ -173,8 +195,44 @@
       <if test="resInfo != null" >
         RES_INFO,
       </if>
-      <if test="cmsPreFee != null" >
-        CMS_PRE_FEE,
+      <if test="albumId != null" >
+        ALBUM_ID,
+      </if>
+      <if test="verNo != null" >
+        VER_NO,
+      </if>
+      <if test="merchantId != null" >
+        MERCHANT_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="createStaffId != null" >
+        CREATE_STAFF_ID,
+      </if>
+      <if test="goodsState != null" >
+        GOODS_STATE,
+      </if>
+      <if test="recomTag != null" >
+        RECOM_TAG,
+      </if>
+      <if test="priceRule != null" >
+        PRICE_RULE,
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="simpDesc != null" >
+        SIMP_DESC,
+      </if>
+      <if test="ctlgCode != null" >
+        CTLG_CODE,
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -217,8 +275,44 @@
       <if test="resInfo != null" >
         #{resInfo,jdbcType=VARCHAR},
       </if>
-      <if test="cmsPreFee != null" >
-        #{cmsPreFee,jdbcType=DECIMAL},
+      <if test="albumId != null" >
+        #{albumId,jdbcType=DECIMAL},
+      </if>
+      <if test="verNo != null" >
+        #{verNo,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaffId != null" >
+        #{createStaffId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsState != null" >
+        #{goodsState,jdbcType=CHAR},
+      </if>
+      <if test="recomTag != null" >
+        #{recomTag,jdbcType=CHAR},
+      </if>
+      <if test="priceRule != null" >
+        #{priceRule,jdbcType=CHAR},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="simpDesc != null" >
+        #{simpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ctlgCode != null" >
+        #{ctlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="originalPrice != null" >
+        #{originalPrice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -270,8 +364,44 @@
       <if test="record.resInfo != null" >
         RES_INFO = #{record.resInfo,jdbcType=VARCHAR},
       </if>
-      <if test="record.cmsPreFee != null" >
-        CMS_PRE_FEE = #{record.cmsPreFee,jdbcType=DECIMAL},
+      <if test="record.albumId != null" >
+        ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.verNo != null" >
+        VER_NO = #{record.verNo,jdbcType=DECIMAL},
+      </if>
+      <if test="record.merchantId != null" >
+        MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createStaffId != null" >
+        CREATE_STAFF_ID = #{record.createStaffId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsState != null" >
+        GOODS_STATE = #{record.goodsState,jdbcType=CHAR},
+      </if>
+      <if test="record.recomTag != null" >
+        RECOM_TAG = #{record.recomTag,jdbcType=CHAR},
+      </if>
+      <if test="record.priceRule != null" >
+        PRICE_RULE = #{record.priceRule,jdbcType=CHAR},
+      </if>
+      <if test="record.beginTime != null" >
+        BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.simpDesc != null" >
+        SIMP_DESC = #{record.simpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctlgCode != null" >
+        CTLG_CODE = #{record.ctlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="record.originalPrice != null" >
+        ORIGINAL_PRICE = #{record.originalPrice,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -293,7 +423,19 @@
       VALUES1 = #{record.values1,jdbcType=VARCHAR},
       VALUES2 = #{record.values2,jdbcType=VARCHAR},
       RES_INFO = #{record.resInfo,jdbcType=VARCHAR},
-      CMS_PRE_FEE = #{record.cmsPreFee,jdbcType=DECIMAL}
+      ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
+      VER_NO = #{record.verNo,jdbcType=DECIMAL},
+      MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      CREATE_STAFF_ID = #{record.createStaffId,jdbcType=DECIMAL},
+      GOODS_STATE = #{record.goodsState,jdbcType=CHAR},
+      RECOM_TAG = #{record.recomTag,jdbcType=CHAR},
+      PRICE_RULE = #{record.priceRule,jdbcType=CHAR},
+      BEGIN_TIME = #{record.beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{record.endTime,jdbcType=TIMESTAMP},
+      SIMP_DESC = #{record.simpDesc,jdbcType=VARCHAR},
+      CTLG_CODE = #{record.ctlgCode,jdbcType=DECIMAL},
+      ORIGINAL_PRICE = #{record.originalPrice,jdbcType=DECIMAL}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -334,8 +476,44 @@
       <if test="resInfo != null" >
         RES_INFO = #{resInfo,jdbcType=VARCHAR},
       </if>
-      <if test="cmsPreFee != null" >
-        CMS_PRE_FEE = #{cmsPreFee,jdbcType=DECIMAL},
+      <if test="albumId != null" >
+        ALBUM_ID = #{albumId,jdbcType=DECIMAL},
+      </if>
+      <if test="verNo != null" >
+        VER_NO = #{verNo,jdbcType=DECIMAL},
+      </if>
+      <if test="merchantId != null" >
+        MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createStaffId != null" >
+        CREATE_STAFF_ID = #{createStaffId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsState != null" >
+        GOODS_STATE = #{goodsState,jdbcType=CHAR},
+      </if>
+      <if test="recomTag != null" >
+        RECOM_TAG = #{recomTag,jdbcType=CHAR},
+      </if>
+      <if test="priceRule != null" >
+        PRICE_RULE = #{priceRule,jdbcType=CHAR},
+      </if>
+      <if test="beginTime != null" >
+        BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="simpDesc != null" >
+        SIMP_DESC = #{simpDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="ctlgCode != null" >
+        CTLG_CODE = #{ctlgCode,jdbcType=DECIMAL},
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE = #{originalPrice,jdbcType=DECIMAL},
       </if>
     </set>
     where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
@@ -354,7 +532,19 @@
       VALUES1 = #{values1,jdbcType=VARCHAR},
       VALUES2 = #{values2,jdbcType=VARCHAR},
       RES_INFO = #{resInfo,jdbcType=VARCHAR},
-      CMS_PRE_FEE = #{cmsPreFee,jdbcType=DECIMAL}
+      ALBUM_ID = #{albumId,jdbcType=DECIMAL},
+      VER_NO = #{verNo,jdbcType=DECIMAL},
+      MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      CREATE_STAFF_ID = #{createStaffId,jdbcType=DECIMAL},
+      GOODS_STATE = #{goodsState,jdbcType=CHAR},
+      RECOM_TAG = #{recomTag,jdbcType=CHAR},
+      PRICE_RULE = #{priceRule,jdbcType=CHAR},
+      BEGIN_TIME = #{beginTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      SIMP_DESC = #{simpDesc,jdbcType=VARCHAR},
+      CTLG_CODE = #{ctlgCode,jdbcType=DECIMAL},
+      ORIGINAL_PRICE = #{originalPrice,jdbcType=DECIMAL}
     where GOODS_ID = #{goodsId,jdbcType=DECIMAL}
       and ORDER_ID = #{orderId,jdbcType=DECIMAL}
   </update>

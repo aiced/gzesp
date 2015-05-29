@@ -18,6 +18,15 @@
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    
     <style type="text/css">
         .orderinfo
         {
@@ -25,6 +34,45 @@
             font-size: 12px;
         }
     </style>
+    <script type="text/javascript">
+    
+	$(function(){
+		
+		$("#stStatus").change(function(){
+			
+	    	var status=$('#stStatus option:selected').val();//选中的值
+	    	if (status!="-1") 
+	    	{
+	    		$("#stStatus").attr("disabled","disabled");  
+	    	}
+	    	else
+	    	{
+	    		alert("请选择该订单是否通过审核？");
+	    	}
+	    	
+	    	//ajax 操作，刷新本界面数据   
+			var parms = {'ORDER_ID':${ORDER_ID},'status':status};
+			$.ajax({
+			 type: "POST",
+			 url: '${base}/shopManage/orderStatusUpdate',
+			 data: parms,
+			 success: function(data){
+			  	 //history.back();
+			  	 //alert("ok");
+			  	 //return;
+			  	 alert(data);
+			 }
+			});
+	    	
+	    	
+	    	
+		});	
+	});
+    
+    
+ 
+    
+    </script>
 </head>
 <body>
     <div>
@@ -91,6 +139,10 @@
                 	订单处理退单
                 <#elseif (ORDER_STATE=='10')>
 					客户拒收退单
+				<#elseif (ORDER_STATE=='10')>
+					店主通过审核	
+				<#elseif (ORDER_STATE=='10')>
+					店主未通过审核
 				<#else>
 					未知
                 </#if>
@@ -98,16 +150,41 @@
                 </a>
                 <a href="#" class="list-group-item"><h5>下单时间：${Order_Time}</h5></a>
                 <!-- <a href="#" class="list-group-item"><h5>缺货处理：${PAY_REMARK}</h5></a> -->
+                <#if ((REFUND_STATE=="未知") || (REFUND_STATE==""))>
+                <#else>
+                	<div  class="list-group-item">
+                	<h5 style="color: red;">请谨慎选择（不可更改）</h5>
+                	<br/>
+                	<#if ((REFUND_STATE=="店主审核通过") || (REFUND_STATE=="店主未审核通过"))>
+                		<select class="form-control" id="stStatus" disabled="disabled">
+                	<#else>
+                		<select class="form-control" id="stStatus" >
+                	</#if>
+                	  <option value="-1">请选择是否通过审核</option>
+                	<#if (REFUND_STATE=="店主审核通过")>  
+					  <option value="04" selected="selected">通过审核</option>
+					  <option value="05">不通过审核</option>
+					<#elseif (REFUND_STATE=="店主未审核通过")>
+					  <option value="04">通过审核</option>
+					  <option value="05" selected="selected">不通过审核</option>
+					<#else>
+					  <option value="04">通过审核</option>
+					  <option value="05">不通过审核</option>
+					</#if>
+					</select>
+                	</div>
+                	<a href="#" class="list-group-item">
+                		退款原因：<br/>
+						<textarea class="form-control" rows="3" disabled>${REFUND_REASON}</textarea>
+                	</a>
+
+                </#if>
+
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+
 
 </body>
 </html>

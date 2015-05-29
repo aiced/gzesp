@@ -22,6 +22,7 @@ import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.dao.sql.RefundSql;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.gzesp.utils.SmsUtils;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -73,10 +74,12 @@ public class WeShopCustRefundController {
 	    	String order_state=paramsMap.get("hide_order_state");
 	    	String REFUND_TYPE="09";//固定写死订单处理退单：09客户拒收退单：10
 	    	String REFUND_STATE="00";
-//	    	未审核：00
+//	    	'未审核：00 （刚开始插入表的状态，前台直接发送短信通知能人）
 //	    	审核未通过：01
-//	    	审核通过未退款：02
-//	    	审核通过已退款：03	
+//	    	审核通过未退款：02；（然后就03了 然后调用支付平台的接口）
+//	    	审核通过已退款：03';
+//	    	能人通过审核： 04 （第二个状态，点击审核后 变成 02状态）
+//	    	能人未通过审核：05
 	    	System.out.println(Partition_Id);
 	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    	Date date_create_time=DateUtil.getNow();
@@ -111,19 +114,13 @@ public class WeShopCustRefundController {
 	    	record_orddrefund.setRefundReason(strreason);
 	    	record_orddrefund.setRefundState(REFUND_STATE);
 	    	
-	    	
 	    	tdOrdDREFUNDDao.insertSelective(record_orddrefund);
-	    	
-	    	
 	    	
 	     	ModelAndView mav = null;
 	    	ModelMap mmap=new ModelMap();
-	        //从数据库获取信息赋值
-
 			mmap.addAttribute("orderid",order_id);
-   
+			mmap.addAttribute("phonenum",strphone);
 			mav = new ModelAndView("redirect:/customer/custRefundSuccess",mmap);
-
 	    	return mav;
 	    	
 	   }

@@ -169,6 +169,20 @@
     <input type="hidden" id="num_resId" value="${num_resId}"></input>
     <input type="hidden" id="attr_contract" ></input>
     <input type="hidden" id="attr_number"></input>
+    
+    <input type="hidden" id="ctlg_code" name="ctlg_code" value="${ctlg_code}"></input>
+    <input type="hidden" id="original_price" name="original_price" value="${original_price}"></input>
+    <input type="hidden" id="album_id" name="album_id" value="${album_id}"></input>
+    <input type="hidden" id="ver_no" name="ver_no" value="${ver_no}"></input>
+    <input type="hidden" id="merchant_id" name="merchant_id" value="${merchant_id}"></input>
+    <input type="hidden" id="create_time" name="create_time" value="${create_time}"></input>
+    <input type="hidden" id="create_staff_id" name="create_staff_id" value="${create_staff_id}"></input>
+    <input type="hidden" id="goods_state" name="goods_state" value="${goods_state}"></input>
+    <input type="hidden" id="recom_tag" name="recom_tag" value="${recom_tag}"></input>
+    <input type="hidden" id="price_rule" name="price_rule" value="${price_rule}"></input>
+    <input type="hidden" id="begin_time" name="begin_time" value="${begin_time}"></input>
+    <input type="hidden" id="end_time" name="end_time" value="${end_time}"></input>
+    <input type="hidden" id="simp_desc" name="simp_desc" value="${simp_desc}"></input>
       
   </body>
 </html>

@@ -43,6 +43,7 @@ import com.ai.gzesp.dao.service.TdResDATTRVALDao;
 import com.ai.gzesp.dao.sql.CommissionSql;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.dao.sql.OrdersSql;
+import com.ai.gzesp.utils.DateUtils;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.RegexUtil;
@@ -410,6 +411,19 @@ public class OrderService {
     	String recvFee = paramsMap.get("recvFee");
     	String goodsDisc = paramsMap.get("goodsDisc");
 //    	String cmsPreFee = paramsMap.get("cmsPreFee");
+    	String ctlgCode = paramsMap.get("ctlgCode");
+    	String originalPrice = paramsMap.get("originalPrice");
+    	String albumId = paramsMap.get("albumId");
+    	String verNo = paramsMap.get("verNo");
+    	String merchantId = paramsMap.get("merchantId");
+    	String createTime = paramsMap.get("createTime");
+    	String createStaffId = paramsMap.get("createStaffId");
+    	String goodsState = paramsMap.get("goodsState");
+    	String recomTag = paramsMap.get("recomTag");
+    	String priceRule = paramsMap.get("priceRule");
+    	String beginTime = paramsMap.get("beginTime");
+    	String endTime = paramsMap.get("endTime");
+    	String simpDesc = paramsMap.get("simpDesc");
     	
     	TdOrdDPROD record = new TdOrdDPROD();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -423,6 +437,20 @@ public class OrderService {
     	record.setDerateReason(derateReason);
     	record.setRecvFee(CommonUtil.toDbPrice(CommonUtil.string2Long(recvFee)));
     	record.setResInfo(goodsDisc);
+    	
+    	record.setCtlgCode(CommonUtil.string2Long(ctlgCode));
+    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
+    	record.setAlbumId(CommonUtil.string2Long(albumId));
+    	record.setVerNo(Short.parseShort(verNo));
+    	record.setMerchantId(CommonUtil.string2Int(merchantId));
+    	record.setCreateTime(DateUtils.parse(createTime, DateUtils.TIMESTAMP_FORMAT));
+    	record.setCreateStaffId(CommonUtil.string2Long(createStaffId));
+    	record.setGoodsState(goodsState);
+    	record.setRecomTag(recomTag);
+    	record.setPriceRule(priceRule);
+    	record.setBeginTime(DateUtils.parse(beginTime, DateUtils.TIMESTAMP_FORMAT));
+    	record.setEndTime(DateUtils.parse(endTime, DateUtils.TIMESTAMP_FORMAT));
+    	record.setSimpDesc(simpDesc);
 //    	record.setCmsPreFee(CommonUtil.toDbPrice(CommonUtil.string2Float(cmsPreFee)));
     	
     	

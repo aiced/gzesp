@@ -7,10 +7,20 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdAurDBASEINFO;
+import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.beans.TdOrdDREFUND;
+import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
+import com.ai.gzesp.dao.service.TdOrdDBASEDao;
+import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.StringUtil;
@@ -22,6 +32,11 @@ public class WeShopOrderDetailController {
     private WeShopService weShopService;
 	@Resource 
 	OrdersSql ordersSql;
+	@Resource
+	TdOrdDREFUNDDao tdOrdDREFUNDDao;
+	@Resource
+	TdOrdDBASEDao tdOrdDBASEDao;
+	
 	
     @RequestMapping("/orderDetail")
     public ModelAndView index(@RequestBody String inputParams){
@@ -29,21 +44,12 @@ public class WeShopOrderDetailController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
     	System.out.println(paramsMap);
-        ModelAndView mav = new ModelAndView("orderDetail.ftl");
-
         String strOrderid=paramsMap.get("ORDER_ID");
-//        String strGoodesName=paramsMap.get("GOODS_NAME");
-//        String strInCome_Money=paramsMap.get("INCOME_MONEY");
-//        String strOrder_Time=paramsMap.get("Order_Time");
-//        String strReceiver_Name=paramsMap.get("RECEIVER_NAME");
-//        String strPost_addr=paramsMap.get("POST_ADDR");
-//        String strMobile_phone=paramsMap.get("MOBILE_PHONE");
-//        String strDeliver_time_code=paramsMap.get("DELIVER_TIME_CODE");
-//        String strPay_Mode=paramsMap.get("PAY_MODE");
-//        String strPay_State=paramsMap.get("PAY_STATE");
-//        String strPay_Remark=paramsMap.get("PAY_REMARK");
-        
-        
+        System.out.println("ORDER_ID:"+strOrderid);
+
+    	ModelAndView mav = new ModelAndView("orderDetail.ftl");
+
+
         //从数据库获取信息赋值
     	List<Map<String, Object>> orderList=ordersSql.getOrderInfobyOrderID(strOrderid);
     	
@@ -64,6 +70,8 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_2","没有数据"); 
             mav.addObject("RES_ATTR_VAL_3","没有数据"); 
             mav.addObject("RES_ATTR_VAL_4","没有数据"); 
+            mav.addObject("REFUND_STATE","未知");
+            mav.addObject("REFUND_REASON","无");
 		}
         else {
             mav.addObject("title", "订单详情");
@@ -81,13 +89,61 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_2",orderList.get(0).get("RES_ATTR_VAL_2")); 
             mav.addObject("RES_ATTR_VAL_3",orderList.get(0).get("RES_ATTR_VAL_3")); 
             mav.addObject("RES_ATTR_VAL_4",orderList.get(0).get("RES_ATTR_VAL_4")); 
+            mav.addObject("REFUND_STATE",orderList.get(0).get("REFUND_STATE"));
+            mav.addObject("REFUND_REASON",orderList.get(0).get("REFUND_REASON"));
            // mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
 		
 		}
         
-
-        
-        
         return mav;
     }
+    
+
+    
+    
+    
+    
+    @RequestMapping("/orderStatusUpdate")
+    @ResponseBody
+    public String updateOrderStatus(@RequestBody String Params)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(Params);
+    	String strorder_id=paramsMap.get("order_id");
+    	String strstatus=paramsMap.get("status");
+    	
+    	System.out.println(strorder_id);
+    	System.out.println(strstatus);
+    	
+    	Criteria example = new Criteria();
+    	example.createConditon().andEqualTo("ORDER_ID", strorder_id);
+    	
+    	TdOrdDREFUND record_refund = new TdOrdDREFUND();
+    	record_refund.setRefundState(strstatus);
+    	int icount=tdOrdDREFUNDDao.updateByExampleSelective(record_refund, example);
+    	System.out.println("icount_refund="+icount);
+    	
+    	
+    	example.createConditon().andEqualTo("ORDER_ID", strorder_id);
+    	TdOrdDBASE record_base = new TdOrdDBASE();
+    	if (strstatus.equals("04")) //能人通过审核
+    	{
+        	record_base.setOrderState("11");
+		}
+    	else if(strstatus.equals("05"))//能人未通过审核
+    	{
+        	record_base.setOrderState("12");
+    	}
+    	
+    	icount=tdOrdDBASEDao.updateByExampleSelective(record_base, example);
+    	System.out.println("icount_base="+icount);
+
+    	if (icount>0)
+    	{
+    		return "操作成功";
+		}
+    	else {
+			return "操作失败";
+		}
+    }
+    
 }

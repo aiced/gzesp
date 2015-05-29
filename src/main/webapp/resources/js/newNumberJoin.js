@@ -118,6 +118,20 @@ function nextPage() {
 	tmp.goodsDisc = $('#goods_disc').val();
 	tmp.attrVal = $('#attr_val').val()+"^"+$('#attr_contract').val()+"^"+$('#attr_number').val();
 	
+	tmp.ctlgCode = $('#ctlg_code').val();
+	tmp.originalPrice = $('#original_price').val();
+	tmp.albumId = $('#album_id').val();
+	tmp.verNo = $('#ver_no').val();
+	tmp.merchantId = $('#merchant_id').val();
+	tmp.createTime = $('#create_time').val();
+	tmp.createStaffId = $('#create_staff_id').val();
+	tmp.goodsState = $('#goods_state').val();
+	tmp.recomTag = $('#recom_tag').val();
+	tmp.priceRule = $('#price_rule').val();
+	tmp.beginTime = $('#begin_time').val();
+	tmp.endTime = $('#end_time').val();
+	tmp.simpDesc = $('#simp_desc').val();
+	
 	params = $.extend({}, params, tmp );
 	 $.commonFormSubmit({  
         action : 'fillOrderMain', 

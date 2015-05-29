@@ -1,30 +1,25 @@
 package com.ai.gzesp.controller;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ai.gzesp.dto.UnionPayParam;
-import com.ai.gzesp.service.UnionPayService;
-import com.ai.gzesp.unionpay.TradeType;
-import com.ai.gzesp.unionpay.UnionPayAttrs;
-import com.ai.gzesp.unionpay.UnionPayCons;
-import com.ai.gzesp.unionpay.UnionPayUtil;
-import com.ai.gzesp.utils.DESUtil;
-import com.ai.gzesp.utils.DateUtils;
-import com.ai.gzesp.utils.MD5Util;
+import com.ai.sysframe.utils.CommonUtil;
+import com.ai.wx.consts.DataConstants;
+import com.ai.wx.entity.WebAuthAccessTokenModel;
+import com.ai.wx.service.WebAuthService;
 import com.ai.wxpay.WXPay;
 import com.ai.wxpay.business.UnifiedOrderBusiness;
 import com.ai.wxpay.common.RandomStringGenerator;
@@ -45,32 +40,53 @@ import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderResData;
 @Controller
 @RequestMapping("/pay")
 public class PayWXController {
+    @Resource
+	WebAuthService webAuthService;
+	
+    @RequestMapping("/wxPay/prepay_setp1/{order_id}/{fee}")
+    public ModelAndView prepay_setp1(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
+    	// 授权回调页限制
+    	String  redirect_uri = CommonUtil.appResource.getString("espRoot")+"/esp/pay/wxPay/prepay_setp2/"+order_id+"/"+fee;
+    	String state = "";
+    	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
+        return new ModelAndView("redirect:"+url);
+    }
     
-    @RequestMapping("/wxPay/prepay")
+    
+    @RequestMapping("/wxPay/prepay_setp2/{order_id}/{fee}")
     @ResponseBody
-    public Map<String, String> prepay(@RequestBody Map<String, String> param, HttpServletRequest req) throws Exception{
+    public ModelAndView prepay(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,
+    		@RequestParam(value="code", required=true) String code,  HttpServletRequest req) throws Exception{
     	
-    	
-    	String body = "jsapi wx pay from unicom";
-    	String _out_trade_no = param.get("order_id");
-    	int _total_fee = Integer.parseInt(param.get("fee"))/10;
-    	String realIp = req.getHeader("X-Real-IP");
-    	String _spbill_create_ip = "".equals(realIp) ? req.getRemoteAddr() : realIp;
-    	String _notify_url = req.getServerPort()+"/"+req.getContextPath()+"/pay/wxPay/callback";
-    	String _trade_type = "JSAPI";
-    	// TODO
-    	String _openid = "okhDVstuDQcv9hXYCTwZ2hR6e34s";
-    	UnifiedOrderReqData reqData = new UnifiedOrderReqData(body, _out_trade_no, _total_fee, _spbill_create_ip, _notify_url, _trade_type, _openid);
-    	
-    	Map<String, String> result = new HashMap();
-    	UnifiedOrderResultListener resultListener = new UnifiedOrderResultListener(result);
-//    	try {
-			WXPay.doUnifiedOrderBusiness(reqData, resultListener);
-			return result;
-//		} catch (Exception e) {
-//			throws e;
-//		}
-//        return result;
+    	WebAuthAccessTokenModel webToken =  webAuthService.getAccessToken(DataConstants.appid, DataConstants.appsecret, code);
+    	ModelAndView mav = null;
+		if (webToken != null) {
+			String openId = webToken.getOpenid();
+			if (openId == null) {
+				mav = new ModelAndView("redirect:/pay/selectPayMode/"+"order_id"+"/"+fee);
+			} else {
+				mav = new ModelAndView("wxPrepay.ftl");
+				String body = "jsapi wx pay from unicom";
+				String _out_trade_no = order_id;
+				int _total_fee = Integer.parseInt(fee)/10;
+				String realIp = req.getHeader("X-Real-IP");
+				String _spbill_create_ip = "".equals(realIp) ? req.getRemoteAddr() : realIp;
+				
+				int port = req.getServerPort();
+		    	String portStr = (80==port || 443 == port) ? "" : ":"+port;
+		    	String _notify_url = req.getScheme() + "://" + req.getServerName() + portStr + "/" + req.getContextPath()+"/pay/wxPay/callback";
+				
+				String _trade_type = "JSAPI";
+				UnifiedOrderReqData reqData = new UnifiedOrderReqData(body, _out_trade_no, _total_fee, _spbill_create_ip, _notify_url, _trade_type, openId);
+				
+				Map<String, String> result = new HashMap();
+				UnifiedOrderResultListener resultListener = new UnifiedOrderResultListener(result);
+				WXPay.doUnifiedOrderBusiness(reqData, resultListener);
+				mav.addAllObjects(result);
+			}
+		}
+		
+		return mav;
     }    
     
     @RequestMapping("/wxPay/callback")

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdAurDBASEINFO;
+import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
 import com.ai.gzesp.dao.sql.CommissionSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.StringUtil;
@@ -26,6 +30,8 @@ public class WeShopCommissQueryController {
     private WeShopService weShopService;
 	@Resource 
 	CommissionSql commissionSql;
+	@Resource
+	TdAurDBASEINFODao tdAurDBASEINFODao;
 	
     @RequestMapping("/commissionQuery")
     public ModelAndView index(@RequestParam(value = "userid", required = true)String strUserID){
@@ -38,6 +44,11 @@ public class WeShopCommissQueryController {
     	String strTotalMoney=commissionSql.getCommTotalbySelectGroup("0",strUserID,"","","","-1",16);
 
 
+    	Criteria example = new Criteria();
+    	example.createConditon().andEqualTo("USER_ID", strUserID);
+    	List<TdAurDBASEINFO> list = tdAurDBASEINFODao.selectByExample(example);
+    	
+    	
     	
     	ModelAndView mav = new ModelAndView("commissionQuery.ftl");
         //从数据库获取信息赋值
@@ -46,7 +57,7 @@ public class WeShopCommissQueryController {
         mav.addObject("hideuserid", strUserID); 
         mav.addObject("commList",commList);
         mav.addObject("totalmoney",Integer.valueOf(strTotalMoney));
-//        mav.addObject("weixin", "1306520198@qq.com"); 
+        mav.addObject("isbandbank", list.get(0).getBankAcct()); 
         
         return mav;
     }

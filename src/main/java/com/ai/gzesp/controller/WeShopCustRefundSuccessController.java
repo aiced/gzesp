@@ -17,7 +17,6 @@ public class WeShopCustRefundSuccessController {
 	   @RequestMapping("/custRefundSuccess")
 	    public ModelAndView index(@RequestParam(value = "orderid", required = false)String strOrderid,@RequestParam(value = "phonenum", required = false)String phonenum){
 	    	
-		   phonenum="18551855717";
 	       String strRet=SmsUtils.doSendMessage(phonenum,"MB-2015052703","@1@="+strOrderid);
 		   
 		   

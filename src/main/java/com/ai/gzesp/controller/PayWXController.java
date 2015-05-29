@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdPayDWEIXINLOG;
+import com.ai.gzesp.dao.service.TdPayDWEIXINLOGDao;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.wx.consts.DataConstants;
 import com.ai.wx.entity.WebAuthAccessTokenModel;
@@ -42,6 +45,9 @@ import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderResData;
 public class PayWXController {
     @Resource
 	WebAuthService webAuthService;
+    
+    @Resource
+    TdPayDWEIXINLOGDao tdPayDWEIXINLOGDao;
 	
     @RequestMapping("/wxPay/prepay_setp1/{order_id}/{fee}")
     public ModelAndView prepay_setp1(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
@@ -92,9 +98,32 @@ public class PayWXController {
     @RequestMapping("/wxPay/callback")
     public void callback(@RequestBody String responseString)	{
     	System.out.println(responseString);
-    	PayQueryResData resData = (PayQueryResData) Util.getObjectFromXML(responseString, PayQueryResData.class);
-    	System.out.println(resData);
-    	// TODO 插数据库 PAY_D_WEIXIN_LOG 需要判断重复记录，区分交易类型
+    	TdPayDWEIXINLOG resData = (TdPayDWEIXINLOG) Util.getObjectFromXML(responseString, TdPayDWEIXINLOG.class);
+    	
+    	String transactionId = resData.getTransactionId();
+    	Criteria example = new Criteria();
+    	example.createConditon().andEqualTo("TRANSACTION_ID", transactionId);
+    	int count = tdPayDWEIXINLOGDao.countByExample(example);
+    	// 过滤重复数据
+    	if(count == 0) {
+    		String logId = CommonUtil.generateLogId("2");
+    		resData.setLogId(CommonUtil.string2Long(logId));
+    		resData.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(logId)));
+    		resData.setReqType("01");
+    		Long totalFee = resData.getTotalFee();
+    		Long cashFee = resData.getCashFee();
+    		Long refundFee = resData.getRefundFee();
+    		if(totalFee != null) {
+    			resData.setTotalFee(totalFee*10);
+    		}
+    		if(cashFee != null) {
+    			resData.setCashFee(cashFee*10);
+    		}
+    		if(refundFee != null) {
+    			resData.setRefundFee(refundFee*10);
+    		}
+    		tdPayDWEIXINLOGDao.insertSelective(resData);
+    	}
     }
     
 }
@@ -108,25 +137,25 @@ class UnifiedOrderResultListener implements UnifiedOrderBusiness.ResultListener 
 		}
 		result = _result;
 	}
-
-	@Override
-	public void onFailByReturnCodeError(UnifiedOrderResData resData) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onFailByReturnCodeFail(UnifiedOrderResData resData) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onFailBySignInvalid(UnifiedOrderResData resData) {
-		// TODO Auto-generated method stub
-		
-	}
-
+//
+//	@Override
+//	public void onFailByReturnCodeError(UnifiedOrderResData resData) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void onFailByReturnCodeFail(UnifiedOrderResData resData) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void onFailBySignInvalid(UnifiedOrderResData resData) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+	
 	@Override
 	public void onFail(UnifiedOrderResData resData) {
 		// TODO Auto-generated method stub

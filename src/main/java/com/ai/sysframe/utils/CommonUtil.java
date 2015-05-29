@@ -259,13 +259,19 @@ public class CommonUtil {
     	return idType + rStr + time;
     }
     
-    public static String generatePayLogId() {
-    	String idType = "2";
+    /**
+     * payType 2:微信支付； 3：银联; 4：沃支付； 5：deal_log_id
+     * 
+     * @param payType
+     * @return
+     */
+    public static String generateLogId(String payType) {
+//    	String idType = "2";
     	long time =  System.currentTimeMillis();
     	Random r = new Random();
     	int rint = r.nextInt(99);
     	String rStr = StringUtil.paddingLeft(String.valueOf(rint), '0', 2);
-    	return idType + rStr + time;
+    	return payType + rStr + time;
     }
     
     public static String getPartitionId(String str) { 

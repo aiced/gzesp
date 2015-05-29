@@ -19,7 +19,7 @@ public class Configure {
 	private static String appID = DataConstants.appid;
 
 	//微信支付分配的商户号ID（开通公众号的微信支付功能之后可以获取到）
-	private static String mchID = "";
+	private static String mchID = "1241798102";
 	
 	//终端设备号(门店号或收银设备ID)，注意：PC网页或公众号内支付请传"WEB"
 	private static String deviceInfo  = "WEB";

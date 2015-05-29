@@ -20,12 +20,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.beans.TdOrdDREFUND;
+import com.ai.gzesp.dao.beans.TdOrdLDEALLOG;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
+import com.ai.gzesp.dao.service.TdOrdLDEALLOGDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.dao.sql.RefundSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.gzesp.utils.SmsUtils;
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -38,6 +41,8 @@ public class WeShopCustRefundController {
 
     @Resource
 	TdOrdDBASEDao tdOrdDBASEDao;
+    @Resource
+	TdOrdLDEALLOGDao tdOrdLDEALLOGDao;
     
     @Autowired
     private WeShopService weShopService;
@@ -124,6 +129,24 @@ public class WeShopCustRefundController {
 	    	TdOrdDBASE record_orddbase=new TdOrdDBASE();
 	    	record_orddbase.setOrderState(REFUND_STATE);
 	    	tdOrdDBASEDao.updateByExampleSelective(record_orddbase, example);
+	    	
+    		String logId = CommonUtil.generateLogId("4");
+	    	
+	    	//插入状态流程日志表
+	    	TdOrdLDEALLOG record_deallog=new TdOrdLDEALLOG();
+	    	record_deallog.setOperateLogid(CommonUtil.string2Long(logId));
+	    	record_deallog.setOrderId(Long.valueOf(order_id));
+	    	record_deallog.setPartitionId(Short.valueOf(Partition_Id));
+	    	record_deallog.setOperateTime(date_order_time);
+	    	record_deallog.setOperatorId(strphone);
+	    	record_deallog.setOperatorName(strphone);
+	    	record_deallog.setDealContent("用户发生退单");
+	    	record_deallog.setResultCode("0");
+	    	record_deallog.setResultInfo("成功");
+	    	record_deallog.setOriginalState(order_state);
+	    	record_deallog.setCurrentState(REFUND_STATE);
+
+	    	tdOrdLDEALLOGDao.insertSelective(record_deallog);
 	    	
 	    	
 	    	

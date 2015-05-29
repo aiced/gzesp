@@ -72,6 +72,7 @@ public class Configure {
 	}
 
 	public static String HttpsRequestClassName = HttpsRequest.class.getName();
+	public static String HttpRequestClassName = HttpRequest.class.getName();
 
 	public static void setKey(String key) {
 		Configure.key = key;

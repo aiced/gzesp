@@ -8,6 +8,8 @@ import java.util.TreeMap;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,7 +30,6 @@ import com.ai.wxpay.business.UnifiedOrderBusiness;
 import com.ai.wxpay.common.RandomStringGenerator;
 import com.ai.wxpay.common.Signature;
 import com.ai.wxpay.common.Util;
-import com.ai.wxpay.protocol.pay_query_protocol.PayQueryResData;
 import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderReqData;
 import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderResData;
 
@@ -43,25 +44,28 @@ import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderResData;
 @Controller
 @RequestMapping("/pay")
 public class PayWXController {
+	Logger log = LoggerFactory.getLogger(this.getClass().getName());
+	
     @Resource
 	WebAuthService webAuthService;
     
     @Resource
     TdPayDWEIXINLOGDao tdPayDWEIXINLOGDao;
 	
-    @RequestMapping("/wxPay/prepay_setp1/{order_id}/{fee}")
-    public ModelAndView prepay_setp1(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
+    @RequestMapping("/wxPay/prepay_step1/{order_id}/{fee}")
+    public ModelAndView prepay_step1(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
     	// 授权回调页限制
     	String  redirect_uri = CommonUtil.appResource.getString("espRoot")+"/esp/pay/wxPay/prepay_setp2/"+order_id+"/"+fee;
+    	log.debug("redirect_uri-----"+redirect_uri);
     	String state = "";
     	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
         return new ModelAndView("redirect:"+url);
     }
     
     
-    @RequestMapping("/wxPay/prepay_setp2/{order_id}/{fee}")
+    @RequestMapping("/wxPay/prepay_step2/{order_id}/{fee}")
     @ResponseBody
-    public ModelAndView prepay(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,
+    public ModelAndView prepay_step2(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,
     		@RequestParam(value="code", required=true) String code,  HttpServletRequest req) throws Exception{
     	
     	WebAuthAccessTokenModel webToken =  webAuthService.getAccessToken(DataConstants.appid, DataConstants.appsecret, code);
@@ -71,7 +75,7 @@ public class PayWXController {
 			if (openId == null) {
 				mav = new ModelAndView("redirect:/pay/selectPayMode/"+"order_id"+"/"+fee);
 			} else {
-				mav = new ModelAndView("wxPrepay.ftl");
+				mav = new ModelAndView("redirect:/pay/wxPay/prepay_setp3");
 				String body = "jsapi wx pay from unicom";
 				String _out_trade_no = order_id;
 				int _total_fee = Integer.parseInt(fee)/10;
@@ -81,7 +85,8 @@ public class PayWXController {
 				int port = req.getServerPort();
 		    	String portStr = (80==port || 443 == port) ? "" : ":"+port;
 		    	String _notify_url = req.getScheme() + "://" + req.getServerName() + portStr + "/" + req.getContextPath()+"/pay/wxPay/callback";
-				
+		    	log.debug("_notify_url-----"+_notify_url);
+		    	
 				String _trade_type = "JSAPI";
 				UnifiedOrderReqData reqData = new UnifiedOrderReqData(body, _out_trade_no, _total_fee, _spbill_create_ip, _notify_url, _trade_type, openId);
 				
@@ -91,13 +96,20 @@ public class PayWXController {
 				mav.addAllObjects(result);
 			}
 		}
-		
 		return mav;
-    }    
+    }
+    
+    @RequestMapping("/wxPay/prepay_step3")
+    @ResponseBody
+    public ModelAndView prepay_step3(HttpServletRequest req) {
+    	ModelAndView mav = new ModelAndView("wxPrepay.ftl", req.getParameterMap());
+    	return mav;
+    }
+    
     
     @RequestMapping("/wxPay/callback")
     public void callback(@RequestBody String responseString)	{
-    	System.out.println(responseString);
+    	log.debug("responseString-----"+responseString);
     	TdPayDWEIXINLOG resData = (TdPayDWEIXINLOG) Util.getObjectFromXML(responseString, TdPayDWEIXINLOG.class);
     	
     	String transactionId = resData.getTransactionId();
@@ -123,6 +135,7 @@ public class PayWXController {
     			resData.setRefundFee(refundFee*10);
     		}
     		tdPayDWEIXINLOGDao.insertSelective(resData);
+    		// TODO 更新订单状态，调用奚总的接口
     	}
     }
     

@@ -98,11 +98,6 @@
 	     where SIGN_CODE = #{sign_code}
 	</update>	
 	
-	<select id="queryUserIdByOrderId" resultType="java.util.HashMap">
-        select user_id
-          from ORD_D_DEAL
-         where order_id = ${order_id}
-	</select>		
 	
 	<select id="queryBindResultRow" resultType="java.util.HashMap">
          select pay_acunt_no sign_code,

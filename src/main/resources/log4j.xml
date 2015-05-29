@@ -90,16 +90,16 @@
 	</appender>
 	
 	<logger name="com.ai">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="Console" />
 		<appender-ref ref="DailyRolling"/>
 	</logger>
 	<logger name="net.sf.ehcache">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="Console" />
 	</logger>
 	<logger name="java.sql.PreparedStatement">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="Console" />
 		<appender-ref ref="DailyRolling"/>
 	</logger>
@@ -133,7 +133,7 @@
 		<appender-ref ref="Console" />
 	</logger>
 	<logger name="org.springframework">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="Console" />
 	</logger>
     

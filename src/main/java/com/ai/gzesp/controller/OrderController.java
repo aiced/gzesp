@@ -185,7 +185,7 @@ public class OrderController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
     	String orderId = CommonUtil.generateOrderId();
-    	String payLogId = CommonUtil.generatePayLogId();
+//    	String payLogId = CommonUtil.generatePayLogId();
     	String originalPrice = paramsMap.get("originalPrice");
     	String isAndroidWeiXin = paramsMap.get("isAndroidWeiXin");
     	if(Boolean.parseBoolean(isAndroidWeiXin)) {
@@ -201,7 +201,7 @@ public class OrderController {
     	
     	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice));
     	paramsMap.put("orderId", orderId);
-    	paramsMap.put("payLogId", payLogId);
+//    	paramsMap.put("payLogId", payLogId);
     	
     	orderService.insertOrder(paramsMap);
     	

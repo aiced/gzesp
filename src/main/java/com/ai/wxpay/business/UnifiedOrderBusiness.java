@@ -24,15 +24,15 @@ public class UnifiedOrderBusiness {
     }
 
     public interface ResultListener {
-
-        //API返回ReturnCode不合法，支付请求逻辑错误，请仔细检测传过去的每一个参数是否合法，或是看API能否被正常访问
-        void onFailByReturnCodeError(UnifiedOrderResData resData);
-
-        //API返回ReturnCode为FAIL，支付API系统返回失败，请检测Post给API的数据是否规范合法
-        void onFailByReturnCodeFail(UnifiedOrderResData resData);
-
-        //支付请求API返回的数据签名验证失败，有可能数据被篡改了
-        void onFailBySignInvalid(UnifiedOrderResData resData);
+//
+//        //API返回ReturnCode不合法，支付请求逻辑错误，请仔细检测传过去的每一个参数是否合法，或是看API能否被正常访问
+//        void onFailByReturnCodeError(UnifiedOrderResData resData);
+//
+//        //API返回ReturnCode为FAIL，支付API系统返回失败，请检测Post给API的数据是否规范合法
+//        void onFailByReturnCodeFail(UnifiedOrderResData resData);
+//
+//        //支付请求API返回的数据签名验证失败，有可能数据被篡改了
+//        void onFailBySignInvalid(UnifiedOrderResData resData);
 
         //支付失败
         void onFail(UnifiedOrderResData resData);
@@ -95,14 +95,14 @@ public class UnifiedOrderBusiness {
 
         if (resData == null || resData.getReturn_code() == null) {
             log.e("【统一下单】请求逻辑错误，请仔细检测传过去的每一个参数是否合法，或是看API能否被正常访问");
-            resultListener.onFailByReturnCodeError(resData);
+            resultListener.onFail(resData);
             return;
         }
 
         if (resData.getReturn_code().equals("FAIL")) {
             //注意：一般这里返回FAIL是出现系统级参数错误，请检测Post给API的数据是否规范合法
             log.e("【统一下单】API系统返回失败，请检测Post给API的数据是否规范合法");
-            resultListener.onFailByReturnCodeFail(resData);
+            resultListener.onFail(resData);
             return;
         } else {
             log.d("统一下单API系统成功返回数据");
@@ -111,7 +111,7 @@ public class UnifiedOrderBusiness {
             //--------------------------------------------------------------------
             if (!Signature.checkIsSignValidFromResponseString(responseString)) {
                 log.e("【统一下单】请求API返回的数据签名验证失败，有可能数据被篡改了");
-                resultListener.onFailBySignInvalid(resData);
+                resultListener.onFail(resData);
                 return;
             }
 

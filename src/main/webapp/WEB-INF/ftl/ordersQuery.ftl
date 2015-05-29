@@ -455,9 +455,13 @@
 		                       <#elseif (item.ORDER_STATE=='10')>
 								<h5><div class="order_contain_statue">客户拒收退单</div></h5>
 		                       <#elseif (item.ORDER_STATE=='11')>
-								<h5><div class="order_contain_statue">店主通过审核</div></h5>
+								<h5><div class="order_contain_statue">店主审核中</div></h5>
 		                       <#elseif (item.ORDER_STATE=='12')>
-								<h5><div class="order_contain_statue">店主未通过审核</div></h5>
+								<h5><div class="order_contain_statue">管理员审核中</div></h5>
+		                       <#elseif (item.ORDER_STATE=='13')>
+								<h5><div class="order_contain_statue">审核通过未退款</div></h5>
+		                       <#elseif (item.ORDER_STATE=='14')>
+								<h5><div class="order_contain_statue">审核通过已退款</div></h5>
 		                       </#if>
 		                       <!-- <div class="order_contain_statue">${item.PAY_STATE}</div> -->
 		                   </div>

@@ -147,11 +147,9 @@ public class WeShopRegist3Controller {
     	//record_aurdbaseinfo.setBankName(strBank);//BANK_NAME
     	//record_aurdbaseinfo.setBankAcct(strBankCardId);//BANK_ACCT
     	tdAurDBASEINFODao.insertSelective(record_aurdbaseinfo);
-    	
 		mmap.addAttribute("userid",LId.toString());
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
     	return mav;
-    	
     } 
     //生成id
     //当前时间+2位随机码

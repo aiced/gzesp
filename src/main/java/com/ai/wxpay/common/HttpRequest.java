@@ -101,5 +101,46 @@ public class HttpRequest  implements IServiceRequest {
 
         return result;
 	}
+	
+	public String sendPost(String api_url, String postDataXML)
+			throws UnrecoverableKeyException, KeyManagementException,
+			NoSuchAlgorithmException, KeyStoreException, IOException {
+		String result = null;
+		
+		
+		HttpClient httpClient = HttpClients.createDefault();
+		HttpPost httpPost = new HttpPost(api_url);
+		
+//		//解决XStream对出现双下划线的bug
+//		XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
+//		xStreamForRequestPostData.alias("xml", xmlObj.getClass());
+//		
+//		//将要提交给API的数据对象转换成XML格式数据Post给API
+//		String postDataXML = xStreamForRequestPostData.toXML(xmlObj);
+		
+		Util.log("API，POST过去的数据是：");
+		Util.log(postDataXML);
+		
+		//得指明使用UTF-8编码，否则到API服务器XML的中文不能被成功识别
+		StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
+		httpPost.addHeader("Content-Type", "text/xml");
+		httpPost.setEntity(postEntity);
+		
+		Util.log("executing request" + httpPost.getRequestLine());
+		
+		try {
+			HttpResponse response = httpClient.execute(httpPost);
+			HttpEntity entity = response.getEntity();
+			result = EntityUtils.toString(entity, "UTF-8");
+			EntityUtils.consume(entity);
+		} catch (Exception e) {
+			Util.log("http get throw Exception");
+		} finally {
+			httpPost.abort();
+			httpClient.getConnectionManager().shutdown();
+		}
+		
+		return result;
+	}
 
 }

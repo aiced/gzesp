@@ -122,6 +122,7 @@ public class HttpsRequest implements IServiceRequest{
 
         //解决XStream对出现双下划线的bug
         XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
+        xStreamForRequestPostData.alias("xml", xmlObj.getClass());
 
         //将要提交给API的数据对象转换成XML格式数据Post给API
         String postDataXML = xStreamForRequestPostData.toXML(xmlObj);

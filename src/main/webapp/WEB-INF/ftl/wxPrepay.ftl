@@ -31,7 +31,7 @@
 	    });
 	    
 	  	function onBridgeReady(){
-	  		alert("123");
+	  		// alert("123");
 			 WeixinJSBridge.invoke('getBrandWCPayRequest',{
 	  		 "appId" : "${appId}",
 	  		 "timeStamp" : "${timeStamp}", 

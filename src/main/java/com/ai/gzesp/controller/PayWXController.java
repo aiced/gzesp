@@ -91,7 +91,7 @@ public class PayWXController {
 				String _trade_type = "JSAPI";
 				UnifiedOrderReqData reqData = new UnifiedOrderReqData(body, _out_trade_no, _total_fee, _spbill_create_ip, _notify_url, _trade_type, openId);
 				
-				Map<String, String> result = new HashMap();
+				Map<String, Object> result = new HashMap();
 				UnifiedOrderResultListener resultListener = new UnifiedOrderResultListener(result);
 				WXPay.doUnifiedOrderBusiness(reqData, resultListener);
 				mav.addAllObjects(result);
@@ -159,11 +159,11 @@ public class PayWXController {
 }
 
 class UnifiedOrderResultListener implements UnifiedOrderBusiness.ResultListener {
-	private Map<String, String> result;
+	private Map<String, Object> result;
 	
-	UnifiedOrderResultListener(Map<String, String> _result) {
+	UnifiedOrderResultListener(Map<String, Object> _result) {
 		if(_result == null) {
-			_result = new HashMap<String, String>();
+			_result = new HashMap<String, Object>();
 		}
 		result = _result;
 	}
@@ -176,7 +176,7 @@ class UnifiedOrderResultListener implements UnifiedOrderBusiness.ResultListener 
 
 	@Override
 	public void onSuccess(UnifiedOrderResData resData) {
-		SortedMap<String, String> finalpackage = new TreeMap<String, String>();
+		Map<String, Object> finalpackage = new HashMap<String, Object>();
 		String appid = resData.getAppid();
 		String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
 		String nonceStr = RandomStringGenerator.getRandomStringByLength(32);
@@ -187,13 +187,9 @@ class UnifiedOrderResultListener implements UnifiedOrderBusiness.ResultListener 
 		finalpackage.put("package", packages);  
 		finalpackage.put("signType", "MD5");
 		finalpackage.put("timeStamp", timestamp);  
-		try {
-			String finalsign = Signature.getSign(finalpackage);
-			result.putAll(finalpackage);
-			result.put("paySign", finalsign);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		String finalsign = Signature.getSign(finalpackage);
+		result.putAll(finalpackage);
+		result.put("paySign", finalsign);
 	}
 	
 }

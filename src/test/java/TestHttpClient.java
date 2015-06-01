@@ -27,6 +27,7 @@ public class TestHttpClient extends TestCase {
     			+ "   <trade_type>JSAPI</trade_type>     <product_id></product_id>     <openid>okhDVstuDQcv9hXYCTwZ2hR6e34s</openid>  </xml>";
     	String result = req.sendPost("https://api.mch.weixin.qq.com/pay/unifiedorder", reqData);
     	System.out.println(result);
+    	
     }
     
 }

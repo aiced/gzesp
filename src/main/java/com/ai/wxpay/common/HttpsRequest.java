@@ -65,7 +65,8 @@ public class HttpsRequest implements IServiceRequest{
     private void init() throws IOException, KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException {
 
         KeyStore keyStore = KeyStore.getInstance("PKCS12");
-        FileInputStream instream = new FileInputStream(new File(Configure.getCertLocalPath()));//加载本地的证书进行https加密传输
+        InputStream instream = this.getClass().getClassLoader().getResourceAsStream(Configure.getCertLocalPath());//加载本地的证书进行https加密传输
+        System.out.println("instream-"+instream);
         try {
             keyStore.load(instream, Configure.getCertPassword().toCharArray());//设置证书密码
         } catch (CertificateException e) {
@@ -164,6 +165,62 @@ public class HttpsRequest implements IServiceRequest{
         }
 
         return result;
+    }
+    
+    public String sendPost(String url, String postDataXML) throws IOException, KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException, KeyManagementException {
+    	
+    	if (!hasInit) {
+    		init();
+    	}
+    	
+    	String result = null;
+    	
+    	HttpPost httpPost = new HttpPost(url);
+    	
+//    	//解决XStream对出现双下划线的bug
+//    	XStream xStreamForRequestPostData = new XStream(new DomDriver("UTF-8", new XmlFriendlyNameCoder("-_", "_")));
+//    	xStreamForRequestPostData.alias("xml", xmlObj.getClass());
+//    	
+//    	//将要提交给API的数据对象转换成XML格式数据Post给API
+//    	String postDataXML = xStreamForRequestPostData.toXML(xmlObj);
+    	
+    	Util.log("API，POST过去的数据是：");
+    	Util.log(postDataXML);
+    	
+    	//得指明使用UTF-8编码，否则到API服务器XML的中文不能被成功识别
+    	StringEntity postEntity = new StringEntity(postDataXML, "UTF-8");
+    	httpPost.addHeader("Content-Type", "text/xml");
+    	httpPost.setEntity(postEntity);
+    	
+    	//设置请求器的配置
+    	httpPost.setConfig(requestConfig);
+    	
+    	Util.log("executing request" + httpPost.getRequestLine());
+    	
+    	try {
+    		HttpResponse response = httpClient.execute(httpPost);
+    		
+    		HttpEntity entity = response.getEntity();
+    		
+    		result = EntityUtils.toString(entity, "UTF-8");
+    		
+    	} catch (ConnectionPoolTimeoutException e) {
+    		log.e("http get throw ConnectionPoolTimeoutException(wait time out)");
+    		
+    	} catch (ConnectTimeoutException e) {
+    		log.e("http get throw ConnectTimeoutException");
+    		
+    	} catch (SocketTimeoutException e) {
+    		log.e("http get throw SocketTimeoutException");
+    		
+    	} catch (Exception e) {
+    		log.e("http get throw Exception");
+    		
+    	} finally {
+    		httpPost.abort();
+    	}
+    	
+    	return result;
     }
 
     /**

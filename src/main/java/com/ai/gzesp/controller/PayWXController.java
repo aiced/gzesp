@@ -1,5 +1,7 @@
 package com.ai.gzesp.controller;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +33,7 @@ import com.ai.wxpay.business.UnifiedOrderBusiness;
 import com.ai.wxpay.common.RandomStringGenerator;
 import com.ai.wxpay.common.Signature;
 import com.ai.wxpay.common.Util;
+import com.ai.wxpay.protocol.unified_order_protocol.CallbackResData;
 import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderReqData;
 import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderResData;
 
@@ -54,11 +57,11 @@ public class PayWXController {
     TdPayDWEIXINLOGDao tdPayDWEIXINLOGDao;
 	
     @RequestMapping("/wxPay/prepay_step1/{order_id}/{fee}")
-    public ModelAndView prepay_step1(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
+    public ModelAndView prepay_step1(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,
+    		@RequestParam(value="state", required=false) String state){
     	// 授权回调页限制
     	String  redirect_uri = CommonUtil.appResource.getString("espRoot")+"/esp/pay/wxPay/prepay_step2/"+order_id+"/"+fee;
     	log.debug("redirect_uri-----"+redirect_uri);
-    	String state = "";
     	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
         return new ModelAndView("redirect:"+url);
     }
@@ -67,7 +70,8 @@ public class PayWXController {
     @RequestMapping("/wxPay/prepay_step2/{order_id}/{fee}")
     @ResponseBody
     public ModelAndView prepay_step2(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,
-    		@RequestParam(value="code", required=true) String code,  HttpServletRequest req) throws Exception{
+    		@RequestParam(value="code", required=true) String code, 
+    		@RequestParam(value="state", required=false) String state, HttpServletRequest req) throws Exception{
     	
     	WebAuthAccessTokenModel webToken =  webAuthService.getAccessToken(DataConstants.appid, DataConstants.appsecret, code);
     	ModelAndView mav = null;
@@ -77,7 +81,7 @@ public class PayWXController {
 				mav = new ModelAndView("redirect:/pay/selectPayMode/"+"order_id"+"/"+fee);
 			} else {
 				mav = new ModelAndView("redirect:/pay/wxPay/prepay_step3");
-				String body = "jsapi wx pay from unicom";
+				String body = "".equals(state)?"贵州联通商品":URLDecoder.decode(state, "UTF-8");
 				String _out_trade_no = order_id;
 				int _total_fee = Integer.parseInt(fee)/10;
 				String realIp = req.getHeader("X-Real-IP");
@@ -127,31 +131,49 @@ public class PayWXController {
     @RequestMapping("/wxPay/callback")
     public void callback(@RequestBody String responseString)	{
     	log.debug("responseString-----"+responseString);
-    	TdPayDWEIXINLOG resData = (TdPayDWEIXINLOG) Util.getObjectFromXML(responseString, TdPayDWEIXINLOG.class);
+    	CallbackResData resData = (CallbackResData) Util.getObjectFromXML(responseString, CallbackResData.class);
     	
-    	String transactionId = resData.getTransactionId();
+    	String transactionId = resData.getTransaction_id();
     	Criteria example = new Criteria();
     	example.createConditon().andEqualTo("TRANSACTION_ID", transactionId);
     	int count = tdPayDWEIXINLOGDao.countByExample(example);
     	// 过滤重复数据
     	if(count == 0) {
+    		Long totalFee = CommonUtil.string2Long(resData.getTotal_fee());
+    		Long cashFee = CommonUtil.string2Long(resData.getCash_fee());
+    		
+    		TdPayDWEIXINLOG record = new TdPayDWEIXINLOG();
     		String logId = CommonUtil.generateLogId("2");
-    		resData.setLogId(CommonUtil.string2Long(logId));
-    		resData.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(logId)));
-    		resData.setReqType("01");
-    		Long totalFee = resData.getTotalFee();
-    		Long cashFee = resData.getCashFee();
-    		Long refundFee = resData.getRefundFee();
+    		record.setLogId(CommonUtil.string2Long(logId));
+    		record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(logId)));
+    		record.setReqType("01");
+    		record.setAppId(resData.getAppid());
+    		record.setBankType(resData.getBank_type());
+    		record.setCashFeeType(resData.getCash_fee());
+    		record.setDeviceInfo(resData.getDevice_info());
+    		record.setErrCode(resData.getErr_code());
+    		record.setErrCodeDes(resData.getErr_code_des());
+    		record.setIsSubscribe(resData.getIs_subscribe());
+    		record.setMchId(resData.getMch_id());
+    		record.setNonceStr(resData.getNonce_str());
+    		record.setOpenId(resData.getOpenid());
+    		record.setOuterTradeNo(resData.getOut_trade_no());
+    		record.setResultCode(resData.getResult_code());
+    		record.setReturnCode(resData.getReturn_code());
+    		record.setReturnMsg(resData.getReturn_msg());
+    		record.setSign(resData.getSign());
+    		record.setTimeEnd(resData.getTime_end());
+    		record.setTradeState(resData.getTrade_state());
+    		record.setTradeType(resData.getTrade_type());
+    		record.setTransactionId(transactionId);
+    		
     		if(totalFee != null) {
-    			resData.setTotalFee(totalFee*10);
+    			record.setTotalFee(totalFee*10);
     		}
     		if(cashFee != null) {
-    			resData.setCashFee(cashFee*10);
+    			record.setCashFee(cashFee*10);
     		}
-    		if(refundFee != null) {
-    			resData.setRefundFee(refundFee*10);
-    		}
-    		tdPayDWEIXINLOGDao.insertSelective(resData);
+    		tdPayDWEIXINLOGDao.insertSelective(record);
     		// TODO 更新订单状态，调用奚总的接口
     	}
     }

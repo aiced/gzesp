@@ -95,7 +95,6 @@ public interface UnionPayDao {
     
     public int updateSignCodeValidFlag(@Param("sign_code") String sign_code, @Param("valid_flag") String valid_flag);
     
-    public Map<Object, Object> queryUserIdByOrderId(@Param("order_id") String order_id);
     
     public Map<String, String> queryBindResultRow(@Param("sys_trade_no") String sys_trade_no);
 

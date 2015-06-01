@@ -43,5 +43,34 @@ public class PayService {
     }
     
 
+    /**
+     * 微信支付，沃支付，银联支付成功收到返回后，除了更新各自的log日志表外，还有一系列后续操作
+     * 1.更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
+     * 2.如果有号码预占而且支付返回响应是成功的则删掉号码预占表信息
+     * @param param
+     * @param result
+     * @return
+     */
+    public void afterPaySuccess(UnionPayParam param, Map<String, String> result){
+
+    }
+    
+    /**
+     * 支付收到响应后更新订单基本表里订单状态
+     * @param respMap
+     * @return
+     */
+/*    public int updatePayStateAndIncomeMoney(boolean isSuccess, String orderId, String fee) {
+    	int r2 = 0;
+        if(isSuccess){
+        	String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
+        	int income_money = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt))*10; //银联是分，表里是厘
+        	//20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
+        	String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
+        	//r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
+        	r2 = unionPayDao.updatePayStateAndIncomeMoney(realOrderId, order_state, income_money);
+        }
+        return r2;
+    }*/
     
 }

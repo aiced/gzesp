@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>test</title>
+    <title>微信支付</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -18,10 +18,20 @@
     <script type="text/javascript">
     
 	    $(function(){
-	    	callpay();
+	    	if (typeof WeixinJSBridge == "undefined"){
+	    		   if( document.addEventListener ){
+	    		       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	    		   }else if (document.attachEvent){
+	    		       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+	    		       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+	    		   }
+	    		}else{
+	    		   onBridgeReady();
+	    		} 
 	    });
 	    
-	  	function callpay(){
+	  	function onBridgeReady(){
+	  		alert("123");
 			 WeixinJSBridge.invoke('getBrandWCPayRequest',{
 	  		 "appId" : "${appId}",
 	  		 "timeStamp" : "${timeStamp}", 
@@ -31,7 +41,7 @@
 	  		 "paySign" : "${paySign}" 
 	   			},function(res){
 					WeixinJSBridge.log(res.err_msg);
-	// 				alert(res.err_code + res.err_desc + res.err_msg);
+					alert(res.err_code + res.err_desc + res.err_msg);
 		            if(res.err_msg == "get_brand_wcpay_request:ok"){  
 		                alert("微信支付成功!");  
 		            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  

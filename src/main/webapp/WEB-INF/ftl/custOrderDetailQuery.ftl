@@ -246,7 +246,7 @@
                         <div><label>${GOODS_NAME}</label></div>
                         <div>
 							<label></label>
-                        	 <#if (ORDER_STATE_CODE=='01')>
+                        	 <#if (ORDER_STATE_CODE=='00')>
 	                            	<div style="text-align: center;border: 1px solid #91CA7D;float: right;width: 60px;color:#91CA7D"><a href="${base}/pay/selectPayMode/${ORDER_ID}/${TOPAY_MONEY*1000}">去支付</a></div>
 		                     <#else>
 		                     	<#if (REFUND_STATE =='未知')><!-- 没有申请过 -->
@@ -315,7 +315,7 @@
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
                 <div class="bottom_1_div2">
-                    <label>实付款：</label><span style="color: red">￥${RECV_FEE}</span>
+                    <label>实付款：</label><span style="color: red">￥${INCOME_MONEY}</span>
                 </div>
                 <div class="bottom_1_div3">
                    	 下单时间：${ORDER_TIME}

@@ -64,7 +64,7 @@
                     break;
             }
         }
-        function unionPayInput(){
+        function goToPay(){
 	        var url;
             var pay_mode = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
 	        //alert(pay_mode);
@@ -72,7 +72,7 @@
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
                //alert(pay_mode_style);
                if(pay_mode_style == "微信支付"){
-                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}'; //微信支付
+                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/10'; //微信支付
                }
                else if(pay_mode_style == "沃支付"){
                  url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
@@ -87,6 +87,20 @@
             
 	        window.location.href = url;  
         }
+        function testWeiXinPay(){
+	        var url;
+            var pay_mode = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
+	        //alert(pay_mode);
+            if(pay_mode == '00'){
+               var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
+               url = '${base}/pay/wxPay/prepay_step1/${order_id}/10'; //微信支付
+            }
+            else{
+               url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+            }
+            
+	        window.location.href = url;  
+        }        
     </script>
 </head>
 <body>
@@ -129,23 +143,23 @@
           <div class="div_line"></div> 
                    
           <!-- 选择支付渠道-->
-          <div class="row" style="margin:15px 10px 0px 20px;">
-            <div class="radio" style="background-color:#ffffff;padding-left:5px;">
+          <div class="row" style="margin:10px 10px 0px 20px;">
+            <div class="radio" style="padding-left:5px;">
              <label class="radio">
-               <input type="radio" name="pay_mode_style" id="weixin" value="微信支付" checked="checked" style="margin-top:15px;" >
-               <img src="${resRoot}/image/selectPayMode/pay_weixin.png" width="150" height="40"/>
+               <input type="radio" name="pay_mode_style" id="weixin" value="微信支付" style="margin-top:15px;" disabled>
+               <img src="${resRoot}/image/selectPayMode/pay_weixin.png" width="200" height="40"/>
              </label>
             </div>
-            <div class="radio" style="background-color:#ffffff;padding-left:5px;">
+            <div class="radio" style="padding-left:5px;">
              <label class="radio">
-               <input type="radio" name="pay_mode_style" id="wo" value="沃支付" checked="checked" style="margin-top: 15px;">
-               <img src="${resRoot}/image/selectPayMode/pay_wo.png" width="150" height="40"/>
+               <input type="radio" name="pay_mode_style" id="wo" value="沃支付" style="margin-top: 15px;" disabled>
+               <img src="${resRoot}/image/selectPayMode/pay_wo.png" width="200" height="40"/>
              </label>
             </div>
-            <div class="radio" style="background-color:#ffffff;padding-left:5px;">
+            <div class="radio" style="padding-left:5px;">
              <label class="radio">
                <input type="radio" name="pay_mode_style" id="unionpay" value="银联支付" checked="checked" style="margin-top: 15px;">
-               <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="150" height="40"/>
+               <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="200" height="40"/>
              </label>              
             </div>
           </div>          
@@ -156,13 +170,13 @@
 			  <b style="font-size: 14px;">已接入银行</b></br>
 			  <b>储蓄卡：</b>工商银行、农业银行、光大银行、邮储银行等</br>
 			  <b>信用卡：</b>中国银行等</br>
-			  <i><b>其他银行陆续接入，敬请期待～</b></i>
+			  <i><b>其他银行陆续接入，敬请期待<a onclick="testWeiXinPay()">～</a></b></i>
             </div>
           </div>
           
           <!-- 提交-->
           <div id="payInfoBtn" style="margin: 15px">
-            <button class="btn btn-warning btn-block" id="btnsubmit" onclick="unionPayInput()">确定</button>
+            <button class="btn btn-warning btn-block" id="btnsubmit" onclick="goToPay()">确定</button>
           </div>
     </div>
 

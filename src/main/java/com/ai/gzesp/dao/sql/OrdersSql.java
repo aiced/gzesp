@@ -369,7 +369,7 @@ public class OrdersSql {
 				+ " WHEN b.ORDER_STATE='14' then '审核通过已退款'"
 				+ " ELSE '未知'"
 				+ " END ORDER_STATE," 
-				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
+				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, b.INCOME_MONEY/1000 as INCOME_MONEY,"
 				+ " e.USER_IMG, e.STORE_NAME,  g.PHOTO_LINKS,b.Order_Time" );
 		sb.append("	from ORD_D_CUST a, ORD_D_BASE b, ORD_D_PROD c, ORD_D_DEAL d, AUR_D_AUTHINFO e,"
 				+ " GDS_D_INFO f, GDS_D_PHOTO g");
@@ -423,7 +423,7 @@ public class OrdersSql {
 				+ " WHEN b.ORDER_STATE='14' then '审核通过已退款'"
 				+ " ELSE '未知'"
 				+ " END ORDER_STATE," 
-				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, c.RECV_FEE/1000 as RECV_FEE,"
+				+ " c.GOODS_NAME, c.SALE_NUM, c.TOPAY_FEE/1000 as TOPAY_FEE, b.INCOME_MONEY/1000 as INCOME_MONEY,"
 				+ " d.INVOCE_TITLE, d.INVOCE_CONTENT,"
 				+ " e.USER_IMG, e.STORE_NAME,  g.PHOTO_LINKS,"
 				+ " h.RECEIVER_NAME, h.MOBILE_PHONE, h.EXPRESS_ID, h.EXPRESS_COMPNAY as EXPRESS_COMPNAY_CODE,"

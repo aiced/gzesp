@@ -1,5 +1,6 @@
 package com.ai.gzesp.controller;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.SortedMap;
@@ -84,7 +85,7 @@ public class PayWXController {
 				
 				int port = req.getServerPort();
 		    	String portStr = (80==port || 443 == port) ? "" : ":"+port;
-		    	String _notify_url = req.getScheme() + "://" + req.getServerName() + portStr + "/" + req.getContextPath()+"/pay/wxPay/callback";
+		    	String _notify_url = req.getScheme() + "://" + req.getServerName() + portStr + req.getContextPath()+"/pay/wxPay/callback";
 		    	log.debug("_notify_url-----"+_notify_url);
 		    	
 				String _trade_type = "JSAPI";
@@ -99,10 +100,26 @@ public class PayWXController {
 		return mav;
     }
     
+//    @RequestMapping("/wxPay/prepay_test")
+//    @ResponseBody
+//    public ModelAndView prepay_test(HttpServletRequest req) {
+//    	Map result = new HashMap();
+//    	result.put("appId", "123");
+//    	ModelAndView mav = new ModelAndView("redirect:/pay/wxPay/prepay_step3");
+//    	mav.addAllObjects(result);
+//    	return mav;
+//    }
+    
     @RequestMapping("/wxPay/prepay_step3")
     @ResponseBody
     public ModelAndView prepay_step3(HttpServletRequest req) {
-    	ModelAndView mav = new ModelAndView("wxPrepay.ftl", req.getParameterMap());
+    	ModelAndView mav = new ModelAndView("wxPrepay.ftl");
+    	Enumeration<String> enNames = req.getParameterNames();
+    	while(enNames.hasMoreElements()) {
+    		String name = enNames.nextElement();
+    		String val = req.getParameter(name);
+    		mav.addObject(name, val);
+    	}
     	return mav;
     }
     
@@ -150,24 +167,6 @@ class UnifiedOrderResultListener implements UnifiedOrderBusiness.ResultListener 
 		}
 		result = _result;
 	}
-//
-//	@Override
-//	public void onFailByReturnCodeError(UnifiedOrderResData resData) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void onFailByReturnCodeFail(UnifiedOrderResData resData) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void onFailBySignInvalid(UnifiedOrderResData resData) {
-//		// TODO Auto-generated method stub
-//		
-//	}
 	
 	@Override
 	public void onFail(UnifiedOrderResData resData) {

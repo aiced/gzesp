@@ -73,12 +73,13 @@ public class PayService {
      * 调用微信支付，沃支付，银联支付前 插支付日志总表 ord_d_pay 
      * 目前一条订单只插一条记录
      * 以后可扩展为一条订单多部分支付，比如一条订单金额：100，能人账户优惠券抵扣10块，能人账户现金抵扣20块，微信支付70块，则插3条paylog记录
+     * 因为mybatis 里 oracle 的 insert 支持不好，不好插入多条记录，得用<select>，不能用<insert>，所以无法返回int，会返回null
      * @param orderId
      * @param orderFee
      * @param payInfo
      * @return
      */
-	private int insertPayInfoBatch(String orderId, String orderFee, List<PayInfo> payInfoList) {
+	private void insertPayInfoBatch(String orderId, String orderFee, List<PayInfo> payInfoList) {
     	List<OrderDPay> list = new ArrayList<OrderDPay>();
     	String partition_id = orderId.substring(14, 16); 
     	String pay_time = DateUtils.getCurentTime();
@@ -99,7 +100,8 @@ public class PayService {
     		list.add(item);
     	}
     	
-		return payDao.insertPayInfoBatch(list);
+    	//因为mybatis 里 oracle 的 insert 支持不好，不好插入多条记录，得用<select>，不能用<insert>，所以无法返回int，会返回null
+        payDao.insertPayInfoBatch(list); 
 	}
     
 
@@ -216,6 +218,10 @@ public class PayService {
     
     private int updateOrdDPay(String orderId, String pay_state, String pay_mode){
         return payDao.updateOrdDPay(orderId, pay_state, pay_mode);
+    }
+    
+    public Map<String, String> queryGoodsNameByOrderId(String orderId){
+    	return payDao.queryGoodsNameByOrderId(orderId);
     }
     
 }

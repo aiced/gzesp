@@ -11,9 +11,14 @@ package com.ai.gzesp.dto;
 public class UnionPayParam {
     
     /**
-     * 订单号
+     * 订单号, 真实订单号，重复支付时不变
      */
     private String order_id;
+    
+    /**
+     * 虚拟订单号, 重复支付时 order_id_vir = order_id + substring最后2位，值相加不是拼字符串
+     */
+    private String order_id_vir;
 
     /**
      * 金额 单位元
@@ -284,6 +289,14 @@ public class UnionPayParam {
 
 	public void setOrig_timestamp(String orig_timestamp) {
 		this.orig_timestamp = orig_timestamp;
+	}
+
+	public String getOrder_id_vir() {
+		return order_id_vir;
+	}
+
+	public void setOrder_id_vir(String order_id_vir) {
+		this.order_id_vir = order_id_vir;
 	}
 	
 	

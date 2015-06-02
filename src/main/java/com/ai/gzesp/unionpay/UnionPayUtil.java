@@ -164,6 +164,56 @@ public class UnionPayUtil {
     }
     
     /**
+     * 银联接口：生成 全要素支付接口 发送报文<br>
+     *
+     * @param param
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static Map<String, String> genPayNewReq2(UnionPayParam param){
+        log.debug("【银联支付：创建payNew请求原始数据map】");
+        
+        //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后一位
+        //20150602修改，在插 PAY_D_UNIONPAY_LOG表的时候已经生成了虚拟订单号，而且赋值给了UnionPayParam
+        //String v_order_id = orderId2newOrderId(param.getOrder_id(), param.getPay_sys_trade_no());
+       
+        //原始请求报文map
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
+        xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
+        xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
+        xmlMap.put(UnionPayAttrs.TradeType, param.getPay_trade_type()); //交易类型全要素支付请求（0202）
+        xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
+        xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
+        xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
+        xmlMap.put(UnionPayAttrs.BusiType, BusiType.type001.getCode()); //业务类型，001：购买电子产品
+        xmlMap.put(UnionPayAttrs.AccountID, ""); //帐单号（根据业务类型的需求来填写）,可以为空
+        xmlMap.put(UnionPayAttrs.AreaCode, ""); //地区代码 发起交易的地区区号（根据不同业务类型需要来填写）,可以为空
+        xmlMap.put(UnionPayAttrs.timeStamp, param.getPay_time_stamp()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, param.getPay_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.accNo, param.getBank_card_no());  //银行卡号
+        //xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn() == null ? "" : param.getBank_card_cvn()); //储蓄卡没有cvn，null在后面getbyte方法会报错
+        xmlMap.put(UnionPayAttrs.cvn2, ""); //20150522修改,银联商务漏申请了，信用卡cvn2不用传，传了报错
+        //xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
+        xmlMap.put(UnionPayAttrs.Nbr, param.getPhone_no()); //手机号
+        xmlMap.put(UnionPayAttrs.Name, param.getFull_name()); //姓名
+        xmlMap.put(UnionPayAttrs.certificateCode, param.getId_card_no());  //身份证号
+        xmlMap.put(UnionPayAttrs.expireDate, param.getBank_card_expire_date() == null ? "" : param.getBank_card_expire_date()); //储蓄卡没有有效期
+        xmlMap.put(UnionPayAttrs.cardType, param.getCard_type()); //卡类型（信用卡:01或借记卡:02）
+        //xmlMap.put(UnionPayAttrs.signCode, param.getSign_code()); //签约号
+        //xmlMap.put(UnionPayAttrs.orderId, param.getOrder_id()); //支付订单号
+        //xmlMap.put(UnionPayAttrs.orderId, v_order_id); //20150522修改
+        xmlMap.put(UnionPayAttrs.orderId, param.getOrder_id_vir()); //20150602修改
+        xmlMap.put(UnionPayAttrs.industryType, UnionPayCons.industryType); //支付行业类型
+        xmlMap.put(UnionPayAttrs.txnAmt, String.valueOf(Integer.parseInt(param.getFee())/10)); //订单传过来是厘，传给银联单位是分 需要除以10
+        xmlMap.put(UnionPayAttrs.ifInstal, "0"); //是否做分期付款（0表示不分期1表示分期）
+        xmlMap.put(UnionPayAttrs.instalTransInfo, ""); //分期付款期数（两位数字，比如分为6期取值为06）
+        
+        
+        //return genByteReq(xmlMap);
+        return xmlMap;
+    }
+    
+    /**
      * 银联接口：生成 支付结果查询接口 发送报文<br>
      *
      * @param param

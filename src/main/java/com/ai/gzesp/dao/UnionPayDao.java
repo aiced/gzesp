@@ -31,6 +31,12 @@ public interface UnionPayDao {
             @Param("req_trade_type") String req_trade_type, @Param("sys_trade_no") String sys_trade_no,
             @Param("order_id") String order_id, @Param("txn_amt") String txn_amt );
     
+    public int insertUnionPaylog(@Param("log_id") String log_id,
+            @Param("partition_id") String partition_id, @Param("real_order_id") String real_order_id,
+            @Param("req_time") String req_time, @Param("req_status") String req_status,
+            @Param("req_trade_type") String req_trade_type, @Param("sys_trade_no") String sys_trade_no,
+            @Param("order_id") String order_id, @Param("txn_amt") String txn_amt );
+    
     public int insertBindCancellog(@Param("pay_id") String pay_id,
             @Param("partition_id") String partition_id, @Param("pay_account_no") String pay_account_no,
             @Param("req_time") String req_time, @Param("req_status") String req_status,
@@ -38,6 +44,8 @@ public interface UnionPayDao {
             @Param("order_id") String order_id );    
     
     public Map<String, String> queryPaylog(@Param("pay_id") String pay_id);
+    
+    public Map<String, String> queryUnionPaylog(@Param("log_id") String log_id);
     
     public int updateBindlog(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
@@ -50,7 +58,11 @@ public interface UnionPayDao {
     public int updatePaylog(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
             @Param("resp_time") String resp_time, @Param("pay_state") String pay_state,
-            @Param("sys_trade_no") String sys_trade_no );    
+            @Param("sys_trade_no") String sys_trade_no ); 
+    
+    public int updateUnionPaylog(@Param("resp_trade_type") String resp_trade_type,
+            @Param("result_code") String result_code, @Param("result_desc") String result_desc,
+            @Param("resp_time") String resp_time, @Param("sys_trade_no") String sys_trade_no ); 
     
     public int updateBindCancellog(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,

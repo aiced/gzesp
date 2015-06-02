@@ -29,7 +29,7 @@ public interface PayDao {
     
     public List<Map<String, String>> queryOrderDPay(@Param("order_id") String order_id);
     
-    public int insertPayInfoBatch(@Param("list") List<OrderDPay> list);    
+    public Map<String, String> insertPayInfoBatch(@Param("list") List<OrderDPay> list);    
     
     public int updateOrdDPay(@Param("order_id") String order_id, @Param("pay_state") String pay_state, @Param("pay_mode") String pay_mode);    
     

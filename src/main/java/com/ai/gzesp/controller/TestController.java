@@ -32,7 +32,7 @@ public class TestController {
     
     @RequestMapping("/wxPay/prepay")
     @ResponseBody
-    public Map<String, String> prepay(@RequestBody Map<String, String> param, HttpServletRequest req) throws Exception{
+    public Map<String, Object> prepay(@RequestBody Map<String, String> param, HttpServletRequest req) throws Exception{
     	
     	
     	String body = "jsapi wx pay from unicom";
@@ -46,7 +46,7 @@ public class TestController {
     	String _openid = "okhDVstuDQcv9hXYCTwZ2hR6e34s";
     	UnifiedOrderReqData reqData = new UnifiedOrderReqData(body, _out_trade_no, _total_fee, _spbill_create_ip, _notify_url, _trade_type, _openid);
     	
-    	Map<String, String> result = new HashMap();
+    	Map<String, Object> result = new HashMap();
     	UnifiedOrderResultListener resultListener = new UnifiedOrderResultListener(result);
 //    	try {
 			WXPay.doUnifiedOrderBusiness(reqData, resultListener);

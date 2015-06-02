@@ -148,9 +148,9 @@
 	$(document).ready(function(){
 		
 		//默认先获得焦点
-		$("#txtXYname").focus();
+		//$("#txtXYname").focus();
 		  //[下一步]按钮点击
-		  $("#btnXYSubmit").click(function(){
+/* 		  $("#btnXYSubmit").click(function(){
 			//在这里操作 [下一步]按钮点击
 			if(!checkData())
 			{
@@ -163,7 +163,7 @@
 				//location.href='step2';
 				return true;
 			}	
-		  });
+		  }); */
 
     	
     	//[信用卡——姓名]文本框失去焦点
@@ -538,6 +538,11 @@
 	});
 	
         function unionPayPay(card_type){
+        	
+        	if (!checkData())
+        	{
+        		return;
+        	}
             //01信用卡 02 储蓄卡
             var param;
             if(card_type == '01'){

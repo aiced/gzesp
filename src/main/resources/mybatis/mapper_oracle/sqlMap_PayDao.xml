@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gzesp.dao.PayDao">
+
+	
+	<select id="queryUserIdByOrderId" resultType="java.util.HashMap">
+        select user_id
+          from ORD_D_DEAL
+         where order_id = ${order_id}
+	</select>		
+	
+	<update id="updatePayStateAndIncomeMoney">
+         update ord_d_base
+            set order_state = #{order_state} ,
+                income_money = ${income_money}
+          where order_id = ${order_id}
+	</update>	
+	
+	<insert id="insertDealLog">
+      insert into ORD_L_DEALLOG
+             (operate_logid, order_id, partition_id, operate_time, operator_id, operator_name, 
+              deal_content, result_code, result_info, original_state,current_state)
+       values(${operate_logid}, ${order_id}, ${partition_id}, sysdate, '00000', '后台更新', 
+              #{deal_content}, #{result_code}, #{result_info}, #{original_state}, #{current_state})
+       ;   
+	</insert>
+		
+</mapper>

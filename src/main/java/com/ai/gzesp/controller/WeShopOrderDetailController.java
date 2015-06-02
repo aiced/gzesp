@@ -1,5 +1,8 @@
 package com.ai.gzesp.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,11 +21,15 @@ import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdAurDBASEINFO;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.beans.TdOrdDREFUND;
+import com.ai.gzesp.dao.beans.TdOrdLDEALLOG;
 import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
+import com.ai.gzesp.dao.service.TdOrdLDEALLOGDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
 @Controller
@@ -36,7 +43,8 @@ public class WeShopOrderDetailController {
 	TdOrdDREFUNDDao tdOrdDREFUNDDao;
 	@Resource
 	TdOrdDBASEDao tdOrdDBASEDao;
-	
+    @Resource
+	TdOrdLDEALLOGDao tdOrdLDEALLOGDao;
 	
     @RequestMapping("/orderDetail")
     public ModelAndView index(@RequestBody String inputParams){
@@ -72,6 +80,7 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_4","没有数据"); 
             mav.addObject("REFUND_STATE","未知");
             mav.addObject("REFUND_REASON","无");
+            mav.addObject("ORDER_STATE_REFUND","无");
 		}
         else {
             mav.addObject("title", "订单详情");
@@ -91,8 +100,7 @@ public class WeShopOrderDetailController {
             mav.addObject("RES_ATTR_VAL_4",orderList.get(0).get("RES_ATTR_VAL_4")); 
             mav.addObject("REFUND_STATE",orderList.get(0).get("REFUND_STATE"));
             mav.addObject("REFUND_REASON",orderList.get(0).get("REFUND_REASON"));
-           // mav.addObject("PAY_REMARK",orderList.get(0).get("PAY_REMARK"));
-		
+            mav.addObject("ORDER_STATE_REFUND",orderList.get(0).get("ORDER_STATE_REFUND"));
 		}
         
         return mav;
@@ -108,35 +116,64 @@ public class WeShopOrderDetailController {
     public String updateOrderStatus(@RequestBody String Params)
     {
     	Map<String, String> paramsMap = StringUtil.params2Map(Params);
-    	String strorder_id=paramsMap.get("order_id");
+    	String strorder_id=paramsMap.get("ORDER_ID");
     	String strstatus=paramsMap.get("status");
     	
     	System.out.println(strorder_id);
     	System.out.println(strstatus);
     	
-    	Criteria example = new Criteria();
-    	example.createConditon().andEqualTo("ORDER_ID", strorder_id);
+    	Criteria example_refund = new Criteria();
+    	example_refund.createConditon().andEqualTo("ORDER_ID", strorder_id);
+    	
+    	List<TdOrdDREFUND> list = tdOrdDREFUNDDao.selectByExample(example_refund);
+    	System.out.println(list);
+    	
     	
     	TdOrdDREFUND record_refund = new TdOrdDREFUND();
-    	record_refund.setRefundState(strstatus);
-    	int icount=tdOrdDREFUNDDao.updateByExampleSelective(record_refund, example);
+    	if (strstatus.equals("12"))//店主审核通过——状态
+    	{
+        	record_refund.setRefundState(strstatus);
+    	}
+    	else	//店主审核不通过 ——状态
+    	{
+        	record_refund.setRefundState("15"); //展示文字
+		}
+    	
+
+
+    	int icount=tdOrdDREFUNDDao.updateByExampleSelective(record_refund, example_refund);
     	System.out.println("icount_refund="+icount);
     	
-    	
-    	example.createConditon().andEqualTo("ORDER_ID", strorder_id);
+    	//修改订单主状态
+    	Criteria example_base=new Criteria();
+    	example_base.createConditon().andEqualTo("ORDER_ID", strorder_id);
     	TdOrdDBASE record_base = new TdOrdDBASE();
-    	if (strstatus.equals("04")) //能人通过审核
-    	{
-        	record_base.setOrderState("11");
-		}
-    	else if(strstatus.equals("05"))//能人未通过审核
-    	{
-        	record_base.setOrderState("12");
-    	}
-    	
-    	icount=tdOrdDBASEDao.updateByExampleSelective(record_base, example);
+        record_base.setOrderState(strstatus);
+    	icount=tdOrdDBASEDao.updateByExampleSelective(record_base, example_base);
     	System.out.println("icount_base="+icount);
+    	
+    	
+    	//插入状态流程日志表
+		String logId = CommonUtil.generateLogId("4"); 
+    	TdOrdLDEALLOG record_deallog=new TdOrdLDEALLOG();
+    	record_deallog.setOperateLogid(CommonUtil.string2Long(logId));
+    	record_deallog.setOrderId(Long.valueOf(strorder_id));
+    	record_deallog.setPartitionId(Short.valueOf(list.get(0).getPartitionId()));
+    	    	
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	Date date_create_time=DateUtil.getNow();
 
+    	record_deallog.setOperateTime(date_create_time);
+    	record_deallog.setOperatorId(list.get(0).getPhoneNumber());
+    	record_deallog.setOperatorName(list.get(0).getPhoneNumber());
+    	record_deallog.setDealContent("店主审核");
+    	record_deallog.setResultCode("0");
+    	record_deallog.setResultInfo("成功");
+    	record_deallog.setOriginalState(list.get(0).getRefundState());
+    	record_deallog.setCurrentState(strstatus);
+
+    	tdOrdLDEALLOGDao.insertSelective(record_deallog);
+    	
     	if (icount>0)
     	{
     		return "操作成功";

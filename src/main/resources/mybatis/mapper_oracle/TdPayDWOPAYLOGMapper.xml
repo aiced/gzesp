@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdPayDWOPAYLOGMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdPayDWOPAYLOG" >
+    <id column="LOG_ID" property="logId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="PAY_FLOOD_ID" property="payFloodId" jdbcType="VARCHAR" />
+    <result column="PAY_RESULT" property="payResult" jdbcType="CHAR" />
+    <result column="PAY_BALANCE" property="payBalance" jdbcType="DECIMAL" />
+    <result column="PAYMENT_BALANCE_DETAIL" property="paymentBalanceDetail" jdbcType="VARCHAR" />
+    <result column="RESP_TIME" property="respTime" jdbcType="VARCHAR" />
+    <result column="RE_TYPE" property="reType" jdbcType="CHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="PASSPORT" property="passport" jdbcType="VARCHAR" />
+    <result column="MP" property="mp" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOG_ID, PARTITION_ID, PAY_FLOOD_ID, PAY_RESULT, PAY_BALANCE, PAYMENT_BALANCE_DETAIL, 
+    RESP_TIME, RE_TYPE, USER_ID, PASSPORT, MP
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from PAY_D_WOPAY_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from PAY_D_WOPAY_LOG
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from PAY_D_WOPAY_LOG
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from PAY_D_WOPAY_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdPayDWOPAYLOG" >
+    insert into PAY_D_WOPAY_LOG (LOG_ID, PARTITION_ID, PAY_FLOOD_ID, 
+      PAY_RESULT, PAY_BALANCE, PAYMENT_BALANCE_DETAIL, 
+      RESP_TIME, RE_TYPE, USER_ID, 
+      PASSPORT, MP)
+    values (#{logId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{payFloodId,jdbcType=VARCHAR}, 
+      #{payResult,jdbcType=CHAR}, #{payBalance,jdbcType=DECIMAL}, #{paymentBalanceDetail,jdbcType=VARCHAR}, 
+      #{respTime,jdbcType=VARCHAR}, #{reType,jdbcType=CHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{passport,jdbcType=VARCHAR}, #{mp,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdPayDWOPAYLOG" >
+    insert into PAY_D_WOPAY_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        LOG_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="payFloodId != null" >
+        PAY_FLOOD_ID,
+      </if>
+      <if test="payResult != null" >
+        PAY_RESULT,
+      </if>
+      <if test="payBalance != null" >
+        PAY_BALANCE,
+      </if>
+      <if test="paymentBalanceDetail != null" >
+        PAYMENT_BALANCE_DETAIL,
+      </if>
+      <if test="respTime != null" >
+        RESP_TIME,
+      </if>
+      <if test="reType != null" >
+        RE_TYPE,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="passport != null" >
+        PASSPORT,
+      </if>
+      <if test="mp != null" >
+        MP,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="payFloodId != null" >
+        #{payFloodId,jdbcType=VARCHAR},
+      </if>
+      <if test="payResult != null" >
+        #{payResult,jdbcType=CHAR},
+      </if>
+      <if test="payBalance != null" >
+        #{payBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentBalanceDetail != null" >
+        #{paymentBalanceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="respTime != null" >
+        #{respTime,jdbcType=VARCHAR},
+      </if>
+      <if test="reType != null" >
+        #{reType,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passport != null" >
+        #{passport,jdbcType=VARCHAR},
+      </if>
+      <if test="mp != null" >
+        #{mp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from PAY_D_WOPAY_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update PAY_D_WOPAY_LOG
+    <set >
+      <if test="record.logId != null" >
+        LOG_ID = #{record.logId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payFloodId != null" >
+        PAY_FLOOD_ID = #{record.payFloodId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payResult != null" >
+        PAY_RESULT = #{record.payResult,jdbcType=CHAR},
+      </if>
+      <if test="record.payBalance != null" >
+        PAY_BALANCE = #{record.payBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.paymentBalanceDetail != null" >
+        PAYMENT_BALANCE_DETAIL = #{record.paymentBalanceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.respTime != null" >
+        RESP_TIME = #{record.respTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reType != null" >
+        RE_TYPE = #{record.reType,jdbcType=CHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passport != null" >
+        PASSPORT = #{record.passport,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mp != null" >
+        MP = #{record.mp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update PAY_D_WOPAY_LOG
+    set LOG_ID = #{record.logId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      PAY_FLOOD_ID = #{record.payFloodId,jdbcType=VARCHAR},
+      PAY_RESULT = #{record.payResult,jdbcType=CHAR},
+      PAY_BALANCE = #{record.payBalance,jdbcType=DECIMAL},
+      PAYMENT_BALANCE_DETAIL = #{record.paymentBalanceDetail,jdbcType=VARCHAR},
+      RESP_TIME = #{record.respTime,jdbcType=VARCHAR},
+      RE_TYPE = #{record.reType,jdbcType=CHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      PASSPORT = #{record.passport,jdbcType=VARCHAR},
+      MP = #{record.mp,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdPayDWOPAYLOG" >
+    update PAY_D_WOPAY_LOG
+    <set >
+      <if test="partitionId != null" >
+        PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="payFloodId != null" >
+        PAY_FLOOD_ID = #{payFloodId,jdbcType=VARCHAR},
+      </if>
+      <if test="payResult != null" >
+        PAY_RESULT = #{payResult,jdbcType=CHAR},
+      </if>
+      <if test="payBalance != null" >
+        PAY_BALANCE = #{payBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentBalanceDetail != null" >
+        PAYMENT_BALANCE_DETAIL = #{paymentBalanceDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="respTime != null" >
+        RESP_TIME = #{respTime,jdbcType=VARCHAR},
+      </if>
+      <if test="reType != null" >
+        RE_TYPE = #{reType,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="passport != null" >
+        PASSPORT = #{passport,jdbcType=VARCHAR},
+      </if>
+      <if test="mp != null" >
+        MP = #{mp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdPayDWOPAYLOG" >
+    update PAY_D_WOPAY_LOG
+    set PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      PAY_FLOOD_ID = #{payFloodId,jdbcType=VARCHAR},
+      PAY_RESULT = #{payResult,jdbcType=CHAR},
+      PAY_BALANCE = #{payBalance,jdbcType=DECIMAL},
+      PAYMENT_BALANCE_DETAIL = #{paymentBalanceDetail,jdbcType=VARCHAR},
+      RESP_TIME = #{respTime,jdbcType=VARCHAR},
+      RE_TYPE = #{reType,jdbcType=CHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR},
+      PASSPORT = #{passport,jdbcType=VARCHAR},
+      MP = #{mp,jdbcType=VARCHAR}
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </update>
+</mapper>

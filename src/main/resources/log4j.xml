@@ -95,11 +95,11 @@
 		<appender-ref ref="DailyRolling"/>
 	</logger>
 	<logger name="net.sf.ehcache">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="Console" />
 	</logger>
 	<logger name="java.sql.PreparedStatement">
-		<level value="debug" />
+		<level value="info" />
 		<appender-ref ref="Console" />
 		<appender-ref ref="DailyRolling"/>
 	</logger>
@@ -129,18 +129,21 @@
 		<appender-ref ref="DailyRolling"/>
 	</logger>
 	<logger name="org.apache.commons">
-		<level value="info" />
+		<level value="debug" />
 		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
 	</logger>
 	<logger name="org.springframework">
 		<level value="debug" />
 		<appender-ref ref="Console" />
+		<appender-ref ref="DailyRolling"/>
 	</logger>
     
 <!--     <logger name="org.apache.shiro.authc"> -->
     <logger name="org.apache.shiro">
     	<level value="info" />
         <appender-ref ref="Console" />
+        <appender-ref ref="DailyRolling"/>
     </logger>
     
     <logger name="org.apache.mina">

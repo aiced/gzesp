@@ -17,12 +17,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.beans.TdOrdDREFUND;
+import com.ai.gzesp.dao.beans.TdOrdLDEALLOG;
+import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
+import com.ai.gzesp.dao.service.TdOrdLDEALLOGDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.dao.sql.RefundSql;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.gzesp.utils.SmsUtils;
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -32,7 +38,12 @@ public class WeShopCustRefundController {
 
     @Resource
 	TdOrdDREFUNDDao tdOrdDREFUNDDao;
-	
+
+    @Resource
+	TdOrdDBASEDao tdOrdDBASEDao;
+    @Resource
+	TdOrdLDEALLOGDao tdOrdLDEALLOGDao;
+    
     @Autowired
     private WeShopService weShopService;
 	@Resource 
@@ -73,13 +84,8 @@ public class WeShopCustRefundController {
 	    	String order_time=paramsMap.get("hide_order_time");
 	    	String order_state=paramsMap.get("hide_order_state");
 	    	String REFUND_TYPE="09";//固定写死订单处理退单：09客户拒收退单：10
-	    	String REFUND_STATE="00";
-//	    	'未审核：00 （刚开始插入表的状态，前台直接发送短信通知能人）
-//	    	审核未通过：01
-//	    	审核通过未退款：02；（然后就03了 然后调用支付平台的接口）
-//	    	审核通过已退款：03';
-//	    	能人通过审核： 04 （第二个状态，点击审核后 变成 02状态）
-//	    	能人未通过审核：05
+	    	String REFUND_STATE="11";
+
 	    	System.out.println(Partition_Id);
 	    	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    	Date date_create_time=DateUtil.getNow();
@@ -115,6 +121,34 @@ public class WeShopCustRefundController {
 	    	record_orddrefund.setRefundState(REFUND_STATE);
 	    	
 	    	tdOrdDREFUNDDao.insertSelective(record_orddrefund);
+	    	
+	    	
+	    	Criteria example = new Criteria();
+	    	example.createConditon().andEqualTo("ORDER_ID", order_id);
+	    	//修改订单基本表
+	    	TdOrdDBASE record_orddbase=new TdOrdDBASE();
+	    	record_orddbase.setOrderState(REFUND_STATE);
+	    	tdOrdDBASEDao.updateByExampleSelective(record_orddbase, example);
+	    	
+    		String logId = CommonUtil.generateLogId("4");
+	    	
+	    	//插入状态流程日志表
+	    	TdOrdLDEALLOG record_deallog=new TdOrdLDEALLOG();
+	    	record_deallog.setOperateLogid(CommonUtil.string2Long(logId));
+	    	record_deallog.setOrderId(Long.valueOf(order_id));
+	    	record_deallog.setPartitionId(Short.valueOf(Partition_Id));
+	    	record_deallog.setOperateTime(date_order_time);
+	    	record_deallog.setOperatorId(strphone);
+	    	record_deallog.setOperatorName(strphone);
+	    	record_deallog.setDealContent("用户发生退单");
+	    	record_deallog.setResultCode("0");
+	    	record_deallog.setResultInfo("成功");
+	    	record_deallog.setOriginalState(order_state);
+	    	record_deallog.setCurrentState(REFUND_STATE);
+
+	    	tdOrdLDEALLOGDao.insertSelective(record_deallog);
+	    	
+	    	
 	    	
 	     	ModelAndView mav = null;
 	    	ModelMap mmap=new ModelMap();

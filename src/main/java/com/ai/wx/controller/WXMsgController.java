@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -168,6 +169,7 @@ public class WXMsgController {
     	 return mav;
     }
     
+    
     @RequestMapping("/test")
     public ModelAndView test(){
         return new ModelAndView("test.ftl");
@@ -177,7 +179,7 @@ public class WXMsgController {
     public ModelAndView test1(){
     	// 授权回调页限制
 //    	String  redirect_uri = "http://192.168.43.179:8080/esp/wx/auth";
-    	String  redirect_uri = "http://wap.woboss.gz186.com/esp/wx/auth";
+    	String  redirect_uri = "http://wap.woboss.gz186.com/esp/wx/authPay/{orderId}/{fee}";
     	String state = "custPay";
     	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
 //    	String url = "http://baidu.com";

@@ -592,15 +592,6 @@ public class UnionPayService {
         return unionPayDao.updateSignCodeValidFlag(sign_code, "3"); //0:还未绑定 1:绑定成功 2:绑定失败 3:绑定解除
     }
     
-    /**
-     * 根据orderid查询能人店铺id
-     * @param order_id
-     * @return
-     */
-    public Map<Object, Object> queryUserIdByOrderId(String order_id) {
-        return unionPayDao.queryUserIdByOrderId(order_id);
-    }
-    
     
     /**
      * 插入绑定日志记录 签约号先空着等待绑定接口返回后更新，

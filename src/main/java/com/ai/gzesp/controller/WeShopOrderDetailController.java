@@ -125,25 +125,33 @@ public class WeShopOrderDetailController {
     	Criteria example_refund = new Criteria();
     	example_refund.createConditon().andEqualTo("ORDER_ID", strorder_id);
     	
-    	
-    	
     	List<TdOrdDREFUND> list = tdOrdDREFUNDDao.selectByExample(example_refund);
     	System.out.println(list);
     	
+    	
     	TdOrdDREFUND record_refund = new TdOrdDREFUND();
-    	record_refund.setRefundState(strstatus);
+    	if (strstatus.equals("12"))//店主审核通过——状态
+    	{
+        	record_refund.setRefundState(strstatus);
+    	}
+    	else	//店主审核不通过 ——状态
+    	{
+        	record_refund.setRefundState("15"); //展示文字
+		}
+    	
+
+
     	int icount=tdOrdDREFUNDDao.updateByExampleSelective(record_refund, example_refund);
     	System.out.println("icount_refund="+icount);
     	
-    	
+    	//修改订单主状态
     	Criteria example_base=new Criteria();
     	example_base.createConditon().andEqualTo("ORDER_ID", strorder_id);
-
-    	
     	TdOrdDBASE record_base = new TdOrdDBASE();
         record_base.setOrderState(strstatus);
     	icount=tdOrdDBASEDao.updateByExampleSelective(record_base, example_base);
     	System.out.println("icount_base="+icount);
+    	
     	
     	//插入状态流程日志表
 		String logId = CommonUtil.generateLogId("4"); 

@@ -11,7 +11,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import oracle.net.aso.k;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -47,7 +46,7 @@ public class WoPayService {
 	
     private static final Logger log = Logger.getLogger(UnionPayService.class); 
     
-	public  String payOrder(String url,String order_id,String fee)
+	public  String payOrder(String url,String order_id,String fee,String flag)
 	{
 		
 		List<Map<String, Object>> lsOrderforPay=getOrderinfoByOrerId(order_id,1);
@@ -82,10 +81,22 @@ public class WoPayService {
         payRequest.setLoginName("文辉");//付款用户名 可空 lsOrderforPay.get(0).get("CUST_NAME");
         payRequest.setMp("2");//标记字段
         payRequest.setStoreName("沃掌柜");//商户名称
-        payRequest.setStraightType("0018");//直连工具类别 可空
-//        payRequest.setBankType("");//指定银行	可空
-        payRequest.setAssignType("0018");//指定工具类别	可空
+        
+        if (flag.equals("1")) //借记卡
+        {
+            payRequest.setStraightType("0018");//直连工具类别 可空
+            payRequest.setAssignType("0018");//指定工具类别	可空
 
+		}
+        else if(flag.equals("2"))//信用卡
+        {
+            payRequest.setStraightType("0019");//直连工具类别 可空
+            payRequest.setAssignType("0019");//指定工具类别	可空
+        	payRequest.setExpandOne("谷子_120224198908146241");
+        }
+
+        
+        //payRequest.setBankType("");//指定银行	可空
         payRequest.setIdNo(Encrypt.crypToDes("120224198908146241", ConfigInfo.merchantSignKey));//身份证号  lsOrderforPay.get(0).get("PSPT_NO");
         payRequest.setName(Encrypt.crypToDes("谷子", ConfigInfo.merchantSignKey));//真实姓名  lsOrderforPay.get(0).get("CUST_NAME");
         payRequest.setModifyDesc("00");//身份证和姓名都不可以修改
@@ -304,7 +315,7 @@ public class WoPayService {
         int iRet= tdPayDWOPAYLOGDao.insertSelective(record_payDwopaylog);
         
         if (iRet>0) {
-        	payService.afterPaySuccess("40",bpayresult,orderId,Integer.valueOf(paybalance));
+        	payService.afterPaySuccess("40",bpayresult,orderId,Integer.valueOf(paybalance)*10);
 	    	return "操作成功";
 		}
         else {

@@ -497,4 +497,18 @@ public class OrdersSql {
 		List<Map<String, Object>> ls =commonDao.queryForList(sb.toString());
 		return ls;
 	}
+	//沃支付需要的订单信息_支付
+	public  List<Map<String, Object>> getOrderforPay(String order_id)
+	{
+		StringBuffer sb=new StringBuffer();		
+		sb.append("select a.order_id, a.cust_name, a.pspt_no, a.Phone_Number,b.goods_name, c.user_id");
+		sb.append(" from ord_d_cust a, ORD_D_PROD b, ord_d_deal c");
+		sb.append(" where a.order_id = b.order_id"
+				+ " and a.order_id = c.order_id"
+				+ " and a.order_id='"+order_id+"'");
+		
+		System.out.println(sb.toString());
+		List<Map<String, Object>> ls =commonDao.queryForList(sb.toString());
+		return ls;
+	}
 }

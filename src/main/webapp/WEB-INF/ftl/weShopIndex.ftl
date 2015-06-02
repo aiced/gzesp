@@ -46,7 +46,7 @@
        <div style="float:left;font-size: 10px;color: white;margin-left:10px;margin-top: 4px;">内测版</div>
        <div style="float:right;" >
        	<!-- <a href="${base}/customer/custOrderQuery" style="color:black;"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a> -->
-       	<a href="${base}/customer/custOrderQuery" style="color:white;float: right;font-size: 12px;"><u>我的订单</u></a>
+       	<a href="${base}/customer/custOrderQuery" style="color:white;float: right;font-size: 15px;"><u>我的订单</u></a>
        </div>
        <div style="clear:both;"></div>       
     </div>

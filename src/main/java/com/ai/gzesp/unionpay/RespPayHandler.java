@@ -2,11 +2,11 @@ package com.ai.gzesp.unionpay;
 
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ai.gzesp.service.PayService;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.UnionPayService;
 
@@ -26,6 +26,12 @@ public class RespPayHandler implements IDealUnionPayResp {
      */
     @Autowired
     private UnionPayService unionPayService;
+    
+    /**
+     * 支付公共service
+     */
+    @Autowired
+    private PayService payService;
     
     @Autowired
     private SelectNumberService selectNumberService;
@@ -49,6 +55,21 @@ public class RespPayHandler implements IDealUnionPayResp {
         	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
         	int r3 = selectNumberService.deleteNumberReserve(numbers);
         }
+    }
+    
+    public void dealResp2(Map<String, String> respMap) {
+    	
+        //更新paylog日志表里的接口调用日志
+        int r1 = unionPayService.updatePaylog(respMap);
+        
+        boolean isSuccess = UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode));
+        //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
+        String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
+        //银联支付返回的支付金额，单位是分
+        int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt));
+        
+        //调用公共service，做后续的统一的操作
+        payService.afterPaySuccess(isSuccess, realOrderId, fee);
     }
 
 }

@@ -148,7 +148,7 @@
 	$(document).ready(function(){
 		
 		//默认先获得焦点
-		$("#txtXYname").focus();
+		//$("#txtXYname").focus();
 		  //[下一步]按钮点击
 		  $("#btnXYSubmit").click(function(){
 			//在这里操作 [下一步]按钮点击
@@ -645,25 +645,6 @@
 							<div class="form-group-lg" id="div_txtXYDate">
 								<label for="txtXYDate" class="sr-only"></label>
 								<input type="text" class="form-control" id="txtXYDate" placeholder="信用卡有效期年份月份如:1504" >
-							</div>
-							<br/>
-							<!--输入有效期-->
-							<div class="form-group-lg" id="div_txtXYDate">
-							  <div class="row">
-							    <div class="col-xs-6" >
-                                <div class="input-group input-group-lg">
-                                  <span class="input-group-addon" id="sizing-addon1">月份</span>
-                                  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
-                                </div>
-                                </div>
-							    
-                                <div class="col-xs-6">
-                                <div class="input-group input-group-lg">
-                                  <span class="input-group-addon" id="sizing-addon1">年份</span>
-                                  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
-                                </div>
-                                </div>
-                              </div>
 							</div>
 							<br/>
 							<!--输入手机号-->

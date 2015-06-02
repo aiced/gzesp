@@ -1,6 +1,7 @@
 package com.ai.gzesp.service;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,10 +16,14 @@ import oracle.net.aso.k;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.ai.gzesp.dao.beans.TdPayDWOPAYLOG;
+import com.ai.gzesp.dao.service.TdPayDWOPAYLOGDao;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.utils.HttpUtils;
 import com.ai.gzesp.utils.UniPaySignUtils;
 import com.ai.gzesp.wopay.ConfigInfo;
+import com.ai.sysframe.utils.CommonUtil;
+import com.ai.sysframe.utils.StringUtil;
 import com.sinovatech.unicom.util.sign.CryptUtil;
 import com.sinovatech.unicom.util.sign.PayRequestBean;
 import com.sinovatech.unicom.util.sign.StoreCommon;
@@ -35,6 +40,10 @@ public class WoPayService {
 	
 	@Resource 
 	OrdersSql ordersSql;
+	@Resource
+	TdPayDWOPAYLOGDao tdPayDWOPAYLOGDao;
+	@Resource
+	PayService payService;
 	
     private static final Logger log = Logger.getLogger(UnionPayService.class); 
     
@@ -66,7 +75,8 @@ public class WoPayService {
         String wostoreTime = sdf.format(date);   
         payRequest.setWostoreTime(wostoreTime.substring(0,14));//商户时间
         payRequest.setRespMode("1");//应答机制
-        payRequest.setCallbackUrl("http://wap.woboss.gz186.com/esp/payResult/woPay");//回调url
+        //payRequest.setCallbackUrl("http://wap.woboss.gz186.com/esp/payResult/woPay");//回调url
+        payRequest.setCallbackUrl("http://localhost:8080/esp/payResult/woPay");//回调url
         payRequest.setServerCallUrl("http://wap.woboss.gz186.com/esp/payResult/woPayAsyn");//后台通知url
         payRequest.setStoreIndex("http://wap.woboss.gz186.com/esp/weShop/index/"+merUserId);//返回商户地址	
         payRequest.setLoginName("文辉");//付款用户名 可空 lsOrderforPay.get(0).get("CUST_NAME");
@@ -76,11 +86,11 @@ public class WoPayService {
 //        payRequest.setBankType("");//指定银行	可空
         payRequest.setAssignType("0018");//指定工具类别	可空
 
-        payRequest.setIdNo(Encrypt.crypToDes("370402198707172514", ConfigInfo.merchantSignKey));//身份证号  lsOrderforPay.get(0).get("PSPT_NO");
-        payRequest.setName(Encrypt.crypToDes("文辉", ConfigInfo.merchantSignKey));//真实姓名  lsOrderforPay.get(0).get("CUST_NAME");
+        payRequest.setIdNo(Encrypt.crypToDes("120224198908146241", ConfigInfo.merchantSignKey));//身份证号  lsOrderforPay.get(0).get("PSPT_NO");
+        payRequest.setName(Encrypt.crypToDes("谷子", ConfigInfo.merchantSignKey));//真实姓名  lsOrderforPay.get(0).get("CUST_NAME");
         payRequest.setModifyDesc("00");//身份证和姓名都不可以修改
         //payRequest.setExpandOne("文辉_370402198707172514");
-        
+
         String sign=StoreCommon.generateHmac(ConfigInfo.merchantSignKey, payRequest);
         System.out.println("sign="+sign);
         payRequest.setSignMsg(sign);//商户签名
@@ -108,7 +118,7 @@ public class WoPayService {
 			sb.append(currentResult);
 		}
 		System.out.println("ls="+ls);
-		return sb.toString();
+		return poParams.get("param");
 	}
 	
 	public static String queryOrder(String url,String order_id)
@@ -242,5 +252,64 @@ public class WoPayService {
 		return ls;
 	}
 	
+	
+	public String callBackResultAsyn(String inputParams)
+	{
+		Map<String, String> paramsMap = StringUtil.params2MapForWoPay(inputParams);
+		
+    	System.out.println(paramsMap);
+        //{paymentbalancedetail=, mp=2, payfloodid=20131017000932092830, 
+    	//payresult=1, userid=9999999999999999, paybalance=200, 
+    	//signmsg=, resptime=20150602164307, retype=1, 
+    	//hmac=0eadafc0791f1073078d0349e417432b, 
+    	//ss=123456789, orderid=1111111111111151, passport=}
+
+        String orderId=paramsMap.get("orderid");//商户订单号
+        String mp=paramsMap.get("mp");//将请求的参数保持不变返回
+        String payfloodid=paramsMap.get("payfloodid");//交易流水号
+        String payresult=paramsMap.get("payresult");//支付结果
+        Boolean bpayresult=false;
+        if (payresult.equals("1"))
+        {
+        	bpayresult=true;
+		}
+        else if(payresult.equals("2"))
+        {
+        	bpayresult=false;
+		}
+        String userid=paramsMap.get("userid");//商户用户id
+        String paybalance=paramsMap.get("paybalance");//支付金额
+        String resptime=paramsMap.get("resptime");//支付时间
+        String retype=paramsMap.get("retype");//返回类型
+        String hmac=paramsMap.get("hmac");//签名      
+
+		String logId = CommonUtil.generateLogId("4");
+        
+        TdPayDWOPAYLOG record_payDwopaylog=new TdPayDWOPAYLOG();
+        
+        record_payDwopaylog.setLogId(Long.valueOf(logId));//接口调用id
+        record_payDwopaylog.setPartitionId(Short.valueOf(logId.substring(logId.length()-2, logId.length())));//分区标识
+        record_payDwopaylog.setPayFloodId(payfloodid);//支付交易流水号
+        record_payDwopaylog.setPayResult(payresult);//支付结果
+        BigDecimal bd=new BigDecimal(paybalance);
+        BigDecimal bd10=new BigDecimal("10");
+        record_payDwopaylog.setPayBalance(bd.multiply(bd10));//支付金额（厘）
+        record_payDwopaylog.setPaymentBalanceDetail("");//金额明细
+        record_payDwopaylog.setRespTime(resptime);//支付时间
+        record_payDwopaylog.setReType(retype);//返回类型
+        record_payDwopaylog.setUserId(userid);//商户用户id
+        record_payDwopaylog.setPassport("");//沃支付账户号
+        record_payDwopaylog.setMp(mp);//标识字段
+
+        int iRet= tdPayDWOPAYLOGDao.insertSelective(record_payDwopaylog);
+        
+        if (iRet>0) {
+        	payService.afterPaySuccess("40",bpayresult,orderId,Integer.valueOf(paybalance));
+	    	return "操作成功";
+		}
+        else {
+			return "操作失败";
+		}
+	}
 	
 }

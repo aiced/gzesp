@@ -316,7 +316,7 @@ public class CommonController {
     	{
         	strRet=SmsUtils.doSendMessage(phonenum,"MB-2015052713","");
 		}
-    	
+
 		System.out.println("短信返回值："+strRet);
 		if (strRet != null && strRet.split("#").length==3)
 		{

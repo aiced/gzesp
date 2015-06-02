@@ -13,9 +13,9 @@ package com.ai.gzesp.wopay;
 public interface ConfigInfo {
 
 	// 商户签名密钥
-	public String merchantSignKey = "ZFG6OZJ1MKX85QS2J23O7X8LFNSV2K7N";//根据实际的替换
+	public String merchantSignKey = "NL4VGTMHNN188CKJA4U93AU22PTEM9MH";//根据实际的替换
 	//商户号
-	public String merchantNo = "303001300001639";//根据实际的替换
+	public String merchantNo = "301100110000828";//根据实际的替换
 	//签名方式
 	public String signType_MD5="MD5";
 	public String signType_SHA="SHA-1";

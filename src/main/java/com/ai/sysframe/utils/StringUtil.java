@@ -64,7 +64,7 @@ public class StringUtil {
     	Map<String, String> map = new HashMap();
     	try {
 			inputParams = URLDecoder.decode(inputParams, "UTF8");
-		
+			System.out.println(inputParams);
 	        if(inputParams != null ) {
 	        	String tmp[] = inputParams.split("&");
 	        	for(String keyValStr : tmp) {
@@ -86,6 +86,36 @@ public class StringUtil {
         return map;
     }
 
+    
+    public static Map<String, String> params2MapForWoPay(String inputParams)  {
+    	Map<String, String> map = new HashMap();
+    	try {
+			inputParams = URLDecoder.decode(inputParams, "UTF8");
+			inputParams=inputParams.replace('$', '&');
+			inputParams=inputParams.substring(6);
+			System.out.println(inputParams);
+	        if(inputParams != null ) {
+	        	String tmp[] = inputParams.split("&");
+	        	for(String keyValStr : tmp) {
+	        		String kv[] = keyValStr.split("=");
+	        		if(kv.length == 2) {
+	        			if(kv[0].endsWith("[]")) {
+	        				kv[0] = kv[0].substring(0, kv[0].length()-2);
+	        				kv[1] = URLDecoder.decode(kv[1], "UTF8");
+	        			}
+	        			map.put(kv[0], kv[1]);
+	        		} else if(kv.length == 1) {
+	        			map.put(kv[0], "");
+	        		}
+	        	}
+	        }
+    	} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+        return map;
+    }
+    
+   
     // 根据bit值，获取bit位随机数
     public static String getRandomNum(final int bit) {
         String tmp = "";

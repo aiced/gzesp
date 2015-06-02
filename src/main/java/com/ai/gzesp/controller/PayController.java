@@ -1,17 +1,16 @@
 package com.ai.gzesp.controller;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.dto.PayInfo;
 import com.ai.gzesp.service.PayService;
 
 /**
@@ -65,6 +64,39 @@ public class PayController {
     	//ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+"2015000000000000");
         
         return mav;
+    }
+    
+    @RequestMapping("/test/2")
+    public void test2(){
+    	payService.afterPaySuccess("30", true, "1171430816469615", 50000);
+    }
+    
+    @RequestMapping("/test/3")
+    public void test3(){
+    	List<PayInfo> payInfoList = new ArrayList<PayInfo>();
+    	
+    	PayInfo row = new PayInfo();
+    	row.setPay_order("1"); //默认从1开始
+    	row.setPay_type("01"); //线上
+    	row.setPay_mode("51"); //30 微信支付  40 沃支付
+    	row.setPay_fee("1000"); //单位厘
+    	payInfoList.add(row);
+    	
+    	PayInfo row2 = new PayInfo();
+    	row2.setPay_order("2"); //默认从1开始
+    	row2.setPay_type("01"); //线上
+    	row2.setPay_mode("52"); //30 微信支付  40 沃支付
+    	row2.setPay_fee("5000"); //单位厘
+    	payInfoList.add(row2);
+    	
+    	PayInfo row3 = new PayInfo();
+    	row3.setPay_order("3"); //默认从1开始
+    	row3.setPay_type("01"); //线上
+    	row3.setPay_mode("30"); //30 微信支付  40 沃支付
+    	row3.setPay_fee("6000"); //单位厘
+    	payInfoList.add(row3);
+    	
+    	payService.beforePayReq("1171430816469616", "12000", payInfoList);
     }
     
 }

@@ -1,22 +1,20 @@
 package com.ai.gzesp.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.PayDao;
-import com.ai.gzesp.dto.UnionPayParam;
-import com.ai.gzesp.unionpay.TradeType;
-import com.ai.gzesp.unionpay.UnionPayAttrs;
-import com.ai.gzesp.unionpay.UnionPayCons;
-import com.ai.gzesp.unionpay.UnionPayUtil;
+import com.ai.gzesp.dto.OrderDPay;
+import com.ai.gzesp.dto.PayInfo;
 import com.ai.gzesp.utils.DateUtils;
-import com.ai.gzesp.utils.MD5Util;
+import com.ai.gzesp.utils.SmsUtils;
 import com.ai.sysframe.utils.CommonUtil;
 
 /**
@@ -55,51 +53,54 @@ public class PayService {
      * @param result
      * @return
      */
-    public void beforePayReq(UnionPayParam param, Map<String, String> result){
-        
+    public void beforePayReq(String orderId, String orderFee, List<PayInfo> payInfoList){
+    	//先查下ord_d_pay 里是否已经有记录了，避免再次支付时多插记录
+    	List<Map<String, String>> rows = queryOrderDPay(orderId);
+    	//如果没有记录则插记录, 有记录则更新记录
+        if(rows.size() == 0){
+        	insertPayInfoBatch(orderId, orderFee, payInfoList);
+        }
+        else{
+        	//暂时不写，等账户功能上了再写
+        }
     }  
+    
+    private List<Map<String, String>> queryOrderDPay(String orderId){
+        return payDao.queryOrderDPay(orderId);
+    }
     
     /**
      * 调用微信支付，沃支付，银联支付前 插支付日志总表 ord_d_pay 
-     * @param param
-     * @param result
+     * 目前一条订单只插一条记录
+     * 以后可扩展为一条订单多部分支付，比如一条订单金额：100，能人账户优惠券抵扣10块，能人账户现金抵扣20块，微信支付70块，则插3条paylog记录
+     * @param orderId
+     * @param orderFee
+     * @param payInfo
      * @return
      */
-/*    private int insertPayInfo(UnionPayParam param, Map<String, String> result){
-        //Map<String, String> result = new HashMap<String, String>();
-        boolean isSuccess = false;
-        
-            String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.payNew.getTradeType()); //系统跟踪号
-            param.setPay_sys_trade_no(sysTradeNo);
-            String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
-            param.setPay_time_stamp(timeStamp);
-            String tradeType = TradeType.payNew.getTradeType(); //业务类型
-            param.setPay_trade_type(tradeType);
-             
-            //
-            int n2 = payDao.insertPayInfo(param.getPay_sys_trade_no(), //pay_id
-            		param.getPay_sys_trade_no().substring(14, 16), //partition_id
-                    "01",  //pay_type
-                    param.getCard_type().equals("01") ? "11" : "12", //pay_mode
-                            "0", //pay_state 初始0已发起支付
-                            null, //银联支付接口时插入md5 加密后的签约号,用于退款时知道退到哪个账户, 全要素支付接口不需要传签约号
-                            param.getPay_time_stamp(), //req_time
-                            "00", //isSuccess ? "00" : "01",  //req_status  这边其实有点问题，还没发送，就写发送成功状态
-                                    param.getPay_trade_type(), //req_trade_type
-                                    param.getPay_sys_trade_no(), //sys_trade_no
-                                    param.getOrder_id(),
-                                    param.getFee()
-                    );
-            
-            if(n2 <= 0){
-            	//都成功则result为空
-            	result.put("status", "E04");
-            	result.put("detail", "支付失败！全要素支付日志流水插入失败");
-            	//return result; //直接返回
-            }
-        
-        //return result;
-    }*/
+	private int insertPayInfoBatch(String orderId, String orderFee, List<PayInfo> payInfoList) {
+    	List<OrderDPay> list = new ArrayList<OrderDPay>();
+    	String partition_id = orderId.substring(14, 16); 
+    	String pay_time = DateUtils.getCurentTime();
+    	
+    	for(int i = 0; i < payInfoList.size(); i++){
+    		OrderDPay item = new OrderDPay();
+    		item.setOrder_id(orderId);
+    		item.setPartition_id(partition_id);
+    		//item.setPay_id(pay_id);
+    		item.setPay_order(String.valueOf(i+1)); //默认是1开始
+    		item.setPay_type("01"); //默认01 在线付款
+    		item.setPay_mode(payInfoList.get(i).getPay_mode()); //按顺序取
+    		item.setPay_state("0");  //默认初始状态 0-未支付
+    		item.setOrder_fee(orderFee); //单位厘
+    		item.setPay_fee(payInfoList.get(i).getPay_fee());  //单位厘
+    		item.setPay_time(pay_time);
+    		
+    		list.add(item);
+    	}
+    	
+		return payDao.insertPayInfoBatch(list);
+	}
     
 
     /**
@@ -109,20 +110,27 @@ public class PayService {
      * 3.更新 ord_d_pay 里 状态
      * 4.如果有号码预占而且支付返回响应是成功的则删掉号码预占表信息
      * 
-     * @param param
-     * @param result
+     * orderFee 单位厘
+     * 
+     * @param pay_mode
+     * @param isSuccess
+     * @param orderId
+     * @param orderFee
      * @return
      */
-    public void afterPaySuccess(boolean isSuccess, String orderId, int fee){
+    public void afterPaySuccess(String pay_mode, boolean isSuccess, String orderId, int orderFee){
     	//更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
-    	int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, fee);
-    	
+    	if(isSuccess){
+    	   int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, orderFee);
+    	}
     	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
     	if(isSuccess){
-    		int r2 = insertDealLog(orderId, fee);
+    		int r2 = insertDealLog(orderId, orderFee);
     	}
     	
-    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态
+    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
+    	String pay_state = isSuccess ? "1" : "2" ;
+    	int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
     	
     	//先根据返回报文里的order_id 获取到订单当时是否有选择号码
     	Map<Object, Object> numberRow = getNumberByOrderId(orderId);
@@ -134,7 +142,13 @@ public class PayService {
         }
         
         //支付成功发短信
-    	
+        if(isSuccess){
+        	Map<String, String> phone = payDao.queryPhoneByOrderId(orderId);
+        	Map<String, String> goods = payDao.queryGoodsNameByOrderId(orderId);
+        	if(MapUtils.isNotEmpty(phone)){
+        		String strRet = SmsUtils.doSendMessage(phone.get("PHONE_NUMBER"), "MB-2015052754", "@1@=" + goods.get("GOODS_NAME"));
+        	}
+    	}
     }
     
     /**
@@ -148,7 +162,7 @@ public class PayService {
     	int r2 = 0;
         if(isSuccess){
         	String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
-        	int income_money = fee*10; //银联是分，表里是厘
+        	int income_money = fee; //银联是分，表里是厘
         	//20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
         	//String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
         	//r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
@@ -192,12 +206,16 @@ public class PayService {
     			CommonUtil.generateLogId("5"),
     			orderId, 
     			orderId.substring(14, 16), //partition_id
-    			"支付成功,金额" + fee/100 + "元",  //DEAL_CONTENT
+    			"支付成功金额" + fee/1000 + "元",  //DEAL_CONTENT
     			"0",  //RESULT_CODE
     			"成功",   //RESULT_INFO
     			"00",  //ORIGINAL_STATE，订单原始状态未支付
     			"01"   //CURRENT_STATE,订单线状态，待分配
     			);
+    }
+    
+    private int updateOrdDPay(String orderId, String pay_state, String pay_mode){
+        return payDao.updateOrdDPay(orderId, pay_state, pay_mode);
     }
     
 }

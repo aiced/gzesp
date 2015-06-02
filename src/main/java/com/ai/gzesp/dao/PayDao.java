@@ -1,9 +1,12 @@
 package com.ai.gzesp.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import com.ai.gzesp.dto.OrderDPay;
 
 /**
  * 支付公共接口dao<br> 
@@ -24,4 +27,13 @@ public interface PayDao {
     		@Param("deal_content") String deal_content, @Param("result_code") String result_code, @Param("result_info") String result_info,
     		@Param("original_state") String original_state, @Param("current_state") String current_state);    
     
+    public List<Map<String, String>> queryOrderDPay(@Param("order_id") String order_id);
+    
+    public int insertPayInfoBatch(@Param("list") List<OrderDPay> list);    
+    
+    public int updateOrdDPay(@Param("order_id") String order_id, @Param("pay_state") String pay_state, @Param("pay_mode") String pay_mode);    
+    
+    public Map<String, String> queryPhoneByOrderId(@Param("order_id") String order_id);
+    
+    public Map<String, String> queryGoodsNameByOrderId(@Param("order_id") String order_id);
 }

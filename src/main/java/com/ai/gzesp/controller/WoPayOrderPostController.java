@@ -16,14 +16,14 @@ public class WoPayOrderPostController {
 	private WoPayService woPayService;
 	
 	
-    @RequestMapping("/orderPost/{order_id}/{fee}")
-    public ModelAndView index(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
+    @RequestMapping("/orderPost/{order_id}/{fee}/{flag}")
+    public ModelAndView index(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,@PathVariable("flag") String flag){
         ModelAndView mav = new ModelAndView("woPayOrderPost.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "沃支付");
         
 		String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
-        String strRet=woPayService.payOrder(url,order_id,fee);
+        String strRet=woPayService.payOrder(url,order_id,fee,flag);
         mav.addObject("postdata",strRet);
         return mav;
     }

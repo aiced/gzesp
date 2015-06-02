@@ -2,10 +2,12 @@ package com.ai.wx.util;
 
 import java.io.Writer;
 import java.lang.reflect.Field;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.ai.gzesp.unionpay.MyMapConverter;
 import com.ai.wx.consts.XStreamIgnoreCDATA;
 import com.ai.wx.entity.response.Article;
 import com.ai.wx.entity.response.ResponseMusicMessage;
@@ -125,6 +127,7 @@ public class XmlUtils {
         // 时区处理
         TimeZone zone = TimeZone.getTimeZone(CHINA_TIME_ZONE);
         XSTREAM.registerConverter(new DateConverter(zone), XStream.PRIORITY_NORMAL);
+//        XSTREAM.registerConverter(new MyMapConverter());
         // XSTREAM.registerConverter(new MyDateConverter(), XStream.PRIORITY_VERY_HIGH);
         // XSTREAM.registerConverter(new MyTimeConverter(), XStream.PRIORITY_VERY_HIGH);
         XSTREAM.autodetectAnnotations(true);
@@ -159,6 +162,17 @@ public class XmlUtils {
      */
     public static String toXML(Object obj) {
         return XSTREAM.toXML(obj);
+    }
+    
+    /**
+     * 对象转报文
+     * 
+     * @param obj
+     * @return String
+     */
+    public static String objToXML(Object obj) {
+    	XSTREAM.alias("xml", obj.getClass());  
+    	return XSTREAM.toXML(obj);
     }
     
     /** 

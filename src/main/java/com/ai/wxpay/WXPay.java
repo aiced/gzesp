@@ -1,5 +1,6 @@
 package com.ai.wxpay;
 
+import com.ai.wxpay.business.CallbackBusiness;
 import com.ai.wxpay.business.DownloadBillBusiness;
 import com.ai.wxpay.business.RefundBusiness;
 import com.ai.wxpay.business.RefundQueryBusiness;
@@ -147,6 +148,10 @@ public class WXPay {
 
     public static void doUnifiedOrderBusiness(UnifiedOrderReqData reqData, UnifiedOrderBusiness.ResultListener resultListener) throws Exception {
     	new UnifiedOrderBusiness().run(reqData,resultListener);
+    }
+    
+    public static void doCallbackBusiness(String responseString, CallbackBusiness.ResultListener resultListener) throws Exception {
+    	new CallbackBusiness().run(responseString,resultListener);
     }
 
 

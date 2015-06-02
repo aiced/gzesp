@@ -204,6 +204,10 @@ public class OrdersSql {
             + " '审核通过未退款'"
             + " when REFUND_STATE = '14' then"
             + " '审核通过已退款'"
+            + " when REFUND_STATE = '15' then"
+            + " '店主审核不通过'"
+            + " when REFUND_STATE = '16' then"
+            + " '管理员审核不通过'"
             + " else "
             + " '未知'"
             + " end REFUND_STATE,REFUND_REASON,T3.ORDER_STATE as ORDER_STATE_REFUND"
@@ -449,6 +453,8 @@ public class OrdersSql {
                 +"WHEN k.refund_state='12' THEN '店主审核中'"
                 +"WHEN k.refund_state='13' THEN '审核通过未退款'"
                 +"WHEN k.refund_state='14' THEN '审核通过已退款'"
+                +"WHEN k.refund_state='15' THEN '店主审核不通过'"
+                +"WHEN k.refund_state='16' THEN '管理员审核不通过'"
                 +"ELSE '未知'"
                 +"END refund_state");
 		sb.append("	from ORD_D_CUST a, ORD_D_BASE b, ORD_D_PROD c, ORD_D_DEAL d, AUR_D_AUTHINFO e,"
@@ -476,5 +482,19 @@ public class OrdersSql {
 		Map custOrderDetail =commonDao.queryForMap(sb.toString());
 		
 		return custOrderDetail;
+	}
+	
+	//沃支付需要的订单信息_退单
+	public  List<Map<String, Object>> getOrderforRefund(String order_id)
+	{
+		StringBuffer sb=new StringBuffer();		
+		sb.append("select b.order_id,to_char(trunc(b.Create_time),'yyyymmdd') CREATE_TIME,a.PAY_FLOOD_ID,a.PAY_BALANCE,c.refund_reason");
+		sb.append(" from PAY_D_WOPAY_LOG a,Ord_d_base b,Ord_d_Refund c");
+		sb.append(" where a.order_id(+) = b.order_id and a.order_id=c.order_id(+) and"
+				+ " b.order_id='"+order_id+"'");
+		
+		System.out.println(sb.toString());
+		List<Map<String, Object>> ls =commonDao.queryForList(sb.toString());
+		return ls;
 	}
 }

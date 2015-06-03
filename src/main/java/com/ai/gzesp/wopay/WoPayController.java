@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import scala.annotation.meta.param;
 
+import com.ai.gzesp.service.PayService;
 import com.ai.gzesp.service.WoPayService;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -30,6 +31,9 @@ public class WoPayController {
 	@Autowired
 	private WoPayService woPayService;
 	
+	@Autowired
+	private PayService payService;
+	
 	@RequestMapping("/pay/woPay/payReq/{order_id}/{fee}/{flag}")
 	@ResponseBody
 	public String woPayOrder(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,@PathVariable("flag") String flag)
@@ -38,10 +42,10 @@ public class WoPayController {
 		System.out.println("woPay_orderid="+fee);
 		System.out.println("woPay_flag="+flag);
 		//沃支付请求地址 正式用
-		//String url="https://epay.10010.com/symob/httpservice/wapPayPageAction.do"; 
+		String url="https://epay.10010.com/symini/httpservice/wapPayPageAction.do?reqcharset=UTF-8"; 
 		//沃支付请求地址 测试用
-		String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
-
+		//String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
+		fee=Integer.parseInt(fee)/10 + "";
 		// 1.借记卡 2.信用卡
 		String strRet=woPayService.payOrder(url,order_id,fee,flag);
 		return strRet;
@@ -59,7 +63,7 @@ public class WoPayController {
 	
 	@RequestMapping("/pay/payRefund/{order_id}/{type_flag}")
 	@ResponseBody
-	public HashMap<String, String> woRefund(@PathVariable("order_id") String order_id,@PathVariable("type_flag") String type_flag)
+	public HashMap<String, String> woRefund(@PathVariable("order_id") String order_id,@PathVariable("type_flag") String type_flag) throws Exception
 	{
 		System.out.println("退款_orderid="+order_id);
 		System.out.println("退款_type_flag="+type_flag);
@@ -67,6 +71,7 @@ public class WoPayController {
 		if (type_flag.equals("1"))  //微信支付
 		{
 			System.out.println("微信支付返回："+MapRet);
+			payService.wxRefund(order_id);
 		}
 		else if(type_flag.equals("2"))//沃支付
 		{

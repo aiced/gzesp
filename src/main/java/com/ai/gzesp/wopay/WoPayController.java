@@ -41,13 +41,9 @@ public class WoPayController {
 		//String url="https://epay.10010.com/symob/httpservice/wapPayPageAction.do"; 
 		//沃支付请求地址 测试用
 		String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
-<<<<<<< HEAD
-		
-		String strRet=woPayService.payOrder(url,order_id,fee);
-=======
+
 		// 1.借记卡 2.信用卡
 		String strRet=woPayService.payOrder(url,order_id,fee,flag);
->>>>>>> 030dc5413db9317faeb6a9f95021b14bf935e481
 		return strRet;
 	}
 	

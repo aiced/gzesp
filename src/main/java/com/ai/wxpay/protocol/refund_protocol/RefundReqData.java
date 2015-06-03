@@ -24,8 +24,8 @@ public class RefundReqData {
     private String transaction_id = "";
     private String out_trade_no = "";
     private String out_refund_no = "";
-    private int total_fee = 0;
-    private int refund_fee = 0;
+    private long total_fee = 0;
+    private long refund_fee = 0;
     private String refund_fee_type = "CNY";
     private String op_user_id = "";
 
@@ -40,7 +40,7 @@ public class RefundReqData {
      * @param opUserID 操作员帐号, 默认为商户号
      * @param refundFeeType 货币类型，符合ISO 4217标准的三位字母代码，默认为CNY（人民币）
      */
-    public RefundReqData(String transactionID,String outTradeNo,String deviceInfo,String outRefundNo,int totalFee,int refundFee,String opUserID,String refundFeeType){
+    public RefundReqData(String transactionID,String outTradeNo,String deviceInfo,String outRefundNo,long totalFee,long refundFee,String opUserID){
 
         //微信分配的公众号ID（开通公众号之后可以获取到）
         setAppid(Configure.getAppid());
@@ -138,19 +138,19 @@ public class RefundReqData {
         this.out_refund_no = out_refund_no;
     }
 
-    public int getTotal_fee() {
+    public long getTotal_fee() {
         return total_fee;
     }
 
-    public void setTotal_fee(int total_fee) {
+    public void setTotal_fee(long total_fee) {
         this.total_fee = total_fee;
     }
 
-    public int getRefund_fee() {
+    public long getRefund_fee() {
         return refund_fee;
     }
 
-    public void setRefund_fee(int refund_fee) {
+    public void setRefund_fee(long refund_fee) {
         this.refund_fee = refund_fee;
     }
 

@@ -29,6 +29,8 @@ public interface OrderDao {
     
     public List<Map<Object, Object>> queryOrdersTimeout(); 
     
+    public List<Map<Object, Object>> queryOrdersTimeout2();
+    
     public int releaseNumberState(@Param("numbers") String[] numbers); 
     
     public int deleteNumberReserve(@Param("numbers") String[] numbers); 

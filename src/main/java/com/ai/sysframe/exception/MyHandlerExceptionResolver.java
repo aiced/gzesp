@@ -17,6 +17,8 @@ public class MyHandlerExceptionResolver implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest request,
             HttpServletResponse response, Object handler, Exception ex) {
         log.warn("Handle exception: " + ex.getClass().getName());
+        //logger.error(exception)只打印一行，logger.error("",exception) 会打印整个堆栈
+    	log.error("Handle exception", ex); 
         String path =  CommonUtil.appResource.getString("base");
         
         String userId = String.valueOf(request.getSession(true).getAttribute("userId"));

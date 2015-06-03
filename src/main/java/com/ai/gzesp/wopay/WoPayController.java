@@ -34,6 +34,9 @@ public class WoPayController {
 	@Autowired
 	private PayService payService;
 	
+	@Autowired
+	private PayService payService;
+	
 	@RequestMapping("/pay/woPay/payReq/{order_id}/{fee}/{flag}")
 	@ResponseBody
 	public String woPayOrder(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,@PathVariable("flag") String flag)

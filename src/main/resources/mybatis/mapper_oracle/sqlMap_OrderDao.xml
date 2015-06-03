@@ -142,7 +142,22 @@
          and b.pay_id is null 
          and a.order_id = c.order_id
          ]]>    
-	</select>		
+	</select>
+	
+	<select id="queryOrdersTimeout2" resultType="java.util.HashMap">
+      <![CDATA[
+        select to_char(a.order_id) order_id,
+             to_char(c.goods_id) goods_id
+        from ord_d_base a,
+             ord_d_pay b,
+             ord_d_prod c
+       where a.order_id = b.order_id(+)
+         and a.create_time <= sysdate - 1/(24*2)
+         and a.create_time >= to_date('20150603120000','yyyymmddhh24miss')
+         and (b.order_id is null or b.pay_state <> '1')
+         and a.order_id = c.order_id
+         ]]>    
+	</select>			
 	
 	<update id="releaseNumberState" >
 	   update num_d_numinfo a

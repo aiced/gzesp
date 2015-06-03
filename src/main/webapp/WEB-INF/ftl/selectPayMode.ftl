@@ -72,7 +72,7 @@
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
                //alert(pay_mode_style);
                if(pay_mode_style == "微信支付"){
-                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state='+ encodeURIComponent(${goods_name}); //微信支付
+                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state='+ encodeURIComponent('${goods_name}'); //微信支付
                }
                else if(pay_mode_style == "沃支付"){
                  url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
@@ -111,7 +111,7 @@
 		      success: function(data){
             if(pay_type == '01'){
                if(pay_mode_style == "微信支付"){
-                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state='+ encodeURIComponent(${goods_name}); //微信支付
+                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state='+ encodeURIComponent('${goods_name}'); //微信支付
                }
                else if(pay_mode_style == "沃支付"){
                  url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
@@ -133,9 +133,9 @@
 	        var url;
             var pay_mode = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
 	        //alert(pay_mode);
-            if(pay_mode == '00'){
+            if(pay_mode == '01'){
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
-               url = '${base}/pay/wxPay/prepay_step1/${order_id}/10?state='+ encodeURIComponent(${goods_name}); //微信支付
+               url = '${base}/pay/wxPay/prepay_step1/${order_id}/10?state='+ encodeURIComponent('${goods_name}'); //微信支付
             }
             
 	        window.location.href = url;  
@@ -144,7 +144,7 @@
 	        var url;
             var pay_mode = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
 	        //alert(pay_mode);
-            if(pay_mode == '00'){
+            if(pay_mode == '01'){
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
                url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
             }
@@ -196,7 +196,7 @@
           <div class="row" style="margin:10px 10px 0px 10px;">
             <div class="radio" style="padding-left:5px;">
              <label class="radio">
-               <input type="radio" name="pay_mode_style" id="weixin" value="微信支付" style="margin-top:18px;" disabled>
+               <input type="radio" name="pay_mode_style" id="weixin" value="微信支付" style="margin-top:18px;">
                <img src="${resRoot}/image/selectPayMode/pay_weixin.png" width="95%" height="30%"/>
              </label>
             </div>

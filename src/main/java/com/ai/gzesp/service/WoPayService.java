@@ -55,30 +55,34 @@ public class WoPayService {
 		}
 
 
-		String merUserId="9999999999999999";
-		String expand="18551855717";
+		//String merUserId="9999999999999999";
+		//String expand="18551855717";
 		//以下构造支付参数
 		PayRequestBean payRequest=new PayRequestBean();
 		payRequest.setVersion("2.2.2");//版本号 可空
 		payRequest.setLoginName("admin");//现在可以随便填写，后面要根据实际情况来填写
 		payRequest.setMerNo(ConfigInfo.merchantNo);//商户号
-		payRequest.setGoodsName("测试商品iphone6");//商品名称 可空  		lsOrderforPay.get(0).get("GOODS_NAME");
+		payRequest.setGoodsName(lsOrderforPay.get(0).get("GOODS_NAME").toString());//商品名称 可空  		lsOrderforPay.get(0).get("GOODS_NAME");
 		payRequest.setStoreOrderId(order_id);//商品订单号
 		payRequest.setOrderBalance(fee);//订单金额
 		payRequest.setPayBalance(fee);//应付金额
-		payRequest.setMerUserId(merUserId);//付款用户id	可空  		lsOrderforPay.get(0).get("USER_ID");
-		payRequest.setExpand(expand);//订单描述信息 可空 lsOrderforPay.get(0).get("PHONE_NUMBER");
+		payRequest.setMerUserId(lsOrderforPay.get(0).get("USER_ID").toString());//付款用户id	可空  		lsOrderforPay.get(0).get("USER_ID");
+		payRequest.setExpand(lsOrderforPay.get(0).get("PHONE_NUMBER").toString());//订单描述信息 可空 lsOrderforPay.get(0).get("PHONE_NUMBER");
         Date date = new Date();  
         System.out.println(date);  
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH24mmss");  
         String wostoreTime = sdf.format(date);   
         payRequest.setWostoreTime(wostoreTime.substring(0,14));//商户时间
         payRequest.setRespMode("1");//应答机制
-        //payRequest.setCallbackUrl("http://wap.woboss.gz186.com/esp/payResult/woPay");//回调url
-        payRequest.setCallbackUrl("http://localhost:8080/esp/payResult/woPay");//回调url
+        payRequest.setCallbackUrl("http://wap.woboss.gz186.com/esp/payResult/woPay");//回调url
+        //payRequest.setCallbackUrl("http://172.20.10.5/esp/payResult/woPay");//回调url
         payRequest.setServerCallUrl("http://wap.woboss.gz186.com/esp/payResult/woPayAsyn");//后台通知url
-        payRequest.setStoreIndex("http://wap.woboss.gz186.com/esp/weShop/index/"+merUserId);//返回商户地址	
-        payRequest.setLoginName("文辉");//付款用户名 可空 lsOrderforPay.get(0).get("CUST_NAME");
+        payRequest.setStoreIndex("http://wap.woboss.gz186.com/esp/weShop/index/"+lsOrderforPay.get(0).get("USER_ID").toString());//返回商户地址	
+//        payRequest.setServerCallUrl("http://172.20.10.5/esp/payResult/woPayAsyn");//后台通知url
+//        payRequest.setStoreIndex("http://172.20.10.5/esp/weShop/index/"+merUserId);//返回商户地址	
+// 
+
+        payRequest.setLoginName(lsOrderforPay.get(0).get("CUST_NAME").toString());//付款用户名 可空 lsOrderforPay.get(0).get("CUST_NAME");
         payRequest.setMp("2");//标记字段
         payRequest.setStoreName("沃掌柜");//商户名称
         
@@ -92,13 +96,13 @@ public class WoPayService {
         {
             payRequest.setStraightType("0019");//直连工具类别 可空
             payRequest.setAssignType("0019");//指定工具类别	可空
-        	payRequest.setExpandOne("谷子_120224198908146241");
+        	payRequest.setExpandOne(lsOrderforPay.get(0).get("CUST_NAME")+"_"+lsOrderforPay.get(0).get("PSPT_NO").toString());
         }
 
         
         //payRequest.setBankType("");//指定银行	可空
-        payRequest.setIdNo(Encrypt.crypToDes("120224198908146241", ConfigInfo.merchantSignKey));//身份证号  lsOrderforPay.get(0).get("PSPT_NO");
-        payRequest.setName(Encrypt.crypToDes("谷子", ConfigInfo.merchantSignKey));//真实姓名  lsOrderforPay.get(0).get("CUST_NAME");
+        payRequest.setIdNo(Encrypt.crypToDes(lsOrderforPay.get(0).get("PSPT_NO").toString(), ConfigInfo.merchantSignKey));//身份证号  lsOrderforPay.get(0).get("PSPT_NO");
+        payRequest.setName(Encrypt.crypToDes(lsOrderforPay.get(0).get("CUST_NAME").toString(), ConfigInfo.merchantSignKey));//真实姓名  lsOrderforPay.get(0).get("CUST_NAME");
         payRequest.setModifyDesc("00");//身份证和姓名都不可以修改
         //payRequest.setExpandOne("文辉_370402198707172514");
 
@@ -268,7 +272,7 @@ public class WoPayService {
 	{
 		Map<String, String> paramsMap = StringUtil.params2MapForWoPay(inputParams);
 		
-    	System.out.println(paramsMap);
+    	System.out.println("异步回调："+paramsMap);
         //{paymentbalancedetail=, mp=2, payfloodid=20131017000932092830, 
     	//payresult=1, userid=9999999999999999, paybalance=200, 
     	//signmsg=, resptime=20150602164307, retype=1, 

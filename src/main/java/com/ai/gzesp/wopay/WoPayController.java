@@ -34,6 +34,9 @@ public class WoPayController {
 	@Autowired
 	private PayService payService;
 	
+	@Autowired
+	private PayService payService;
+	
 	@RequestMapping("/pay/woPay/payReq/{order_id}/{fee}/{flag}")
 	@ResponseBody
 	public String woPayOrder(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,@PathVariable("flag") String flag)
@@ -42,10 +45,10 @@ public class WoPayController {
 		System.out.println("woPay_orderid="+fee);
 		System.out.println("woPay_flag="+flag);
 		//沃支付请求地址 正式用
-		//String url="https://epay.10010.com/symob/httpservice/wapPayPageAction.do"; 
+		String url="https://epay.10010.com/symini/httpservice/wapPayPageAction.do?reqcharset=UTF-8"; 
 		//沃支付请求地址 测试用
-		String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
-
+		//String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
+		fee=Integer.parseInt(fee)/10 + "";
 		// 1.借记卡 2.信用卡
 		String strRet=woPayService.payOrder(url,order_id,fee,flag);
 		return strRet;

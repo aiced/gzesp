@@ -22,8 +22,10 @@ public class WoPayOrderPostController {
         //从数据库获取信息赋值
         mav.addObject("title", "沃支付");
         
-		String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
-        String strRet=woPayService.payOrder(url,order_id,fee,flag);
+		//String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
+		String url="https://epay.10010.com/symini/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
+		fee=Integer.parseInt(fee)/10 + "";
+		String strRet=woPayService.payOrder(url,order_id,fee,flag);
         mav.addObject("postdata",strRet);
         return mav;
     }

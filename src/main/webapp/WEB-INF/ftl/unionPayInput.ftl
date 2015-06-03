@@ -51,7 +51,7 @@
 	var bRet12=false;
 	var bRet13=false;
 	
-	var tabActive;//记录当前处于激活状态的 1，信用卡 2 储蓄卡
+	var tabActive=1;//记录当前处于激活状态的 1，信用卡 2 储蓄卡
 	
 	//判断输入的是否是手机号
 	function isPhoneNum(strPhoneNum)
@@ -524,7 +524,7 @@
 			           	//window.setTimeout (function(){ document.getElementById ('txtXYname'). select();},0 ); 
 
 			        }
-			        if($(this).text()=="存储卡")
+			        if($(this).text()=="储蓄卡")
 			        {
 			        	tabActive=2;
 			        	//window.setTimeout (function(){ document.getElementById ('txtCCname'). select();},0 );

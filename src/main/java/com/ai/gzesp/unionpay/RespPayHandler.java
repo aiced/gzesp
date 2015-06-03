@@ -69,7 +69,7 @@ public class RespPayHandler implements IDealUnionPayResp {
         int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt));
         
         //调用公共service，做后续的统一的操作
-        payService.afterPaySuccess(null, isSuccess, realOrderId, fee);
+        payService.afterPaySuccess("15", isSuccess, realOrderId, fee);
     }
 
 }

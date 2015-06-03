@@ -72,7 +72,7 @@
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
                //alert(pay_mode_style);
                if(pay_mode_style == "微信支付"){
-                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state=${goods_name}'; //微信支付
+                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state='+ encodeURIComponent(${goods_name}); //微信支付
                }
                else if(pay_mode_style == "沃支付"){
                  url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
@@ -111,7 +111,7 @@
 		      success: function(data){
             if(pay_type == '01'){
                if(pay_mode_style == "微信支付"){
-                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state=encodeURIComponent(${goods_name})'; //微信支付
+                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state='+ encodeURIComponent(${goods_name}); //微信支付
                }
                else if(pay_mode_style == "沃支付"){
                  url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
@@ -135,7 +135,7 @@
 	        //alert(pay_mode);
             if(pay_mode == '00'){
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
-               url = '${base}/pay/wxPay/prepay_step1/${order_id}/10?state=encodeURIComponent(${goods_name})'; //微信支付
+               url = '${base}/pay/wxPay/prepay_step1/${order_id}/10?state='+ encodeURIComponent(${goods_name}); //微信支付
             }
             
 	        window.location.href = url;  

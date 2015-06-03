@@ -54,7 +54,6 @@ public class PayController {
         //获取商品名称，微信支付和沃支付需要
         Map<String, String> goods = payService.queryGoodsNameByOrderId(order_id);
         mav.addObject("goods_name", MapUtils.isEmpty(goods) ? "" : goods.get("GOODS_NAME"));
-        
         return mav;
     }
     

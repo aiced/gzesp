@@ -3,6 +3,9 @@ package com.ai.gzesp.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
@@ -11,11 +14,18 @@ import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.PayDao;
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdPayDWEIXINLOG;
+import com.ai.gzesp.dao.service.TdPayDWEIXINLOGDao;
 import com.ai.gzesp.dto.OrderDPay;
 import com.ai.gzesp.dto.PayInfo;
 import com.ai.gzesp.utils.DateUtils;
 import com.ai.gzesp.utils.SmsUtils;
 import com.ai.sysframe.utils.CommonUtil;
+import com.ai.wxpay.WXPay;
+import com.ai.wxpay.common.Configure;
+import com.ai.wxpay.protocol.refund_protocol.RefundReqData;
+import com.ai.wxpay.protocol.refund_protocol.RefundResData;
 
 /**
  * 支付公共服务类<br> 
@@ -218,4 +228,91 @@ public class PayService {
         return payDao.updateOrdDPay(orderId, pay_state, pay_mode);
     }
     
+    
+    
+    @Resource
+    TdPayDWEIXINLOGDao tdPayDWEIXINLOGDao;
+    
+    public void wxRefund(String orderId) throws Exception {
+    	// 检索订单是否有退款记录, 假如有：不能再发起流程
+    	Criteria example = new Criteria();
+    	example.createConditon().andEqualTo("OUTER_TRADE_NO", orderId).andEqualTo("REQ_TYPE", "04");
+    	int count = tdPayDWEIXINLOGDao.countByExample(example);
+    	if(count > 0) {
+    		return;
+    	}
+    	// 检索订单 审核状态 退款流程需要的字段
+    	example.clear();
+    	example.createConditon().andEqualTo("OUTER_TRADE_NO", orderId).andEqualTo("REQ_TYPE", "01");
+    	List<TdPayDWEIXINLOG> list = tdPayDWEIXINLOGDao.selectByExample(example);
+    	if(list.size() == 0) {
+    		return;
+    	}
+    	TdPayDWEIXINLOG record = list.get(0);
+    	record.setReqType("04");
+    	String logId = CommonUtil.generateLogId("2");
+    	record.setLogId(CommonUtil.string2Long(logId));
+    	record.setOutRefundNo(UUID.randomUUID().toString());
+    	record.setRefundFee(record.getTotalFee());
+    	record.setReturnCode("");
+    	record.setReturnMsg("");
+    	record.setResultCode("");
+    	record.setErrCode("");
+    	record.setErrCodeDes("");
+    	// 插入退款记录
+    	tdPayDWEIXINLOGDao.insertSelective(record);
+    	// 发起流程， 等待响应
+    	// 响应后更新退款记录
+    	RefundReqData req = new RefundReqData(record.getTransactionId(), record.getOuterTradeNo(), "", record.getOutRefundNo(), 
+    			record.getTotalFee(), record.getRefundFee(), Configure.getMchid());
+    	WXPay.doRefundBusiness(req, new RefundResultListener());
+    }
+    
+    
+    class RefundResultListener implements com.ai.wxpay.business.RefundBusiness.ResultListener {
+
+		@Override
+		public void onFailByReturnCodeError(RefundResData refundResData) {
+			
+		}
+
+		@Override
+		public void onFailByReturnCodeFail(RefundResData refundResData) {
+			
+		}
+
+		@Override
+		public void onFailBySignInvalid(RefundResData refundResData) {
+			
+		}
+
+		@Override
+		public void onRefundFail(RefundResData refundResData) {
+			Criteria example = new Criteria();
+	    	example.createConditon().andEqualTo("OUT_REFUND_NO", refundResData.getOut_refund_no()).andEqualTo("REQ_TYPE", "04");
+			TdPayDWEIXINLOG record = new TdPayDWEIXINLOG();
+			record.setReturnCode(refundResData.getReturn_code());
+			record.setReturnMsg(refundResData.getReturn_msg());
+			record.setResultCode(refundResData.getResult_code());
+			record.setErrCode(refundResData.getErr_code());
+			record.setErrCodeDes(refundResData.getErr_code_des());
+	    	tdPayDWEIXINLOGDao.updateByExampleSelective(record, example);
+		}
+
+		@Override
+		public void onRefundSuccess(RefundResData refundResData) {
+			Criteria example = new Criteria();
+	    	example.createConditon().andEqualTo("OUT_REFUND_NO", refundResData.getOut_refund_no()).andEqualTo("REQ_TYPE", "04");
+			TdPayDWEIXINLOG record = new TdPayDWEIXINLOG();
+			record.setReturnCode(refundResData.getReturn_code());
+			record.setReturnMsg(refundResData.getReturn_msg());
+			record.setResultCode(refundResData.getResult_code());
+			record.setErrCode(refundResData.getErr_code());
+			record.setErrCodeDes(refundResData.getErr_code_des());
+	    	tdPayDWEIXINLOGDao.updateByExampleSelective(record, example);
+		}
+    	
+    }
+//    	
+//    }
 }

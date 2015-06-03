@@ -229,7 +229,7 @@ public class UnionPayController {
      * @see [相关类/方法](可选)
      * @since [产品/模块版本](可选)
      */
-    @RequestMapping("/unionPay/payNew")
+/*    @RequestMapping("/unionPay/payNew")
     @ResponseBody
     public Map<String, String> unionPayPayNew(@RequestBody UnionPayParam param){
         Map<String, String> result = new HashMap<String, String>();
@@ -260,7 +260,45 @@ public class UnionPayController {
 		}      
         
         return result;
-    }    
+    }*/
+    
+    /**
+     * 支付改造后(增加ord_d_pay 表和 PAY_D_UNIONPAY_LOG表后)，相应的记录操作也要换表
+     * @param param
+     * @return
+     */
+    @RequestMapping("/unionPay/payNew")
+    @ResponseBody
+    public Map<String, String> unionPayPayNew2(@RequestBody UnionPayParam param){
+        Map<String, String> result = new HashMap<String, String>();
+        
+        //判断校验参数
+        
+        //逻辑放controller是因为service里都有事务控制，没法分开
+        try {
+			unionPayService.insertUnionPaylog(param, result); //插的是新表 PAY_D_UNIONPAY_LOG
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.sendPayNewReq2(param, result); //新的方法
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.waitForPayResp2(param, result); //新方法，查询的是 PAY_D_UNIONPAY_LOG
+			if(!result.isEmpty()){
+				return result; 
+			}
+			
+			result.put("status", "E11");
+            result.put("detail", "支付失败！");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			result.put("status", "E12");
+            result.put("detail", "支付失败！");
+		}      
+        
+        return result;
+    }  
     
 
     

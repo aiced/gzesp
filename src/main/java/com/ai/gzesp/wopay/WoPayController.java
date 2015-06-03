@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import scala.annotation.meta.param;
 
 import com.ai.gzesp.service.WoPayService;
+import com.ai.sysframe.utils.StringUtil;
 
 
 @Controller
@@ -29,18 +30,24 @@ public class WoPayController {
 	@Autowired
 	private WoPayService woPayService;
 	
-	@RequestMapping("/pay/woPay/payReq/{order_id}/{fee}")
+	@RequestMapping("/pay/woPay/payReq/{order_id}/{fee}/{flag}")
 	@ResponseBody
-	public String woPayOrder(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee)
+	public String woPayOrder(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,@PathVariable("flag") String flag)
 	{
 		System.out.println("woPay_orderid="+order_id);
 		System.out.println("woPay_orderid="+fee);
+		System.out.println("woPay_flag="+flag);
 		//沃支付请求地址 正式用
 		//String url="https://epay.10010.com/symob/httpservice/wapPayPageAction.do"; 
 		//沃支付请求地址 测试用
 		String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
+<<<<<<< HEAD
 		
 		String strRet=woPayService.payOrder(url,order_id,fee);
+=======
+		// 1.借记卡 2.信用卡
+		String strRet=woPayService.payOrder(url,order_id,fee,flag);
+>>>>>>> 030dc5413db9317faeb6a9f95021b14bf935e481
 		return strRet;
 	}
 	
@@ -84,57 +91,21 @@ public class WoPayController {
 	}
 	
 	@RequestMapping("/payResult/woPay")
-	public ModelAndView woResult(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView woResult(@RequestBody String inputParams)
 	{
-		//http://wap.woboss.gz186.com/esp/payResult/woPay 
-		//System.out.println(request.getParameter("abc"));
-        String orderId=request.getParameter("orderId");
-//        String payFloodId=request.getParameter("orderId");
-//        String payResult=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");      
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-        
-        
+		//String strRet=woPayService.callBackResult(inputParams);
+        System.out.println("回调");
         ModelAndView mav = new ModelAndView("woPayOrderPost.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "沃支付");
         return mav;
-		
 	}
+	
 	@RequestMapping("/payResult/woPayAsyn")
-	public ModelAndView woResultAsyn(HttpServletRequest request, HttpServletResponse response)
+	public ModelAndView woResultAsyn(@RequestBody String inputParams)
 	{
-		//http://wap.woboss.gz186.com/esp/payResult/woPay 
-		//System.out.println(request.getParameter("abc"));
-        String orderId=request.getParameter("orderId");
-//        String payFloodId=request.getParameter("orderId");
-//        String payResult=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");      
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-//        String orderId=request.getParameter("orderId");
-        
-        
+		String strRet=woPayService.callBackResultAsyn(inputParams);
+        System.out.println("异步回调");
         ModelAndView mav = new ModelAndView("woPayOrderPost.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "沃支付");

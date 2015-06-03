@@ -1,12 +1,9 @@
 package com.ai.gzesp.controller;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -24,16 +21,19 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdPayDWEIXINLOG;
 import com.ai.gzesp.dao.service.TdPayDWEIXINLOGDao;
+import com.ai.gzesp.service.PayService;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.wx.consts.DataConstants;
 import com.ai.wx.entity.WebAuthAccessTokenModel;
 import com.ai.wx.service.WebAuthService;
+import com.ai.wx.util.XmlUtils;
 import com.ai.wxpay.WXPay;
+import com.ai.wxpay.business.CallbackBusiness;
 import com.ai.wxpay.business.UnifiedOrderBusiness;
 import com.ai.wxpay.common.RandomStringGenerator;
 import com.ai.wxpay.common.Signature;
-import com.ai.wxpay.common.Util;
 import com.ai.wxpay.protocol.unified_order_protocol.CallbackResData;
+import com.ai.wxpay.protocol.unified_order_protocol.CallbackResResData;
 import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderReqData;
 import com.ai.wxpay.protocol.unified_order_protocol.UnifiedOrderResData;
 
@@ -52,6 +52,9 @@ public class PayWXController {
 	
     @Resource
 	WebAuthService webAuthService;
+    
+    @Resource
+    PayService payService;
     
     @Resource
     TdPayDWEIXINLOGDao tdPayDWEIXINLOGDao;
@@ -129,89 +132,122 @@ public class PayWXController {
     
     
     @RequestMapping("/wxPay/callback")
-    public void callback(@RequestBody String responseString)	{
-    	log.debug("responseString-----"+responseString);
-    	CallbackResData resData = (CallbackResData) Util.getObjectFromXML(responseString, CallbackResData.class);
+    @ResponseBody
+    public String callback(@RequestBody String responseString) throws Exception	{
+//    	log.debug("responseString-----"+responseString);
+//    	Map<String, Object> result = new HashMap();
+    	CallbackResResData data = new CallbackResResData();
+    	CallbackResultListener resultListener = new CallbackResultListener(data);
+    	WXPay.doCallbackBusiness(responseString, resultListener);
+    	 String str = XmlUtils.objToXML(data);
+//    	log.debug(str);
+    	return str;
+    }
+    
+    
+    class UnifiedOrderResultListener implements UnifiedOrderBusiness.ResultListener {
+    	private Map<String, Object> result;
     	
-    	String transactionId = resData.getTransaction_id();
-    	Criteria example = new Criteria();
-    	example.createConditon().andEqualTo("TRANSACTION_ID", transactionId);
-    	int count = tdPayDWEIXINLOGDao.countByExample(example);
-    	// 过滤重复数据
-    	if(count == 0) {
-    		Long totalFee = CommonUtil.string2Long(resData.getTotal_fee());
-    		Long cashFee = CommonUtil.string2Long(resData.getCash_fee());
-    		
-    		TdPayDWEIXINLOG record = new TdPayDWEIXINLOG();
-    		String logId = CommonUtil.generateLogId("2");
-    		record.setLogId(CommonUtil.string2Long(logId));
-    		record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(logId)));
-    		record.setReqType("01");
-    		record.setAppId(resData.getAppid());
-    		record.setBankType(resData.getBank_type());
-    		record.setCashFeeType(resData.getCash_fee());
-    		record.setDeviceInfo(resData.getDevice_info());
-    		record.setErrCode(resData.getErr_code());
-    		record.setErrCodeDes(resData.getErr_code_des());
-    		record.setIsSubscribe(resData.getIs_subscribe());
-    		record.setMchId(resData.getMch_id());
-    		record.setNonceStr(resData.getNonce_str());
-    		record.setOpenId(resData.getOpenid());
-    		record.setOuterTradeNo(resData.getOut_trade_no());
-    		record.setResultCode(resData.getResult_code());
-    		record.setReturnCode(resData.getReturn_code());
-    		record.setReturnMsg(resData.getReturn_msg());
-    		record.setSign(resData.getSign());
-    		record.setTimeEnd(resData.getTime_end());
-    		record.setTradeState(resData.getTrade_state());
-    		record.setTradeType(resData.getTrade_type());
-    		record.setTransactionId(transactionId);
-    		
-    		if(totalFee != null) {
-    			record.setTotalFee(totalFee*10);
+    	UnifiedOrderResultListener(Map<String, Object> _result) {
+    		if(_result == null) {
+    			_result = new HashMap<String, Object>();
     		}
-    		if(cashFee != null) {
-    			record.setCashFee(cashFee*10);
-    		}
-    		tdPayDWEIXINLOGDao.insertSelective(record);
-    		// TODO 更新订单状态，调用奚总的接口
+    		result = _result;
+    	}
+    	
+    	@Override
+    	public void onFail(UnifiedOrderResData resData) {
+    	}
+
+    	@Override
+    	public void onSuccess(UnifiedOrderResData resData) {
+    		Map<String, Object> finalpackage = new HashMap<String, Object>();
+    		String appid = resData.getAppid();
+    		String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+    		String nonceStr = RandomStringGenerator.getRandomStringByLength(32);
+    		String prepay_id = "prepay_id="+resData.getPrepay_id();
+    		String packages = prepay_id;
+    		finalpackage.put("appId", appid);  
+    		finalpackage.put("nonceStr", nonceStr);  
+    		finalpackage.put("package", packages);  
+    		finalpackage.put("signType", "MD5");
+    		finalpackage.put("timeStamp", timestamp);  
+    		String finalsign = Signature.getSign(finalpackage);
+    		result.putAll(finalpackage);
+    		result.put("paySign", finalsign);
     	}
     }
     
+    class CallbackResultListener implements CallbackBusiness.ResultListener {
+        
+        private CallbackResResData result;
+    	
+        CallbackResultListener(CallbackResResData _result) {
+    		result = _result;
+    	}
+    	
+    	@Override
+    	public void onFail(CallbackResData resData) {
+    		payService.afterPaySuccess("30", false, resData.getOut_trade_no(), 
+    				CommonUtil.string2Int(resData.getTotal_fee())*10);
+        	result.setReturn_code("FAIL");
+        	result.setReturn_msg("FAIL");
+    	}
+
+    	@Override
+    	public void onSuccess(CallbackResData resData) {
+        	String transactionId = resData.getTransaction_id();
+        	Criteria example = new Criteria();
+        	example.createConditon().andEqualTo("TRANSACTION_ID", transactionId);
+        	int count = tdPayDWEIXINLOGDao.countByExample(example);
+        	// 过滤重复数据
+        	if(count == 0) {
+        		Long totalFee = CommonUtil.string2Long(resData.getTotal_fee());
+        		Long cashFee = CommonUtil.string2Long(resData.getCash_fee());
+        		
+        		TdPayDWEIXINLOG record = new TdPayDWEIXINLOG();
+        		String logId = CommonUtil.generateLogId("2");
+        		record.setLogId(CommonUtil.string2Long(logId));
+        		record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(logId)));
+        		record.setReqType("01");
+        		record.setAppId(resData.getAppid());
+        		record.setBankType(resData.getBank_type());
+        		record.setCashFeeType(resData.getCash_fee());
+        		record.setDeviceInfo(resData.getDevice_info());
+        		record.setErrCode(resData.getErr_code());
+        		record.setErrCodeDes(resData.getErr_code_des());
+        		record.setIsSubscribe(resData.getIs_subscribe());
+        		record.setMchId(resData.getMch_id());
+        		record.setNonceStr(resData.getNonce_str());
+        		record.setOpenId(resData.getOpenid());
+        		record.setOuterTradeNo(resData.getOut_trade_no());
+        		record.setResultCode(resData.getResult_code());
+        		record.setReturnCode(resData.getReturn_code());
+        		record.setReturnMsg(resData.getReturn_msg());
+        		record.setSign(resData.getSign());
+        		record.setTimeEnd(resData.getTime_end());
+        		record.setTradeState(resData.getTrade_state());
+        		record.setTradeType(resData.getTrade_type());
+        		record.setTransactionId(transactionId);
+        		
+        		if(totalFee != null) {
+        			record.setTotalFee(totalFee*10);
+        		}
+        		if(cashFee != null) {
+        			record.setCashFee(cashFee*10);
+        		}
+        		tdPayDWEIXINLOGDao.insertSelective(record);
+        		payService.afterPaySuccess("30", true, resData.getOut_trade_no(), 
+        				CommonUtil.string2Int(resData.getTotal_fee())*10);
+        	}
+    		
+        	result.setReturn_code("SUCCESS");
+        	result.setReturn_msg("OK");
+    	}
+
+    }
 }
 
-class UnifiedOrderResultListener implements UnifiedOrderBusiness.ResultListener {
-	private Map<String, Object> result;
-	
-	UnifiedOrderResultListener(Map<String, Object> _result) {
-		if(_result == null) {
-			_result = new HashMap<String, Object>();
-		}
-		result = _result;
-	}
-	
-	@Override
-	public void onFail(UnifiedOrderResData resData) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void onSuccess(UnifiedOrderResData resData) {
-		Map<String, Object> finalpackage = new HashMap<String, Object>();
-		String appid = resData.getAppid();
-		String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
-		String nonceStr = RandomStringGenerator.getRandomStringByLength(32);
-		String prepay_id = "prepay_id="+resData.getPrepay_id();
-		String packages = prepay_id;
-		finalpackage.put("appId", appid);  
-		finalpackage.put("nonceStr", nonceStr);  
-		finalpackage.put("package", packages);  
-		finalpackage.put("signType", "MD5");
-		finalpackage.put("timeStamp", timestamp);  
-		String finalsign = Signature.getSign(finalpackage);
-		result.putAll(finalpackage);
-		result.put("paySign", finalsign);
-	}
-	
-}
+
+

@@ -37,7 +37,7 @@ public class RespPayHandler implements IDealUnionPayResp {
     private SelectNumberService selectNumberService;
 
     @Override
-    public void dealResp(Map<String, String> respMap) {
+/*    public void dealResp(Map<String, String> respMap) {
     	
         //更新paylog日志表里的接口调用日志
         int r1 = unionPayService.updatePaylog(respMap);
@@ -55,12 +55,12 @@ public class RespPayHandler implements IDealUnionPayResp {
         	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
         	int r3 = selectNumberService.deleteNumberReserve(numbers);
         }
-    }
+    }*/
     
-    public void dealResp2(Map<String, String> respMap) {
+    public void dealResp(Map<String, String> respMap) {
     	
-        //更新paylog日志表里的接口调用日志
-        int r1 = unionPayService.updatePaylog(respMap);
+        //更新PAY_D_UNIONPAY_LOG日志表里的接口调用日志
+        int r1 = unionPayService.updateUnionPaylog(respMap);
         
         boolean isSuccess = UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode));
         //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
@@ -69,7 +69,7 @@ public class RespPayHandler implements IDealUnionPayResp {
         int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt));
         
         //调用公共service，做后续的统一的操作
-        payService.afterPaySuccess(isSuccess, realOrderId, fee);
+        payService.afterPaySuccess(null, isSuccess, realOrderId, fee);
     }
 
 }

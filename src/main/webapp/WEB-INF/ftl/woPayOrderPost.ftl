@@ -89,7 +89,7 @@
         <div id="wopay_div">
         </div>
         <form method=post action="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8">
-        	<textarea class="form-control" rows="23" name="param" id="param">303001300001639assigntype=0018$banktype=$callbackurl=http://localhost:8080/esp/payResult/woPay$expand=18551855717$expandone=$expandtwo=$goodsname=测试商品iphone6$idno=WU9aLguSDh7dw7PDkfbSxGftHObHA0QL$iptvflag=$loginname=文辉$merno=303001300001639$meruserid=9999999999999999$modifydesc=00$mp=2$name=0keYGzrlADU=$orderbalance=200$paybalance=200$respmode=1$servercallurl=http://www.baidu.com$signmsg=3e3bab54be5d0369df3a89819b05f6ea$storeindex=http://wap.woboss.gz186.com/esp/weShop/index/2015051408084496$storename=沃掌柜$storeorderid=3111111111111111$straighttype=0018$usefultime=$version=2.2.2$wostoretime=20150601172433</textarea>
+        	<textarea class="form-control" rows="23" name="param" id="param">${postdata}</textarea>
         	<button class="btn btn-warning btn-block" type="submit" name="btnSubmit" id="btnSubmit">提交</button>
         </form>
         <button class="btn btn-warning btn-block" type="submit" name="btnajaxSubmit" id="btnajaxSubmit">ajax提交</button>

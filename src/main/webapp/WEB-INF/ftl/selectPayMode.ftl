@@ -68,11 +68,11 @@
 	        var url;
             var pay_mode = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
 	        //alert(pay_mode);
-            if(pay_mode == '00'){
+            if(pay_mode == '01'){
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
                //alert(pay_mode_style);
                if(pay_mode_style == "微信支付"){
-                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}'; //微信支付
+                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state=${goods_name}'; //微信支付
                }
                else if(pay_mode_style == "沃支付"){
                  url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
@@ -87,13 +87,55 @@
             
 	        window.location.href = url;  
         }
+        function goToPay2(){
+            var pay_type = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
+            var pay_mode;
+            var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
+               //alert(pay_mode_style);
+               if(pay_mode_style == "微信支付"){
+                 pay_mode = '30';
+               }
+               else if(pay_mode_style == "沃支付"){
+                 pay_mode = '40';
+               }
+               else if(pay_mode_style == "银联支付"){
+                 pay_mode = '15'; //此刻无法区分信用卡和储蓄卡
+               }
+            var param = [{"pay_order":"1", "pay_type":pay_type, "pay_mode":pay_mode, pay_fee:${fee}}]; 
+	        $.ajax({
+		      type: "POST",
+		      contentType:"application/json", //发送给服务器的内容编码类型
+		      url: '${base}/pay/prePayReq/${order_id}/${fee}', // 支付接口调用前预先工作
+		      dataType:"json", //预期服务器返回的数据类型
+		      data: JSON.stringify(param), //服务器只能接收json字符串
+		      success: function(data){
+            if(pay_type == '01'){
+               if(pay_mode_style == "微信支付"){
+                 url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state=encodeURIComponent(${goods_name})'; //微信支付
+               }
+               else if(pay_mode_style == "沃支付"){
+                 url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
+               }
+               else if(pay_mode_style == "银联支付"){
+                 url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //银联支付
+               }
+            }
+            else{
+               url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+            }
+            
+	        window.location.href = url;			    
+		      }
+		    });            
+  
+        }        
         function testWeiXinPay(){
 	        var url;
             var pay_mode = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
 	        //alert(pay_mode);
             if(pay_mode == '00'){
                var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
-               url = '${base}/pay/wxPay/prepay_step1/${order_id}/10'; //微信支付
+               url = '${base}/pay/wxPay/prepay_step1/${order_id}/10?state=encodeURIComponent(${goods_name})'; //微信支付
             }
             
 	        window.location.href = url;  
@@ -133,11 +175,11 @@
           <!-- 选择在线支付还是 货到付款-->
           <div class="row" style="margin:15px 10px 0px 20px;">
                 <label class="radio-inline">
-                    <input type="radio" name="pay_mode" id="pay_mode_1" value="00" checked="checked" data-text="在线支付">
+                    <input type="radio" name="pay_mode" id="pay_mode_1" value="01" checked="checked" data-text="在线支付">
                     <span class="font-song-bold-14">在线支付</span>
                 </label>
                 <label class="radio-inline">
-                    <input type="radio" name="pay_mode" id="pay_mode_2" value="01" data-text="货到付款" disabled>
+                    <input type="radio" name="pay_mode" id="pay_mode_2" value="02" data-text="货到付款" disabled>
                     <span class="font-song-bold-14">货到付款</span>
                 </label>
           </div>
@@ -184,7 +226,7 @@
           
           <!-- 提交-->
           <div id="payInfoBtn" style="margin: 15px">
-            <button class="btn btn-warning btn-block" id="btnsubmit" onclick="goToPay()">确定</button>
+            <button class="btn btn-warning btn-block" id="btnsubmit" onclick="goToPay2()">确定</button>
           </div>
     </div>
 

@@ -41,13 +41,13 @@
 	  		 "paySign" : "${paySign}" 
 	   			},function(res){
 					WeixinJSBridge.log(res.err_msg);
-					alert(res.err_code + res.err_desc + res.err_msg);
+					//alert(res.err_code + res.err_desc + res.err_msg);
 		            if(res.err_msg == "get_brand_wcpay_request:ok"){  
-		                alert("微信支付成功!");  
+		                //alert("微信支付成功!");  
 		            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
-		                alert("用户取消支付!");
+		                //alert("用户取消支付!");
 		            }else{
-		               alert("支付失败!");
+		               //alert("支付失败!");
 		            }  
 				})
 			}

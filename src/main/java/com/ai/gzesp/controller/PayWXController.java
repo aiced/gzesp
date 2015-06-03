@@ -212,7 +212,6 @@ public class PayWXController {
         		record.setReqType("01");
         		record.setAppId(resData.getAppid());
         		record.setBankType(resData.getBank_type());
-        		record.setCashFeeType(resData.getCash_fee());
         		record.setDeviceInfo(resData.getDevice_info());
         		record.setErrCode(resData.getErr_code());
         		record.setErrCodeDes(resData.getErr_code_des());

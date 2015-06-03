@@ -40,7 +40,7 @@ public class WoPayController {
 		//沃支付请求地址 测试用
 		String url="http://123.125.97.67:8802/sy2_mini24_cs/httpservice/wapPayPageAction.do?reqcharset=UTF-8";
 		
-		String strRet=WoPayService.payOrder(url,order_id,fee);
+		String strRet=woPayService.payOrder(url,order_id,fee);
 		return strRet;
 	}
 	

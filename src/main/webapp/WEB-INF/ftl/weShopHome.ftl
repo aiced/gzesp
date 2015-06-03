@@ -250,28 +250,28 @@
 	            <table class="table table-striped table-condensed">
 	                <tr>
 	                	<#if viewcountlist?size==0>
-		                    <td class="yesterday_view">昨日访问(次)<br/><div style="text-align: center;">0</div></td>
-		                    <td class="month_view">本月访问(次)<br/><div style="text-align: center;">0</div></td>
-		                    <td class="total_view">累计访问(次)<br/><div style="text-align: center;">0</div></td>
+		                    <td class="yesterday_view"><div style="text-align: center;">昨日访问(次)</div><div style="text-align: center;">0</div></td>
+		                    <td class="month_view"><div style="text-align: center;">本月访问(次)</div><div style="text-align: center;">0</div></td>
+		                    <td class="total_view"><div style="text-align: center;">累计访问(次)</div><div style="text-align: center;">0</div></td>
 		                <#else>
 	                		<#list viewcountlist as item>
-	                	    	<td class="yesterday_view">昨日访问(次)<br/><div style="text-align: center;">${item.yesterday_view}</div></td>
-	                    		<td class="month_view">本月访问(次)<br/><div style="text-align: center;">${item.month_view}</div></td>
-	                    		<td class="total_view">累计访问(次)<br/><div style="text-align: center;">${item.total_count}</div></td>
+	                	    	<td class="yesterday_view"><div style="text-align: center;">昨日访问(次)</div><div style="text-align: center;">${item.yesterday_view}</div></td>
+	                    		<td class="month_view"><div style="text-align: center;">本月访问(次)</div><div style="text-align: center;">${item.month_view}</div></td>
+	                    		<td class="total_view"><div style="text-align: center;">累计访问(次)</div><div style="text-align: center;">${item.total_count}</div></td>
 	                		</#list>
 	                	</#if>
 					</tr>
 
 	                <tr>
 	                	<#if saleList?size==0>
-		                    <td class="yesterday_sale">昨日销售(件)<br/><div style="text-align: center;">0</div></td>
-		                    <td class="month_sale">本月销售(件)<br/><div style="text-align: center;">0</div></td>
-		                    <td class="total_sale">累计销售(件)<br/><div style="text-align: center;">0</div></td>          		
+		                    <td class="yesterday_sale"><div style="text-align: center;">昨日销售(件)</div><div style="text-align: center;">0</div></td>
+		                    <td class="month_sale"><div style="text-align: center;">本月销售(件)</div><div style="text-align: center;">0</div></td>
+		                    <td class="total_sale"><div style="text-align: center;">累计销售(件)</div><div style="text-align: center;">0</div></td>          		
 		                <#else>
 	                		<#list saleList as item>
-	                	    	<td class="yesterday_sale">昨日销售(件)<br/><div style="text-align: center;">${item.yesterday_count}</div></td>
-	                    		<td class="month_sale">本月销售(件)<br/><div style="text-align: center;">${item.month_count}</div></td>
-	                    		<td class="total_sale">累计销售(件)<br/><div style="text-align: center;">${item.total_count}</div></td>
+	                	    	<td class="yesterday_sale"><div style="text-align: center;">昨日销售(件)</div><div style="text-align: center;">${item.yesterday_count}</div></td>
+	                    		<td class="month_sale"><div style="text-align: center;">本月销售(件)</div><div style="text-align: center;">${item.month_count}</div></td>
+	                    		<td class="total_sale"><div style="text-align: center;">累计销售(件)</div><div style="text-align: center;">${item.total_count}</div></td>
 	                		</#list>
 	                	</#if>
 					</tr>

@@ -606,6 +606,17 @@ public class OrderService {
         return list;
     }
     
+    /**
+     * 支付改造后新的方法：支付表用新的 ord_d_pay 表
+     * 查询超时超时未支付的订单，sql里写死了超时时间为半小时 
+     * @return
+     */
+    public List<Map<Object, Object>> queryOrdersTimeout2(){
+    	List<Map<Object, Object>> list = orderDao.queryOrdersTimeout2();
+    	logger.debug("【订单超时未支付库存释放定时任务：查询到超时未支付订单 " + list.size() + " 个】");
+        return list;
+    }
+    
     public static void main(String[] args) {
         	String resAttrStr = "3415041400000014|PACKRES|校园沃派16元套餐|校园沃派16元套餐";
         	

@@ -41,11 +41,26 @@
               )	    
 	</insert>
 	
+	<insert id="insertUnionPaylog">
+        insert into PAY_D_UNIONPAY_LOG
+              (log_id, partition_id, real_order_id, req_time, req_status, req_trade_type,
+               sys_trade_no, order_id, txn_amt)
+        values(${log_id}, ${partition_id}, ${real_order_id},  #{req_time}, #{req_status},
+               #{req_trade_type}, #{sys_trade_no}, ${order_id}, ${txn_amt}
+              )	    
+	</insert>	
+	
 	<select id="queryPaylog" resultType="java.util.HashMap">
          select pay_id, resp_trade_type, result_code, result_desc 
            from ord_d_paylog 
           where pay_id = ${pay_id}
-	</select>	
+	</select>
+	
+	<select id="queryUnionPaylog" resultType="java.util.HashMap">
+         select log_id, resp_trade_type, result_code, result_desc 
+           from PAY_D_UNIONPAY_LOG 
+          where log_id = ${log_id}
+	</select>		
 	
 	<update id="updateBindlog">
          update ORD_D_PAYLOG
@@ -74,7 +89,16 @@
                 resp_time = #{resp_time},
                 pay_state = #{pay_state}
           where sys_trade_no = #{sys_trade_no}
-	</update>		
+	</update>
+	
+	<update id="updateUnionPaylog">
+         update PAY_D_UNIONPAY_LOG
+            set resp_trade_type = #{resp_trade_type},
+                result_code = #{result_code},
+                result_desc = #{result_desc},
+                resp_time = #{resp_time}
+          where sys_trade_no = #{sys_trade_no}
+	</update>			
 
 	<update id="updatePayStateAndIncomeMoney">
          update ord_d_base

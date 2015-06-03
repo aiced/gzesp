@@ -30,16 +30,14 @@
          where order_id = ${order_id}
 	</select>	
 	
-	<insert id="insertPayInfoBatch">
+	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
+	<select id="insertPayInfoBatch">
       insert into ord_d_pay 
              (order_id, partition_id, pay_order, pay_type, pay_mode, pay_state, order_fee, pay_fee, pay_time)
-      select order_id, partition_id, pay_order, pay_type, pay_mode, pay_state, order_fee, pay_fee, pay_time
-        from (
-      <foreach collection="list" item="item" index="index" separator=" union all ">        
-       select ${item.order_id} order_id, ${item.partition_id} partition_id, ${item.pay_order} pay_order, #{item.pay_type} pay_type, #{item.pay_mode} pay_mode, #{item.pay_state} pay_state, ${item.order_fee} order_fee, ${item.pay_fee} pay_fee, to_date(#{item.pay_time},'yyyymmddhh24miss') pay_time from dual    
+      <foreach collection="list" item="item" index="index" separator="union all">        
+       select ${item.order_id}, ${item.partition_id}, ${item.pay_order}, #{item.pay_type}, #{item.pay_mode}, #{item.pay_state}, ${item.order_fee}, ${item.pay_fee}, to_date(#{item.pay_time},'yyyymmddhh24miss') from dual   
       </foreach>
-        )
-	</insert>	
+	</select>	
 	
 	<update id="updateOrdDPay">
          update ord_d_pay

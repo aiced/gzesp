@@ -24,7 +24,9 @@ public class GoodsAmountReverseTask {
     private OrderService orderService;
 	
 	public void doJob(){
-		List<Map<Object, Object>> list =  orderService.queryOrdersTimeout();
+		//List<Map<Object, Object>> list =  orderService.queryOrdersTimeout();
+		
+		List<Map<Object, Object>> list =  orderService.queryOrdersTimeout2();
 		
 		if(CollectionUtils.isNotEmpty(list)){
 			String[] orderIds = new String[list.size()];

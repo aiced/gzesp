@@ -261,7 +261,7 @@ public class PayService {
     	record.setReqType("04");
     	String logId = CommonUtil.generateLogId("2");
     	record.setLogId(CommonUtil.string2Long(logId));
-    	record.setOutRefundNo(UUID.randomUUID().toString());
+    	record.setOutRefundNo(UUID.randomUUID().toString().replaceAll("-", ""));
     	record.setRefundFee(record.getTotalFee());
     	record.setReturnCode("");
     	record.setReturnMsg("");

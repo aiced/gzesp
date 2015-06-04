@@ -16,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dto.PayInfo;
 import com.ai.gzesp.service.PayService;
+import com.ai.gzesp.service.UnionPayService;
+import com.ai.gzesp.service.WXPayService;
 import com.ai.gzesp.service.WoPayService;
 
 /**
@@ -35,6 +37,12 @@ public class PayController {
     
 	@Autowired
 	private WoPayService woPayService;
+	
+	@Autowired
+	private WXPayService wxPayService;
+	
+	@Autowired
+	private UnionPayService unionPayService;
 
     /**
      * 选择支付方式(在线支付or货到付款) 以及选择 银联or支付宝 <br>
@@ -110,7 +118,9 @@ public class PayController {
     
 	/**
 	 * 退款总入口，提供给后台管理审核通过后调用
-     * 返回json {"result_code":"SUCCESS", "result_desc":"请求发送成功"}
+     * 返回json 
+     * {"result_code":"SUCCESS", "result_desc":"请求发送成功"}
+	 * {"result_code":"FAIL", "result_desc":"退款请求发送失败"}
 	 * 
 	 * @param order_id
 	 * @return
@@ -120,7 +130,7 @@ public class PayController {
 	@ResponseBody
 	public Map<String, String> payRefund(@PathVariable("order_id") String order_id) throws Exception
 	{
-		Map<String, String> MapRet=null;
+		Map<String, String> mapRet=null;
 		
 		Map<String, String> payInfo = payService.queryPayModeByOrderId(order_id);
 		
@@ -128,17 +138,18 @@ public class PayController {
 		
 		if ("30".equals(pay_mode))  //微信支付
 		{
-			MapRet = payService.wxRefund(order_id);
+			mapRet = wxPayService.wxRefund(order_id);
 		}
 		else if("40".equals(pay_mode))//沃支付
 		{
-			MapRet=woPayService.refundOrder(order_id);
+			mapRet = woPayService.refundOrder(order_id);
 		}
 		else if("15".equals(pay_mode))//银联支付
 		{
-			System.out.println("银联支付返回："+MapRet);
+			mapRet = unionPayService.refundOrder(order_id);
 		}
-		return MapRet;
+		
+		return mapRet;
 	}
     
     @RequestMapping("/test/2")

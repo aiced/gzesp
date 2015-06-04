@@ -1,16 +1,15 @@
 package com.ai.gzesp.service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.UnionPayDao;
 import com.ai.gzesp.dto.UnionPayParam;
-import com.ai.gzesp.unionpay.ClientHandler;
 import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayAttrs;
 import com.ai.gzesp.unionpay.UnionPayCons;
@@ -905,4 +904,19 @@ public class UnionPayService {
         //return result;
     }    
     
+    
+    /**
+     * 银联退款
+     * @param order_id
+     * @return
+     */
+    public Map<String, String> refundOrder(String order_id){
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	
+    	result.put("result_code", "SUCCESS");
+    	result.put("result_desc", "请求发送成功");
+    	
+    	return result;
+    }  
 }

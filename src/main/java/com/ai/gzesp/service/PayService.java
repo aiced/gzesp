@@ -1,6 +1,7 @@
 package com.ai.gzesp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -232,21 +233,29 @@ public class PayService {
     
     @Resource
     TdPayDWEIXINLOGDao tdPayDWEIXINLOGDao;
-    
-    public void wxRefund(String orderId) throws Exception {
+    /*
+     * 微信退款
+     * Map{result_code:"SUCCESS/FAIL ", result_desc:""}
+     */
+    public Map<String, String> wxRefund(String orderId) throws Exception {
+    	Map<String, String> resultMap = new HashMap();
     	// 检索订单是否有退款记录, 假如有：不能再发起流程
     	Criteria example = new Criteria();
     	example.createConditon().andEqualTo("OUTER_TRADE_NO", orderId).andEqualTo("REQ_TYPE", "04");
     	int count = tdPayDWEIXINLOGDao.countByExample(example);
     	if(count > 0) {
-    		return;
+    		resultMap.put("result_code", "FAIL");
+    		resultMap.put("result_desc", "已经发起过退款流程");
+    		return resultMap;
     	}
     	// 检索订单 审核状态 退款流程需要的字段
     	example.clear();
     	example.createConditon().andEqualTo("OUTER_TRADE_NO", orderId).andEqualTo("REQ_TYPE", "01");
     	List<TdPayDWEIXINLOG> list = tdPayDWEIXINLOGDao.selectByExample(example);
     	if(list.size() == 0) {
-    		return;
+    		resultMap.put("result_code", "FAIL");
+    		resultMap.put("result_desc", "订单未支付成功");
+    		return resultMap;
     	}
     	TdPayDWEIXINLOG record = list.get(0);
     	record.setReqType("04");
@@ -266,6 +275,9 @@ public class PayService {
     	RefundReqData req = new RefundReqData(record.getTransactionId(), record.getOuterTradeNo(), "", record.getOutRefundNo(), 
     			record.getTotalFee(), record.getRefundFee(), Configure.getMchid());
     	WXPay.doRefundBusiness(req, new RefundResultListener());
+    	resultMap.put("result_code", "SUCCESS");
+		resultMap.put("result_desc", "退款申请成功");
+		return resultMap;
     }
     
     

@@ -34,9 +34,6 @@ public class WoPayController {
 	@Autowired
 	private PayService payService;
 	
-	@Autowired
-	private PayService payService;
-	
 	@RequestMapping("/pay/woPay/payReq/{order_id}/{fee}/{flag}")
 	@ResponseBody
 	public String woPayOrder(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee,@PathVariable("flag") String flag)
@@ -66,15 +63,15 @@ public class WoPayController {
 	
 	@RequestMapping("/pay/payRefund/{order_id}/{type_flag}")
 	@ResponseBody
-	public HashMap<String, String> woRefund(@PathVariable("order_id") String order_id,@PathVariable("type_flag") String type_flag) throws Exception
+	public Map<String, String> woRefund(@PathVariable("order_id") String order_id,@PathVariable("type_flag") String type_flag) throws Exception
 	{
 		System.out.println("退款_orderid="+order_id);
 		System.out.println("退款_type_flag="+type_flag);
-		HashMap<String, String> MapRet=null;
+		Map<String, String> MapRet=null;
 		if (type_flag.equals("1"))  //微信支付
 		{
 			System.out.println("微信支付返回："+MapRet);
-			payService.wxRefund(order_id);
+			MapRet = payService.wxRefund(order_id);
 		}
 		else if(type_flag.equals("2"))//沃支付
 		{

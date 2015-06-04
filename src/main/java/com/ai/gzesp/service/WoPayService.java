@@ -239,10 +239,14 @@ public class WoPayService {
 			reCheckSign = UniPaySignUtils.getSha1SignMsg(mapTemp, ConfigInfo.merchantSignKey, ConfigInfo.input_charset);
 		}
 		
+		HashMap<String, String> retMap = new HashMap<String, String>();
+		
 		if (map.get("signMsg") == null || !map.get("signMsg").equalsIgnoreCase(reCheckSign)) {
 			System.out.println("签名验证失败！");
 			return null;
 		}
+		
+		
 		System.out.println("验证签名成功！");
 		return map;
 	}

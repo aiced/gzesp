@@ -174,16 +174,15 @@ public class WoPayService {
 		
 		List<Map<String, Object>> lsOrderforRefund=getOrderinfoByOrerId(order_id,2);
 		
-		order_id="WSY_1432793921551"; //后面直接删除 不要犹豫
 		String amount="1";// 不过感觉会有个退款的规则 1 全额退款 单位为分
 		String reason="购买错误";  
-		String payJournl="20131017020154365921";
+		String payJournl="20131017020154366435";
 		//以下构造退款参数
 		HashMap<String, String> roParams = new HashMap<String, String>();
 		roParams.put("refundReqJournl", payJournl); //商户退款申请单号    		lsOrderforRefund.get(0).get("PAY_FLOOD_ID");
 		roParams.put("merNo", ConfigInfo.merchantNo);//商户号
 		roParams.put("orderNo", order_id);//原商户订单号
-		roParams.put("orderDate", "20150528");//原商户订单日期	lsOrderforRefund.get(0).get("CREATE_TIME");
+		roParams.put("orderDate", "20150603");//原商户订单日期	lsOrderforRefund.get(0).get("CREATE_TIME");
 		roParams.put("payJournl", payJournl);//原支付系统交易流水号 		lsOrderforRefund.get(0).get("PAY_FLOOD_ID");
 		
         Date date = new Date();  
@@ -241,14 +240,16 @@ public class WoPayService {
 		}
 		
 		HashMap<String, String> retMap = new HashMap<String, String>();
-		
+//		{"result_code":"SUCCESS", "result_desc":"退款请求发送成功"}
+//		{"result_code":"FAIL", "result_desc":"退款请求发送失败"}
 		if (map.get("signMsg") == null || !map.get("signMsg").equalsIgnoreCase(reCheckSign)) {
 			System.out.println("签名验证失败！");
-			return null;
+			retMap.put("result_code", "FAIL");
+			retMap.put("result_desc", "沃支付_退款请求发送失败_"+map.get("transRet"));
 		}
-		
-		
 		System.out.println("验证签名成功！");
+		retMap.put("result_code", "SUCCESS");
+		retMap.put("result_desc", "沃支付_退款请求发送成功_"+map.get("transRet"));
 		return map;
 	}
 	

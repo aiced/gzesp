@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dto.PayInfo;
-import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.service.PayService;
+import com.ai.gzesp.service.WoPayService;
 
 /**
  * 支付入口<br> 
@@ -32,6 +32,9 @@ public class PayController {
     
     @Autowired
     private PayService payService;
+    
+	@Autowired
+	private WoPayService woPayService;
 
     /**
      * 选择支付方式(在线支付or货到付款) 以及选择 银联or支付宝 <br>
@@ -104,6 +107,46 @@ public class PayController {
         
         return result;
     }    
+    
+	/**
+	 * 退款总入口，提供给后台管理审核通过后调用
+     * 返回json {"result_code":"SUCCESS", "result_desc":"请求发送成功"}
+	 * 
+	 * @param order_id
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("/payRefund/{order_id}")
+	@ResponseBody
+	public Map<String, String> payRefund(@PathVariable("order_id") String order_id) throws Exception
+	{
+		Map<String, String> MapRet=null;
+		
+		Map<String, String> payInfo = payService.queryPayModeByOrderId(order_id);
+		
+		String pay_mode = payInfo.get("PAY_MODE"); // 15:银联，30：微信支付，40：沃支付
+		
+		if ("30".equals(pay_mode))  //微信支付
+		{
+			MapRet = payService.wxRefund(order_id);
+		}
+		else if("40".equals(pay_mode))//沃支付
+		{
+			String url="https://123.125.97.66:8085/pay/trade/singleRefund.htm?reqCharSet=UTF-8";
+			MapRet=woPayService.refundOrder(url, order_id);
+			if (MapRet == null)
+			{
+				System.out.println("签名错误！");
+			}
+			System.out.println("沃支付返回："+MapRet);
+
+		}
+		else if("15".equals(pay_mode))//银联支付
+		{
+			System.out.println("银联支付返回："+MapRet);
+		}
+		return MapRet;
+	}
     
     @RequestMapping("/test/2")
     public void test2(){

@@ -36,4 +36,6 @@ public interface PayDao {
     public Map<String, String> queryPhoneByOrderId(@Param("order_id") String order_id);
     
     public Map<String, String> queryGoodsNameByOrderId(@Param("order_id") String order_id);
+    
+    public Map<String, String> queryPayModeByOrderId(@Param("order_id") String order_id);
 }

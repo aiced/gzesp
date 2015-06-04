@@ -565,7 +565,7 @@ public class OrderService {
 			logger.debug("【订单超时未支付定时任务：商品数量表update " + r1 + " 条记录】");
 		}
 		
-		if(orderIds.length > 0){
+/*		if(orderIds.length > 0){
 			//下面是删除订单相关表
 			int r2 = orderDao.deleteOrderBaseInfo(orderIds);
 			logger.debug("【订单超时未支付定时任务：ORD_D_BASE表delete " + r2 + " 条记录】");
@@ -590,6 +590,12 @@ public class OrderService {
 			
 			int r9 = orderDao.deleteOrderCMSStateInfo(orderIds);
 			logger.debug("【订单超时未支付定时任务：ORD_D_CMSSTATE表delete " + r9 + " 条记录】");
+		}*/
+		
+		//20150603 ximh 修改，做逻辑删除，不做物理删除，更新订单状态为99,作废
+		if(orderIds.length > 0){
+			int r10 = orderDao.updateOrderBaseState(orderIds);
+			logger.debug("【订单超时未支付定时任务：ORD_D_BASE表update " + r10 + " 条记录,order_state=99】");
 		}
 
 		return true; //只要不报异常就返回true

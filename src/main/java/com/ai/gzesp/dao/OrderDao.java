@@ -54,4 +54,6 @@ public interface OrderDao {
     public int deleteOrderCMSStateInfo(@Param("orderIds") String[] orderIds);
     
     public int deleteOrderPreCMSFeeInfo(@Param("orderIds") String[] orderIds);
+    
+    public int updateOrderBaseState(@Param("orderIds") String[] orderIds);
 }

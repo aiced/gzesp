@@ -58,7 +58,7 @@ public class CoreService {
         String reqType = RegexUtils.getElementText(XmlUtils.deleteCdataTag(reqTypeElement));
         String respMessage = "消息处理异常";
         
-        log.info("reqType---"+reqType);
+//        log.info("reqType---"+reqType);
         // 文本消息
         if (MessageType.REQ_MESSAGE_TYPE_TEXT.equals(reqType)) {
             respMessage = processTextReq(xml);
@@ -101,14 +101,17 @@ public class CoreService {
             else if (MessageType.EVENT_TYPE_SCAN.equals(eventType)) {
                 respMessage = processScanReq(xml);
             }             
+            else if (MessageType.EVENT_TYPE_VIEW.equals(eventType)) {
+            	respMessage = "";
+            }             
             else {
-                log.error("事件推送类型未匹配到");
+                log.warn("事件推送类型未匹配到");
                 respMessage = "eventType had not found!";
             }
         } 
         //其他类型匹配不到的
         else {
-            log.error("请求消息类型未匹配到");
+            log.warn("请求消息类型未匹配到");
             respMessage = "reqType had not found!";
         }
 

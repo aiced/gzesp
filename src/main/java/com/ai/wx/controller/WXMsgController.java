@@ -95,19 +95,19 @@ public class WXMsgController {
     @RequestMapping(value="/access",method = RequestMethod.POST)
     public void access_post(@RequestBody String inputParam, HttpServletResponse response) throws IOException {
     	 logger.info(inputParam);
-    	 Document doc = XmlUtil.stringToDoc(inputParam, "UTF-8");
-    	 Element rootElt = doc.getRootElement();
-    	 Iterator it = rootElt.elementIterator();
-    	 Map<String, String> info = new HashMap();
-    	 while(it.hasNext()) {
-    		 Element ele = (Element) it.next();
-    		 String name = ele.getName();
-    		 String text = ele.getTextTrim();
-    		 
-    		 logger.info("name----"+name);
-    		 logger.info("text----"+text);
-    		 info.put(name, text);
-    	 }
+//    	 Document doc = XmlUtil.stringToDoc(inputParam, "UTF-8");
+//    	 Element rootElt = doc.getRootElement();
+//    	 Iterator it = rootElt.elementIterator();
+//    	 Map<String, String> info = new HashMap();
+//    	 while(it.hasNext()) {
+//    		 Element ele = (Element) it.next();
+//    		 String name = ele.getName();
+//    		 String text = ele.getTextTrim();
+//    		 
+//    		 logger.info("name----"+name);
+//    		 logger.info("text----"+text);
+//    		 info.put(name, text);
+//    	 }
 //    	 service.handleMsg(info, response);
     	 String respMessage = coreService.processRequest(inputParam);  
     	 response.getWriter().write(respMessage);  
@@ -170,21 +170,21 @@ public class WXMsgController {
     }
     
     
-    @RequestMapping("/test")
-    public ModelAndView test(){
-        return new ModelAndView("test.ftl");
-    }
-    
-    @RequestMapping("/test1")
-    public ModelAndView test1(){
-    	// 授权回调页限制
-//    	String  redirect_uri = "http://192.168.43.179:8080/esp/wx/auth";
-    	String  redirect_uri = "http://wap.woboss.gz186.com/esp/wx/authPay/{orderId}/{fee}";
-    	String state = "custPay";
-    	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
-//    	String url = "http://baidu.com";
-        return new ModelAndView("redirect:"+url);
-    }
+//    @RequestMapping("/test")
+//    public ModelAndView test(){
+//        return new ModelAndView("test.ftl");
+//    }
+//    
+//    @RequestMapping("/test1")
+//    public ModelAndView test1(){
+//    	// 授权回调页限制
+////    	String  redirect_uri = "http://192.168.43.179:8080/esp/wx/auth";
+//    	String  redirect_uri = "http://wap.woboss.gz186.com/esp/wx/authPay/{orderId}/{fee}";
+//    	String state = "custPay";
+//    	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
+////    	String url = "http://baidu.com";
+//        return new ModelAndView("redirect:"+url);
+//    }
     
     
     @RequestMapping("/createMenu")

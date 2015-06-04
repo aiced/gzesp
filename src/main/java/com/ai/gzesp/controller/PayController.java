@@ -132,14 +132,7 @@ public class PayController {
 		}
 		else if("40".equals(pay_mode))//沃支付
 		{
-			String url="https://123.125.97.66:8085/pay/trade/singleRefund.htm?reqCharSet=UTF-8";
-			MapRet=woPayService.refundOrder(url, order_id);
-			if (MapRet == null)
-			{
-				System.out.println("签名错误！");
-			}
-			System.out.println("沃支付返回："+MapRet);
-
+			MapRet=woPayService.refundOrder(order_id);
 		}
 		else if("15".equals(pay_mode))//银联支付
 		{

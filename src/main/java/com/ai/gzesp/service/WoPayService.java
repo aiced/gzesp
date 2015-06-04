@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -138,13 +139,11 @@ public class WoPayService {
 	
 	public static String queryOrder(String url,String order_id)
 	{
-		order_id="WSY_1432793921551";
-
 		//以下构造查询参数
 		HashMap<String, String> qoParams = new HashMap<String, String>();
 		qoParams.put("merNo", ConfigInfo.merchantNo); //商户号
 		qoParams.put("orderNo", order_id);//商户订单号
-		qoParams.put("orderDate", "20150528");//商户订单日期
+		qoParams.put("orderDate", "20150603");//商户订单日期
 		qoParams.put("charSet", ConfigInfo.input_charset);//字符集
 		qoParams.put("signType", ConfigInfo.signType_MD5);//签名方式
 		
@@ -169,8 +168,10 @@ public class WoPayService {
 	}
 
 
-	public  HashMap<String, String> refundOrder(String url,String order_id)
+	public  HashMap<String, String> refundOrder(String order_id)
 	{
+		String url="https://123.125.97.66:8085/pay/trade/singleRefund.htm?reqCharSet=UTF-8";
+		
 		List<Map<String, Object>> lsOrderforRefund=getOrderinfoByOrerId(order_id,2);
 		
 		order_id="WSY_1432793921551"; //后面直接删除 不要犹豫

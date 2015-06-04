@@ -330,4 +330,13 @@ public class PayService {
     	return payDao.queryGoodsNameByOrderId(orderId);
     }
     
+    /**
+     * 根据订单号查询支付方式：微信支付or沃支付or银联支付
+     * @param orderId
+     * @return
+     */
+    public Map<String, String> queryPayModeByOrderId(String orderId){
+    	return payDao.queryPayModeByOrderId(orderId);
+    }
+    
 }

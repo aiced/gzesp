@@ -58,5 +58,11 @@
         select goods_name
           from ord_d_prod
          where order_id = ${order_id}
-	</select>		
+	</select>
+	
+	<select id="queryGoodsNameByOrderId" resultType="java.util.HashMap">
+        select order_id, pay_order, pay_type, pay_mode
+          from ord_d_pay
+         where order_id = ${order_id}
+	</select>				
 </mapper>

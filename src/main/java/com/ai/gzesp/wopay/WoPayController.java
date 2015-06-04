@@ -61,35 +61,6 @@ public class WoPayController {
 		return strRet;
 	}
 	
-	@RequestMapping("/pay/payRefund/{order_id}/{type_flag}")
-	@ResponseBody
-	public Map<String, String> woRefund(@PathVariable("order_id") String order_id,@PathVariable("type_flag") String type_flag) throws Exception
-	{
-		System.out.println("退款_orderid="+order_id);
-		System.out.println("退款_type_flag="+type_flag);
-		Map<String, String> MapRet=null;
-		if (type_flag.equals("1"))  //微信支付
-		{
-			System.out.println("微信支付返回："+MapRet);
-			MapRet = payService.wxRefund(order_id);
-		}
-		else if(type_flag.equals("2"))//沃支付
-		{
-			String url="https://123.125.97.66:8085/pay/trade/singleRefund.htm?reqCharSet=UTF-8";
-			MapRet=woPayService.refundOrder(url, order_id);
-			if (MapRet == null)
-			{
-				System.out.println("签名错误！");
-			}
-			System.out.println("沃支付返回："+MapRet);
-
-		}
-		else if(type_flag.equals("3"))//银联支付
-		{
-			System.out.println("银联支付返回："+MapRet);
-		}
-		return MapRet;
-	}
 	
 	@RequestMapping("/payResult/woPay")
 	public ModelAndView woResult(@RequestBody String inputParams)

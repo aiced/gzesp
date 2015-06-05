@@ -61,7 +61,6 @@ public class WoPayController {
 		return strRet;
 	}
 	
-	
 	@RequestMapping("/payResult/woPay")
 	public ModelAndView woResult(@RequestBody String inputParams)
 	{

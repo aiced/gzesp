@@ -132,6 +132,9 @@ public class WXPayService {
 	    	tdPayDWEIXINLOGDao.updateByExampleSelective(record, example);
 	    	map.put("result_code", "FAIL");
 	    	map.put("result_desc", refundResData.getErr_code_des());
+	    	
+	    	payService.afterRefundSuccess("30", false, refundResData.getOut_trade_no(), 
+					CommonUtil.string2Int(refundResData.getRefund_fee())*10);
 		}
 
 		@Override

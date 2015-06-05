@@ -14,7 +14,7 @@ import com.ai.wxpay.protocol.refund_protocol.RefundReqData;
 public class RefundService extends BaseService{
 
     public RefundService() throws IllegalAccessException, InstantiationException, ClassNotFoundException {
-        super(Configure.REFUND_API);
+        super(Configure.REFUND_API, Configure.HttpsRequestClassName);
     }
 
     /**

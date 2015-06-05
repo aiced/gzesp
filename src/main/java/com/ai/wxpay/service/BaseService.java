@@ -28,6 +28,14 @@ public class BaseService{
         Class c = Class.forName(Configure.HttpRequestClassName);
         serviceRequest = (IServiceRequest) c.newInstance();
     }
+    
+    public BaseService(String api, String className) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    	apiURL = api;
+    	Class c = Class.forName(className);
+//        Class c = Class.forName(Configure.HttpsRequestClassName);
+//    	Class c = Class.forName(Configure.HttpRequestClassName);
+    	serviceRequest = (IServiceRequest) c.newInstance();
+    }
 
     protected String sendPost(Object xmlObj) throws UnrecoverableKeyException, IOException, NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
         return serviceRequest.sendPost(apiURL,xmlObj);

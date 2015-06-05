@@ -67,6 +67,9 @@ public class WXPayService {
     	WXPay.doRefundBusiness(req, new RefundResultListener());
     	resultMap.put("result_code", "SUCCESS");
 		resultMap.put("result_desc", "退款申请成功");
+		
+		// 发短信
+		// 改状态 ord_d_refund, ord_d_base, ord_d_pay, 退佣金（能人账户功能完成后开发）
 		return resultMap;
     }
     

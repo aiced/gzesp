@@ -529,7 +529,7 @@ public class OrdersSql {
 				+ " j.CITY_NAME||j.DISTRICT_NAME|| h.POST_ADDR ADDRESS,"
 				+ "CASE WHEN k.refund_state='00' THEN '未审核'"
                 +"WHEN k.refund_state='11' THEN '店主审核中'"
-                +"WHEN k.refund_state='12' THEN '店主审核中'"
+                +"WHEN k.refund_state='12' THEN '管理员审核中'"
                 +"WHEN k.refund_state='13' THEN '审核通过未退款'"
                 +"WHEN k.refund_state='14' THEN '审核通过已退款'"
                 +"WHEN k.refund_state='15' THEN '店主审核不通过'"

@@ -132,9 +132,6 @@ public class WXPayService {
 	    	tdPayDWEIXINLOGDao.updateByExampleSelective(record, example);
 	    	map.put("result_code", "FAIL");
 	    	map.put("result_desc", refundResData.getErr_code_des());
-	    	
-	    	payService.afterRefundSuccess("30", false, refundResData.getOut_trade_no(), 
-					CommonUtil.string2Int(refundResData.getRefund_fee())*10);
 		}
 
 		@Override
@@ -151,9 +148,6 @@ public class WXPayService {
 	    	map.put("result_code", "SUCCESS");
 	    	map.put("result_desc", "退款申请成功");
 	    	
-	    	// 改状态 ord_d_refund, ord_d_base, ord_d_pay, ORD_L_DEALLOG, 退佣金（能人账户功能完成后开发）
-	    	payService.afterRefundSuccess("30", true, refundResData.getOut_trade_no(), 
-					CommonUtil.string2Int(refundResData.getRefund_fee())*10);
 		}
     	
     }

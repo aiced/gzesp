@@ -26,10 +26,10 @@ public class RespPayCancelHandler implements IDealUnionPayResp {
 
     @Override
     public void dealResp(Map<String, String> respMap) {
-        // TODO Auto-generated method stub
-
+        //更新PAY_D_UNIONPAY_LOG日志表里的接口调用日志
+        int r1 = unionPayService.updateUnionPaylog(respMap);
     	
-    	
+        boolean isSuccess = UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode));
     	
     }
 

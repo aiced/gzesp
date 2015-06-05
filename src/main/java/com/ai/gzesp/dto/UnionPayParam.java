@@ -96,6 +96,21 @@ public class UnionPayParam {
     private String pay_trade_type;    
     
     /**
+     * 调用 支付撤销(当日交易撤销) 和 支付退款(非当日交易退款) 接口的系统跟踪号
+     */
+    private String payCalcel_sys_trade_no;
+    
+    /**
+     * 调用 支付撤销(当日交易撤销) 和 支付退款(非当日交易退款) 接口的请求时间戳
+     */
+    private String payCalcel_time_stamp;
+    
+    /**
+     * 调用 支付撤销(当日交易撤销) 和 支付退款(非当日交易退款) 接口 业务类型
+     */
+    private String payCalcel_trade_type;  
+    
+    /**
      * 调用绑定解除接口的系统跟踪号
      */
     private String bindCacnel_sys_trade_no;
@@ -111,13 +126,24 @@ public class UnionPayParam {
     private String bindCacnel_trade_type;    
     
     /**
-     * 调用支付撤销/支付退款接口 原订单id
-     */
-    private String orig_order_id;
-    /**
      * 调用支付撤销/支付退款接口 原订单时间
      */
     private String orig_timestamp;
+    
+    /**
+     * 调用支付撤销/支付退款接口 原交易系统跟踪号
+     */
+    private String orig_sys_trade_no;
+    
+    /**
+     * 调用支付撤销/支付退款接口 原支付交易订单号
+     */
+    private String orig_order_id;
+    
+    /**
+     * 调用支付撤销/支付退款接口 原交易交易金额(厘)
+     */
+    private String orig_txn_amt; 
 
     public UnionPayParam(){
         //空构造，spring 转换对象时需要
@@ -297,6 +323,46 @@ public class UnionPayParam {
 
 	public void setOrder_id_vir(String order_id_vir) {
 		this.order_id_vir = order_id_vir;
+	}
+
+	public String getPayCalcel_sys_trade_no() {
+		return payCalcel_sys_trade_no;
+	}
+
+	public void setPayCalcel_sys_trade_no(String payCalcel_sys_trade_no) {
+		this.payCalcel_sys_trade_no = payCalcel_sys_trade_no;
+	}
+
+	public String getPayCalcel_time_stamp() {
+		return payCalcel_time_stamp;
+	}
+
+	public void setPayCalcel_time_stamp(String payCalcel_time_stamp) {
+		this.payCalcel_time_stamp = payCalcel_time_stamp;
+	}
+
+	public String getPayCalcel_trade_type() {
+		return payCalcel_trade_type;
+	}
+
+	public void setPayCalcel_trade_type(String payCalcel_trade_type) {
+		this.payCalcel_trade_type = payCalcel_trade_type;
+	}
+
+	public String getOrig_sys_trade_no() {
+		return orig_sys_trade_no;
+	}
+
+	public void setOrig_sys_trade_no(String orig_sys_trade_no) {
+		this.orig_sys_trade_no = orig_sys_trade_no;
+	}
+
+	public String getOrig_txn_amt() {
+		return orig_txn_amt;
+	}
+
+	public void setOrig_txn_amt(String orig_txn_amt) {
+		this.orig_txn_amt = orig_txn_amt;
 	}
 	
 	

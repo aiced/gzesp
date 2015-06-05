@@ -47,6 +47,8 @@ public interface UnionPayDao {
     
     public Map<String, String> queryUnionPaylog(@Param("log_id") String log_id);
     
+    public Map<String, String> queryUnionPaylogByOrderId(@Param("order_id") String order_id);
+    
     public int updateBindlog(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
             @Param("resp_time") String resp_time, @Param("sys_trade_no") String sys_trade_no);
@@ -71,16 +73,21 @@ public interface UnionPayDao {
     
     public int updatePayStateAndIncomeMoney(@Param("order_id") String order_id, @Param("order_state") String order_state, @Param("income_money") int income_money);    
     
-    
     public int insertPayCancellog(
-    		@Param("pay_id") String pay_id,
-            @Param("partition_id") String partition_id,
+    		@Param("log_id") String log_id,
+            @Param("partition_id") String partition_id, 
+            @Param("real_order_id") String real_order_id,
             @Param("req_time") String req_time, 
             @Param("req_status") String req_status,
             @Param("req_trade_type") String req_trade_type, 
             @Param("sys_trade_no") String sys_trade_no,
+            @Param("order_id") String order_id, 
+            @Param("txn_amt") String txn_amt,
+            @Param("orig_timestamp") String orig_timestamp,
+            @Param("orig_sys_trade_no") String orig_sys_trade_no,
             @Param("orig_order_id") String orig_order_id,
-            @Param("orig_timestamp") String orig_timestamp);
+            @Param("orig_txn_amt") String orig_txn_amt
+            );
     
     /**
      * 功能描述: 调用绑定接口前先插记录，签约号sign_code 不填，等待银联接口返回后根据sys_trade_no更新sign_code<br>

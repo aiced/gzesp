@@ -64,5 +64,24 @@
         select order_id, pay_order, pay_type, pay_mode
           from ord_d_pay
          where order_id = ${order_id}
-	</select>				
+	</select>	
+	
+	<update id="updatePayRefundState">
+         update ord_d_refund
+            set order_state = #{order_state}
+          where order_id = ${order_id}
+	</update>
+
+	<update id="updatePayState">
+         update ord_d_base
+            set order_state = #{order_state}
+          where order_id = ${order_id}
+	</update>	
+
+	<select id="queryRefundInfoByOrderId" resultType="java.util.HashMap">
+        select order_id, order_state
+          from ord_d_refund
+         where order_id = ${order_id}
+	</select>	
+							
 </mapper>

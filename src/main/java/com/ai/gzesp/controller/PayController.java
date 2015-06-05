@@ -119,7 +119,7 @@ public class PayController {
 	/**
 	 * 退款总入口，提供给后台管理审核通过后调用
      * 返回json 
-     * {"result_code":"SUCCESS", "result_desc":"请求发送成功"}
+     * {"result_code":"SUCCESS", "result_desc":"退款请求发送成功"}
 	 * {"result_code":"FAIL", "result_desc":"退款请求发送失败"}
 	 * 
 	 * @param order_id
@@ -146,9 +146,22 @@ public class PayController {
 		}
 		else if("15".equals(pay_mode))//银联支付
 		{
-			mapRet = unionPayService.refundOrder(order_id);
+			Map<String, String> result = unionPayService.refundOrder(order_id);
+			if("00".equals(result.get("status"))){
+				mapRet.put("result_code", "SUCCESS") ;
+				mapRet.put("result_desc", "退款请求发送成功") ;
+			}
+			else{
+				mapRet.put("result_code", "FAIL") ;
+				mapRet.put("result_desc", result.get("detail")) ;
+			}
 		}
 		
+		//退款请求完成后，成功或失败需要做相应的后续操作
+		boolean isSuccess = "SUCCESS".equals(mapRet.get("result_code")) ? true : false;
+		payService.afterRefundSuccess(pay_mode, isSuccess, order_id);
+		
+		//返回json
 		return mapRet;
 	}
     

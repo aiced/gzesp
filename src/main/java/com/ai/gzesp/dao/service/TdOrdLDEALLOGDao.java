@@ -40,6 +40,16 @@ public class TdOrdLDEALLOGDao extends ITableDao {
     }
 
     /**
+    * @Title TdOrdLDEALLOGDao.selectByPrimaryKey
+    * @Description: 根据主键类，返回ORD_L_DEALLOG
+    * @param operateLogid operateLogid
+    * @return TdOrdLDEALLOG bean对象
+     */
+    public TdOrdLDEALLOG selectByPrimaryKey(Long operateLogid) {
+        return this.tdOrdLDEALLOGMapper.selectByPrimaryKey(operateLogid);
+    }
+
+    /**
     * @Title TdOrdLDEALLOGDao.selectByExample
     * @Description: 根据查询条件类，返回ORD_L_DEALLOG结果集
     * @param example 通用查询条件类
@@ -47,6 +57,36 @@ public class TdOrdLDEALLOGDao extends ITableDao {
      */
     public List<TdOrdLDEALLOG> selectByExample(Criteria example) {
         return this.tdOrdLDEALLOGMapper.selectByExample(example);
+    }
+
+    /**
+    * @Title TdOrdLDEALLOGDao.deleteByPrimaryKey
+    * @Description: 根据属性名称，删除ORD_L_DEALLOG
+    * @param operateLogid operateLogid
+    * @return int  删除个数
+     */
+    public int deleteByPrimaryKey(Long operateLogid) {
+        return this.tdOrdLDEALLOGMapper.deleteByPrimaryKey(operateLogid);
+    }
+
+    /**
+    * @Title TdOrdLDEALLOGDao.updateByPrimaryKeySelective
+    * @Description: 根据主键更新ORD_L_DEALLOG部分字段
+    * @param record 要更新成为的TdOrdLDEALLOG对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKeySelective(TdOrdLDEALLOG record) {
+        return this.tdOrdLDEALLOGMapper.updateByPrimaryKeySelective(record);
+    }
+
+    /**
+    * @Title TdOrdLDEALLOGDao.updateByPrimaryKey
+    * @Description: 根据主键更新ORD_L_DEALLOG全部字段
+    * @param record 要更新成为的TdOrdLDEALLOG对象
+    * @return int 更新记录数
+     */
+    public int updateByPrimaryKey(TdOrdLDEALLOG record) {
+        return this.tdOrdLDEALLOGMapper.updateByPrimaryKey(record);
     }
 
     /**

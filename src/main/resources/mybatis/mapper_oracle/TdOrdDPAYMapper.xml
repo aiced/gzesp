@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDPAYMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDPAY" >
+    <id column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <id column="PAY_ORDER" property="payOrder" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
+    <result column="PAY_MODE" property="payMode" jdbcType="VARCHAR" />
+    <result column="PAY_STATE" property="payState" jdbcType="CHAR" />
+    <result column="ORDER_FEE" property="orderFee" jdbcType="DECIMAL" />
+    <result column="PAY_FEE" property="payFee" jdbcType="DECIMAL" />
+    <result column="PAY_TIME" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="HALT_TAG" property="haltTag" jdbcType="CHAR" />
+    <result column="SETTLE_DATE" property="settleDate" jdbcType="VARCHAR" />
+    <result column="HALT_TIME" property="haltTime" jdbcType="TIMESTAMP" />
+    <result column="REFUND_TAG" property="refundTag" jdbcType="CHAR" />
+    <result column="REFUND_TIME" property="refundTime" jdbcType="TIMESTAMP" />
+    <result column="REFUND_LOGID" property="refundLogid" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, PAY_ORDER, PARTITION_ID, PAY_TYPE, PAY_MODE, PAY_STATE, ORDER_FEE, PAY_FEE, 
+    PAY_TIME, HALT_TAG, SETTLE_DATE, HALT_TIME, REFUND_TAG, REFUND_TIME, REFUND_LOGID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_D_PAY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_D_PAY
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PAY_ORDER = #{payOrder,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAYKey" >
+    delete from ORD_D_PAY
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PAY_ORDER = #{payOrder,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_D_PAY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAY" >
+    insert into ORD_D_PAY (ORDER_ID, PAY_ORDER, PARTITION_ID, 
+      PAY_TYPE, PAY_MODE, PAY_STATE, 
+      ORDER_FEE, PAY_FEE, PAY_TIME, 
+      HALT_TAG, SETTLE_DATE, HALT_TIME, 
+      REFUND_TAG, REFUND_TIME, REFUND_LOGID
+      )
+    values (#{orderId,jdbcType=DECIMAL}, #{payOrder,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, 
+      #{payType,jdbcType=CHAR}, #{payMode,jdbcType=VARCHAR}, #{payState,jdbcType=CHAR}, 
+      #{orderFee,jdbcType=DECIMAL}, #{payFee,jdbcType=DECIMAL}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{haltTag,jdbcType=CHAR}, #{settleDate,jdbcType=VARCHAR}, #{haltTime,jdbcType=TIMESTAMP}, 
+      #{refundTag,jdbcType=CHAR}, #{refundTime,jdbcType=TIMESTAMP}, #{refundLogid,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAY" >
+    insert into ORD_D_PAY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="payOrder != null" >
+        PAY_ORDER,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="payMode != null" >
+        PAY_MODE,
+      </if>
+      <if test="payState != null" >
+        PAY_STATE,
+      </if>
+      <if test="orderFee != null" >
+        ORDER_FEE,
+      </if>
+      <if test="payFee != null" >
+        PAY_FEE,
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME,
+      </if>
+      <if test="haltTag != null" >
+        HALT_TAG,
+      </if>
+      <if test="settleDate != null" >
+        SETTLE_DATE,
+      </if>
+      <if test="haltTime != null" >
+        HALT_TIME,
+      </if>
+      <if test="refundTag != null" >
+        REFUND_TAG,
+      </if>
+      <if test="refundTime != null" >
+        REFUND_TIME,
+      </if>
+      <if test="refundLogid != null" >
+        REFUND_LOGID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="payOrder != null" >
+        #{payOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="payMode != null" >
+        #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        #{payState,jdbcType=CHAR},
+      </if>
+      <if test="orderFee != null" >
+        #{orderFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payFee != null" >
+        #{payFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="haltTag != null" >
+        #{haltTag,jdbcType=CHAR},
+      </if>
+      <if test="settleDate != null" >
+        #{settleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="haltTime != null" >
+        #{haltTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTag != null" >
+        #{refundTag,jdbcType=CHAR},
+      </if>
+      <if test="refundTime != null" >
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundLogid != null" >
+        #{refundLogid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_D_PAY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_D_PAY
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payOrder != null" >
+        PAY_ORDER = #{record.payOrder,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payType != null" >
+        PAY_TYPE = #{record.payType,jdbcType=CHAR},
+      </if>
+      <if test="record.payMode != null" >
+        PAY_MODE = #{record.payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payState != null" >
+        PAY_STATE = #{record.payState,jdbcType=CHAR},
+      </if>
+      <if test="record.orderFee != null" >
+        ORDER_FEE = #{record.orderFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payFee != null" >
+        PAY_FEE = #{record.payFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payTime != null" >
+        PAY_TIME = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.haltTag != null" >
+        HALT_TAG = #{record.haltTag,jdbcType=CHAR},
+      </if>
+      <if test="record.settleDate != null" >
+        SETTLE_DATE = #{record.settleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.haltTime != null" >
+        HALT_TIME = #{record.haltTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundTag != null" >
+        REFUND_TAG = #{record.refundTag,jdbcType=CHAR},
+      </if>
+      <if test="record.refundTime != null" >
+        REFUND_TIME = #{record.refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundLogid != null" >
+        REFUND_LOGID = #{record.refundLogid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_D_PAY
+    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PAY_ORDER = #{record.payOrder,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      PAY_TYPE = #{record.payType,jdbcType=CHAR},
+      PAY_MODE = #{record.payMode,jdbcType=VARCHAR},
+      PAY_STATE = #{record.payState,jdbcType=CHAR},
+      ORDER_FEE = #{record.orderFee,jdbcType=DECIMAL},
+      PAY_FEE = #{record.payFee,jdbcType=DECIMAL},
+      PAY_TIME = #{record.payTime,jdbcType=TIMESTAMP},
+      HALT_TAG = #{record.haltTag,jdbcType=CHAR},
+      SETTLE_DATE = #{record.settleDate,jdbcType=VARCHAR},
+      HALT_TIME = #{record.haltTime,jdbcType=TIMESTAMP},
+      REFUND_TAG = #{record.refundTag,jdbcType=CHAR},
+      REFUND_TIME = #{record.refundTime,jdbcType=TIMESTAMP},
+      REFUND_LOGID = #{record.refundLogid,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAY" >
+    update ORD_D_PAY
+    <set >
+      <if test="partitionId != null" >
+        PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="payMode != null" >
+        PAY_MODE = #{payMode,jdbcType=VARCHAR},
+      </if>
+      <if test="payState != null" >
+        PAY_STATE = #{payState,jdbcType=CHAR},
+      </if>
+      <if test="orderFee != null" >
+        ORDER_FEE = #{orderFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payFee != null" >
+        PAY_FEE = #{payFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="haltTag != null" >
+        HALT_TAG = #{haltTag,jdbcType=CHAR},
+      </if>
+      <if test="settleDate != null" >
+        SETTLE_DATE = #{settleDate,jdbcType=VARCHAR},
+      </if>
+      <if test="haltTime != null" >
+        HALT_TIME = #{haltTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTag != null" >
+        REFUND_TAG = #{refundTag,jdbcType=CHAR},
+      </if>
+      <if test="refundTime != null" >
+        REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundLogid != null" >
+        REFUND_LOGID = #{refundLogid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PAY_ORDER = #{payOrder,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDPAY" >
+    update ORD_D_PAY
+    set PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      PAY_TYPE = #{payType,jdbcType=CHAR},
+      PAY_MODE = #{payMode,jdbcType=VARCHAR},
+      PAY_STATE = #{payState,jdbcType=CHAR},
+      ORDER_FEE = #{orderFee,jdbcType=DECIMAL},
+      PAY_FEE = #{payFee,jdbcType=DECIMAL},
+      PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      HALT_TAG = #{haltTag,jdbcType=CHAR},
+      SETTLE_DATE = #{settleDate,jdbcType=VARCHAR},
+      HALT_TIME = #{haltTime,jdbcType=TIMESTAMP},
+      REFUND_TAG = #{refundTag,jdbcType=CHAR},
+      REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      REFUND_LOGID = #{refundLogid,jdbcType=DECIMAL}
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+      and PAY_ORDER = #{payOrder,jdbcType=DECIMAL}
+  </update>
+</mapper>

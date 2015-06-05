@@ -14,38 +14,58 @@ public class TdOrdDREFUNDKey implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @Fields ORD_D_REFUND.ORDER_ID :null
+     * 订单标识
+     */
+    /**
+     * @Fields ORD_D_REFUND.ORDER_ID :订单标识
      */
     private Long orderId;
 
     /**
-     * @Fields ORD_D_REFUND.PARTITION_ID :null
+     * 分区标识
+     */
+    /**
+     * @Fields ORD_D_REFUND.PARTITION_ID :分区标识
      */
     private Short partitionId;
 
     /**
-     * @return ORD_D_REFUND.ORDER_ID : 返回 null
+     * @return 订单标识
+     */
+    /**
+     * @return ORD_D_REFUND.ORDER_ID : 返回 订单标识
      */
     public Long getOrderId() {
         return orderId;
     }
 
     /**
-     * @param orderId of ORD_D_REFUND : 设置 null
+     * @param orderId 
+	 *            订单标识
+     */
+    /**
+     * @param orderId of ORD_D_REFUND : 设置 订单标识
      */
     public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
     /**
-     * @return ORD_D_REFUND.PARTITION_ID : 返回 null
+     * @return 分区标识
+     */
+    /**
+     * @return ORD_D_REFUND.PARTITION_ID : 返回 分区标识
      */
     public Short getPartitionId() {
         return partitionId;
     }
 
     /**
-     * @param partitionId of ORD_D_REFUND : 设置 null
+     * @param partitionId 
+	 *            分区标识
+     */
+    /**
+     * @param partitionId of ORD_D_REFUND : 设置 分区标识
      */
     public void setPartitionId(Short partitionId) {
         this.partitionId = partitionId;

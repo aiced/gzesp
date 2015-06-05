@@ -164,6 +164,43 @@ public class PayService {
     	}
     }
     
+    /*
+     * 退款接口
+     */
+    public void afterRefundSuccess(String pay_mode, boolean isSuccess, String orderId, int orderFee){
+    	// TODO 奚总, 请完善
+    	//更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
+//    	if(isSuccess){
+//    	   int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, orderFee);
+//    	}
+//    	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
+//    	if(isSuccess){
+//    		int r2 = insertDealLog(orderId, orderFee);
+//    	}
+//    	
+//    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
+//    	String pay_state = isSuccess ? "1" : "2" ;
+//    	int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
+//    	
+//    	//先根据返回报文里的order_id 获取到订单当时是否有选择号码
+//    	Map<Object, Object> numberRow = getNumberByOrderId(orderId);
+//    	//如果有号码而且返回响应是成功的则删掉号码预占表信息
+//        if(MapUtils.isNotEmpty(numberRow) && isSuccess){
+//        	//号码预占表删掉号码记录
+//        	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
+//        	int r4 = deleteNumberReserve(numbers);
+//        }
+//        
+//        //退款成功发短信
+//        if(isSuccess){
+//        	Map<String, String> phone = payDao.queryPhoneByOrderId(orderId);
+//        	Map<String, String> goods = payDao.queryGoodsNameByOrderId(orderId);
+//        	if(MapUtils.isNotEmpty(phone)){
+//        		String strRet = SmsUtils.doSendMessage(phone.get("PHONE_NUMBER"), "MB-2015052754", "@1@=" + goods.get("GOODS_NAME"));
+//        	}
+//    	}
+    }
+    
     /**
      * 支付收到响应后更新订单基本表里订单状态 和 实收金额
      * @param isSuccess

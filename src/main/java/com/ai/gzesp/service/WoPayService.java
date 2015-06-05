@@ -250,7 +250,8 @@ public class WoPayService {
 		System.out.println("验证签名成功！");
 		retMap.put("result_code", "SUCCESS");
 		retMap.put("result_desc", "沃支付_退款请求发送成功_"+map.get("transRet"));
-		return map;
+		System.out.println(retMap);
+		return retMap;
 	}
 	
 	

@@ -127,8 +127,8 @@
 				  }
 				  else
 				  {
-				  	//这里开始做验证码操作
-				  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode","0");
+				  	//这里开始做验证码操作 
+				  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode","4");
 				  	if(bRet1)
 				  	{
 				  		$("#txtyanzhengma").attr("disabled",false); 

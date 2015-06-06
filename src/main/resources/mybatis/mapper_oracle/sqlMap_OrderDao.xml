@@ -154,7 +154,7 @@
        where a.order_id = b.order_id(+)
          and a.create_time <= sysdate - 1/(24*2)
          and a.create_time >= to_date('20150603120000','yyyymmddhh24miss')
-         and (b.order_id is null or b.pay_state <> '1')
+         and (b.order_id is null or b.pay_state = '2')
          and a.order_state <> '99'
          and a.order_id = c.order_id
          ]]>    

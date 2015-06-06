@@ -834,7 +834,7 @@ public class UnionPayService {
                                 //null, //orig_pay_id 这个字段作废，插null
                                 param.getOrig_timestamp(),   // orig_timestamp
                                 param.getOrig_sys_trade_no(), //orig_sys_trade_no
-                                param.getOrig_order_id(),  //orig_order_id
+                                param.getOrig_order_id(),  //orig_order_id 其实插的是原来支付日志里的虚拟order_id
                                 param.getOrig_txn_amt()  //orig_txn_amt
                 );
 	     
@@ -928,7 +928,7 @@ public class UnionPayService {
     	//组装原支付成功订单部分请求参数
     	UnionPayParam param = new UnionPayParam();
     	param.setOrder_id(order_id);
-    	param.setOrig_order_id(origUnionPayLog.get("REAL_ORDER_ID"));
+    	param.setOrig_order_id(origUnionPayLog.get("ORDER_ID")); //这边插入原支付记录里的虚拟的order_id,因为支付时发送的是虚拟order_id的
     	param.setOrig_sys_trade_no(origUnionPayLog.get("SYS_TRADE_NO"));
     	param.setOrig_timestamp(origUnionPayLog.get("REQ_TIME"));
     	param.setOrig_txn_amt(origUnionPayLog.get("TXN_AMT"));

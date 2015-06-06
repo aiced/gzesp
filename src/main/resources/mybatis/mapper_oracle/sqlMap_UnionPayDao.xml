@@ -63,10 +63,11 @@
 	</select>
 	
 	<select id="queryUnionPaylogByOrderId" resultType="java.util.HashMap">
-         select real_order_id, sys_trade_no, req_time, txn_amt
+         select to_char(real_order_id) real_order_id, to_char(sys_trade_no) sys_trade_no, req_time, to_char(txn_amt) txn_amt, to_char(order_id) order_id
            from PAY_D_UNIONPAY_LOG 
           where real_order_id = ${order_id}
             and result_code = '00'
+            and req_trade_type in ('0202', '0200')
 	</select>			
 	
 	<update id="updateBindlog">

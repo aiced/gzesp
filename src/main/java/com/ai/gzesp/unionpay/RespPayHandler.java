@@ -65,8 +65,8 @@ public class RespPayHandler implements IDealUnionPayResp {
         boolean isSuccess = UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode));
         //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
         String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
-        //银联支付返回的支付金额，单位是分
-        int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt));
+        //银联支付返回的支付金额，单位是分, 插入表里是厘
+        int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt))*10;
         
         //调用公共service，做后续的统一的操作
         payService.afterPaySuccess("15", isSuccess, realOrderId, fee);

@@ -138,7 +138,7 @@ public class PayService {
     	}
     	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
     	if(isSuccess){
-    		int r2 = insertDealLog(orderId, orderFee);
+    		int r2 = insertDealLogAfterPaySuccess(orderId, orderFee);
     	}
     	
     	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
@@ -164,41 +164,43 @@ public class PayService {
     	}
     }
     
-    /*
-     * 退款接口
+
+    /**
+     * 退款接口请求返回成功后 后续统一操作
+     * 1.ord_d_refund, ORDER_STATE 后台审核通过未退款 13，后台审核通过已退款14 
+     * 2.ord_d_base, 
+     * 3.ord_d_pay, 
+     * 4.ORD_L_DEALLOG, 
+     * 5.退佣金（能人账户功能完成后开发）
+     * 6.发短信通知(放到后台管理去发了)
+     * @param pay_mode
+     * @param isSuccess
+     * @param orderId
      */
-    public void afterRefundSuccess(String pay_mode, boolean isSuccess, String orderId, int orderFee){
-    	// TODO 奚总, 请完善
-    	//更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
-//    	if(isSuccess){
-//    	   int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, orderFee);
-//    	}
-//    	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
-//    	if(isSuccess){
-//    		int r2 = insertDealLog(orderId, orderFee);
-//    	}
-//    	
-//    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
-//    	String pay_state = isSuccess ? "1" : "2" ;
-//    	int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
-//    	
-//    	//先根据返回报文里的order_id 获取到订单当时是否有选择号码
-//    	Map<Object, Object> numberRow = getNumberByOrderId(orderId);
-//    	//如果有号码而且返回响应是成功的则删掉号码预占表信息
-//        if(MapUtils.isNotEmpty(numberRow) && isSuccess){
-//        	//号码预占表删掉号码记录
-//        	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
-//        	int r4 = deleteNumberReserve(numbers);
-//        }
-//        
-//        //退款成功发短信
-//        if(isSuccess){
-//        	Map<String, String> phone = payDao.queryPhoneByOrderId(orderId);
-//        	Map<String, String> goods = payDao.queryGoodsNameByOrderId(orderId);
-//        	if(MapUtils.isNotEmpty(phone)){
-//        		String strRet = SmsUtils.doSendMessage(phone.get("PHONE_NUMBER"), "MB-2015052754", "@1@=" + goods.get("GOODS_NAME"));
-//        	}
-//    	}
+    public void afterRefundSuccess(String pay_mode, boolean isSuccess, String orderId){
+    	//先从ord_d_refund表里查询出订单表里原来的状态,用于插到 ORD_L_DEALLOG
+    	Map<String, String> refundInfo = payDao.queryRefundInfoByOrderId(orderId);
+    	String orig_order_state = refundInfo.get("ORDER_STATE");
+    	
+    	//不管成功与否 都要 更新订单退款表 ord_d_refund里的  refund_state 后台审核通过未退款 13，后台审核通过已退款14 
+    	String order_state = isSuccess ? "14" : "13";
+    	int r1 = updatePayRefundState(orderId, order_state);
+    	
+    	//不管成功与否 都要 更新订单基本表 ord_d_base 里的  ORDER_STATE 
+    	int r2 = updatePayState(orderId, order_state);
+    	
+    	//如果退款请求成功 更新ord_d_pay 里的状态 5 已退款
+    	if(isSuccess){
+    		//String pay_state = isSuccess ? "5";
+    		int r3 = updateOrdDPay(orderId, "5", pay_mode);
+    	}
+    	
+    	//不管退款成功失败 则新增一条 ORD_L_DEALLOG 处理日志
+    	String content = isSuccess ? "退款请求成功" : "退款请求失败" ;
+    	int r4 = insertDealLogAfterPayRefund(orderId, content, orig_order_state, order_state);
+    	
+    	
+        //退款成功发短信
     }
     
     /**
@@ -220,6 +222,7 @@ public class PayService {
         }
         return r2;
     }
+
     
     /**
      * 根据order_id 查找是否用了手机号码
@@ -251,7 +254,7 @@ public class PayService {
      * 支付成功后插 ORD_L_DEALLOG 记录
      * @return
      */
-    private int insertDealLog(String orderId, int fee){
+    private int insertDealLogAfterPaySuccess(String orderId, int fee){
     	return payDao.insertDealLog(
     			CommonUtil.generateLogId("5"),
     			orderId, 
@@ -261,6 +264,23 @@ public class PayService {
     			"成功",   //RESULT_INFO
     			"00",  //ORIGINAL_STATE，订单原始状态未支付
     			"01"   //CURRENT_STATE,订单线状态，待分配
+    			);
+    }
+    
+    /**
+     * 退款成功后插 ORD_L_DEALLOG 记录
+     * @return
+     */
+    private int insertDealLogAfterPayRefund(String orderId, String content, String orig_order_state, String current_state){
+    	return payDao.insertDealLog(
+    			CommonUtil.generateLogId("5"),
+    			orderId, 
+    			orderId.substring(14, 16), //partition_id
+    			content,  //DEAL_CONTENT
+    			"0",  //RESULT_CODE
+    			content,   //RESULT_INFO
+    			orig_order_state,  //ORIGINAL_STATE，订单原始状态未支付
+    			current_state   //CURRENT_STATE,订单线状态，待分配
     			);
     }
     
@@ -283,4 +303,24 @@ public class PayService {
     	return payDao.queryPayModeByOrderId(orderId);
     }
     
+    /**
+     * 根据退款请求返回的成功失败 更新 ord_d_refund 表里的 order_state 
+     * @param order_id
+     * @param order_state 
+     * @return
+     */
+    private int updatePayRefundState(String order_id, String order_state){
+        return payDao.updatePayRefundState(order_id, order_state);
+    }
+    
+    
+    /**
+     * 退款请求收到响应后更新订单基本表里订单状态 order_state
+     * @param order_id
+     * @param order_state
+     * @return
+     */
+    private int updatePayState(String order_id, String order_state) {
+        return payDao.updatePayState(order_id, order_state);
+    }
 }

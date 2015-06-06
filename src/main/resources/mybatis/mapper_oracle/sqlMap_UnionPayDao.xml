@@ -60,7 +60,15 @@
          select log_id, resp_trade_type, result_code, result_desc 
            from PAY_D_UNIONPAY_LOG 
           where log_id = ${log_id}
-	</select>		
+	</select>
+	
+	<select id="queryUnionPaylogByOrderId" resultType="java.util.HashMap">
+         select to_char(real_order_id) real_order_id, to_char(sys_trade_no) sys_trade_no, req_time, to_char(txn_amt) txn_amt, to_char(order_id) order_id
+           from PAY_D_UNIONPAY_LOG 
+          where real_order_id = ${order_id}
+            and result_code = '00'
+            and req_trade_type in ('0202', '0200')
+	</select>			
 	
 	<update id="updateBindlog">
          update ORD_D_PAYLOG
@@ -134,25 +142,14 @@
 	
 	
 	<insert id="insertPayCancellog">
-        insert into ord_d_paylog(
-        	pay_id, 
-            partition_id,
-            req_time,
-            req_status,
-            req_trade_type,
-            sys_trade_no,
-            orig_order_id,
-            orig_timestamp)
-        values(
-        	${pay_id}, 
-        	${partition_id},  
-        	#{req_time}, 
-        	#{req_status},
-            #{req_trade_type}, 
-            #{sys_trade_no}, 
-            ${orig_order_id}, 
-            #{orig_timestamp}
-              )	    
+        insert into PAY_D_UNIONPAY_LOG
+              (log_id, partition_id, real_order_id, req_time, req_status, req_trade_type,
+               sys_trade_no, order_id, txn_amt,
+               orig_timestamp, orig_sys_trade_no, orig_order_id, orig_txn_amt)
+        values(${log_id}, ${partition_id}, ${real_order_id},  #{req_time}, #{req_status},
+               #{req_trade_type}, #{sys_trade_no}, ${order_id}, ${txn_amt},
+               #{orig_timestamp}, #{orig_sys_trade_no}, ${orig_order_id}, ${orig_txn_amt}
+              )		
 	</insert>
 	
 	

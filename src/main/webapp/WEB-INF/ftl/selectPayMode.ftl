@@ -200,16 +200,19 @@
                <img src="${resRoot}/image/selectPayMode/pay_weixin.png" width="95%" height="30%"/>
              </label>
             </div>
+            <#--
             <div class="radio" style="padding-left:5px;">
              <label class="radio">
                <input type="radio" name="pay_mode_style" id="wo" value="沃支付" style="margin-top: 18px;" disabled>
                <img src="${resRoot}/image/selectPayMode/pay_wo.png" width="95%" height="30%"/>
              </label>
             </div>
+            -->
             <div class="radio" style="padding-left:5px;">
              <label class="radio">
                <input type="radio" name="pay_mode_style" id="unionpay" value="银联支付" checked="checked" style="margin-top: 18px;">
-               <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="95%" height="30%"/>
+               <#-- <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="95%" height="30%"/> -->
+               <img src="${resRoot}/image/selectPayMode/pay_wo.png" width="95%" height="30%"/>
              </label>              
             </div>
           </div>          
@@ -220,7 +223,8 @@
 			  <b style="font-size: 14px;">已接入银行</b></br>
 			  <b>储蓄卡：</b>工商银行、农业银行、光大银行、邮储银行等</br>
 			  <b>信用卡：</b>中国银行等</br>
-			  <i><b>其他银行陆续接入<a onclick="testWoPay()">,</a></b>敬请期待<a onclick="testWeiXinPay()">～</a></b></i>
+			  <#--<i><b>其他银行陆续接入<a onclick="testWoPay()">,</a></b>敬请期待<a onclick="testWeiXinPay()">～</a></b></i>-->
+			  <i><b>其他银行陆续接入,</b>敬请期待～</b></i>
             </div>
           </div>
           

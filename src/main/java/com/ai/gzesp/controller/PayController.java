@@ -119,7 +119,7 @@ public class PayController {
 	/**
 	 * 退款总入口，提供给后台管理审核通过后调用
      * 返回json 
-     * {"result_code":"SUCCESS", "result_desc":"请求发送成功"}
+     * {"result_code":"SUCCESS", "result_desc":"退款请求发送成功"}
 	 * {"result_code":"FAIL", "result_desc":"退款请求发送失败"}
 	 * 
 	 * @param order_id
@@ -134,6 +134,11 @@ public class PayController {
 		
 		Map<String, String> payInfo = payService.queryPayModeByOrderId(order_id);
 		
+		if(MapUtils.isEmpty(payInfo)){
+			mapRet.put("result_code", "FAIL") ;
+			mapRet.put("result_desc", "ord_d_pay表中不存在此order_id的记录") ;
+		}
+		
 		String pay_mode = payInfo.get("PAY_MODE"); // 15:银联，30：微信支付，40：沃支付
 		
 		if ("30".equals(pay_mode))  //微信支付
@@ -146,9 +151,22 @@ public class PayController {
 		}
 		else if("15".equals(pay_mode))//银联支付
 		{
-			mapRet = unionPayService.refundOrder(order_id);
+			Map<String, String> result = unionPayService.refundOrder(order_id);
+			if("00".equals(result.get("status"))){
+				mapRet.put("result_code", "SUCCESS") ;
+				mapRet.put("result_desc", "退款请求发送成功") ;
+			}
+			else{
+				mapRet.put("result_code", "FAIL") ;
+				mapRet.put("result_desc", result.get("detail")) ;
+			}
 		}
 		
+		//退款请求完成后，成功或失败需要做相应的后续操作
+		boolean isSuccess = "SUCCESS".equals(mapRet.get("result_code")) ? true : false;
+		payService.afterRefundSuccess(pay_mode, isSuccess, order_id);
+		
+		//返回json
 		return mapRet;
 	}
     
@@ -157,7 +175,7 @@ public class PayController {
     	payService.afterPaySuccess("30", true, "1171430816469615", 50000);
     }
     
-    @RequestMapping("/test/5")
+    @RequestMapping("/test/3")
     public void test3(){
     	List<PayInfo> payInfoList = new ArrayList<PayInfo>();
     	
@@ -185,4 +203,10 @@ public class PayController {
     	payService.beforePayReq("1171430816469616", "12000", payInfoList);
     }
     
+    @RequestMapping("/test/4")
+    public void test4(){
+    	payService.afterRefundSuccess("30", true, "1801430209611502");
+    }
+    
+
 }

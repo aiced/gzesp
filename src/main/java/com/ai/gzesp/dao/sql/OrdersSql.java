@@ -463,7 +463,8 @@ public class OrdersSql {
 				+ " and d.USER_ID = e.USER_ID "
 				+ " and c.GOODS_ID = f.GOODS_ID"
 				+ " and f.ALBUM_ID = g.ALBUM_ID"
-				+ " and g.DEFAULT_TAG = '0'" );
+				+ " and g.DEFAULT_TAG = '0'"
+				+ " and ORDER_STATE!='99'" );
 		if(keyword != null && !"".equals(keyword)) {
 			sb.append(" and (a.ORDER_ID like '%"+keyword+"%'"
 					+ " 	or c.GOODS_NAME like '%"+keyword+"%')" );
@@ -474,8 +475,7 @@ public class OrdersSql {
 		sb.append(" where Rownum <="+(iHidePageIndex+3)+") table_alias");
 		sb.append("	where table_alias.rowno >="+iHidePageIndex);
 		
-		
-		
+
 		System.out.println(sb.toString());
 		List custMyOrderList =commonDao.queryForList(sb.toString());
 
@@ -555,7 +555,8 @@ public class OrdersSql {
 				+ " and f.ALBUM_ID = g.ALBUM_ID"
 				+ " and g.DEFAULT_TAG = '0'"
 				+ "	and a.ORDER_ID = h.ORDER_ID"
-				+ " and h.DISTRICT_CODE = j.DISTRICT_CODE" );
+				+ " and h.DISTRICT_CODE = j.DISTRICT_CODE"
+				+ " and b.ORDER_STATE!='99'" );
 		
 		System.out.println("客户查询："+sb.toString());
 		Map custOrderDetail =commonDao.queryForMap(sb.toString());

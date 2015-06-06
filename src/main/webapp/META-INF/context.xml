@@ -26,6 +26,10 @@
 		password="ucr_gz" driverClassName="oracle.jdbc.OracleDriver"
 		url="jdbc:oracle:thin:@localhost:1521:XE" />   -->
 
-
+  <!-- gztest -->
+<!--   <Resource name="jdbc/ucr_gz" auth="Container" type="javax.sql.DataSource"
+		maxActive="100" maxIdle="30" maxWait="10000" username="UCR_GZ"
+		password="N7ytoi" driverClassName="oracle.jdbc.OracleDriver"
+		url="jdbc:oracle:thin:@58.16.129.235:1521:wlyx" /> -->
 
 </Context>

@@ -152,6 +152,7 @@ public class PayController {
 		else if("15".equals(pay_mode))//银联支付
 		{
 			Map<String, String> result = unionPayService.refundOrder(order_id);
+			mapRet = new HashMap<String, String>();
 			if("00".equals(result.get("status"))){
 				mapRet.put("result_code", "SUCCESS") ;
 				mapRet.put("result_desc", "退款请求发送成功") ;
@@ -203,9 +204,9 @@ public class PayController {
     	payService.beforePayReq("1171430816469616", "12000", payInfoList);
     }
     
-    @RequestMapping("/test/4")
-    public void test4(){
-    	payService.afterRefundSuccess("30", true, "1801430209611502");
+    @RequestMapping("/test/4/{order_id}")
+    public void test4(@PathVariable("order_id") String order_id){
+    	payService.afterRefundSuccess("15", true, order_id);
     }
     
 

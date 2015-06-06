@@ -315,10 +315,9 @@ public class OrdersSql {
 				+ "T1.DELIVER_TYPE_CODE,"
 				+ "T1.ORDER_STATE,"
 				+ "T1.PHOTO_LINKS,"
-				+ "T2.PAY_MODE,"
-				+ "T1.ORDER_STATE !='99'"
-				+ " from T1,T2 where T1.Order_id=T2.Order_id(+)"
-				);
+				+ "T2.PAY_MODE"
+				+ " from T1,T2 where T1.Order_id=T2.Order_id(+) and T1.ORDER_STATE !='99'"
+				);				
 		sb.append(" ) tt");
 		sb.append(" where Rownum <="+(strHidePageIndex+3)+") table_alias");
 		sb.append("	where table_alias.rowno >="+strHidePageIndex);

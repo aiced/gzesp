@@ -21,84 +21,6 @@ public class OrdersSql {
 
 	@Resource
 	private CommonDao commonDao;	
-//	//通过userid获取商品列表
-//	public List<Map<String, Object>> getOrdersListbyUserID(String strUserID)
-//	{
-//		StringBuffer sb=new StringBuffer();
-//		
-//		sb.append("with T1 as"
-//				+"("
-//				+"select "
-//				+"ORD_D_DEAL.ORDER_ID,"//订单id
-//				+"ORD_D_PROD.GOODS_NAME,"//商品名称
-//				+"ORD_D_PROD.TOPAY_FEE,"//订单金额
-//				+"ORD_D_BASE.Order_Time,"//下单时间
-//				+"ORD_D_POST.RECEIVER_NAME,"//收件人
-//				+"ORD_D_POST.POST_ADDR,"//详细地址
-//				+"ORD_D_POST.MOBILE_PHONE,"//联系电话
-//				+"case when ORD_D_POST.DELIVER_TIME_CODE ='00' then"
-//				+"'工作日'"
-//				+"when ORD_D_POST.DELIVER_TIME_CODE ='01' then"
-//				+"'周末'"
-//				+"when ORD_D_POST.DELIVER_TIME_CODE ='02' then" 
-//				+"'工作日、周末'"
-//				+"else"
-//				+"'未知'"
-//				+"end" 
-//				+" DELIVER_TIME_CODE,"
-//				+"case when ORD_D_POST.DELIVER_TYPE_CODE ='00' then"
-//				+"'不需要配送'"
-//				+"when ORD_D_POST.DELIVER_TYPE_CODE ='01' then"
-//				+"'送货'"
-//				+"when ORD_D_POST.DELIVER_TYPE_CODE ='02' then" 
-//				+"'自提'"
-//				+"else"
-//				+"'未知'"
-//				+"end" 
-//				+" DELIVER_TYPE_CODE,"
-//				+"ORD_D_BASE.ORDER_STATE,"//订单状态
-//				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
-//				);
-//		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
-//		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
-//				+" and ORD_D_BASE.Order_Id=ORD_D_PROD.Order_Id"
-//				+" and ORD_D_PROD.Order_Id=ORD_D_POST.Order_Id"
-//				+" and GDS_D_INFO.Goods_Id=ORD_D_PROD.Goods_Id" //先注释掉，后面需要放开注释
-//				+" and GDS_D_INFO.ALBUM_ID=GDS_D_PHOTO.ALBUM_ID" //先注释掉，后面需要放开注释
-//				+" and GDS_D_PHOTO.DEFAULT_TAG=0"
-//				+" and ORD_D_DEAL.USER_ID='"+strUserID+"'"
-//				+" order by ORD_D_BASE.Order_Time DESC"
-//				);
-//		sb.append("),");
-//		sb.append("T2 as ("
-//				+ "select Order_id,ORD_D_PAYLOG.PAY_MODE,ORD_D_PAYLOG.REQ_TRADE_TYPE from ORD_D_PAYLOG where REQ_TRADE_TYPE='0202'"
-//				+ ")");
-//		sb.append("select * from ("
-//				+ "select tt.*,ROWNUM as rowno from (");
-//		sb.append("select T1.ORDER_ID,"
-//				+ "T1.GOODS_NAME,"
-//				+ "T1.TOPAY_FEE,"
-//				+ "T1.Order_Time,"
-//				+ "T1.RECEIVER_NAME,"
-//				+ "T1.POST_ADDR,"
-//				+ "T1.MOBILE_PHONE,"
-//				+ "T1.DELIVER_TIME_CODE,"
-//				+ "T1.DELIVER_TYPE_CODE,"
-//				+ "T1.ORDER_STATE,"
-//				+"T1.PHOTO_LINKS,"
-//				+"T2.PAY_MODE,T2.REQ_TRADE_TYPE "
-//				+"from T1,T2 where T1.Order_id=T2.Order_id(+)"
-//				);
-//		sb.append(" ) tt");
-//		sb.append(" where Rownum <="+4+") table_alias");
-//		sb.append("	where table_alias.rowno >="+1);
-//		
-//		System.out.println(sb.toString());
-//		List<Map<String, Object>> orderList =commonDao.queryForList(sb.toString());
-//
-//		return orderList;
-//		
-//	}
 	
 	//通过userid获取商品列表
 	public List<Map<String, Object>> getOrdersListbyUserID(String strUserID)
@@ -392,9 +314,10 @@ public class OrdersSql {
 				+ "T1.DELIVER_TIME_CODE,"
 				+ "T1.DELIVER_TYPE_CODE,"
 				+ "T1.ORDER_STATE,"
-				+"T1.PHOTO_LINKS,"
-				+"T2.PAY_MODE "
-				+" from T1,T2 where T1.Order_id=T2.Order_id(+)"
+				+ "T1.PHOTO_LINKS,"
+				+ "T2.PAY_MODE,"
+				+ "T1.ORDER_STATE !='99'"
+				+ " from T1,T2 where T1.Order_id=T2.Order_id(+)"
 				);
 		sb.append(" ) tt");
 		sb.append(" where Rownum <="+(strHidePageIndex+3)+") table_alias");
@@ -416,7 +339,8 @@ public class OrdersSql {
 		sb.append("count(case when a.CREATE_TIME >=to_date(to_char(sysdate,'yyyy/mm'),'yyyy/mm') and a.CREATE_TIME < add_months(to_date(to_char(sysdate,'yyyy/mm'),'yyyy/mm'),1) then 1 else null end) month_count,");
 		sb.append("count(1) total_count");
 		sb.append(" from ORD_D_BASE a,ORD_D_DEAL b");
-		sb.append(" where a.order_id=b.order_id");
+		sb.append(" where a.order_id=b.order_id"
+				+ " and a.ORDER_STATE !='99'");
 		sb.append(" and b.user_id='" + strUserID+"'");
 		sb.append(" group by b.user_id");
 		System.out.println(sb.toString());

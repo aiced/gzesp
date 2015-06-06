@@ -44,7 +44,7 @@
 	            <br>
 	            <div class="row">
 	                <div class="col-xs-8 col-sm-8">
-	                    <input type="text" class="form-control" id="txtphonenum" name="txtphonenum" aria-describedby="txtnum" placeholder="请输入联通手机号"  required autofocus>
+	                    <input type="text" class="form-control" id="txtphonenum" name="txtphonenum" aria-describedby="txtnum" placeholder="请输入手机号"  required autofocus>
 	                </div>
 	                <div class="col-xs-4 col-sm-4">
 	                    <button class="btn btn-primary btn-block form-control" type="button" name="btnCode" id="btnCode">获取验证码</button>
@@ -52,12 +52,13 @@
 	            </div>
 	            <br>
 	            <!--输入验证码-->
-	            <div class="form-group">
+	            <div class="form-group" id='div_yanzhengma'>
 	                <label for="txtyanzhengma" class="sr-only"></label>
-	                <input type="text" class="form-control" id="txtyanzhengma" placeholder="请输入验证码"  required>
+	                <input type="text" class="form-control" id="txtyanzhengma" placeholder="请输入验证码"  required disabled='true'>
 	            </div>
 	            <br/>
 	            <button class="btn-sm btn-warning btn-block" type="submit" id="btnStep1">下一步</button>
+	        		            <input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 	        </form>
 	    </div> <!-- /container -->
 	</div>
@@ -70,6 +71,8 @@
     <script src="${resRoot}/js/baseJs.js"></script>
 
 	<script type="text/javascript">
+	
+		var bRet3=false;
 		//判断输入的是否是手机号
 		function isPhoneNum(strPhoneNum)
 		{
@@ -88,19 +91,33 @@
 				alert("手机号格式不对，请重新输入。");
 				return false;
 		  	}
-		  	if(!$("#txtyanzhengma").val())
+		  	if(!bRet3)
 		  	{
-				alert("请输入验证码");
 				return false;
 		  	}
 			return true;
 		}
-		
+    	function getNowDate()
+    	{
+		  var d = new Date();
+		  var vYear = d.getFullYear();
+		  var vMon = d.getMonth() + 1;
+		  var vDay = d.getDate();
+		  var h = d.getHours(); 
+		  var m = d.getMinutes(); 
+		  var se = d.getSeconds(); 
+		  s=vYear+(vMon<10 ? "0" + vMon : vMon)+(vDay<10 ? "0"+ vDay : vDay)+(h<10 ? "0"+ h : h)+(m<10 ? "0" + m : m)+(se<10 ? "0" +se : se);
+		  return s;	
+    	}
 		$(document).ready(function(){  
 			   //[获取验证码]按钮点击
 			  $("#btnCode").click(function(){  
 				  //在这里操作获取验证码
 				  //alert("发送验证码");
+				  
+				  //点击的时候 获得当前时间
+			  	  $("#hide_code_date").val(getNowDate());
+			  
 				  var bRet=isPhoneNum($("#txtphonenum").val());
 					
 				  if(!bRet)
@@ -111,21 +128,43 @@
 				  else
 				  {
 				  	//这里开始做验证码操作
-				  	sendMessage($("#txtphonenum").val(),"#btnCode");
-					//按钮禁用
-				  	//$("#btnCode").attr('disabled',true);
+				  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode","0");
+				  	if(bRet1)
+				  	{
+				  		$("#txtyanzhengma").attr("disabled",false); 
+				  	}
 				  	return true;
 				  }
 			  });
 			//[验证码]文本框失去焦点  
 			$("#txtyanzhengma").blur(function(){
-			  	//在这里操作 验证码 文本框失去焦点
 			  	if(!$("#txtyanzhengma").val())
 			  	{
-					//alert($("#txtyanzhengma").val());
+			  		$("#div_yanzhengma").addClass("has-error");
+			  		bRet3=false;
+			  		//alert("验证码不能为空");
+			  		return;
+			  	}
+			  	else if($("#txtyanzhengma").val()!=code)
+			  	{
+			  		alert("输入的验证码与短信中的验证码不匹配");
+			  		$("#div_yanzhengma").addClass("has-error");
+			  		bRet3=false;
+			  		return;
+			  	}
+			  	else if(getNowDate() - $("#hide_code_date").val()>1800)
+			  	{
+			  		$("#div_yanzhengma").addClass("has-error");
+			  		alert("验证码过期");
+			  		bRet3=false;
+			  		return;
 			  	}
 			  	else
 			  	{
+			  		$("#div_yanzhengma").removeClass("has-error");
+			  		$("#div_yanzhengma").addClass("has-success");
+			  		bRet3=true;
+			  		return;
 			  	}
 			});
 		 	//[下一步]按钮点击

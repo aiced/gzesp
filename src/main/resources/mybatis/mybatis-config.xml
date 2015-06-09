@@ -99,6 +99,7 @@
     	<mapper resource="mybatis/mapper_oracle/TdSysPWEBCITYMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdSysPWEBDISTRICTMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdSysPWEBPROVINCEMapper.xml" />  
+    	<mapper resource="mybatis/mapper_oracle/TdITFDWEIXINLOGMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdPayDWEIXINLOGMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdPayDWOPAYLOGMapper.xml" />  
     	

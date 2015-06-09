@@ -68,7 +68,7 @@
 	
 	<update id="updatePayRefundState">
          update ord_d_refund
-            set order_state = #{order_state}
+            set refund_state = #{refund_state}
           where order_id = ${order_id}
 	</update>
 

@@ -110,14 +110,10 @@
 			  {
 			  	//这里开始做验证码操作 0是注册模板 1是支付模板
 			  	bRet1=sendMessage($("#txtphonenum").val(),"#btnCode","0");
-			  	//bRet1=true;//这个地方要删掉，切记切记！！！！！
 			  	if(bRet1)
 			  	{
 			  		$("#txtyanzhengma").attr("disabled",false); 
 			  	}
-				//按钮禁用
-			  	//$("#btnCode").attr('disabled',true);
-			  	//=true;
 			  	return;
 			  }
 		  });

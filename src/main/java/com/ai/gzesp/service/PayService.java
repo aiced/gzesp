@@ -182,7 +182,7 @@ public class PayService {
     	Map<String, String> refundInfo = payDao.queryRefundInfoByOrderId(orderId);
     	String orig_order_state = refundInfo.get("ORDER_STATE");
     	
-    	//不管成功与否 都要 更新订单退款表 ord_d_refund里的  ORDER_STATE 后台审核通过未退款 13，后台审核通过已退款14 
+    	//不管成功与否 都要 更新订单退款表 ord_d_refund里的  refund_state 后台审核通过未退款 13，后台审核通过已退款14 
     	String order_state = isSuccess ? "14" : "13";
     	int r1 = updatePayRefundState(orderId, order_state);
     	
@@ -201,6 +201,7 @@ public class PayService {
     	
     	
         //退款成功发短信
+
     }
     
     /**

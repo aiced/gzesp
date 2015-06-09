@@ -234,6 +234,11 @@ public class CommonController {
     		String order_id=paramsMap.get("order_id");
     		strRet=SmsUtils.doSendMessage(strphone,"MB-2015052703","@1@="+order_id);
     	}
+    	else if(strFlag.equals("4"))
+    	{
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015060623","@1@="+strcode);
+    		
+    	}
     	
 		 System.out.println("短信返回值："+strRet);
 		 if (strRet != null && strRet.split("#").length==3)

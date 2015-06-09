@@ -1,10 +1,11 @@
 package com.ai.wx.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,12 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.dom4j.Document;
-import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,18 +30,15 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.service.UserService;
 import com.ai.sysframe.utils.CommonUtil;
-import com.ai.sysframe.utils.StringUtil;
-import com.ai.sysframe.utils.XmlUtil;
 import com.ai.wx.consts.DataConstants;
 import com.ai.wx.entity.WebAuthAccessTokenModel;
 import com.ai.wx.service.CoreService;
 import com.ai.wx.service.CustomService;
 import com.ai.wx.service.MenuService;
+import com.ai.wx.service.PayBillService;
 import com.ai.wx.service.WXMsgService;
 import com.ai.wx.service.WebAuthService;
-import com.ai.wx.util.RegexUtils;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.ai.wx.util.DateUtils;
 
 @Controller
 @RequestMapping("/wx")
@@ -170,22 +165,33 @@ public class WXMsgController {
     }
     
     
-//    @RequestMapping("/test")
-//    public ModelAndView test(){
-//        return new ModelAndView("test.ftl");
-//    }
-//    
-//    @RequestMapping("/test1")
-//    public ModelAndView test1(){
-//    	// 授权回调页限制
-////    	String  redirect_uri = "http://192.168.43.179:8080/esp/wx/auth";
-//    	String  redirect_uri = "http://wap.woboss.gz186.com/esp/wx/authPay/{orderId}/{fee}";
-//    	String state = "custPay";
-//    	String url = webAuthService.getRedirectUrl(DataConstants.appid, redirect_uri, state);
-////    	String url = "http://baidu.com";
-//        return new ModelAndView("redirect:"+url);
-//    }
-    
+    @Resource
+  	public PayBillService billService;
+
+    @RequestMapping("/downloadBill/{trade_day}")
+    @ResponseBody
+	public Map<String, Object> downloadBill(@PathVariable("trade_day") String tradeDay_YYYYMMDD) {
+		Map<String, Object> result = new HashMap();
+		DateFormat format = new SimpleDateFormat(DateUtils.PATTERN);
+		try {
+			format.parse(tradeDay_YYYYMMDD);
+		} catch (ParseException e) {
+			logger.error(tradeDay_YYYYMMDD + " is not a valid Date String.", e);
+			result.put("return_code", "FAIL");
+			result.put("return_msg", tradeDay_YYYYMMDD	+ " is not a valid Date String.");
+			return result;
+		}
+		
+		try {
+			result = billService.downloadBill(tradeDay_YYYYMMDD);
+			return result;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			result.put("return_code", "FAIL");
+			result.put("return_msg", e.getMessage());
+			return result;
+		}
+	}
     
     @RequestMapping("/createMenu")
     public ModelAndView createMenu(){

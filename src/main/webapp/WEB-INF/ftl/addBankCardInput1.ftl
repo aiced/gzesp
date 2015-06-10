@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
 <title>添加银行卡</title>
 	<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     <link rel="stylesheet" href="${resRoot}/css/base.css?v=${resVer}" rel="stylesheet">  
@@ -48,7 +51,7 @@
 			</li>
 		</ul>
 		
-		<div style = "margin:10px 15px;font-size:14px;">
+		<div style = "margin:15px 15px;font-size:14px;">
 			<input id="chkRight" type="checkbox" checked="true" name="chkRight">
 			同意   
 			<a style="color:green" href="regProtocol">《用户协议》</a>

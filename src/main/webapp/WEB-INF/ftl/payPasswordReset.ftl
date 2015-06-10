@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>密码重置</title>
 	<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     <link rel="stylesheet" href="${resRoot}/css/base.css?v=${resVer}" rel="stylesheet">  
@@ -21,12 +23,12 @@
 			<ul class = "border_top border_bottom">
 			
 			<li class = "border_bottom">
-				<em> 请输入新密码 </em>	
+				<em> 请输入新密码: </em>	
 				<input class= "input_nolmal" type="text"  placeholder="" id="test">				
 			</li>
 			
 			<li >
-				<em> 请确定密码 </em>	
+				<em> 请确定密码: </em>	
 				<input class= "input_nolmal" type="text"  placeholder="" id="test">				
 			</li>
 		</ul>

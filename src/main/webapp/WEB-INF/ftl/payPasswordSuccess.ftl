@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>密码设置成功</title>
+ 	<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
+    <link rel="stylesheet" href="${resRoot}/css/base.css?v=${resVer}" rel="stylesheet">  
+    <link rel="stylesheet" href="${resRoot}/css/payPasswordSuccess.css?v=${resVer}" rel="stylesheet">  
+	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
+	<script type="text/javascript" src="${resRoot}/js/payPasswordSuccess.js?v=${resVer}"></script>
+</head>
+<body>
+		   <div id="top">
+	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+	        	<div id="top_middle">${title}</div>
+	        </div> 
+	<br/>
+	<br/>
+	<div class = "container">
+		<div class = "imgContainer">
+				<img scr> 
+		</div>	
+		<p class = "set_success"> 设置密码成功 </p>
+		<p class = "set_alert"> 为了保障您的资金安全，请妥善保管您的密码 </p>		
+		<a id = "save"> 完成
+		</a>
+	</div>
+		
+</body>
+</html>
+

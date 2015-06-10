@@ -1,0 +1,145 @@
+@CHARSET "UTF-8";
+/* topbar */
+.topbar_a{
+    float:left; 
+    display:block;
+    font-size: 15px;
+    line-height: 39px;
+    width: 33.33330%;
+    margin-top:0px;
+    text-align: center;
+    text-transform: none;    
+}
+.topbar_a_nomal{
+    color: #777777;  	
+}
+.topbar_a_selected{
+	background-color: #f0ad4e;
+    color: #fff;      
+}
+
+.right_line{
+    border-right: 1px solid #DBDBDB; 
+    height: 25px;
+    right: -1px;
+    top: 7px;
+}
+
+/* search */
+#search_tile{
+     display: inline-block;
+     font-size: 16px;
+     padding-top:2px;   	
+     padding-left:5px;
+}
+#search_select {
+/*     display: inline-block;
+ */  
+    text-align: center;  
+    /* 加border只是为了看到边框*/  
+    border:1px solid gray ; 
+    color:gray ; 
+    vertical-align: middle;
+    width: 100%;
+    font-size: 14px !important;
+    height: 25px !important;
+    line-height: 25px;
+    text-indent: 0px !important;
+	margin:0px auto;
+}
+#search_a {
+    display:inline-block;
+    width:65px;
+    height: 25px !important;
+    line-height: 25px !important;    
+    border: 1px solid #FD9000;
+    color:#FD9000;
+    font-size: 14px !important;
+    text-align: center; 
+    right:0px;  
+}
+
+/* list */
+#list_head{
+	padding:10px 15px;
+	height:60px;
+}
+
+.list_title_left_text{
+	top:13px;
+	left:15px;
+	font-size:25px;
+	color:#FD9500;
+
+}
+.list_title_right_text{
+	top:15px;
+	right:15px;
+	font-size:30px;
+	color:#FD9500;
+}
+.row{
+	padding:10px 15px;
+	height:64px;
+	
+}
+
+.row_left{
+	float:left;
+	width:65%;
+	height:40px;
+}
+
+.row_left_title{
+	padding-bottom:10px;
+	padding-right:10px;
+	font-size:18px;
+}
+.row_left_subtitle{
+	color:#8C8C8C ;
+	font-size:12px;
+}
+
+.row_left_time{
+	padding-bottom:5px;
+	font-size:12px;
+	color:#8C8C8C;
+}
+
+
+.row_right{
+	float:left;
+	width:35%;
+	height:40px;	
+	text-align:center ;
+	vertical-align:center;
+}
+
+.row_right_num_normal{
+	padding-top:15px;
+	padding-bottom:5px;
+	font-size:22px;	
+	text-align:right;
+}
+.row_right_num_audit{
+	padding-top:5px;
+	padding-bottom:3px;
+	font-size:22px;	
+	text-align:right;
+}
+
+.row_right_audit{
+	padding-bottom:10px;
+	font-size:12px;	
+	width:100%;
+	text-align:right;	
+ 	display:none; 
+}
+
+
+
+
+
+
+
+

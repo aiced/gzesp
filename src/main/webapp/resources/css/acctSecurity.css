@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+#row{
+	display:block;
+	background-color: #fff;
+	margin-top:18px;
+	height:55px;
+    line-height:55px;	
+    border: 1px solid #DBDBDB;
+    padding :0px 25px;
+}
+#subTitle::after {
+    border-bottom: 1px solid #5d5d5d;
+    border-right: 1px solid #5d5d5d;
+    content: "";
+    height: 9px;
+    position: absolute;
+    right: 10px;
+    top: 22px;
+    transform: rotate(-45deg);
+    width: 9px;
+}
+
+.footer{
+	padding:15px 20px;	
+	font-size:11px;
+	color:#828282
+}
+

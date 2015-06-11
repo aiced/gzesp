@@ -1,0 +1,85 @@
+@CHARSET "UTF-8";
+* {
+    box-sizing: border-box;
+}
+html{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #f0f0f0;
+    height: 100%;
+}
+body {
+    margin: 0 auto;
+    max-width: 640px;
+    min-height: 100%;   
+    color: #323232;
+	font-family:"微软雅黑";
+
+}
+
+section, footer, nav, em, mark, p, span, ul, li, ol, h1, h2, h3, h4, input, textarea,div,a,select{
+    font-style: normal;
+    font-weight: normal;
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+.rel {
+    position: relative;
+}
+.abs {
+    position: absolute;
+}
+.fleft {
+    float: left;
+}
+.fright {
+    float: right;
+}
+
+.fix {
+    position: fixed;
+}
+.hide {
+    display: none;
+}
+
+
+
+a {
+    color: #323232;
+    outline-style: none;
+    text-decoration: none;
+}
+
+.container{
+	padding:10px auto;
+}
+
+.border_bottom{
+	 border-bottom: 1px solid #DBDBDB;
+}
+.border_top{
+	 border-top: 1px solid #DBDBDB;
+}
+
+
+
+
+
+.has-error{
+	border-color: #a94442;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.has-focus {
+    border-color: #66afe9;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+    outline: 0 none;
+}
+
+.has-success{
+    border-color: #3c763d;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}

@@ -208,30 +208,30 @@ public class CommissionSql {
 		//sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(b.CMS_PRE_FEE, 0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id from ORD_D_BASE a, ORD_D_PROD b, ORD_D_POST c, ORD_D_DEAL d where a.Order_id = b.Order_id and b.Order_Id = c.Order_Id and a.order_id = d.order_id");
 		if (strFlag.equals("1")) //按照帐期查询，暂时先这样写着
 		{
-			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(e.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id, e.CMS_TYPE from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d,ORD_D_PRECMSFEE e where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id and a.order_id = e.order_id");
+			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(e.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id, e.CMS_TYPE from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d,ORD_D_PRECMSFEE e where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id and a.order_id = e.order_id and a.order_state !='99'");
 
 		}
 		else if (strFlag.equals("2")) //按照订单时间查询
 		{
-			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(e.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id, e.CMS_TYPE from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d,ORD_D_PRECMSFEE e where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id and a.order_id = e.order_id");			
+			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(e.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id, e.CMS_TYPE from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d,ORD_D_PRECMSFEE e where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id and a.order_id = e.order_id and a.order_state !='99'");			
 			sb.append(" and a.CREATE_TIME >=to_date('"+strStartDate+"','yyyy-mm-dd') and a.CREATE_TIME < to_date('"+strEndDate+"','yyyy-mm-dd')+1");
 			//sb.append(" and a.create_time >= trunc(sysdate, 'month') and a.create_time < trunc(add_months(sysdate, 1), 'month')");
 		}
 		else //刚一进来，默认是当月的时间 
 		{
-			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(e.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id, e.CMS_TYPE from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d,ORD_D_PRECMSFEE e where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id and a.order_id = e.order_id");
+			sb.append("select a.ORDER_ID,a.CREATE_TIME,b.Goods_Id,b.goods_name,nvl(e.CMS_PRE_FEE,0) CMS_PRE_FEE,c.RECEIVER_NAME,d.User_Id, e.CMS_TYPE from ORD_D_BASE a,ORD_D_PROD b,ORD_D_POST c,ORD_D_DEAL d,ORD_D_PRECMSFEE e where a.Order_id=b.Order_id and b.Order_Id=c.Order_Id and a.order_id=d.order_id and a.order_id = e.order_id and a.order_state !='99'");
 			//sb.append(" and a.CREATE_TIME >=to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd') and a.CREATE_TIME < to_date(to_char(sysdate,'yyyy-mm-dd'),'yyyy-mm-dd')+1");
 			sb.append(" and a.create_time >= trunc(sysdate, 'month') and a.create_time < trunc(add_months(sysdate, 1), 'month')");
 		}
 		sb.append("),");
 		sb.append("T3 as (select T2.ORDER_ID,T2.CREATE_TIME,T2.GOODS_ID,T2.GOODS_NAME,T2.CMS_PRE_FEE,T2.RECEIVER_NAME,T2.USER_ID,T1.CMS_DAY,T1.SUM_CMS_MONEY,T2.CMS_TYPE,T1.CMS_TYPE_DAILLY");
-		sb.append(" from T1, T2");
-		sb.append(" where T1.order_id(+) = T2.order_id and T1.CMS_TYPE_DAILLY(+)= T2.CMS_TYPE and T2.USER_ID ='"+strUserID+"'),");
+		sb.append(" from T1 full outer join T2");
+		sb.append(" on T1.order_id = T2.order_id),");
 		sb.append("T4 as (select CMS_STATE,ORDER_ID from ORD_D_CMSSTATE)");
 		
 		sb.append("select * from ("
 				+ "select tt.*,ROWNUM as rowno from (");
-		sb.append("select T3.ORDER_ID,T3.CREATE_TIME,T3.GOODS_ID,T3.GOODS_NAME,T3.CMS_PRE_FEE,T3.RECEIVER_NAME,T3.USER_ID,T3.CMS_DAY,T3.SUM_CMS_MONEY,T4.CMS_STATE,T3.CMS_TYPE,T3.CMS_TYPE_DAILLY from T3,T4 where T3.order_id=T4.order_id(+)");
+		sb.append("select T3.ORDER_ID,T3.CREATE_TIME,T3.GOODS_ID,T3.GOODS_NAME,T3.CMS_PRE_FEE,T3.RECEIVER_NAME,T3.USER_ID,T3.CMS_DAY,T3.SUM_CMS_MONEY,T4.CMS_STATE,T3.CMS_TYPE,T3.CMS_TYPE_DAILLY from T3,T4 where T3.order_id=T4.order_id and T3.USER_ID ='"+strUserID+"'");
 //		00：未激活
 //		01：结算中
 //		02：已到帐

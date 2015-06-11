@@ -15,9 +15,9 @@
 		      			未知
 		      		</#if>
 		      	<#else>
-		      		<#if (item.CMS_TYPE == '0')> <!-- 比例 -->
+		      		<#if (item.CMS_TYPE_DAILLY == '0')> <!-- 比例 -->
 		      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 -->
-		      		<#elseif (item.CMS_TYPE=='1')><!-- 奖励 -->
+		      		<#elseif (item.CMS_TYPE_DAILLY=='1')><!-- 奖励 -->
 		      			${(item.SUM_CMS_MONEY/1000)?string("#.##")}<!-- 实际 --><label style="color: red;">(奖)</label> <!-- 预期 -->
 		      		<#else><!-- 未知 -->
 		      			未知

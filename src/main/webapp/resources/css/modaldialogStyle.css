@@ -1,0 +1,29 @@
+.modal-dialog
+{
+    margin-top: 50%;
+    text-align: center;
+}
+.pwd_container>div
+{
+    float: left;
+    width: 16%;
+    margin: 10px auto;
+
+}
+.modal-body
+{
+    height: 120px;
+}
+.modal-footer
+{
+    text-align: center;
+}
+.pwd_container>div>input
+{
+    height: 42px;
+    border-radius: 0px;
+}
+.modal-button
+{
+    width:100px;
+}

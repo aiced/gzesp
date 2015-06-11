@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gzesp.dao.MyAcctDao">
+
+	<select id="queryAcctByUserId" resultType="java.util.HashMap">
+	select a.USER_ID,
+	       ACCT_ID,
+	       BALANCE,
+	       ACCT_TYPE,
+	       ACCT_STATUS,
+	       BANK_NO,
+	       CVN2,
+	       PHONE,
+	       b.Name,
+	       CERTIFICATE_CODE,
+	       EXPIRE_DATE,
+	       CARD_TYPE,
+	       BANK_TYPE,
+	       PRIORITY,
+	       VALID_FLAG,
+	       c.PASSWORD,
+	       UPDATE_TIME
+	  from ACT_D_ACCOUNT a, ACT_D_BANKCARD b, ACT_D_PAY_PASSWORD c 
+	 where a.ACCT_TYPE = '2' 
+	   and a.user_id = b.user_id(+)
+	   and a.user_id = c.user_id(+)
+	   and a.user_id = '${user_id}'
+	</select>	
+
+</mapper>

@@ -34,6 +34,7 @@
 
     <!-- SQL映射文件 -->
     <mappers>
+		<mapper resource="mybatis/mapper_oracle/sqlMap_MyAcct.xml" />
 		<mapper resource="mybatis/mapper_oracle/common_SqlMap.xml" />
      	<mapper resource="mybatis/mapper_oracle/CommonMapper.xml" />    	
     	<mapper resource="mybatis/mapper_oracle/sqlMap_WeShopDao.xml" />

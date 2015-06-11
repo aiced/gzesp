@@ -1,0 +1,25 @@
+.myButton {
+    -moz-box-shadow:inset 0px 1px 0px 0px #fce2c1;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #fce2c1;
+    box-shadow:inset 0px 1px 0px 0px #fce2c1;
+    background-color:transparent;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #ffaa00;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffaa00;
+    font-size: 20px;
+    font-family:"微软雅黑";
+    font-weight:bold;
+    padding:3px 30px;
+    text-decoration:none;
+}
+.myButton:hover {
+    background-color:transparent;
+}
+.myButton:active {
+    position:relative;
+    top:1px;
+}

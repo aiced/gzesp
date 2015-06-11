@@ -24,13 +24,42 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    
+    
+    <script type="text/javascript">
+    
+    function isSetPwd(param)
+    {
+ 		if (!$("#hide_update_time").val())
+  		{
+  			alert("请先点击右上角进行安全设置！");
+  			$(param).attr('href', '#'); 
+  			return false;
+  		}  
+    }
+    function rightClick(param)
+    {
+    	window.location.href='../acctSecurity/'+$("#hide_user_id").val();
+    	
+    }
+   	$(function(){
+   				
+   	});
+   	
+   	
+    </script>
 </head>
 <body>
+
+
+
+
+
     <!--top_start-->
     <div id="top">
        	<div id="top_left"></div>
        	<div id="top_middle">我的账户</div>
-       	<div id="top_right">
+       	<div id="top_right" onclick="rightClick(this)">
 			<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 		</div>
     </div>
@@ -48,12 +77,12 @@
                         <div></div>
                     </td>
                     <td rowspan="2">
-                        <a class="myButton" href="../withdraw/111">提现</a>
+                    	<a href="../withdraw/111" onclick="isSetPwd(this);" class="myButton" id="btntixian">提现</a>
                     </td>
                 </tr>
                 <tr>
                     <td class="td02">
-                        	￥888.00
+                    ¥${(acctinfo.BALANCE/1000)?string("#.##")}
                     </td>
                 </tr>
             </table>
@@ -64,9 +93,9 @@
         </div>
         <br/>
         <br/>
-        <div class="container_mid">
+        <div id="container_mid" class="container_mid">
             <div class="list-group">
-                <a href="#" class="list-group-item">
+                <a href="#" class="list-group-item"  onclick="isSetPwd(this);">
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/daijinquan.png">
                     	代金券
@@ -77,7 +106,7 @@
                 </a>
             </div>
             <div class="list-group">
-                <a href="../myBankCardList/111" class="list-group-item">
+                <a href="../myBankCardList/111" class="list-group-item"  onclick="isSetPwd(this);">
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/ka.png">
                     	我的银行卡
@@ -89,7 +118,7 @@
                 </a>
             </div>
             <div class="list-group">
-                <a href="../acctBalance/111" class="list-group-item">
+                <a onclick="isSetPwd(this);" href="../acctBalance/111" class="list-group-item">
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/xinxi.png">
                     	收支明细
@@ -100,6 +129,8 @@
                 </a>
             </div>
         </div>
+        <input type="hidden" id="hide_update_time" name="hide_update_time" value=${acctinfo.UPDATE_TIME}>
+        <input type="hidden" id="hide_user_id" name="hide_user_id" value=${acctinfo.USER_ID}>
     </div>
 </body>
 </html>

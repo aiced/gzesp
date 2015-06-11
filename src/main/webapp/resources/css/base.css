@@ -14,7 +14,8 @@ body {
     max-width: 640px;
     min-height: 100%;   
     color: #323232;
- 
+	font-family:"微软雅黑";
+
 }
 
 section, footer, nav, em, mark, p, span, ul, li, ol, h1, h2, h3, h4, input, textarea,div,a,select{

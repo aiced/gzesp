@@ -39,6 +39,7 @@ public class WxTimeTask {
     	try {
 			billService.downloadBill(tradeDay_YYYYMMDD);
 		} catch (Exception e) {
+			e.printStackTrace();
 			log.error(e.getMessage());
 		}
     }

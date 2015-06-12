@@ -80,6 +80,11 @@ public class PayBillService {
 			
 			String[] records = response.split("\r\n");
 			if(records.length >= 4) {
+				
+				Criteria example = new Criteria();
+				example.createConditon().andEqualTo("TRADE_DAY", tradeDay);
+				wxBillDao.deleteByExample(example);
+				
 				String head = records[0];
 				log.debug(head);
 //				System.out.println("--head---"+head);
@@ -115,14 +120,11 @@ public class PayBillService {
 					String serviceFee = fields[22];
 					String rate = fields[23];
 					
-					Criteria example = new Criteria();
-					example.createConditon().andEqualTo("TRADE_DAY", tradeDay);
-					wxBillDao.deleteByExample(example);
 					
 					TdITFDWEIXINLOG record = new TdITFDWEIXINLOG();
 					record.setAppId(appId);
 					record.setBankType(bankType);
-					record.setCuponFee(CommonUtil.string2Long(coupon)*10);
+					record.setCuponFee((long)(CommonUtil.string2Float(coupon)*1000));
 					record.setDeviceInfo(deviceInfo);
 					record.setFeeType(feeType);
 					record.setGoodsName(goodsName);
@@ -130,14 +132,14 @@ public class PayBillService {
 					record.setOpenId(openId);
 					record.setOuterTradeNo(ordId);
 					record.setOutRefundNo(refundId);
-					record.setRefundCuponFee(CommonUtil.string2Long(couponRefundFee)*10);
-					record.setRefundFee(CommonUtil.string2Long(refundFee)*10);
+					record.setRefundCuponFee((long)(CommonUtil.string2Float(couponRefundFee)*1000));
+					record.setRefundFee((long)(CommonUtil.string2Float(refundFee)*1000));
 					record.setRefundState(refundState);
 					record.setRefundType(refundType);
 					record.setServiceFee(serviceFee);
 					record.setServiceFeeRate(rate);
 					record.setSubMchId(subMchId);
-					record.setTotalFee(CommonUtil.string2Long(totalFee)*10);
+					record.setTotalFee((long)(CommonUtil.string2Float(totalFee)*1000));
 					record.setTradeDay(tradeDay);
 					record.setTradeState(tradeState);
 					record.setTradeTime(tradeTime);

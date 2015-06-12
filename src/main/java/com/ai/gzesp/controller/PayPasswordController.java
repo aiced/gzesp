@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,13 +29,16 @@ public class PayPasswordController {
     	mav.addObject("title", "安全设置"); //页面title
     	return mav;
     }
-	
-    @RequestMapping("/set/payPasswordSet")
-    public ModelAndView payPasswordSet(@RequestBody String inputParam){    	
+    
+    
+    @RequestMapping("/shopManage/acct/payPasswordSet/{user_id}")
+  	public ModelAndView initAcct(@PathVariable("user_id") String user_id)
+  	{
         ModelAndView mav = new ModelAndView("payPasswordSet.ftl");
-    	mav.addObject("title", "密码设置"); //页面title
-    	return mav;
-    }
+      	mav.addObject("title", "密码设置"); //页面title
+      	return mav ;
+  	}
+	
     
     @RequestMapping("/set/payPasswordResetVerify")
     public ModelAndView payPasswordResetVerify(@RequestBody String inputParam){    	

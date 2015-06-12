@@ -28,7 +28,11 @@
 			
 			<li class = "border_bottom">
 				<em class = "em_normal"> 有效期 </em>	
-				<input class= "input_normal input_validation" type="text"  placeholder="" id="test">				
+					<select id = "select" class= "" tabindex="1">
+					<option value="-1">--选择有效期--</option>
+					<option value="1">2015-08</option>
+					<option value="2">2015-09</option>
+				</select> 	
 			</li>
 			
 			

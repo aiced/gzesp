@@ -188,7 +188,8 @@ public class OrderController {
     	
     	String orderId = CommonUtil.generateOrderId();
 //    	String payLogId = CommonUtil.generatePayLogId();
-    	String originalPrice = paramsMap.get("originalPrice");
+//    	String originalPrice = paramsMap.get("originalPrice");
+    	String topayMoney = paramsMap.get("topayMoney");
     	String isAndroidWeiXin = paramsMap.get("isAndroidWeiXin");
     	if(Boolean.parseBoolean(isAndroidWeiXin)) {
     		log.debug("create thread download image from wxServer--" + isAndroidWeiXin);
@@ -201,7 +202,7 @@ public class OrderController {
     		paramsMap.put("cardPic2", pic2Url);
     	}
     	
-    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice));
+    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney));
     	paramsMap.put("orderId", orderId);
 //    	paramsMap.put("payLogId", payLogId);
     	

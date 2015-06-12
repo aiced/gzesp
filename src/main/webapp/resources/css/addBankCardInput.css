@@ -83,6 +83,21 @@ em{
 	line-height:50px;
     text-align: center;
 }
+#select {
+/*     display: inline-block;
+ */  
+    text-align: center;  
+    /* 加border只是为了看到边框*/  
+    border:1px solid gray ; 
+    color:gray ; 
+    vertical-align: middle;
+    width: 70%;
+    font-size: 14px !important;
+    height: 25px !important;
+    line-height: 25px;
+    text-indent: 0px !important;
+	margin-left:5px;
+}
 
 
 

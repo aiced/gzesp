@@ -36,7 +36,12 @@
 			
 			<li class = "border_bottom">
 				<em> 开户银行 </em>	
-				<input class="input_normal"  type="text"  placeholder="" id="test">				
+				<select id = "select" class= "" tabindex="1">
+					<option value="-1">--选择银行卡--</option>
+					<option value="1">中国招商银行</option>
+					<option value="2">中国建设银行</option>
+				</select> 				
+				
 			</li>
 			
 			

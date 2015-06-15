@@ -15,18 +15,19 @@
 <body>
 		   <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">${title}</div>
+	        	<div id="top_middle">设置成功</div>
 	        </div> 
 	<br/>
 	<br/>
 	<div class = "container">
 		<div class = "imgContainer">
-				<img scr> 
+				<img src="${resRoot}/image/myacct/right.png"> 
 		</div>	
 		<p class = "set_success"> 设置密码成功 </p>
 		<p class = "set_alert"> 为了保障您的资金安全，请妥善保管您的密码 </p>		
 		<a id = "save"> 完成
 		</a>
+		<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
 	</div>
 		
 </body>

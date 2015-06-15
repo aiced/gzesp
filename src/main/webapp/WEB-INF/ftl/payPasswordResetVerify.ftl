@@ -39,7 +39,7 @@
 	
 		</a>
 		
-			
+		<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
 		
 		</div>
 </body>

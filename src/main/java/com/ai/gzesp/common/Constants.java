@@ -105,5 +105,9 @@ public class Constants {
      * 状态-失败
      */
     public static final String STATUS_FAILD = "FAILD";
+    
+    //账户——md5加密key
+    public static final String md5key="0aad787d015ca667d67ba25e68952c23";
+    
 
 }

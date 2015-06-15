@@ -81,9 +81,9 @@
 	<bean id="myScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="OneTimeTask"/>
+<!-- 				<ref bean="OneTimeTask"/>
 				<ref bean="RepeatTask"/>
-				<ref bean="RepeatTask2"/>
+				<ref bean="RepeatTask2"/> -->
 				<ref bean="releaseNumberTrigger"/>
 				<ref bean="reverseGoodsAmountTrigger"/>
 			</list>

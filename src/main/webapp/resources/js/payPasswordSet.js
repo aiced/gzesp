@@ -27,6 +27,13 @@ function validationClick(){
 }
 
 function saveClick(){
-	alert("点击确定");
-
+	var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':$('#txtrepwd').val(),'update_time':$('#hide_update_time').val()};
+	$.commonFormSubmit({
+	 type: "POST",
+	 action: 'postData',
+	 data: parms,
+	 success: function(data){
+	  	 return;
+	 }
+	});
 }

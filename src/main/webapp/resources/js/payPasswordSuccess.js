@@ -10,5 +10,5 @@ function initBind(){
 }
 
 function saveClick(){
-	alert("点击保存");
+	window.location.href='/esp/shopManage/acct/myAcct/'+	$("#hide_user_id").val();
 }

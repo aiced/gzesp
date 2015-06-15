@@ -77,7 +77,7 @@
                         <div></div>
                     </td>
                     <td rowspan="2">
-                    	<a href="../withdraw/111" onclick="isSetPwd(this);" class="myButton" id="btntixian">提现</a>
+                    	<a href="../withdraw/${acctinfo.USER_ID}" onclick="isSetPwd(this);" class="myButton" id="btntixian">提现</a>
                     </td>
                 </tr>
                 <tr>
@@ -106,11 +106,11 @@
                 </a>
             </div>
             <div class="list-group">
-                <a href="../myBankCardList/111" class="list-group-item"  onclick="isSetPwd(this);">
+                <a href="../myBankCardList/${acctinfo.USER_ID}" class="list-group-item"  onclick="isSetPwd(this);">
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/ka.png">
                     	我的银行卡
-                    	<span class="badge">4张</span>
+                    	<span class="badge">${bankcout}张</span>
                     </span>
                     <span class="list_gou">
 						<img src="${resRoot}/image/myacct/jiantou.png"></span>
@@ -118,7 +118,7 @@
                 </a>
             </div>
             <div class="list-group">
-                <a onclick="isSetPwd(this);" href="../acctBalance/111" class="list-group-item">
+                <a onclick="isSetPwd(this);" href="../acctBalance/${acctinfo.USER_ID}" class="list-group-item">
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/xinxi.png">
                     	收支明细

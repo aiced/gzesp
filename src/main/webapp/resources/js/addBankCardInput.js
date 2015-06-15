@@ -1,3 +1,8 @@
+$(document).ready(function (){  
+
+//	select 绑定
+
+}); 
 $(function(){
 	initBind();
 	
@@ -22,14 +27,39 @@ function initBind(){
 		};
 		
 	}
+	
+	
 
+
+	
+	$("#band_select").change(function(){
+		alert("1111");
+	});
+	
+	
+	$("#cardType_select").change(function(){
+		var index = $("#cardType_select").get(0).selectedIndex; // 选中索引		
+		$("#CVN2_li").show();
+		$("#validity_li").show();		
+		if(index == 1){
+			$("#CVN2_li").hide();
+			$("#validity_li").hide();
+		}
+		
+	});
+	
+	$("#validity_select").change(function(){
+		alert("1111");
+		var index = $("#validity_select").selectedIndex; // 选中索引
+		if(index == 0){
+			return;
+		}
+		var text = $("#validity_select").options[index].text; // 选中文本
+	});
+	
 }
 
 
-function validationClick(){
-	alert("点击验证");
-
-}
 
 function saveClick(){
 	alert("点击确定");

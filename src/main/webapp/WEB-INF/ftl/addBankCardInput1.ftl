@@ -36,7 +36,7 @@
 			
 			<li class = "border_bottom">
 				<em> 开户银行 </em>	
-				<select id = "select" class= "" tabindex="1">
+				<select id = "band_select" class= "" tabindex="1">
 					<option value="-1">--选择银行卡--</option>
 					<option value="1">中国招商银行</option>
 					<option value="2">中国建设银行</option>
@@ -47,13 +47,43 @@
 			
 			<li class = "border_bottom">
 				<em> 卡类型 </em>	
-				<input class="input_normal"   type="text"  placeholder="" id="test">				
+				<select id = "cardType_select" class= "" tabindex="1">
+					<option value="1">银联卡</option>
+					<option value="2">信用卡</option>
+				</select> 			
 			</li>
 			
-			<li>
+			<li id = "validity_li" class = "border_bottom">
+				<em class = "em_normal"> 有效期 </em>	
+					<select id = "validity_select" class= "" tabindex="1">
+					<option value="-1">--选择有效期--</option>
+					<option value="1">2015-08</option>
+					<option value="2">2015-09</option>
+				</select> 	
+			</li>
+			
+			<li id = "CVN2_li" class = "border_bottom" >
+				<em class = "em_long"> CVN2 <em>(卡背后三位)</em> </em>	
+				<input class= "input_normal input_validation" type="text"  placeholder="" id="test">				
+			</li>
+			
+			<li class = "border_bottom">
 				<em> 卡号 </em>	
 				<input class="input_normal"  type="text"  placeholder="" id="test">				
 			</li>
+			
+			<li class = "border_bottom">
+				<em class = "em_long"> 银行预留手机 </em>	
+				<input class= "input_normal input_validation" type="text"  placeholder="" id="test">				
+			</li>
+			
+			<li class = "border_bottom">
+				<em class = "em_normal"> 验证码 </em>	
+				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="test">				
+				<a id = "validation" class = "fright"> 输入验证码 </a	>		
+			</li>
+			
+
 		</ul>
 		
 		<div style = "margin:15px 15px;font-size:14px;">

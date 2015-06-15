@@ -83,7 +83,7 @@ em{
 	line-height:50px;
     text-align: center;
 }
-#select {
+#select, #validity_select,#cardType_select,#band_select{
 /*     display: inline-block;
  */  
     text-align: center;  

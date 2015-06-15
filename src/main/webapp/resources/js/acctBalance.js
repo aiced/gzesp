@@ -1,7 +1,7 @@
-//$(document).ready(function (){  
-////	//滚动加载
-//	
-//});  
+$(document).ready(function (){  
+
+	
+});  
 
 $(function(){
 	initBind();

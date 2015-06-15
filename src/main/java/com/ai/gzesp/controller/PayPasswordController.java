@@ -31,7 +31,7 @@ public class PayPasswordController {
     }
     
     
-    @RequestMapping("/shopManage/acct/payPasswordSet/{user_id}")
+    @RequestMapping("/set/acct/payPasswordSet/{user_id}")
   	public ModelAndView initAcct(@PathVariable("user_id") String user_id)
   	{
         ModelAndView mav = new ModelAndView("payPasswordSet.ftl");

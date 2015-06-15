@@ -39,11 +39,11 @@ function initBind(){
 	
 	$("#cardType_select").change(function(){
 		var index = $("#cardType_select").get(0).selectedIndex; // 选中索引		
-		$("#CVN2_li").show();
-		$("#validity_li").show();		
+		$("#CVN2_li").hide();
+		$("#validity_li").hide();
 		if(index == 1){
-			$("#CVN2_li").hide();
-			$("#validity_li").hide();
+			$("#CVN2_li").show();
+			$("#validity_li").show();
 		}
 		
 	});

@@ -48,12 +48,12 @@
 			<li class = "border_bottom">
 				<em> 卡类型 </em>	
 				<select id = "cardType_select" class= "" tabindex="1">
-					<option value="1">银联卡</option>
+					<option value="1">借记卡</option>
 					<option value="2">信用卡</option>
 				</select> 			
 			</li>
 			
-			<li id = "validity_li" class = "border_bottom">
+			<li id = "validity_li" class = "border_bottom" style="display : none">
 				<em class = "em_normal"> 有效期 </em>	
 					<select id = "validity_select" class= "" tabindex="1">
 					<option value="-1">--选择有效期--</option>
@@ -62,7 +62,7 @@
 				</select> 	
 			</li>
 			
-			<li id = "CVN2_li" class = "border_bottom" >
+			<li id = "CVN2_li" class = "border_bottom"  style="display : none">
 				<em class = "em_long"> CVN2 <em>(卡背后三位)</em> </em>	
 				<input class= "input_normal input_validation" type="text"  placeholder="" id="test">				
 			</li>

@@ -113,7 +113,7 @@
                     	<span class="badge">${bankcout}张</span>
                     </span>
                     <span class="list_gou">
-						<img src="${resRoot}/image/myacct/jiantou.png"></span>
+						<img src="${resRoot}/image/myacct/jiantou.png">
                     </span>
                 </a>
             </div>
@@ -124,7 +124,7 @@
                     	收支明细
                     </span>
                     <span class="list_gou">
-						<img src="${resRoot}/image/myacct/jiantou.png"></span>
+						<img src="${resRoot}/image/myacct/jiantou.png">
                     </span>
                 </a>
             </div>

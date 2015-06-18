@@ -1,37 +1,68 @@
-$(document).ready(function (){  
+var pageSize = 9;
 
-	
-});  
+$(document).ready(function (){  
+//	//滚动加载
+
+	$(window).scroll(function () {
+		var scrollTop = $(this).scrollTop();
+		var scrollHeight = $(document).height();
+		var windowHeight = $(this).height();
+		var height = scrollTop + windowHeight;
+		 
+		if (scrollTop + windowHeight == scrollHeight) {
+				var type = "2";
+				var monthKey = "2014-09";
+				//页码请求算法,得到所有的li的个数。
+				var pageNum;
+				var rowNum = $("li");
+				if(rowNum.length%pageSize ==0 ){
+					 pageNum = rowNum.length/pageSize +1;
+					 queryList(type,monthKey,pageNum);					
+				}				
+		}
+    }); 
+}); 
+
+
+
 
 $(function(){
 	initBind();
 	
 });
 function initBind(){
-	var income_a = document.getElementById("income_a");
-	var spending_a = document.getElementById("spending_a");
-	var withdrawal_a  = document.getElementById("withdrawal_a");
-	income_a.onclick = function() {
+//	收入
+    $("#income_a").bind('click',function(){
 	    return topBarClick(this);
-	};
-	spending_a.onclick = function() {
+    });
+//  支出
+    $("#spending_a").bind('click',function(){
 	    return topBarClick(this);
-	};
-	withdrawal_a.onclick = function() {
+    });
+//  体现
+    $("#withdrawal_a").bind('click',function(){
 	    return topBarClick(this);
-	};	
-	var search_a = document.getElementById("search_a");
-	search_a.onclick = function() {
+    });
+//  搜索  
+    $("#search_a").bind("click",function(){
 	    return searchClick(this);
-	};	
-	
+    });
+//	$("ul").delegate("li", "click", function(){
+//		$(this).hide();
+//		$(this).index();
+//	});	
 }
 
 function topBarClick(obj){
-	queryList();
+//	得到点击索引；
+	
+	var type = "2";
+	var monthKey = null;
+	var pageNum = "1";
+	
+	queryList(type,monthKey,pageNum);
 	resetHeader(obj);	
 	//查询业务
-	resetListStyle();
 }
 function searchClick(obj){
 	var search_select = document.getElementById("search_select"); //定位id
@@ -41,36 +72,44 @@ function searchClick(obj){
 	}
 	var text = search_select.options[index].text; // 选中文本
 	alert(text);
+	var type = "2";
+	var pageNum = "1";
+	queryList(type,monthKey,pageNum);
 	//查询业务
-	resetListStyle();
 }
 
 
 function resetHeader(obj) {
-	var income_a = document.getElementById("income_a");
-	var spending_a = document.getElementById("spending_a");
-	var withdrawal_a  = document.getElementById("withdrawal_a");
-	income_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
-	spending_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
-	withdrawal_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
+//	var income_a = document.getElementById("income_a");
+//	var spending_a = document.getElementById("spending_a");
+//	var withdrawal_a  = document.getElementById("withdrawal_a");
+//	income_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
+//	spending_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
+//	withdrawal_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
+	
+	$('#income_a').attr("class","topbar_a_nomal topbar_a rel");
+	$('#spending_a').attr("class","topbar_a_nomal topbar_a rel");
+	$('#withdrawal_a').attr("class","topbar_a_nomal topbar_a rel");
+//	var $obj=obj;
+//	$obj.attr("class","topbar_a_selected topbar_a rel");
 	obj.setAttribute("class", "topbar_a_selected topbar_a rel"); 
+
+		
 }
 
 //ajax查询刷新 公共入口方法
 //筛选 排序 关键字查询搜索 都是调用这个函数
-function queryList()
-{
-	var param = {"eparchy_code":"eparchy_code", "nice_rule":"nice_rule"};
-	
-	alert($('#baseRoot').val() + "/test/acct/acctBalance/21");
+function queryList(type,monthKey,pageNum)
+{	
+	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize};	
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
 		   url: $('#baseRoot').val() + "/test/acct/acctBalance/2",
 		   data: param, //服务器只能接收json字符串
 		   success: function(data){
-			   alert(data);
-//		     $('#datagrid').html(data);
+		     $('#datagrid').append(data);
+		 		resetListStyle();
 		   }
 		});
 }
@@ -81,7 +120,8 @@ function resetListStyle() {
 //	得到两个 元素数组。
 	var nums =document.getElementsByName("row_right_num");
 	var audits =document.getElementsByName("row_right_audit");	
-	var withdrawal_a  = document.getElementById("withdrawal_a");
+//	var withdrawal_a  = document.getElementById("withdrawal_a");
+	var withdrawal_a = $("#withdrawal_a")[0];
 
 	if(withdrawal_a.className == "topbar_a_selected topbar_a rel")
 	{

@@ -18,8 +18,8 @@
     <input type="hidden" id="user_id" value="${user_id}"></input>
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">${title}</div>
-	        </div> 
+	        	<div id="top_middle">${resRoot} ${title}</div>
+	      </div> 
 
 	<div class = "container">
 	<!-- topbar  -->
@@ -32,26 +32,26 @@
 			</a>
 			<a id="withdrawal_a" class="topbar_a topbar_a_nalmal" name = "提现" >提现</a>
 		</div>
+		
 	<!-- search  -->
 	<div style = "padding:15px 8px">
 		<div style = "width:25%;height:25px;display:inline-block;margin-right: -3px; class = "rel">
  			<em id="search_tile" class= "abs">月份查询</em> 
 		</div>
-
 		
-		
+		<!--选择月份 -->
 		<div style = "width:50%;height:25px;display:inline-block;margin-right: -3px;" class = "rel">
  		 	<select id = "search_select" class= "abs" tabindex="1">
 				<option value="-1">--选择月份--</option>
-				<option value="1">1月</option>
-				<option value="2">2月</option>
-				<option value="3">3月</option>
-				<option value="4">4月</option>
+				<#list monthList as item>
+							<option> ${item}</option>			
+				</#list>				
 			</select> 
-		</div>
+		</div>	
+		
 		<div style = "width:24%;height:25px;display:inline-block;margin-right:-3px;" class = "rel">
 			<a id="search_a" class ="abs">查询
-			</a>
+		    </a>
 		</div>
 	
 		
@@ -66,8 +66,8 @@
 			<span  class = "list_title_right_text abs">${sumNum}</span>
 		</div>
 		
-		<ul>
-		
+		<ul id = "datagrid">			
+				
 		<#if (costList?size == 0) > 
 		   	没有账单
 		<#else>
@@ -81,11 +81,13 @@
 					<p class = "row_right_num_normal" name ="row_right_num">${item.payNum} </p>
 					<p class = "row_right_audit" name = "row_right_audit">${item.state}</p>
 				</div>
-				</li>
+				<div style="clear:both;"></div> 
+			   </li>
 			
 			
 			</#list>
 	 	</#if>
+	 	
 		
 		<!--
 			<li class = "row border_bottom">
@@ -143,10 +145,6 @@
 		
 		
 	</div>
-	
-
-	
-	
 	
 	</div>
 

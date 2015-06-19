@@ -11,14 +11,12 @@ function initBind(){
 
 function rowClick(){
 	var subTitle = document.getElementById("subTitle");
+	var user_id=document.getElementById("hide_user_id");
+	
 	if(subTitle.innerHTML == "设置"){
-		alert('点击了设置');
-//    	window.location.href='../acctSecurity/'+$("#hide_user_id").val();
-    	window.location.href='../acctSecurity/'+'2';
-
+		window.location.href="../payPasswordSet/"+user_id.value;
 
 	}else if(subTitle.innerHTML == "重置" ){
-		alert('点击了重置');
-
+		window.location.href="../payPasswordResetVerify/"+user_id.value;
 	}
 }

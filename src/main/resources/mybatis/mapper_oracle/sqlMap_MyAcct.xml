@@ -8,23 +8,34 @@
 	       BALANCE,
 	       ACCT_TYPE,
 	       ACCT_STATUS,
-	       BANK_NO,
-	       CVN2,
-	       PHONE,
-	       b.Name,
-	       CERTIFICATE_CODE,
-	       EXPIRE_DATE,
-	       CARD_TYPE,
-	       BANK_TYPE,
-	       PRIORITY,
-	       VALID_FLAG,
-	       c.PASSWORD,
+	       b.PASSWORD,
 	       UPDATE_TIME
-	  from ACT_D_ACCOUNT a, ACT_D_BANKCARD b, ACT_D_PAY_PASSWORD c 
+	  from ACT_D_ACCOUNT a, ACT_D_PAY_PASSWORD b 
 	 where a.ACCT_TYPE = '2' 
 	   and a.user_id = b.user_id(+)
-	   and a.user_id = c.user_id(+)
-	   and a.user_id = '${user_id}'
+	   and a.user_id = #{user_id}
 	</select>	
-
+	<select id="queryAcctBankByUserId" resultType="java.util.HashMap">
+	select a.*, b.param_value
+	  from ACT_D_BANKCARD a, SYS_D_ESPPARAM b
+	 where b.param_type = 'BANK_TYPE'
+	   and b.param_code = a.bank_type
+	   and a.user_id = #{user_id}
+	</select>
+	<insert id="insertAcctPwd">
+		insert into ACT_D_PAY_PASSWORD
+			(user_id,password,update_time)
+		values(#{user_id},#{user_pwd},sysdate)
+	</insert>
+	<update id="updateAcctPwd">
+		update ACT_D_PAY_PASSWORD set password=#{user_pwd},update_time=sysdate where user_id=#{user_id}
+	</update>
+	
+	<select id="queryAcctByUserId_UserPwd" resultType="java.util.HashMap">
+	select *
+	  from ACT_D_PAY_PASSWORD
+	 where user_id = #{user_id}
+	   and password = #{user_pwd}
+	</select>
+	
 </mapper>

@@ -13,6 +13,14 @@ function initBind(){
 }
 
 function saveClick(){
-	alert("点击确定");
+	var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':$('#txtrepwd').val()};
+	$.commonFormSubmit({
+	 type: "POST",
+	 action: 'postData',
+	 data: parms,
+	 success: function(data){
+	  	 return;
+	 }
+	});
 
 }

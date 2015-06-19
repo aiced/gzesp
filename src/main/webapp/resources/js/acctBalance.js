@@ -1,7 +1,7 @@
-//$(document).ready(function (){  
-////	//滚动加载
-//	
-//});  
+$(document).ready(function (){  
+
+	
+});  
 
 $(function(){
 	initBind();
@@ -28,6 +28,7 @@ function initBind(){
 }
 
 function topBarClick(obj){
+	queryList();
 	resetHeader(obj);	
 	//查询业务
 	resetListStyle();
@@ -54,6 +55,27 @@ function resetHeader(obj) {
 	withdrawal_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
 	obj.setAttribute("class", "topbar_a_selected topbar_a rel"); 
 }
+
+//ajax查询刷新 公共入口方法
+//筛选 排序 关键字查询搜索 都是调用这个函数
+function queryList()
+{
+	var param = {"eparchy_code":"eparchy_code", "nice_rule":"nice_rule"};
+	
+	alert($('#baseRoot').val() + "/test/acct/acctBalance/21");
+	$.ajax({
+		   type: "POST",
+		   contentType:"application/json", //发送给服务器的内容编码类型
+		   url: $('#baseRoot').val() + "/test/acct/acctBalance/2",
+		   data: param, //服务器只能接收json字符串
+		   success: function(data){
+			   alert(data);
+//		     $('#datagrid').html(data);
+		   }
+		});
+}
+
+
 
 function resetListStyle() {
 //	得到两个 元素数组。

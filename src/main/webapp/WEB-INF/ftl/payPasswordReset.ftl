@@ -11,12 +11,13 @@
 	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/payPasswordReset.js?v=${resVer}"></script>
 
-
+	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    
 </head>
 <body>
 	   <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">${title}</div>
+	        	<div id="top_middle">密码重置</div>
 	        </div> 
 	<div class = "container">
 			<br/>
@@ -24,19 +25,20 @@
 			
 			<li class = "border_bottom">
 				<em> 请输入新密码: </em>	
-				<input class= "input_nolmal" type="text"  placeholder="" id="test">				
+				<input class= "input_nolmal" type="text"  placeholder="" id="txtpwd" name='txtpwd'>				
 			</li>
 			
 			<li >
 				<em> 请确定密码: </em>	
-				<input class= "input_nolmal" type="text"  placeholder="" id="test">				
+				<input class= "input_nolmal" type="text"  placeholder="" id="txtrepwd" name='txtrepwd'>				
 			</li>
 		</ul>
 		
 		<a id = "save"> 确定
 	
 		</a>
-
+		<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
+		
 		</div>
 </body>
 </html>

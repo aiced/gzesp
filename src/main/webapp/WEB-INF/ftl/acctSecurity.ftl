@@ -15,18 +15,21 @@
 </head>
 <body>
 	   <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">安全设置</div>
-	        </div> 
-
+	       	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+	       	<div id="top_middle">安全设置</div>
+	   </div>
 		<div class = "container">
 			<a id = "row" class = "rel">
 				<em class = "title">支付密码</em>
-				<em id= "subTitle" class = "fright">设置</em>
+				<#if (!acctinfo.UPDATE_TIME)>
+					<em id= "subTitle" class = "fright">设置</em>
+				<#else>
+					<em id= "subTitle" class = "fright">重置</em>
+				</#if>
 			</a>
-			
 			<p class = "footer">资金账户变动，绑定／解除银行卡时需要输入的密码</p>		
 		</div>
-		
+        <input type="hidden" id="hide_update_time" name="hide_update_time" value=${acctinfo.UPDATE_TIME}>
+        <input type="hidden" id="hide_user_id" name="hide_user_id" value=${acctinfo.USER_ID}>
 </body>
 </html>

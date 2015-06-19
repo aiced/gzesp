@@ -14,9 +14,11 @@
 	
 </head>
 <body>
+    <input type="hidden" id="baseRoot" value="${base}"></input>
+    <input type="hidden" id="user_id" value="${user_id}"></input>
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">收支明细</div>
+	        	<div id="top_middle">${title}</div>
 	        </div> 
 
 	<div class = "container">
@@ -35,6 +37,9 @@
 		<div style = "width:25%;height:25px;display:inline-block;margin-right: -3px; class = "rel">
  			<em id="search_tile" class= "abs">月份查询</em> 
 		</div>
+
+		
+		
 		<div style = "width:50%;height:25px;display:inline-block;margin-right: -3px;" class = "rel">
  		 	<select id = "search_select" class= "abs" tabindex="1">
 				<option value="-1">--选择月份--</option>
@@ -52,13 +57,37 @@
 		
 	</div>	
 	<!-- 列表 -->
+
+	
+	
 	<div >
 		<div id = "list_head" class = "border_bottom border_top rel">
-			<span  class = "list_title_left_text abs">总收入</span>
-			<span  class = "list_title_right_text abs">1000</span>
+			<span  class = "list_title_left_text abs">${sumTitle}</span>
+			<span  class = "list_title_right_text abs">${sumNum}</span>
 		</div>
 		
 		<ul>
+		
+		<#if (costList?size == 0) > 
+		   	没有账单
+		<#else>
+			<#list costList as item>
+				<li class = "row border_bottom">
+				<div class = "row_left">
+					<p class = "row_left_title">${item.orderType} <span class = "row_left_subtitle"> (订单号：31445) </span> </p>
+					<p class = "row_left_time">${item.createTime}</p>
+				</div>
+				<div class = "row_right">
+					<p class = "row_right_num_normal" name ="row_right_num">${item.payNum} </p>
+					<p class = "row_right_audit" name = "row_right_audit">${item.state}</p>
+				</div>
+				</li>
+			
+			
+			</#list>
+	 	</#if>
+		
+		<!--
 			<li class = "row border_bottom">
 				<div class = "row_left">
 					<p class = "row_left_title">佣金转入 <span class = "row_left_subtitle"> (订单号：31445) </span> </p>
@@ -108,20 +137,31 @@
 				</div>
 				
 			</li>	
+			-->
 			
 		</ul>
 		
 		
 	</div>
 	
+
 	
 	
-			
-			
-			
-			
-			
+	
 	</div>
+
+	<p value = ><p>
+
+  <script type="text/javascript">
+     
+		$(document).ready(function(){ 
+
+
+  
+		});
+	
+					
+	</script>
 
 </body>
 </html>

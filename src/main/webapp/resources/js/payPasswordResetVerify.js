@@ -27,6 +27,5 @@ function validationClick(){
 }
 
 function saveClick(){
-	alert("点击下一步");
 	window.location.href='/esp/shopManage/acct/payPasswordReset/'+$("#hide_user_id").val();
 }

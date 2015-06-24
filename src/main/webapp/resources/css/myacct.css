@@ -129,6 +129,14 @@ body
     font-size: 12px;
     color:#999;
 }
+.div_container>.radio>div>span>span,.modal-body>span>span
+{
+    margin-left: 10px;
+    font-size: 12px;
+    color:#999;
+}
+
+
 .div_container_mid
 {
     height: 60px;
@@ -203,35 +211,35 @@ body
 {
     color:#ffa800;
 }
-
-/*.modal-body>.form-inline>.form-group>input*/
-/*{*/
-    /*width: 20px;*/
-/*}*/
-
-
-/*.container_top_left*/
-/*{*/
-    /*float: left;*/
-    /*width: 60%;*/
-    /*background-color: red;*/
-    /*height: 100%;*/
-
-/*}*/
-/*.container_top_mid*/
-/*{*/
-    /*float: left;*/
-    /*width: 1px;*/
-    /*background-color: #666666;*/
-    /*height: 70%;*/
-    /*margin-left: 5px;*/
-    /*margin-right: 5px;*/
-    /*margin-top: height/2;*/
-/*}*/
-/*.container_top_right*/
-/*{*/
-    /*float: right;*/
-    /*width: auto;*/
-    /*background-color: #00cc66;*/
-    /*height: 100%;*/
-/*}*/
+.div_container_bank
+{
+    padding: 10px;
+}
+.div_container_bank>.list-group>.list-group-item
+{
+	height:80px;
+}
+.span1
+{
+	float:left;
+	width:30%;
+}
+.span2
+{
+	float:left;
+	width:50%;
+	margin:10px;
+    font-weight: bold;
+}
+.span2 span
+{
+	font-size:12px;
+	color:#999;
+}
+.span3
+{
+	height:100%;
+	float:right;
+	margin-top:15px;
+	vertical-align:middle;
+}

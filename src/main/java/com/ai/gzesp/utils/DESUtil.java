@@ -114,4 +114,38 @@ public class DESUtil {
         System.out.println("解密后的字符串:" + (new String(srcBytes)));
     }
 
+    //byte[] 转 字符串 
+    //主要为了应对数据库中字段为字符串的情况下如果单纯的new String(byte[])转换成字符串再插入数据库是不可行的。
+    //因为当String().getBytes()的时候 再解密的话是不到原始数据
+    public static String Bytes2HexString(byte[] b) { 
+        String ret = ""; 
+        for (int i = 0; i < b.length; i++) { 
+            String hex = Integer.toHexString(b[i] & 0xFF); 
+            if (hex.length() == 1) { 
+                hex = '0' + hex; 
+            } 
+            ret += hex.toUpperCase(); 
+        } 
+        return ret; 
+    } 
+    //字符串 转byte[]
+    public static byte[] HexString2Bytes(String src){ 
+        byte[] ret = new byte[src.length()/2]; 
+        byte[] tmp = src.getBytes(); 
+        for(int i=0; i<(src.length()/2); i++){ 
+         ret[i] = uniteBytes(tmp[i*2], tmp[i*2+1]); //这个函数在下面
+        } 
+        return ret; 
+    }
+    
+    public static byte uniteBytes(byte src0, byte src1) { 
+        byte _b0 = Byte.decode("0x" + new String(new byte[]{src0})).byteValue(); 
+        _b0 = (byte)(_b0 << 4); 
+        byte _b1 = Byte.decode("0x" + new String(new byte[]{src1})).byteValue(); 
+        byte ret = (byte)(_b0 ^ _b1); 
+        return ret; 
+    } 
+    
+    
+    
 }

@@ -11,9 +11,8 @@ $(document).ready(function (){
 		if (scrollTop + windowHeight == scrollHeight) {
 				var type = getypeIndex();
 				var monthKey = null;
-				var index = search_select.selectedIndex; // 选中索引
-				if(index != 0){
-				    monthKey = search_select.options[index].text; // 选中文本;
+				if($("#search_select").val() != 0){
+				    monthKey = $("#search_select").val(); // 选中文本;
 				}
 				//页码请求算法,得到所有的li的个数。
 				var pageNum;
@@ -46,6 +45,31 @@ function initBind(){
     $("#withdrawal_a").bind('click',function(){
 	    return topBarClick(this);
     });
+    
+    
+//   日历
+    var currYear = (new Date()).getFullYear();	
+	var opt={};
+	opt.date = {preset : 'date'};
+	opt.datetime = {preset : 'datetime'};
+	opt.time = {preset : 'time'};
+	opt.default = {
+		theme: 'android-ics light', //皮肤样式
+        display: 'modal', //显示方式 
+        mode: 'scroller', //日期选择模式
+		dateFormat: 'yyyy-mm',
+		lang: 'zh',
+		showNow: true,
+		nowText: "今天",
+		dateOrder: 'yymm',
+        startYear: currYear - 10, //开始年份
+        endYear: currYear + 10 //结束年份
+	};
+
+  	$("#search_select").mobiscroll($.extend(opt['date'], opt['default']));    
+    
+    
+    
 //  搜索  
     $("#search_a").bind("click",function(){
 	    return searchClick(this);
@@ -67,11 +91,10 @@ function topBarClick(obj){
 	//查询业务
 }
 function searchClick(obj){
-	var search_select = document.getElementById("search_select"); //定位id
-	var index = search_select.selectedIndex; // 选中索引
+	
 	var monthKey = null;
-	if(index != 0){
-	    monthKey = search_select.options[index].text; // 选中文本;
+	if($("#search_select").val() != 0){
+	    monthKey = $("#search_select").val(); // 选中文本;
 	}
 	var type = getypeIndex();
 	var pageNum = "1";

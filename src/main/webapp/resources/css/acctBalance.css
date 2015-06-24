@@ -24,6 +24,26 @@
     right: -1px;
     top: 7px;
 }
+.search{
+	padding:15px 8px;
+}
+
+.search .leftDiv{
+	width:25%;
+	height:25px;
+	display:inline-block
+	margin-right: -3px;
+	line-height:25px;
+}
+
+.search .middleDiv{
+	width:50%;
+	height:25px;
+	display:inline-block;
+	margin-right: -3px;
+}
+
+
 
 /* search */
 #search_tile{

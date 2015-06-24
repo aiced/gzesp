@@ -1,4 +1,4 @@
-var pageSize = 9;
+var pageSize = 10;
 
 $(document).ready(function (){  
 //	//滚动加载
@@ -60,6 +60,7 @@ function topBarClick(obj){
 //	得到点击索引；
 	resetHeader(obj);	
 	var type = getypeIndex();
+	//清空月份	
 	var monthKey = null;
 	var pageNum = "1";
 	queryList(type,monthKey,pageNum);
@@ -68,10 +69,10 @@ function topBarClick(obj){
 function searchClick(obj){
 	var search_select = document.getElementById("search_select"); //定位id
 	var index = search_select.selectedIndex; // 选中索引
-	if(index == 0){
-		return;
+	var monthKey = null;
+	if(index != 0){
+	    monthKey = search_select.options[index].text; // 选中文本;
 	}
-	var monthKey = search_select.options[index].text; // 选中文本;
 	var type = getypeIndex();
 	var pageNum = "1";
 	queryList(type,monthKey,pageNum);
@@ -157,13 +158,10 @@ function resetListStyle() {
 
 function getypeIndex(){	
     if($('#income_a')[0].className == "topbar_a_selected topbar_a rel"){
-    	alert($('#income_a')[0].className);
     	return 0;
     }else if($('#spending_a')[0].className == "topbar_a_selected topbar_a rel"){
-    	alert($('#spending_a')[0].className);
     	return 1;
     }else if($('#withdrawal_a')[0].className == "topbar_a_selected topbar_a rel"){
-    	alert($('#withdrawal_a')[0].className);
     	return 2;
     }
 }

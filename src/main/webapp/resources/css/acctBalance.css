@@ -99,9 +99,13 @@
 	padding-right:10px;
 	font-size:18px;
 }
-.row_left_subtitle{
-	color:#8C8C8C ;
-	font-size:12px;
+
+.row_left_order{
+	display: block;
+ 	color:#8C8C8C ;
+	padding-bottom:10px;
+ 	font-size:12px;
+
 }
 
 .row_left_time{
@@ -138,11 +142,3 @@
 	text-align:right;	
  	display:none; 
 }
-
-
-
-
-
-
-
-

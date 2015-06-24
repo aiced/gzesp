@@ -48,33 +48,29 @@
 				</#list>				
 			</select> 
 		</div>	
-		
 		<div style = "width:24%;height:25px;display:inline-block;margin-right:-3px;" class = "rel">
 			<a id="search_a" class ="abs">查询
 		    </a>
-		</div>
-	
-		
+		</div>		
 	</div>	
 	<!-- 列表 -->
 
-	
-	
 	<div >
 		<div id = "list_head" class = "border_bottom border_top rel">
 			<span  class = "list_title_left_text abs">${sumTitle}</span>
 			<span  class = "list_title_right_text abs">${sumNum}</span>
 		</div>
-		
 		<ul id = "datagrid">			
-				
 		<#if (costList?size == 0) > 
 		   	没有账单
 		<#else>
 			<#list costList as item>
 				<li class = "row border_bottom">
 				<div class = "row_left">
-					<p class = "row_left_title">${item.orderType} <span class = "row_left_subtitle"> (订单号：31445) </span> </p>
+					<p class = "row_left_title">${item.orderType} </p>
+					<#if (item.orderNum) > 
+						<span class = "row_left_order"> (订单号：${item.orderNum}) </span>
+					</#if>
 					<p class = "row_left_time">${item.createTime}</p>
 				</div>
 				<div class = "row_right">
@@ -82,84 +78,12 @@
 					<p class = "row_right_audit" name = "row_right_audit">${item.state}</p>
 				</div>
 				<div style="clear:both;"></div> 
-			   </li>
-			
-			
+			   </li>			
 			</#list>
 	 	</#if>
-	 	
-		
-		<!--
-			<li class = "row border_bottom">
-				<div class = "row_left">
-					<p class = "row_left_title">佣金转入 <span class = "row_left_subtitle"> (订单号：31445) </span> </p>
-					<p class = "row_left_time">2015-07 &nbsp 07:45</p>
-				</div>
-				<div class = "row_right">
-					<p class = "row_right_num_normal" name ="row_right_num">2000 </p>
-					<p class = "row_right_audit" name = "row_right_audit">审核中</p>
-				</div>
-				
-			</li>	
-			
-				<li class = "row border_bottom">
-				<div class = "row_left">
-					<p class = "row_left_title">佣金转入 <span class = "row_left_subtitle"> (订单号：31445) </span> </p>
-					<p class = "row_left_time">2015-07 &nbsp 07:45</p>
-				</div>
-				<div class = "row_right">
-					<p class = "row_right_num_normal" name ="row_right_num">2000 </p>
-					<p class = "row_right_audit" name = "row_right_audit">审核未通过</p>
-				</div>
-				
-			</li>	
-			
-					<li class = "row border_bottom">
-				<div class = "row_left">
-					<p class = "row_left_title">佣金转入 <span class = "row_left_subtitle"> (订单号：31445) </span> </p>
-					<p class = "row_left_time">2015-07 &nbsp 07:45</p>
-				</div>
-				<div class = "row_right">
-					<p class = "row_right_num_normal" name ="row_right_num">2000 </p>
-					<p class = "row_right_audit" name = "row_right_audit">审核已通过</p>
-				</div>
-				
-			</li>	
-			
-			</li>	
-			
-					<li class = "row border_bottom">
-				<div class = "row_left">
-					<p class = "row_left_title">佣金转入 <span class = "row_left_subtitle"> (订单号：31445) </span> </p>
-					<p class = "row_left_time">2015-07 &nbsp 07:45</p>
-				</div>
-				<div class = "row_right">
-					<p class = "row_right_num_normal" name ="row_right_num">2000 </p>
-					<p class = "row_right_audit" name = "row_right_audit">已打款</p>
-				</div>
-				
-			</li>	
-			-->
-			
-		</ul>
-		
-		
+		</ul>		
 	</div>
-	
 	</div>
-
-	<p value = ><p>
-
-  <script type="text/javascript">
-     
-		$(document).ready(function(){ 
-
-
-  
-		});
-	
-					
-	</script>
 
 </body>
 </html>

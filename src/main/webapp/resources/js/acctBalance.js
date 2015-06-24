@@ -9,8 +9,12 @@ $(document).ready(function (){
 		var height = scrollTop + windowHeight;
 		 
 		if (scrollTop + windowHeight == scrollHeight) {
-				var type = "2";
-				var monthKey = "2014-09";
+				var type = getypeIndex();
+				var monthKey = null;
+				var index = search_select.selectedIndex; // 选中索引
+				if(index != 0){
+				    monthKey = search_select.options[index].text; // 选中文本;
+				}
 				//页码请求算法,得到所有的li的个数。
 				var pageNum;
 				var rowNum = $("li");
@@ -54,13 +58,11 @@ function initBind(){
 
 function topBarClick(obj){
 //	得到点击索引；
-	
-	var type = "2";
+	resetHeader(obj);	
+	var type = getypeIndex();
 	var monthKey = null;
 	var pageNum = "1";
-	
 	queryList(type,monthKey,pageNum);
-	resetHeader(obj);	
 	//查询业务
 }
 function searchClick(obj){
@@ -69,9 +71,8 @@ function searchClick(obj){
 	if(index == 0){
 		return;
 	}
-	var text = search_select.options[index].text; // 选中文本
-	alert(text);
-	var type = "2";
+	var monthKey = search_select.options[index].text; // 选中文本;
+	var type = getypeIndex();
 	var pageNum = "1";
 	queryList(type,monthKey,pageNum);
 	//查询业务
@@ -89,8 +90,6 @@ function resetHeader(obj) {
 	$('#income_a').attr("class","topbar_a_nomal topbar_a rel");
 	$('#spending_a').attr("class","topbar_a_nomal topbar_a rel");
 	$('#withdrawal_a').attr("class","topbar_a_nomal topbar_a rel");
-//	var $obj=obj;
-//	$obj.attr("class","topbar_a_selected topbar_a rel");
 	obj.setAttribute("class", "topbar_a_selected topbar_a rel"); 
 
 		
@@ -154,6 +153,19 @@ function resetListStyle() {
 		
 	}
 	
+}
+
+function getypeIndex(){	
+    if($('#income_a')[0].className == "topbar_a_selected topbar_a rel"){
+    	alert($('#income_a')[0].className);
+    	return 0;
+    }else if($('#spending_a')[0].className == "topbar_a_selected topbar_a rel"){
+    	alert($('#spending_a')[0].className);
+    	return 1;
+    }else if($('#withdrawal_a')[0].className == "topbar_a_selected topbar_a rel"){
+    	alert($('#withdrawal_a')[0].className);
+    	return 2;
+    }
 }
 
 

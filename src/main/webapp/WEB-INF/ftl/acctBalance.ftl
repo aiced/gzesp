@@ -24,13 +24,13 @@
 	<div class = "container">
 	<!-- topbar  -->
 		<div class = "border_bottom" style = "height : 40px">
-			<a id="income_a" class="topbar_a topbar_a_selected rel " >收入
+			<a id="income_a" class="topbar_a_selected topbar_a rel" >收入
 				<em class ="abs right_line"></em>
 			</a>
-			<a id="spending_a" class="topbar_a topbar_a_nalmal rel" >支出
+			<a id="spending_a" class="topbar_a_nomal topbar_a rel" >支出
 				<em class ="abs right_line"></em>
 			</a>
-			<a id="withdrawal_a" class="topbar_a topbar_a_nalmal" name = "提现" >提现</a>
+			<a id="withdrawal_a" class="topbar_a_nomal topbar_a rel" name = "提现" >提现</a>
 		</div>
 		
 	<!-- search  -->

@@ -5,7 +5,7 @@
 	<select id="queryAcctByUserId" resultType="java.util.HashMap">
 	select a.USER_ID,
 	       ACCT_ID,
-	       BALANCE,
+	       BALANCE/1000 as BALANCE,
 	       ACCT_TYPE,
 	       ACCT_STATUS,
 	       b.PASSWORD,
@@ -20,6 +20,7 @@
 	  from ACT_D_BANKCARD a, SYS_D_ESPPARAM b
 	 where b.param_type = 'BANK_TYPE'
 	   and b.param_code = a.bank_type
+	   and a.valid_flag='1'
 	   and a.user_id = #{user_id}
 	</select>
 	<insert id="insertAcctPwd">
@@ -37,5 +38,90 @@
 	 where user_id = #{user_id}
 	   and password = #{user_pwd}
 	</select>
+	<insert id="insertAcctBank">
+		insert into ACT_D_BANKCARD
+		  (user_id, bank_no, valid_flag, priority, card_type, bank_type)
+		values
+		  (#{user_id},
+		   #{bank_no},
+		   #{valid_flag},
+		   #{priority},
+		   #{card_type},
+		   #{bank_type})
+	</insert>
+	
+	<select id="queryAcctBankDetail" resultType="java.util.HashMap">
+		select a.*, b.param_value
+		  from ACT_D_BANKCARD a, SYS_D_ESPPARAM b
+		 where b.param_type = 'BANK_TYPE'
+		   and b.param_code = a.bank_type
+		   and a.user_id = #{user_id}
+		   and a.bank_no = #{bank_no}
+	</select>
+	
+	<select id="queryAcctBalanceLog" resultType="java.util.HashMap">
+		   
+	    select a.User_Id, b.*,c.AUDIT_STATE
+	      from ACT_D_ACCOUNT a, ACT_D_ACCESS_LOG b,ACT_D_WITHDRAW_AUDIT c
+	      where a.acct_id = b.acct_id
+	       and a.acct_status = '1'
+	       and a.acct_type = '2'
+	       and a.user_id=#{user_id}
+	       <if test="iFlag == 0">
+	       	and  TRADE_TYPE = '10' or TRADE_TYPE = '51'
+	       </if>
+	       <if test="iFlag == 1">
+	       	and  TRADE_TYPE = '22' or TRADE_TYPE = '52'
+	       </if>
+	       <if test="iFlag == 2">
+	       	and  TRADE_TYPE = '60'
+	       </if>
+	       
+           <if test="update_time != ''">
+               <![CDATA[ 
+                 and b.update_time>=trunc(to_date(#{update_time},'yyyy-mm'), 'MM')
+                 and b.update_time<trunc(add_months(to_date(#{update_time},'yyyy-mm'),1),'MM')
+                  ]]>
+           </if>
+	       order by b.update_time desc
+	</select>
+	
+	<select id="queryAcctBalanceLogPage" resultType="java.util.HashMap">
+		select * from
+		(
+		  select tt.*,ROWNUM as rowno from
+		  (
+		    select a.User_Id, b.*,c.AUDIT_STATE
+		      from ACT_D_ACCOUNT a, ACT_D_ACCESS_LOG b,ACT_D_WITHDRAW_AUDIT c
+		      where a.acct_id = b.acct_id
+		       and a.acct_status = '1'
+		       and a.acct_type = '2'
+		       and a.user_id=#{user_id}
+		       <if test="iFlag == 0">
+		       	and  TRADE_TYPE = '10' or TRADE_TYPE = '51'
+		       </if>
+		       <if test="iFlag == 1">
+		       	and  TRADE_TYPE = '22' or TRADE_TYPE = '52'
+		       </if>
+		       <if test="iFlag == 2">
+		       	and  TRADE_TYPE = '60'
+		       </if>
+		       
+	           <if test="update_time != ''">
+	               <![CDATA[ 
+	                 and b.update_time>=trunc(to_date(#{update_time},'yyyy-mm'), 'MM')
+	                 and b.update_time<trunc(add_months(to_date(#{update_time},'yyyy-mm'),1),'MM')
+	                  ]]>
+	           </if>
+		       order by b.update_time desc
+		  ) tt
+		  
+		  <![CDATA[  
+			  where Rownum <= (${pageNum}*${pageSize})) table_alias
+			  where table_alias.rowno >= (${pageNum}-1)*${pageSize}
+		 	]]>
+	</select>
+
+	
 	
 </mapper>

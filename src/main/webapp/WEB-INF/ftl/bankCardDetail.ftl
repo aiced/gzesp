@@ -4,25 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>我的银行卡</title>
-
+    <title>${title}</title>
+    
     <!-- Bootstrap -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/myacct.css?v=${resVer}" rel="stylesheet">
+    <link href="${resRoot}/css/buttonStyle.css?v=${resVer}" rel="stylesheet">
     <link href="${resRoot}/css/modaldialogStyle.css?v=${resVer}" rel="stylesheet">
 
+    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <![end if]-->
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+
     <script type="text/javascript">
     	
     	function checkData(param1,param2)
@@ -55,19 +58,27 @@
     			return;
     		}
     		
-			var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':txtpwd};
+			var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':txtpwd,'bank_no':$('#hide_bank_no').val()};
 			$.ajax({
 			 type: "POST",
-			 url: 'checkPwd',
+			 url: '/esp/shopManage/acct/bankCardDetail/undindingBankCard',
 			 data: parms,
 			 success: function(data){
-				if(!data)
-				{
+				 
+				 switch(data)
+				 {
+				 case 1: //密码错误
 					alert("输入密码有误，请重新输入！");
 					clearTextVal();
-					return 
-				}
-				window.location.href='/esp/shopManage/acct/addBankCardInput1/'+$("#hide_user_id").val();
+				 	break;
+				 case 2://删除失败
+				 	alert("删除失败，请重新操作");
+				 	break;
+				 case 3: //操作成功
+				 	alert("操作成功");
+					break;
+				 }
+				window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
 			 }
 			});
     	}
@@ -87,75 +98,87 @@
 <body>
     <!--top_start-->
     <div id="top">
-        <div id="top_left"></div>
-        <div id="top_middle">我的银行卡</div>
-        <div id="top_right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></div>
+       	<div id="top_left"></div>
+       	<div id="top_middle">${title}</div>
+       	<div id="top_right" onclick="rightClick(this)">
+			<!-- <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
+		</div>
     </div>
     <div class="dv_clear"></div>
     <!--top_end-->
+
     <div class="div_container_bank">
-        <div class="list-group">        
-        	<#if (acctbankinfolist?exists)>
-       			<#list acctbankinfolist as item>
-        			<a href="/esp/shopManage/acct/bankCardDetail/${item.USER_ID}/${item.BANK_NO}" class="list-group-item">
-		            	<div class="span1"> 
-		            		<img width=80 height=60 alt="银行卡" src="${resRoot}/image/myacct/${item.BANK_TYPE}.png" >
-		            	</div>
-		                <div class="span2">
-		                	${item.PARAM_VALUE}
-		                	<br/>
-		                	<span>
-		                	尾号${item.BANK_NO?substring((item.BANK_NO?length)-4,item.BANK_NO?length)}
-		                	<#if (item.CARD_TYPE =='01')>
-		                		信用卡
-		                	<#elseif (item.CARD_TYPE =='02')>
-		                		储蓄卡
-		                	</#if>
-		                	</span>
-		                </div>
-	                    <div class="span3">
-	                        <img src="${resRoot}/image/myacct/jiantou.png">
-	                    </div>
-		            </a>
-        		</#list>
+        <div class="list-group">
+			<#if (acctbankinfo?exists)>
+			        
+            <a href="#" class="list-group-item">
+            	<div class="span1"> 
+            		<img width=80 height=60 alt="银行卡" src="${resRoot}/image/myacct/${acctbankinfo.BANK_TYPE}.png" >
+            	</div>
+                <div class="span2">
+                	${acctbankinfo.PARAM_VALUE}
+                	<br/>
+                	<span>
+                	尾号${acctbankinfo.BANK_NO?substring((acctbankinfo.BANK_NO?length)-4,acctbankinfo.BANK_NO?length)}
+                	<#if (acctbankinfo.CARD_TYPE =='01')>
+                		信用卡
+                	<#elseif (acctbankinfo.CARD_TYPE =='02')>
+                		储蓄卡
+                	</#if>
+                	</span>
+                </div>
+ <!--                <div class="span3">
+                    <img src="${resRoot}/image/myacct/jiantou.png">
+                </div> -->
+            </a>
         	<#else>
  				<center>您还没有绑定银行卡</center>
         	</#if>
         </div>
         <div class="div_container">
-            <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal">添加银行卡</button>
+            <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal">解除绑定</button>
         </div>
-		<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
+        <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
+        <input type="hidden" id="hide_bank_no" name="hide_bank_no" value=${acctbankinfo.BANK_NO}>
     </div>
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="clearTextVal();"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">请输入支付密码</h4>
                 </div>
                 <div class="modal-body">
-<!--                     <span>交通银行<span>尾号2878储蓄卡</span></span>
-                    <br> -->
+                	<#if (acctbankinfo?exists)>
+                		<span>${acctbankinfo.PARAM_VALUE}
+                			<span>
+                				尾号${acctbankinfo.BANK_NO?substring((acctbankinfo.BANK_NO?length)-4,acctbankinfo.BANK_NO?length)}
+                			</span>
+                		</span>
+                	 <#else>
+ 						<center>您还没有绑定银行卡</center>
+        			</#if>
+                    
+                    <br>
                     <div class="pwd_container">
                         <div>
-                            <input type="password" class="form-control" id="txt1" placeholder="" maxlength="1" onkeyup="checkData(this,txt2);" onfocus="doFocus(this);">
+                            <input type="password" class="form-control" id="txt1" placeholder="" onkeyup="checkData(this,txt2);" onfocus="doFocus(this);">
                         </div>
                         <div>
-                            <input type="password" class="form-control" id="txt2" placeholder="" maxlength="1" onkeyup="checkData(this,txt3);" onfocus="doFocus(this);">
+                            <input type="password" class="form-control" id="txt2" placeholder="" onkeyup="checkData(this,txt3);" onfocus="doFocus(this);">
                         </div>
                         <div>
-                            <input type="password" class="form-control" id="txt3" placeholder="" maxlength="1" onkeyup="checkData(this,txt4);" onfocus="doFocus(this);">
+                            <input type="password" class="form-control" id="txt3" placeholder="" onkeyup="checkData(this,txt4);" onfocus="doFocus(this);">
                         </div>
                         <div>
-                            <input type="password" class="form-control" id="txt4" placeholder="" maxlength="1" onkeyup="checkData(this,txt5);" onfocus="doFocus(this);">
+                            <input type="password" class="form-control" id="txt4" placeholder="" onkeyup="checkData(this,txt5);" onfocus="doFocus(this);">
                         </div>
                         <div>
-                            <input type="password" class="form-control" id="txt5" placeholder="" maxlength="1" onkeyup="checkData(this,txt6);" onfocus="doFocus(this);">
+                            <input type="password" class="form-control" id="txt5" placeholder="" onkeyup="checkData(this,txt6);" onfocus="doFocus(this);">
                         </div>
                         <div>
-                            <input type="password" class="form-control" id="txt6" placeholder="" maxlength="1" onkeyup="checkData(this,btnok);" onfocus="doFocus(this);">
+                            <input type="password" class="form-control" id="txt6" placeholder="" onkeyup="checkData(this,btnok);" onfocus="doFocus(this);">
                         </div>
                     </div>
                 </div>

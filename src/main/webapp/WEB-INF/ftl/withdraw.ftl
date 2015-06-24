@@ -23,7 +23,14 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-
+    <script type="text/javascript">
+    	function doClick(param)
+    	{
+    		//alert($(param)[0].tagName);
+			//var id=$(param).attr("id");
+    		//var a=$("#"+id+" :input").attr("checked","checked");
+    	}
+    </script>
 </head>
 <body>
 <!--top_start-->
@@ -35,28 +42,32 @@
 <div class="dv_clear"></div>
 <!--top_end-->
 <div class="div_container">
-    <div class="radio">
-        <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-            <span>交通银行<span>尾号2878储蓄卡</span></span>
-        </label>
-    </div>
-    <div class="radio">
-        <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-            <span>交通银行<span>尾号2878储蓄卡</span></span>
-        </label>
-    </div>
-    <div class="radio">
-        <label>
-            <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3" >
-            <span>交通银行<span>尾号2878储蓄卡</span></span>
-        </label>
-    </div>
+	<#if (acctbankinfolist?exists)>
+		<#list acctbankinfolist as item>
+		    <div class="radio">
+		        <label id="lab${item_index}" onclick="doClick(this);">
+		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.BANK_TYPE}" >
+                	<span>${item.PARAM_VALUE}
+	                	<span>
+	                	尾号${item.BANK_NO?substring((item.BANK_NO?length)-4,item.BANK_NO?length)}
+	                	<#if (item.CARD_TYPE =='01')>
+	                		信用卡
+	                	<#elseif (item.CARD_TYPE =='02')>
+	                		储蓄卡
+	                	</#if>
+	                	</span>
+                	</span>
+		        </label>
+		    </div>
+    	</#list>
+   	<#else>
+		<center>您还没有绑定银行卡</center>
+		<center><a href="/esp/shopManage/acct/myBankCardList/${acctinfo.USER_ID}">现在去绑定</a></center>
+   	</#if>
 </div>
 <br>
 <div class="div_container_mid">
-    <span>转出金额<label>当前可提现金额111元</label></span>
+    <span>转出金额<label>当前可提现金额${acctinfo.BALANCE}元</label></span>
 </div>
 <div class="div_container_bottom">
     预计在3-7个工作日后打到您的银行账户，请注意查收～

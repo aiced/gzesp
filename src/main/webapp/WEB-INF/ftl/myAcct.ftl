@@ -51,10 +51,6 @@
 </head>
 <body>
 
-
-
-
-
     <!--top_start-->
     <div id="top">
        	<div id="top_left"></div>
@@ -82,7 +78,7 @@
                 </tr>
                 <tr>
                     <td class="td02">
-                    ¥${(acctinfo.BALANCE/1000)?string("#.##")}
+	                    ¥${(acctinfo.BALANCE)}
                     </td>
                 </tr>
             </table>
@@ -110,7 +106,9 @@
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/ka.png">
                     	我的银行卡
-                    	<span class="badge">${bankcout}张</span>
+                    	<span class="badge">
+                    		${bankcout}张
+                    	</span>
                     </span>
                     <span class="list_gou">
 						<img src="${resRoot}/image/myacct/jiantou.png">
@@ -129,8 +127,8 @@
                 </a>
             </div>
         </div>
-        <input type="hidden" id="hide_update_time" name="hide_update_time" value=${acctinfo.UPDATE_TIME}>
-        <input type="hidden" id="hide_user_id" name="hide_user_id" value=${acctinfo.USER_ID}>
+	        <input type="hidden" id="hide_update_time" name="hide_update_time" value=${acctinfo.UPDATE_TIME}>
+	        <input type="hidden" id="hide_user_id" name="hide_user_id" value=${acctinfo.USER_ID}>
     </div>
 </body>
 </html>

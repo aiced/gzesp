@@ -1,11 +1,16 @@
 package com.ai.gzesp.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dao.MyAcctDao;
+import com.ai.gzesp.utils.DESUtil;
 
 @Service
 public class MyAcctService {
@@ -26,9 +31,32 @@ public class MyAcctService {
     	return myAcctDao.updateAcctPwd(user_id,user_pwd);
     }
     //通过userid获得绑定银行卡信息
-    public Map<String, String> queryAcctBankByUserId(String user_id)
+    public List<Map<String, Object>> queryAcctBankByUserId(String user_id)
     {
-        return myAcctDao.queryAcctBankByUserId(user_id);
+        //查询数据库
+        List<Map<String, Object>> acctbankinfo_temp =myAcctDao.queryAcctBankByUserId(user_id);
+        List<Map<String, Object>> acctbankinfolist=null;
+        if(acctbankinfo_temp == null)
+        {
+        	return null;
+        }
+    	acctbankinfolist=new ArrayList<Map<String,Object>>();
+    	for (int i = 0; i < acctbankinfo_temp.size(); i++) {
+    		Map<String, Object> acctbankinfo=new HashMap<String, Object>();
+			for (String key : acctbankinfo_temp.get(i).keySet()) {
+				if (key.equalsIgnoreCase("bank_no")){
+					byte[] srcBytes=DESUtil.HexString2Bytes(acctbankinfo_temp.get(i).get(key).toString());
+        			byte[] bank_no=DESUtil.decryptMode(Constants.desKey.getBytes(),srcBytes);
+        			acctbankinfo.put(key, new String(bank_no));
+				}
+				else {
+					acctbankinfo.put(key, acctbankinfo_temp.get(i).get(key));	
+				}
+			}
+			acctbankinfolist.add(acctbankinfo);
+		}
+        return acctbankinfolist;        
+
     }
     
     //通过账号和密码判断是否为该用户
@@ -36,4 +64,54 @@ public class MyAcctService {
     {
     	return myAcctDao.queryAcctByUserId_UserPwd(user_id,user_pwd);
     }
+    //通过uiserid插入账户银行关系表：ACT_D_BANKCARD
+    
+    public int insertAcctBank(String user_id,String bank_no,String valid_flag,String priority,String card_type,String bank_type)
+    {
+    	return myAcctDao.insertAcctBank(user_id,bank_no,valid_flag,priority,card_type,bank_type);
+    }
+    //通过userid和银行卡卡号 获得银行详细信息
+    public Map<String, Object> queryAcctBankDetail(String user_id,String bank_no)
+    {
+    	byte[] bank_no_temp=DESUtil.encryptMode(Constants.desKey.getBytes(),bank_no.getBytes());
+    	String strbank_no=DESUtil.Bytes2HexString(bank_no_temp);
+    	
+    	Map<String, Object> acctbankinfo_temp=myAcctDao.queryAcctBankDetail(user_id,strbank_no);
+    	
+    	if(acctbankinfo_temp ==null)
+    	{
+        	return null;
+    	}
+    	
+		Map<String, Object> acctbankinfo=new HashMap<String, Object>();
+		for (String key : acctbankinfo_temp.keySet()) {
+			if (key.equalsIgnoreCase("bank_no")){
+				byte[] srcBytes=DESUtil.HexString2Bytes(acctbankinfo_temp.get(key).toString());
+    			byte[] bank_no_bak=DESUtil.decryptMode(Constants.desKey.getBytes(),srcBytes);
+    			acctbankinfo.put(key, new String(bank_no_bak));
+			}
+			else {
+				acctbankinfo.put(key, acctbankinfo_temp.get(key));	
+			}
+		}
+    	return acctbankinfo;
+    }
+    
+    //通过userid和银行卡卡号 删除绑定银行卡
+    public int delAcctBankDetail(String user_id,String bank_no)
+    {
+    	return myAcctDao.delAcctBankDetail(user_id,bank_no);
+    }
+    //通过userid 查询收支明细
+    public List<Map<String, Object>> queryAcctBalanceLog(String user_id,int iFlag,int page_num,int page_size,String strDate)
+    {
+    	return myAcctDao.queryAcctBalanceLog(user_id,iFlag,page_num,page_size,strDate);
+    }
+    
+    //通过userid，类型（type），查询收支明细
+    public List<Map<String, Object>> queryAcctBalanceLogPage(String user_id,int iFlag,int page_num,int page_size,String strDate)
+    {
+    	return myAcctDao.queryAcctBalanceLogPage(user_id,iFlag,page_num,page_size,strDate);
+    }
+
 }

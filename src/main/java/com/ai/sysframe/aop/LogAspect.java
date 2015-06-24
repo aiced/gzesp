@@ -36,7 +36,7 @@ public class LogAspect {
         }
         
         HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        logger.info(req.getRequestURL()+">>>"+className+"_"+methodName+"_"+sbParam);
+        logger.info(req.getSession(true).getId()+">>>"+req.getRequestURL()+">>>"+className+"_"+methodName+"_"+sbParam);
         
     }
     
@@ -47,6 +47,9 @@ public class LogAspect {
   
     @AfterThrowing(pointcut = "controllerMethod()", throwing = "ex")  
     public void logException(JoinPoint jp, Throwable ex) {       
-    	logger.warn(ex.getMessage());
+    	String className = jp.getTarget().getClass().getName();  
+        String methodName = jp.getSignature().getName();  
+    	HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    	logger.warn(req.getSession(true).getId()+">>>"+className+"_"+methodName+"_"+ex.getMessage(), ex);
     }  
 }

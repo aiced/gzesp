@@ -60,42 +60,12 @@
 	</select>
 	
 	<select id="queryAcctBalanceLog" resultType="java.util.HashMap">
-		   
-	    select a.User_Id, b.*,c.AUDIT_STATE
-	      from ACT_D_ACCOUNT a, ACT_D_ACCESS_LOG b,ACT_D_WITHDRAW_AUDIT c
-	      where a.acct_id = b.acct_id
-	       and a.acct_status = '1'
-	       and a.acct_type = '2'
-	       and a.user_id=#{user_id}
-	       <if test="iFlag == 0">
-	       	and  TRADE_TYPE = '10' or TRADE_TYPE = '51'
-	       </if>
-	       <if test="iFlag == 1">
-	       	and  TRADE_TYPE = '22' or TRADE_TYPE = '52'
-	       </if>
-	       <if test="iFlag == 2">
-	       	and  TRADE_TYPE = '60'
-	       </if>
-	       
-           <if test="update_time != ''">
-               <![CDATA[ 
-                 and b.update_time>=trunc(to_date(#{update_time},'yyyy-mm'), 'MM')
-                 and b.update_time<trunc(add_months(to_date(#{update_time},'yyyy-mm'),1),'MM')
-                  ]]>
-           </if>
-	       order by b.update_time desc
-	</select>
-	
-	<select id="queryAcctBalanceLogPage" resultType="java.util.HashMap">
-		select * from
-		(
-		  select tt.*,ROWNUM as rowno from
-		  (
-		    select a.User_Id, b.*,c.AUDIT_STATE
-		      from ACT_D_ACCOUNT a, ACT_D_ACCESS_LOG b,ACT_D_WITHDRAW_AUDIT c
-		      where a.acct_id = b.acct_id
-		       and a.acct_status = '1'
-		       and a.acct_type = '2'
+		with T1 as
+		 (select a.User_Id, b.*
+		    from ACT_D_ACCOUNT a, ACT_D_ACCESS_LOG b
+		   where a.acct_id = b.acct_id
+		     and a.acct_status = '1'
+		     and a.acct_type = '2'
 		       and a.user_id=#{user_id}
 		       <if test="iFlag == 0">
 		       	and  TRADE_TYPE = '10' or TRADE_TYPE = '51'
@@ -106,20 +76,115 @@
 		       <if test="iFlag == 2">
 		       	and  TRADE_TYPE = '60'
 		       </if>
-		       
 	           <if test="update_time != ''">
 	               <![CDATA[ 
 	                 and b.update_time>=trunc(to_date(#{update_time},'yyyy-mm'), 'MM')
 	                 and b.update_time<trunc(add_months(to_date(#{update_time},'yyyy-mm'),1),'MM')
 	                  ]]>
 	           </if>
-		       order by b.update_time desc
-		  ) tt
-		  
+		   order by b.update_time desc),
+		T2 as
+		 (select a.*
+		    from ACT_D_WITHDRAW_AUDIT a
+		   where a.user_id = #{user_id})
+		select T1.user_id,
+	       T1.order_id,
+	       case when T1.trade_type ='10' then
+	             '佣金转入'
+	            when T1.trade_type ='51' then
+	              '佣金回退'
+	            when T1.trade_type ='22' then
+	              '代客下单'
+	            when T1.trade_type ='52' then
+	              '支付回退'
+	            when T1.trade_type ='60' then
+	              '提现'
+	            else
+	              '未知'                           
+	       end trade_type,
+	       T1.old_balance/1000 as old_balance,  
+ 	       T1.new_balance/1000 as new_balance,
+	       T1.fee/1000 as fee,
+	       T1.update_time,
+	       T2.withdraw_fee/1000 as withdraw,
+	       case when T2.audit_state ='01' then
+	         '审核中'
+	         else
+	           '未知'
+	       end audit_state,
+	       T2.apply_time
+	  from T1, T2
+	 where T1.user_id = T2.user_id(+)
+	 order by T1.update_time desc
+
+	</select>
+	
+	<select id="queryAcctBalanceLogPage" resultType="java.util.HashMap">
+		with T1 as
+		 (select a.User_Id, b.*
+		    from ACT_D_ACCOUNT a, ACT_D_ACCESS_LOG b
+		   where a.acct_id = b.acct_id
+		     and a.acct_status = '1'
+		     and a.acct_type = '2'
+		       and a.user_id=#{user_id}
+		       <if test="iFlag == 0">
+		       	and  TRADE_TYPE = '10' or TRADE_TYPE = '51'
+		       </if>
+		       <if test="iFlag == 1">
+		       	and  TRADE_TYPE = '22' or TRADE_TYPE = '52'
+		       </if>
+		       <if test="iFlag == 2">
+		       	and  TRADE_TYPE = '60'
+		       </if>
+	           <if test="update_time != ''">
+	               <![CDATA[ 
+	                 and b.update_time>=trunc(to_date(#{update_time},'yyyy-mm'), 'MM')
+	                 and b.update_time<trunc(add_months(to_date(#{update_time},'yyyy-mm'),1),'MM')
+	                  ]]>
+	           </if>
+		   order by b.update_time desc),
+		T2 as
+		 (select a.*
+		    from ACT_D_WITHDRAW_AUDIT a
+		   where a.user_id = #{user_id})
+		select *
+		  from (select tt.*, ROWNUM as rowno
+		          from (select T1.user_id,
+		                       T1.order_id,
+		                       case when T1.trade_type ='10' then
+		                             '佣金转入'
+		                            when T1.trade_type ='51' then
+		                              '佣金回退'
+		                            when T1.trade_type ='22' then
+		                              '代客下单'
+		                            when T1.trade_type ='52' then
+		                              '支付回退'
+		                            when T1.trade_type ='60' then
+		                              '提现'
+		                            else
+		                              '未知'                           
+		                       end trade_type,
+						       T1.old_balance/1000 as old_balance,  
+					 	       T1.new_balance/1000 as new_balance,
+						       T1.fee/1000 as fee,
+						       T1.update_time,
+						       T2.withdraw_fee/1000 as withdraw,
+		                       case when T2.audit_state ='01' then
+		                         '审核中'
+		                         else
+		                           '未知'
+		                       end audit_state,
+		                       T2.apply_time
+		                  from T1, T2
+		                 where T1.user_id = T2.user_id(+)
+		                 order by T1.update_time desc
+		                 ) tt
+
 		  <![CDATA[  
 			  where Rownum <= (${page_num}*${page_size})) table_alias
 			  where table_alias.rowno >= (${page_num}-1)*${page_size}
 		 	]]>
+
 	</select>
 
 	

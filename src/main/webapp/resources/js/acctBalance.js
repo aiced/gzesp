@@ -1,4 +1,4 @@
-var pageSize = 9;
+var pageSize = 10;
 
 $(document).ready(function (){  
 //	//滚动加载
@@ -9,8 +9,11 @@ $(document).ready(function (){
 		var height = scrollTop + windowHeight;
 		 
 		if (scrollTop + windowHeight == scrollHeight) {
-				var type = "2";
-				var monthKey = "2014-09";
+				var type = getypeIndex();
+				var monthKey = null;
+				if($("#search_select").val() != 0){
+				    monthKey = $("#search_select").val(); // 选中文本;
+				}
 				//页码请求算法,得到所有的li的个数。
 				var pageNum;
 				var rowNum = $("li");
@@ -42,6 +45,31 @@ function initBind(){
     $("#withdrawal_a").bind('click',function(){
 	    return topBarClick(this);
     });
+    
+    
+//   日历
+    var currYear = (new Date()).getFullYear();	
+	var opt={};
+	opt.date = {preset : 'date'};
+	opt.datetime = {preset : 'datetime'};
+	opt.time = {preset : 'time'};
+	opt.default = {
+		theme: 'android-ics light', //皮肤样式
+        display: 'modal', //显示方式 
+        mode: 'scroller', //日期选择模式
+		dateFormat: 'yyyy-mm',
+		lang: 'zh',
+		showNow: true,
+		nowText: "今天",
+		dateOrder: 'yymm',
+        startYear: currYear - 10, //开始年份
+        endYear: currYear + 10 //结束年份
+	};
+
+  	$("#search_select").mobiscroll($.extend(opt['date'], opt['default']));    
+    
+    
+    
 //  搜索  
     $("#search_a").bind("click",function(){
 	    return searchClick(this);
@@ -54,24 +82,21 @@ function initBind(){
 
 function topBarClick(obj){
 //	得到点击索引；
-	
-	var type = "2";
+	resetHeader(obj);	
+	var type = getypeIndex();
+	//清空月份	
 	var monthKey = null;
 	var pageNum = "1";
-	
 	queryList(type,monthKey,pageNum);
-	resetHeader(obj);	
 	//查询业务
 }
 function searchClick(obj){
-	var search_select = document.getElementById("search_select"); //定位id
-	var index = search_select.selectedIndex; // 选中索引
-	if(index == 0){
-		return;
+	
+	var monthKey = null;
+	if($("#search_select").val() != 0){
+	    monthKey = $("#search_select").val(); // 选中文本;
 	}
-	var text = search_select.options[index].text; // 选中文本
-	alert(text);
-	var type = "2";
+	var type = getypeIndex();
 	var pageNum = "1";
 	queryList(type,monthKey,pageNum);
 	//查询业务
@@ -89,8 +114,6 @@ function resetHeader(obj) {
 	$('#income_a').attr("class","topbar_a_nomal topbar_a rel");
 	$('#spending_a').attr("class","topbar_a_nomal topbar_a rel");
 	$('#withdrawal_a').attr("class","topbar_a_nomal topbar_a rel");
-//	var $obj=obj;
-//	$obj.attr("class","topbar_a_selected topbar_a rel");
 	obj.setAttribute("class", "topbar_a_selected topbar_a rel"); 
 
 		
@@ -154,6 +177,16 @@ function resetListStyle() {
 		
 	}
 	
+}
+
+function getypeIndex(){	
+    if($('#income_a')[0].className == "topbar_a_selected topbar_a rel"){
+    	return 0;
+    }else if($('#spending_a')[0].className == "topbar_a_selected topbar_a rel"){
+    	return 1;
+    }else if($('#withdrawal_a')[0].className == "topbar_a_selected topbar_a rel"){
+    	return 2;
+    }
 }
 
 

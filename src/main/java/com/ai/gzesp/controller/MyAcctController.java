@@ -171,7 +171,7 @@ public class MyAcctController {
     	
 	    List<Map<String, Object>> acctloglist=myAcctService.queryAcctBalanceLog(user_id,Integer.parseInt(type),Integer.parseInt(pageNum),Integer.parseInt(pageSize),monthKey);
 	    
-	    if (acctloglist != null) {
+	    if ((acctloglist != null ) && (acctloglist.size() > 0)) {
 	    	return 	(Integer) acctloglist.get(0).get("NEW_BALANCE");
 		}
     	return  -1;
@@ -188,7 +188,6 @@ public class MyAcctController {
     	if(acctinfo != null)
     	{
             mav.addObject("acctinfo",acctinfo);
-
             System.out.println(acctinfo);
     	}    	 
         return mav;

@@ -69,6 +69,28 @@ function saveClick(){
 function nextClick(){
 	alert("点击下一步");
 
+	
+	var parms = {
+			'user_id':$('#hide_user_id').val(),
+			'bank_no':$('#txtcardno').val(),
+			'valid_flag':"0",
+			'priority':"1",
+			'card_type':"02",
+			'bank_type':"9",
+			
+	};
+	
+	$.commonFormSubmit({
+	 type: "POST",
+	 action: 'postData',
+	 data: parms,
+	 success: function(data){
+	  	 return;
+	 }
+	});
+	
+	
+	
 }
 
 

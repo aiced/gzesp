@@ -109,5 +109,7 @@ public class Constants {
     //账户——md5加密key
     public static final String md5key="0aad787d015ca667d67ba25e68952c23";
     
-
+    //银行卡-卡号 加密key
+    public static final String desKey = "e036wlqtcueakxn8tjwhu9gs";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
+    
 }

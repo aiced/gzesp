@@ -31,7 +31,7 @@
     <input type="hidden" id="user_id" value="${user_id}"></input>
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">${resRoot} ${title}</div>
+	        	<div id="top_middle">${title}</div>
 	      </div> 
 
 	<div class = "container">
@@ -66,7 +66,7 @@
 	<div >
 		<div id = "list_head" class = "border_bottom border_top rel">
 			<span id = "sumTitle" class = "list_title_left_text abs">${sumTitle}</span>
-			<span id = "sumNum" class = "list_title_right_text abs">${sumNum}</span>
+			<span id = "sumNum" class = "list_title_right_text abs">${NEW_BALANCE}</span>
 		</div>
 		<ul id = "datagrid">			
 		<#if (costList?size == 0) > 
@@ -75,15 +75,15 @@
 			<#list costList as item>
 				<li class = "row border_bottom">
 				<div class = "row_left">
-					<p class = "row_left_title">${item.orderType} </p>
+					<p class = "row_left_title">${item.TRADE_TYPE} </p>
 					<#if (item.orderNum) > 
-						<span class = "row_left_order"> (订单号：${item.orderNum}) </span>
+						<span class = "row_left_order"> (订单号：${item.ORDER_ID}) </span>
 					</#if>
-					<p class = "row_left_time">${item.createTime}</p>
+					<p class = "row_left_time">${item.UPDATE_TIME}</p>
 				</div>
 				<div class = "row_right">
-					<p class = "row_right_num_normal" name ="row_right_num">${item.payNum} </p>
-					<p class = "row_right_audit" name = "row_right_audit">${item.state}</p>
+					<p class = "row_right_num_normal" name ="row_right_num">${item.FEE} </p>
+					<p class = "row_right_audit" name = "row_right_audit">${item.AUDIT_STATE}</p>
 				</div>
 				<div style="clear:both;"></div> 
 			   </li>			

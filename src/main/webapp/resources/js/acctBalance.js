@@ -1,4 +1,4 @@
-var pageSize = 9;
+var pageSize = 5;
 
 $(document).ready(function (){  
 //	//滚动加载
@@ -15,7 +15,7 @@ $(document).ready(function (){
 				    monthKey = getMonth(); // 选中文本;
 				}
 				//页码请求算法,得到所有的li的个数。
-				var pageNum;
+				var pageNum =null;
 				var rowNum = $("li");
 				if(rowNum.length%pageSize ==0 ){
 					 pageNum = rowNum.length/pageSize +1;

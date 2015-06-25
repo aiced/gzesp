@@ -68,10 +68,10 @@
 		     and a.acct_type = '2'
 		       and a.user_id=#{user_id}
 		       <if test="iFlag == 0">
-		       	and  TRADE_TYPE = '10' or TRADE_TYPE = '51'
+		       	and  TRADE_TYPE in('10','51')
 		       </if>
 		       <if test="iFlag == 1">
-		       	and  TRADE_TYPE = '22' or TRADE_TYPE = '52'
+		       	and  TRADE_TYPE in('22','52')
 		       </if>
 		       <if test="iFlag == 2">
 		       	and  TRADE_TYPE = '60'
@@ -128,10 +128,10 @@
 		     and a.acct_type = '2'
 		       and a.user_id=#{user_id}
 		       <if test="iFlag == 0">
-		       	and  TRADE_TYPE = '10' or TRADE_TYPE = '51'
+		       	and  TRADE_TYPE in ('10','51')
 		       </if>
 		       <if test="iFlag == 1">
-		       	and  TRADE_TYPE = '22' or TRADE_TYPE = '52'
+		       	and  TRADE_TYPE in('22','52')
 		       </if>
 		       <if test="iFlag == 2">
 		       	and  TRADE_TYPE = '60'
@@ -182,7 +182,7 @@
 
 		  <![CDATA[  
 			  where Rownum <= (${page_num}*${page_size})) table_alias
-			  where table_alias.rowno >= (${page_num}-1)*${page_size}
+			  where table_alias.rowno >= (${page_num}-1)*${page_size}+1
 		 	]]>
 
 	</select>

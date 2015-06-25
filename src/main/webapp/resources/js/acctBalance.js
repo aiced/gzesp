@@ -113,18 +113,6 @@ function queryList(type,monthKey,pageNum)
 	
 	var user_id = $("#user_id").val();
 	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize,"user_id":user_id};	
-	$.ajax({
-		   type: "POST",
-		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/shopManage/acct/acctBalancePagePostData",
-		   data: param, //服务器只能接收json字符串
-		   async: false,
-		   success: function(data){
-//			   alert(data);
-			 $('#datagrid').html(data);
-		     	resetListStyle();
-		   }
-		});
 	
 	$.ajax({
 		   type: "POST",
@@ -138,6 +126,22 @@ function queryList(type,monthKey,pageNum)
 		    setSum(data);
 		   }
 		});
+	
+	
+	$.ajax({
+		   type: "POST",
+		   contentType:"application/json", //发送给服务器的内容编码类型
+		   url: $('#baseRoot').val() + "/shopManage/acct/acctBalancePagePostData",
+		   data: param, //服务器只能接收json字符串
+		   async: false,
+		   success: function(data){
+//			   alert(data);
+			 $('#datagrid').html(data);
+		     	resetListStyle();
+		   }
+		});
+	
+
 		
 }
 //

@@ -1,4 +1,4 @@
-var pageSize = 10;
+var pageSize = 9;
 
 $(document).ready(function (){  
 //	//滚动加载
@@ -9,17 +9,17 @@ $(document).ready(function (){
 		var height = scrollTop + windowHeight;
 		 
 		if (scrollTop + windowHeight == scrollHeight) {
-				var type = getypeIndex();
+				var type = getTypeIndex();
 				var monthKey = null;
-				if($("#search_select").val() != 0){
-				    monthKey = $("#search_select").val(); // 选中文本;
+				if(getMonth() != null){
+				    monthKey = getMonth(); // 选中文本;
 				}
 				//页码请求算法,得到所有的li的个数。
 				var pageNum;
 				var rowNum = $("li");
 				if(rowNum.length%pageSize ==0 ){
 					 pageNum = rowNum.length/pageSize +1;
-					 queryList(type,monthKey,pageNum);					
+					 loadMoreData(type,monthKey,pageNum);					
 				}				
 		}
     }); 
@@ -82,9 +82,10 @@ function initBind(){
 
 function topBarClick(obj){
 //	得到点击索引；
-	resetHeader(obj);	
-	var type = getypeIndex();
+	setTypeIndex(obj);	
+	var type = getTypeIndex();
 	//清空月份	
+	setMonthNull();
 	var monthKey = null;
 	var pageNum = "1";
 	queryList(type,monthKey,pageNum);
@@ -93,31 +94,17 @@ function topBarClick(obj){
 function searchClick(obj){
 	
 	var monthKey = null;
-	if($("#search_select").val() != 0){
-	    monthKey = $("#search_select").val(); // 选中文本;
+	if(getMonth() != null){
+	    monthKey = getMonth(); // 选中文本;
 	}
-	var type = getypeIndex();
+	var type = getTypeIndex();
 	var pageNum = "1";
 	queryList(type,monthKey,pageNum);
 	//查询业务
 }
 
 
-function resetHeader(obj) {
-//	var income_a = document.getElementById("income_a");
-//	var spending_a = document.getElementById("spending_a");
-//	var withdrawal_a  = document.getElementById("withdrawal_a");
-//	income_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
-//	spending_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
-//	withdrawal_a.setAttribute("class", "topbar_a_nomal topbar_a rel"); 
-	
-	$('#income_a').attr("class","topbar_a_nomal topbar_a rel");
-	$('#spending_a').attr("class","topbar_a_nomal topbar_a rel");
-	$('#withdrawal_a').attr("class","topbar_a_nomal topbar_a rel");
-	obj.setAttribute("class", "topbar_a_selected topbar_a rel"); 
 
-		
-}
 
 //ajax查询刷新 公共入口方法
 //筛选 排序 关键字查询搜索 都是调用这个函数
@@ -130,11 +117,30 @@ function queryList(type,monthKey,pageNum)
 		   url: $('#baseRoot').val() + "/test/acct/acctBalance/2",
 		   data: param, //服务器只能接收json字符串
 		   success: function(data){
+			 $('#datagrid').html(data);
+		     	setSum();
+		     	resetListStyle();
+		   }
+		});
+	
+}
+//
+function loadMoreData(type,monthKey,pageNum)
+{	
+	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize};	
+	$.ajax({
+		   type: "POST",
+		   contentType:"application/json", //发送给服务器的内容编码类型
+		   url: $('#baseRoot').val() + "/test/acct/acctBalance/2",
+		   data: param, //服务器只能接收json字符串
+		   success: function(data){
 		     $('#datagrid').append(data);
+		     	setSum();
 		 		resetListStyle();
 		   }
 		});
 }
+
 
 
 
@@ -144,8 +150,7 @@ function resetListStyle() {
 	var audits =document.getElementsByName("row_right_audit");	
 //	var withdrawal_a  = document.getElementById("withdrawal_a");
 	var withdrawal_a = $("#withdrawal_a")[0];
-
-	if(withdrawal_a.className == "topbar_a_selected topbar_a rel")
+	if(getTypeIndex() == 2 )
 	{
 		   for(var i=0;i<nums.length;i++){
 		        num =nums[i];
@@ -178,8 +183,44 @@ function resetListStyle() {
 	}
 	
 }
+function setSum(sum) {
+	var totle = null;
+	if(getTypeIndex() == 0){
+		totle = "总收入";
+	}else if(getTypeIndex() == 1){
+		totle = "总支出";
+	}else if(getTypeIndex() == 2){
+		totle = "累计提现";
+	}
+	if(getMonth()!=null){
+		totle = "当月"+ totle;
+	}	
+	$('#sumTitle').text(totle);
+	$('#sumNum').text("100");
 
-function getypeIndex(){	
+}
+
+
+function setMonthNull() {
+	$("#search_select").val(null);
+}
+
+function getMonth() {
+	if($("#search_select").val()){
+		return $("#search_select").val()
+	}
+	return null;
+}
+
+function setTypeIndex(obj) {
+	$('#income_a').attr("class","topbar_a_nomal topbar_a rel");
+	$('#spending_a').attr("class","topbar_a_nomal topbar_a rel");
+	$('#withdrawal_a').attr("class","topbar_a_nomal topbar_a rel");
+	obj.setAttribute("class", "topbar_a_selected topbar_a rel"); 	
+}
+
+
+function getTypeIndex(){	
     if($('#income_a')[0].className == "topbar_a_selected topbar_a rel"){
     	return 0;
     }else if($('#spending_a')[0].className == "topbar_a_selected topbar_a rel"){

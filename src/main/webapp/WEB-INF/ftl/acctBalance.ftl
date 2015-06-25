@@ -11,6 +11,19 @@
     <link rel="stylesheet" href="${resRoot}/css/acctBalance.css?v=${resVer}" rel="stylesheet">  
 	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/acctBalance.js?v=${resVer}"></script>	
+			
+	
+	<script src="${resRoot}/js/jquery.1.7.2.min.js"></script>
+    <script src="${resRoot}/js/mobiscroll_002.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_004.js" type="text/javascript"></script>
+	<link href="${resRoot}/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+	<link href="${resRoot}/css/mobiscroll.css" rel="stylesheet" type="text/css">
+	<script src="${resRoot}/js/mobiscroll.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_003.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_005.js" type="text/javascript"></script>
+	<link href="${resRoot}/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
+	
+		
 	
 </head>
 <body>
@@ -24,29 +37,24 @@
 	<div class = "container">
 	<!-- topbar  -->
 		<div class = "border_bottom" style = "height : 40px">
-			<a id="income_a" class="topbar_a topbar_a_selected rel " >收入
+			<a id="income_a" class="topbar_a_selected topbar_a rel" >收入
 				<em class ="abs right_line"></em>
 			</a>
-			<a id="spending_a" class="topbar_a topbar_a_nalmal rel" >支出
+			<a id="spending_a" class="topbar_a_nomal topbar_a rel" >支出
 				<em class ="abs right_line"></em>
 			</a>
-			<a id="withdrawal_a" class="topbar_a topbar_a_nalmal" name = "提现" >提现</a>
+			<a id="withdrawal_a" class="topbar_a_nomal topbar_a rel" name = "提现" >提现</a>
 		</div>
 		
 	<!-- search  -->
-	<div style = "padding:15px 8px">
-		<div style = "width:25%;height:25px;display:inline-block;margin-right: -3px; class = "rel">
+	<div class = "search rel">
+		<div class = "leftDiv fleft">
  			<em id="search_tile" class= "abs">月份查询</em> 
 		</div>
 		
 		<!--选择月份 -->
-		<div style = "width:50%;height:25px;display:inline-block;margin-right: -3px;" class = "rel">
- 		 	<select id = "search_select" class= "abs" tabindex="1">
-				<option value="-1">--选择月份--</option>
-				<#list monthList as item>
-							<option> ${item}</option>			
-				</#list>				
-			</select> 
+		<div class = "middleDiv fleft">
+			<input value="" class="" readonly="readonly" name="search_select" id="search_select" type="text">
 		</div>	
 		<div style = "width:24%;height:25px;display:inline-block;margin-right:-3px;" class = "rel">
 			<a id="search_a" class ="abs">查询
@@ -84,6 +92,8 @@
 		</ul>		
 	</div>
 	</div>
+
+	
 
 </body>
 </html>

@@ -292,7 +292,7 @@
 	        </div>
 	        <div class="list-group">
 	        	<!-- edit_by_wenh_2015_6_8 -->
-  	            <a href="#" class="list-group-item">我的账户<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+  	            <a href="acct/myAcct/${userid}" class="list-group-item">我的账户<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
   	            <a href="#" class="list-group-item">代客下单<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	            <a href="goodsManageRecommend?userid=${userid}" class="list-group-item">商品管理<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>

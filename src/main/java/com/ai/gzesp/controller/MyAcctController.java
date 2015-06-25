@@ -117,7 +117,7 @@ public class MyAcctController {
         {
             mav.addObject("acctloglist",acctlogpagelist);
             List<Map<String, Object>> acctloglist=myAcctService.queryAcctBalanceLog(user_id,0,Integer.parseInt(page_num),Integer.parseInt(page_size),"");
-            mav.addObject("acctlogtotal", acctloglist.size());//这个地方 应该取最近的一条数据，这里我乱写的。后面会修改
+            mav.addObject("acctlogtotal", acctloglist.get(0).get("NEW_BALANCE"));
         }
 
     	return mav;
@@ -171,7 +171,10 @@ public class MyAcctController {
     	
 	    List<Map<String, Object>> acctloglist=myAcctService.queryAcctBalanceLog(user_id,Integer.parseInt(type),Integer.parseInt(pageNum),Integer.parseInt(pageSize),monthKey);
 	    
-    	return acctloglist.size();
+	    if (acctloglist != null) {
+	    	return 	(Integer) acctloglist.get(0).get("NEW_BALANCE");
+		}
+    	return  -1;
     }
     
     

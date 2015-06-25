@@ -110,11 +110,12 @@ function searchClick(obj){
 //筛选 排序 关键字查询搜索 都是调用这个函数
 function queryList(type,monthKey,pageNum)
 {	
-	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize};	
+	var user_id = $("#user_id").val();
+	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize,"user_id":user_id};	
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/test/acct/acctBalance/2",
+		   url: $('#baseRoot').val() + "/acct/acctBalancePagePostData",
 		   data: param, //服务器只能接收json字符串
 		   success: function(data){
 			 $('#datagrid').html(data);
@@ -127,11 +128,12 @@ function queryList(type,monthKey,pageNum)
 //
 function loadMoreData(type,monthKey,pageNum)
 {	
-	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize};	
+	var user_id = $("#user_id").val;
+	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize,"user_id":user_id};	
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/test/acct/acctBalance/2",
+		   url: $('#baseRoot').val() + "/acct/acctBalancePagePostData",
 		   data: param, //服务器只能接收json字符串
 		   success: function(data){
 		     $('#datagrid').append(data);

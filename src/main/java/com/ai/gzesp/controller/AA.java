@@ -57,63 +57,63 @@ public class AA {
 		// pageSize: 每页返回条目数量
 
 		Map<String, Object> item1 = new HashMap<String, Object>();
-		item1.put("orderType", "代客下单1");
-		item1.put("createTime", "2015 －04 －17");
-		item1.put("orderNum", "1234568363738883874478747");
-		item1.put("payNum", "501");
-		item1.put("state", "审核中");
+		item1.put("TRADE_TYPE", "代客下单1");
+		item1.put("UPDATE_TIME", "2015 －04 －17");
+		item1.put("ORDER_ID", "1234568363738883874478747");
+		item1.put("FEE", "501");
+		item1.put("AUDIT_STATE", "审核中");
 
 		Map<String, Object> item2 = new HashMap<String, Object>();
-		item2.put("orderType", "代客下单2");
-		item2.put("orderNum", "1234568363738883874478747");
-		item2.put("createTime", "2015 －04 －18");
-		item2.put("payNum", "502");
-		item2.put("state", "审核未通过");
+		item2.put("TRADE_TYPE", "代客下单2");
+		item2.put("ORDER_ID", "1234568363738883874478747");
+		item2.put("UPDATE_TIME", "2015 －04 －18");
+		item2.put("FEE", "502");
+		item2.put("AUDIT_STATE", "审核未通过");
 
 		Map<String, Object> item3 = new HashMap<String, Object>();
-		item3.put("orderType", "代客下单3");
-		item3.put("orderNum", "1234568363738883874478747");
-		item3.put("createTime", "2015 －04 －19");
-		item3.put("payNum", "503");
-		item3.put("state", "审核已通过");
+		item3.put("TRADE_TYPE", "代客下单3");
+		item3.put("ORDER_ID", "1234568363738883874478747");
+		item3.put("UPDATE_TIME", "2015 －04 －19");
+		item3.put("FEE", "503");
+		item3.put("AUDIT_STATE", "审核已通过");
 
 		Map<String, Object> item4 = new HashMap<String, Object>();
-		item4.put("orderType", "代客下单4");
-		item4.put("orderNum", "1234568363738883874478747");
-		item4.put("createTime", "2015 －04 －20");
-		item4.put("payNum", "504");
-		item4.put("state", "已打款");
+		item4.put("TRADE_TYPE", "代客下单4");
+		item4.put("ORDER_ID", "1234568363738883874478747");
+		item4.put("UPDATE_TIME", "2015 －04 －20");
+		item4.put("FEE", "504");
+		item4.put("AUDIT_STATE", "已打款");
 
 		Map<String, Object> item5 = new HashMap<String, Object>();
-		item5.put("orderType", "代客下单4");
-		item5.put("orderNum", "1234568363738883874478747");
-		item5.put("createTime", "2015 －04 －20");
-		item5.put("payNum", "504");
-		item5.put("state", "已打款");
+		item5.put("TRADE_TYPE", "代客下单4");
+		item5.put("ORDER_ID", "1234568363738883874478747");
+		item5.put("UPDATE_TIME", "2015 －04 －20");
+		item5.put("FEE", "504");
+		item5.put("AUDIT_STATE", "已打款");
 		Map<String, Object> item6 = new HashMap<String, Object>();
-		item6.put("orderType", "代客下单4");
-		item6.put("orderNum", "1234568363738883874478747");
-		item6.put("createTime", "2015 －04 －20");
-		item6.put("payNum", "504");
-		item6.put("state", "已打款");
+		item6.put("TRADE_TYPE", "代客下单4");
+		item6.put("ORDER_ID", "1234568363738883874478747");
+		item6.put("UPDATE_TIME", "2015 －04 －20");
+		item6.put("FEE", "504");
+		item6.put("AUDIT_STATE", "已打款");
 		Map<String, Object> item7 = new HashMap<String, Object>();
-		item7.put("orderType", "代客下单4");
+		item7.put("TRADE_TYPE", "代客下单4");
 //		item7.put("orderNum", "1234568363738883874478747");
-		item7.put("createTime", "2015 －04 －20");
-		item7.put("payNum", "504");
-		item7.put("state", "已打款");
+		item7.put("UPDATE_TIME", "2015 －04 －20");
+		item7.put("FEE", "504");
+		item7.put("AUDIT_STATE", "已打款");
 		Map<String, Object> item8 = new HashMap<String, Object>();
-		item8.put("orderType", "代客下单4");
+		item8.put("TRADE_TYPE", "代客下单4");
 //		item8.put("orderNum", "1234568363738883874478747");
-		item8.put("createTime", "2015 －04 －20");
-		item8.put("payNum", "504");
-		item8.put("state", "已打款");
+		item8.put("UPDATE_TIME", "2015 －04 －20");
+		item8.put("FEE", "504");
+		item8.put("AUDIT_STATE", "已打款");
 		Map<String, Object> item9 = new HashMap<String, Object>();
-		item9.put("orderType", "代客下单4");
-		item9.put("createTime", "2015 －04 －20");
-		item9.put("orderNum", "1234568363738883874478747");
-		item9.put("payNum", "504");
-		item9.put("state", "已打款");
+		item9.put("TRADE_TYPE", "代客下单4");
+		item9.put("UPDATE_TIME", "2015 －04 －20");
+		item9.put("ORDER_ID", "1234568363738883874478747");
+		item9.put("FEE", "504");
+		item9.put("AUDIT_STATE", "已打款");
 
 		costList.add(item1);
 		costList.add(item2);
@@ -146,8 +146,9 @@ public class AA {
 		Map<String, Object> rspMap = new HashMap<String, Object>();
 		rspMap.put("sumTitle", "总收入:");
 		rspMap.put("sumNum", "10000");
+		rspMap.put("sumTitle", "总收入:");
 		rspMap.put("title", "标题1");
-		rspMap.put("costList", costList);
+		rspMap.put("acctloglist", costList);
 		rspMap.put("monthList", monthList);
 		
 		

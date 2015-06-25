@@ -117,8 +117,8 @@
 		  ) tt
 		  
 		  <![CDATA[  
-			  where Rownum <= (${pageNum}*${pageSize})) table_alias
-			  where table_alias.rowno >= (${pageNum}-1)*${pageSize}
+			  where Rownum <= (${page_num}*${page_size})) table_alias
+			  where table_alias.rowno >= (${page_num}-1)*${page_size}
 		 	]]>
 	</select>
 

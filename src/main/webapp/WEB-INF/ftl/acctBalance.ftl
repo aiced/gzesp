@@ -76,7 +76,7 @@
 				<li class = "row border_bottom">
 				<div class = "row_left">
 					<p class = "row_left_title">${item.TRADE_TYPE} </p>
-					<#if (item.orderNum) > 
+					<#if (item.ORDER_ID) > 
 						<span class = "row_left_order"> (订单号：${item.ORDER_ID}) </span>
 					</#if>
 					<p class = "row_left_time">${item.UPDATE_TIME}</p>

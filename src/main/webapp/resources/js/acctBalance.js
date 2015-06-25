@@ -110,6 +110,7 @@ function searchClick(obj){
 //筛选 排序 关键字查询搜索 都是调用这个函数
 function queryList(type,monthKey,pageNum)
 {	
+	
 	var user_id = $("#user_id").val();
 	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize,"user_id":user_id};	
 	$.ajax({
@@ -117,13 +118,25 @@ function queryList(type,monthKey,pageNum)
 		   contentType:"application/json", //发送给服务器的内容编码类型
 		   url: $('#baseRoot').val() + "/acct/acctBalancePagePostData",
 		   data: param, //服务器只能接收json字符串
+		   async: false,
 		   success: function(data){
 			 $('#datagrid').html(data);
-		     	setSum();
 		     	resetListStyle();
 		   }
 		});
 	
+	$.ajax({
+		   type: "POST",
+		   contentType:"application/json", //发送给服务器的内容编码类型
+		   url: $('#baseRoot').val() + "/acct/acctBalanceTotalPostData",
+		   data: param, //服务器只能接收json字符串
+		   async: false,
+		   success: function(data){
+//			  取数值
+		     setSum();
+		   }
+		});
+		
 }
 //
 function loadMoreData(type,monthKey,pageNum)
@@ -135,9 +148,9 @@ function loadMoreData(type,monthKey,pageNum)
 		   contentType:"application/json", //发送给服务器的内容编码类型
 		   url: $('#baseRoot').val() + "/acct/acctBalancePagePostData",
 		   data: param, //服务器只能接收json字符串
+		   async: false,
 		   success: function(data){
 		     $('#datagrid').append(data);
-		     	setSum();
 		 		resetListStyle();
 		   }
 		});
@@ -150,8 +163,6 @@ function resetListStyle() {
 //	得到两个 元素数组。
 	var nums =document.getElementsByName("row_right_num");
 	var audits =document.getElementsByName("row_right_audit");	
-//	var withdrawal_a  = document.getElementById("withdrawal_a");
-	var withdrawal_a = $("#withdrawal_a")[0];
 	if(getTypeIndex() == 2 )
 	{
 		   for(var i=0;i<nums.length;i++){

@@ -116,7 +116,7 @@ function queryList(type,monthKey,pageNum)
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/acct/acctBalancePagePostData",
+		   url: $('#baseRoot').val() + "/shopManage/acct/acctBalancePagePostData",
 		   data: param, //服务器只能接收json字符串
 		   async: false,
 		   success: function(data){
@@ -128,12 +128,15 @@ function queryList(type,monthKey,pageNum)
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/acct/acctBalanceTotalPostData",
+		   url: $('#baseRoot').val() + "/shopManage/acct/acctBalanceTotalPostData",
 		   data: param, //服务器只能接收json字符串
 		   async: false,
 		   success: function(data){
 //			  取数值
-		     setSum();
+			if(data == -1){
+				return;
+			}
+		    setSum(data);
 		   }
 		});
 		
@@ -146,7 +149,7 @@ function loadMoreData(type,monthKey,pageNum)
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/acct/acctBalancePagePostData",
+		   url: $('#baseRoot').val() + "/shopManage/acct/acctBalancePagePostData",
 		   data: param, //服务器只能接收json字符串
 		   async: false,
 		   success: function(data){
@@ -209,7 +212,7 @@ function setSum(sum) {
 		totle = "当月"+ totle;
 	}	
 	$('#sumTitle').text(totle);
-	$('#sumNum').text("100");
+	$('#sumNum').text(sum);
 
 }
 

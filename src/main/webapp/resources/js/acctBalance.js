@@ -120,7 +120,7 @@ function queryList(type,monthKey,pageNum)
 		   data: param, //服务器只能接收json字符串
 		   async: false,
 		   success: function(data){
-			   alert(data);
+//			   alert(data);
 			 $('#datagrid').html(data);
 		     	resetListStyle();
 		   }
@@ -134,10 +134,7 @@ function queryList(type,monthKey,pageNum)
 		   async: false,
 		   success: function(data){
 //			  取数值
-		    alert(data);	
-			if(data == -1){
-				return;
-			}
+//		    alert(data);	
 		    setSum(data);
 		   }
 		});
@@ -215,6 +212,9 @@ function setSum(sum) {
 	}	
 	$('#sumTitle').text(totle);
 	$('#sumNum').text(sum);
+	if(sum == -1){
+		$('#sumNum').text("0");
+	}
 
 }
 

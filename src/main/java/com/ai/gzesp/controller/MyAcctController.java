@@ -154,7 +154,7 @@ public class MyAcctController {
     
     @RequestMapping("/acct/acctBalanceTotalPostData")
     @ResponseBody
-    public int acctBalanceTotalPostData(@RequestBody String inputParam){  
+    public String acctBalanceTotalPostData(@RequestBody String inputParam){  
     	//收支明细通过Type
     	
 //    	type : //订单类型 0 , 1 ,2 (收入，支出，提现)，默认为0；
@@ -172,9 +172,9 @@ public class MyAcctController {
 	    List<Map<String, Object>> acctloglist=myAcctService.queryAcctBalanceLog(user_id,Integer.parseInt(type),Integer.parseInt(pageNum),Integer.parseInt(pageSize),monthKey);
 	    
 	    if ((acctloglist != null ) && (acctloglist.size() > 0)) {
-	    	return 	(Integer) acctloglist.get(0).get("NEW_BALANCE");
+	    	return 	acctloglist.get(0).get("NEW_BALANCE").toString();
 		}
-    	return  -1;
+    	return  "-1";
     }
     
     

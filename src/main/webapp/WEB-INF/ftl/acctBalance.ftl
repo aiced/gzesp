@@ -65,14 +65,14 @@
 
 	<div >
 		<div id = "list_head" class = "border_bottom border_top rel">
-			<span id = "sumTitle" class = "list_title_left_text abs">${sumTitle}</span>
+			<span id = "sumTitle" class = "list_title_left_text abs">${acctlogtotal}</span>
 			<span id = "sumNum" class = "list_title_right_text abs">${NEW_BALANCE}</span>
 		</div>
 		<ul id = "datagrid">			
-		<#if (costList?size == 0) > 
+		<#if (acctloglist?size == 0) > 
 		   	没有账单
 		<#else>
-			<#list costList as item>
+			<#list acctloglist as item>
 				<li class = "row border_bottom">
 				<div class = "row_left">
 					<p class = "row_left_title">${item.TRADE_TYPE} </p>

@@ -65,8 +65,8 @@
 
 	<div >
 		<div id = "list_head" class = "border_bottom border_top rel">
-			<span id = "sumTitle" class = "list_title_left_text abs">${acctlogtotal}</span>
-			<span id = "sumNum" class = "list_title_right_text abs">${NEW_BALANCE}</span>
+			<span id = "sumTitle" class = "list_title_left_text abs">总收入</span>
+			<span id = "sumNum" class = "list_title_right_text abs">${acctlogtotal}</span>
 		</div>
 		<ul id = "datagrid">			
 		<#if (acctloglist?size == 0) > 

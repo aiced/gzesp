@@ -1,4 +1,4 @@
-var pageSize = 5;
+var pageSize = 10;
 
 $(document).ready(function (){  
 //	//滚动加载
@@ -147,7 +147,7 @@ function queryList(type,monthKey,pageNum)
 //
 function loadMoreData(type,monthKey,pageNum)
 {	
-	var user_id = $("#user_id").val;
+	var user_id = $("#user_id").val();
 	var param = {"type":type, "monthKey":monthKey,"pageNum":pageNum,"pageSize":pageSize,"user_id":user_id};	
 	$.ajax({
 		   type: "POST",

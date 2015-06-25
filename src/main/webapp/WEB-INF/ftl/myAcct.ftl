@@ -116,7 +116,7 @@
                 </a>
             </div>
             <div class="list-group">
-                <a onclick="isSetPwd(this);" href="../acctBalance/${acctinfo.USER_ID}/1/15" class="list-group-item">
+                <a onclick="isSetPwd(this);" href="../acctBalance/${acctinfo.USER_ID}/1/10" class="list-group-item">
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/xinxi.png">
                     	收支明细

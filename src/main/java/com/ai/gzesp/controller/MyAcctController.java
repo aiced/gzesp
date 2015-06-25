@@ -125,7 +125,7 @@ public class MyAcctController {
     
     @RequestMapping("/acct/acctBalancePagePostData")
     public ModelAndView acctBalancePagePostData(@RequestBody String inputParam){  
-    	//收支明细通过Type
+    	//收支明细
     	
 //    	type : //订单类型 0 , 1 ,2 (收入，支出，提现)，默认为0；
 //		monthKey: 按月份查询，默认所有数据
@@ -146,8 +146,6 @@ public class MyAcctController {
 	    if(acctlogpagelist != null)
 	    {
           mav.addObject("acctloglist",acctlogpagelist);
-//          List<Map<String, Object>> acctloglist=myAcctService.queryAcctBalanceLog(user_id,Integer.parseInt(type),Integer.parseInt(pageNum),Integer.parseInt(pageSize),monthKey);
-//          mav.addObject("acctlogtotal", acctloglist.size());//这个地方 应该取最近的一条数据，这里我乱写的。后面会修改
 	    }
     	
     	return mav;

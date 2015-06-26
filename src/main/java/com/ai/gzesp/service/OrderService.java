@@ -509,7 +509,7 @@ public class OrderService {
     	TdOrdDCMSSTATE record = new TdOrdDCMSSTATE();
     	record.setOrderId(CommonUtil.string2Long(orderId));
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
-    	record.setCmsType("0");
+    	//record.setCmsType("0");
     	record.setCmsState("00");
     	record.setAddTime(DateUtil.getNow());
     	

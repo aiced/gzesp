@@ -25,13 +25,13 @@
 			
 			<li class = "border_bottom">
 				<em> 安全手机 </em>	
-				<input class= "input_nolmal" type="text"  placeholder="输入手机号" id="test">				
+				<input class= "input_nolmal" type="text"  placeholder="输入手机号" id="txtPhone" name="txtPhone">				
 			</li>
 			
 			<li >
 				<em> 验证码 </em>	
-				<input class= "input_validation" type="text"  placeholder="输入验证码" id="test">				
-				<a id = "validation" class = "fright"> 获取验证码 </a	>		
+				<input class= "input_validation" type="text"  placeholder="输入验证码" id="txtCode" name="txtCode" disabled='true'>				
+				<a id = "validation" class = "fright" onclick="getCode();"> 获取验证码 </a	>		
 			</li>
 		</ul>
 		
@@ -40,7 +40,7 @@
 		</a>
 		
 		<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
-		
+		<input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 		</div>
 </body>
 </html>

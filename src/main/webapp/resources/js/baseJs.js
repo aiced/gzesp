@@ -208,6 +208,32 @@ function  checkPhoneNum(strPhoneNum)
 		});
 	return bReturn;
 }
+
+//判断手机号是否已经注册过
+//这个方面和上面方法相同，写渣了。
+function  checkPhoneNum_New(strPhoneNum)
+{
+	var bReturn=false;
+	var param = {"PhoneNum":strPhoneNum};
+	$.ajax({
+		   type: "POST",
+		   url: "/esp/common/checkPhoneNum",
+		   data: param,
+		   async: false,
+		   success: function(bRet){
+			   //alert(bRet);
+			   if (!bRet) {
+				   bReturn=false;
+			   }
+			   else
+			   {
+				   bReturn=true;
+			   }
+		   }
+		});
+	return bReturn;
+}
+
 //判断订单号是否已经申请过退款
 function  checkRefundOrderId(strOrderId)
 {
@@ -275,7 +301,7 @@ function SetRemainTime() {
     }  
     else {  
         curCount--;  
-        $(m_btnName).text(curCount + "秒内输入验证码");  
+        $(m_btnName).text(curCount + "秒内输入");  
     }  
 }  
 
@@ -291,7 +317,7 @@ function sendMessage(strPhone,btnName,flag) {
     }
     //设置button效果，开始计时  
     $(m_btnName).attr("disabled", "true");  
-    $(m_btnName).text(curCount + "秒内输入验证码");  
+    $(m_btnName).text(curCount + "秒内输入");  
     InterValObj = setInterval("SetRemainTime()", 1000); //启动计时器，1秒执行一次  
 //向后台发送处理数据  
 //    $.ajax({  

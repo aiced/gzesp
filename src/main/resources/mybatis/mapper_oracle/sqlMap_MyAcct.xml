@@ -5,7 +5,7 @@
 	<select id="queryAcctByUserId" resultType="java.util.HashMap">
 	select a.USER_ID,
 	       ACCT_ID,
-	       BALANCE/1000 as BALANCE,
+	       trunc(BALANCE/1000,2) as BALANCE,
 	       ACCT_TYPE,
 	       ACCT_STATUS,
 	       b.PASSWORD,
@@ -102,11 +102,11 @@
 	            else
 	              '未知'                           
 	       end trade_type,
-	       T1.old_balance/1000 as old_balance,  
- 	       T1.new_balance/1000 as new_balance,
-	       T1.fee/1000 as fee,
+	       trunc(T1.old_balance/1000,2) as old_balance,  
+ 	       trunc(T1.new_balance/1000,2) as new_balance,
+	       trunc(T1.fee/1000,2) as fee,
 	       T1.update_time,
-	       T2.withdraw_fee/1000 as withdraw,
+	       trunc(T2.withdraw_fee/1000,2) as withdraw,
 	       case when T2.audit_state ='01' then
 	         '审核中'
 	         else
@@ -164,11 +164,11 @@
 		                            else
 		                              '未知'                           
 		                       end trade_type,
-						       T1.old_balance/1000 as old_balance,  
-					 	       T1.new_balance/1000 as new_balance,
-						       T1.fee/1000 as fee,
+						       trunc(T1.old_balance/1000,2) as old_balance,  
+					 	       trunc(T1.new_balance/1000,2) as new_balance,
+						       trunc(T1.fee/1000,2) as fee,
 						       T1.update_time,
-						       T2.withdraw_fee/1000 as withdraw,
+						       trunc(T2.withdraw_fee/1000,2) as withdraw,
 		                       case when T2.audit_state ='01' then
 		                         '审核中'
 		                         else

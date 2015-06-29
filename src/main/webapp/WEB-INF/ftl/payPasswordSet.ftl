@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="${resRoot}/js/payPasswordSet.js?v=${resVer}"></script>
 	
 	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     
 </head>
 <body>
@@ -31,23 +32,22 @@
 		<ul class = "border_top border_bottom">
 			<li class = "border_bottom">
 				<em> 设置密码: </em>	
-				<input class= "input_nolmal" type="password"  placeholder="必填" id="txtpwd" name='txtpwd'>				
+				<input class= "input_nolmal" type="password"  placeholder="必填" id="txtpwd" name='txtpwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
-			
 			<li class = "border_bottom">
 				<em> 确认密码: </em>	
-				<input class= "input_nolmal" type="password"  placeholder="必填" id="txtrepwd" name='txtrepwd'>				
+				<input class= "input_nolmal" type="password"  placeholder="必填" id="txtrepwd" name='txtrepwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em> 安全手机: </em>	
-				<input class= "input_nolmal" type="text"  placeholder="必填" id="txtphone" name='txtphone'>				
+				<input class= "input_nolmal" type="text"  placeholder="必填" id="txtPhone" name='txtPhone' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em> 验证码 :</em>	
-				<input class= "input_validation" type="text"  placeholder="必填" id="txtverify">				
-				<a id = "validation" class = "fright"> 输入验证码 </a	>		
+				<input class= "input_validation" type="text"  placeholder="必填" id="txtCode" onfocus="doFocus(this);" onblur="doBlur(this);" disabled='true'>
+				<a id = "validation" class = "fright" > 输入验证码 </a>		
 			</li>
 		</ul>
 		
@@ -56,6 +56,7 @@
 		</a>
         <input type="hidden" id="hide_update_time" name="hide_update_time" value=${acctinfo.UPDATE_TIME}>
         <input type="hidden" id="hide_user_id" name="hide_user_id" value=${acctinfo.USER_ID}>
+		<input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 	</div>
 
 </body>

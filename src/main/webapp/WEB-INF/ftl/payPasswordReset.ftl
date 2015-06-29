@@ -24,13 +24,13 @@
 			<ul class = "border_top border_bottom">
 			
 			<li class = "border_bottom">
-				<em> 请输入新密码: </em>	
-				<input class= "input_nolmal" type="text"  placeholder="" id="txtpwd" name='txtpwd'>				
+				<em> 新密码: </em>	
+				<input class= "input_nolmal" type="password"  placeholder="" id="txtpwd" name='txtpwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li >
-				<em> 请确定密码: </em>	
-				<input class= "input_nolmal" type="text"  placeholder="" id="txtrepwd" name='txtrepwd'>				
+				<em> 确认密码: </em>	
+				<input class= "input_nolmal" type="password"  placeholder="" id="txtrepwd" name='txtrepwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 		</ul>
 		

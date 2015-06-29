@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="${resRoot}/css/payPasswordResetVerify.css?v=${resVer}" rel="stylesheet">  
 	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/payPasswordResetVerify.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
 
 
 </head>
@@ -25,13 +26,13 @@
 			
 			<li class = "border_bottom">
 				<em> 安全手机 </em>	
-				<input class= "input_nolmal" type="text"  placeholder="输入手机号" id="txtPhone" name="txtPhone">				
+				<input class= "input_nolmal" type="text"  placeholder="输入手机号" id="txtPhone" name="txtPhone" onblur="doBlur(this);" onfocus="doFocus(this);">				
 			</li>
 			
 			<li >
 				<em> 验证码 </em>	
-				<input class= "input_validation" type="text"  placeholder="输入验证码" id="txtCode" name="txtCode" disabled='true'>				
-				<a id = "validation" class = "fright" onclick="getCode();"> 获取验证码 </a	>		
+				<input class= "input_validation" type="text"  placeholder="输入验证码" id="txtCode" name="txtCode" disabled='true' onblur="doBlur(this);" onfocus="doFocus(this);">				
+				<a id = "validation" class = "fright" onclick="getCode(this);"> 获取验证码 </a>		
 			</li>
 		</ul>
 		

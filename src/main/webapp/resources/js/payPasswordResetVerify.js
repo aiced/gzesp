@@ -3,19 +3,19 @@ $(function(){
 	
 });
 function initBind(){
-	var validation = document.getElementById("validation");
+	//var validation = document.getElementById("validation");
 	var save = document.getElementById("next");
 
-	validation.onclick = function() {
+/*	validation.onclick = function() {
 	    return validationClick(this);
-	};
+	};*/
 	
 	save.onclick = function() {
 	    return saveClick(this);
 	};
 }
 
-function validationClick(){
+/*function validationClick(){
 //	var subTitle = document.getElementById("subTitle");
 //	if(subTitle.innerHTML == "设置"){
 //		alert('点击了设置');
@@ -23,9 +23,9 @@ function validationClick(){
 //		alert('点击了重置');
 //saveClicksaveClick
 //	}
-	alert("点击验证");
-}
 
+}
+*/
 function isTextEmpty()
 {
 	if (!$("#txtPhone").val()) {
@@ -55,21 +55,70 @@ function getNowDate()
   return s;	
 }
 
+function doBlur(param)
+{
+	var iRet=-1;
+	var id=$(param).attr("id");
+	if (id == "txtPhone") {
+		
+		if (!$("#txtPhone").val()) {
+			iRet=11;
+			return opReturn(iRet);
+		}
+		if (!isPhoneNum($("#txtPhone").val())) {
+			iRet=12;
+			return opReturn(iRet);
+		}
+		if (checkPhoneNum_New($("#txtPhone").val())){
+			iRet=13;
+			return opReturn(iRet);
+		}
+	}
+	else if(id=="txtCode")
+	{
+		if(!$("#txtCode").val())
+		{
+			iRet=21;
+			return opReturn(iRet);
+		}
+		if($("#txtCode").val()!=code)
+		{
+			iRet=22;
+			return opReturn(iRet);
+		}
+		if(getNowDate() - $("#hide_code_date").val()>1800)
+		{
+			iRet=23;
+			return opReturn(iRet);
+		}
+	}
+	
+	iRet=00;
+	return opReturn(iRet);
+}
+
+function doFocus(param)
+{
+	$(param).val("");
+}
 function checkCode()
 {
 	$("#hide_code_date").val(getNowDate());
 	 
 	if (!$("#txtPhone").val()) {
 		iRet=11;
+		return opReturn(iRet);
 	}
 	if (!isPhoneNum($("#txtPhone").val())) {
 		iRet=12;
+		return opReturn(iRet);
 	}
-	//校验绑定的预留手机号码
-	if(!$("#txtCode").val())
-	{
-		iRet=21;
+	if (checkPhoneNum_New($("#txtPhone").val())){
+		iRet=13;
+		return opReturn(iRet);
 	}
+
+	iRet=00;
 	return opReturn(iRet);	
 }
 function getCode()
@@ -78,8 +127,8 @@ function getCode()
 	{
 		return;
 	}
-  	//这里开始做验证码操作 0是注册模板 1是支付模板
-  	var bRet=sendMessage($("#txtphonenum").val(),"#btnCode","0");
+	//短信模板 记得更新
+  	var bRet=sendMessage($("#txtPhone").val(),"#validation","0");
   	if(bRet)
   	{
   		$("#txtCode").attr("disabled",false); 
@@ -91,27 +140,35 @@ function checkData()
 	var iRet=-1;
 	if (!$("#txtPhone").val()) {
 		iRet=11;
+		return opReturn(iRet);
 	}
 	if (!isPhoneNum($("#txtPhone").val())) {
 		iRet=12;
+		return opReturn(iRet);
 	}
-	//校验绑定的预留手机号码
+	if (checkPhoneNum_New($("#txtPhone").val())){
+		iRet=13;
+		return opReturn(iRet);
+	}
 	if(!$("#txtCode").val())
 	{
 		iRet=21;
+		return opReturn(iRet);
 	}
 	if($("#txtCode").val()!=code)
 	{
 		iRet=22;
+		return opReturn(iRet);
 	}
 	if(getNowDate() - $("#hide_code_date").val()>1800)
 	{
 		iRet=23;
+		return opReturn(iRet);
 	}
 	
 	iRet=00;
-	
 	return opReturn(iRet);
+
 }
 
 
@@ -120,7 +177,7 @@ function checkData()
 //00：成功！
 //11：手机号不能为空
 //12：手机号格式不正确
-//13：请填写绑定时的预留手机号码
+//13：请填写注册时的手机号码
 //21：验证码不能为空
 //22：验证码不正确
 //23：验证码超时
@@ -129,7 +186,7 @@ function opReturn(iRet)
 {
 	switch (iRet) {
 	case 00:
-		alert("操作成功！");
+		//alert("操作成功！");
 		return true
 	case 11:
 		alert("手机号不能为空！");
@@ -138,7 +195,7 @@ function opReturn(iRet)
 		alert("手机号格式不正确");
 		return false;
 	case 13:
-		alert("与绑定时预留的手机号不匹配");
+		alert("请填写注册时的手机号码");
 		return false;
 	case 21:
 		alert("验证码不能为空！");
@@ -153,10 +210,6 @@ function opReturn(iRet)
 		return false;
 	}
 }
-
-
-
-
 
 function saveClick(){
 	

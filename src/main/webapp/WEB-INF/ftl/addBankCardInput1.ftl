@@ -12,6 +12,17 @@
 	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/addBankCardInput.js?v=${resVer}"></script>	
 	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
+	
+	
+	<script src="${resRoot}/js/jquery.1.7.2.min.js"></script>
+    <script src="${resRoot}/js/mobiscroll_002.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_004.js" type="text/javascript"></script>
+	<link href="${resRoot}/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
+	<link href="${resRoot}/css/mobiscroll.css" rel="stylesheet" type="text/css">
+	<script src="${resRoot}/js/mobiscroll.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_003.js" type="text/javascript"></script>
+	<script src="${resRoot}/js/mobiscroll_005.js" type="text/javascript"></script>
+	<link href="${resRoot}/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
     
 </head>
 <body>
@@ -46,7 +57,7 @@
 			
 			<li class = "border_bottom">
 				<em> 卡类型 </em>	
-				<select id = "cardtype_select" class= "" tabindex="1">
+				<select id = "cardType_select" class= "" tabindex="0">
 					<option value="-1">--选择卡类型--</option>
 					<option value="1">借记卡</option>
 					<option value="2">信用卡</option>
@@ -55,11 +66,7 @@
 			
 			<li id = "validity_li" class = "border_bottom" style="display : none">
 				<em class = "em_normal"> 有效期 </em>	
-					<select id = "validity_select" class= "" tabindex="1">
-					<option value="-1">--选择有效期--</option>
-					<option value="1">2015-08</option>
-					<option value="2">2015-09</option>
-				</select> 	
+				<input value="" class="" readonly="readonly" name="search_select" id="search_select" type="text">
 			</li>
 			
 			<li id = "CVN2_li" class = "border_bottom"  style="display : none">

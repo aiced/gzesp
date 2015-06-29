@@ -141,16 +141,13 @@ public class AA {
 			System.out.println("######################################");
 			System.out.println("######################################");
 		}
-		List<String> monthList = readMonthFile();
 
 		Map<String, Object> rspMap = new HashMap<String, Object>();
 		rspMap.put("sumTitle", "总收入:");
 		rspMap.put("sumNum", "10000");
 		rspMap.put("sumTitle", "总收入:");
 		rspMap.put("title", "标题1");
-		rspMap.put("acctloglist", costList);
-		rspMap.put("monthList", monthList);
-		
+		rspMap.put("acctloglist", costList);		
 		
 		// 点击tab，点击搜索，加载更多查询
 		if (inputParam.length() != 0) {
@@ -160,65 +157,4 @@ public class AA {
 		return new ModelAndView("acctBalance.ftl", rspMap);
 
 	}
-
-	public static List<String> readMonthFile() {  	    
-    	List<String> monthList = Arrays.asList(
-    		"2015-06",
-			"2015-07",
-			"2015-08",
-			"2015-09",
-			"2015-10",
-			"2015-11",
-			"2015-12",
-			"2016-01",
-			"2016-02",
-			"2016-03",
-			"2016-04",
-			"2016-05",
-			"2016-06",
-			"2016-07",
-			"2016-08",
-			"2016-09",
-			"2016-10",
-			"2016-11",
-			"2016-12",
-			"2017-01",
-			"2017-02",
-			"2017-03",
-			"2017-04",
-			"2017-05",
-			"2017-06",
-			"2017-07",
-			"2017-08",
-			"2017-09",
-			"2017-10",
-			"2017-11",
-			"2017-12",
-			"2018-01",
-			"2018-02",
-			"2018-03",
-			"2018-04",
-			"2018-05",
-			"2018-06",
-			"2018-07",
-			"2018-08",
-			"2018-09",
-			"2018-10",
-			"2018-11",
-			"2018-12",
-			"2019-01",
-			"2019-02",
-			"2019-03",
-			"2019-04",
-			"2019-05",
-			"2019-06",
-			"2019-07",
-			"2019-08",
-			"2019-09",
-			"2019-10",
-			"2019-11",
-			"2019-12"		);
-    	
-			
-		return monthList;	    
-    }}
+}

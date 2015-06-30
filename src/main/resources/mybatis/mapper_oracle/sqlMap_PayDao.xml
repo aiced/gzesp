@@ -41,6 +41,15 @@
 	
 	<update id="updateOrdDPay">
          update ord_d_pay
+            set pay_state = #{pay_state},
+                pay_mode = #{pay_mode},
+                pay_time = sysdate
+          where order_id = ${order_id}
+            and pay_mode in ('15', '30', '40')
+	</update>	
+	
+	<update id="updateOrdDPay_bak">
+         update ord_d_pay
             set pay_state = #{pay_state}
           where order_id = ${order_id}
             <if test="pay_mode != null">

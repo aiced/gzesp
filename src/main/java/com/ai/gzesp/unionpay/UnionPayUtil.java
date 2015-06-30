@@ -57,6 +57,38 @@ public class UnionPayUtil {
     }
     
     /**
+     * 银联接口：生成 银行卡绑定接口 发送报文<br>
+     * 使用第2套商户号参赛
+     * @param param
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static Map<String, String> genBindReq2(UnionPayParam param){
+        log.debug("【银联支付：创建bind请求原始数据map】");
+        //原始请求报文map
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
+        xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
+        xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
+        xmlMap.put(UnionPayAttrs.TradeType, param.getBind_trade_type()); //交易类型银行卡绑定（0120）
+        xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
+        xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
+        xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons2.bmMerId); // 前置平台获批后分配的商户身份ID
+        xmlMap.put(UnionPayAttrs.timeStamp, DateUtils.getCurentTime()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, param.getBind_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.accNo, param.getBank_card_no());  //银行卡号
+        xmlMap.put(UnionPayAttrs.cvn2, param.getBank_card_cvn() == null ? "" : param.getBank_card_cvn()); //储蓄卡没有cvn，null在后面getbyte方法会报错
+        xmlMap.put(UnionPayAttrs.currencyCode, UnionPayCons.currencyCode); //交易货币代码（156）
+        xmlMap.put(UnionPayAttrs.Nbr, param.getPhone_no()); //手机号
+        xmlMap.put(UnionPayAttrs.Name, param.getFull_name()); //姓名
+        xmlMap.put(UnionPayAttrs.certificateCode, param.getId_card_no());  //身份证号
+        xmlMap.put(UnionPayAttrs.expireDate, param.getBank_card_expire_date() == null ? "" : param.getBank_card_expire_date()); //储蓄卡没有有效期
+        xmlMap.put(UnionPayAttrs.cardType, param.getCard_type()); //卡类型（信用卡:01或借记卡:02）
+
+        //return genByteReq(xmlMap);
+        return xmlMap;
+    }
+    
+    /**
      * 银联接口：生成 银行卡绑定关系查询接口 发送报文<br>
      *
      * @param param
@@ -506,6 +538,7 @@ public class UnionPayUtil {
             return null;
         } 
     }
+    
     
     /**
      * 调用mina客户端 发送byte[] 报文<br>

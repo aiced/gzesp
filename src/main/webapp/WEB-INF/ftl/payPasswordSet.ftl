@@ -24,7 +24,7 @@
 	        	<div id="top_middle">密码设置</div>
 	        </div> 
 
-	<div class = "container">
+	<div class = "divContainer">
  
 	
 	<br/>

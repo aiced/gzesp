@@ -21,7 +21,7 @@
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">安全验证</div>
 	        </div> 
-		<div class = "container">
+		<div class = "divContainer">
 			<br/>
 			<ul class = "border_top border_bottom">
 			

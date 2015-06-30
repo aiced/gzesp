@@ -15,7 +15,7 @@
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 	        </div> 
-<div class = "container">
+<div class = "divContainer">
 		<br/>
 	    <br/>
 		<p class = "header">请绑定持卡人本人的银行卡</p>

@@ -1,0 +1,32 @@
+ul {
+    padding: 8px 10px;
+}
+
+ul li {
+    margin: 15px 0px;
+    background: #ffffff;
+    padding: 5px 10px;
+}
+
+ul li p {
+    height: 30px;
+    line-height: 30px;
+    font-size: 13px;
+}
+ul li span {
+    height: 30px;
+    line-height: 30px;
+    font-size: 18px;
+    right: 10px;
+    bottom: 8px;
+    color: red;
+}
+
+ul li .title {
+    color: #363636;
+}
+
+ul li .status, .date {
+    color: #B1B2B1;
+}
+

@@ -31,7 +31,7 @@
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">添加银行卡</div>
 	        </div> 
-	<div class = "container">
+	<div class = "divContainer">
 		<p class = "header">请绑定持卡人本人的银行卡</p>
 		<ul class = "border_top border_bottom">
 			

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>收支明细</title>
-	
+	 <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
 	<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     <link rel="stylesheet" href="${resRoot}/css/base.css?v=${resVer}" rel="stylesheet">  
     <link rel="stylesheet" href="${resRoot}/css/acctBalance.css?v=${resVer}" rel="stylesheet">  
@@ -27,13 +27,14 @@
 	
 </head>
 <body>
+    <div id="top">
+       	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+       	<div id="top_middle">我的账户</div>
+       	<div id="top_right"></div>
+    </div>
+    <div class="dv_clear"></div>
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
-   		  <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">${title}</div>
-	      </div> 
-
 	<div class = "container">
 	<!-- topbar  -->
 		<div class = "border_bottom" style = "height : 40px">

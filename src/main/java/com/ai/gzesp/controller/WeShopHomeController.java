@@ -67,11 +67,11 @@ public class WeShopHomeController {
     		mav.addObject("storename", list.get(0).getStoreName());//姓名
     		mav.addObject("phone", list.get(0).getPhoneNumber()); //手机号
     		mav.addObject("weixin", list.get(0).getWeixinId()); //微信
-    		mav.addObject("userimage",list.get(0).getUserImg());          
+    		mav.addObject("userimage",list.get(0).getUserImg());    
+    		mav.addObject("usertype",list.get(0).getUsertype());
     	} 
         
-        
-        
+
         //根据userid查询访问量
     	List<Map<String, Object>> ViewCountlist = viewSql.getViewCountByUserID(strUserID);
         //根据userid查询销售量

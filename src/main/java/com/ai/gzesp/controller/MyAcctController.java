@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.common.Constants;
+import com.ai.gzesp.dao.sql.RegistSql;
 import com.ai.gzesp.service.MyAcctService;
 import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.utils.DESUtil;
@@ -28,9 +31,9 @@ public class MyAcctController {
 	
     @Autowired
     private MyAcctService myAcctService;
+	@Resource 
+	RegistSql registSql;
 
-	
-	
     @RequestMapping("/acct/myAcct/{user_id}")
 	public ModelAndView initAcct(@PathVariable("user_id") String user_id)
 	{
@@ -78,7 +81,7 @@ public class MyAcctController {
             	mav.addObject("acctbankinfolist",acctbankinfolist);
             }
     	}  
-        
+    	mav.addObject("user_id",user_id);
         return mav;
     }
     
@@ -284,6 +287,11 @@ public class MyAcctController {
     	
     	ModelAndView mav = new ModelAndView("addBankCardInput1.ftl");
     	mav.addObject("user_id",user_id);
+    	
+        List<Map<String, Object>> bankList=registSql.getBankList("BANK_TYPE");
+        
+        mav.addObject("bankList", bankList);
+        
     	return mav;
     }
     @RequestMapping("/acct/addBankCardInput1/postData")

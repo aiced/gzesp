@@ -186,6 +186,18 @@
 		 	]]>
 
 	</select>
+	
+	<insert id="insertAccount">
+		insert into ACT_D_ACCOUNT
+		  (user_id, acct_id, balance, acct_type, acct_status, version)
+		values
+		  (#{user_id},
+		   #{acct_id},
+		   ${balance},
+		   #{acct_type},
+		   #{acct_status},
+		   #{version})
+	</insert>
 
 	
 	

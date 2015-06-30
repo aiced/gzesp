@@ -21,6 +21,11 @@ public class MyAcctService {
     public Map<String, String> queryAcctByUserId(String user_id) {
         return myAcctDao.queryAcctByUserId(user_id);
     }
+    //插入账号信息表
+    public int insertAccount(String user_id,String acct_id,String balance,String acct_type,String acct_status,String version)
+    {
+    	return myAcctDao.insertAccount(user_id,acct_id,balance,acct_type,acct_status,version);
+    }
     
     //插入数据 密码表
     public int insertAcctPwd(String user_id,String user_pwd){

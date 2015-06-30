@@ -14,6 +14,7 @@
     <result column="STORE_ID" property="storeId" jdbcType="VARCHAR" />
     <result column="STORE_NAME" property="storeName" jdbcType="VARCHAR" />
     <result column="WXOPEN_ID" property="wxopenId" jdbcType="VARCHAR" />
+    <result column="USER_TYPE" property="usertype" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -81,7 +82,7 @@
   </sql>
   <sql id="Base_Column_List" >
     ID, USER_ID, USER_NAME, USER_IMG, USER_PASSWORD, WEIXIN_ID, EMAIL, PHONE_NUMBER, 
-    STATUS, STORE_ID, STORE_NAME, WXOPEN_ID
+    STATUS, STORE_ID, STORE_NAME, WXOPEN_ID,USER_TYPE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -119,12 +120,12 @@
     insert into AUR_D_AUTHINFO (ID, USER_ID, USER_NAME, 
       USER_IMG, USER_PASSWORD, WEIXIN_ID, 
       EMAIL, PHONE_NUMBER, STATUS, 
-      STORE_ID, STORE_NAME, WXOPEN_ID
+      STORE_ID, STORE_NAME, WXOPEN_ID,USER_TYPE
       )
     values (#{id,jdbcType=DECIMAL}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{userImg,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR}, #{weixinId,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{storeId,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, #{wxopenId,jdbcType=VARCHAR}
+      #{storeId,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, #{wxopenId,jdbcType=VARCHAR},#{usertype,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdAurDAUTHINFO" >
@@ -166,6 +167,9 @@
       <if test="wxopenId != null" >
         WXOPEN_ID,
       </if>
+      <if test="usertype != null" >
+        USER_TYPE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -203,6 +207,9 @@
       </if>
       <if test="wxopenId != null" >
         #{wxopenId,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        #{usertype,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -251,6 +258,9 @@
       <if test="record.wxopenId != null" >
         WXOPEN_ID = #{record.wxopenId,jdbcType=VARCHAR},
       </if>
+      <if test="record.usertype != null" >
+        USER_TYPE = #{record.usertype,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -270,6 +280,7 @@
       STORE_ID = #{record.storeId,jdbcType=VARCHAR},
       STORE_NAME = #{record.storeName,jdbcType=VARCHAR},
       WXOPEN_ID = #{record.wxopenId,jdbcType=VARCHAR}
+      USER_TYPE = #{record.usertype,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -310,6 +321,9 @@
       <if test="wxopenId != null" >
         WXOPEN_ID = #{wxopenId,jdbcType=VARCHAR},
       </if>
+      <if test="usertype != null" >
+        USER_TYPE = #{usertype,jdbcType=VARCHAR},
+      </if>
     </set>
     where ID = #{id,jdbcType=DECIMAL}
   </update>
@@ -326,6 +340,7 @@
       STORE_ID = #{storeId,jdbcType=VARCHAR},
       STORE_NAME = #{storeName,jdbcType=VARCHAR},
       WXOPEN_ID = #{wxopenId,jdbcType=VARCHAR}
+      USER_TYPE = #{usertype,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=DECIMAL}
   </update>
 </mapper>

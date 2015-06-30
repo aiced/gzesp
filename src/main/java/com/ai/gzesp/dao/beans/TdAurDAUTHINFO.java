@@ -123,7 +123,7 @@ public class TdAurDAUTHINFO implements Serializable {
      * @Fields AUR_D_AUTHINFO.WXOPEN_ID :微信openId
      */
     private String wxopenId;
-
+    private String usertype;
     /**
      * @return ID
      */
@@ -145,7 +145,15 @@ public class TdAurDAUTHINFO implements Serializable {
         this.id = id;
     }
 
-    /**
+    public String getUsertype() {
+		return usertype;
+	}
+
+	public void setUsertype(String usertype) {
+		this.usertype = usertype;
+	}
+
+	/**
      * @return 用户名
      */
     /**

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     
 <title>添加银行卡</title>
+	 <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
 	<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     <link rel="stylesheet" href="${resRoot}/css/base.css?v=${resVer}" rel="stylesheet">  
     <link rel="stylesheet" href="${resRoot}/css/addBankCardInput.css?v=${resVer}" rel="stylesheet">  
@@ -13,8 +14,6 @@
 	<script type="text/javascript" src="${resRoot}/js/addBankCardInput.js?v=${resVer}"></script>	
 	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
 	
-	
-	<script src="${resRoot}/js/jquery.1.7.2.min.js"></script>
     <script src="${resRoot}/js/mobiscroll_002.js" type="text/javascript"></script>
 	<script src="${resRoot}/js/mobiscroll_004.js" type="text/javascript"></script>
 	<link href="${resRoot}/css/mobiscroll_002.css" rel="stylesheet" type="text/css">
@@ -26,11 +25,17 @@
     
 </head>
 <body>
-	   <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">添加银行卡</div>
-	        </div> 
-	<div class = "container">
+    <!--top_start-->
+    <div id="top">
+       	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+       	<div id="top_middle">添加银行卡</div>
+       	<div id="top_right" onclick="rightClick(this)">
+			<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+		</div>
+    </div>
+    <div class="dv_clear"></div>
+    <!--top_end-->
+	<div class = "divContainer">
 		<p class = "header">请绑定持卡人本人的银行卡</p>
 		<ul class = "border_top border_bottom">
 			
@@ -46,12 +51,23 @@
 			
 			<li class = "border_bottom">
 				<em> 开户银行 </em>	
-				<select id = "band_select" class= "" tabindex="1">
+<!-- 				<select id = "band_select" class= "" tabindex="1">
 					<option value="-1">--选择银行卡--</option>
 					<option value="1">中国招商银行</option>
 					<option value="2">中国建设银行</option>
-				</select> 				
-				
+				</select> 	 -->			
+                <select class="form-control" name="band_select" id="band_select" tabindex="1">
+                	<option value="请选择开户银行">请选择开户银行</option>
+		      		<#if (bankList?size==0)>
+						<option value="数据加载失败">数据加载失败</option>
+		        	<#else>
+						<#list bankList as item>						
+						    <option value="${item.param_code}">
+							${item.param_value}
+							</option>
+						</#list>
+		 			</#if>
+                </select>
 			</li>
 			
 			

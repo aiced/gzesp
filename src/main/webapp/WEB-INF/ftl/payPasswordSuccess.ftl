@@ -19,7 +19,7 @@
 	        </div> 
 	<br/>
 	<br/>
-	<div class = "container">
+	<div class = "divContainer">
 		<div class = "imgContainer">
 				<img src="${resRoot}/image/myacct/right.png"> 
 		</div>	

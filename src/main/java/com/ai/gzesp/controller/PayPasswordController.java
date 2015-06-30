@@ -82,5 +82,42 @@ public class PayPasswordController {
     	mav.addObject("title", "添加银行卡"); //页面title
     	return mav;
     }
+    
+    @RequestMapping("/set/phoneTopUp")
+    public ModelAndView phoneTopUp(@RequestBody String inputParam){    	
+        ModelAndView mav = new ModelAndView("phoneTopUp.ftl");
+    	mav.addObject("title", "手机充值"); //页面title
+    	return mav;
+    }
+    
+    @RequestMapping("/set/phoneTopUpCards")
+    public ModelAndView phoneTopUpCards(@RequestBody String inputParam){    	
+        ModelAndView mav = new ModelAndView("phoneTopUpCards.ftl");
+    	mav.addObject("title", "购买充值卡"); //页面title
+    	return mav;
+    }
+    
+
+    
+    @RequestMapping("/set/phoneTradRecordSearch")
+    public ModelAndView phoneTradRecordSearch(@RequestBody String inputParam){    	
+        ModelAndView mav = new ModelAndView("phoneTradRecordSearch.ftl");
+    	mav.addObject("title", "交易记录查询"); //页面title
+    	return mav;
+    }
+    
+    @RequestMapping("/set/phoneTradRecordList")
+    public ModelAndView phoneTradRecordList(@RequestBody String inputParam){    	
+        ModelAndView mav = new ModelAndView("phoneTradRecordList.ftl");
+    	mav.addObject("title", "交易记录"); //页面title
+    	return mav;
+    }
+    
+    @RequestMapping("/set/phoneTradRecordDetail")
+    public ModelAndView phoneTradRecordDetail(@RequestBody String inputParam){    	
+        ModelAndView mav = new ModelAndView("phoneTradRecordDetail.ftl");
+    	mav.addObject("title", "详情"); //页面title
+    	return mav;
+    }
 
 }

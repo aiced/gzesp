@@ -1,0 +1,35 @@
+.detailContainer{
+    margin: 15px 10px;
+    padding: 15px 15px;
+    background: #ffffff;
+}
+.detailContainer .title{
+    height: 40px;
+    line-height: 40px;
+    font-size: 13px;
+}
+
+.detailContainer .title .sum{
+    color: red;
+    font-size: 18px;
+    margin-right: 5px;
+}
+
+ul{
+    padding: 10px 0px;
+
+}
+ul li {
+    font-size: 13px;
+    height: 45px;
+    line-height: 45px;
+}
+
+ul li .li_title{
+    color:#B5B5B5;
+}
+ul li .li_content{
+    color:#767676;
+}
+
+

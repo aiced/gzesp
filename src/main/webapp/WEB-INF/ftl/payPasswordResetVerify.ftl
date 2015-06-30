@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <title>安全验证</title>
+	 <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
 	<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     <link rel="stylesheet" href="${resRoot}/css/base.css?v=${resVer}" rel="stylesheet">  
     <link rel="stylesheet" href="${resRoot}/css/payPasswordResetVerify.css?v=${resVer}" rel="stylesheet">  
@@ -20,7 +21,7 @@
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">安全验证</div>
 	        </div> 
-		<div class = "container">
+		<div class = "divContainer">
 			<br/>
 			<ul class = "border_top border_bottom">
 			

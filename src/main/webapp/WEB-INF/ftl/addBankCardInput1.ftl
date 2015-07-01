@@ -13,8 +13,9 @@
 	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/addBankCardInput.js?v=${resVer}"></script>	
 	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
-	
-	
+	<script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
+    <script src="${resRoot}/js/bankCardCheck.js?v=${resVer}"></script>
+
 	<script src="${resRoot}/js/jquery.1.7.2.min.js"></script>
     <script src="${resRoot}/js/mobiscroll_002.js" type="text/javascript"></script>
 	<script src="${resRoot}/js/mobiscroll_004.js" type="text/javascript"></script>
@@ -33,7 +34,6 @@
        	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
        	<div id="top_middle">添加银行卡</div>
        	<div id="top_right" onclick="rightClick(this)">
-			<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 		</div>
     </div>
     <div class="dv_clear"></div>
@@ -44,21 +44,16 @@
 			
 			<li class = "border_bottom">
 				<em> 持卡人 </em>	
-				<input class="input_normal" type="text"  placeholder="" id="txtusername">				
+				<input class="input_normal" type="text"  placeholder="" id="txtusername" onfocus="doFocus(this);">				
 			</li>
 			
 			<li class = "border_bottom" >
 				<em> 身份证 </em>	
-				<input class="input_normal"  type="text"  placeholder="" id="txtpersonalid">				
+				<input class="input_normal"  type="text"  placeholder="" id="txtpersonalid" onfocus="doFocus(this);" >				
 			</li>
 			
 			<li class = "border_bottom">
-				<em> 开户银行 </em>	
-<!-- 				<select id = "band_select" class= "" tabindex="1">
-					<option value="-1">--选择银行卡--</option>
-					<option value="1">中国招商银行</option>
-					<option value="2">中国建设银行</option>
-				</select> 	 -->			
+				<em> 开户银行 </em>			
                 <select  name="band_select" id="band_select" tabindex="1">
                 	<option value="请选择开户银行">请选择开户银行</option>
 		      		<#if (bankList?size==0)>
@@ -76,7 +71,7 @@
 			
 			<li class = "border_bottom">
 				<em> 卡类型 </em>	
-				<select id = "cardType_select" class= "" tabindex="0">
+				<select id = "cardType_select" class= "" name="cardType_select" tabindex="0" >
 					<option value="-1">--选择卡类型--</option>
 					<option value="1">借记卡</option>
 					<option value="2">信用卡</option>
@@ -85,28 +80,28 @@
 			
 			<li id = "validity_li" class = "border_bottom" style="display : none">
 				<em class = "em_normal"> 有效期 </em>	
-				<input value="" class="" readonly="readonly" name="search_select" id="search_select" type="text">
+				<input value="" class="" readonly="readonly" name="date_select" id="date_select" type="text" onfocus="doFocus(this);">
 			</li>
 			
 			<li id = "CVN2_li" class = "border_bottom"  style="display : none">
 				<em class = "em_long"> CVN2 <em>(卡背后三位)</em> </em>	
-				<input class= "input_normal input_validation" type="text"  placeholder="" id="txt3cord">				
+				<input  class= "input_normal input_validation" type="text"  placeholder="" id="txtcord" name="txtcord" onfocus="doFocus(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em> 卡号 </em>	
-				<input class="input_normal"  type="text"  placeholder="" id="txtcardno" name='txtcardno'>				
+				<input class="input_normal"  type="text"  placeholder="" id="txtcardno" name='txtcardno' onfocus="doFocus(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em class = "em_long"> 银行预留手机 </em>	
-				<input class= "input_normal input_validation" type="text"  placeholder="" id="txtphone">				
+				<input class= "input_normal input_validation" type="text"  placeholder="" id="txtphone" onfocus="doFocus(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em class = "em_normal"> 验证码 </em>	
-				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify">				
-				<a id = "validation" class = "fright"> 输入验证码 </a	>		
+				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify" onfocus="doFocus(this);">				
+				<a id = "validation" class = "fright" onclick="getCode();"> 输入验证码 </a	>		
 			</li>
 			
 
@@ -122,6 +117,7 @@
 	
 		</a>
 		<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
+		<input type="hidden" value='' id="hide_code_date" name="hide_code_date">
 	</div>
 
 </body>

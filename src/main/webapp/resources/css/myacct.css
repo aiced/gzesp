@@ -265,7 +265,7 @@ body
 {
     color:#999;
     font-size: 16px;
-
+	margin-left:10px;
 }
 .sp2
 {
@@ -275,7 +275,7 @@ body
 }
 .sp2>img
 {
-    margin-left: 5px;
+    margin-left: 20px;
 }
 .sp1>span
 {

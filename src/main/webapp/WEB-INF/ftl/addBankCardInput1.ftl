@@ -59,7 +59,7 @@
 					<option value="1">中国招商银行</option>
 					<option value="2">中国建设银行</option>
 				</select> 	 -->			
-                <select class="form-control" name="band_select" id="band_select" tabindex="1">
+                <select  name="band_select" id="band_select" tabindex="1">
                 	<option value="请选择开户银行">请选择开户银行</option>
 		      		<#if (bankList?size==0)>
 						<option value="数据加载失败">数据加载失败</option>

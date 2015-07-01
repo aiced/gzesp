@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dto.PayInfo;
+import com.ai.gzesp.service.MyAcctService;
 import com.ai.gzesp.service.PayService;
 import com.ai.gzesp.service.UnionPayService;
 import com.ai.gzesp.service.WXPayService;
@@ -43,7 +44,10 @@ public class PayController {
 	
 	@Autowired
 	private UnionPayService unionPayService;
-
+	
+	//edit_by_wenh_2015_6_30
+    @Autowired
+    private MyAcctService myAcctService;
     /**
      * 选择支付方式(在线支付or货到付款) 以及选择 银联or支付宝 <br>
      * 〈功能详细描述〉
@@ -209,5 +213,46 @@ public class PayController {
     	payService.afterRefundSuccess("15", true, order_id);
     }
     
+    @RequestMapping("/insteadPay/{user_id}/{order_id}")
+    public ModelAndView initInsteadPay(@PathVariable("user_id") String user_id,@PathVariable("order_id") String order_id){
+    	//代客下单
+    	
+    	Double dtopaymoney=0.00;
+    	Double dacctbanlance=0.00;
+    	
+        ModelAndView mav = new ModelAndView("insteadPay.ftl");
+    	//ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+"2015000000000000");
+        
+        
+    	//查询数据库
+    	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
+        
+    	if (acctinfo != null && acctinfo.size()>0) {
+            mav.addObject("acctinfo",acctinfo);
+            dacctbanlance=Double.valueOf(acctinfo.get("BALANCE").toString());
+            System.out.println(acctinfo);
+		}
+    
+    	
+    	//查询数据库
+    	Map<String,Object> topay_money=myAcctService.queryToPayMoneyByOrderId(order_id);
+    	if (topay_money != null && topay_money.size()>0) {
+    		mav.addObject("topay_money",topay_money.get("TOPAY_MONEY"));
+    		dtopaymoney=Double.valueOf(topay_money.get("TOPAY_MONEY").toString());
+    	}
+    	
+    	//查询数据库
+        //查询数据库
+        List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
 
+        if(acctbankinfolist != null && acctbankinfolist.size()>0)
+        {	
+        	mav.addObject("acctbankinfolist",acctbankinfolist);
+        }
+        
+    	mav.addObject("left_money",dtopaymoney-dacctbanlance);
+    	mav.addObject("user_id",user_id);
+        mav.addObject("order_id",order_id);
+        return mav;
+    }
 }

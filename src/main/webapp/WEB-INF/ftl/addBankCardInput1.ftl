@@ -26,11 +26,18 @@
 	<link href="${resRoot}/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
     
 </head>
+
 <body style="background-color:transparent">
-	   <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">添加银行卡</div>
-	        </div> 
+    <!--top_start-->
+    <div id="top">
+       	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+       	<div id="top_middle">添加银行卡</div>
+       	<div id="top_right" onclick="rightClick(this)">
+			<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+		</div>
+    </div>
+    <div class="dv_clear"></div>
+    <!--top_end-->
 	<div class = "divContainer">
 		<p class = "header">请绑定持卡人本人的银行卡</p>
 		<ul class = "border_top border_bottom">
@@ -47,12 +54,23 @@
 			
 			<li class = "border_bottom">
 				<em> 开户银行 </em>	
-				<select id = "band_select" class= "" tabindex="1">
+<!-- 				<select id = "band_select" class= "" tabindex="1">
 					<option value="-1">--选择银行卡--</option>
 					<option value="1">中国招商银行</option>
 					<option value="2">中国建设银行</option>
-				</select> 				
-				
+				</select> 	 -->			
+                <select class="form-control" name="band_select" id="band_select" tabindex="1">
+                	<option value="请选择开户银行">请选择开户银行</option>
+		      		<#if (bankList?size==0)>
+						<option value="数据加载失败">数据加载失败</option>
+		        	<#else>
+						<#list bankList as item>						
+						    <option value="${item.param_code}">
+							${item.param_value}
+							</option>
+						</#list>
+		 			</#if>
+                </select>
 			</li>
 			
 			

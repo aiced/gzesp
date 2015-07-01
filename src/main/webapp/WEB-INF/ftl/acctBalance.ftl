@@ -26,14 +26,15 @@
 		
 	
 </head>
-<body style = " background-color:#f0f0f0">
+<body>
+    <div id="top">
+       	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+       	<div id="top_middle">我的账户</div>
+       	<div id="top_right"></div>
+    </div>
+    <div class="dv_clear"></div>
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
-   		  <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">${title}</div>
-	      </div> 
-
 	<div class = "divContainer">
 	<!-- topbar  -->
 		<div class = "tapDiv border_bottom" style = "height : 40px">

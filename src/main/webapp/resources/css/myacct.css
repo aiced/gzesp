@@ -243,3 +243,65 @@ body
 	margin-top:15px;
 	vertical-align:middle;
 }
+
+.div_container_top{
+    height: 40px;
+    line-height: 40px;
+    margin: 10px;
+}
+.div_container_top1
+{
+    height: 120px;
+    line-height: 50px;
+    background-color: #f6f6f6;
+    padding: 10px;
+}
+.div_container_top2
+{
+    width: 100%;
+    height: 50px;
+}
+.sp1
+{
+    color:#999;
+    font-size: 16px;
+
+}
+.sp2
+{
+    color:#999;
+    font-size: 12px;
+    float: right;
+}
+.sp2>img
+{
+    margin-left: 5px;
+}
+.sp1>span
+{
+    margin:20px;
+    color:#999;
+    font-size: 12px;
+}
+.div_line
+{
+    background-color: #cccccc;
+    height: 1px;
+    width: 100%;
+}
+.div_container_top3
+{
+    height: 40px;
+    line-height: 40px;
+    background-color: #ffffff;
+}
+.sp3
+{
+    float: left;
+    margin-left: 20px;
+}
+.sp4
+{
+    float: right;
+    margin-right: 20px;
+}

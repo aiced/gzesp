@@ -23,6 +23,9 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+    <script type="text/javascript" src="${resRoot}/js/withdraw.js?v=${resVer}"></script>
+  
+    
     <script type="text/javascript">
     	function doClick(param)
     	{
@@ -35,9 +38,10 @@
 <body>
 <!--top_start-->
 <div id="top">
-    <div id="top_left"></div>
-    <div id="top_middle">提现</div>
-    <div id="top_right"></div>
+	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+   	<div id="top_middle">提现</div>
+   	<div id="top_right">
+	</div>
 </div>
 <div class="dv_clear"></div>
 <!--top_end-->
@@ -65,6 +69,7 @@
 		<center><a href="/esp/shopManage/acct/myBankCardList/${acctinfo.USER_ID}">现在去绑定</a></center>
    	</#if>
 </div>
+<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
 <br>
 <div class="div_container_mid">
     <span>转出金额<label>当前可提现金额${acctinfo.BALANCE}元</label></span>

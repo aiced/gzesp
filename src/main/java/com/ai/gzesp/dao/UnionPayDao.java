@@ -17,12 +17,19 @@ public interface UnionPayDao {
     
     public Map<String, String> querySignCode(@Param("bank_card_no") String bank_card_no);
     
+    public Map<String, String> querySignCode2(@Param("sys_trade_no") String sys_trade_no);
+    
     public int insertBindlog(@Param("pay_id") String pay_id,
             @Param("partition_id") String partition_id, @Param("pay_type") String pay_type,
             @Param("pay_mode") String pay_mode, @Param("pay_state") String pay_state,
             @Param("req_time") String req_time, @Param("req_status") String req_status,
             @Param("req_trade_type") String req_trade_type, @Param("sys_trade_no") String sys_trade_no,
             @Param("order_id") String order_id, @Param("txn_amt") String txn_amt );
+    
+    public int insertBindlog2(@Param("log_id") String log_id,
+            @Param("partition_id") String partition_id, 
+            @Param("req_time") String req_time, @Param("req_trade_type") String req_trade_type, 
+            @Param("sys_trade_no") String sys_trade_no );
 
     public int insertPaylog(@Param("pay_id") String pay_id,
             @Param("partition_id") String partition_id, @Param("pay_type") String pay_type,

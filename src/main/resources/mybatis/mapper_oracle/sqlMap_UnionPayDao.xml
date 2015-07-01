@@ -10,6 +10,14 @@
             and sign_code is not null
 	</select>	
 	
+	<select id="querySignCode2" resultType="java.util.HashMap">
+         select sign_code
+           from ACT_D_BANKCARD
+          where sys_trade_no = #{sys_trade_no}
+            and valid_flag = '1'
+            and sign_code is not null
+	</select>	
+	
 	<insert id="insertSignCode" parameterType="java.util.Map">
 	    insert into SYS_D_UNIONPAY_SIGNCODE 
 	           (ACC_NO, CVN2, NBR, NAME, CERTIFICATE_CODE, EXPIRE_DATE, CURRENCY_CODE, SIGN_CODE, SYS_TRADE_NO, VALID_FLAG)
@@ -30,7 +38,13 @@
         values(${pay_id}, ${partition_id}, #{pay_type}, #{pay_mode}, #{pay_state}, #{req_time}, #{req_status},
                #{req_trade_type}, ${sys_trade_no}, ${order_id}, ${txn_amt}
               )	    
-	</insert>	
+	</insert>
+	
+	<insert id="insertBindlog2">
+        insert into PAY_D_UNIONPAY_LOG
+              (log_id, partition_id, req_time, req_trade_type, sys_trade_no)
+        values(${log_id}, ${partition_id}, #{req_time}, #{req_trade_type}, #{sys_trade_no})	                
+	</insert>		
 
 	<insert id="insertPaylog">
         insert into ord_d_paylog

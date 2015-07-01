@@ -24,36 +24,14 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+	<script type="text/javascript" src="${resRoot}/js/myAcct.js?v=${resVer}"></script>
     
-    
-    <script type="text/javascript">
-    
-    function isSetPwd(param)
-    {
- 		if (!$("#hide_update_time").val())
-  		{
-  			alert("请先点击右上角进行安全设置！");
-  			$(param).attr('href', '#'); 
-  			return false;
-  		}  
-    }
-    function rightClick(param)
-    {
-    	window.location.href='../acctSecurity/'+$("#hide_user_id").val();
-    	
-    }
-   	$(function(){
-   				
-   	});
-   	
-   	
-    </script>
 </head>
 <body>
 
     <!--top_start-->
     <div id="top">
-       	<div id="top_left"></div>
+       	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
        	<div id="top_middle">我的账户</div>
        	<div id="top_right" onclick="rightClick(this)">
 			<span class="glyphicon glyphicon-cog" aria-hidden="true"></span>

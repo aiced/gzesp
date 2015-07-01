@@ -24,6 +24,7 @@ import com.ai.gzesp.dao.beans.TdAurDRELINFO;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.service.TdAurDBASEINFODao;
 import com.ai.gzesp.dao.service.TdAurDRELINFODao;
+import com.ai.gzesp.service.MyAcctService;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.gzesp.utils.MD5Util;
 import com.ai.sysframe.token.Token;
@@ -46,6 +47,9 @@ public class WeShopRegist3Controller {
     @Resource
     TdAurDBASEINFODao tdAurDBASEINFODao;
 	
+    @Autowired
+    private MyAcctService myAcctService;
+    
     Long LGId=0L;
 	
 	
@@ -118,6 +122,7 @@ public class WeShopRegist3Controller {
     	record_aurdauthinfo.setStoreName(strName+"的店铺");//STORE_NAME
     	record_aurdauthinfo.setUserImg(strDefalutImg);
     	record_aurdauthinfo.setWxopenId(strOpenid);
+    	record_aurdauthinfo.setUsertype("1"); //默认插入1，普通能人
     	//record.setCreateTime(DateUtil.getNow());
     	tdAurDAUTHINFODao.insertSelective(record_aurdauthinfo);
     	
@@ -147,8 +152,21 @@ public class WeShopRegist3Controller {
     	//record_aurdbaseinfo.setBankName(strBank);//BANK_NAME
     	//record_aurdbaseinfo.setBankAcct(strBankCardId);//BANK_ACCT
     	tdAurDBASEINFODao.insertSelective(record_aurdbaseinfo);
+    	
+    	
+    	//插入能人账户信息表
+    	myAcctService.insertAccount(
+    			LId.toString(), 
+    			LId.toString()+"2", 
+    			"0", 
+    			"2", 
+    			"1", 
+    			"00000001"
+    			);
+    	
 		mmap.addAttribute("userid",LId.toString());
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
+		
     	return mav;
     } 
     //生成id

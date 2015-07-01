@@ -41,5 +41,7 @@ public class UserService {
     public Map<Object, Object> getUserInfoByOpenId(String open_id){
         return userDao.getUserInfoByOpenId(open_id);
     }
+    
+
 
 }

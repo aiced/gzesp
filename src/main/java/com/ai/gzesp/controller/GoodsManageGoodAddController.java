@@ -41,14 +41,6 @@ public class GoodsManageGoodAddController {
     @RequestMapping("/goodsManageGoodAdd")
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-//<<<<<<< HEAD
-//    	String strUserID = paramsMap.get("userId");
-//    	if(strUserID == null){
-//    		strUserID = "333";
-//    	}
-//    	rcdlist = goodsSql.GetRcdList(); 
-//=======
-    	//String name = paramsMap.get("index");
     	String strUserID = paramsMap.get("userId");
 
     	rcdlist = goodsSql.GetRcdList(strUserID); //根据能人id 查询店长推荐的列表

@@ -26,7 +26,7 @@
 		
 	
 </head>
-<body>
+<body style = " background-color:#f0f0f0">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
    		  <div id="top">
@@ -34,9 +34,9 @@
 	        	<div id="top_middle">${title}</div>
 	      </div> 
 
-	<div class = "container">
+	<div class = "divContainer">
 	<!-- topbar  -->
-		<div class = "border_bottom" style = "height : 40px">
+		<div class = "tapDiv border_bottom" style = "height : 40px">
 			<a id="income_a" class="topbar_a_selected topbar_a rel" >收入
 				<em class ="abs right_line"></em>
 			</a>
@@ -63,7 +63,7 @@
 	</div>	
 	<!-- 列表 -->
 
-	<div >
+	<div class = "sumDiv">
 		<div id = "list_head" class = "border_bottom border_top rel">
 			<span id = "sumTitle" class = "list_title_left_text abs">总收入</span>
 			<span id = "sumNum" class = "list_title_right_text abs">${acctlogtotal}</span>
@@ -73,7 +73,7 @@
 		   	没有账单
 		<#else>
 			<#list acctloglist as item>
-				<li class = "row border_bottom">
+				<li class = "li_row border_bottom">
 				<div class = "row_left">
 					<p class = "row_left_title">${item.TRADE_TYPE} </p>
 					<#if (item.ORDER_ID) > 

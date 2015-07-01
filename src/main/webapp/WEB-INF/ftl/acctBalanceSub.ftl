@@ -1,7 +1,7 @@
 <#if (acctloglist?size == 0) > 
 		<#else>
 			<#list acctloglist as item>
-				<li class = "row border_bottom">
+				<li class = "li_row border_bottom">
 				<div class = "row_left">
 					<p class = "row_left_title">${item.TRADE_TYPE} </p>
 					<#if (item.ORDER_ID) > 

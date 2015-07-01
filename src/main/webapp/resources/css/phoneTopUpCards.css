@@ -1,0 +1,145 @@
+.src{
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+.src img{
+    width: 100%;
+}
+
+.cardsContainer{
+    padding: 0px 5px;
+}
+
+.cardsContainer .cardContainer{
+    width: 50%;
+    padding: 2px 0px;
+    /*background: red;*/
+}
+
+.card{
+    display: block;
+    width: 80%;
+    height: 40px;
+    background: white;
+    margin: 5px auto;
+    border: 1px solid #ADADAD;
+}
+.card .price{
+
+    font-size: 13px;
+    text-align:center;
+    color: #3C3C3C;
+    margin-top: 8px;
+}
+
+.card .realPrice{
+    font-size: 9px;
+    color: #A0A0A0;
+    margin-top: 0px;
+    text-align:center;
+}
+
+
+.cardSelected{
+    display: block;
+    width: 80%;
+    height: 40px;
+    background: white;
+    margin: 5px auto;
+    border: 1px solid #FD990C;
+    /*background: ;*/
+    background-image: url("../image/phoneTopUp/selected.png");
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    background-position:bottom right;
+
+}
+
+.cardSelected .price{
+    font-size: 13px;
+    color: #FD990C;
+    text-align:center;
+    margin-top: 8px;
+}
+
+.cardSelected .realPrice{
+    font-size: 9px;
+    color: #FD990C;
+    margin-top: 0px;
+    text-align:center;
+}
+
+.buyInfo{
+     padding: 25px 20px 15px;
+ }
+.buyInfo span{
+    font-size: 10px;
+    margin-top: 0px;
+    line-height: 27px;
+    height: 27px;
+
+}
+.buyInfo .numContainer{
+    width: 145px;
+    height: 27px;
+    margin: 0px auto;
+}
+
+.buyInfo .numContainer .remove{
+    display: block;
+    width: 27px;
+    height: 27px;
+    background-image: url("../image/phoneTopUp/remove.png");
+    background-size: 18px 18px; 
+    background-position:center;
+    background-repeat: no-repeat;
+    
+}
+
+.buyInfo .numContainer .num{
+    display: block;
+    width: 75px;
+    height: 27px;
+    line-height: 27px;
+    background: white;
+    margin: 0px auto;
+    text-align:center;
+    border: 1px solid #C2C2C2;
+
+}
+
+.buyInfo .numContainer .add{
+    display: block;
+    width: 27px;
+    height: 27px;
+    margin-top: -27px;
+    background-image: url("../image/phoneTopUp/add.png");
+    background-size: 18px 18px; 
+    background-position:center;
+    background-repeat: no-repeat;
+    
+    
+}
+
+
+.buyInfo .payNum{
+    display: block;
+    width: 75px;
+    height: 27px;
+    line-height: 27px;
+    margin: 2px auto;
+    text-align:center;
+    color: red;
+}
+
+
+.inputContainer{
+    padding: 20px 30px 10px;
+    font-size: 13px;
+
+}
+
+.top-upContainer{
+    margin: 0px 10px;
+}

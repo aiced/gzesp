@@ -17,7 +17,7 @@
     <script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     
 </head>
-<body>
+<body style="background-color:transparent">
 
  		   <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>

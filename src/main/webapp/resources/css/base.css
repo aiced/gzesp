@@ -36,6 +36,10 @@ a {
     outline-style: none;
     text-decoration: none;
 }
+a:focus, a:hover {
+    text-decoration: none;
+}
+
 
 .container {
     padding: 10px auto;

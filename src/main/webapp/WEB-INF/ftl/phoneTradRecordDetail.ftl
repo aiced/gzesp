@@ -14,7 +14,7 @@
     <script type="text/javascript" src="${resRoot}/js/phoneTradRecordDetail.js"></script>
 
 </head>
-<body>
+<body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
    		  <div id="top">

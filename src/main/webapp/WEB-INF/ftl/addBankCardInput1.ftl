@@ -26,7 +26,7 @@
 	<link href="${resRoot}/css/mobiscroll_003.css" rel="stylesheet" type="text/css">
     
 </head>
-<body>
+<body style="background-color:transparent">
 	   <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">添加银行卡</div>

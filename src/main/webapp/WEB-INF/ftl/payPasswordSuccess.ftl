@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     
 <title>密码设置成功</title>
+	 <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
  	<link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     <link rel="stylesheet" href="${resRoot}/css/base.css?v=${resVer}" rel="stylesheet">  
     <link rel="stylesheet" href="${resRoot}/css/payPasswordSuccess.css?v=${resVer}" rel="stylesheet">  
 	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/payPasswordSuccess.js?v=${resVer}"></script>
 </head>
-<body>
+<body style="background-color:transparent">
 		   <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">设置成功</div>

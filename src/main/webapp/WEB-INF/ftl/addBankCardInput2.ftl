@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="${resRoot}/css/addBankCardInput.css?v=${resVer}" rel="stylesheet">  
 	<script type="text/javascript" src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/addBankCardInput.js?v=${resVer}"></script>
-<body>
+<body style="background-color:transparent">
 		   <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>

@@ -73,6 +73,8 @@ public class PayService {
         }
         else{
         	//暂时不写，等账户功能上了再写
+        	//先删除原记录再插新记录，其实这样有问题，应该判断是否有成功支付记录，成功了页面就不允许再次选择支付模式支付
+        	insertPayInfoBatch(orderId, orderFee, payInfoList);
         }
     }  
     
@@ -214,7 +216,9 @@ public class PayService {
     private int updatePayStateAndIncomeMoney(boolean isSuccess, String orderId, int fee) {
     	int r2 = 0;
         if(isSuccess){
-        	String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
+        	//20150702 ximh 修改，要跳过外呼步骤，所以支付成功直接改成 02: 待处理状态
+        	//String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
+        	String order_state = "02";
         	int income_money = fee; //银联是分，表里是厘
         	//20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
         	//String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));

@@ -93,6 +93,15 @@
           where sys_trade_no = #{sys_trade_no}
 	</update>
 	
+	<update id="updateBindlog2">
+         update PAY_D_UNIONPAY_LOG
+            set resp_trade_type = #{resp_trade_type},
+                result_code = #{result_code},
+                result_desc = #{result_desc},
+                resp_time = #{resp_time}
+          where sys_trade_no = #{sys_trade_no}
+	</update>	
+	
 	<update id="updateBindlogNew">
          update ORD_D_PAYLOG
             set resp_trade_type = #{resp_trade_type},
@@ -142,8 +151,14 @@
 	    update SYS_D_UNIONPAY_SIGNCODE 
 	       set VALID_FLAG = #{valid_flag}
 	     where SIGN_CODE = #{sign_code}
-	</update>	
+	</update>
 	
+	<update id="updateBankCardSignCode">
+	    update ACT_D_BANKCARD 
+	       set VALID_FLAG = #{valid_flag}
+	     where SIGN_CODE = #{sign_code}
+	</update>			
+
 	
 	<select id="queryBindResultRow" resultType="java.util.HashMap">
          select pay_acunt_no sign_code,

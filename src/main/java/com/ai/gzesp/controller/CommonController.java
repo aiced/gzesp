@@ -239,6 +239,7 @@ public class CommonController {
     		strRet=SmsUtils.doSendMessage(strphone,"MB-2015060623","@1@="+strcode);
     		
     	}
+
     	
 		 System.out.println("短信返回值："+strRet);
 		 if (strRet != null && strRet.split("#").length==3)

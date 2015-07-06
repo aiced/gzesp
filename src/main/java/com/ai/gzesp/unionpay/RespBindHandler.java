@@ -5,7 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ai.gzesp.service.UnionPayService;
+import com.ai.gzesp.service.UnionPayService2;
 
 /**
  * 处理 银行卡绑定 接口 响应报文<br> 
@@ -22,7 +22,7 @@ public class RespBindHandler implements IDealUnionPayResp {
      * 业务逻辑处理service
      */
     @Autowired
-    private UnionPayService unionPayService;
+    private UnionPayService2 unionPayService2;
 
     //此方法作废，因为后来银联根据我们的要求改造代码
     //改造前esp系统单独有个签约信息表，每次支付前先查询是否曾经绑定成功过，有就直接取出签约号支付，没有则先绑定接口再支付接口，重复绑定会返回错误码
@@ -41,10 +41,22 @@ public class RespBindHandler implements IDealUnionPayResp {
     }*/
     
     //此为银联改造后新的逻辑方法，绑定接口返回后不再更新 签约信息表，只更新绑定接口日志，并且把签约号字段pay_acunt_no更新上
-    public void dealResp(Map<String, String> respMap) {
+/*    public void dealResp(Map<String, String> respMap) {
     	
         //更新paylog日志表里的接口调用日志, 此处调用了new 的方法
         int r1 = unionPayService.updateBindlogNew(respMap);
+    }*/
+    
+    public void dealResp(Map<String, String> respMap) {
+        //更新 PAY_D_UNIONPAY_LOG 日志表里的接口调用日志
+        int r1 = unionPayService2.updateBindlog2(respMap);
+        //如果应答码是00表示接口调用成功，需要更新ACT_D_BANKCARD信息表，其他应答码都是有问题
+        if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
+            int r2 = unionPayService2.updateBankCardSignCode(respMap);
+        }
+        else{
+            
+        }
     }
 
 }

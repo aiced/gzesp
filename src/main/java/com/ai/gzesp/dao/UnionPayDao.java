@@ -44,6 +44,12 @@ public interface UnionPayDao {
             @Param("req_trade_type") String req_trade_type, @Param("sys_trade_no") String sys_trade_no,
             @Param("order_id") String order_id, @Param("txn_amt") String txn_amt );
     
+    public int insertUnionPaylog2(@Param("log_id") String log_id,
+            @Param("partition_id") String partition_id, @Param("real_order_id") String real_order_id,
+            @Param("req_time") String req_time, @Param("req_status") String req_status,
+            @Param("req_trade_type") String req_trade_type, @Param("sys_trade_no") String sys_trade_no,
+            @Param("order_id") String order_id, @Param("txn_amt") String txn_amt );    
+    
     public int insertBindCancellog(@Param("pay_id") String pay_id,
             @Param("partition_id") String partition_id, @Param("pay_account_no") String pay_account_no,
             @Param("req_time") String req_time, @Param("req_status") String req_status,
@@ -59,6 +65,10 @@ public interface UnionPayDao {
     public int updateBindlog(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
             @Param("resp_time") String resp_time, @Param("sys_trade_no") String sys_trade_no);
+    
+    public int updateBindlog2(@Param("resp_trade_type") String resp_trade_type,
+            @Param("result_code") String result_code, @Param("result_desc") String result_desc,
+            @Param("resp_time") String resp_time, @Param("sys_trade_no") String sys_trade_no);    
     
     public int updateBindlogNew(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
@@ -118,6 +128,9 @@ public interface UnionPayDao {
     
     public int updateSignCode(@Param("sign_code") String sign_code, @Param("valid_flag") String valid_flag,
             @Param("sys_trade_no") String sys_trade_no );
+    
+    public int updateBankCardSignCode(@Param("sign_code") String sign_code, @Param("valid_flag") String valid_flag,
+            @Param("sys_trade_no") String sys_trade_no );    
     
     public int updateSignCodeValidFlag(@Param("sign_code") String sign_code, @Param("valid_flag") String valid_flag);
     

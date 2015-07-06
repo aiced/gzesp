@@ -42,7 +42,7 @@ public class MyAcctController {
         ModelAndView mav = new ModelAndView("myAcct.ftl");
     	
     	//查询数据库
-    	Map<String, String> acctinfo =myAcctService.queryAcctByUserId(user_id);
+    	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
     	if(acctinfo != null)
     	{
             mav.addObject("acctinfo",acctinfo);
@@ -70,7 +70,7 @@ public class MyAcctController {
     	
         ModelAndView mav = new ModelAndView("withdraw.ftl");
         
-       	Map<String, String> acctinfo =myAcctService.queryAcctByUserId(user_id);
+       	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
     	if(acctinfo != null)
     	{
             mav.addObject("acctinfo",acctinfo);
@@ -187,7 +187,7 @@ public class MyAcctController {
 		ModelAndView mav = new ModelAndView("acctSecurity.ftl");
 		
     	//查询数据库
-    	Map<String, String> acctinfo =myAcctService.queryAcctByUserId(user_id);
+    	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
     	if(acctinfo != null)
     	{
             mav.addObject("acctinfo",acctinfo);
@@ -210,7 +210,7 @@ public class MyAcctController {
  		ModelAndView mav = new ModelAndView("payPasswordSet.ftl");
  		
     	//查询数据库
-    	Map<String, String> acctinfo =myAcctService.queryAcctByUserId(user_id);
+    	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
     	if(acctinfo != null)
     	{
             mav.addObject("acctinfo",acctinfo);
@@ -366,5 +366,5 @@ public class MyAcctController {
 //		}
     	return  3; //操作成功
     }
-    
+
 }

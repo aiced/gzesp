@@ -18,7 +18,7 @@ public class MyAcctService {
     @Autowired
     private MyAcctDao myAcctDao;
 	//通过userid 获得账户信息
-    public Map<String, String> queryAcctByUserId(String user_id) {
+    public Map<String, Object> queryAcctByUserId(String user_id) {
         return myAcctDao.queryAcctByUserId(user_id);
     }
     //插入账号信息表
@@ -119,4 +119,9 @@ public class MyAcctService {
     	return myAcctDao.queryAcctBalanceLogPage(user_id,iFlag,page_num,page_size,strDate);
     }
 
+    //通过order_id，查询实付金额
+    public Map<String,Object> queryToPayMoneyByOrderId(String order_id)
+    {
+    	return myAcctDao.queryToPayMoneyByOrderId(order_id);
+    }
 }

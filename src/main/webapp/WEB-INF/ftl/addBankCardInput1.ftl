@@ -44,12 +44,12 @@
 			
 			<li class = "border_bottom">
 				<em> 持卡人 </em>	
-				<input class="input_normal" type="text"  placeholder="" id="txtusername" onfocus="doFocus(this);">				
+				<input class="input_normal" type="text"  placeholder="" id="txtusername" onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom" >
 				<em> 身份证 </em>	
-				<input class="input_normal"  type="text"  placeholder="" id="txtpersonalid" onfocus="doFocus(this);" >				
+				<input class="input_normal"  type="text"  placeholder="" id="txtpersonalid" onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom">
@@ -72,9 +72,9 @@
 			<li class = "border_bottom">
 				<em> 卡类型 </em>	
 				<select id = "cardType_select" class= "" name="cardType_select" tabindex="0" >
-					<option value="-1">--选择卡类型--</option>
-					<option value="1">借记卡</option>
-					<option value="2">信用卡</option>
+					<option value="--选择卡类型--">--选择卡类型--</option>
+					<option value="02">借记卡</option>
+					<option value="01">信用卡</option>
 				</select> 			
 			</li>
 			
@@ -85,26 +85,24 @@
 			
 			<li id = "CVN2_li" class = "border_bottom"  style="display : none">
 				<em class = "em_long"> CVN2 <em>(卡背后三位)</em> </em>	
-				<input  class= "input_normal input_validation" type="text"  placeholder="" id="txtcord" name="txtcord" onfocus="doFocus(this);">				
+				<input  class= "input_normal input_validation" type="text"  placeholder="" id="txtcord" name="txtcord" onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em> 卡号 </em>	
-				<input class="input_normal"  type="text"  placeholder="" id="txtcardno" name='txtcardno' onfocus="doFocus(this);">				
+				<input class="input_normal"  type="text"  placeholder="" id="txtcardno" name='txtcardno' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em class = "em_long"> 银行预留手机 </em>	
-				<input class= "input_normal input_validation" type="text"  placeholder="" id="txtphone" onfocus="doFocus(this);">				
+				<input class= "input_normal input_validation" type="text"  placeholder="" id="txtphone" onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom">
 				<em class = "em_normal"> 验证码 </em>	
 				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify" onfocus="doFocus(this);">				
-				<a id = "validation" class = "fright" onclick="getCode();"> 输入验证码 </a	>		
+				<a id = "validation" class = "fright" onclick="getCode();" onblur="doBlur(this);"> 输入验证码 </a	>		
 			</li>
-			
-
 		</ul>
 		
 		<div style = "margin:15px 15px;font-size:14px;">

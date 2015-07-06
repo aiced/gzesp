@@ -37,12 +37,12 @@ function initBind(){
   	$("#search_select").mobiscroll($.extend(opt['date'], opt['default']));    
     
 	
-	var validation = document.getElementById("validation");
+/*	var validation = document.getElementById("validation");
 	if(validation){
 		validation.onclick = function() {
 		    return validationClick(this);
 		};
-	}
+	}*/
 	var save = document.getElementById("save");
 	if(save){
 		save.onclick = function() {
@@ -72,7 +72,6 @@ function initBind(){
 	});
 	
 	$("#validity_select").change(function(){
-		alert("1111");
 		var index = $("#validity_select").selectedIndex; // 选中索引
 		if(index == 0){
 			return;
@@ -110,6 +109,99 @@ function getNowDate()
   s=vYear+(vMon<10 ? "0" + vMon : vMon)+(vDay<10 ? "0"+ vDay : vDay)+(h<10 ? "0"+ h : h)+(m<10 ? "0" + m : m)+(se<10 ? "0" +se : se);
   return s;	
 }
+
+
+function doBlur(param)
+{
+	var iRet=-1;
+	var id=$(param).attr("id");
+	if (id == "txtusername") {
+		if(!$("#txtusername").val()){
+			iRet=11;
+			return opReturn(iRet);
+		}
+	}
+	else if(id=="txtpersonalid")
+	{
+		if(!$("#txtpersonalid").val()){
+			iRet=21;
+			return opReturn(iRet);
+		}
+		if(!checkEnergyCard($("#txtpersonalid").val()))
+		{
+
+			iRet=22;
+	  		return opReturn(iRet);
+		}
+	}
+	else if(id=="txtcord")
+	{
+		if(!$("#txtcord").val())
+		{
+			iRet=31;
+	  		return opReturn(iRet);
+		}
+		var reg = /^\d*$/;
+		if(!reg.test($("#txtcord").val()))
+		{
+			iRet=32;
+	  		return opReturn(iRet);
+		}
+	}
+	else if(id=="txtcardno")
+	{
+		if(!$("#txtcardno").val()){
+			iRet=41;
+			return opReturn(iRet);
+		}
+		
+		if (!luhmCheck($("#txtcardno").val())) {
+			iRet=42;
+			return opReturn(iRet);
+		}
+	}
+	else if(id=="txtphone")
+	{
+	  	if(!$("#txtphone").val())
+	  	{
+			iRet=51;
+			return opReturn(iRet);
+	  	}
+		if(!isPhoneNum($("#txtphone").val()))
+		{
+			iRet=52;
+			return opReturn(iRet);
+		}
+		if (checkPhoneNum_New($("#txtPhone").val())){
+			iRet=53;
+			return opReturn(iRet);
+		}
+	}	
+	else if(id=="txtverify")
+	{
+		if(!$("#txtverify").val())
+		{
+			iRet=61;
+			return opReturn(iRet);
+		}
+		if($("#txtverify").val()!=code)
+		{
+			iRet=62;
+			return opReturn(iRet);
+		}
+		if(getNowDate() - $("#hide_code_date").val()>1800)
+		{
+			iRet=63;
+			return opReturn(iRet);
+		}	
+	}	
+	
+
+	iRet=00;
+	return opReturn(iRet);
+}
+
+
 
 function doFocus(param)
 {
@@ -159,7 +251,7 @@ function checkData()
 		return opReturn(iRet);
 	}
 	if(!$("#txtpersonalid").val()){
-		iRet=12;
+		iRet=21;
 		return opReturn(iRet);
 	}
 	if(!checkEnergyCard($("#txtpersonalid").val()))
@@ -239,7 +331,11 @@ function checkData()
 		iRet=63;
 		return opReturn(iRet);
 	}	
-	
+	if($("#chkRight").attr("checked")!=true)
+	{
+		iRet=71;
+		return opReturn(iRet);
+	}	
 	iRet=00;
 	return opReturn(iRet);
 }
@@ -264,6 +360,7 @@ function checkData()
 //61:请输入验证码
 //62:验证码不正确
 //63:验证码超时
+//71:请勾选同意用户协议
 
 var bRet=-1;
 function opReturn(iRet)
@@ -319,6 +416,9 @@ function opReturn(iRet)
 	case 63:
 		alert("验证码超时");
 		return false;
+	case 71:
+		alert("请勾选同意用户协议");
+		return false;
 	default:
 		return false;
 	}
@@ -336,8 +436,8 @@ function nextClick(){
 			'bank_no':$('#txtcardno').val(),
 			'valid_flag':"0",
 			'priority':"1",
-			'card_type':"02",
-			'bank_type':"9",
+			'card_type':$('#cardType_select').val(),
+			'bank_type':$('#band_select').val(),
 			
 	};
 	

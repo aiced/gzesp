@@ -15,6 +15,7 @@
     <script type="text/javascript" src="${resRoot}/js/phoneTopUp.js"></script>
 
 </head>
+
 <body>
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>

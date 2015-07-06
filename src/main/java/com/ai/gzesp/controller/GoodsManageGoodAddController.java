@@ -45,7 +45,6 @@ public class GoodsManageGoodAddController {
 
     	rcdlist = goodsSql.GetRcdList(strUserID); //根据能人id 查询店长推荐的列表
     	List<Map<String, Object>> goodsList = null;
-//>>>>>>> cda98479ff777e99dab992d7058040523a03f99d
 		sb = new StringBuffer();
 
 		if(rcdlist.size() != 0){

@@ -27,16 +27,16 @@
 }
 .card .price{
 
-    font-size: 13px;
+    font-size: 14px;
     text-align:center;
     color: #3C3C3C;
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .card .realPrice{
     font-size: 9px;
     color: #A0A0A0;
-    margin-top: 0px;
+    margin-top: -2px;
     text-align:center;
 }
 
@@ -60,13 +60,13 @@
     font-size: 13px;
     color: #FD990C;
     text-align:center;
-    margin-top: 8px;
+    margin-top: 6px;
 }
 
 .cardSelected .realPrice{
     font-size: 9px;
     color: #FD990C;
-    margin-top: 0px;
+    margin-top: -2px;
     text-align:center;
 }
 

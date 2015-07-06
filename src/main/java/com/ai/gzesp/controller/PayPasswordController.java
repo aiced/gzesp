@@ -31,13 +31,13 @@ public class PayPasswordController {
     }
     
 
-//    @RequestMapping("/set/acct/payPasswordSet/{user_id}")
-//  	public ModelAndView initAcct(@PathVariable("user_id") String user_id)
-//  	{
-//        ModelAndView mav = new ModelAndView("payPasswordSet.ftl");
-//      	mav.addObject("title", "密码设置"); //页面title
-//      	return mav ;
-//  	}
+    @RequestMapping("/set/acct/payPasswordSet")
+  	public ModelAndView payPasswordSet(@RequestBody String inputParam)
+  	{
+        ModelAndView mav = new ModelAndView("payPasswordSet.ftl");
+      	mav.addObject("title", "密码设置"); //页面title
+      	return mav ;
+  	}
 	
     
     @RequestMapping("/set/payPasswordResetVerify")

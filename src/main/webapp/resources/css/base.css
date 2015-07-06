@@ -10,6 +10,7 @@ html {
     width: 100%;
     background-color: #f0f0f0;
     height: 100%;
+    -webkit-text-size-adjust:none
 }
 
 body {
@@ -18,8 +19,9 @@ body {
     min-width: 280px;
     min-height: 100%;
     color: #323232;
-    /* 	font-family: "微软雅黑";
-     */	font-family: "黑体";
+/*     	font-family: "微软雅黑";
+ */    	font-family: "黑体";
+    
 }
 
 section,footer,nav,em,mark,p,span,ul,li,ol,h1,h2,h3,h4,input,textarea,div,a,select,div

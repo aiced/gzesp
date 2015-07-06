@@ -21,6 +21,8 @@
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 	      </div> 
+	      
+	      <!-- 加载列表，点击，分页 -->
 <div class="divContainer">
     <ul>
         <li class="rel">

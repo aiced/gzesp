@@ -122,6 +122,10 @@
  
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/weShop/insteadBuy/*" />
+            <bean class="com.ai.sysframe.token.InsteadInterceptor"/>
+		</mvc:interceptor>	
+		<mvc:interceptor>
 			<mvc:mapping path="/**" />
             <bean class="com.ai.sysframe.token.TokenInterceptor"/>
 		</mvc:interceptor>

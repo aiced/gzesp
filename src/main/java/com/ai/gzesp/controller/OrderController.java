@@ -183,7 +183,7 @@ public class OrderController {
     
     @Token(remove=true)
     @RequestMapping("/submitFilledOrder")
-    public ModelAndView submitFilledOrder(@RequestBody String inputParams) throws UnsupportedEncodingException{
+    public ModelAndView submitFilledOrder(HttpServletRequest request, @RequestBody String inputParams) throws UnsupportedEncodingException{
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
     	String orderId = CommonUtil.generateOrderId();
@@ -211,9 +211,18 @@ public class OrderController {
     	//20150420 ximh add，订单生成成功后需要库存数量-1，销量+1，用于后面判断有货无货
     	orderService.updateGoodsAmount(paramsMap.get("goodsId"));
     	
-    	String url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
-    	ModelAndView mav = new ModelAndView(url);
     	
+    	//20150703 ximh modify 提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，跳转到不同的支付页面
+    	boolean isInstead = request.getSession(false).getAttribute("instead") == null ? false : true;
+    	String url = null;
+    	if(isInstead){
+        	url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
+    	}
+    	else{
+        	url = "redirect:/pay/insteadPay/" + paramsMap.get("userId") + "/" + orderId;
+    	}
+    	
+    	ModelAndView mav = new ModelAndView(url);
     	return mav;
     }
     

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.token.Instead;
 
 /**
  * 一级功能：wap端<br> 
@@ -79,5 +80,24 @@ public class WeShopController {
         return mav;
     }
 
+    /**
+     * 店铺管理页面 -> 代客下单
+     * 这边用注解+拦截器的形式往session里存一个instead属性值，
+     * 最后提交订单的时候判断是否有此值，从而区分是代客下单还是普通用户
+     * @param request
+     * @param user_id
+     * @return
+     */
+    @Instead
+    @RequestMapping("/insteadBuy/{user_id}")
+    public ModelAndView insteadBuy(HttpServletRequest request, @PathVariable("user_id") String user_id){
+        //直接session存值也是可以的
+    	//request.getSession(false).setAttribute("instead", user_id);
+		
+    	//session存值后直接跳转到店铺首页
+		String url = "redirect:/weShop/index/" + user_id;
+    	ModelAndView mav = new ModelAndView(url);
+        return mav;
+    }
   
 }

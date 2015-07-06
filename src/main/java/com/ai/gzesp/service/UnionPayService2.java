@@ -36,7 +36,7 @@ public class UnionPayService2 {
     
     /**
      * 银行卡绑定 服务类，调用银联第二套商户号参数 调用 绑定接口
-     * 系统跟踪号 SysTradeNo 由文辉生成并传过来
+     * 银行卡 几大要素 + 系统跟踪号 SysTradeNo 由文辉生成并传过来
      * @param param
      * @return
      */

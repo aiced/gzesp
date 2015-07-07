@@ -27,12 +27,8 @@
   
     
     <script type="text/javascript">
-    	function doClick(param)
-    	{
-    		//alert($(param)[0].tagName);
-			//var id=$(param).attr("id");
-    		//var a=$("#"+id+" :input").attr("checked","checked");
-    	}
+
+    	
     </script>
 </head>
 <body>
@@ -49,9 +45,9 @@
 	<#if (acctbankinfolist?exists)>
 		<#list acctbankinfolist as item>
 		    <div class="radio">
-		        <label id="lab${item_index}" onclick="doClick(this);">
-		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.BANK_TYPE}" >
-                	<span>${item.PARAM_VALUE}
+		        <div id="lab${item_index}" >
+		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.SIGN_CODE}" onclick="doClick(this);">
+                	<label for="optionsRadios${item_index}">${item.PARAM_VALUE}
 	                	<span>
 	                	尾号${item.BANK_NO?substring((item.BANK_NO?length)-4,item.BANK_NO?length)}
 	                	<#if (item.CARD_TYPE =='01')>
@@ -60,8 +56,8 @@
 	                		储蓄卡
 	                	</#if>
 	                	</span>
-                	</span>
-		        </label>
+                	</label>
+		        </div>
 		    </div>
     	</#list>
    	<#else>
@@ -71,8 +67,10 @@
 </div>
 <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
 <br>
-<div class="div_container_mid">
-    <span>转出金额<label>当前可提现金额${acctinfo.BALANCE}元</label></span>
+<div class="div_container_mid form-group" >
+    <span>转出金额
+    	<input type="text" class="input" id="txtbalance" placeholder="当前可提现金额${acctinfo.BALANCE}元" onblur="doBlur(this);">
+	</span>
 </div>
 <div class="div_container_bottom">
     预计在3-7个工作日后打到您的银行账户，请注意查收～
@@ -84,8 +82,11 @@
 <br>
 <br>
 <div class="div_container">
-    <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal">确认转出</button>
+    <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal" onclick="doSubmit(this);">确认转出</button>
 </div>
+    <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
+    <input type="hidden" id="hide_balance" name="hide_balance" value=${acctinfo.BALANCE}>        
+
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -95,7 +96,7 @@
                 <h4 class="modal-title" id="myModalLabel">请输入支付密码</h4>
             </div>
             <div class="modal-body">
-                <span>交通银行<span>尾号2878储蓄卡</span></span>
+                <span id='span_modal'>交通银行<span>尾号2878储蓄卡</span></span>
                 <br>
                 <div class="pwd_container">
                     <div>

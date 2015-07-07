@@ -135,8 +135,21 @@ body
     font-size: 12px;
     color:#999;
 }
-
-
+.div_container>.radio>div>label
+{
+	font-size: 16px;
+}
+.div_container>.radio>div>label>span
+{
+    margin-left: 10px;
+    font-size: 12px;
+    color:#999;
+}
+.div_container_mid>span>input
+{
+	border:0px;
+	height:60px;
+}
 .div_container_mid
 {
     height: 60px;

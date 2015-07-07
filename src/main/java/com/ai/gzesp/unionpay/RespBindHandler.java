@@ -51,12 +51,13 @@ public class RespBindHandler implements IDealUnionPayResp {
         //更新 PAY_D_UNIONPAY_LOG 日志表里的接口调用日志
         int r1 = unionPayService2.updateBindlog2(respMap);
         //如果应答码是00表示接口调用成功，需要更新ACT_D_BANKCARD信息表，其他应答码都是有问题
-        if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
+        /*if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
             int r2 = unionPayService2.updateBankCardSignCode(respMap);
         }
         else{
             
-        }
+        }*/
+        int r2 = unionPayService2.updateBankCardSignCode(respMap); //不管成功失败都要更新卡状态
     }
 
 }

@@ -41,11 +41,12 @@ public class RechargeClient {
 	
     /**
      * 初始化socket连接
+     * 启动(在listener中启动是需要新建一个线程来连接Server，否则web容器会阻塞而无法启动。) 
      */
 	public void initConnector() {
 		connector = new NioSocketConnector();
 		connector.getFilterChain().addLast("logger", new LoggingFilter());
-		connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ByteArrayCodecFactory()));
+		connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new RechargeCodecFactory()));
 		connector.setHandler(rechargeClientHandler); //connector.setHandler(new ClientHandler());
 
 		// 设置心跳过滤器链

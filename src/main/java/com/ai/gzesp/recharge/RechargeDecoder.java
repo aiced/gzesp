@@ -1,4 +1,6 @@
-package com.ai.gzesp.unionpay;
+package com.ai.gzesp.recharge;
+
+import java.nio.charset.Charset;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -6,33 +8,22 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
-/**
- * 字节码数组 解码器<br> 
- * 编写编码器的注意事项：
- * 1、 mina 为 IoSession 写队列里的每个对象调用 ProtocolEncode.encode 方法。
- * 因为业务处理器里写出的都是与编码器对应高层对象，所以可以直接进行类型转换。
- * 2、从 jvm 堆分配 IoBuffer，最好避免使用直接缓存，因为堆缓存一般有更好的性能。
- * 3、开发人员不需要释放缓存， mina 会释放。
- * 4、在 dispose 方法里可以释放编码所需的资源。
- *
- * @author xmh
- * @see [相关类/方法]（可选）
- * @since [产品/模块版本] （可选）
- */
-public class ByteArrayDecoder extends CumulativeProtocolDecoder {
-    private static Logger log = Logger.getLogger(ByteArrayDecoder.class); 
+import com.ai.gzesp.unionpay.ByteArrayDecoder;
+
+public class RechargeDecoder extends CumulativeProtocolDecoder {
+    private static Logger log = Logger.getLogger(RechargeDecoder.class); 
     
     /** 
-      * 这个方法的返回值是重点： 
-      * 1、当内容刚好时，返回false，告知父类接收下一批内容 
-      * 2、内容不够时需要下一批发过来的内容，此时返回false，这样父类 CumulativeProtocolDecoder 
-      *    会将内容放进IoSession中，等下次来数据后就自动拼装再交给本类的doDecode 
-      * 3、当内容多时，返回true，因为需要再将本批数据进行读取，父类会将剩余的数据再次推送本类的doDecode 
-      */
+     * 这个方法的返回值是重点： 
+     * 1、当内容刚好时，返回false，告知父类接收下一批内容 
+     * 2、内容不够时需要下一批发过来的内容，此时返回false，这样父类 CumulativeProtocolDecoder 
+     *    会将内容放进IoSession中，等下次来数据后就自动拼装再交给本类的doDecode 
+     * 3、当内容多时，返回true，因为需要再将本批数据进行读取，父类会将剩余的数据再次推送本类的doDecode 
+     */
     public boolean doDecode(IoSession session, IoBuffer in,  ProtocolDecoderOutput out) throws Exception {
-        log.debug("【银联支付：esp收到数据包解码开始。。。】");
+        log.debug("【一卡充：esp收到数据包解码开始。。。】");
           if (in.remaining() > 0) {
-              log.debug("【银联支付：esp收到数据包解码， IoBuffer.remaining()= " +in.remaining()+ "】");
+              log.debug("【一卡充：esp收到数据包解码， IoBuffer.remaining()= " +in.remaining()+ "】");
             // 有数据时，读取 4 字节判断消息长度
             byte[] sizeBytes = new byte[4];
 
@@ -42,7 +33,7 @@ public class ByteArrayDecoder extends CumulativeProtocolDecoder {
             // 读取钱 4 个字节
             in.get(sizeBytes);
 
-            log.debug("【银联支付：esp收到数据包解码， sizeBytes = new byte[4];size= "+ new String(sizeBytes) +"】");
+            log.debug("【一卡充：esp收到数据包解码， sizeBytes = new byte[4];size= "+ new String(sizeBytes) +"】");
             //log.debug("【银联支付：esp收到数据包解码， size= "+ NumberUtil.bytesToInt(sizeBytes, 0) + "|"+ NumberUtil.bytesToInt2(sizeBytes, 0)  +"】");
             // NumberUtil 是自己写的一个 int 转 byte[] 的工具类
             //int size = NumberUtil.bytes2int(sizeBytes);
@@ -50,13 +41,13 @@ public class ByteArrayDecoder extends CumulativeProtocolDecoder {
 
             if (size > in.remaining()) {
               // 如果消息内容的长度不够，则重置（相当于不读取 size），返回 false
-              log.debug("【银联支付：esp收到数据包解码， size > in.remaining(),消息内容的长度不够，则重置（相当于不读取 size），返回 false】");
+              log.debug("【一卡充：esp收到数据包解码， size > in.remaining(),消息内容的长度不够，则重置（相当于不读取 size），返回 false】");
               in.reset();
               // 接收新数据，以拼凑成完整的数据~
               return false;
 
             } else {
-              log.debug("【银联支付：esp收到数据包解码， size < in.remaining(),消息内容的长度足够，开始读取byte[size]】");
+              log.debug("【一卡充：esp收到数据包解码， size < in.remaining(),消息内容的长度足够，开始读取byte[size]】");
               byte[] dataBytes = new byte[size];
               in.get(dataBytes, 0, size);
               out.write(dataBytes);

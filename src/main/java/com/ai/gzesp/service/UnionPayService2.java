@@ -205,10 +205,10 @@ public class UnionPayService2 {
         String sign_code = MD5Util.convertMD5(respMap.get(UnionPayAttrs.signCode)); //表里存放md5加密的签约号
         String valid_flag;
         if(UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode))){
-        	valid_flag = "1"; //0:还未绑定或绑定失败 1:绑定成功 
+        	valid_flag = "1"; //0：未绑定 1：绑定成功 2：绑定失败 3：解绑成功
         }
         else{
-        	valid_flag = "0";
+        	valid_flag = "2";
         }
         return unionPayDao.updateBankCardSignCode(sign_code, valid_flag, respMap.get(UnionPayAttrs.sysTradeNo));
     }

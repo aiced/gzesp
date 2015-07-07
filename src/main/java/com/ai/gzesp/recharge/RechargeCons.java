@@ -13,7 +13,7 @@ public class RechargeCons {
     /**
      * 一卡充系统 主接入服务器ip
      */
-    public static String SERVER_1_HOST = "144.180.70.53"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
+    public static String SERVER_1_HOST = "127.0.0.1"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
     
     /**
      * 一卡充系统 主接入服务器端口

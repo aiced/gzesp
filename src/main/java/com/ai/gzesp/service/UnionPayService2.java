@@ -43,9 +43,16 @@ public class UnionPayService2 {
     public Map<String, String> bindCard(UnionPayParam param){
     	Map<String, String> result = new HashMap<String, String>();
     	
-    	//UnionPayParam param = new UnionPayParam();
-    	//String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.bind.getTradeType()); //系统跟踪号
-    	//param.setBind_sys_trade_no(sysTradeNo);
+//    	UnionPayParam param = new UnionPayParam();
+//    	String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.bind.getTradeType()); //系统跟踪号
+//    	param.setBind_sys_trade_no(sysTradeNo);  //接口日志流水号
+//    	param.setBank_card_no(bank_card_no);   //银行卡号
+//    	param.setBank_card_cvn(bank_card_cvn);  //cvn2
+//    	param.setBank_card_expire_date(bank_card_expire_date); //有效期 1501
+//    	param.setCard_type(card_type);  //卡类型 信用卡:01或借记卡:02
+//    	param.setFull_name(full_name);   //姓名
+//    	param.setId_card_no(id_card_no); //身份证
+//    	param.setPhone_no(phone_no); //手机号
         String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
         param.setBind_time_stamp(timeStamp);
         String tradeType = TradeType.bind.getTradeType(); //业务类型

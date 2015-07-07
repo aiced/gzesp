@@ -196,6 +196,14 @@
           <div class="row" style="margin:10px 10px 0px 10px;">
             <div class="radio" style="padding-left:5px;">
              <label class="radio">
+               <input type="radio" name="pay_mode_style" id="unionpay" value="银联支付" checked="checked" style="margin-top: 18px;">
+               <img src="${resRoot}/image/selectPayMode/pay_bank.png" width="95%" height="30%"/>
+               <#-- <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="95%" height="30%"/> -->
+               <#-- <img src="${resRoot}/image/selectPayMode/pay_wo.png" width="95%" height="30%"/> -->
+             </label>              
+            </div>          
+            <div class="radio" style="padding-left:5px;">
+             <label class="radio">
                <input type="radio" name="pay_mode_style" id="weixin" value="微信支付" style="margin-top:18px;">
                <img src="${resRoot}/image/selectPayMode/pay_weixin.png" width="95%" height="30%"/>
              </label>
@@ -208,13 +216,7 @@
              </label>
             </div>
             -->
-            <div class="radio" style="padding-left:5px;">
-             <label class="radio">
-               <input type="radio" name="pay_mode_style" id="unionpay" value="银联支付" checked="checked" style="margin-top: 18px;">
-               <#-- <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="95%" height="30%"/> -->
-               <img src="${resRoot}/image/selectPayMode/pay_wo.png" width="95%" height="30%"/>
-             </label>              
-            </div>
+
           </div>          
           
           <!-- 选择银联后展示提示信息-->

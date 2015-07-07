@@ -18,11 +18,35 @@ public interface MyAcctDao {
 	public int insertAcctBank(
 			@Param("user_id") String user_id,
 			@Param("bank_no") String bank_no,
+			@Param("cvn2") String cvn2,
+			@Param("phone") String phone,
+			@Param("name") String name,
+			@Param("certificate_code") String certificate_code,
+			@Param("expire_date") String expire_date,
+			@Param("card_type") String card_type,
+			@Param("bank_type") String bank_type,
+			@Param("sign_code") String sign_code,
 			@Param("valid_flag") String valid_flag,
 			@Param("priority") String priority,
-			@Param("card_type") String card_type,
-			@Param("bank_type") String bank_type
+			@Param("sys_trade_no") String sys_trade_no
 			);
+	
+	public int updateAcctBank(
+			@Param("user_id") String user_id,
+			@Param("bank_no") String bank_no,
+			@Param("cvn2") String cvn2,
+			@Param("phone") String phone,
+			@Param("name") String name,
+			@Param("certificate_code") String certificate_code,
+			@Param("expire_date") String expire_date,
+			@Param("card_type") String card_type,
+			@Param("bank_type") String bank_type,
+			@Param("sign_code") String sign_code,
+			@Param("valid_flag") String valid_flag,
+			@Param("priority") String priority,
+			@Param("sys_trade_no") String sys_trade_no
+			);
+	
 	public Map<String,Object> queryAcctBankDetail(@Param("user_id") String user_id,@Param("bank_no") String bank_no);
 	public int delAcctBankDetail(@Param("user_id") String user_id,@Param("bank_no") String bank_no);
 	public List<Map<String, Object>> queryAcctBalanceLog(@Param("user_id") String user_id,@Param("iFlag") int iFlag,@Param("page_num") int page_num,@Param("page_size") int page_size,@Param("update_time") String update_time);

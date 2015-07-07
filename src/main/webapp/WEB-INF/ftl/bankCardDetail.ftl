@@ -72,7 +72,7 @@
 					clearTextVal();
 				 	break;
 				 case 2://删除失败
-				 	alert("删除失败，请重新操作");
+				 	alert("操作失败，请重新操作");
 				 	break;
 				 case 3: //操作成功
 				 	alert("操作成功");

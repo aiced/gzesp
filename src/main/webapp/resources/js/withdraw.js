@@ -77,12 +77,61 @@
 		}
 	}
 	
+	
+    function goToPay2(){
+        /*var pay_type = $('input[name=pay_mode]:checked').val(); //线上支付还是货到付款
+        var pay_mode;
+        var pay_mode_style = $('input[name=pay_mode_style]:checked').val();
+           //alert(pay_mode_style);
+           if(pay_mode_style == "微信支付"){
+             pay_mode = '30';
+           }
+           else if(pay_mode_style == "沃支付"){
+             pay_mode = '40';
+           }
+           else if(pay_mode_style == "银联支付"){
+             pay_mode = '15'; //此刻无法区分信用卡和储蓄卡
+           }
+        var param = [{"pay_order":"1", "pay_type":pay_type, "pay_mode":pay_mode, pay_fee:${fee}}]; 
+        $.ajax({
+	      type: "POST",
+	      contentType:"application/json", //发送给服务器的内容编码类型
+	      url: '${base}/pay/prePayReq/${order_id}/${fee}', // 支付接口调用前预先工作
+	      dataType:"json", //预期服务器返回的数据类型
+	      data: JSON.stringify(param), //服务器只能接收json字符串
+	      success: function(data){
+        if(pay_type == '01'){
+           if(pay_mode_style == "微信支付"){
+             url = '${base}/pay/wxPay/prepay_step1/${order_id}/${fee}?state='+ encodeURIComponent('${goods_name}'); //微信支付
+           }
+           else if(pay_mode_style == "沃支付"){
+             url = '${base}/pay/wopay/orderPost/${order_id}/${fee}'; //沃支付
+           }
+           else if(pay_mode_style == "银联支付"){
+             url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //银联支付
+           }
+        }
+        else{
+           url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+        }
+        
+        window.location.href = url;			    
+	      }
+	    });      */      
+
+    } 
+	
+	
+	
+	
+	
+	
 	function doSubmit(param)
 	{
 		if (!checkData()) {
 			return;
 		}
-		//ajax调用操作_todo_ximh
+		goToPay2();
 	}
 	
 	

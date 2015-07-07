@@ -100,29 +100,34 @@
 	    			return;
 	    		}
 	    		
-/* 				var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':txtpwd,'bank_no':$('#hide_bank_no').val()};
-				$.ajax({
-				 type: "POST",
-				 url: '/esp/shopManage/acct/bankCardDetail/undindingBankCard',
-				 data: parms,
-				 success: function(data){
-					 
-					 switch(data)
-					 {
-					 case 1: //密码错误
-						alert("输入密码有误，请重新输入！");
-						clearTextVal();
-					 	break;
-					 case 2://删除失败
-					 	alert("删除失败，请重新操作");
-					 	break;
-					 case 3: //操作成功
-					 	alert("操作成功");
-						break;
-					 }
-					window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
-				 }
-				}); */
+	    		var parms = {
+	    				'user_id':$('#hide_user_id').val(),
+	    				'bank_no':$('#txtcardno').val(),
+	    				'cvn2':$('#txtcord').val(),
+	    				'phone':$('#txtphone').val(),
+	    				'name':$('#txtusername').val(),
+	    				'certificate_code':$('#txtpersonalid').val(),
+	    				'expire_date':$('#date_select').val(),
+	    				'valid_flag':"0",
+	    				'priority':"1",
+	    				'card_type':$('#cardType_select').val(),
+	    				'bank_type':$('#band_select').val()
+	    		};
+	    		
+	    		$.ajax({
+	    		 type: "POST",
+	    		 url: 'postData',
+	    		 data: parms,
+	    		 success: function(data){
+	    			 if (data=="ok") {
+	    				window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
+	    			}else {
+	    				alert(data);
+	    			}
+	    			 
+	    		  	 return;
+	    		 }
+	    		});
 				break;
 		}
 	}

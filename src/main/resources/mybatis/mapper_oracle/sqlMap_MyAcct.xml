@@ -40,15 +40,40 @@
 	</select>
 	<insert id="insertAcctBank">
 		insert into ACT_D_BANKCARD
-		  (user_id, bank_no, valid_flag, priority, card_type, bank_type)
+		  (user_id, bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,priority,valid_flag,sys_trade_no)
 		values
-		  (#{user_id},
+		  (
+		   #{user_id},
 		   #{bank_no},
-		   #{valid_flag},
-		   #{priority},
+		   #{cvn2},
+		   #{phone},
+		   #{name},
+		   #{certificate_code},
+		   #{expire_date},
 		   #{card_type},
-		   #{bank_type})
+		   #{bank_type},
+		   #{sign_code},
+		   #{priority},
+		   #{valid_flag},
+		   #{sys_trade_no})
 	</insert>
+	<update id="updateAcctBank">
+		update ACT_D_BANKCARD set 
+		user_id=#{valid_flag},
+		bank_no=#{bank_no},
+		cvn2=#{cvn2},
+		phone=#{phone},
+		name=#{name},
+		certificate_code=#{certificate_code},
+		expire_date=#{expire_date},
+		card_type=#{card_type},
+		bank_type=#{bank_type},
+		sign_code=#{sign_code},
+		priority=#{priority},
+		valid_flag=#{valid_flag},
+		sys_trade_no==#{sys_trade_no}
+		where user_id=#{user_id} and bank_no=#{bank_no}
+	</update>
 	
 	<select id="queryAcctBankDetail" resultType="java.util.HashMap">
 		select a.*, b.param_value

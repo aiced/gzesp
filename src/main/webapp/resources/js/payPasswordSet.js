@@ -91,7 +91,7 @@ function doBlur(param)
 			iRet=31;
 			return opReturn(iRet);
 		}
-		if ($("#txtpwd").val().length<6) {
+		if ($("#txtpwd").val().length!=6) {
 			iRet=32;
 			return opReturn(iRet);
 		}
@@ -102,7 +102,7 @@ function doBlur(param)
 			iRet=41;
 			return opReturn(iRet);
 		}
-		if ($("#txtrepwd").val().length<6) {
+		if ($("#txtrepwd").val().length!=6) {
 			iRet=42;
 			return opReturn(iRet);
 		}
@@ -142,7 +142,7 @@ function getCode()
 		return;
 	}
 	//短信模板 记得更新
-  	var bRet=sendMessage($("#txtPhone").val(),"#validation","0");
+  	var bRet=sendMessage($("#txtPhone").val(),"#validation","5");
   	if(bRet)
   	{
   		$("#txtCode").attr("disabled",false); 
@@ -188,7 +188,7 @@ function checkData()
 		iRet=31;
 		return opReturn(iRet);
 	}
-	if ($("#txtpwd").val().length<6) {
+	if ($("#txtpwd").val().length!=6) {
 		iRet=32;
 		return opReturn(iRet);
 	}
@@ -196,7 +196,7 @@ function checkData()
 		iRet=41;
 		return opReturn(iRet);
 	}
-	if ($("#txtrepwd").val().length<6) {
+	if ($("#txtrepwd").val().length!=6) {
 		iRet=42;
 		return opReturn(iRet);
 	}
@@ -219,9 +219,9 @@ function checkData()
 //22：验证码不正确
 //23：验证码超时
 //31：密码不能空
-//32：密码长度必须大于6
+//32：密码长度等于6
 //41：确认密码不能为空
-//42:确认密码必须大于6
+//42:确认密码等于6
 //51：密码和确认密码不一致
 
 var bRet=-1;
@@ -253,13 +253,13 @@ function opReturn(iRet)
 		alert("密码不能空！");
 		return false;
 	case 32:
-		alert("密码长度必须大于6！");
+		alert("密码长度必须等于6！");
 		return false;
 	case 41:
 		alert("确认密码不能为空!");
 		return false;
 	case 42:
-		alert("确认密码必须大于6!");
+		alert("确认密码必须等于6!");
 		return false;
 	case 51:
 		alert("密码和确认密码不一致！");
@@ -285,4 +285,9 @@ function saveClick(){
 	  	 return;
 	 }
 	});
+}
+
+function leftClick(param)
+{
+	window.location.href='/esp/shopManage/weShopHome?userid='+$("#hide_user_id").val();
 }

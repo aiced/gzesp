@@ -235,8 +235,7 @@ function getCode()
 	{
 		return;
 	}
-	//短信模板 记得更新
-  	var bRet=sendMessage($("#txtphone").val(),"#txtverify","0");
+  	var bRet=sendMessage($("#txtphone").val(),"#validation","7");
   	if(bRet)
   	{
   		$("#txtverify").attr("disabled",false); 
@@ -331,7 +330,7 @@ function checkData()
 		iRet=63;
 		return opReturn(iRet);
 	}	
-	if($("#chkRight").attr("checked")!=true)
+	if($("#chkRight").attr("checked")=="true")
 	{
 		iRet=71;
 		return opReturn(iRet);
@@ -434,18 +433,28 @@ function nextClick(){
 	var parms = {
 			'user_id':$('#hide_user_id').val(),
 			'bank_no':$('#txtcardno').val(),
+			'cvn2':$('#txtcord').val(),
+			'phone':$('#txtphone').val(),
+			'name':$('#txtusername').val(),
+			'certificate_code':$('#txtpersonalid').val(),
+			'expire_date':$('#date_select').val(),
 			'valid_flag':"0",
 			'priority':"1",
 			'card_type':$('#cardType_select').val(),
-			'bank_type':$('#band_select').val(),
-			
+			'bank_type':$('#band_select').val()
 	};
 	
-	$.commonFormSubmit({
+	$.ajax({
 	 type: "POST",
-	 action: 'postData',
+	 url: 'postData',
 	 data: parms,
 	 success: function(data){
+		 if (data=="ok") {
+			window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
+		}else {
+			alert(data);
+		}
+		 
 	  	 return;
 	 }
 	});

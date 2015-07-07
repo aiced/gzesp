@@ -223,8 +223,12 @@
           <div class="row" id="pay_mode_3_detail" style="margin:5px 10px 10px 20px;">
             <div style="font-size: 12px;margin: 10px;line-height: 20px;">
 			  <b style="font-size: 14px;">已接入银行</b></br>
-			  <b>储蓄卡：</b>工商银行、农业银行、光大银行、邮储银行等</br>
-			  <b>信用卡：</b>中国银行等</br>
+<!-- 			  <b>储蓄卡：</b>工商银行、农业银行、光大银行、邮储银行等</br>
+			  <b>信用卡：</b>中国银行等</br> -->
+			  <b>
+			  	工商银行、农业银行、中国银行、建设银行、交通银行、邮储银行、光大银行、贵阳银行等～
+			  </b>
+			  <br/>
 			  <#--<i><b>其他银行陆续接入<a onclick="testWoPay()">,</a></b>敬请期待<a onclick="testWeiXinPay()">～</a></b></i>-->
 			  <i><b>其他银行陆续接入,</b>敬请期待～</b></i>
             </div>

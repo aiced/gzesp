@@ -34,7 +34,7 @@ function initBind(){
         endYear: currYear + 10 //结束年份
 	};
 
-  	$("#search_select").mobiscroll($.extend(opt['date'], opt['default']));    
+  	$("#date_select").mobiscroll($.extend(opt['date'], opt['default']));    
     
 	
 /*	var validation = document.getElementById("validation");

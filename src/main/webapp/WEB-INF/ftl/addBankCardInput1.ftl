@@ -16,7 +16,7 @@
 	<script src="${resRoot}/js/baseJs.js?v=${resVer}"></script>
     <script src="${resRoot}/js/bankCardCheck.js?v=${resVer}"></script>
 
-	<script src="${resRoot}/js/jquery.1.7.2.min.js"></script>
+	<script src="${resRoot}/js/jquery.min.js"></script>
     <script src="${resRoot}/js/mobiscroll_002.js" type="text/javascript"></script>
 	<script src="${resRoot}/js/mobiscroll_004.js" type="text/javascript"></script>
 	<link href="${resRoot}/css/mobiscroll_002.css" rel="stylesheet" type="text/css">

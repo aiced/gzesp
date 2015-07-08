@@ -93,12 +93,16 @@
     	{
     		$(param).val("");
     	}
+    	function leftClick(param)
+    	{
+    		window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
+    	}
     </script>
 </head>
 <body>
     <!--top_start-->
     <div id="top">
-       	<div id="top_left"></div>
+       	<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
        	<div id="top_middle">${title}</div>
        	<div id="top_right" onclick="rightClick(this)">
 			<!-- <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
@@ -147,7 +151,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">请输入支付密码</h4>
+                    <h4 class="modal-title" id="myModalLabel">请输入安全密码</h4>
                 </div>
                 <div class="modal-body">
                 	<#if (acctbankinfo?exists)>

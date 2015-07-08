@@ -21,7 +21,7 @@
 	   </div>
 		<div class = "divContainer">
 			<a id = "row" class = "rel">
-				<em class = "title">支付密码</em>
+				<em class = "title">安全密码</em>
 				<#if (!acctinfo.UPDATE_TIME)>
 					<em id= "subTitle" class = "fright">设置</em>
 				<#else>

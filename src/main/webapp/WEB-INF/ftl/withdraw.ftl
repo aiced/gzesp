@@ -93,10 +93,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">请输入支付密码</h4>
+                <h4 class="modal-title" id="myModalLabel">请输入安全密码</h4>
             </div>
             <div class="modal-body">
-                <span id='span_modal'>交通银行<span>尾号2878储蓄卡</span></span>
+                <span id='span_modal'></span>
                 <br>
                 <div class="pwd_container">
                     <div>

@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dto.PayInfo;
+import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.service.MyAcctService;
 import com.ai.gzesp.service.PayService;
 import com.ai.gzesp.service.UnionPayService;
+import com.ai.gzesp.service.UnionPayService2;
 import com.ai.gzesp.service.WXPayService;
 import com.ai.gzesp.service.WoPayService;
+import com.ai.gzesp.utils.MD5Util;
 
 /**
  * 支付入口<br> 
@@ -48,6 +51,8 @@ public class PayController {
 	//edit_by_wenh_2015_6_30
     @Autowired
     private MyAcctService myAcctService;
+    @Autowired
+    private UnionPayService2 unionPayService2;
     /**
      * 选择支付方式(在线支付or货到付款) 以及选择 银联or支付宝 <br>
      * 〈功能详细描述〉
@@ -242,7 +247,6 @@ public class PayController {
     	}
     	
     	//查询数据库
-        //查询数据库
         List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
 
         if(acctbankinfolist != null && acctbankinfolist.size()>0)
@@ -255,4 +259,52 @@ public class PayController {
         mav.addObject("order_id",order_id);
         return mav;
     }
+    
+    @RequestMapping("/insteadPay/postData/{user_id}/{order_id}/{bank_no}")
+    @ResponseBody
+    public String insteadPayPostData(@PathVariable("user_id") String user_id,@PathVariable("order_id") String order_id,@PathVariable("bank_no") String bank_no)
+    {
+    	Map<String, String> paramsRet=null;
+    	
+    	Double dtopaymoney=0.00;
+    	Double dacctbanlance=0.00;
+    	String left_money="";
+    	//查询数据库
+    	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
+        
+    	if (acctinfo != null && acctinfo.size()>0) {
+            dacctbanlance=Double.valueOf(acctinfo.get("BALANCE").toString());
+            System.out.println(acctinfo);
+		}
+    
+    	//查询数据库
+    	Map<String,Object> topay_money=myAcctService.queryToPayMoneyByOrderId(order_id);
+    	if (topay_money != null && topay_money.size()>0) {
+    		dtopaymoney=Double.valueOf(topay_money.get("TOPAY_MONEY").toString());
+    	}
+    	
+    	//查询数据库
+    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
+    	
+        if(acctbankinfo != null && acctbankinfo.size()>0)
+        {	
+        	UnionPayParam param = new UnionPayParam();
+        	param.setOrder_id(order_id); // 真实order_id
+        	left_money=String.valueOf(dtopaymoney-dacctbanlance);
+        	param.setFee(left_money); // 单位厘
+        	param.setSign_code(MD5Util.convertMD5(acctbankinfo.get("SIGN_CODE").toString())); //md5解密，表里存放的是加密的
+        
+        	paramsRet=unionPayService2.unionPayPay(param);
+        }
+        
+        
+    	if (paramsRet.get("status").equals("00"))//成功
+    	{
+			return "ok";
+		}
+    	else {
+    		return paramsRet.get("detail").toString();
+		}
+    }
+    
 }

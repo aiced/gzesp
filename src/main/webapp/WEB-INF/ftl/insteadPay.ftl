@@ -24,114 +24,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
-	<script type="text/javascript">
-	
-	function leftClick(param)
-	{
-		window.location.href='/esp/shopManage/weShopHome?userid='+$("#hide_user_id").val();
-	}
-	
-	function checkData(param1,param2)
-	{
-		var reg = /^\d*$/;
-		if(!reg.test($(param1).val()))
-		{
-			alert("密码只能是数字");
-			$(param1).val("");
-			return false;
-		}
-		else
-		{
-			$(param2).focus();
-			return true;
-		}
-	}
-	function clearTextVal()
-	{
-		for (var i = 1; i < 7; i++) {
-    		$("#txt"+i).val("");
-		}
-	}
-	
-	function doFocus(param)
-	{
-		$(param).val("");
-	}
-	//
-	//1:代金券点击
-	//2:微账户点击
-	//3：确认支付点击
-	//4:弹出框点击确定
-	function doClick(param,flag)
-	{
-		switch(flag)
-		{
-			case 1:
-				alert("敬请期待～");
-				break;
-			case 2:
-				var images = ['${resRoot}/image/myacct/off.png', '${resRoot}/image/myacct/on.png'] 
-				
-				if($(param).attr("class")=="off") //关闭
-				{ 
-					$(param).attr("src",images[1]); 
-					$(param).removeClass(); 
-				
-					$("#lab_left_money").html("还需支付￥"+($("#hide_topay_money").val()-$("#hide_balance").val()));
-				
-				}
-				else //打开
-				{ 
-					$(param).attr("src",images[0]); 
-					$(param).addClass("off"); 
-					$("#lab_left_money").html("还需支付￥"+$("#hide_topay_money").val());
-				} 
-				break;
-			case 3:
-				break;
-			case 4: //弹出框 确定按钮
-	    		var txtpwd="";
-	    		for (var i = 1; i < 7; i++) {
-	    			txtpwd=txtpwd+$("#txt"+i).val();
-				}
-	    		if (txtpwd.length!=6)
-	    		{
-	    			alert("请输入6位支付密码！");
-	    			return;
-	    		}
-	    		
-	    		var parms = {
-	    				'user_id':$('#hide_user_id').val(),
-	    				'bank_no':$('#txtcardno').val(),
-	    				'cvn2':$('#txtcord').val(),
-	    				'phone':$('#txtphone').val(),
-	    				'name':$('#txtusername').val(),
-	    				'certificate_code':$('#txtpersonalid').val(),
-	    				'expire_date':$('#date_select').val(),
-	    				'valid_flag':"0",
-	    				'priority':"1",
-	    				'card_type':$('#cardType_select').val(),
-	    				'bank_type':$('#band_select').val()
-	    		};
-	    		
-	    		$.ajax({
-	    		 type: "POST",
-	    		 url: 'postData',
-	    		 data: parms,
-	    		 success: function(data){
-	    			 if (data=="ok") {
-	    				window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
-	    			}else {
-	    				alert(data);
-	    			}
-	    			 
-	    		  	 return;
-	    		 }
-	    		});
-				break;
-		}
-	}
-	</script>
+	<script type="text/javascript" src="${resRoot}/js/insteadPay.js?v=${resVer}"></script>
+    
 </head>
 <body>
     <!--top_start-->
@@ -168,7 +62,7 @@
 				<option value="数据加载失败">数据加载失败</option>
     		<#else>
 				<#list acctbankinfolist as item>						
-			    	<option value="${item.param_code}">
+			    	<option value="${item.sign_code}">
 						${item.PARAM_VALUE}
 					</option>
 				</#list>

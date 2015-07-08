@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="phoneDetail">
+        <div class="phoneDetail" id = "phoneDetailId">
             <div class="name border_bottom"> 王伟（江苏联通）</div>
             <div class="name"> 实时话费
                 <span class="fright real-timeCalls ">92.00 元 </span>
@@ -44,7 +44,6 @@
             <div class="name"> 话费余额
                 <span class="fright balances ">92.00 元 </span>
             </div>
-
         </div>
 
     </div>
@@ -59,34 +58,30 @@
     <div class="cardHeader">选择充值金额：</div>
     <div class="cardsContainer">
         <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$30" >
+            <a class="card" name = "cardName" price="$10" realPrice="$9.9" >
                 <p class="price">$10</p>
-
-                <p class="realPrice">售价为29.87</p>
+                <p class="realPrice" >售价为9.9</p>
             </a>
         </div>
 
         <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$31">
+            <a class="card" name = "cardName" price="$30" realPrice="$29.9">
                 <p class="price">$30</p>
-
-                <p class="realPrice">售价为29.87</p>
+                <p class="realPrice" >售价为29.9</p>
             </a>
         </div>
 
         <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$32">
+            <a class="card" name = "cardName" price="$50" realPrice="$49.9" >
                 <p class="price">$50</p>
-
-                <p class="realPrice">售价为29.87</p>
+                <p class="realPrice" >售价为49.9</p>
             </a>
         </div>
 
         <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$33">
+            <a class="card" name = "cardName" price="$100"  realPrice="$99.9">
                 <p class="price">$100</p>
-
-                <p class="realPrice">售价为29.87</p>
+                <p class="realPrice">售价为99.9</p>
             </a>
         </div>
         <div class="clearBoth"></div>
@@ -97,14 +92,12 @@
         <span> 其他金额</span>
 
         <div class="fright">
-            <input id="amountId" class="standardInputStyle2" type="tel" placeholder="只限贵州地区号码">
+            <input id="amountId" class="standardInputStyle2" type="tel" placeholder="请输入10的整数倍">
         </div>
         <div class="clearBoth"></div>
     </div>
 
-    <div class="preferential">
-        优惠：售价98.5元
-    </div>
+    <div class ="preferential" id = "preferentialId"></div>
 
     <div class="orderContainer">
         <a id="topUpId" class="standard_a_Style1">立即充值</a>
@@ -114,8 +107,6 @@
         <a id="buyCardId" class="left">购买充值卡 </a>
         <a id="dealListId" class="fright">交易记录查询 </a>
     </div>
-
-
 
 </div>
 </body>

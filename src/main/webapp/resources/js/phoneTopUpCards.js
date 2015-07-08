@@ -1,6 +1,8 @@
 /**
  * Created by xinjunwang on 15-6-18.
  */
+
+var preferentialPrice;
 $(function () {
     initBind();
 
@@ -17,9 +19,10 @@ function initBind() {
             clearCardStyle();
             $(this).attr("class", "cardSelected");
             //设置可数量为1，刷新金额
-            refreshTotleAmount(100.32, 1);
-
-        })
+//            var realPrice = parseFloat();
+            preferentialPrice = $(this).attr('realPrice');
+            refreshTotleAmount($(this).attr('realPrice'),1);
+        });
     }
     //点击减号
     $("#removeId").bind("click", function () {
@@ -28,10 +31,8 @@ function initBind() {
             return;
         }
         num = num - 1;
-        $("#numId").html(num);
-
         //    刷新金额
-        refreshTotleAmount(100.32, num);
+        refreshTotleAmount(preferentialPrice, num);
 
 
     });
@@ -39,23 +40,49 @@ function initBind() {
     $("#addId").bind("click", function () {
         var num = parseInt($("#numId").html());
         num = num + 1;
-        $("#numId").html(num);
-        refreshTotleAmount(100.32, num);
-
+        refreshTotleAmount(preferentialPrice, num);
         //    刷新金额
     });
 
     //    输入号码判断
     $("#inputId").blur(function () {
-        alert("111");
-    })
-
-    //     立即充值
-    $("#top-upId").bind("click", function () {
-        alert("222");
+    	var phoneNum = $("#inputId").val();
+        if(phoneNum == null || phoneNum == ""){
+          	alert("充值号码不能为空");
+        	return;
+        }else {
+        	checkPhoneNum(phoneNum);
+        }
     });
 
+    	//     立即充值
+    $("#top-upId").bind("click", function () {
+    	//        充值判断 充值金额 号码有效性
+        var num = $("#numId").html();
+        if(num == null || num == "" || num == 0){
+        	alert("充值卡金额不能为空");
+        	return;
+        }
 
+        var phoneNum = $("#inputId").val();
+        if(phoneNum == null || phoneNum == ""){
+          	alert("充值号码不能为空");
+        	return;
+        }else {
+        	checkPhoneNum(phoneNum);
+        }
+        
+        //判断结束 界面跳转;
+//        var  totleAmount =  $("#totleAmount").html();
+//        alert(num);
+//        alert(phoneNum);
+//        alert(totleAmount);
+
+    });
+}
+function checkPhoneNum(phoneNum) {
+//	alert(phoneNum);
+	
 }
 
 
@@ -73,4 +100,7 @@ function refreshTotleAmount(price, num) {
     var totleAmount = price * num;
     totleAmount = Math.round(totleAmount * 100) / 100;
     $("#totleAmount").html(totleAmount);
+    $("#numId").html(num);
 }
+
+

@@ -1,15 +1,29 @@
 /**
  * Created by xinjunwang on 15-6-18.
  */
+//  一处赋数，多处取值
+var phoneNumalidation =false;
+
 $(function () {
     initBind();
 
 });
 function initBind() {
 //    输入号码失焦点 绑定
+	$('#phoneDetailId').hide();
+	
     $('#phoneNumId').blur(function ()
     {
+    	phoneNumalidation = false;
 
+    	//发送验证请求 成功返沪
+//    	phoneNumalidation = true;
+    	var data = "";
+    	phoneDetailId(data);
+    	//失败    	
+    	
+    	
+    	
     });
 
 //    点击金额绑定
@@ -17,28 +31,51 @@ function initBind() {
     for(var i=0;i<cards.length;i++){
         var card = cards[i];
         var $card=$(card);
-        $card.bind("click" , function(){
-            //alert($(this).attr('price'));
+        $card.bind("click" , function(){          
             //清空所有格式
             clearCardStyle();
             $(this).attr("class","cardSelected");
-            //设置优惠价格
-
-        })
+            //清空输入金额  设置优惠价格
+            clearInputNum();
+            refreshTotleAmount($(this).attr('realPrice'));
+        });
     }
 
 //    输入金额失焦点 绑定
-//    $('#phoneNumId').focus(function ()
-//    {
-//    });
     $('#amountId').blur(function ()
     {
+		var inputNum = $('#amountId').val();
+    	if(inputNum != null && inputNum != "" && inputNum !=0){
+    		//无效金额返回
+    		inputNum = parseInt(inputNum);
+    		if(inputNum%10 != 0){
+    			clearInputNum();
+    			alert("输入金额必须为10的整数倍");
+    			return;
+    			}
+    		//  有效金额 清除卡标识  更新总金额
+             clearCardStyle();
+     		 inputNum = inputNum *0.98;
+             refreshTotleAmount(inputNum);
+    	}
+    	
         //alert("buyCardId");
     });
 //    点击充值 绑定
     $("#topUpId").bind("click",function(){
-        alert("topUpId");
-
+    	//号码判断
+    	if(!phoneNumalidation){
+            alert("输入的号码无效");
+    		return;
+    	}
+        //金额判断
+    	var preferential =  $("#preferentialId").html();
+    	if(preferential == null && preferential == ""){
+            alert("输入的金额不能为空");
+            return;
+    	}
+    	
+    	
     });
 
 //    点击购买充值卡绑定
@@ -52,9 +89,18 @@ function initBind() {
         alert("dealListId");
 
     });
-
+}
+function phoneDetailId(data){
+	if(!phoneNumalidation){
+		$('#phoneDetailId').hide();
+		return;
+	}
+	$('#phoneDetailId').show();
+	//加载数据
 
 }
+
+
 
 function clearCardStyle(){
     var cards=$('[name=cardName]');
@@ -65,3 +111,16 @@ function clearCardStyle(){
 
     }
 }
+
+function clearInputNum(){
+	$('#amountId').val(null);
+}
+
+
+
+function refreshTotleAmount(realPrice) {
+	var text = "优惠价："+ realPrice;
+	$("#preferentialId").html(text);
+	
+}
+

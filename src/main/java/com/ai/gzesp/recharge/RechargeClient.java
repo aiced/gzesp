@@ -103,6 +103,11 @@ public class RechargeClient {
      * 发送报文
      * @param xmlSend
      */
+    public void sendMsg(String xmlSend) {
+        checkConnector();
+        cf.getSession().write(xmlSend);
+      }
+    
     public void sendMsg(byte[] xmlSend) {
         checkConnector();
         cf.getSession().write(xmlSend);

@@ -1,14 +1,13 @@
 package com.ai.gzesp.recharge;
 
 import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.codec.CumulativeProtocolDecoder;
 import org.apache.mina.filter.codec.ProtocolDecoderOutput;
-
-import com.ai.gzesp.unionpay.ByteArrayDecoder;
 
 public class RechargeDecoder extends CumulativeProtocolDecoder {
     private static Logger log = Logger.getLogger(RechargeDecoder.class); 
@@ -22,6 +21,8 @@ public class RechargeDecoder extends CumulativeProtocolDecoder {
      */
     public boolean doDecode(IoSession session, IoBuffer in,  ProtocolDecoderOutput out) throws Exception {
         log.debug("【一卡充：esp收到数据包解码开始。。。】");
+        
+        CharsetDecoder cd = Charset.forName("UTF-8").newDecoder();  
           if (in.remaining() > 0) {
               log.debug("【一卡充：esp收到数据包解码， IoBuffer.remaining()= " +in.remaining()+ "】");
             // 有数据时，读取 4 字节判断消息长度
@@ -32,6 +33,7 @@ public class RechargeDecoder extends CumulativeProtocolDecoder {
 
             // 读取钱 4 个字节
             in.get(sizeBytes);
+            in.getString(cd);
 
             log.debug("【一卡充：esp收到数据包解码， sizeBytes = new byte[4];size= "+ new String(sizeBytes) +"】");
             //log.debug("【银联支付：esp收到数据包解码， size= "+ NumberUtil.bytesToInt(sizeBytes, 0) + "|"+ NumberUtil.bytesToInt2(sizeBytes, 0)  +"】");

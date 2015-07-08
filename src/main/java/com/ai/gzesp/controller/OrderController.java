@@ -216,10 +216,10 @@ public class OrderController {
     	boolean isInstead = request.getSession(false).getAttribute("instead") == null ? false : true;
     	String url = null;
     	if(isInstead){
-        	url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
+    		url = "redirect:/pay/insteadPay/" + paramsMap.get("userId") + "/" + orderId;
     	}
     	else{
-        	url = "redirect:/pay/insteadPay/" + paramsMap.get("userId") + "/" + orderId;
+    		url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
     	}
     	
     	ModelAndView mav = new ModelAndView(url);

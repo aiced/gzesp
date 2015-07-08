@@ -33,13 +33,13 @@ public class RechargeCons {
     /**
      * 接入ID
      */
-    public static String ID = "584520148120004"; //测试：1000000000009904 正式：584520148120004   
+    public static String ID = "123"; //测试：1000000000009904 正式：584520148120004   
     
     
     /**
      * des加密密钥:，密钥长度128位（16个字符）
      */
-    public static String desKey = "e036hlqtculakx38tjw2u9gs";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
+    public static String desKey = "e036hlqtculakx38";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
 
     /**
      * 心跳发送间隔时间
@@ -70,5 +70,15 @@ public class RechargeCons {
      * 编码方式
      */
     public static String charCode = "utf-8";  
+    
+    /**
+     * 所有数据包前增加”@”为包的开始标志，数据包尾加“0x1a”为包的结束标志
+     */
+    public static char prefix = '@';
+    
+    /**
+     * 所有数据包前增加”@”为包的开始标志，数据包尾加“0x1a”为包的结束标志
+     */
+    public static char Suffix = 0x1a;
 
 }

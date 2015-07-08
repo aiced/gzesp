@@ -4,6 +4,7 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.ai.gzesp.recharge.RechargeCons;
 import com.ai.gzesp.unionpay.UnionPayCons;
 
 /**
@@ -16,15 +17,35 @@ import com.ai.gzesp.unionpay.UnionPayCons;
  */
 public class DESUtil {
 
+    /**
+     * 银联用的算法
+     */
     private static final String Algorithm = "DESede"; // 定义 加密算法,可用 DES,DESede,Blowfish
+    
+    /**
+     * 一卡充系统的算法：3des对称加密算法，算法模式ECB，密钥长度128位（16个字符）。
+     * 加密数据补码方式：Pkcs5Padding。加密结果编码方式base64。
+     */
+    private static final String Algorithm2 = "DESede/ECB/PKCS5Padding"; 
     
     //private static final byte[] keybyte = "e143cc8236aed7f7786da932".getBytes();//keybyte为加密密钥，长度为24字节
 
+    /**
+     * 银联接口用的加密
+     * @param src
+     * @return
+     */
     public static byte[] encryptMode(byte[] src) {
         return encryptMode(UnionPayCons.desKey.getBytes(), src);
     }
     
-    // src为被加密的数据缓冲区（源）
+    /**
+     * 银联接口用的加密
+     * src为被加密的数据缓冲区（源）
+     * @param keybyte
+     * @param src
+     * @return
+     */
     public static byte[] encryptMode(byte[] keybyte, byte[] src) {
         try {
             // 生成密钥
@@ -43,13 +64,59 @@ public class DESUtil {
         }
         return null;
     }
+
+    /**
+     * 一卡充接口用的加密
+     * @param src
+     * @return
+     */
+    public static byte[] encryptModeRecharge(byte[] src) {
+        return encryptMode(RechargeCons.desKey.getBytes(), src);
+    }
     
+    /**
+     * 一卡充接口用的加密
+     * src为被加密的数据缓冲区（源）
+     * @param keybyte
+     * @param src
+     * @return
+     */
+    public static byte[] encryptModeRecharge(byte[] keybyte, byte[] src) {
+        try {
+            // 生成密钥
+            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm2); 
+
+            // 加密
+            Cipher c1 = Cipher.getInstance(Algorithm2);
+            c1.init(Cipher.ENCRYPT_MODE, deskey);
+            return c1.doFinal(src);
+        } catch (java.security.NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        } catch (javax.crypto.NoSuchPaddingException e2) {
+            e2.printStackTrace();
+        } catch (java.lang.Exception e3) {
+            e3.printStackTrace();
+        }
+        return null;
+    }
+    
+    /**
+     * 银联接口的解密
+     * @param src
+     * @return
+     */
     public static byte[] decryptMode(byte[] src) {
         return decryptMode(UnionPayCons.desKey.getBytes(), src);
     }
 
-    // keybyte为加密密钥，长度为24字节
-    // src为加密后的缓冲区
+    /**
+     * 银联接口的解密
+     * keybyte为加密密钥，长度为24字节
+     * src为加密后的缓冲区
+     * @param keybyte
+     * @param src
+     * @return
+     */
     public static byte[] decryptMode(byte[] keybyte, byte[] src) {
         try {
             // 生成密钥
@@ -57,6 +124,42 @@ public class DESUtil {
 
             // 解密
             Cipher c1 = Cipher.getInstance(Algorithm);
+            c1.init(Cipher.DECRYPT_MODE, deskey);
+            return c1.doFinal(src);
+        } catch (java.security.NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        } catch (javax.crypto.NoSuchPaddingException e2) {
+            e2.printStackTrace();
+        } catch (java.lang.Exception e3) {
+            e3.printStackTrace();
+        }
+        return null;
+    }
+    
+    /**
+     * 一卡充接口的解密
+     * @param src
+     * @return
+     */
+    public static byte[] decryptModeRecharge(byte[] src) {
+        return decryptMode(RechargeCons.desKey.getBytes(), src);
+    }
+
+    /**
+     * 一卡充接口的解密
+     * keybyte为加密密钥，长度为16字节
+     * src为加密后的缓冲区
+     * @param keybyte
+     * @param src
+     * @return
+     */
+    public static byte[] decryptModeRecharge(byte[] keybyte, byte[] src) {
+        try {
+            // 生成密钥
+            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm2);
+
+            // 解密
+            Cipher c1 = Cipher.getInstance(Algorithm2);
             c1.init(Cipher.DECRYPT_MODE, deskey);
             return c1.doFinal(src);
         } catch (java.security.NoSuchAlgorithmException e1) {

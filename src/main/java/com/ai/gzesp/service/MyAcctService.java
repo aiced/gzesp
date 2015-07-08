@@ -69,11 +69,16 @@ public class MyAcctService {
     {
     	return myAcctDao.queryAcctByUserId_UserPwd(user_id,user_pwd);
     }
+
     //通过uiserid插入账户银行关系表：ACT_D_BANKCARD
-    
-    public int insertAcctBank(String user_id,String bank_no,String valid_flag,String priority,String card_type,String bank_type)
+    public int insertAcctBank(String user_id,String bank_no,String cvn2,String phone,String name,String certificate_code,String expire_date,String card_type,String bank_type,String sign_code,String valid_flag,String priority,String systradeno)
     {
-    	return myAcctDao.insertAcctBank(user_id,bank_no,valid_flag,priority,card_type,bank_type);
+    	return myAcctDao.insertAcctBank(user_id,bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,valid_flag,priority,systradeno);
+    }
+    //通过userid和银行卡号来
+    public int updateAcctBank(String user_id,String bank_no,String cvn2,String phone,String name,String certificate_code,String expire_date,String card_type,String bank_type,String sign_code,String valid_flag,String priority,String systradeno)
+    {
+    	return myAcctDao.updateAcctBank(user_id,bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,valid_flag,priority,systradeno);
     }
     //通过userid和银行卡卡号 获得银行详细信息
     public Map<String, Object> queryAcctBankDetail(String user_id,String bank_no)

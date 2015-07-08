@@ -25,7 +25,7 @@ function doBlur(param)
 			iRet=11;
 			return opReturn(iRet);
 		}
-		if ($("#txtpwd").val().length<6) {
+		if ($("#txtpwd").val().length!=6) {
 			iRet=14;
 			return opReturn(iRet);
 		}
@@ -36,7 +36,7 @@ function doBlur(param)
 			iRet=12;
 			return opReturn(iRet);
 		}
-		if ($("#txtrepwd").val().length<6) {
+		if ($("#txtrepwd").val().length!=6) {
 			iRet=15;
 			return opReturn(iRet);
 		}
@@ -58,7 +58,7 @@ function checkData()
 		iRet=11;
 		return opReturn(iRet);
 	}
-	if ($("#txtpwd").val().length<6) {
+	if ($("#txtpwd").val().length!=6) {
 		iRet=14;
 		return opReturn(iRet);
 	}
@@ -66,7 +66,7 @@ function checkData()
 		iRet=12;
 		return opReturn(iRet);
 	}
-	if ($("#txtrepwd").val().length<6) {
+	if ($("#txtrepwd").val().length!=6) {
 		iRet=15;
 		return opReturn(iRet);
 	}
@@ -84,8 +84,8 @@ function checkData()
 //11：新密码不能为空
 //12：确认密码不能为空
 //13：新密码和确认密码不相同
-//14：新密码长度必须大于6
-//15：确认密码长度必须大于6
+//14：新密码长度必须等于6
+//15：确认密码长度必须等于6
 var bRet=-1;
 function opReturn(iRet)
 {
@@ -103,10 +103,10 @@ function opReturn(iRet)
 		alert("新密码和确认密码不相同！");
 		return false;
 	case 14:
-		alert("长度必须大于6");
+		alert("长度必须等于6");
 		return false;
 	case 15:
-		alert("长度必须大于6");
+		alert("长度必须等于6");
 		return false;
 	default:
 		return false;

@@ -234,12 +234,22 @@ public class CommonController {
     		String order_id=paramsMap.get("order_id");
     		strRet=SmsUtils.doSendMessage(strphone,"MB-2015052703","@1@="+order_id);
     	}
-    	else if(strFlag.equals("4"))
+    	else if(strFlag.equals("4"))//您修改微店登录密码的验证码是：@1@，请在30分钟内完成验证。
     	{
     		strRet=SmsUtils.doSendMessage(strphone,"MB-2015060623","@1@="+strcode);
-    		
     	}
-
+    	else if(strFlag.equals("5"))//您正在设置账户安全码，验证码：@1@，请在30分钟内完成验证。
+    	{
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015070602","@1@="+strcode);
+    	}
+    	else if(strFlag.equals("6"))//您正在修改账户安全码，验证码：@1@，请在30分钟内完成验证。
+    	{
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015070640","@1@="+strcode);
+    	}
+    	else if(strFlag.equals("7"))//您正在绑定账户银行卡，验证码：@1@，请在30分钟内完成验证。
+    	{
+    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015070629","@1@="+strcode);
+    	}
     	
 		 System.out.println("短信返回值："+strRet);
 		 if (strRet != null && strRet.split("#").length==3)

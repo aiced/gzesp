@@ -32,11 +32,11 @@
 		<ul class = "border_top border_bottom">
 			<li class = "border_bottom">
 				<em> 设置密码: </em>	
-				<input class= "input_nolmal" type="password"  placeholder="必填" id="txtpwd" name='txtpwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
+				<input class= "input_nolmal" type="password"  placeholder="长度必须是6位（必填）" id="txtpwd" name='txtpwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			<li class = "border_bottom">
 				<em> 确认密码: </em>	
-				<input class= "input_nolmal" type="password"  placeholder="必填" id="txtrepwd" name='txtrepwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
+				<input class= "input_nolmal" type="password"  placeholder="长度必须是6位（必填）" id="txtrepwd" name='txtrepwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li class = "border_bottom">

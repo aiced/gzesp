@@ -26,12 +26,12 @@
 			
 			<li class = "border_bottom">
 				<em> 新密码: </em>	
-				<input class= "input_nolmal" type="password"  placeholder="" id="txtpwd" name='txtpwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
+				<input class= "input_nolmal" type="password"  placeholder="请输入6位密码（必填）" id="txtpwd" name='txtpwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 			
 			<li >
 				<em> 确认密码: </em>	
-				<input class= "input_nolmal" type="password"  placeholder="" id="txtrepwd" name='txtrepwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
+				<input class= "input_nolmal" type="password"  placeholder="请输入6位密码（必填）" id="txtrepwd" name='txtrepwd' onfocus="doFocus(this);" onblur="doBlur(this);">				
 			</li>
 		</ul>
 		

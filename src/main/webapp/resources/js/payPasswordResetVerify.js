@@ -128,7 +128,7 @@ function getCode()
 		return;
 	}
 	//短信模板 记得更新
-  	var bRet=sendMessage($("#txtPhone").val(),"#validation","0");
+  	var bRet=sendMessage($("#txtPhone").val(),"#validation","6");
   	if(bRet)
   	{
   		$("#txtCode").attr("disabled",false); 

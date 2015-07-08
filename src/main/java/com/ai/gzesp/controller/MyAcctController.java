@@ -17,10 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import scala.annotation.meta.param;
+
 import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dao.sql.RegistSql;
+import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.service.MyAcctService;
+import com.ai.gzesp.service.UnionPayService2;
+import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayCons;
+import com.ai.gzesp.unionpay.UnionPayUtil;
 import com.ai.gzesp.utils.DESUtil;
 import com.ai.gzesp.utils.MD5Util;
 import com.ai.sysframe.utils.StringUtil;
@@ -33,7 +39,10 @@ public class MyAcctController {
     private MyAcctService myAcctService;
 	@Resource 
 	RegistSql registSql;
-
+	
+    @Autowired
+	UnionPayService2 unionPayService2;
+	
     @RequestMapping("/acct/myAcct/{user_id}")
 	public ModelAndView initAcct(@PathVariable("user_id") String user_id)
 	{
@@ -50,7 +59,7 @@ public class MyAcctController {
             
             //查询数据库
             List<Map<String, Object>> acctbankinfo =myAcctService.queryAcctBankByUserId(user_id);
-            if(acctbankinfo != null)
+            if(acctbankinfo != null && acctbankinfo.size()>0)
             {
             	mav.addObject("bankcout",acctbankinfo.size());
                 System.out.println(acctbankinfo);
@@ -71,12 +80,12 @@ public class MyAcctController {
         ModelAndView mav = new ModelAndView("withdraw.ftl");
         
        	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
-    	if(acctinfo != null)
+    	if(acctinfo != null && acctinfo.size()>0)
     	{
             mav.addObject("acctinfo",acctinfo);
             //查询数据库
             List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
-            if(acctbankinfolist != null)
+            if(acctbankinfolist != null && acctbankinfolist.size()>0)
             {	
             	mav.addObject("acctbankinfolist",acctbankinfolist);
             }
@@ -84,7 +93,29 @@ public class MyAcctController {
     	mav.addObject("user_id",user_id);
         return mav;
     }
-    
+    @RequestMapping("/acct/withdraw/postData")
+    @ResponseBody
+    public String withdrawPostData(@RequestBody String inputParam)
+    {
+    	//提现
+    	
+//        ModelAndView mav = new ModelAndView("withdraw.ftl");
+//        
+//       	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
+//    	if(acctinfo != null && acctinfo.size()>0)
+//    	{
+//            mav.addObject("acctinfo",acctinfo);
+//            //查询数据库
+//            List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
+//            if(acctbankinfolist != null && acctbankinfolist.size()>0)
+//            {	
+//            	mav.addObject("acctbankinfolist",acctbankinfolist);
+//            }
+//    	}  
+//    	mav.addObject("user_id",user_id);
+//        return mav;
+    	return "";
+    }
     @RequestMapping("/acct/myBankCardList/{user_id}")
     public ModelAndView initMyBankCardList(@PathVariable("user_id") String user_id)
     {
@@ -95,7 +126,7 @@ public class MyAcctController {
         //查询数据库
         List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
 
-        if(acctbankinfolist != null)
+        if(acctbankinfolist != null && acctbankinfolist.size()>0)
         {	
         	mav.addObject("acctbankinfolist",acctbankinfolist);
         }
@@ -116,7 +147,7 @@ public class MyAcctController {
         //""	时间
         List<Map<String, Object>> acctlogpagelist=myAcctService.queryAcctBalanceLogPage(user_id,0,Integer.parseInt(page_num),Integer.parseInt(page_size),"");
         
-        if(acctlogpagelist != null)
+        if(acctlogpagelist != null && acctlogpagelist.size()>0)
         {
             mav.addObject("acctloglist",acctlogpagelist);
             List<Map<String, Object>> acctloglist=myAcctService.queryAcctBalanceLog(user_id,0,Integer.parseInt(page_num),Integer.parseInt(page_size),"");
@@ -146,7 +177,7 @@ public class MyAcctController {
 	    
 	    ModelAndView mav = new ModelAndView("acctBalanceSub.ftl");
 	    
-	    if(acctlogpagelist != null)
+	    if(acctlogpagelist != null && acctlogpagelist.size()>0)
 	    {
           mav.addObject("acctloglist",acctlogpagelist);
 	    }
@@ -188,7 +219,7 @@ public class MyAcctController {
 		
     	//查询数据库
     	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
-    	if(acctinfo != null)
+    	if(acctinfo != null && acctinfo.size()>0)
     	{
             mav.addObject("acctinfo",acctinfo);
             System.out.println(acctinfo);
@@ -211,7 +242,7 @@ public class MyAcctController {
  		
     	//查询数据库
     	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
-    	if(acctinfo != null)
+    	if(acctinfo != null && acctinfo.size()>0)
     	{
             mav.addObject("acctinfo",acctinfo);
             System.out.println(acctinfo);
@@ -274,7 +305,7 @@ public class MyAcctController {
  		
     	//查询数据库
     	Map<String, String> acctinfo =myAcctService.queryAcctByUserId_UserPwd(user_id,user_pwd);
-    	if(acctinfo != null)
+    	if(acctinfo != null && acctinfo.size()>0)
     	{
     		return true;
     	}  
@@ -295,39 +326,154 @@ public class MyAcctController {
     	return mav;
     }
     @RequestMapping("/acct/addBankCardInput1/postData")
-    public ModelAndView addBankCardInput1PostData(@RequestBody String inputParam){    		
+    @ResponseBody
+    public String addBankCardInput1PostData(@RequestBody String inputParam){    		
     	//插入表格
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-    
+    	Map<String, String> paramsRet=null;
     	String user_id =paramsMap.get("user_id");
-
+    	
     	String valid_flag=paramsMap.get("valid_flag");
     	String priority=paramsMap.get("priority");
     	String card_type=paramsMap.get("card_type");
     	String bank_type=paramsMap.get("bank_type");
+    	String certificate_code=paramsMap.get("certificate_code");
+    	String phone=paramsMap.get("phone");
+    	String name=paramsMap.get("name");
+    	
+    	String systradeno = UnionPayUtil.genSysTradeNo(TradeType.bind.getTradeType()); //系统跟踪号
 
+    	
+    	//下面两句可能报错
+		String cvn2=paramsMap.get("cvn2");
+		String expire_date=paramsMap.get("expire_date");
+    	
     	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
     	String strbank_no=DESUtil.Bytes2HexString(bank_no);
 
+    	
+    	
     	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,paramsMap.get("bank_no"));
     	
-    	if (acctbankinfo != null) //有数据
+    	if (acctbankinfo != null && acctbankinfo.size()>0) //有数据
     	{
-			//直接将valid_flag 变成1 即可 wenh_todo
+
+    		String strvalid_flag= acctbankinfo.get("VALID_FLAG").toString();
+
+    		if (strvalid_flag.equals("1")) 
+    		{
+    			return "ok";
+			}
+    		else if (strvalid_flag.equals("2") || strvalid_flag.equals("0")) {
+				//1,先更新要素
+    			//2.然后调用接口
+    			//3.wenh_do
+    			
+    			int iRet=myAcctService.updateAcctBank(
+	            			user_id, 
+	            			strbank_no,
+	            			cvn2,
+	            			phone,
+	            			name,
+	            			certificate_code,
+	            			expire_date,
+	            			card_type,
+	            			bank_type,
+	            			"",//固定写死，奚总后面会有更新的操作，签约号
+	            			valid_flag, 
+	            			priority,
+	            			systradeno
+    					);
+                if (iRet > 0)
+                {
+                	paramsRet=bindCard(
+                			systradeno,
+                			paramsMap.get("bank_no"),
+                			cvn2,
+                			expire_date,
+                			card_type,
+                			name, 
+                			certificate_code,
+                			phone
+                			);
+                }
+                else {
+    				return "插入报错～";
+				}
+			}
 		}
-    	else {
-        	int iRet=myAcctService.insertAcctBank(user_id, strbank_no, valid_flag, priority, card_type, bank_type);
+    	else //没有记录之际插入掉接口 
+    	{
+        	int iRet=myAcctService.insertAcctBank(
+        			user_id, 
+        			strbank_no,
+        			cvn2,
+        			phone,
+        			name,
+        			certificate_code,
+        			expire_date,
+        			card_type,
+        			bank_type,
+        			"",//固定写死，奚总后面会有更新的操作，签约号
+        			valid_flag, 
+        			priority,
+        			systradeno
+        			);
+        	
             if (iRet > 0)
             {
             	//只需要调用奚总绑定接口_ximh_todo
+            	
+            	paramsRet=bindCard(
+            			systradeno,
+            			paramsMap.get("bank_no"),
+            			cvn2,
+            			expire_date,
+            			card_type,
+            			name, 
+            			certificate_code,
+            			phone
+            			);
+            	
+            	System.out.println(paramsRet);
+//            	result.put("status", "E01");
+//                result.put("detail", "支付失败！绑定日志插入失败");
             }
+            else {
+				return "插入报错～";
+			}
 		}
     	
-    	ModelAndView mav = new ModelAndView("redirect:/shopManage/acct/myBankCardList/"+user_id);
-    	return mav;
+    	if (paramsRet.get("status").equals("00"))//成功
+    	{
+			return "ok";
+		}
+    	else {
+    		return paramsRet.get("detail").toString();
+		}
+    	
+    	//ModelAndView mav = new ModelAndView("redirect:/shopManage/acct/myBankCardList/"+user_id);
+    	//return mav;
 
     }
 
+    public Map<String, String> bindCard(String systradeno,String bank_no,String cvn2,String expire_date,String card_type,String name, String certificate_code,String phone)
+    {
+    	UnionPayParam param = new UnionPayParam();
+    	
+    	param.setBind_sys_trade_no(systradeno);  //接口日志流水号
+    	param.setBank_card_no(bank_no);   //银行卡号
+    	param.setBank_card_cvn(cvn2);  //cvn2
+    	param.setBank_card_expire_date(expire_date); //有效期 1501
+    	param.setCard_type(card_type);  //卡类型 信用卡:01或借记卡:02
+    	param.setFull_name(name);   //姓名
+    	param.setId_card_no(certificate_code); //身份证
+    	param.setPhone_no(phone); //手机号
+    	
+    	return unionPayService2.bindCard(param);
+    }
+    
+    
     @RequestMapping("/acct/bankCardDetail/{user_id}/{bank_no}")
     public ModelAndView initBankCardDetail(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
     {
@@ -336,7 +482,7 @@ public class MyAcctController {
     	
     	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
     	
-    	if (acctbankinfo !=null) {
+    	if (acctbankinfo !=null && acctbankinfo.size()>0) {
 			mav.addObject("acctbankinfo",acctbankinfo);
 		}
     	mav.addObject("title",acctbankinfo.get("PARAM_VALUE"));
@@ -356,15 +502,37 @@ public class MyAcctController {
     	
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String user_id = paramsMap.get("user_id");
-    	String bank_no = paramsMap.get("bank_no");
     	
-    	//这个地方先放着，调用奚总的解绑接口_todo
-//    	int iRet=myAcctService.delAcctBankDetail(user_id,bank_no);
-//    	if (iRet>0) 
-//    	{
-//    		return 2; //删除失败
-//		}
-    	return  3; //操作成功
+    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
+    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
+    	
+    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,paramsMap.get("bank_no"));
+    	
+    	if (acctbankinfo != null && acctbankinfo.size()>0) //有数据
+    	{
+        	//解绑 直接修改为不可用
+        	int iRet=myAcctService.updateAcctBank(
+        			acctbankinfo.get("USER_ID").toString(), 
+        			acctbankinfo.get("BANK_NO").toString(),
+        			acctbankinfo.get("CVN2").toString(),
+        			acctbankinfo.get("PHONE").toString(),
+        			acctbankinfo.get("NAME").toString(),
+        			acctbankinfo.get("CERTIFICATE_CODE").toString(),
+        			acctbankinfo.get("EXPIRE_DATE").toString(),
+        			acctbankinfo.get("CARD_TYPE").toString(),
+        			acctbankinfo.get("BANK_TYPE").toString(),
+        			acctbankinfo.get("SIGN_CODE").toString(),
+        			"3",//acctbankinfo.get("VALID_FLAG").toString()
+        			acctbankinfo.get("PRIORITY").toString(),
+        			acctbankinfo.get("SYS_TRADE_NO").toString()
+        			);
+        	if (iRet<0) 
+        	{
+        		return 2; //删除失败
+    		}
+        	return  3; //操作成功
+    	}
+    	return 2;
     }
 
 }

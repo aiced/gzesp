@@ -351,8 +351,7 @@ public class MyAcctController {
     	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
     	String strbank_no=DESUtil.Bytes2HexString(bank_no);
 
-    	
-    	
+
     	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,paramsMap.get("bank_no"));
     	
     	if (acctbankinfo != null && acctbankinfo.size()>0) //有数据

@@ -3,6 +3,8 @@ package com.ai.gzesp.recharge;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +37,7 @@ public class RechargeUtil {
 	}
 	
 	/**
-	 * 开始计算所有的可能的组合
+	 * 开始计算所有的可能的组合，并且按卡的总张数排序
 	 * @param temp_fee
 	 */
 	public static List<Map<Integer, Integer>> startCompute(int temp_fee){
@@ -84,6 +86,33 @@ public class RechargeUtil {
 			//组合4 里面 再细分各种不同组合
 			computeSub(temp_fee, groups4, 3, groupsList);
 		}
+		
+		//根据总张数排序
+		Collections.sort(groupsList, new Comparator<Map<Integer, Integer>>(){
+
+			@Override
+			public int compare(Map<Integer, Integer> arg0,
+					Map<Integer, Integer> arg1) {
+				int num0 = 0;
+				int num1 = 0;
+				for (Map.Entry<Integer, Integer> entry : arg0.entrySet()) {
+					num0 += entry.getValue();
+					  }
+				for (Map.Entry<Integer, Integer> entry : arg1.entrySet()) {
+					num1 += entry.getValue();
+					  }
+				//如果arg0小于arg1,返回一个正数;如果arg0大于arg1，返回一个负数;如果他们相等，则返回0;
+				if(num0 < num1){
+					return -1 ;
+				}
+				else if(num0 > num1){
+					return 1;
+				}
+				else{
+					return 0;
+				}
+				
+			}});
 		
 		log.debug("【充值面额组合】" + groupsList);	
 		
@@ -184,11 +213,11 @@ public class RechargeUtil {
 	 * @param interfaceType
 	 * @param param
 	 */
-	public static String genReq(String interfaceType, RechargeParam param){
+	public static String genReq(RechargeParam param, String logId, String interfaceType, String serialsNum, String userType, String reqTime){
 		//先生成包体，因为包头里需要知道包体的长度
 		String reqBody = genReqBody(interfaceType, param); 
 		//再生成包头
-		String reqHead = genReqHead(reqBody);
+		String reqHead = genReqHead(reqBody, logId, interfaceType, serialsNum, userType, reqTime);
 		
 		return RechargeCons.prefix + reqHead + reqBody + RechargeCons.Suffix;
 	}
@@ -239,9 +268,21 @@ public class RechargeUtil {
 	 * 生成请求包头
 	 * @param reqBody
 	 */
-	public static String genReqHead(String reqBody){
+	public static String genReqHead(String reqBody, String logId, String interfaceType, String serialsNum, String userType, String reqTime){
 		StringBuffer reqHead = new StringBuffer(113);
 		appendHeadA1(reqHead, reqBody);
+		appendHeadA2(reqHead, logId);
+		appendHeadA3(reqHead);
+		appendHeadA4(reqHead, interfaceType);
+		appendHeadA5(reqHead);
+		appendHeadA6(reqHead, interfaceType, serialsNum);
+		appendHeadA7(reqHead, userType);
+		appendHeadA8(reqHead);
+		appendHeadA9(reqHead, reqTime, logId);
+		appendHeadA10(reqHead);
+		appendHeadA11(reqHead);
+		appendHeadA12(reqHead);
+		appendHeadA13(reqHead, reqTime);
 		return reqHead.toString();
 	}
 	
@@ -426,12 +467,18 @@ public class RechargeUtil {
 //        
 //        System.out.println(fillNull("1234567890", 20).substring(12));
 		
-		StringBuffer src = new StringBuffer(23);
+/*		StringBuffer src = new StringBuffer(23);
 		src.append("150707120113");
 		src.append("1234567890123456");
 		src.append(fillNull("1234567890123456", 20).substring(12));
 		byte[] temp = DESUtil.encryptModeRecharge(src.toString().getBytes());
 		String target = Base64Utils.encodeStr(temp);
-		System.out.println(target);
+		System.out.println(target);*/
+		
+		String src = "123  ";
+		System.out.println(src);
+		byte[] sizeBytes = src.getBytes();
+		System.out.println(new String(src.getBytes()).trim());
+		System.out.println(Integer.parseInt(new String(src.getBytes()).trim()));
 	}
 }

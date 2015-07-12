@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gzesp.dao.RechargeDao">
+
+
+	<update id="updateCardList">
+      update INV_D_RECHARGE_CARD 
+         set card_status = '3',
+             order_id = ${order_id}
+      where card_status = '1'
+        and card_no in
+      (
+        <foreach collection="group" item="item" index="key" separator="union all">        
+           select card_no
+             from INV_D_RECHARGE_CARD
+            where card_value= ${key}
+              and card_status = '1'
+              and rownum <= ${item}
+        </foreach>
+      )  
+	</update>
+	
+	<select id="getUseCardList" resultType="java.util.HashMap">
+	    select card_no, card_value, card_password, order_id
+          from INV_D_RECHARGE_CARD
+         where order_id = ${order_id}
+         order by card_value desc
+	</select>		
+	
+	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
+	<select id="insertRechargeLogBatch">
+      insert into ITF_D_RECHARGE_LOG
+             (log_id, partition_id, order_id, req_time, interface_type, 
+              busi_type, serial_number, serial_number_type, charge_money, agent_id, password)
+      <foreach collection="cardList" item="item" index="index" separator="union all">        
+       select ${log_id}, ${partition_id}, ${order_id}, #{item.req_time}, #{interface_type}, 
+              #{busi_type}, #{serial_number}, ${serial_number_type}, ${item.CARD_VALUE}, #{item.CARD_NO}, #{item.CARD_PASSWORD} 
+         from dual   
+      </foreach>
+	</select>		
+
+							
+</mapper>

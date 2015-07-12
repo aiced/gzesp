@@ -84,7 +84,7 @@ public class DESUtil {
     public static byte[] encryptModeRecharge(byte[] keybyte, byte[] src) {
         try {
             // 生成密钥
-            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm2); 
+            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm2); //  "DESede"
 
             // 加密
             Cipher c1 = Cipher.getInstance(Algorithm2);
@@ -156,7 +156,7 @@ public class DESUtil {
     public static byte[] decryptModeRecharge(byte[] keybyte, byte[] src) {
         try {
             // 生成密钥
-            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm2);
+            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm2); //  "DESede"
 
             // 解密
             Cipher c1 = Cipher.getInstance(Algorithm2);

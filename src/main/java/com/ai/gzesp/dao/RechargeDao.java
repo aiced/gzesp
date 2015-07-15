@@ -23,8 +23,7 @@ public interface RechargeDao {
     
     public List<Map<String, String>> getUseCardList(@Param("order_id") String order_id);   
     
-    public Map<String, String> insertRechargeLogBatch(@Param("log_id") String log_id, 
-    		@Param("partitionId") String partition_id, 
+    public Map<String, String> insertRechargeLogBatch(
     		@Param("order_id") String order_id, 
     		@Param("req_time") String req_time, 
     		@Param("interface_Type") String interface_Type,
@@ -33,5 +32,7 @@ public interface RechargeDao {
     		@Param("serial_number_type") String serial_number_type, 
     		@Param("cardList") List<Map<String, String>> cardList);   
     
-    
+    public int updateRechargeLog(@Param("log_id") String log_id, @Param("success_flag") String success_flag,
+    		@Param("result_code") String result_code, @Param("agent_balance") String agent_balance, 
+    		@Param("unicon_serial_num") String unicon_serial_num); 
 }

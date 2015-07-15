@@ -5,7 +5,7 @@ package com.ai.gzesp.dto;
  * @author xmh
  *
  */
-public class RechargeParam {
+public class RechargeBodyParam {
 
 	/**
 	 * 充值金额(元)

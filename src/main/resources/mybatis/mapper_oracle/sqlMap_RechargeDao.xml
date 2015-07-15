@@ -15,7 +15,9 @@
              from INV_D_RECHARGE_CARD
             where card_value= ${key}
               and card_status = '1'
+              <![CDATA[
               and rownum <= ${item}
+              ]]>
         </foreach>
       )  
 	</update>
@@ -33,11 +35,19 @@
              (log_id, partition_id, order_id, req_time, interface_type, 
               busi_type, serial_number, serial_number_type, charge_money, agent_id, password)
       <foreach collection="cardList" item="item" index="index" separator="union all">        
-       select ${log_id}, ${partition_id}, ${order_id}, #{item.req_time}, #{interface_type}, 
+       select ${item.LOG_ID}, ${item.PARTITION_ID}, ${order_id}, #{item.req_time}, #{interface_type}, 
               #{busi_type}, #{serial_number}, ${serial_number_type}, ${item.CARD_VALUE}, #{item.CARD_NO}, #{item.CARD_PASSWORD} 
          from dual   
       </foreach>
 	</select>		
 
+	<update id="updateRechargeLog">
+      update ITF_D_RECHARGE_LOG
+         set success_flag = #{success_flag},
+             result_code = #{result_code},
+             agent_balance = #{agent_balance},
+             unicon_serial_num = #{unicon_serial_num}
+       where log_id = ${log_id}
+	</update>
 							
 </mapper>

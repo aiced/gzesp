@@ -125,7 +125,7 @@ public class MyAcctService {
     }
 
     //通过order_id，查询实付金额
-    public Map<String,Object> queryToPayMoneyByOrderId(String order_id)
+    public Map<String, String> queryToPayMoneyByOrderId(String order_id)
     {
     	return myAcctDao.queryToPayMoneyByOrderId(order_id);
     }

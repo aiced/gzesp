@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.ai.gzesp.dao.RechargeDao;
+import com.ai.gzesp.dto.RechargeBodyParam;
 import com.ai.gzesp.recharge.InterfaceType;
+import com.ai.gzesp.recharge.RechargeClientHandler;
 import com.ai.gzesp.recharge.RechargeUtil;
 
 /**
@@ -24,6 +26,9 @@ public class RechargeService {
     
     @Autowired
     private RechargeDao rechargeDao;
+    
+    @Autowired
+    private RechargeClientHandler rechargeClientHandler;
 	
 	public void rechargeTx(String order_id, String serial_number, String serial_number_type, int total_fee){
 		//l	A4交易类型（6位）： 010202，010203，010204，010205，010206，010201
@@ -33,8 +38,8 @@ public class RechargeService {
 		//  A2流水号（20位）：业务流水号，标志每笔具体交易 String logId = generateLogId();
 		log.debug("【一卡充】需要充值" + total_fee + "厘，开始计算充值卡面额组合");
 		int temp_fee = total_fee/1000; //单位换成元
-		String logId = RechargeUtil.generateLogId();
-		String partitionId = logId.substring(14, 16);
+		//String logId = RechargeUtil.generateLogId();
+		//String partitionId = logId.substring(14, 16);
 		String reqTime = RechargeUtil.getCurentTime();
 		
 		//获取所有充值卡面额的组合
@@ -59,11 +64,14 @@ public class RechargeService {
 		
 		//获取刚刚update占用的卡号的组合
 		List<Map<String, String>> cardList = rechargeDao.getUseCardList(order_id);
+		for(Map<String, String> card : cardList){
+			String logId = RechargeUtil.generateLogId(); //每张卡插的记录logid不一致
+			card.put("LOG_ID", logId);
+			card.put("PARTITION_ID", logId.substring(14, 16));
+		}
 		
 		//调用一卡充接口前先插入接口日志表，状态等待响应返回再更新
 		rechargeDao.insertRechargeLogBatch(
-				logId, 
-				partitionId, 
 				order_id, 
 				reqTime, 
 				InterfaceType.recharge.getInterfaceCode(),
@@ -73,12 +81,33 @@ public class RechargeService {
 				cardList
 				);
 		
-		//调用一卡充接口
-//		for(){
-//			//是否可以for循环调用接口
-//		}
+		//每张卡挨个调用一卡充接口，是否可以for循环调用接口
+		for(Map<String, String> card : cardList){
+			RechargeBodyParam param = new RechargeBodyParam();
+			param.setChargeMoney(card.get("CARD_VALUE"));
+			param.setAgentID(card.get("CARD_NO"));
+			param.setPasword(card.get("CARD_PASSWORD"));
+			param.setSerialNum(card.get("LOG_ID")); //这个不是填手机号，是填流水号
+			//生成请求报文
+			String req = RechargeUtil.genReq(param, 
+					card.get("LOG_ID"), InterfaceType.recharge.getInterfaceCode(), 
+					serial_number, serial_number_type, reqTime);
+			//发送报文
+			rechargeClientHandler.sendMsg(req.getBytes()); 
+		}
 	}
 	
+	
+	/**
+	 * 根据响应报文里的logid，更新接口日志表里的记录状态
+	 * @param logId
+	 * @return
+	 */
+	public int updateRechargeLog(String log_id, String success_flag, String result_code,
+			String agent_balance, String unicon_serial_num){
+		return rechargeDao.updateRechargeLog(log_id, success_flag, result_code,
+				agent_balance, unicon_serial_num);
+	}
   
 	
 	

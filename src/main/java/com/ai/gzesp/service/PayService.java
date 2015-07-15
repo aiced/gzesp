@@ -1,32 +1,26 @@
 package com.ai.gzesp.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-
-import javax.annotation.Resource;
 
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.PayDao;
-import com.ai.gzesp.dao.beans.Criteria;
-import com.ai.gzesp.dao.beans.TdPayDWEIXINLOG;
-import com.ai.gzesp.dao.service.TdPayDWEIXINLOGDao;
 import com.ai.gzesp.dto.OrderDPay;
 import com.ai.gzesp.dto.PayInfo;
+import com.ai.gzesp.dto.UnionPayParam;
+import com.ai.gzesp.recharge.RechargeUtil;
+import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.utils.DateUtils;
+import com.ai.gzesp.utils.MD5Util;
 import com.ai.gzesp.utils.SmsUtils;
 import com.ai.sysframe.utils.CommonUtil;
-import com.ai.wxpay.WXPay;
-import com.ai.wxpay.common.Configure;
-import com.ai.wxpay.protocol.refund_protocol.RefundReqData;
-import com.ai.wxpay.protocol.refund_protocol.RefundResData;
 
 /**
  * 支付公共服务类<br> 
@@ -47,6 +41,11 @@ public class PayService {
     @Autowired
     private OrderDao orderDao;
     
+    @Autowired
+    private UnionPayService2 unionPayService2;
+    
+    @Autowired
+    private MyAcctService myAcctService;
     
     /**
      * 根据orderid查询能人店铺id
@@ -64,7 +63,18 @@ public class PayService {
      * @param result
      * @return
      */
-    public void beforePayReq(String orderId, String orderFee, List<PayInfo> payInfoList){
+    public void beforePayReq(String orderId, String orderFee, List<Map<String, String>> paramList){
+    	//组装list
+    	List<PayInfo> payInfoList = new ArrayList<PayInfo>();
+    	for(int i = 0; i < paramList.size(); i++){
+    		PayInfo row = new PayInfo();
+    		row.setPay_order(String.valueOf(i+1)); //默认从1开始
+    		row.setPay_type(paramList.get(i).get("pay_type")); //线上
+    		row.setPay_mode(paramList.get(i).get("pay_mode")); //30 微信支付  40 沃支付
+    		row.setPay_fee(paramList.get(i).get("pay_fee")); //单位厘
+    		payInfoList.add(row);
+    	}
+    	
     	//先查下ord_d_pay 里是否已经有记录了，避免再次支付时多插记录
     	List<Map<String, String>> rows = queryOrderDPay(orderId);
     	//如果没有记录则插记录, 有记录则更新记录
@@ -72,11 +82,13 @@ public class PayService {
         	insertPayInfoBatch(orderId, orderFee, payInfoList);
         }
         else{
-        	//暂时不写，等账户功能上了再写
+        	//暂时不写，第一次支付失败后，可以再次支付，支付成功后会来更新表里的记录
         	//先删除原记录再插新记录，其实这样有问题，应该判断是否有成功支付记录，成功了页面就不允许再次选择支付模式支付
-        	insertPayInfoBatch(orderId, orderFee, payInfoList);
+        	
+        	//insertPayInfoBatch(orderId, orderFee, payInfoList);
         }
-    }  
+    } 
+    
     
     private List<Map<String, String>> queryOrderDPay(String orderId){
         return payDao.queryOrderDPay(orderId);
@@ -327,5 +339,130 @@ public class PayService {
      */
     private int updatePayState(String order_id, String order_state) {
         return payDao.updatePayState(order_id, order_state);
+    }
+    
+    public void dealInsteadPayTx(String user_id, String order_id, String order_fee, List<Map<String, String>> paramList){
+    	//先插入ord_d_pay订单支付信息
+    	beforePayReq(order_id, order_fee, paramList);
+    	
+    	//根据代金券or账户or银联快捷支付，调用不同的处理
+		for(Map<String, String> payInfo : paramList){
+			//如果是代金券,更新act_d_coupon状态为2，已使用
+    		if(payInfo.get("pay_mode").equals("60")){
+    			//boolean canUse = checkCouponLimit();
+    			updateCouponLog(payInfo.get("coupon_id"), "2", order_id); 
+    		}
+    		//如果是账户支付，更新act_d_account里余额和版本，然后插入act_d_access_log变动日志
+    		else if(payInfo.get("pay_mode").equals("51")){
+    			useAcctForPay(user_id, payInfo.get("pay_fee"), order_id);
+    		}
+    		//如果是银联快捷支付
+    		else if(payInfo.get("pay_mode").equals("10")){
+    	        //查出银行卡签约号sign_code，用于调用银联签约号快捷支付接口
+    			String bank_no = payInfo.get("bank_no");
+    	        Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
+    	        String sign_code = MD5Util.convertMD5(acctbankinfo.get("SIGN_CODE").toString());//md5解密，表里存放的是加密的
+    	        Map<String, String> result = callUnionPay(payInfo.get("pay_fee"), order_id, sign_code); //调用银联接口
+    		    if(!result.get("status").equals(UnionPayCons.RESULT_CODE_SUCCESS)){
+    		    	TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
+    		    	break; //跳出循环
+    		    }
+    		}
+    		else{
+    		}
+    	}
+    }
+    
+    /**
+     * 判断代金券使用限制条件，是否此订单可以使用此代金券
+     * @return
+     */
+    private boolean checkCouponLimit(){
+    	return true;
+    }
+    
+
+    /**
+     * 更新代金券表的状态
+     * 如果order_id不是null，则表示是被订单代付使用，如果是null，表示是其他状态更新，比如过期失效
+     * @param coupon_id
+     * @param status
+     * @param order_id
+     * @return
+     */
+    private int updateCouponLog(String coupon_id, String status, String order_id) {
+        return payDao.updateCouponLog(coupon_id, status, order_id);
+    }
+    
+    private void useAcctForPay(String user_id, String pay_fee, String order_id) {
+    	String acct_id = user_id + "2"; //默认现金可提账户是user_id||'2' ;
+    	//查出最新的余额和版本号，在此基础上版本号+1,用乐观锁的机制更新，
+    	//考虑到并发的情况，如果版本号+1进行update记录为0，需要重新查询一遍再更新
+    	while(true){
+    		Map<String, String> acct = queryAcctBalanceAndVersion(acct_id);
+    		int balance = Integer.parseInt(acct.get("BALANCE")); //原余额
+    		int version = Integer.parseInt(acct.get("VERSION")); //原版本号
+    		int balanceNew = balance - Integer.parseInt(pay_fee); //变动后的账户余额
+    		String versionNew = RechargeUtil.fillZero(version + 1, 8); //新版本号，数字左补0凑成8位版本号
+    		int num = updateAcctBalanceAndVersion(acct_id, balanceNew, versionNew); 
+    		if(num > 0){
+    			//如果更新成功了才可以插accesslog日志
+    			insertAcctAccessLog(acct_id, order_id, balance, -Integer.parseInt(pay_fee), balanceNew);//pay_fee负值
+    			break; //跳出循环
+    		}
+    	}
+    }
+
+    /**
+     * 查询账户余额和版本
+     * @param acct_id
+     * @return
+     */
+    private Map<String, String> queryAcctBalanceAndVersion(String acct_id) {
+        return payDao.queryAcctBalanceAndVersion(acct_id);
+    }
+    
+    /**
+     * 更新账户余额和版本
+     * @param acct_id
+     * @param balanceNew
+     * @param versionNew
+     * @return
+     */
+    private int updateAcctBalanceAndVersion(String acct_id, int balanceNew, String versionNew) {
+        return payDao.updateAcctBalanceAndVersion(acct_id, balanceNew, versionNew);
+    }
+    
+    /**
+     * 插账户变动access_log日志
+     * @param acct_id
+     * @param order_id
+     * @param balanceOld
+     * @param pay_fee
+     * @param balanceNew
+     * @return
+     */
+    private int insertAcctAccessLog(String acct_id, String order_id, int balanceOld, int pay_fee, int balanceNew) {
+        String log_id = RechargeUtil.generateLogId();
+        String partition_id = log_id.substring(14, 16);
+        String trade_type = "22"; //22：账户支付(现金可提)(钱为负值)
+    	return payDao.insertAcctAccessLog(log_id, partition_id, acct_id, order_id, trade_type, balanceOld, pay_fee, balanceNew);
+    }
+    
+    /**
+     * 调用银联快捷支付接口，并返还结果
+     * @param pay_fee
+     * @param order_id
+     * @param sign_code
+     * @return
+     */
+    private Map<String, String> callUnionPay(String pay_fee, String order_id, String sign_code) {
+    	UnionPayParam param = new UnionPayParam();
+    	param.setOrder_id(order_id); // 真实order_id
+    	param.setFee(pay_fee); // 单位厘
+    	param.setSign_code(sign_code); //解密过的sign_code
+    
+    	return unionPayService2.unionPayPay(param);
+    	
     }
 }

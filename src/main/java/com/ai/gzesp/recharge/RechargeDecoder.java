@@ -28,6 +28,27 @@ public class RechargeDecoder extends CumulativeProtocolDecoder {
 			// 标记当前位置，以便 reset
 			in.mark();
 			
+			//先判断长度是否够心跳包长度，然后再判断是否是心跳包内容，不是则流转到下面判断是否是数据包
+			int heartBytesLen = RechargeCons.HEARTBEAT_REQ.getBytes().length + 2; //心跳前后也有前缀后缀
+			byte[] heartBytes = new byte[heartBytesLen]; //存放心跳包内容
+			boolean isEnoughHeart = isEnoughHeart(in, heartBytesLen);
+			if(isEnoughHeart){
+				//如果长度够心跳包，再判断是否是心跳包内容，不是则流转到下面判断是否是数据包
+				boolean isHeartResp = isHeartResp(in, heartBytesLen, heartBytes);
+				if(isHeartResp){
+					out.write(heartBytes); //心跳内容要输出
+					return false; // 心跳包已经被读取成功，让父类进行接收下个包
+				}
+				else{
+					in.reset(); //如果长度够但又不是心跳包，则重置，以便流转到下面重新读取判断是否是数据包
+				}
+			}
+			else{
+				in.reset(); //长度不够心跳包长度，则重置，等待更多的内容
+				return false;
+			}
+			
+			
 			// 有数据时，读取@后 5 字节判断消息长度
 			// 所有数据包前增加”@”为包的开始标志，数据包尾加“0x1a”为包的结束标志。
 			// 数据包头中的包长字段不包含这两个字符在内
@@ -71,6 +92,46 @@ public class RechargeDecoder extends CumulativeProtocolDecoder {
 		 * in.get(dataBytes, 0, size); out.write(dataBytes); // 处理成功，让父类进行接收下个包
 		 * return false;
 		 */
+	}
+	
+	/**
+	 * 判断数据包是否够一个心跳包的长度
+	 * @param in
+	 * @return
+	 */
+	private boolean isEnoughHeart(IoBuffer in, int heartBytesLen) {
+		// 如果连心跳包的长度都不够，正常数据包的长度更不够，返回重新接收新数据，以拼凑成完整的数据~
+		if (heartBytesLen > in.remaining()) {
+			// in.reset(); //重置
+			return false;
+		}
+		else{
+			return true;
+		}
+	}
+	
+	/**
+	 * 判断是否是心跳包内容，如果是则顺便读取出来放到heartBytes
+	 * @param in
+	 * @param heartBytesLen
+	 * @param heartBytes
+	 * @return
+	 */
+	private boolean isHeartResp(IoBuffer in, int heartBytesLen, byte[] heartBytes){
+		//先判断是否是心跳报文
+		//byte[] heartBytes = new byte[heartBytesLen]; 
+		in.get(heartBytes); //获取心跳包相同长度+前后缀长度的内容，判断下是否是心跳包
+		String heart = new String(heartBytes).trim();
+		if(heart.equals(RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix)){
+			log.debug("【一卡充：esp收到数据包解码， 是响应心跳包" + heart + "】");
+			return true;
+		}
+		else{
+			//如果不是心跳内容，则可能是正常数据包，直接返回重新
+			log.debug("【一卡充：esp收到数据包解码， 不是响应心跳包】");
+			//in.reset(); //重置
+			return false;
+		}		
 	}
 
 }

@@ -1,20 +1,23 @@
 package com.ai.gzesp.recharge;
 
-import java.util.Map;
+import java.net.InetSocketAddress;
 
 import org.apache.log4j.Logger;
+import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.core.session.IoSession;
+import org.apache.mina.filter.codec.ProtocolCodecFilter;
+import org.apache.mina.filter.keepalive.KeepAliveFilter;
+import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
+import org.apache.mina.filter.logging.LoggingFilter;
+import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.ai.gzesp.dao.RechargeDao;
 import com.ai.gzesp.dto.RechargeResp;
-import com.ai.gzesp.unionpay.IDealUnionPayResp;
-import com.ai.gzesp.unionpay.RespHandlerFactory;
-import com.ai.gzesp.unionpay.UnionPayCons;
-import com.ai.gzesp.utils.DESUtil;
-import com.ai.gzesp.utils.XmlUtils;
+import com.ai.gzesp.service.RechargeService;
 
 /**
  * 客户端请求端handler<br> 
@@ -29,13 +32,24 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     
     private static Logger log = Logger.getLogger(RechargeClientHandler.class); 
     
+//    @Autowired
+//    private RechargeService rechargeService;
+    
     @Autowired
-    private RechargeClient rechargeClient;
+    private RechargeDao rechargeDao;
+    
+	private NioSocketConnector connector; 
+	
+    private ConnectFuture cf;
+    
+//    @Autowired
+//    private RechargeClient rechargeClient;
 
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
         byte[] m = (byte[])message;
         log.debug("【一卡充：客户端收到响应 sessionId： " + session.getId() + "， message：" + new String(m) + "】");
+        recvMsg(m); //处理响应报文
         //super.messageReceived(session, message);
     }
 
@@ -43,8 +57,8 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 	public void sessionClosed(IoSession session) throws Exception {
 		log.debug("【一卡充：客户端链接关闭 sessionId： " + session.getId() + "】");
 
-		rechargeClient.disconnect(); // 断开原有socket连接，并释放资源
-		rechargeClient.initConnector(); // esp客户端如果断链了要重连
+		disconnect(); // 断开原有socket连接，并释放资源
+		initConnector(); // esp客户端如果断链了要重连
 		super.sessionClosed(session);
 	}
 
@@ -80,28 +94,88 @@ public class RechargeClientHandler extends IoHandlerAdapter {
         log.debug("【一卡充：捕捉到异常 sessionId： " + session.getId() + cause.toString() + "】");
     }
 
+    /**
+     * 初始化socket连接
+     * 启动(在listener中启动是需要新建一个线程来连接Server，否则web容器会阻塞而无法启动。) 
+     */
+	public void initConnector() {
+		connector = new NioSocketConnector();
+		connector.getFilterChain().addLast("logger", new LoggingFilter());
+		connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new RechargeCodecFactory()));
+		connector.setHandler(this); //connector.setHandler(new ClientHandler());
+
+		// 设置心跳过滤器链
+		ClientKeepAliveFactoryImpl ckafi = new ClientKeepAliveFactoryImpl();
+		KeepAliveFilter kaf = new KeepAliveFilter(ckafi, IdleStatus.BOTH_IDLE, KeepAliveRequestTimeoutHandler.CLOSE);
+		kaf.setForwardEvent(true); // 继续调用 IoHandlerAdapter 中的 sessionIdle时间
+		kaf.setRequestInterval(RechargeCons.HEART_INTERVAL); // 设置当连接的读取通道空闲的时候，心跳包请求时间间隔
+		kaf.setRequestTimeout(RechargeCons.HEART_TIMEOUT); // 设置心跳包请求后 等待反馈超时时间
+		connector.getFilterChain().addLast("heart", kaf); // 设置心跳
+
+		cf = connector.connect(new InetSocketAddress(RechargeCons.SERVER_1_HOST, RechargeCons.SERVER_1_PORT));
+		cf.awaitUninterruptibly();
+
+		log.debug("【一卡充：esp创建连接成功】");
+	}
+	
 
 
     /**
-     * 发送byte[] 报文至银联服务端
-     * @param xmlSend
+     * 断开socket连接，并释放资源
+     */
+	public void disconnect() {
+      cf.getSession().close(true);
+      cf.getSession().getCloseFuture().awaitUninterruptibly();
+      connector.dispose();
+      log.debug("【一卡充：esp断开原有连接】");
+    }
+
+    /**
+     * 检查socket连接是否正常，如果断掉了需要重连
+     */
+    private void checkConnector()
+    {
+      if (!connector.isActive()) {
+        log.debug("【一卡充：connector.isActive()=false,断开原有连接重新创建连接】");
+        disconnect();
+        initConnector();
+      } else {
+        log.debug("【一卡充：connector.isActive()=true,连接状态活跃】");
+      }
+    }
+    
+    /**
+     * 获取ConnectFuture
      * @return
      */
-/*    public static boolean sendMsg(byte[] xmlSend) {
+    public ConnectFuture getConnectFuture()
+    {
       checkConnector();
-      //cf.getSession().write(xmlSend);
-      boolean isSuccess = true;
-      try {
-      cf.getSession().write(xmlSend);
-      return isSuccess;
-      } catch (Exception e) {
-          log.debug("【银联支付：生成最终请求报文后发送异常！！！】");
-          isSuccess = false;
-          e.printStackTrace();
-          return isSuccess;
-      }
-    }*/
+      return cf;
+    }
     
+    /**
+     * 发送报文
+     * @param xmlSend
+     */
+    public void sendMsg(String xmlSend) {
+        checkConnector();
+        cf.getSession().write(xmlSend);
+      }
+    
+    /**
+     * 发送报文
+     * @param xmlSend
+     */
+    public void sendMsg(byte[] xmlSend) {
+        checkConnector();
+        cf.getSession().write(xmlSend);
+      }
+
+    /**
+     * 收到响应后的处理
+     * @param msg
+     */
     private void recvMsg(byte[] msg){
         //如果收到的是心跳报文0000,则返回 0000响应,心跳报文银联也不需要我返回
           if(msg.length == 0){
@@ -158,7 +232,11 @@ public class RechargeClientHandler extends IoHandlerAdapter {
           log.debug("【一卡充：收到的响应报文转换成bean," + resp.toString() +" 】");
           
           //更新ITF_D_RECHARGE_LOG日志记录里的结果
-
+//          rechargeService.updateRechargeLog(resp.getLogId(), resp.getSuccessFlag(), resp.getResultCode(),
+//        		  resp.getAgentBalance(), resp.getUniconSerilNum());
+          
+          rechargeDao.updateRechargeLog(resp.getLogId(), resp.getSuccessFlag(), resp.getResultCode(),
+        		  resp.getAgentBalance(), resp.getUniconSerilNum());
       }
     
     

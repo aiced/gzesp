@@ -51,7 +51,7 @@ public interface MyAcctDao {
 	public int delAcctBankDetail(@Param("user_id") String user_id,@Param("bank_no") String bank_no);
 	public List<Map<String, Object>> queryAcctBalanceLog(@Param("user_id") String user_id,@Param("iFlag") int iFlag,@Param("page_num") int page_num,@Param("page_size") int page_size,@Param("update_time") String update_time);
 	public List<Map<String, Object>> queryAcctBalanceLogPage(@Param("user_id") String user_id,@Param("iFlag") int iFlag,@Param("page_num") int page_num,@Param("page_size") int page_size,@Param("update_time") String update_time);
-	public Map<String,Object> queryToPayMoneyByOrderId(@Param("order_id") String order_id);
+	public Map<String, String> queryToPayMoneyByOrderId(@Param("order_id") String order_id);
 
 	
 }

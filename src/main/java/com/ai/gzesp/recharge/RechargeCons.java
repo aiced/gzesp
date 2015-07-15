@@ -54,12 +54,12 @@ public class RechargeCons {
     /**
      * 请求端心跳包内容 
      */
-    public static String HEARTBEAT_REQ = "0000";
+    public static String HEARTBEAT_REQ = "GWHEARTBEATTEST";
     
     /**
      * 服务端心跳包内容 
      */
-    public static String HEARTBEAT_RESP = "0000";
+    public static String HEARTBEAT_RESP = "GWHEARTBEATTEST";
     
     /**
      * 接口调用成功返回00000应答码 

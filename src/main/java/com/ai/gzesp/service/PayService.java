@@ -63,7 +63,7 @@ public class PayService {
      * @param result
      * @return
      */
-    public void beforePayReq(String orderId, String orderFee, List<Map<String, String>> paramList){
+    public void beforePayReq(String orderId, String orderFee, List<Map<String, String>> paramList, Map<String, String> result){
     	//组装list
     	List<PayInfo> payInfoList = new ArrayList<PayInfo>();
     	for(int i = 0; i < paramList.size(); i++){
@@ -341,16 +341,32 @@ public class PayService {
         return payDao.updatePayState(order_id, order_state);
     }
     
-    public void dealInsteadPayTx(String user_id, String order_id, String order_fee, List<Map<String, String>> paramList){
+    /**
+     * 处理代客下单支付的业务逻辑
+     * 所有数据库操作事务控制，发生异常全部回滚
+     * 银联支付返回失败时，虽不发生异常，但也手工回滚，所以会出现 PAY_D_UNIONPAY_LOG 有日志接口调用记录，但订单表和 ord_d_pay里面没有相关记录的情况
+     * @param user_id
+     * @param order_id
+     * @param order_fee
+     * @param paramList
+     * @param result
+     */
+    public void dealInsteadPayTx(String user_id, String order_id, String order_fee, List<Map<String, String>> paramList, Map<String, String> result){
     	//先插入ord_d_pay订单支付信息
-    	beforePayReq(order_id, order_fee, paramList);
+    	beforePayReq(order_id, order_fee, paramList, result);
     	
     	//根据代金券or账户or银联快捷支付，调用不同的处理
 		for(Map<String, String> payInfo : paramList){
 			//如果是代金券,更新act_d_coupon状态为2，已使用
     		if(payInfo.get("pay_mode").equals("60")){
     			//boolean canUse = checkCouponLimit();
-    			updateCouponLog(payInfo.get("coupon_id"), "2", order_id); 
+    			int n1 = updateCouponLog(payInfo.get("coupon_id"), "2", order_id); 
+    			if(n1 <= 0){
+    				result.put("status", "11");
+    	        	result.put("detail", "代客下单代金券未找到记录");
+    	        	TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
+    	        	break; //跳出循环
+    			}
     		}
     		//如果是账户支付，更新act_d_account里余额和版本，然后插入act_d_access_log变动日志
     		else if(payInfo.get("pay_mode").equals("51")){
@@ -362,8 +378,11 @@ public class PayService {
     			String bank_no = payInfo.get("bank_no");
     	        Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
     	        String sign_code = MD5Util.convertMD5(acctbankinfo.get("SIGN_CODE").toString());//md5解密，表里存放的是加密的
-    	        Map<String, String> result = callUnionPay(payInfo.get("pay_fee"), order_id, sign_code); //调用银联接口
-    		    if(!result.get("status").equals(UnionPayCons.RESULT_CODE_SUCCESS)){
+    	        Map<String, String> resultUnionPay = callUnionPay(payInfo.get("pay_fee"), order_id, sign_code); //调用银联接口
+    	        //如果银联返回失败，则透传返回错误信息给前台
+    		    if(!resultUnionPay.get("status").equals(UnionPayCons.RESULT_CODE_SUCCESS)){
+    		    	result.put("status", resultUnionPay.get("status")); //直接把银联返回的错误编码返回
+    	        	result.put("detail", resultUnionPay.get("detail"));
     		    	TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
     		    	break; //跳出循环
     		    }
@@ -410,6 +429,7 @@ public class PayService {
     			insertAcctAccessLog(acct_id, order_id, balance, -Integer.parseInt(pay_fee), balanceNew);//pay_fee负值
     			break; //跳出循环
     		}
+    		log.debug("【代客下单：更新act_d_account记录为0，重试。。。】");
     	}
     }
 

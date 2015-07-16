@@ -449,8 +449,10 @@ public class RechargeUtil {
     public static String generateLogId() {
     	StringBuffer sb = new StringBuffer(16);
         Random random = new Random();
-        sb.append(random.nextInt(3)); //加3位随机整数
         sb.append(System.currentTimeMillis()); //13位
+        sb.append(random.nextInt(9)); //加1位随机整数
+        sb.append(random.nextInt(9)); //加1位随机整数
+        sb.append(random.nextInt(9)); //加1位随机整数 ，总共加3位随机数
         return sb.toString();
     }
     
@@ -504,7 +506,13 @@ public class RechargeUtil {
 		byte[] heartByte = heart.getBytes(RechargeCons.charCode);
 		System.out.println(new String(heart.getBytes()).equals(heart));*/
 		
-		System.out.println(fillZero(13, 8));
+//		System.out.println(fillZero(13, 8));
+		
+		
+        String log_id = generateLogId();
+        System.out.println(log_id);
+        String partition_id = log_id.substring(14, 16);
+        System.out.println(partition_id);
 		
 	}
 }

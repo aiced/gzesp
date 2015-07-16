@@ -101,6 +101,7 @@
 			<tx:method name="update*" read-only="false" propagation="REQUIRED" rollback-for="Exception" />
 			<tx:method name="delete*" read-only="false" propagation="REQUIRED" rollback-for="Exception" />
 			<tx:method name="save*" read-only="false" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="*Tx" propagation="REQUIRED" />
 			<tx:method name="*" timeout="10" />
 		</tx:attributes>
 	</tx:advice>

@@ -115,8 +115,13 @@ public class PayController {
     public Map<String, String> prePayReq(@PathVariable("order_id") String order_id, @PathVariable("order_fee") String order_fee, @RequestBody List<Map<String, String>> paramList){
     	Map<String, String> result = new HashMap<String, String>();
     	
-    	payService.beforePayReq(order_id, order_fee, paramList);
+    	payService.beforePayReq(order_id, order_fee, paramList, result);
+    	//如果result不为空，表示有异常，直接返回界面
+    	if(MapUtils.isNotEmpty(result)){
+    		return result;
+    	}
     	
+    	//无异常
     	result.put("status", "00");
         result.put("detail", "插入ord_d_pay成功");
         
@@ -328,10 +333,8 @@ public class PayController {
     		@PathVariable("order_id") String order_id, 
     		@RequestBody List<Map<String, String>> paramList)
     {
-    	//返回map，初始设置成功
+    	//返回map
     	Map<String, String> result = new HashMap<String, String>();
-    	result.put("status", "00");
-    	result.put("detail", "代客下单支付成功");
     	
     	//先校验密码是否正确
     	//请wenh 写校验逻辑，如果校验失败，执行下面
@@ -345,14 +348,23 @@ public class PayController {
         Map<String, String> topay_money = myAcctService.queryToPayMoneyByOrderId(order_id);
         String order_fee = topay_money.get("TOPAY_MONEY");
 
+        //dealInsteadPayTx里只考虑了几种异常，有可能会发生其他异常
         try {
 			//根据代金券or账户or银联快捷支付，调用不同的处理
-			payService.dealInsteadPayTx(user_id, order_id, order_fee, paramList);
+			payService.dealInsteadPayTx(user_id, order_id, order_fee, paramList, result);
+			//如果result不为空，表示有异常，直接返回界面
+	    	if(MapUtils.isNotEmpty(result)){
+	    		return result;
+	    	}
 		} catch (Exception e) {
-			log.error("插入ord_d_pay发生 exception，异常编码02", e); 
+			log.error("代客下单支付发生其他exception", e); 
 			result.put("status", "02");
-        	result.put("detail", "代客下单支付发生异常");
+        	result.put("detail", "代客下单支付发生其他异常");
 		}
+    	
+        //以上都无异常才会走到这里
+    	result.put("status", "00");
+    	result.put("detail", "代客下单支付成功");
     	
     	return result;
     }

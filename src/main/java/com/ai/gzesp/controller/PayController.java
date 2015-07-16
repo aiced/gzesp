@@ -218,6 +218,13 @@ public class PayController {
     	payService.afterRefundSuccess("15", true, order_id);
     }
     
+    
+    /*
+     * @auth:wenh
+     * @店铺管理--代客下单--代客下单支付页面
+     */
+    
+    
     @RequestMapping("/insteadPay/{user_id}/{order_id}")
     public ModelAndView initInsteadPay(@PathVariable("user_id") String user_id,@PathVariable("order_id") String order_id){
     	//代客下单
@@ -260,6 +267,10 @@ public class PayController {
         return mav;
     }
     
+    /*
+     * @auth:wenh
+     * @店铺管理--代客下单--代客下单支付页面--点击支付按钮
+     */
     @RequestMapping("/insteadPay/postData/{user_id}/{order_id}/{bank_no}")
     @ResponseBody
     public String insteadPayPostData(@PathVariable("user_id") String user_id,@PathVariable("order_id") String order_id,@PathVariable("bank_no") String bank_no)
@@ -269,7 +280,7 @@ public class PayController {
     	Double dtopaymoney=0.00;
     	Double dacctbanlance=0.00;
     	String left_money="";
-    	//查询数据库
+    	//查询数据库_账户余额
     	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
         
     	if (acctinfo != null && acctinfo.size()>0) {

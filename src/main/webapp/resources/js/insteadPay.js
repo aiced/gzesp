@@ -45,11 +45,11 @@
 	                     },
 	                     {
 	                    	 "pay_order":"1", "pay_type":pay_type, "pay_mode":'51', pay_fee:$("#hide_balance").val()
-	                     },
+	                     }/*,
 	                     {
 	                    	 "pay_order":"1", "pay_type":pay_type, "pay_mode":'53', pay_fee:""
 	                     }
-	                     
+	                     */
 	                     ]; 
 	        $.ajax({
 		      type: "POST",
@@ -58,14 +58,13 @@
 		      dataType:"json", //预期服务器返回的数据类型
 		      data: JSON.stringify(param), //服务器只能接收json字符串
 		      success: function(data){
-	        if(pay_type == '01'){
-	        	url="${base}/pay/insteadPay/postData/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val()+"/"+$('#selBank').val();
-	        }
-	        else{
-	           url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
-	        }
-	        
-	        window.location.href = url;			    
+		        if(pay_type == '01'){
+		        	url="${base}/pay/insteadPay/postData/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val()+"/"+$('#selBank').val();
+		        }
+		        else{
+		           url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+		        }
+		        window.location.href = url;			    
 		      }
 		    });  
 

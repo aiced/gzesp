@@ -1,8 +1,11 @@
 package com.ai.gzesp.recharge;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +13,7 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import com.ai.gzesp.dto.RechargeParam;
+import com.ai.gzesp.dto.RechargeBodyParam;
 import com.ai.gzesp.utils.Base64Utils;
 import com.ai.gzesp.utils.DESUtil;
 
@@ -35,7 +38,24 @@ public class RechargeUtil {
 	}
 	
 	/**
-	 * 开始计算所有的可能的组合
+	 * 数字位数不足num位的情况下左补空格
+	 * %08d
+	 * 0 代表前面补充0         
+     * 4 代表长度为4         
+     * d 代表参数为正数型
+	 * @param oldStr
+	 * @param num
+	 */
+	public static String fillZero(int oldNum, int num){
+		StringBuffer sb = new StringBuffer(5);
+		sb.append("%0");
+		sb.append(num);
+		sb.append("d");
+		return String.format(sb.toString(), oldNum);  //最后拼成如："%08d"
+	}
+	
+	/**
+	 * 开始计算所有的可能的组合，并且按卡的总张数排序
 	 * @param temp_fee
 	 */
 	public static List<Map<Integer, Integer>> startCompute(int temp_fee){
@@ -84,6 +104,33 @@ public class RechargeUtil {
 			//组合4 里面 再细分各种不同组合
 			computeSub(temp_fee, groups4, 3, groupsList);
 		}
+		
+		//根据总张数排序
+		Collections.sort(groupsList, new Comparator<Map<Integer, Integer>>(){
+
+			@Override
+			public int compare(Map<Integer, Integer> arg0,
+					Map<Integer, Integer> arg1) {
+				int num0 = 0;
+				int num1 = 0;
+				for (Map.Entry<Integer, Integer> entry : arg0.entrySet()) {
+					num0 += entry.getValue();
+					  }
+				for (Map.Entry<Integer, Integer> entry : arg1.entrySet()) {
+					num1 += entry.getValue();
+					  }
+				//如果arg0小于arg1,返回一个正数;如果arg0大于arg1，返回一个负数;如果他们相等，则返回0;
+				if(num0 < num1){
+					return -1 ;
+				}
+				else if(num0 > num1){
+					return 1;
+				}
+				else{
+					return 0;
+				}
+				
+			}});
 		
 		log.debug("【充值面额组合】" + groupsList);	
 		
@@ -184,11 +231,11 @@ public class RechargeUtil {
 	 * @param interfaceType
 	 * @param param
 	 */
-	public static String genReq(String interfaceType, RechargeParam param){
+	public static String genReq(RechargeBodyParam param, String logId, String interfaceType, String serialNum, String serialNumType, String reqTime){
 		//先生成包体，因为包头里需要知道包体的长度
 		String reqBody = genReqBody(interfaceType, param); 
 		//再生成包头
-		String reqHead = genReqHead(reqBody);
+		String reqHead = genReqHead(reqBody, logId, interfaceType, serialNum, serialNumType, reqTime);
 		
 		return RechargeCons.prefix + reqHead + reqBody + RechargeCons.Suffix;
 	}
@@ -199,7 +246,7 @@ public class RechargeUtil {
 	 * @param param
 	 * @return
 	 */
-	public static String genReqBody(String interfaceType, RechargeParam param){
+	public static String genReqBody(String interfaceType, RechargeBodyParam param){
 		//StringBuffer reqBody = new StringBuffer(100);
 		//prependHeadA1(req);
 		String reqBody = null;
@@ -221,7 +268,7 @@ public class RechargeUtil {
 	 * @param param
 	 * @return
 	 */
-	public static String genReqBodyOfRecharge(RechargeParam param){
+	public static String genReqBodyOfRecharge(RechargeBodyParam param){
 		StringBuffer reqBody = new StringBuffer(100);
 		reqBody.append(fillNull(String.valueOf(param.getChargeMoney()), 10));
 		reqBody.append(fillNull(String.valueOf(param.getAgentID()), 20));
@@ -239,9 +286,21 @@ public class RechargeUtil {
 	 * 生成请求包头
 	 * @param reqBody
 	 */
-	public static String genReqHead(String reqBody){
+	public static String genReqHead(String reqBody, String logId, String interfaceType, String serialNum, String serialNumType, String reqTime){
 		StringBuffer reqHead = new StringBuffer(113);
 		appendHeadA1(reqHead, reqBody);
+		appendHeadA2(reqHead, logId);
+		appendHeadA3(reqHead);
+		appendHeadA4(reqHead, interfaceType);
+		appendHeadA5(reqHead);
+		appendHeadA6(reqHead, interfaceType, serialNum);
+		appendHeadA7(reqHead, serialNumType);
+		appendHeadA8(reqHead);
+		appendHeadA9(reqHead, reqTime, logId);
+		appendHeadA10(reqHead);
+		appendHeadA11(reqHead);
+		appendHeadA12(reqHead);
+		appendHeadA13(reqHead, reqTime);
 		return reqHead.toString();
 	}
 	
@@ -302,11 +361,11 @@ public class RechargeUtil {
 	 * @param reqHead
 	 * @param serialsNum
 	 */
-	private static void appendHeadA6(StringBuffer reqHead, String interfaceType, String serialsNum){
+	private static void appendHeadA6(StringBuffer reqHead, String interfaceType, String serialNum){
 		String a6 = null;
 		if(InterfaceType.recharge.getInterfaceCode().equals(interfaceType) ||
 				InterfaceType.rechargeCheck.getInterfaceCode().equals(interfaceType)){
-			a6 = fillNull(serialsNum, 20);
+			a6 = fillNull(serialNum, 20);
 		}
 		else{
 			a6 = "";
@@ -319,8 +378,8 @@ public class RechargeUtil {
 	 * A7业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。当A4为010203时，此值为空格
 	 * @param reqHead
 	 */
-	private static void appendHeadA7(StringBuffer reqHead, String userType){
-		reqHead.append(userType);
+	private static void appendHeadA7(StringBuffer reqHead, String serialNumType){
+		reqHead.append(serialNumType);
 	}
 	
 	/**
@@ -390,8 +449,10 @@ public class RechargeUtil {
     public static String generateLogId() {
     	StringBuffer sb = new StringBuffer(16);
         Random random = new Random();
-        sb.append(random.nextInt(3)); //加3位随机整数
         sb.append(System.currentTimeMillis()); //13位
+        sb.append(random.nextInt(9)); //加1位随机整数
+        sb.append(random.nextInt(9)); //加1位随机整数
+        sb.append(random.nextInt(9)); //加1位随机整数 ，总共加3位随机数
         return sb.toString();
     }
     
@@ -407,7 +468,7 @@ public class RechargeUtil {
         return new SimpleDateFormat("yyMMddHHmmss").format(Calendar.getInstance().getTime());
     }
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
 		   // 0 代表前面补充0     
 		   // 4 代表长度为4     
 		   // d 代表参数为正数型     
@@ -426,12 +487,32 @@ public class RechargeUtil {
 //        
 //        System.out.println(fillNull("1234567890", 20).substring(12));
 		
-		StringBuffer src = new StringBuffer(23);
+/*		StringBuffer src = new StringBuffer(23);
 		src.append("150707120113");
 		src.append("1234567890123456");
 		src.append(fillNull("1234567890123456", 20).substring(12));
 		byte[] temp = DESUtil.encryptModeRecharge(src.toString().getBytes());
 		String target = Base64Utils.encodeStr(temp);
-		System.out.println(target);
+		System.out.println(target);*/
+		
+/*		String src = "123  ";
+		System.out.println(src);
+		byte[] sizeBytes = src.getBytes();
+		System.out.println(new String(src.getBytes()).trim());
+		System.out.println(Integer.parseInt(new String(src.getBytes()).trim()));*/
+		
+/*		String heart = RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix;
+		System.out.println(heart);
+		byte[] heartByte = heart.getBytes(RechargeCons.charCode);
+		System.out.println(new String(heart.getBytes()).equals(heart));*/
+		
+//		System.out.println(fillZero(13, 8));
+		
+		
+        String log_id = generateLogId();
+        System.out.println(log_id);
+        String partition_id = log_id.substring(14, 16);
+        System.out.println(partition_id);
+		
 	}
 }

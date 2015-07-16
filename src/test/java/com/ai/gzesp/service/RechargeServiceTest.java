@@ -31,6 +31,6 @@ public class RechargeServiceTest extends BaseTest {
 //		rechargeService.recharge(190000);
 //		rechargeService.recharge(200000);
 //		rechargeService.recharge(210000);
-		rechargeService.recharge(310000);
+//		rechargeService.rechargeTx(310000);
 	}
 }

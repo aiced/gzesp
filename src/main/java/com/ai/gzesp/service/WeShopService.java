@@ -263,7 +263,7 @@ public class WeShopService {
         StringBuffer sb = new StringBuffer(16);
         sb.append(System.currentTimeMillis()); //13位
         Random random = new Random();
-        sb.append(random.nextInt(4)); //加1位随机整数
+        sb.append(random.nextInt(4)); //加1位随机整数, 最大是4
         return sb.toString();
     }
     

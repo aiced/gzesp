@@ -311,7 +311,7 @@
 	                  '退款审核通过，已退款'
 	        end current_state_content  
 	   from ord_l_deallog a
-       where order_id = ${order_id} order by operate_time
+       where order_id = ${order_id} order by current_state
 	</select>											
 	
 </mapper>

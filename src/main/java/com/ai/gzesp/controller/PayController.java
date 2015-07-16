@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,6 +36,7 @@ import com.ai.gzesp.utils.MD5Util;
 @Controller
 @RequestMapping("/pay")
 public class PayController {
+	private static final Logger log = Logger.getLogger(PayController.class); 
     
     @Autowired
     private PayService payService;
@@ -96,9 +98,14 @@ public class PayController {
     }
     
     /**
-     * 选择支付模式后，点击确定，在发起各种支付接口前需要先做些操作
+     * 普通用户提交订单后，选择支付模式后，点击确定，在发起各种支付接口前需要先做些操作
      * 1.插入 ord_d_pay 表
      * 2.根据支付模式跳转到不同controller去处理
+     * 
+     * 返回json 
+     * {"status":"00", "detail":"成功"} 或
+	 * {"status":"非00", "detail":"具体失败原因"}
+	 * 
      * @param order_id
      * @param fee
      * @return
@@ -108,17 +115,13 @@ public class PayController {
     public Map<String, String> prePayReq(@PathVariable("order_id") String order_id, @PathVariable("order_fee") String order_fee, @RequestBody List<Map<String, String>> paramList){
     	Map<String, String> result = new HashMap<String, String>();
     	
-    	List<PayInfo> payInfoList = new ArrayList<PayInfo>();
-    	for(int i = 0; i < paramList.size(); i++){
-    		PayInfo row = new PayInfo();
-    		row.setPay_order(String.valueOf(i+1)); //默认从1开始
-    		row.setPay_type(paramList.get(i).get("pay_type")); //线上
-    		row.setPay_mode(paramList.get(i).get("pay_mode")); //30 微信支付  40 沃支付
-    		row.setPay_fee(paramList.get(i).get("pay_fee")); //单位厘
-    		payInfoList.add(row);
+    	payService.beforePayReq(order_id, order_fee, paramList, result);
+    	//如果result不为空，表示有异常，直接返回界面
+    	if(MapUtils.isNotEmpty(result)){
+    		return result;
     	}
-    	payService.beforePayReq(order_id, order_fee, payInfoList);
     	
+    	//无异常
     	result.put("status", "00");
         result.put("detail", "插入ord_d_pay成功");
         
@@ -210,20 +213,13 @@ public class PayController {
     	row3.setPay_fee("6000"); //单位厘
     	payInfoList.add(row3);
     	
-    	payService.beforePayReq("1171430816469616", "12000", payInfoList);
+    	//payService.beforePayReq("1171430816469616", "12000", payInfoList);
     }
     
     @RequestMapping("/test/4/{order_id}")
     public void test4(@PathVariable("order_id") String order_id){
     	payService.afterRefundSuccess("15", true, order_id);
     }
-    
-    
-    /*
-     * @auth:wenh
-     * @店铺管理--代客下单--代客下单支付页面
-     */
-    
     
     @RequestMapping("/insteadPay/{user_id}/{order_id}")
     public ModelAndView initInsteadPay(@PathVariable("user_id") String user_id,@PathVariable("order_id") String order_id){
@@ -247,10 +243,10 @@ public class PayController {
     
     	
     	//查询数据库
-    	Map<String,Object> topay_money=myAcctService.queryToPayMoneyByOrderId(order_id);
+    	Map<String, String> topay_money=myAcctService.queryToPayMoneyByOrderId(order_id);
     	if (topay_money != null && topay_money.size()>0) {
-    		mav.addObject("topay_money",topay_money.get("TOPAY_MONEY"));
-    		dtopaymoney=Double.valueOf(topay_money.get("TOPAY_MONEY").toString());
+    		mav.addObject("topay_money", Integer.parseInt(topay_money.get("TOPAY_MONEY"))/1000);
+    		dtopaymoney=Double.valueOf(Integer.parseInt(topay_money.get("TOPAY_MONEY"))/1000);
     	}
     	
     	//查询数据库
@@ -267,11 +263,7 @@ public class PayController {
         return mav;
     }
     
-    /*
-     * @auth:wenh
-     * @店铺管理--代客下单--代客下单支付页面--点击支付按钮
-     */
-    @RequestMapping("/insteadPay/postData/{user_id}/{order_id}/{bank_no}")
+/*    @RequestMapping("/insteadPay/postData/{user_id}/{order_id}/{bank_no}")
     @ResponseBody
     public String insteadPayPostData(@PathVariable("user_id") String user_id,@PathVariable("order_id") String order_id,@PathVariable("bank_no") String bank_no)
     {
@@ -280,7 +272,7 @@ public class PayController {
     	Double dtopaymoney=0.00;
     	Double dacctbanlance=0.00;
     	String left_money="";
-    	//查询数据库_账户余额
+    	//查询数据库
     	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
         
     	if (acctinfo != null && acctinfo.size()>0) {
@@ -316,6 +308,65 @@ public class PayController {
     	else {
     		return paramsRet.get("detail").toString();
 		}
+    }*/
+    
+    /**
+     * 代客下单支付页面 ，输入支付密码后提交
+     * post方式传参数paramList:
+     * [{"pay_order":"1", "pay_type":01, "pay_mode":60, pay_fee:1, coupon_id:12345678},
+     *  {"pay_order":"2", "pay_type":01, "pay_mode":51, pay_fee:2},
+     *  {"pay_order":"3", "pay_type":01, "pay_mode":10, pay_fee:3, bank_no:1234567},
+     * ]
+     * 
+     * 返回json 
+     * {"status":"00", "detail":"成功"} 或
+	 * {"status":"非00", "detail":"具体失败原因"}
+	 * 
+     * @param user_id
+     * @param order_id
+     * @param paramList
+     * @return
+     */
+    @RequestMapping("/insteadPay/postData/{user_id}/{order_id}")
+    @ResponseBody
+    public Map<String, String> insteadPayPostNew(@PathVariable("user_id") String user_id, 
+    		@PathVariable("order_id") String order_id, 
+    		@RequestBody List<Map<String, String>> paramList)
+    {
+    	//返回map
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	//先校验密码是否正确
+    	//请wenh 写校验逻辑，如果校验失败，执行下面
+        if(false){
+        	result.put("status", "01");
+        	result.put("detail", "支付密码不正确");
+        	return result;
+        }
+    	
+        //根据order_id,查出订单应收金额
+        Map<String, String> topay_money = myAcctService.queryToPayMoneyByOrderId(order_id);
+        String order_fee = topay_money.get("TOPAY_MONEY");
+
+        //dealInsteadPayTx里只考虑了几种异常，有可能会发生其他异常
+        try {
+			//根据代金券or账户or银联快捷支付，调用不同的处理
+			payService.dealInsteadPayTx(user_id, order_id, order_fee, paramList, result);
+			//如果result不为空，表示有异常，直接返回界面
+	    	if(MapUtils.isNotEmpty(result)){
+	    		return result;
+	    	}
+		} catch (Exception e) {
+			log.error("代客下单支付发生其他exception", e); 
+			result.put("status", "02");
+        	result.put("detail", "代客下单支付发生其他异常");
+		}
+    	
+        //以上都无异常才会走到这里
+    	result.put("status", "00");
+    	result.put("detail", "代客下单支付成功");
+    	
+    	return result;
     }
     
 }

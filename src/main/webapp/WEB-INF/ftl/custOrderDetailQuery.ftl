@@ -60,7 +60,7 @@
         .container_mid_1
         {
             background-color: #ffffff;
-            height: 260px;
+            height: 100%;
         }
         .container_mid_2
         {
@@ -123,8 +123,7 @@
         }
         .mid_1_div4
         {
-            margin-left: 10px;
-            margin-top: 10px;
+        	margin:10px;
             font-weight: bold;
             text-align: right;
         }

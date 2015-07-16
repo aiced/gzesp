@@ -16,13 +16,13 @@ a { blr:expression(this.onFocus=this.blur()) } /*��� IE*/
 a { outline:none; } /*���firefox��*/
 .dt1
 {
-	font-size:14px;
+	font-size:12px;
 	color:#0B892E;
 }
 
 .dt2
 {
-	font-size:16px;
+	font-size:14px;
 	color:#939B94;
 }
 .main { padding:20px; min-height:720px; }

@@ -44,4 +44,15 @@ public interface PayDao {
     public int updatePayState(@Param("order_id") String order_id, @Param("order_state") String order_state);    
     
     public Map<String, String> queryRefundInfoByOrderId(@Param("order_id") String order_id);
+    
+    public int updateCouponLog(@Param("coupon_id") String coupon_id, @Param("status") String status, @Param("order_id") String order_id); 
+    
+    public Map<String, String> queryAcctBalanceAndVersion(@Param("acct_id") String acct_id);
+    
+    public int updateAcctBalanceAndVersion(@Param("acct_id") String acct_id, @Param("balance") int balance, @Param("version") String version);
+    
+    public int insertAcctAccessLog(@Param("log_id") String log_id, @Param("partition_id") String partition_id, 
+    		@Param("acct_id") String acct_id, @Param("order_id") String order_id, 
+    		@Param("trade_type") String trade_type, @Param("old_balance") int old_balance, 
+    		@Param("fee") int fee, @Param("new_balance") int new_balance);
 }

@@ -92,5 +92,38 @@
           from ord_d_refund
          where order_id = ${order_id}
 	</select>	
-							
+	
+	<update id="updateCouponLog">
+         update act_d_coupon
+            set status = #{status},
+                update_time = sysdate
+                <if test="order_id != null">
+                  , order_id = ${order_id}, 
+                    use_time = sysdate
+                </if>
+          where coupon_id = ${coupon_id}
+	</update>	
+
+	<select id="queryAcctBalanceAndVersion" resultType="java.util.HashMap">
+        select user_id, acct_id, to_char(balance) balance, version
+          from act_d_account
+         where acct_id = #{acct_id}
+	</select>
+	
+	<update id="updateAcctBalanceAndVersion">
+         update act_d_account
+            set balance = ${balance},
+                version = #{version}
+          where acct_id = #{acct_id}
+          <![CDATA[
+            and version < #{version}
+          ]]>
+	</update>	
+	
+	<insert id="insertAcctAccessLog">
+      insert into act_d_access_log
+             (log_id, partition_id, acct_id, order_id, trade_type, old_balance, fee, new_balance, update_time)
+       values(${log_id}, ${partition_id}, #{acct_id}, ${order_id}, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate)
+	</insert>	
+								
 </mapper>

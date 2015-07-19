@@ -275,6 +275,7 @@ public class OrderService {
     	String topayMoney = paramsMap.get("topayMoney");
     	String custRemark = paramsMap.get("custRemark");
     	String sellerRemark = paramsMap.get("sellerRemark");
+    	String orderType = paramsMap.get("orderType"); //20150716 ximh add
     	
     	TdOrdDBASE record = new TdOrdDBASE();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -291,6 +292,7 @@ public class OrderService {
     	record.setOrderState("00");
     	record.setCustRemark(custRemark);
     	record.setSellerRemark(sellerRemark);
+    	record.setOrderType(orderType);  //20150716 ximh add
     
     	tdOrdDBASEDao.insertSelective(record);
     }

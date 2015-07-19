@@ -18,7 +18,7 @@ public class PayServiceTest extends BaseTest {
 		//返回map
     	Map<String, String> result = new HashMap<String, String>();
     	
-		String user_id = "2015052804213719" ; //20150514080844962 
+		String user_id = "2015052804213719" ; //20150514080844962  2015052804213719
 		String order_id = "1071435216606404" ;
 		String order_fee = "25000" ;
 		List<Map<String, String>> paramList = new ArrayList<Map<String, String>>();
@@ -43,6 +43,6 @@ public class PayServiceTest extends BaseTest {
 		param3.put("bank_no", "6226090253538876");
 		paramList.add(param3);
 		
-		payService.dealInsteadPayTx(user_id, order_id, order_fee, paramList, result);
+		payService.dealInsteadPay(user_id, order_id, order_fee, paramList, result);
 	}
 }

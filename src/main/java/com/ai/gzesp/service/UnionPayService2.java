@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,9 @@ public class UnionPayService2 {
     
     @Autowired
     private UnionPayDao unionPayDao;
+    
+    @Autowired
+    private SqlSessionFactory sqlSessionFactory;
     
     /**
      * 银行卡绑定 服务类，调用银联第二套商户号参数 调用 绑定接口
@@ -224,14 +229,14 @@ public class UnionPayService2 {
     public Map<String, String> unionPayPay(UnionPayParam param){
         Map<String, String> result = new HashMap<String, String>();
         
-        String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.pay.getTradeType()); //系统跟踪号
+/*        String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.pay.getTradeType()); //系统跟踪号
         param.setPay_sys_trade_no(sysTradeNo);
         String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
         param.setPay_time_stamp(timeStamp);
         String tradeType = TradeType.pay.getTradeType(); //业务类型
         param.setPay_trade_type(tradeType);
         String orderIdVir = UnionPayUtil.orderId2newOrderId(param.getOrder_id(), param.getPay_sys_trade_no()); //虚拟订单号，每次支付不重复
-        param.setOrder_id_vir(orderIdVir);
+        param.setOrder_id_vir(orderIdVir);*/
         
         //判断校验参数
         
@@ -259,7 +264,8 @@ public class UnionPayService2 {
      * @param param
      * @return
      */
-    private void insertUnionPaylog2(UnionPayParam param, Map<String, String> result){
+    public void insertUnionPaylog2(UnionPayParam param, Map<String, String> result){
+        //SqlSession sqlSession = sqlSessionFactory.openSession();
         //Map<String, String> result = new HashMap<String, String>();
         boolean isSuccess = false;
              
@@ -274,6 +280,7 @@ public class UnionPayService2 {
                                     param.getOrder_id_vir(),  //order_id 这边是虚拟order_id
                                     param.getFee()
                     );
+            //sqlSession.commit(); //手动提交
             
             if(n2 <= 0){
             	//都成功则result为空
@@ -315,7 +322,7 @@ public class UnionPayService2 {
     /**
      * 支付改造后：发送支付接口后等待支付结果返回
      * 区别是查询的 新银联日志表 PAY_D_UNIONPAY_LOG
-     * 
+     * 只返回错误，成功result为空
      * @param param
      * @param result
      * @return
@@ -338,8 +345,8 @@ public class UnionPayService2 {
             Map<String, String> row = unionPayDao.queryUnionPaylog(param.getPay_sys_trade_no()); //查询银联日志表里是否已经有银联返回的结果了
             if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
                 if(UnionPayCons.RESULT_CODE_SUCCESS.equals(row.get("RESULT_CODE"))){
-                    result.put("status", UnionPayCons.RESULT_CODE_SUCCESS);
-                    result.put("detail", "支付成功！");
+//                    result.put("status", UnionPayCons.RESULT_CODE_SUCCESS);
+//                    result.put("detail", "支付成功！");
                 }
                 else{
                     result.put("status", row.get("RESULT_CODE"));

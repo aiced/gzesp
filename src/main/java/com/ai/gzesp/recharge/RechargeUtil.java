@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 
 import com.ai.gzesp.dto.RechargeBodyParam;
@@ -509,10 +510,15 @@ public class RechargeUtil {
 //		System.out.println(fillZero(13, 8));
 		
 		
-        String log_id = generateLogId();
-        System.out.println(log_id);
-        String partition_id = log_id.substring(14, 16);
-        System.out.println(partition_id);
+//        String log_id = generateLogId();
+//        System.out.println(log_id);
+//        String partition_id = log_id.substring(14, 16);
+//        System.out.println(partition_id);
 		
+		Map<String, String> map1 = null;
+		Map<String, String> map2 = new HashMap<String, String>();
+		
+		System.out.println(MapUtils.isEmpty(map1));
+		System.out.println(MapUtils.isEmpty(map2));
 	}
 }

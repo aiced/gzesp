@@ -111,6 +111,7 @@
         <aop:pointcut id="serviceOperation" expression="execution(* com.ai.gzesp.service.OrderService.*(..)) 
                           or execution(* com.ai.gzesp.service.SelectNumberService.*(..)) 
                           or execution(* com.ai.gzesp.service.UnionPayService.*Tx(..))
+                          or execution(* com.ai.gzesp.service.UnionPayService2.*Tx(..))
                           or execution(* com.ai.gzesp.service.WeShopService.*(..))
                           or execution(* com.ai.gzesp.service.RechargeService.*Tx(..))
                           or execution(* com.ai.gzesp.service.PayService.*Tx(..))"/>

@@ -1,6 +1,7 @@
 package com.ai.gzesp.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,6 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.PayDao;
@@ -16,7 +16,8 @@ import com.ai.gzesp.dto.OrderDPay;
 import com.ai.gzesp.dto.PayInfo;
 import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.recharge.RechargeUtil;
-import com.ai.gzesp.unionpay.UnionPayCons;
+import com.ai.gzesp.unionpay.TradeType;
+import com.ai.gzesp.unionpay.UnionPayUtil;
 import com.ai.gzesp.utils.DateUtils;
 import com.ai.gzesp.utils.MD5Util;
 import com.ai.gzesp.utils.SmsUtils;
@@ -63,7 +64,7 @@ public class PayService {
      * @param result
      * @return
      */
-    public void beforePayReq(String orderId, String orderFee, List<Map<String, String>> paramList, Map<String, String> result){
+    public void beforePayReq(String orderId, String orderFee, List<Map<String, String>> paramList){
     	//组装list
     	List<PayInfo> payInfoList = new ArrayList<PayInfo>();
     	for(int i = 0; i < paramList.size(); i++){
@@ -343,54 +344,74 @@ public class PayService {
     
     /**
      * 处理代客下单支付的业务逻辑
-     * 所有数据库操作事务控制，发生异常全部回滚
-     * 银联支付返回失败时，虽不发生异常，但也手工回滚，所以会出现 PAY_D_UNIONPAY_LOG 有日志接口调用记录，但订单表和 ord_d_pay里面没有相关记录的情况
+     * 银联支付因为是异步响应，事务处理太复杂，所以没有用事务
+     * 存在问题1，因为没有事务，可能代金券或者账户某一个处理异常了前面的操作不会回滚
+     * 存在问题1，极端情况如果代金券或者账户都失败了，只会返回最后一个错误，前面的错误原因会被覆盖，可以考虑返回list
+     * 注意代码里 null 和 MapUtils.isNotEmpty 的使用区别：null代表没有这个子记录，MapUtils.isNotEmpty表示处理成功无异常
      * @param user_id
      * @param order_id
      * @param order_fee
      * @param paramList
      * @param result
      */
-    public void dealInsteadPayTx(String user_id, String order_id, String order_fee, List<Map<String, String>> paramList, Map<String, String> result){
-    	//先插入ord_d_pay订单支付信息
-    	beforePayReq(order_id, order_fee, paramList, result);
+    public void dealInsteadPay(String user_id, String order_id, String order_fee, List<Map<String, String>> paramList, Map<String, String> result){
+    	log.info("【代客下单入参：" + paramList + "】"); //这边用info，以便系统稳定后也能打印出入参
     	
-    	//根据代金券or账户or银联快捷支付，调用不同的处理
-		for(Map<String, String> payInfo : paramList){
-			//如果是代金券,更新act_d_coupon状态为2，已使用
-    		if(payInfo.get("pay_mode").equals("60")){
-    			//boolean canUse = checkCouponLimit();
-    			int n1 = updateCouponLog(payInfo.get("coupon_id"), "2", order_id); 
-    			if(n1 <= 0){
-    				result.put("status", "11");
-    	        	result.put("detail", "代客下单代金券未找到记录");
-    	        	TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
-    	        	break; //跳出循环
+    	//先插入ord_d_pay订单支付信息
+    	beforePayReq(order_id, order_fee, paramList);
+    	
+        //因为银联是异步响应的，如果支付里有银联接口，放最前面调，成功了再执行代金券和账户的支付，失败了直接不执行
+    	Map<String, String> resultUnionPay = null;
+        for(Map<String, String> payInfo : paramList){
+        	//如果是银联快捷支付,这里只插日志表和发送请求，因为响应时异步的，无法在这个事务里处理
+    		if(payInfo.get("pay_mode").equals("10")){
+    			//此方法会透传返回银联的错误或者成功编码
+    			resultUnionPay = insteadPayUnionPay(user_id, order_id, payInfo);
+    			if(MapUtils.isNotEmpty(resultUnionPay)){
+    				result.put("status", resultUnionPay.get("status"));
+    				result.put("detail", resultUnionPay.get("detail"));
     			}
+    		    break; //执行完跳出循环
     		}
-    		//如果是账户支付，更新act_d_account里余额和版本，然后插入act_d_access_log变动日志
-    		else if(payInfo.get("pay_mode").equals("51")){
-    			useAcctForPay(user_id, payInfo.get("pay_fee"), order_id);
-    		}
-    		//如果是银联快捷支付
-    		else if(payInfo.get("pay_mode").equals("10")){
-    	        //查出银行卡签约号sign_code，用于调用银联签约号快捷支付接口
-    			String bank_no = payInfo.get("bank_no");
-    	        Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
-    	        String sign_code = MD5Util.convertMD5(acctbankinfo.get("SIGN_CODE").toString());//md5解密，表里存放的是加密的
-    	        Map<String, String> resultUnionPay = callUnionPay(payInfo.get("pay_fee"), order_id, sign_code); //调用银联接口
-    	        //如果银联返回失败，则透传返回错误信息给前台
-    		    if(!resultUnionPay.get("status").equals(UnionPayCons.RESULT_CODE_SUCCESS)){
-    		    	result.put("status", resultUnionPay.get("status")); //直接把银联返回的错误编码返回
-    	        	result.put("detail", resultUnionPay.get("detail"));
-    		    	TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();//手动回滚
-    		    	break; //跳出循环
-    		    }
-    		}
-    		else{
-    		}
-    	}
+        }
+        
+        //如果resultUnionPay空，表示银联返回成功或者上面for循环没有银联接口需要调，则继续执行 代金券和账户的处理
+        Map<String, String> resultCoupon = null;
+        Map<String, String> resultAcct = null;
+	    if(MapUtils.isEmpty(resultUnionPay)){
+	    	//根据代金券or账户，调用不同的处理，银联快捷支付已经处理过无需再次处理
+			for(Map<String, String> payInfo : paramList){
+				//如果是代金券,更新act_d_coupon状态为2，已使用
+	    		if(payInfo.get("pay_mode").equals("60")){
+	    			//boolean canUse = checkCouponLimit(); //检查代金券使用条件
+	    			resultCoupon = insteadPayCoupon(payInfo.get("coupon_id"), order_id, payInfo.get("pay_mode")); 
+	    			if(MapUtils.isNotEmpty(resultCoupon)){
+	    				result.put("status", resultCoupon.get("status"));
+	    				result.put("detail", resultCoupon.get("detail"));
+	    			}
+	    		}
+	    		//如果是账户支付，更新act_d_account里余额和版本，然后插入act_d_access_log变动日志
+	    		else if(payInfo.get("pay_mode").equals("51")){
+	    			resultAcct = insteadPayAcct(user_id, payInfo.get("pay_fee"), order_id, payInfo.get("pay_mode"));
+	    			if(MapUtils.isNotEmpty(resultAcct)){
+	    				result.put("status", resultAcct.get("status"));
+	    				result.put("detail", resultAcct.get("detail"));
+	    			}
+	    		}
+	    	}
+			
+			//更新支付表 ORD_D_PAY 里代金券和账户子记录的支付状态为1-支付成功,2失败
+			//银联的子记录在银联响应里面afterPaySuccess 里已经更新过了
+			if(resultCoupon != null || resultAcct != null){
+				int n1 = updateOrdDPayStateBatch(order_id, resultCoupon, resultAcct);
+				if(n1 < 0){
+					result.put("status", "31");
+					result.put("detail", "更新订单支付表状态记录数为0");
+				}
+			}
+	    }
     }
+    
     
     /**
      * 判断代金券使用限制条件，是否此订单可以使用此代金券
@@ -402,35 +423,78 @@ public class PayService {
     
 
     /**
-     * 更新代金券表的状态
+     * 用代金券支付部分订单金额
+     * 1.更新代金券表ACT_D_COUPON的状态
+     * 2.更新支付表 ORD_D_PAY 里代金券子记录的支付状态
      * 如果order_id不是null，则表示是被订单代付使用，如果是null，表示是其他状态更新，比如过期失效
      * @param coupon_id
-     * @param status
      * @param order_id
+     * @param pay_mode
      * @return
      */
-    private int updateCouponLog(String coupon_id, String status, String order_id) {
-        return payDao.updateCouponLog(coupon_id, status, order_id);
+    private Map<String, String> insteadPayCoupon(String coupon_id, String order_id, String pay_mode) {
+    	Map<String, String> result = new HashMap<String, String>();
+
+    	//更新代金券表ACT_D_COUPON的状态 2：已使用
+        int n1 = payDao.updateCouponLog(coupon_id, "2", order_id);
+        if(n1 < 1){
+        	result.put("status", "11");
+        	result.put("detail", "代客下单代金券" + coupon_id + "未找到记录");
+        	return result;
+        }
+        
+        return result;
     }
     
-    private void useAcctForPay(String user_id, String pay_fee, String order_id) {
+    /**
+     * 用现金账户里的金额支付部分订单金额
+     * @param user_id
+     * @param pay_fee
+     * @param order_id
+     * @param pay_mode
+     * @return
+     */
+    private Map<String, String> insteadPayAcct(String user_id, String pay_fee, String order_id, String pay_mode) {
+    	Map<String, String> result = new HashMap<String, String>();
+    	
     	String acct_id = user_id + "2"; //默认现金可提账户是user_id||'2' ;
     	//查出最新的余额和版本号，在此基础上版本号+1,用乐观锁的机制更新，
-    	//考虑到并发的情况，如果版本号+1进行update记录为0，需要重新查询一遍再更新
+    	//考虑到并发的情况，如果版本号+1进行update记录为0，需要重新查询一遍再更新，最多尝试5次
+    	int num = 1;
     	while(true){
+    		if(num > 5){
+    			result.put("status", "21");
+            	result.put("detail", "代客下单更新账户信息表ACT_D_ACCOUNT失败5次，不再尝试");
+    			break;
+    		}
+    		
+    		log.debug("【代客下单：更新act_d_account记录为0，acct_id=" + acct_id + ",第" + num + "次尝试。。。】");
+    		
     		Map<String, String> acct = queryAcctBalanceAndVersion(acct_id);
     		int balance = Integer.parseInt(acct.get("BALANCE")); //原余额
     		int version = Integer.parseInt(acct.get("VERSION")); //原版本号
     		int balanceNew = balance - Integer.parseInt(pay_fee); //变动后的账户余额
     		String versionNew = RechargeUtil.fillZero(version + 1, 8); //新版本号，数字左补0凑成8位版本号
-    		int num = updateAcctBalanceAndVersion(acct_id, balanceNew, versionNew); 
-    		if(num > 0){
+    		int n1 = updateAcctBalanceAndVersion(acct_id, balanceNew, versionNew); 
+    		if(n1 > 0){
     			//如果更新成功了才可以插accesslog日志
-    			insertAcctAccessLog(acct_id, order_id, balance, -Integer.parseInt(pay_fee), balanceNew);//pay_fee负值
+    			int n2 = insertAcctAccessLog(acct_id, order_id, balance, -Integer.parseInt(pay_fee), balanceNew);//pay_fee负值
+    			//如果n1和n2都成功，更新支付表 ORD_D_PAY 里账户子记录的支付状态为1-支付成功
+//    			if(n2 > 0){
+//    		        int n3 = payDao.updateOrdDPay(order_id, n2>0?"1":"2", pay_mode);	
+//    			}
+    			if(n2 < 0){
+    				result.put("status", "22");
+                	result.put("detail", "代客下单插入账户变动日志表ACT_D_ACCESS_LOG失败，acct_id=" + acct_id);
+    			}
+    			
     			break; //跳出循环
     		}
-    		log.debug("【代客下单：更新act_d_account记录为0，重试。。。】");
+    		
+    		num++; //计数器+1
     	}
+    	
+    	return result;
     }
 
     /**
@@ -476,13 +540,56 @@ public class PayService {
      * @param sign_code
      * @return
      */
-    private Map<String, String> callUnionPay(String pay_fee, String order_id, String sign_code) {
+    public Map<String, String> insteadPayUnionPay(String user_id,  String order_id,  Map<String, String> payInfo) {
+    	//查出银行卡签约号sign_code，用于调用银联签约号快捷支付接口
+    	String bank_no = payInfo.get("bank_no");
+    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
+    	String sign_code = MD5Util.convertMD5(acctbankinfo.get("SIGN_CODE").toString());//md5解密，表里存放的是加密的
+    	//String sign_code = "123457678";
+    	
     	UnionPayParam param = new UnionPayParam();
     	param.setOrder_id(order_id); // 真实order_id
-    	param.setFee(pay_fee); // 单位厘
+    	param.setFee(payInfo.get("pay_fee")); // 单位厘
     	param.setSign_code(sign_code); //解密过的sign_code
-    
-    	return unionPayService2.unionPayPay(param);
     	
+        String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.pay.getTradeType()); //系统跟踪号
+        param.setPay_sys_trade_no(sysTradeNo);
+        String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
+        param.setPay_time_stamp(timeStamp);
+        String tradeType = TradeType.pay.getTradeType(); //业务类型
+        param.setPay_trade_type(tradeType);
+        String orderIdVir = UnionPayUtil.orderId2newOrderId(param.getOrder_id(), param.getPay_sys_trade_no()); //虚拟订单号，每次支付不重复
+        param.setOrder_id_vir(orderIdVir);
+        
+    	return unionPayService2.unionPayPay(param);
+    }
+    
+    /**
+     * 更新支付表 ORD_D_PAY 里代金券和账户子记录的支付状态为1-支付成功,2失败
+	 * 银联的子记录在银联响应里面afterPaySuccess 里已经更新过了
+     * @param order_id
+     * @param resultCoupon
+     * @param resultAcct
+     */
+    private int updateOrdDPayStateBatch(String order_id, Map<String, String> resultCoupon, Map<String, String> resultAcct){
+	    List<Map<String, String>> stateList = new ArrayList<Map<String, String>>();
+//	    Map<String, String> unionPay = new HashMap<String, String>();
+//	    unionPay.put("pay_mode", "10");
+//	    unionPay.put("pay_state", MapUtils.isEmpty(resultUnionPay) ? "1" : "2");
+//	    stateList.add(unionPay);
+	    if(resultCoupon != null){
+	    	Map<String, String> coupon = new HashMap<String, String>();
+	    	coupon.put("pay_mode", "60");
+	    	coupon.put("pay_state", MapUtils.isEmpty(resultCoupon) ? "1" : "2");
+	    	stateList.add(coupon);
+	    }
+	    if(resultAcct != null){
+	    	Map<String, String> acct = new HashMap<String, String>();
+	    	acct.put("pay_mode", "51");
+	    	acct.put("pay_state", MapUtils.isEmpty(resultAcct) ? "1" : "2");
+	    	stateList.add(acct);
+	    }
+	    //批量更新
+        return payDao.updateOrdDPayStateBatch(order_id, stateList);
     }
 }

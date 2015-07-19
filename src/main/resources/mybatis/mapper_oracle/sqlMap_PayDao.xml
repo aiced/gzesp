@@ -39,7 +39,7 @@
       </foreach>
 	</select>	
 	
-	<update id="updateOrdDPay">
+	<update id="updateOrdDPay_bak">
          update ord_d_pay
             set pay_state = #{pay_state},
                 pay_mode = #{pay_mode},
@@ -48,14 +48,27 @@
             and pay_mode in ('15', '30', '40')
 	</update>	
 	
-	<update id="updateOrdDPay_bak">
+	<update id="updateOrdDPay">
          update ord_d_pay
-            set pay_state = #{pay_state}
+            set pay_state = #{pay_state},
+                pay_time = sysdate
           where order_id = ${order_id}
             <if test="pay_mode != null">
             and pay_mode = #{pay_mode}
             </if>
 	</update>	
+	
+	<update id="updateOrdDPayStateBatch">
+         update ord_d_pay
+            set pay_state = 
+                (
+                  <foreach collection="stateList" item="item" index="index" open="case " close=" else 0 end" separator=" ">
+                    when pay_mode=#{item.pay_mode} then #{item.pay_state}
+                  </foreach>
+                ),
+                pay_time = sysdate
+          where order_id = ${order_id}
+	</update>			
 	
 	<select id="queryPhoneByOrderId" resultType="java.util.HashMap">
         select phone_number

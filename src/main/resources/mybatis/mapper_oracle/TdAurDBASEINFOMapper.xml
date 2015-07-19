@@ -251,6 +251,9 @@
       <if test="reserved2 != null" >
         RESERVED2,
       </if>
+      <if test="orderType != null" >
+        ORDER_TYPE,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -349,6 +352,9 @@
       <if test="reserved2 != null" >
         #{reserved2,jdbcType=VARCHAR},
       </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=VARCHAR},
+      </if>      
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >

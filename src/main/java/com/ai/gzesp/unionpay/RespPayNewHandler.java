@@ -11,7 +11,7 @@ import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.UnionPayService;
 
 /**
- * 处理 支付接口 响应报文<br> 
+ * 处理 全要素支付接口 响应报文<br> 
  * 〈功能详细描述〉
  *
  * @author xmh
@@ -19,7 +19,7 @@ import com.ai.gzesp.service.UnionPayService;
  * @since [产品/模块版本] （可选）
  */
 @Service
-public class RespPayHandler implements IDealUnionPayResp {
+public class RespPayNewHandler implements IDealUnionPayResp {
     
     /**
      * 业务逻辑处理service
@@ -69,7 +69,7 @@ public class RespPayHandler implements IDealUnionPayResp {
         int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt))*10;
         
         //调用公共service，做后续的统一的操作
-        payService.afterPaySuccess("10", isSuccess, realOrderId, fee); //全要素支付是15，签约号支付时10
+        payService.afterPaySuccess("15", isSuccess, realOrderId, fee);
     }
 
 }

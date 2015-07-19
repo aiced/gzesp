@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
 import com.ai.gzesp.dto.OrderDPay;
 
@@ -55,4 +54,6 @@ public interface PayDao {
     		@Param("acct_id") String acct_id, @Param("order_id") String order_id, 
     		@Param("trade_type") String trade_type, @Param("old_balance") int old_balance, 
     		@Param("fee") int fee, @Param("new_balance") int new_balance);
+    
+    public int updateOrdDPayStateBatch(@Param("order_id") String order_id, @Param("stateList") List<Map<String, String>> stateList);    
 }

@@ -154,6 +154,14 @@ public class TdOrdDBASE extends TdOrdDBASEKey implements Serializable {
      * @Fields ORD_D_BASE.VALUES2 :预留字段2
      */
     private String values2;
+    
+    /**
+     * 订单类型
+     */
+    /**
+     * @Fields ORD_D_BASE.ORDER_TYPE :订单类型
+     */
+    private String orderType;
 
     /**
      * @return 展现给客户使用，系统内唯一。具体创建可参见相关文档
@@ -505,4 +513,14 @@ public class TdOrdDBASE extends TdOrdDBASEKey implements Serializable {
     public void setValues2(String values2) {
         this.values2 = values2 == null ? null : values2.trim();
     }
+
+	public String getOrderType() {
+		return orderType;
+	}
+
+	public void setOrderType(String orderType) {
+		this.orderType = values2 == null ? null : values2.trim();
+	}
+    
+    
 }

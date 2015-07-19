@@ -275,6 +275,43 @@
                   open="(" close=")" separator=",">
                    #{order_id}
               </foreach>
-	</update>													
+	</update>		
+	<select id="queryOrdersDealLogByOrderId" resultType="java.util.HashMap">
+	select a.*,
+	        to_char(a.operate_time, 'yyyy') year,
+	        to_char(a.operate_time, 'mm-dd') month_day,
+	        to_char(a.operate_time, 'hh24:mi') hour_minute,
+	        case when a.current_state ='01' then
+	                  '待分配：正在将订单分配给生产人员'
+	             when a.current_state ='02' then
+	                  '待处理：已将订单分配至生产人员'
+	             when a.current_state ='03' then
+	                  '处理中：生产人员正在飞速操作'
+	             when a.current_state ='04' then
+	                  '无'
+	             when a.current_state ='05' then
+	                  '无'
+	             when a.current_state ='06' then
+	                  '物流在途'
+	             when a.current_state ='07' then
+	                  '本人已签收，待归档'
+	             when a.current_state ='08' then
+	                  '成功关闭（已归档）'
+	             when a.current_state ='09' then
+	                  '无'
+	             when a.current_state ='10' then
+	                  '无'
+	             when a.current_state ='11' then
+	                  '用户申请退款，店主审核中'
+	             when a.current_state ='12' then
+	                  '用户申请退款，管理员审核中'
+	             when a.current_state ='13' then
+	                  '退款审核未通过'
+	             when a.current_state ='14' then
+	                  '退款审核通过，已退款'
+	        end current_state_content  
+	   from ord_l_deallog a
+       where order_id = ${order_id} order by current_state
+	</select>											
 	
 </mapper>

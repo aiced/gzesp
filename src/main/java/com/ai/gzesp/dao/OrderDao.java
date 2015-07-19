@@ -56,4 +56,7 @@ public interface OrderDao {
     public int deleteOrderPreCMSFeeInfo(@Param("orderIds") String[] orderIds);
     
     public int updateOrderBaseState(@Param("orderIds") String[] orderIds);
+    
+    public List<Map<String, Object>> queryOrdersDealLogByOrderId(@Param("order_id") String order_id);
+    
 }

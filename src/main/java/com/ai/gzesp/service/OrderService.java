@@ -636,4 +636,16 @@ public class OrderService {
         	System.out.println("bb");
 	}
     	
+    
+    /**
+     * @author wenh
+     * 根据order_id查询ord_d_deallog获得订单状态流转详情
+     * 
+     */
+    
+   public List<Map<String, Object>> queryOrdersDealLogByOrderId(String order_id)
+   {
+	   return orderDao.queryOrdersDealLogByOrderId(order_id);
+
+   }
 }

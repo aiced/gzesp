@@ -184,7 +184,7 @@
                 </label>
           </div>
           <div class="row" id="pay_mode_1_detail" style="margin:5px 10px 10px 20px;">
-             <span class="font-song-12">支持信用卡、储蓄卡、微信支付、沃支付</span>
+             <span class="font-song-12">支持信用卡、储蓄卡、微信支付</span>
           </div>
           <div class="row" id="pay_mode_2_detail" style="margin:5px 10px 10px 20px;">
              <span class="font-song-12">需先确认地址信息才能选择货到付款，请您验货后付款。</span>
@@ -197,8 +197,8 @@
             <div class="radio" style="padding-left:5px;">
              <label class="radio">
                <input type="radio" name="pay_mode_style" id="unionpay" value="银联支付" checked="checked" style="margin-top: 18px;">
-               <img src="${resRoot}/image/selectPayMode/pay_bank.png" width="95%" height="30%"/>
-               <#-- <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="95%" height="30%"/> -->
+               <#--<img src="${resRoot}/image/selectPayMode/pay_bank.png" width="95%" height="30%"/>-->
+               <img src="${resRoot}/image/selectPayMode/pay_unionpay.png" width="95%" height="30%"/>
                <#-- <img src="${resRoot}/image/selectPayMode/pay_wo.png" width="95%" height="30%"/> -->
              </label>              
             </div>          
@@ -222,15 +222,15 @@
           <!-- 选择银联后展示提示信息-->
           <div class="row" id="pay_mode_3_detail" style="margin:5px 10px 10px 20px;">
             <div style="font-size: 12px;margin: 10px;line-height: 20px;">
-			  <b style="font-size: 14px;">已接入银行</b></br>
+			 <!--  <b style="font-size: 14px;">已接入银行</b></br> -->
 <!-- 			  <b>储蓄卡：</b>工商银行、农业银行、光大银行、邮储银行等</br>
 			  <b>信用卡：</b>中国银行等</br> -->
-			  <b>
+<!-- 			  <b>
 			  	工商银行、农业银行、中国银行、建设银行、交通银行、邮储银行、光大银行、贵阳银行等～
-			  </b>
+			  </b> -->
 			  <br/>
 			  <#--<i><b>其他银行陆续接入<a onclick="testWoPay()">,</a></b>敬请期待<a onclick="testWeiXinPay()">～</a></b></i>-->
-			  <i><b>其他银行陆续接入,</b>敬请期待～</b></i>
+			  <!-- <i><b>其他银行陆续接入,</b>敬请期待～</b></i> -->
             </div>
           </div>
           

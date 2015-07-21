@@ -28,21 +28,27 @@ public interface PayDao {
     
     public List<Map<String, String>> queryOrderDPay(@Param("order_id") String order_id);
     
+    public int deletePayInfoBatch(@Param("order_id") String order_id);  
+    
     public Map<String, String> insertPayInfoBatch(@Param("list") List<OrderDPay> list);    
     
-    public int updateOrdDPay(@Param("order_id") String order_id, @Param("pay_state") String pay_state, @Param("pay_mode") String pay_mode);    
+    public int updateOrdDPay(@Param("order_id") String order_id, @Param("pay_state") String pay_state, @Param("pay_mode") String pay_mode);
+    
+    public int updateOrdDPayRefund(@Param("order_id") String order_id, @Param("pay_state") String pay_state);
     
     public Map<String, String> queryPhoneByOrderId(@Param("order_id") String order_id);
     
     public Map<String, String> queryGoodsNameByOrderId(@Param("order_id") String order_id);
     
-    public Map<String, String> queryPayModeByOrderId(@Param("order_id") String order_id);
+    public List<Map<String, String>> queryPayModeByOrderId(@Param("order_id") String order_id);
     
     public int updatePayRefundState(@Param("order_id") String order_id, @Param("refund_state") String refund_state);    
     
     public int updatePayState(@Param("order_id") String order_id, @Param("order_state") String order_state);    
     
     public Map<String, String> queryRefundInfoByOrderId(@Param("order_id") String order_id);
+    
+    public Map<String, String> queryAccessLogAndBalanceByOrderId(@Param("order_id") String order_id);
     
     public int updateCouponLog(@Param("coupon_id") String coupon_id, @Param("status") String status, @Param("order_id") String order_id); 
     

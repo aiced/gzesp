@@ -30,6 +30,10 @@
          where order_id = ${order_id}
 	</select>	
 	
+	<delete id="deletePayInfoBatch">
+        delete from ord_d_pay where order_id = ${order_id}
+	</delete>	
+	
 	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
 	<select id="insertPayInfoBatch">
       insert into ord_d_pay 
@@ -45,7 +49,7 @@
                 pay_mode = #{pay_mode},
                 pay_time = sysdate
           where order_id = ${order_id}
-            and pay_mode in ('15', '30', '40')
+            and pay_mode in ('10', '15', '30', '40')
 	</update>	
 	
 	<update id="updateOrdDPay">
@@ -56,7 +60,13 @@
             <if test="pay_mode != null">
             and pay_mode = #{pay_mode}
             </if>
-	</update>	
+	</update>
+	
+	<update id="updateOrdDPayRefund">
+         update ord_d_pay
+            set pay_state = #{pay_state}
+          where order_id = ${order_id}
+	</update>		
 	
 	<update id="updateOrdDPayStateBatch">
          update ord_d_pay
@@ -104,7 +114,16 @@
         select order_id, order_state
           from ord_d_refund
          where order_id = ${order_id}
-	</select>	
+	</select>
+	
+	<select id="queryAccessLogAndBalanceByOrderId" resultType="java.util.HashMap">
+        select a.acct_id, a.fee, b.balance, b.version
+          from act_d_accesslog a,
+               act_d_account b
+         where a.order_id = ${order_id}
+           and a.trade_type = '22'
+           and a.acct_id = b.acct_id
+	</select>		
 	
 	<update id="updateCouponLog">
          update act_d_coupon

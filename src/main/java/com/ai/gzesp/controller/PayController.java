@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -139,48 +140,82 @@ public class PayController {
 	@ResponseBody
 	public Map<String, String> payRefund(@PathVariable("order_id") String order_id) throws Exception
 	{
-		Map<String, String> mapRet=null;
+		Map<String, String> mapRet = new HashMap<String, String>();
+		//因为代客下单存在多条支付记录的情况，只要有一条失败，则isSuccess=false，下面表达式防止for循环里isSuccess被覆盖
+		//isSuccess = isSuccess ? ("SUCCESS".equals(mapRet.get("result_code")) ? true : false) : isSuccess;
+		boolean isSuccess = true;
 		
-		Map<String, String> payInfo = payService.queryPayModeByOrderId(order_id);
+		List<Map<String, String>> payInfos = payService.queryPayModeByOrderId(order_id);
 		
-		if(MapUtils.isEmpty(payInfo)){
+		if(CollectionUtils.isEmpty(payInfos)){
 			mapRet.put("result_code", "FAIL") ;
 			mapRet.put("result_desc", "ord_d_pay表中不存在此order_id的记录") ;
 		}
-		
-		String pay_mode = payInfo.get("PAY_MODE"); // 15:银联，30：微信支付，40：沃支付
-		
-		if ("30".equals(pay_mode))  //微信支付
-		{
-			mapRet = wxPayService.wxRefund(order_id);
-		}
-		else if("40".equals(pay_mode))//沃支付
-		{
-			mapRet = woPayService.refundOrder(order_id);
-		}
-		else if("15".equals(pay_mode))//银联支付
-		{
-			Map<String, String> result = unionPayService.refundOrder(order_id);
-			mapRet = new HashMap<String, String>();
-			if("00".equals(result.get("status"))){
-				mapRet.put("result_code", "SUCCESS") ;
-				mapRet.put("result_desc", "退款请求发送成功") ;
-			}
-			else{
-				mapRet.put("result_code", "FAIL") ;
-				mapRet.put("result_desc", result.get("detail")) ;
+		else{
+			
+			for(Map<String, String> payInfo : payInfos){
+				// 15:银联，30：微信支付，40：沃支付 。 60 代金券 51现金账户 10银联签约号支付
+				String pay_mode = payInfo.get("PAY_MODE"); 
+				
+				if ("30".equals(pay_mode))  //微信支付
+				{
+					mapRet = wxPayService.wxRefund(order_id);
+					isSuccess = isSuccess ? ("SUCCESS".equals(mapRet.get("result_code")) ? true : false) : isSuccess;
+				}
+				else if("40".equals(pay_mode))//沃支付
+				{
+					mapRet = woPayService.refundOrder(order_id);
+					isSuccess = isSuccess ? ("SUCCESS".equals(mapRet.get("result_code")) ? true : false) : isSuccess;
+				}
+				else if("15".equals(pay_mode))//银联全要素支付 退款 用第一套商户号
+				{
+					Map<String, String> result = unionPayService.refundOrder(order_id);
+					mapRet = new HashMap<String, String>();
+					if("00".equals(result.get("status"))){
+						mapRet.put("result_code", "SUCCESS") ;
+						mapRet.put("result_desc", "退款请求发送成功") ;
+					}
+					else{
+						mapRet.put("result_code", "FAIL") ;
+						mapRet.put("result_desc", result.get("detail")) ;
+					}
+					isSuccess = isSuccess ? ("SUCCESS".equals(mapRet.get("result_code")) ? true : false) : isSuccess;
+				}
+				else if("10".equals(pay_mode))//银联签约号支付 退款 用第二套商户号
+				{
+					Map<String, String> result = unionPayService2.refundOrder(order_id);
+					mapRet = new HashMap<String, String>();
+					if("00".equals(result.get("status"))){
+						mapRet.put("result_code", "SUCCESS") ;
+						mapRet.put("result_desc", "退款请求发送成功") ;
+					}
+					else{
+						mapRet.put("result_code", "FAIL") ;
+						mapRet.put("result_desc", result.get("detail")) ;
+					}
+					isSuccess = isSuccess ? ("SUCCESS".equals(mapRet.get("result_code")) ? true : false) : isSuccess;
+				}
+				else if("60".equals(pay_mode))//代金券支付
+				{
+					//代金券支付不允许退，用过就作废
+				}
+				else if("51".equals(pay_mode))//现金账户支付
+				{
+					mapRet = payService.refundOrderAcct(order_id);
+					isSuccess = isSuccess ? ("SUCCESS".equals(mapRet.get("result_code")) ? true : false) : isSuccess;
+				}
+				
 			}
 		}
 		
 		//退款请求完成后，成功或失败需要做相应的后续操作
-		boolean isSuccess = "SUCCESS".equals(mapRet.get("result_code")) ? true : false;
-		payService.afterRefundSuccess(pay_mode, isSuccess, order_id);
+		payService.afterRefundSuccess(isSuccess, order_id);
 		
 		//返回json
 		return mapRet;
 	}
     
-    @RequestMapping("/test/2")
+/*    @RequestMapping("/test/2")
     public void test2(){
     	payService.afterPaySuccess("30", true, "1171430816469615", 50000);
     }
@@ -215,8 +250,8 @@ public class PayController {
     
     @RequestMapping("/test/4/{order_id}")
     public void test4(@PathVariable("order_id") String order_id){
-    	payService.afterRefundSuccess("15", true, order_id);
-    }
+    	payService.afterRefundSuccess(true, order_id);
+    }*/
     
     @RequestMapping("/insteadPay/{user_id}/{order_id}")
     public ModelAndView initInsteadPay(@PathVariable("user_id") String user_id,@PathVariable("order_id") String order_id){
@@ -335,7 +370,7 @@ public class PayController {
     	//先校验密码是否正确
     	//请wenh 写校验逻辑，如果校验失败，执行下面
         if(false){
-        	result.put("status", "01");
+        	result.put("status", "EA1");
         	result.put("detail", "支付密码不正确");
         	return result;
         }
@@ -344,9 +379,9 @@ public class PayController {
         Map<String, String> topay_money = myAcctService.queryToPayMoneyByOrderId(order_id);
         String order_fee = topay_money.get("TOPAY_MONEY");
 
-        //dealInsteadPayTx里只考虑了几种异常，有可能会发生其他异常
+        //根据代金券or账户or银联快捷支付，调用不同的处理
+        //dealInsteadPay里只考虑了几种异常，有可能会发生其他异常
         try {
-			//根据代金券or账户or银联快捷支付，调用不同的处理
 			payService.dealInsteadPay(user_id, order_id, order_fee, paramList, result);
 			//如果result不为空，表示有异常，直接返回界面
 	    	if(MapUtils.isNotEmpty(result)){
@@ -354,10 +389,12 @@ public class PayController {
 	    	}
 		} catch (Exception e) {
 			log.error("代客下单支付发生其他exception", e); 
-			result.put("status", "02");
+			result.put("status", "EA2");
         	result.put("detail", "代客下单支付发生其他异常");
         	return result;
 		}
+        
+        //
     	
         //以上都无异常才会走到这里
     	result.put("status", "00");

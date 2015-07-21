@@ -11,7 +11,11 @@ import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.UnionPayService;
 
 /**
- * 处理 支付接口 响应报文<br> 
+ * 处理 银联签约号快捷支付支付接口 响应报文<br> 
+ * 银联签约号快捷支付 目前只有能人代客下单支付时调用
+ * 处理逻辑 和  全要素支付接口 响应 不一样：
+ * 1.不需要更新 ord_d_pay，
+ * 2.另外后续处理不用调afterPaySuccess，而是调用 afterInsteadPaySuccess，
  * 〈功能详细描述〉
  *
  * @author xmh
@@ -62,14 +66,14 @@ public class RespPayHandler implements IDealUnionPayResp {
         //更新PAY_D_UNIONPAY_LOG日志表里的接口调用日志
         int r1 = unionPayService.updateUnionPaylog(respMap);
         
-        boolean isSuccess = UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode));
-        //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
-        String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
-        //银联支付返回的支付金额，单位是分, 插入表里是厘
-        int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt))*10;
-        
-        //调用公共service，做后续的统一的操作
-        payService.afterPaySuccess("10", isSuccess, realOrderId, fee); //全要素支付是15，签约号支付时10
+//        boolean isSuccess = UnionPayCons.RESULT_CODE_SUCCESS.equals(respMap.get(UnionPayAttrs.resultCode));
+//        //20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
+//        String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
+//        //银联支付返回的支付金额，单位是分, 插入表里是厘
+//        int fee = Integer.parseInt(respMap.get(UnionPayAttrs.txnAmt))*10;
+//        
+//        //调用公共service，做后续的统一的操作
+//        payService.afterPaySuccess("10", isSuccess, realOrderId, fee); //全要素支付是15，签约号支付时10
     }
 
 }

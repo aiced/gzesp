@@ -529,8 +529,10 @@ public class UnionPayService {
                 pay_state, respMap.get(UnionPayAttrs.sysTradeNo));
     }
     
+    
     /**
-     * 收到银联支付接口的返回后，更新PAY_D_UNIONPAY_LOG日志表<br>
+     * 收到银联全要素支付接口的返回后，更新PAY_D_UNIONPAY_LOG日志表<br>
+     * 和updateUnionPaylog区别：返回无签约号
      * 〈功能详细描述〉
      *
      * @param respMap
@@ -542,7 +544,7 @@ public class UnionPayService {
         return unionPayDao.updateUnionPaylog(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
                 respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
                  respMap.get(UnionPayAttrs.sysTradeNo));
-    } 
+    }     
     
     /**
      * 支付收到响应后更新订单基本表里订单状态
@@ -916,6 +918,7 @@ public class UnionPayService {
     
     
     /**
+     * 银联全要素支付 退款 用第一套商户号
      * 银联退款调用接口service，没有单独controller，controller入口是在payController里面
      * @param order_id
      * @return

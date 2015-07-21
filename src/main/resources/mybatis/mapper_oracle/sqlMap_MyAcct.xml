@@ -224,7 +224,7 @@
 		   #{version})
 	</insert>
 	<select id="queryToPayMoneyByOrderId" resultType="java.util.HashMap">
-		select to_char(totopay_money) as topay_money from ord_d_base where order_id=#{order_id}
+		select to_char(topay_money) as topay_money from ord_d_base where order_id=#{order_id}
 	</select>
 
 	

@@ -15,6 +15,10 @@ import com.ai.gzesp.service.OrderService;
  * 如果订单半小时后未支付，释放预占的号码，同时库存数量销量都要相应返销
  * 注意：这里只判断了订单表有记录，但是ord_d_pay表里没记录 或 ord_d_pay里支付失败2的情况，
  *       如果选择了支付方式，但是没进行支付下去，则不会被回收变99
+ *       
+ * 20150720 ximh 改成：
+ * 判断ord_d_base 里 order_state = '00'的。
+ * 不再判断ord_d_pay，因为能人代客下单支付ord_d_pay会不只一条记录，会关联出多条
  * @author xmh
  *
  */

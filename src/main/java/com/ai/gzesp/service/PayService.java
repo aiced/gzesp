@@ -83,10 +83,10 @@ public class PayService {
         	insertPayInfoBatch(orderId, orderFee, payInfoList);
         }
         else{
-        	//暂时不写，第一次支付失败后，可以再次支付，支付成功后会来更新表里的记录
-        	//先删除原记录再插新记录，其实这样有问题，应该判断是否有成功支付记录，成功了页面就不允许再次选择支付模式支付
-        	
-        	//insertPayInfoBatch(orderId, orderFee, payInfoList);
+        	//第一次支付失败后，可以再次支付，支付成功后会来更新表里的记录
+        	//先删除原记录再插新记录，页面前端应该限制是否有成功支付记录，成功了页面就不允许再次选择支付模式支付
+        	deletePayInfoBatch(orderId);
+        	insertPayInfoBatch(orderId, orderFee, payInfoList);
         }
     } 
     
@@ -95,6 +95,14 @@ public class PayService {
         return payDao.queryOrderDPay(orderId);
     }
     
+	/**
+	 * 支付失败，再次支付时，先删除原支付记录ord_d_pay,再插新的
+	 * @param orderId
+	 */
+	private int deletePayInfoBatch(String orderId) {
+        return payDao.deletePayInfoBatch(orderId); 
+	}
+	
     /**
      * 调用微信支付，沃支付，银联支付前 插支付日志总表 ord_d_pay 
      * 目前一条订单只插一条记录
@@ -181,18 +189,66 @@ public class PayService {
     
 
     /**
+     * 代客下单 代金券and账户and银联 全部完成后，除了更新各自的log日志表外，还有一系列后续操作
+     * 1.更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
+     * 2.新增一条 ORD_L_DEALLOG 处理日志
+     * 3.更新 ord_d_pay 里 状态
+     * 4.如果有号码预占而且支付返回响应是成功的则删掉号码预占表信息
+     * 
+     * orderFee 订单应收金额，incomeFee 实收金额=订单应收金额-代金券金额，单位厘
+     * 
+     * @param pay_mode
+     * @param isSuccess
+     * @param orderId
+     * @param orderFee
+     * @param incomeFee
+     */
+    public void afterInsteadPaySuccess(String pay_mode, boolean isSuccess, String orderId, int orderFee, int incomeFee){
+    	//更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
+    	if(isSuccess){
+    	   int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, incomeFee);
+    	}
+    	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
+    	if(isSuccess){
+    		int r2 = insertDealLogAfterPaySuccess(orderId, orderFee);
+    	}
+    	
+    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
+//    	String pay_state = isSuccess ? "1" : "2" ;
+//    	int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
+    	
+    	//先根据返回报文里的order_id 获取到订单当时是否有选择号码
+    	Map<Object, Object> numberRow = getNumberByOrderId(orderId);
+    	//如果有号码而且返回响应是成功的则删掉号码预占表信息
+        if(MapUtils.isNotEmpty(numberRow) && isSuccess){
+        	//号码预占表删掉号码记录
+        	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
+        	int r4 = deleteNumberReserve(numbers);
+        }
+        
+        //支付成功发短信
+        if(isSuccess){
+        	Map<String, String> phone = payDao.queryPhoneByOrderId(orderId);
+        	Map<String, String> goods = payDao.queryGoodsNameByOrderId(orderId);
+        	if(MapUtils.isNotEmpty(phone)){
+        		String strRet = SmsUtils.doSendMessage(phone.get("PHONE_NUMBER"), "MB-2015052754", "@1@=" + goods.get("GOODS_NAME"));
+        	}
+    	}
+    }
+    
+
+    /**
      * 退款接口请求返回成功后 后续统一操作
      * 1.ord_d_refund, ORDER_STATE 后台审核通过未退款 13，后台审核通过已退款14 
      * 2.ord_d_base, 
      * 3.ord_d_pay, 
      * 4.ORD_L_DEALLOG, 
      * 5.退佣金（能人账户功能完成后开发）
-     * 6.发短信通知(放到后台管理去发了)
-     * @param pay_mode
+     * 6.发短信通知(放到后台管理去发了)     
      * @param isSuccess
      * @param orderId
      */
-    public void afterRefundSuccess(String pay_mode, boolean isSuccess, String orderId){
+    public void afterRefundSuccess(boolean isSuccess, String orderId){
     	//先从ord_d_refund表里查询出订单表里原来的状态,用于插到 ORD_L_DEALLOG
     	Map<String, String> refundInfo = payDao.queryRefundInfoByOrderId(orderId);
     	String orig_order_state = refundInfo.get("ORDER_STATE");
@@ -207,7 +263,7 @@ public class PayService {
     	//如果退款请求成功 更新ord_d_pay 里的状态 5 已退款
     	if(isSuccess){
     		//String pay_state = isSuccess ? "5";
-    		int r3 = updateOrdDPay(orderId, "5", pay_mode);
+    		int r3 = updateOrdDPayRefund(orderId, "5");
     	}
     	
     	//不管退款成功失败 则新增一条 ORD_L_DEALLOG 处理日志
@@ -281,7 +337,7 @@ public class PayService {
     			"0",  //RESULT_CODE
     			"成功",   //RESULT_INFO
     			"00",  //ORIGINAL_STATE，订单原始状态未支付
-    			"01"   //CURRENT_STATE,订单线状态，待分配
+    			"02"   //CURRENT_STATE,订单现状态，01待分配。 2015070 要求跳过外呼步骤直接改成02: 待处理
     			);
     }
     
@@ -306,6 +362,16 @@ public class PayService {
         return payDao.updateOrdDPay(orderId, pay_state, pay_mode);
     }
     
+    /**
+     * 退款成功后，更新ord_d_pay 该order_id的所有记录状态为5，退款成功
+     * @param orderId
+     * @param pay_state
+     * @return
+     */
+    private int updateOrdDPayRefund(String orderId, String pay_state){
+        return payDao.updateOrdDPayRefund(orderId, pay_state);
+    }
+    
 
     
     public Map<String, String> queryGoodsNameByOrderId(String orderId){
@@ -313,11 +379,12 @@ public class PayService {
     }
     
     /**
-     * 根据订单号查询支付方式：微信支付or沃支付or银联支付
+     * 根据订单号查询支付方式：微信支付or沃支付or银联全要素支付 or代金券or账户or银联签约号z
+     * 能人代客下单后一个订单号存在多条记录
      * @param orderId
      * @return
      */
-    public Map<String, String> queryPayModeByOrderId(String orderId){
+    public List<Map<String, String>> queryPayModeByOrderId(String orderId){
     	return payDao.queryPayModeByOrderId(orderId);
     }
     
@@ -356,6 +423,7 @@ public class PayService {
      */
     public void dealInsteadPay(String user_id, String order_id, String order_fee, List<Map<String, String>> paramList, Map<String, String> result){
     	log.info("【代客下单入参：" + paramList + "】"); //这边用info，以便系统稳定后也能打印出入参
+    	int incomeFee = Integer.parseInt(order_fee); //实收金额=订单应收金额-代金券金额，单位厘
     	
     	//先插入ord_d_pay订单支付信息
     	beforePayReq(order_id, order_fee, paramList);
@@ -384,6 +452,7 @@ public class PayService {
 				//如果是代金券,更新act_d_coupon状态为2，已使用
 	    		if(payInfo.get("pay_mode").equals("60")){
 	    			//boolean canUse = checkCouponLimit(); //检查代金券使用条件
+	    			incomeFee -= Integer.parseInt(payInfo.get("pay_fee")); //减去代金券金额
 	    			resultCoupon = insteadPayCoupon(payInfo.get("coupon_id"), order_id, payInfo.get("pay_mode")); 
 	    			if(MapUtils.isNotEmpty(resultCoupon)){
 	    				result.put("status", resultCoupon.get("status"));
@@ -400,16 +469,23 @@ public class PayService {
 	    		}
 	    	}
 			
-			//更新支付表 ORD_D_PAY 里代金券和账户子记录的支付状态为1-支付成功,2失败
-			//银联的子记录在银联响应里面afterPaySuccess 里已经更新过了
-			if(resultCoupon != null || resultAcct != null){
-				int n1 = updateOrdDPayStateBatch(order_id, resultCoupon, resultAcct);
-				if(n1 < 0){
-					result.put("status", "31");
-					result.put("detail", "更新订单支付表状态记录数为0");
-				}
-			}
 	    }
+	    
+	    //更新支付表 ORD_D_PAY 里 代金券and账户and银联 子记录的支付状态为1-支付成功,2失败
+	    if(resultUnionPay != null || resultCoupon != null || resultAcct != null){
+	    	int n1 = updateOrdDPayStateBatch(order_id, resultUnionPay, resultCoupon, resultAcct);
+	    	if(n1 < 0){
+	    		result.put("status", "31");
+	    		result.put("detail", "更新订单支付表状态记录数为0");
+	    	}
+	    }
+	    
+	    //调用公共service，做后续的统一的操作
+	    boolean isSuccess = true; //三部分支付都成功才算成功
+	    if(MapUtils.isEmpty(resultUnionPay) || MapUtils.isNotEmpty(resultCoupon) || MapUtils.isNotEmpty(resultAcct)){
+	    	isSuccess = false;
+	    }
+        afterInsteadPaySuccess("10", isSuccess, order_id, Integer.parseInt(order_fee), incomeFee); //全要素支付是15，签约号支付时10
     }
     
     
@@ -477,8 +553,8 @@ public class PayService {
     		String versionNew = RechargeUtil.fillZero(version + 1, 8); //新版本号，数字左补0凑成8位版本号
     		int n1 = updateAcctBalanceAndVersion(acct_id, balanceNew, versionNew); 
     		if(n1 > 0){
-    			//如果更新成功了才可以插accesslog日志
-    			int n2 = insertAcctAccessLog(acct_id, order_id, balance, -Integer.parseInt(pay_fee), balanceNew);//pay_fee负值
+    			//如果更新成功了才可以插accesslog日志 22：账户支付(现金可提)(钱为负值)
+    			int n2 = insertAcctAccessLog(acct_id, order_id, "22", balance, -Integer.parseInt(pay_fee), balanceNew);//pay_fee负值
     			//如果n1和n2都成功，更新支付表 ORD_D_PAY 里账户子记录的支付状态为1-支付成功
 //    			if(n2 > 0){
 //    		        int n3 = payDao.updateOrdDPay(order_id, n2>0?"1":"2", pay_mode);	
@@ -496,6 +572,60 @@ public class PayService {
     	
     	return result;
     }
+    
+    /**
+     * 现金账户退款52。(代客下单时用 现金账户支付22)
+     * @param order_id
+     * @return
+     */
+    public Map<String, String> refundOrderAcct(String order_id) {
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	//先从act_d_access_log关联act_d_account表查询出订单支付时账户的变动金额和当前账户的余额和版本
+    	Map<String, String> AccessLogAndBalance = payDao.queryAccessLogAndBalanceByOrderId(order_id);
+    	
+    	if(MapUtils.isEmpty(AccessLogAndBalance)){
+    		result.put("result_code", "FAIL") ;
+    		result.put("result_desc", "没有找到账户支付成功记录") ;
+    		return result;
+    	}
+    	
+    	String acct_id = AccessLogAndBalance.get("ACCT_ID"); 
+    	//查出最新的余额和版本号，在此基础上版本号+1,用乐观锁的机制更新，
+    	//考虑到并发的情况，如果版本号+1进行update记录为0，需要重新查询一遍再更新，最多尝试5次
+    	int num = 1;
+    	while(true){
+    		if(num > 5){
+    			result.put("result_code", "FAIL");
+            	result.put("result_desc", "现金账户退款更新账户信息表ACT_D_ACCOUNT失败5次，不再尝试");
+    			break;
+    		}
+    		
+    		log.debug("【退款：更新act_d_account记录为0，acct_id=" + acct_id + ",第" + num + "次尝试。。。】");
+    		
+    		int balance = Integer.parseInt(AccessLogAndBalance.get("BALANCE")); //原余额
+    		int version = Integer.parseInt(AccessLogAndBalance.get("VERSION")); //原版本号
+    		int fee = Integer.parseInt(AccessLogAndBalance.get("FEE")); //accesslog表里是负值
+    		int balanceNew = balance - fee; //变动后的账户余额
+    		String versionNew = RechargeUtil.fillZero(version + 1, 8); //新版本号，数字左补0凑成8位版本号
+    		int n1 = updateAcctBalanceAndVersion(acct_id, balanceNew, versionNew); 
+    		if(n1 > 0){
+    			//如果更新成功了才可以插accesslog日志
+    			int n2 = insertAcctAccessLog(acct_id, order_id, "52", balance, -fee, balanceNew);//fee正值
+    			if(n2 < 0){
+    				result.put("result_code", "FAIL");
+                	result.put("result_desc", "现金账户退款插入账户变动日志表ACT_D_ACCESS_LOG失败，acct_id=" + acct_id);
+    			}
+    			
+    			break; //跳出循环
+    		}
+    		
+    		num++; //计数器+1
+    	}
+    	
+    	return result;
+    }
+
 
     /**
      * 查询账户余额和版本
@@ -521,15 +651,16 @@ public class PayService {
      * 插账户变动access_log日志
      * @param acct_id
      * @param order_id
+     * @param trade_type
      * @param balanceOld
      * @param pay_fee
      * @param balanceNew
      * @return
      */
-    private int insertAcctAccessLog(String acct_id, String order_id, int balanceOld, int pay_fee, int balanceNew) {
+    private int insertAcctAccessLog(String acct_id, String order_id, String trade_type, int balanceOld, int pay_fee, int balanceNew) {
         String log_id = RechargeUtil.generateLogId();
         String partition_id = log_id.substring(14, 16);
-        String trade_type = "22"; //22：账户支付(现金可提)(钱为负值)
+        //String trade_type = "22"; //22：账户支付(现金可提)(钱为负值)
     	return payDao.insertAcctAccessLog(log_id, partition_id, acct_id, order_id, trade_type, balanceOld, pay_fee, balanceNew);
     }
     
@@ -565,18 +696,20 @@ public class PayService {
     }
     
     /**
-     * 更新支付表 ORD_D_PAY 里代金券和账户子记录的支付状态为1-支付成功,2失败
-	 * 银联的子记录在银联响应里面afterPaySuccess 里已经更新过了
+     * 更新支付表 ORD_D_PAY 里 代金券and账户and银联 子记录的支付状态为1-支付成功,2失败
      * @param order_id
      * @param resultCoupon
      * @param resultAcct
      */
-    private int updateOrdDPayStateBatch(String order_id, Map<String, String> resultCoupon, Map<String, String> resultAcct){
+    private int updateOrdDPayStateBatch(String order_id, Map<String, String> resultUnionPay, Map<String, String> resultCoupon, Map<String, String> resultAcct){
 	    List<Map<String, String>> stateList = new ArrayList<Map<String, String>>();
-//	    Map<String, String> unionPay = new HashMap<String, String>();
-//	    unionPay.put("pay_mode", "10");
-//	    unionPay.put("pay_state", MapUtils.isEmpty(resultUnionPay) ? "1" : "2");
-//	    stateList.add(unionPay);
+	    
+	    if(resultUnionPay != null){
+	    	Map<String, String> unionPay = new HashMap<String, String>();
+	    	unionPay.put("pay_mode", "10");
+	    	unionPay.put("pay_state", MapUtils.isEmpty(resultUnionPay) ? "1" : "2");
+	    	stateList.add(unionPay);
+	    }
 	    if(resultCoupon != null){
 	    	Map<String, String> coupon = new HashMap<String, String>();
 	    	coupon.put("pay_mode", "60");

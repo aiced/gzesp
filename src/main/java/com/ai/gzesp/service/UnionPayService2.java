@@ -39,6 +39,9 @@ public class UnionPayService2 {
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
     
+	@Autowired
+	private UnionPayService unionPayService;
+    
     /**
      * 银行卡绑定 服务类，调用银联第二套商户号参数 调用 绑定接口
      * 银行卡 几大要素 + 系统跟踪号 SysTradeNo 由文辉生成并传过来
@@ -358,5 +361,95 @@ public class UnionPayService2 {
         
         //return result;
     }
+    
+    /**
+     * 银联签约号支付 退款 用第二套商户号
+     * 银联退款调用接口service，没有单独controller，controller入口是在payController里面
+     * @param order_id
+     * @return
+     */
+    public Map<String, String> refundOrder(String order_id){
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	Map<String, String> origUnionPayLog = unionPayDao.queryUnionPaylogByOrderId(order_id); //先查出原来支付成功的订单信息
+    	
+    	//组装原支付成功订单部分请求参数
+    	UnionPayParam param = new UnionPayParam();
+    	param.setOrder_id(order_id);
+    	param.setOrig_order_id(origUnionPayLog.get("ORDER_ID")); //这边插入原支付记录里的虚拟的order_id,因为支付时发送的是虚拟order_id的
+    	param.setOrig_sys_trade_no(origUnionPayLog.get("SYS_TRADE_NO"));
+    	param.setOrig_timestamp(origUnionPayLog.get("REQ_TIME"));
+    	param.setOrig_txn_amt(origUnionPayLog.get("TXN_AMT"));
+    	//组装退款请求当前时间等请求参数
+    	String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
+    	param.setPayCalcel_time_stamp(timeStamp);
+    	//判断当前退款时间和支付成功时间 是否同一天，接口类型不一样，其他参数都一致
+    	if(StringUtils.equals(timeStamp.subSequence(0, 8), param.getOrig_timestamp().subSequence(0, 8))){
+    		String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.payCancel.getTradeType()); //系统跟踪号
+    		param.setPayCalcel_sys_trade_no(sysTradeNo);
+    		String tradeType = TradeType.payCancel.getTradeType(); //业务类型
+    		param.setPayCalcel_trade_type(tradeType);
+    	}
+    	else{
+    		String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.payRefund.getTradeType()); //系统跟踪号
+    		param.setPayCalcel_sys_trade_no(sysTradeNo);
+    		String tradeType = TradeType.payRefund.getTradeType(); //业务类型
+    		param.setPayCalcel_trade_type(tradeType);    		
+    	}
+    	
+        try {
+        	unionPayService.insertPayCancellog(param, result); //插银联日志
+			if(!result.isEmpty()){
+				return result; 
+			}
+			sendPayCancelReq(param, result); //发送接口请求，第二套商户号
+			if(!result.isEmpty()){
+				return result; 
+			}
+			unionPayService.waitForPayCancelResp(param, result); //等待银联响应
+			if(!result.isEmpty()){
+				return result; 
+			}
+			
+			result.put("status", "E11");
+            result.put("detail", "退款请求失败！");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			result.put("status", "E12");
+            result.put("detail", "退款请求失败！");
+		}  
+        
+    	
+    	return result;
+    }  
+    
+    /**
+     * 签约号支付是用第二套商户号的，所以相应退款也需要用第二套商户号  发送请求。
+     * 所以这边重写，其他插日志，等待响应逻辑相同
+     * 
+     * @param param
+     * @param result
+     * @return
+     */
+    public void sendPayCancelReq(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        boolean isSuccess = false;
+            //接口 参数封装成map,转换层xml，生成md5摘要，3des加密,生成可发送的报文
+            Map<String, String> xmlMap = UnionPayUtil.genPayCancelReq2(param); //第二套商户
+            byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
+            //调用mina客户端发送报文
+            if(xmlSend != null){
+                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = ClientHandler.sendMsg(xmlSend);
+            }    
+            
+            if(!isSuccess){
+            	result.put("status", "E05");
+            	result.put("detail", "撤销失败！发送支付接口报文失败");
+            	//return result; //直接返回
+            }
+            
+        //return result;
+    }    
     
 }

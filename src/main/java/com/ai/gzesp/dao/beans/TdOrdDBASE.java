@@ -519,7 +519,7 @@ public class TdOrdDBASE extends TdOrdDBASEKey implements Serializable {
 	}
 
 	public void setOrderType(String orderType) {
-		this.orderType = values2 == null ? null : values2.trim();
+		this.orderType = orderType == null ? null : orderType.trim();
 	}
     
     

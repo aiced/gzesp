@@ -10,7 +10,7 @@ import org.apache.mina.filter.codec.textline.TextLineEncoder;
 
 public class RechargeCodecFactory implements ProtocolCodecFactory {
 	
-/*	private RechargeDecoder decoder;
+	private RechargeDecoder decoder;
 	private RechargeEncoder encoder;
 	
 	public RechargeCodecFactory(){
@@ -19,17 +19,17 @@ public class RechargeCodecFactory implements ProtocolCodecFactory {
 	}
 
 	@Override
-	public ProtocolEncoder getEncoder(IoSession session) throws Exception {
+	public RechargeEncoder getEncoder(IoSession session) throws Exception {
 		return encoder;
 	}
 
 	@Override
-	public ProtocolDecoder getDecoder(IoSession session) throws Exception {
+	public RechargeDecoder getDecoder(IoSession session) throws Exception {
 		return decoder;
-	}*/
+	}
 	
 	
-	private TextLineEncoder encoder; 
+/*	private TextLineEncoder encoder; 
 	private TextLineDecoder decoder;  
 	//private char endchar = 0x1a ; //所有数据包前增加”@”为包的开始标志，数据包尾加“0x1a”为包的结束标志
 	private String endchar = "0x1a" ;
@@ -50,5 +50,5 @@ public class RechargeCodecFactory implements ProtocolCodecFactory {
 	@Override
 	public TextLineDecoder getDecoder(IoSession session) throws Exception {
 		return decoder;
-	}
+	}*/
 }

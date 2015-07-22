@@ -385,7 +385,37 @@ public class UnionPayUtil {
         
         //return genByteReq(xmlMap);
         return xmlMap;
-    }    
+    }  
+    
+    /**
+     * 银联接口：生成 支付交易撤销(指当日交易撤消) 发送报文<br>
+     * 签约号支付是用第二套商户号的，所以相应退款也需要用第二套商户号
+     * @param param
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static Map<String, String> genPayCancelReq2(UnionPayParam param){
+        log.debug("【银联支付：创建payNew请求原始数据map】");
+        //原始请求报文map
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
+        xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
+        xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
+        xmlMap.put(UnionPayAttrs.TradeType, param.getPayCalcel_trade_type()); //交易类型退款(当日)请求（0970）或0900
+        xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
+        xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
+        xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
+        xmlMap.put(UnionPayAttrs.timeStamp, param.getPayCalcel_time_stamp()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, param.getPayCalcel_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.origsignCode, ""); //原交易签约号 可空
+        xmlMap.put(UnionPayAttrs.origtimeStamp, param.getOrig_timestamp()); //原交易时间yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.origsysTradeNo, param.getOrig_sys_trade_no()); //原交易系统跟踪号
+        xmlMap.put(UnionPayAttrs.origOrderId, param.getOrig_order_id());  // 原支付交易订单号
+        xmlMap.put(UnionPayAttrs.origtxnAmt, String.valueOf(Integer.parseInt(param.getOrig_txn_amt())/10)); // 原支付交易金额（单位：分）（不支持部分撤消）
+        xmlMap.put(UnionPayAttrs.orderId, param.getPayCalcel_sys_trade_no()); //撤销交易订单号 这边填的是 log_id
+        
+        //return genByteReq(xmlMap);
+        return xmlMap;
+    }
     
     
     

@@ -30,6 +30,10 @@
          where order_id = ${order_id}
 	</select>	
 	
+	<delete id="deletePayInfoBatch">
+        delete from ord_d_pay where order_id = ${order_id}
+	</delete>	
+	
 	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
 	<select id="insertPayInfoBatch">
       insert into ord_d_pay 
@@ -39,23 +43,42 @@
       </foreach>
 	</select>	
 	
-	<update id="updateOrdDPay">
+	<update id="updateOrdDPay_bak">
          update ord_d_pay
             set pay_state = #{pay_state},
                 pay_mode = #{pay_mode},
                 pay_time = sysdate
           where order_id = ${order_id}
-            and pay_mode in ('15', '30', '40')
+            and pay_mode in ('10', '15', '30', '40')
 	</update>	
 	
-	<update id="updateOrdDPay_bak">
+	<update id="updateOrdDPay">
          update ord_d_pay
-            set pay_state = #{pay_state}
+            set pay_state = #{pay_state},
+                pay_time = sysdate
           where order_id = ${order_id}
             <if test="pay_mode != null">
             and pay_mode = #{pay_mode}
             </if>
-	</update>	
+	</update>
+	
+	<update id="updateOrdDPayRefund">
+         update ord_d_pay
+            set pay_state = #{pay_state}
+          where order_id = ${order_id}
+	</update>		
+	
+	<update id="updateOrdDPayStateBatch">
+         update ord_d_pay
+            set pay_state = 
+                (
+                  <foreach collection="stateList" item="item" index="index" open="case " close=" else 0 end" separator=" ">
+                    when pay_mode=#{item.pay_mode} then #{item.pay_state}
+                  </foreach>
+                ),
+                pay_time = sysdate
+          where order_id = ${order_id}
+	</update>			
 	
 	<select id="queryPhoneByOrderId" resultType="java.util.HashMap">
         select phone_number
@@ -91,6 +114,48 @@
         select order_id, order_state
           from ord_d_refund
          where order_id = ${order_id}
-	</select>	
-							
+	</select>
+	
+	<select id="queryAccessLogAndBalanceByOrderId" resultType="java.util.HashMap">
+        select a.acct_id, a.fee, b.balance, b.version
+          from act_d_accesslog a,
+               act_d_account b
+         where a.order_id = ${order_id}
+           and a.trade_type = '22'
+           and a.acct_id = b.acct_id
+	</select>		
+	
+	<update id="updateCouponLog">
+         update act_d_coupon
+            set status = #{status},
+                update_time = sysdate
+                <if test="order_id != null">
+                  , order_id = ${order_id}, 
+                    use_time = sysdate
+                </if>
+          where coupon_id = ${coupon_id}
+	</update>	
+
+	<select id="queryAcctBalanceAndVersion" resultType="java.util.HashMap">
+        select user_id, acct_id, to_char(balance) balance, version
+          from act_d_account
+         where acct_id = #{acct_id}
+	</select>
+	
+	<update id="updateAcctBalanceAndVersion">
+         update act_d_account
+            set balance = ${balance},
+                version = #{version}
+          where acct_id = #{acct_id}
+          <![CDATA[
+            and version < #{version}
+          ]]>
+	</update>	
+	
+	<insert id="insertAcctAccessLog">
+      insert into act_d_access_log
+             (log_id, partition_id, acct_id, order_id, trade_type, old_balance, fee, new_balance, update_time)
+       values(${log_id}, ${partition_id}, #{acct_id}, ${order_id}, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate)
+	</insert>	
+								
 </mapper>

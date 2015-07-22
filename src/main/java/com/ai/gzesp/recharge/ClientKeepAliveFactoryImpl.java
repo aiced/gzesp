@@ -19,34 +19,14 @@ import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 public class ClientKeepAliveFactoryImpl implements KeepAliveMessageFactory {
     
     private static Logger log = Logger.getLogger(ClientKeepAliveFactoryImpl.class); 
-
-    @Override
-    public boolean isRequest(IoSession session, Object message) {
-        // 服务器不会给客户端发送请求包，因此不关注请求包，直接返回false 
-        byte[] m = (byte[])message;
-        log.debug("【一卡充：客户端收到服务端心跳请求 sessionId： " + session.getId() + "， message：" + new String(m) + "】");
-        return false;
-    }
-
-    @Override
-    public boolean isResponse(IoSession session, Object message) {
-        // 客户端关注请求反馈，因此判断mesaage是否是反馈包
-        byte[] m = (byte[])message;
-        log.debug("【一卡充：客户端发送心跳后收到服务端反馈 sessionId： " + session.getId() + "， message：" + new String(m) + "】");
-        if (message.equals(RechargeCons.HEARTBEAT_RESP)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    
     @Override
     public Object getRequest(IoSession session) {
-        // 获取心跳请求包
+        // 返回给对方的心跳包数据
         try {
-            return RechargeCons.HEARTBEAT_REQ.getBytes(RechargeCons.charCode);
+            return (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes(RechargeCons.charCode);
         } catch (UnsupportedEncodingException e) {
-            log.debug("【一卡充：客户端心跳0000转换byte异常 sessionId： " + session.getId()  + "】");
+            log.debug("【一卡充：客户端心跳GWHEARTBEATTEST转换byte异常 sessionId： " + session.getId()  + "】");
             e.printStackTrace();
             return null;
         }
@@ -54,8 +34,39 @@ public class ClientKeepAliveFactoryImpl implements KeepAliveMessageFactory {
 
     @Override
     public Object getResponse(IoSession session, Object request) {
-        // 服务器不会给客户端发送心跳请求，客户端当然也不用反馈  该方法返回null
+    	//接受到对方的数据包
+        // 一卡充服务器给esp客户端发送心跳请求，esp客户端不用反馈  该方法返回null
         return null;
+    }
+
+    @Override
+    public boolean isRequest(IoSession session, Object message) {
+    	//判断是否是对方发送来的的心跳包此判断影响 KeepAliveRequestTimeoutHandler实现类，判断是否心跳包发送超时
+        // esp发送心跳后，一卡充服务器会给esp客户端返回相同的心跳包
+	    return isHeart((byte[])message);
+    }
+
+    @Override
+    public boolean isResponse(IoSession session, Object message) {
+    	//判断发送信息是否是心跳数据包此判断影响 KeepAliveRequestTimeoutHandler实现类,判断是否心跳包发送超时
+        return isHeart((byte[])message);
+    }
+
+
+    
+    /**
+     * 判断是否是心跳
+     * @param message
+     * @return
+     */
+    private boolean isHeart(byte[] message){
+        String heart = new String(message).trim();
+		if(heart.equals(RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix)){
+			return true;
+		}
+		else{
+			return false;
+		}	
     }
 
 }

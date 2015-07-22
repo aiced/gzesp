@@ -39,7 +39,7 @@ public class RechargeCons {
     /**
      * des加密密钥:，密钥长度128位（16个字符）
      */
-    public static String desKey = "e036hlqtculakx38";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
+    public static String desKey = "e036hlqtculakx38e036hlqt";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
 
     /**
      * 心跳发送间隔时间
@@ -54,12 +54,12 @@ public class RechargeCons {
     /**
      * 请求端心跳包内容 
      */
-    public static String HEARTBEAT_REQ = "0000";
+    public static String HEARTBEAT_REQ = "GWHEARTBEATTEST";
     
     /**
      * 服务端心跳包内容 
      */
-    public static String HEARTBEAT_RESP = "0000";
+    public static String HEARTBEAT_RESP = "GWHEARTBEATTEST";
     
     /**
      * 接口调用成功返回00000应答码 

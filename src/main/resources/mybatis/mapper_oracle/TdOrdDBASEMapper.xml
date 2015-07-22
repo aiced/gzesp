@@ -19,6 +19,7 @@
     <result column="SELLER_REMARK" property="sellerRemark" jdbcType="VARCHAR" />
     <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
     <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+    <result column="ORDER_TYPE" property="orderType" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -87,7 +88,7 @@
   <sql id="Base_Column_List" >
     ORDER_ID, PARTITION_ID, ORDER_NO, CREATE_TIME, ORDER_FROM, ORDER_TIME, ORIGINAL_PRICE, 
     COUPON_MONEY, MAN_MADE_MONEY, POST_FEE, TOPAY_MONEY, INCOME_MONEY, ORDER_STATE, CUST_REMARK, 
-    SELLER_REMARK, VALUES1, VALUES2
+    SELLER_REMARK, VALUES1, VALUES2, ORDER_TYPE
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
     <include refid="common.Oracle_Pagination_Head" />
@@ -191,6 +192,9 @@
       <if test="values2 != null" >
         VALUES2,
       </if>
+      <if test="orderType != null" >
+        ORDER_TYPE,
+      </if>      
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="orderId != null" >
@@ -244,6 +248,9 @@
       <if test="values2 != null" >
         #{values2,jdbcType=VARCHAR},
       </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=VARCHAR},
+      </if>       
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >

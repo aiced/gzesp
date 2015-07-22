@@ -60,7 +60,7 @@
         .container_mid_1
         {
             background-color: #ffffff;
-            height: 260px;
+            height: 100%;
         }
         .container_mid_2
         {
@@ -123,9 +123,9 @@
         }
         .mid_1_div4
         {
-            margin-left: 10px;
-            margin-top: 10px;
+        	margin:10px;
             font-weight: bold;
+            text-align: right;
         }
         .mid_2_div1
         {
@@ -268,9 +268,9 @@
                 </div>
                 <div class="div_clear"></div>
                 <div class="div_line"></div>
-<!--                 <div class="mid_1_div4"> -->
-<!--                    	 共1件商品 实付：5000元 -->
-<!--                 </div> -->
+				<div class="mid_1_div4">
+                   	 <a href="/esp/customer/custOrderStateDetails/${ORDER_ID}">订单状态  ></a>
+                </div>
             </div>
             <br/>
             <div class="container_mid_2">

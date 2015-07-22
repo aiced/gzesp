@@ -108,5 +108,29 @@ public class CustController {
 	        
 	        return mav;
 	    }
+
+	   /*
+	    * @auth:wenh
+	    * 客户订单查询-订单详情-订单状态
+	    * order_id 订单id
+	    */
+	   
+	   @RequestMapping("/custOrderStateDetails/{order_id}")
+	   public ModelAndView initCustOrderStateDetails(@PathVariable("order_id") String order_id)
+	   {
+	    	ModelAndView mav = new ModelAndView("custOrderStateDetails.ftl");
+	        //查询数据库：ord_l_deallog
+	    	
+	    	List<Map<String, Object>> listdealloginfo=orderService.queryOrdersDealLogByOrderId(order_id);
+	    	
+	    	if (listdealloginfo != null && listdealloginfo.size()>0) {
+				
+	    		mav.addObject("listdealloginfo",listdealloginfo);
+			}
+	    	
+	    	mav.addObject("order_id",order_id);
+	        return mav;
+	   }
+	   
 	   
 }

@@ -141,7 +141,7 @@
     
 <!--     <logger name="org.apache.shiro.authc"> -->
     <logger name="org.apache.shiro">
-    	<level value="info" />
+    	<level value="debug" />
         <appender-ref ref="Console" />
         <appender-ref ref="DailyRolling"/>
     </logger>

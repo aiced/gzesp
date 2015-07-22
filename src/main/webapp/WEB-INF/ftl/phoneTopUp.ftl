@@ -16,7 +16,7 @@
 
 </head>
 
-<body>
+<body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
    		  <div id="top">
@@ -26,14 +26,21 @@
 <div class="divContainer">
     <div class="phoneNumContainer">
         <div class="top-upNumber">
-            <span> 充值号码 </span>
-
-            <div class="fright">
+        <!--
+                    <span> 充值号码 </span>
+         -->
+			 <select id = "numSelected">
+                <option value="1">手机 </option>>
+                <option value="2">固话 </option>
+                <option value="3">宽带 </option>>
+            </select>
+             <div class="fright">
                 <input id="phoneNumId" type="tel" placeholder="只限贵州地区号码">
             </div>
         </div>
 
-        <div class="phoneDetail" id = "phoneDetailId">
+		<!-- 
+		 <div class="phoneDetail" id = "phoneDetailId">
             <div class="name border_bottom"> 王伟（江苏联通）</div>
             <div class="name"> 实时话费
                 <span class="fright real-timeCalls ">92.00 元 </span>
@@ -45,6 +52,8 @@
                 <span class="fright balances ">92.00 元 </span>
             </div>
         </div>
+		-->
+       
 
     </div>
 

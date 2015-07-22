@@ -21,9 +21,6 @@ function initBind() {
     	var data = "";
     	phoneDetailId(data);
     	//失败    	
-    	
-    	
-    	
     });
 
 //    点击金额绑定
@@ -74,8 +71,7 @@ function initBind() {
             alert("输入的金额不能为空");
             return;
     	}
-    	
-    	
+
     });
 
 //    点击购买充值卡绑定
@@ -91,6 +87,8 @@ function initBind() {
     });
 }
 function phoneDetailId(data){
+    alert($("#numSelected").val());
+
 	if(!phoneNumalidation){
 		$('#phoneDetailId').hide();
 		return;
@@ -108,7 +106,6 @@ function clearCardStyle(){
         var card = cards[i];
         var $card=$(card);
         $card.attr("class","card");
-
     }
 }
 
@@ -121,6 +118,25 @@ function clearInputNum(){
 function refreshTotleAmount(realPrice) {
 	var text = "优惠价："+ realPrice;
 	$("#preferentialId").html(text);
-	
 }
 
+
+
+
+//匹配国内电话号码(0511-4405222 或 021-87888822)
+function istell(str)
+{
+	var result=str.match(/\d{3}-\d{8}|\d{4}-\d{7}/);
+	if(result==null) return false;
+	return true;
+}
+
+
+function isPhoneNum(strPhoneNum)
+{
+	if(strPhoneNum && /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0-9]|170)\d{8}$/.test(strPhoneNum)){
+	    return true;//是手机号
+	} else{
+	    return false; //不是手机号
+	}
+}

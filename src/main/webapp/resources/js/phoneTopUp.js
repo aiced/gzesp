@@ -55,7 +55,6 @@ function initBind() {
      		 inputNum = inputNum *0.98;
              refreshTotleAmount(inputNum);
     	}
-    	
         //alert("buyCardId");
     });
 //    点击充值 绑定

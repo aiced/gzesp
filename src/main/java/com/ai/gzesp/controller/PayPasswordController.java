@@ -97,7 +97,6 @@ public class PayPasswordController {
     	return mav;
     }
     
-
     @RequestMapping("/set/phoneTradRecordSearch")
     public ModelAndView phoneTradRecordSearch(@RequestBody String inputParam){    	
         ModelAndView mav = new ModelAndView("phoneTradRecordSearch.ftl");

@@ -60,14 +60,14 @@ public class AA {
 		item1.put("TRADE_TYPE", "代客下单1");
 		item1.put("UPDATE_TIME", "2015 －04 －17");
 		item1.put("ORDER_ID", "1234568363738883874478747");
-		item1.put("FEE", "501");
+		item1.put("FEE", "501.1");
 		item1.put("AUDIT_STATE", "审核中");
 
 		Map<String, Object> item2 = new HashMap<String, Object>();
 		item2.put("TRADE_TYPE", "代客下单2");
 		item2.put("ORDER_ID", "1234568363738883874478747");
 		item2.put("UPDATE_TIME", "2015 －04 －18");
-		item2.put("FEE", "502");
+		item2.put("FEE", "502.1.1");
 		item2.put("AUDIT_STATE", "审核未通过");
 
 		Map<String, Object> item3 = new HashMap<String, Object>();
@@ -130,7 +130,6 @@ public class AA {
 		// mav.addObject("title", "标题");
 		// mav.addObject("costList", costList);
 		// return mav;
-
 		// 读取月 json 数据
 
 		URL path = this.getClass().getClassLoader().getResource("month.json");

@@ -335,11 +335,14 @@
       </#if>           	            
     </div>
     <!-- 充值缴费入口按钮 -->
-    <div class = "top-up-div">
+     <!-- 
+      <div class = "top-up-div">
     	<a href="${base}/set/phoneTopUp">
     	</a>
-    </div>
-   
+      </div>     
+      -->
+    
+
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script src="${resRoot}/js/jquery.qrcode.js?v=${resVer}"></script>

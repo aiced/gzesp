@@ -39,7 +39,6 @@
             </div>
         </div>
 
-		<!-- 
 		 <div class="phoneDetail" id = "phoneDetailId">
             <div class="name border_bottom"> 王伟（江苏联通）</div>
             <div class="name"> 实时话费
@@ -52,7 +51,6 @@
                 <span class="fright balances ">92.00 元 </span>
             </div>
         </div>
-		-->
        
 
     </div>

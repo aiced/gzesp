@@ -10,10 +10,10 @@
 		      <#list custMyOrderList as item>
 		      	<div onclick="showCustOrderDetail(${item.ORDER_ID})">
 			        <div class="row" style="margin-top:15px;margin-bottom:1px;background-color:#ffffff;">
-			        	<div class="col-xs-9" >	
+			        	<div class="col-xs-7" >	
 			        			<p>订单号：${item.ORDER_ID}</p>
 			        	</div>
-			        	<div class="col-xs-3" style="padding:0">	
+			        	<div class="col-xs-5" style="padding:0">	
 			        			<p class="text-right">${item.ORDER_STATE}</p>
 			        	</div>
 			        </div> 

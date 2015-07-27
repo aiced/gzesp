@@ -26,7 +26,7 @@
 //滚动
   function nav() {
     var $liCur = $(".nav-box ul li.cur"),
-      curP = $liCur.position().left,
+      curP = 1,
       curW = $liCur.outerWidth(true),
       $slider = $(".nav-line"),
       $targetEle = $(".nav-box ul li:not('.last') a"),
@@ -172,7 +172,7 @@
       $targetA = $warpEle.find("h2 a,ul li dl dt a"),
       parentH,
       eleTop = [];
-    parentH = $warpEle.parent().height();
+    parentH = $warpEle.parent().height()-80;
     $warpEle.parent().css({
       "height":00
     });

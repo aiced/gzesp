@@ -345,9 +345,9 @@ public class PayController {
     /**
      * 代客下单支付页面 ，输入支付密码后提交
      * post方式传参数paramList:
-     * [{"pay_order":"1", "pay_type":01, "pay_mode":60, pay_fee:1, coupon_id:12345678},
-     *  {"pay_order":"2", "pay_type":01, "pay_mode":51, pay_fee:2},
-     *  {"pay_order":"3", "pay_type":01, "pay_mode":10, pay_fee:3, bank_no:1234567},
+     * [{"pay_order":"1", "pay_type":01, "pay_mode":60, pay_fee:1, coupon_id:12345678},//代金券
+     *  {"pay_order":"2", "pay_type":01, "pay_mode":51, pay_fee:2},	//账户
+     *  {"pay_order":"3", "pay_type":01, "pay_mode":10, pay_fee:3, bank_no:1234567}, //快捷支付
      * ]
      * 
      * 返回json 

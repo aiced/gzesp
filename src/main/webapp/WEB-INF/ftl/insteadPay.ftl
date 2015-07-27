@@ -30,7 +30,7 @@
 <body>
     <!--top_start-->
     <div id="top">
-        <div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+        <div id="top_left"></div>
         <div id="top_middle">支付</div>
         <div id="top_right"></div>
     </div>

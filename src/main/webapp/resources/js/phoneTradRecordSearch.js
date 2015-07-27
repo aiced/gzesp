@@ -5,6 +5,7 @@ $(function(){
     initBind();
 
 });
+
 function initBind(){
 
     $("#searchId").bind("click",function(){
@@ -16,4 +17,11 @@ function initBind(){
 //        跳转界面 传入 inputValue
         alert(inputValue);
     });
+}
+
+
+function leftClick(param)
+{
+//	点击返回
+//	window.location.href='/esp/shopManage/acct/myAcct/'+$("#user_id").val();
 }

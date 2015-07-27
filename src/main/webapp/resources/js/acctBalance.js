@@ -25,13 +25,10 @@ $(document).ready(function (){
     }); 
 }); 
 
-
-
-
 $(function(){
-	initBind();
-	
+	initBind();	
 });
+
 function initBind(){
 //	收入
     $("#income_a").bind('click',function(){
@@ -91,6 +88,7 @@ function topBarClick(obj){
 	queryList(type,monthKey,pageNum);
 	//查询业务
 }
+
 function searchClick(obj){
 	
 	var monthKey = null;

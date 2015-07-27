@@ -15,11 +15,16 @@ function initBind() {
     $('#phoneNumId').blur(function ()
     {
     	phoneNumalidation = false;
-    	//发送验证请求 成功返沪
-    	phoneNumalidation = true;
-    	var data = "123456789";
-    	phoneDetailId(data);
-    	//失败    	
+
+    	var phoneNum = $('#phoneNumId').val();
+    	//本地验证请求
+    	phoneNumalidation = isPhoneNum(phoneNum);
+    	if(phoneNumalidation){
+        	queryAccountInfo(phoneNum);
+    	}else{
+    		$('#phoneNumId').val("");
+    		alert("手机号码有误，请重新输入");
+    	}
     });
 
 //    点击金额绑定
@@ -69,29 +74,35 @@ function initBind() {
             alert("输入的金额不能为空");
             return;
     	}
-
+    	
+    	// 数据组装，跳转界面
+//    	window.location.href='/esp/shopManage/weShopHome?userid='+$("#hide_user_id").val();    	
     });
 
 //    点击购买充值卡绑定
     $("#buyCardId").bind("click",function(){
-        alert("buyCardId");
-
+    	window.location.href='/esp/set/phoneTradRecordSearch';   
     });
 
 //    点击交易记录查询绑定
     $("#dealListId").bind("click",function(){
-        alert("dealListId");
-
+    	window.location.href='/esp/set/phoneTopUpCards';   
     });
 }
-function phoneDetailId(data){
-    alert($("#numSelected").val());
 
+
+function phoneDetailId(data){
+	//根据返回数据，判断一下
+	
 	if(!phoneNumalidation){
 		$('#phoneDetailId').hide();
 		return;
 	}
+
 	$('#phoneDetailId').show();
+	$('#realTopUpId').html();
+    alert("oooo" + $('#realTopUpId').html() + "oooo"  + $('#creditId').html()+ "oooo"  + $('#balanceId').html());
+	
 	//加载数据
 }
 
@@ -133,4 +144,36 @@ function isPhoneNum(strPhoneNum)
 	} else{
 	    return false; //不是手机号
 	}
+}
+
+
+
+//查询 账户信息
+function queryAccountInfo(phoneNum)
+{		
+	var user_id = $("#user_id").val();
+	var param = {"phoneNum":phoneNum,"user_id":user_id};	
+
+//	$.ajax({
+//		   type: "POST",
+//		   contentType:"application/json", //发送给服务器的内容编码类型
+//		   url: $('#baseRoot').val() + "/shopManage/acct/acctBalanceTotalPostData",
+//		   data: param, //服务器只能接收json字符串
+//		   async: false,
+//		   success: function(data){
+//			//			  取数值
+//		    alert(data);	
+//	    	phoneDetailId(data);
+//		   }
+//		});
+	
+	
+}
+
+
+
+function leftClick(param)
+{
+//	点击返回
+//	window.location.href='/esp/shopManage/acct/myAcct/'+$("#user_id").val();
 }

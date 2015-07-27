@@ -20,7 +20,7 @@
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
    		  <div id="top">
-	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
+       			<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 	      </div> 
 <div class="divContainer">
@@ -42,17 +42,17 @@
 		 <div class="phoneDetail" id = "phoneDetailId">
             <div class="name border_bottom"> 王伟（江苏联通）</div>
             <div class="name"> 实时话费
-                <span class="fright real-timeCalls ">92.00 元 </span>
+                <span class="fright real-timeCalls " id = "realTopUpId">92.00 元 </span>
             </div>
+            
             <div class="name"> 信用额度
-                <span class="fright credit ">92.00 元 </span>
+                <span class="fright credit " id = "creditId">192.00 元 </span>
             </div>
+            
             <div class="name"> 话费余额
-                <span class="fright balances ">92.00 元 </span>
+                <span class="fright balances " id = "balanceId">292.00 元 </span>
             </div>
         </div>
-       
-
     </div>
 
     <div class="error hide">

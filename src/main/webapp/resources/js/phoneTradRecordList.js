@@ -48,3 +48,10 @@ function loadMoreData(pageNum)
 		   }
 		});
 }
+
+
+function leftClick(param)
+{
+//	点击返回
+//	window.location.href='/esp/shopManage/acct/myAcct/'+$("#user_id").val();
+}

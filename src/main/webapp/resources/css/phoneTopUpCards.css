@@ -25,8 +25,9 @@
     margin: 5px auto;
     border: 1px solid #ADADAD;
 }
-.card .price{
 
+
+.card .price{
     font-size: 14px;
     text-align:center;
     color: #3C3C3C;
@@ -45,15 +46,13 @@
     display: block;
     width: 80%;
     height: 40px;
-    background: white;
     margin: 5px auto;
     border: 1px solid #FD990C;
-    /*background: ;*/
-    background-image: url("../image/phoneTopUp/selected.png");
+    /*background:*/
+    background-image: url("../image/phoneTopUp/cardSelected.png");
     background-repeat: no-repeat;
     background-size: 10px 10px;
     background-position:bottom right;
-
 }
 
 .cardSelected .price{

@@ -2,13 +2,14 @@
 
         	<#else>
 				<#list orderList as item>
+				<div class="order_middle_contain">
 		           <div class="order_middle" onclick="doneClick(this);">
 		           	   <input type="hidden" name="itemindx${item_index}" id="itemindex${item_index}" value=${item_index}>
 		               <div class="order_contain">
-		                   <div class="order_contain_top">
+	                   		<div class="order_contain_top">
 		                   	   <!-- ,苹果最新手机iphone6 4.7寸大屏幕 超强性能处理器 -->
 		                       <h5><div class="order_contain_title">${item.GOODS_NAME}</div></h5>
-								<#if (item.ORDER_STATE=='00')>
+		                       <#if (item.ORDER_STATE=='00')>
 		                       	<h5><div class="order_contain_statue">待支付</div></h5>
 		                       <#elseif (item.ORDER_STATE=='01')>
 		                       	<h5><div class="order_contain_statue">待分配</div></h5>
@@ -30,6 +31,14 @@
 		                       <h5><div class="order_contain_statue">订单处理退单</div></h5>
 		                       <#elseif (item.ORDER_STATE=='10')>
 								<h5><div class="order_contain_statue">客户拒收退单</div></h5>
+		                       <#elseif (item.ORDER_STATE=='11')>
+								<h5><div class="order_contain_statue">店主审核中</div></h5>
+		                       <#elseif (item.ORDER_STATE=='12')>
+								<h5><div class="order_contain_statue">管理员审核中</div></h5>
+		                       <#elseif (item.ORDER_STATE=='13')>
+								<h5><div class="order_contain_statue">审核通过未退款</div></h5>
+		                       <#elseif (item.ORDER_STATE=='14')>
+								<h5><div class="order_contain_statue">审核通过已退款</div></h5>
 		                       </#if>
 		                       <!-- <div class="order_contain_statue">${item.PAY_STATE}</div> -->
 		                   </div>
@@ -66,5 +75,10 @@
 				    	<input id="PAY_REMARK" name="PAY_REMARK" value='${item.PAY_REMARK}'></input>-->
 				 	 </form>
 		           </div><!-- order_middle_end -->
+					<#if (item.ORDER_TYPE=='2' && item.ORDER_STATE=='00')>
+                       <div class="order_line"></div>
+			           <div style="color:green;text-align: right;padding-bottom: 5px;"><u><a href="/esp/pay/insteadPay/${hideuserid}/${item.ORDER_ID}">去支付>>></a></u></div>
+                    </#if>
+				</div>
 				</#list>
  			</#if>

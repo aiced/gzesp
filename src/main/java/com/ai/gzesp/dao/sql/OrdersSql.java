@@ -23,6 +23,13 @@ public class OrdersSql {
 	private CommonDao commonDao;	
 	
 	//通过userid获取商品列表
+	/**
+	 * 通过userid获得所有的订单商品列表数据()
+	 * strUserID: 用户id
+	 * 返回：该userid对应所有的订单商品列表数据
+	 * 
+	 * 
+	 */
 	public List<Map<String, Object>> getOrdersListbyUserID(String strUserID)
 	{
 		StringBuffer sb=new StringBuffer();
@@ -58,7 +65,8 @@ public class OrdersSql {
 				+"end" 
 				+" DELIVER_TYPE_CODE,"
 				+"ORD_D_BASE.ORDER_STATE,"//订单状态
-				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
+				+"GDS_D_PHOTO.PHOTO_LINKS,"//先注释掉，后面需要放开注释
+				+ "ORD_D_BASE.ORDER_TYPE"
 				);
 		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
 		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
@@ -87,7 +95,8 @@ public class OrdersSql {
 				+ "T1.DELIVER_TYPE_CODE,"
 				+ "T1.ORDER_STATE,"
 				+"T1.PHOTO_LINKS,"
-				+"T2.PAY_MODE"
+				+"T2.PAY_MODE,"
+				+ "ORDER_TYPE"
 				+" from T1,T2 where T1.Order_id=T2.Order_id(+) and T1.ORDER_STATE !='99'"
 				);
 		sb.append(" ) tt");
@@ -220,7 +229,15 @@ public class OrdersSql {
 		return orderList;
 	}
 	
-	//通过userid获取商品列表
+	/**
+	 * 通过各个条件查询订单的数据
+	 * @param strUserID 用户id
+	 * @param strOrderID 订单id
+	 * @param startDate 订单开始时间
+	 * @param endDate 订单结束时间
+	 * @param strHidePageIndex 分页用到的
+	 * @return 筛选出来的订单数据
+	 */
 	public List getOrdersList(String strUserID,String strOrderID,String startDate,String endDate,int strHidePageIndex)
 	{
 		if (strOrderID==null) {
@@ -266,7 +283,8 @@ public class OrdersSql {
 				+"end" 
 				+" DELIVER_TYPE_CODE,"
 				+"ORD_D_BASE.ORDER_STATE,"//订单状态
-				+"GDS_D_PHOTO.PHOTO_LINKS"//先注释掉，后面需要放开注释
+				+"GDS_D_PHOTO.PHOTO_LINKS,"//先注释掉，后面需要放开注释
+				+ "ORD_D_BASE.ORDER_TYPE"
 				);
 		sb.append(" from ORD_D_DEAL,ORD_D_BASE,ORD_D_PROD,ORD_D_POST,GDS_D_INFO,GDS_D_PHOTO");
 		sb.append(" where ORD_D_DEAL.ORDER_ID=ORD_D_BASE.Order_Id "
@@ -315,7 +333,8 @@ public class OrdersSql {
 				+ "T1.DELIVER_TYPE_CODE,"
 				+ "T1.ORDER_STATE,"
 				+ "T1.PHOTO_LINKS,"
-				+ "T2.PAY_MODE"
+				+ "T2.PAY_MODE,"
+				+ "ORDER_TYPE"
 				+ " from T1,T2 where T1.Order_id=T2.Order_id(+) and T1.ORDER_STATE !='99'"
 				);				
 		sb.append(" ) tt");
@@ -327,8 +346,11 @@ public class OrdersSql {
 	
 		return orderList;
 	}
-	//通过userid获得订单获得订单量
-	//iflag 
+	/**
+	 * 能人管理首页 展示该用户的订单总量
+	 * @param strUserID：用户id
+	 * @return 返回订单总量
+	 */
 	public List getOrderCountByUserID(String strUserID)
 	{
 		StringBuffer sb=new StringBuffer();
@@ -348,12 +370,22 @@ public class OrdersSql {
 		return saleList;
 	}
 	
+	
+	/*
+	 * 用户订单查询
+	 * passport：身份证号
+	 * phone：手机号
+	 * keyword：搜索的条件
+	 * iHidePageIndex：分页使用
+	 * 
+	 * 用户订单查询只能查询由客户自身购买的订单信息（查询不到代客下单的消息）
+	 * 返回：该身份证号和手机号对应的所有的订单信息列表
+	 */
+	
 	public List getCustMyOrder(String passport, String phone, String keyword,int iHidePageIndex) {
 		StringBuffer sb=new StringBuffer();
 		sb.append("select * from ("
 				+ "select tt.*,ROWNUM as rowno from (");
-		
-		
 		sb.append("select distinct"
 				+ "	a.ORDER_ID, b.ORDER_STATE as ORDER_STATE_CODE ,"
 				+ " CASE WHEN b.ORDER_STATE='00' then '待支付'"
@@ -387,7 +419,8 @@ public class OrdersSql {
 				+ " and c.GOODS_ID = f.GOODS_ID"
 				+ " and f.ALBUM_ID = g.ALBUM_ID"
 				+ " and g.DEFAULT_TAG = '0'"
-				+ " and ORDER_STATE!='99'" );
+				+ " and ORDER_STATE!='99'" 
+				+ " and ORDER_TYPE ='1'");
 		if(keyword != null && !"".equals(keyword)) {
 			sb.append(" and (a.ORDER_ID like '%"+keyword+"%'"
 					+ " 	or c.GOODS_NAME like '%"+keyword+"%')" );
@@ -404,6 +437,13 @@ public class OrdersSql {
 
 		return custMyOrderList;
 	}
+	/*
+	 * 用户详细订单查询
+	 * orderId:订单编号
+	 * 
+	 * 用户详细订单查询:获得该用户某一个订单的详细信息数据
+	 * 返回：该用户某一个订单的详细数据信息
+	 */
 	
 	public Map getCustOrderDetail(String orderId) {
 		StringBuffer sb=new StringBuffer();

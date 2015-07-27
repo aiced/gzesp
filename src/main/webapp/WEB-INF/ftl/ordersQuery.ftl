@@ -296,11 +296,15 @@
             background: #e6e6e6;
             margin-top: 20px;
         }
+       .order_middle_contain
+        {
+           background: #ffffff;
+
+            margin: 15px;
+        } 
         .order_middle
         {
-            background: #ffffff;
-            height: 140px;
-            margin: 15px;
+           
         }
         .order_contain
         {
@@ -352,8 +356,8 @@
         .order_contain_middle_right
         {
             float: right;
-            height:65px;
-            line-height: 65px;
+            height:85px;
+            line-height: 85px;
             margin-right: 10px;
         }
 
@@ -426,6 +430,7 @@
 	        	</div>
         	<#else>
 				<#list orderList as item>
+				<div class="order_middle_contain">
 		           <div class="order_middle" onclick="doneClick(this);">
 		           	   <input type="hidden" name="itemindx${item_index}" id="itemindex${item_index}" value=${item_index}>
 		               <div class="order_contain">
@@ -499,6 +504,13 @@
 				    	<input id="PAY_REMARK" name="PAY_REMARK" value='${item.PAY_REMARK}'></input>-->
 				 	 </form>
 		           </div><!-- order_middle_end -->
+		           
+					<#if (item.ORDER_TYPE=='2' && item.ORDER_STATE=='00')>
+                       <div class="order_line"></div>
+			           <div style="color:green;text-align: right;padding-bottom: 5px;"><u><a href="/esp/pay/insteadPay/${hideuserid}/${item.ORDER_ID}">去支付>>></a></u></div>
+                    </#if>
+				</div>
+
 				</#list>
  			</#if>
         </div><!-- order_middle_info_end -->

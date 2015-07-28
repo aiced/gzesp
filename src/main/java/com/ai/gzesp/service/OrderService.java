@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
+import com.ai.gzesp.dao.beans.TdOrdDCARDPAY;
 import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
 import com.ai.gzesp.dao.beans.TdOrdDCUST;
 import com.ai.gzesp.dao.beans.TdOrdDDEAL;
@@ -30,6 +31,7 @@ import com.ai.gzesp.dao.beans.TdOrdDPROD;
 import com.ai.gzesp.dao.beans.TdOrdDREFUND;
 import com.ai.gzesp.dao.beans.TdOrdDRES;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
+import com.ai.gzesp.dao.service.TdOrdDCARDPAYDao;
 import com.ai.gzesp.dao.service.TdOrdDCMSSTATEDao;
 import com.ai.gzesp.dao.service.TdOrdDCUSTDao;
 import com.ai.gzesp.dao.service.TdOrdDDEALDao;
@@ -88,6 +90,9 @@ public class OrderService {
     
     @Resource 
     TdResDATTRVALDao tdResDATTRVALDao;
+    
+    @Resource 
+    TdOrdDCARDPAYDao tdOrdDCARDPAYDao;
     
     @Resource 
     GoodsSql goodsSql;
@@ -264,7 +269,13 @@ public class OrderService {
     	insertOrderPreCMSFeeInfo(paramsMap);
 //    	insertOrderReFundInfo(paramsMap);
     }
-    
+
+    public void insertRechargeOrder(Map<String, String> paramsMap) {
+    	insertOrderRechargeInfo(paramsMap);
+    	cacuCMSPreFee(paramsMap);
+    	insertOrderCMSStateInfo(paramsMap);
+    	insertOrderPreCMSFeeInfo(paramsMap);
+    }
     
     private void insertOrderBaseInfo(Map<String, String> paramsMap) {
     	String orderId = paramsMap.get("orderId");
@@ -337,11 +348,11 @@ public class OrderService {
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
     	record.setUserName(userName);
     	record.setPhoneNumber(phoneNum);
-    	record.setDevlopId(devlpId);
+    	record.setDevlopId(devlpId);    	
     	record.setDevlopName(devlpName);
     	record.setInvoceTitle(invoiceTitle);
     	record.setInvoceContent(invoceContent);
-
+    	
     	tdOrdDDEALDao.insertSelective(record);
     }
     
@@ -544,7 +555,32 @@ public class OrderService {
 			tdOrdDPRECMSFEEDao.insertSelective(record);
 		}
 		
-		
+	}
+	
+	
+	public void insertOrderRechargeInfo(Map<String, String> paramsMap) {
+		String orderId = paramsMap.get("orderId");
+		String originalPrice = paramsMap.get("ORIGINAL_PRICE");
+    	String topayMoney = paramsMap.get("TOPAY_MONEY");
+    	String goodsId = paramsMap.get("GOODS_ID");
+    	String phoneNumber = paramsMap.get("PHONE_NUMBER");
+    	String userId = paramsMap.get("USER_ID");
+    	String orderFrom = paramsMap.get("orderFrom");
+    	
+    	TdOrdDCARDPAY record = new TdOrdDCARDPAY();
+    	record.setOrderId(CommonUtil.string2Long(orderId));
+    	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+    	record.setOrderFrom(orderFrom);
+    	record.setGoodsId(CommonUtil.string2Long(goodsId));
+    	record.setUserId(CommonUtil.string2Long(userId));
+    	record.setPhoneNumber(phoneNumber);
+    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
+    	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney)));
+    	record.setOrderState("00");
+    	record.setOrderType("3");
+    	record.setCreateTime(DateUtil.getNow());
+    	
+    	tdOrdDCARDPAYDao.insertSelective(record);
 	}
 	
 	/**

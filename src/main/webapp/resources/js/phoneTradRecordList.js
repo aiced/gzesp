@@ -26,12 +26,13 @@ $(document).ready(function (){
 $(function(){
     initBind();
 });
+
 function initBind(){
     $("ul").delegate("li", "click", function(){
         alert( $(this).index());
+    	window.location.href='/esp/set/phoneTradRecordDetail';       
     });
 }
-
 
 function loadMoreData(pageNum)
 {	

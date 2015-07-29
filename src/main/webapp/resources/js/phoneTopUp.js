@@ -75,25 +75,35 @@ function initBind() {
             return;
     	}
     	
+    	  var r=confirm("充值号码: " + $('#phoneNumId').val());
+          if (r==true)
+          {
+              alert("You pressed OK!");
+//          	window.location.href='/esp/shopManage/weShopHome?userid='+$("#hide_user_id").val();    	
+          }
+          else
+          {
+        	  return;
+          }
+    	
     	// 数据组装，跳转界面
-//    	window.location.href='/esp/shopManage/weShopHome?userid='+$("#hide_user_id").val();    	
     });
 
 //    点击购买充值卡绑定
     $("#buyCardId").bind("click",function(){
-    	window.location.href='/esp/set/phoneTradRecordSearch';   
+    	alert("敬请期待！");
+//    	window.location.href='/esp/set/phoneTopUpCards';   
     });
 
 //    点击交易记录查询绑定
     $("#dealListId").bind("click",function(){
-    	window.location.href='/esp/set/phoneTopUpCards';   
+    	window.location.href='/esp/set/phoneTradRecordSearch';   
     });
 }
 
 
 function phoneDetailId(data){
 	//根据返回数据，判断一下
-	
 	if(!phoneNumalidation){
 		$('#phoneDetailId').hide();
 		return;
@@ -102,7 +112,6 @@ function phoneDetailId(data){
 	$('#phoneDetailId').show();
 	$('#realTopUpId').html();
     alert("oooo" + $('#realTopUpId').html() + "oooo"  + $('#creditId').html()+ "oooo"  + $('#balanceId').html());
-	
 	//加载数据
 }
 

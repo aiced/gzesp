@@ -30,7 +30,7 @@
         <ul>
             <li>
                 <span class="li_title">商  品</span>
-                <span class="fright li_content">30元面值充值卡－15150697332</span>
+                <span class="fright li_content">充值卡充值－15150697332</span>
             </li>
 
             <li>
@@ -40,7 +40,7 @@
 
             <li>
                 <span class="li_title">当前状态</span>
-                <span class="fright li_content">支付成功</span>
+                <span id = "status" class="fright li_content">支付成功</span>
             </li>
 
             <li>
@@ -61,7 +61,7 @@
         </ul>
 
 	<!-- 根据数据判断是否显示 -->
-        <ul class=" border_top">
+        <ul id = "cardInfo" class=" border_top">
             <li>
                 <span class="li_title">充值卡号</span>
                 <span class="fright li_content">1274928773889283737</span>
@@ -73,6 +73,18 @@
             </li>
         </ul>
     </div>
+    
+    <div id = "payDivId" class="payDiv">去支付
+
+    </div>
+    
+    <div id = "checkDetailId" class="checkDetail">查看进度 >
+
+    </div>
+    
+    
+    
+    
 
 
 </div>

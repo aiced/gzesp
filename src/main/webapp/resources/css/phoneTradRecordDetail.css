@@ -17,7 +17,6 @@
 
 ul{
     padding: 10px 0px;
-
 }
 ul li {
     font-size: 13px;
@@ -31,5 +30,33 @@ ul li .li_title{
 ul li .li_content{
     color:#767676;
 }
+
+.payDiv{
+    margin: 20px 40px;
+    height:40px;
+    line-height:40px;
+    background-color:#FD980B;    
+    color:#fff; 
+    text-align: center;     
+}
+
+.checkDetail{
+    height:30px;
+    width:80px;
+    line-height:30px;
+    color:#005BA4; 
+    text-align: center;   
+    float:right; 
+    margin-right:10px; 
+    margin-bottom:20px; 
+}
+
+
+
+
+
+
+
+
 
 

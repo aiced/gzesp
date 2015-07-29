@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.StringUtil;
 
 /**
  * 一级功能：wap端<br> 
@@ -124,13 +125,43 @@ public class CustController {
 	    	List<Map<String, Object>> listdealloginfo=orderService.queryOrdersDealLogByOrderId(order_id);
 	    	
 	    	if (listdealloginfo != null && listdealloginfo.size()>0) {
-				
 	    		mav.addObject("listdealloginfo",listdealloginfo);
 			}
 	    	
 	    	mav.addObject("order_id",order_id);
 	        return mav;
-	   }
+	   }	   
 	   
+	   //add by wangxinjun
+	    @RequestMapping("/phoneTradRecordList/{cust_phone}")
+	    public ModelAndView custMyOrderTopUp(@PathVariable("cust_phone") String cust_phone){
+	        ModelAndView mav = new ModelAndView("phoneTradRecordList.ftl");
+//	    	List custMyOrderList = orderService.getCustMyOrder(cust_phone, null,1);//默认第一页显示4条记录
+//	    	mav.addObject("custMyOrderList", custMyOrderList);
+	    	mav.addObject("cust_phone", cust_phone);
+	        mav.addObject("title", "一卡充订单");
+	        return mav;
+	    }	 
+	    
+	    @RequestMapping("/phoneTradRecordListPagePostData")
+	    public ModelAndView phoneTradRecordListPagePostData(@RequestBody String inputParam){  
+	    	//收支明细
+//			pageNum: 页数，默认第一页
+//			pageSize: 每页返回条目数量
+			Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+			String user_id = paramsMap.get("user_id");
+			String pageNum=paramsMap.get("pageNum");
+			String pageSize=paramsMap.get("pageSize");
+//		    List<Map<String, Object>> acctlogpagelist=myAcctService.queryAcctBalanceLogPage(user_id,Integer.parseInt(type),Integer.parseInt(pageNum),Integer.parseInt(pageSize),monthKey);
+		    
+		    ModelAndView mav = new ModelAndView("acctBalanceSub.ftl");
+//		    if(acctlogpagelist != null && acctlogpagelist.size()>0)
+//		    {
+//	          mav.addObject("acctloglist",acctlogpagelist);
+//		    }
+	    	return mav;
+	    }
+	    
+	    
 	   
 }

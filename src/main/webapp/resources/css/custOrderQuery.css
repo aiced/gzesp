@@ -1,0 +1,45 @@
+
+.topBar{
+	width:100%;
+	height: 40px;
+	background-color: #f1f1f1;
+}
+
+.regularOrderSelected{
+	width:50%;
+	height:40px;
+	float:left;
+	line-height:40px;
+	text-align:center;
+	border-bottom: 2px solid #EEA319;	
+	
+}
+.regularOrderUnselected{
+	width:50%;
+	height:40px;
+	float:left;
+	line-height:40px;
+	text-align:center;
+    border-bottom: 0px solid #EEA319;	
+	
+}
+
+.topUpOrderSelected{
+	width:50%;
+	height:40px;
+	float:left;
+	line-height:40px;
+	text-align:center;
+	border-bottom: 2px solid #EEA319;	
+}
+
+
+.topUpOrderUnselected{
+	width:50%;
+	height:40px;
+	float:left;
+	line-height:40px;
+	text-align:center;
+	border-bottom: 0px solid #EEA319;	
+} 
+

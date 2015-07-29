@@ -77,7 +77,6 @@ function initBind() {
 //        alert(num);
 //        alert(phoneNum);
 //        alert(totleAmount);
-
     });
 }
 function checkPhoneNum(phoneNum) {

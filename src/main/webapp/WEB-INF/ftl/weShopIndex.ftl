@@ -29,7 +29,6 @@
 			height:5px;
 		}
     </style>
-
   </head>
 
   <body>
@@ -317,6 +316,7 @@
     	        <a href="${base}/weShop/goodDetail/${user_id}/${item.CTLG_CODE}/${item.GOODS_ID}" >
     	          <img src="${imageRoot}${item.PHOTO_LINKS}" alt="" class="img-responsive" />
     	        </a>
+    	        
     	  	  <div class="text-shenlue">${item.GOODS_NAME}</div>
     	  	  <p style="font-size:14px;">
     	  	    <#if (item.CTLG_CODE==4 || item.CTLG_CODE==9)>

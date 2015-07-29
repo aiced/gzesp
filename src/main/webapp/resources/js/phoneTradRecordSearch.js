@@ -7,15 +7,14 @@ $(function(){
 });
 
 function initBind(){
-
     $("#searchId").bind("click",function(){
         var inputValue =  $("#inputId").val();
         if(inputValue == null || inputValue == ""){
             alert("搜索内容不能为空");
             return;
-        }
+        }        
 //        跳转界面 传入 inputValue
-        alert(inputValue);
+    	window.location.href='/esp/set/phoneTradRecordList';       
     });
 }
 

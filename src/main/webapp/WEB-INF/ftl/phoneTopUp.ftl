@@ -64,39 +64,20 @@
 
     <div class="cardHeader">选择充值金额：</div>
     <div class="cardsContainer">
-        <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$10" realPrice="$9.9" >
-                <p class="price">$10</p>
-                <p class="realPrice" >售价为9.9</p>
-            </a>
-        </div>
-
-        <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$30" realPrice="$29.9">
-                <p class="price">$30</p>
-                <p class="realPrice" >售价为29.9</p>
-            </a>
-        </div>
-
-        <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$50" realPrice="$49.9" >
-                <p class="price">$50</p>
-                <p class="realPrice" >售价为49.9</p>
-            </a>
-        </div>
-
-        <div class="cardContainer  fleft">
-            <a class="card" name = "cardName" price="$100"  realPrice="$99.9">
-                <p class="price">$100</p>
-                <p class="realPrice">售价为99.9</p>
-            </a>
-        </div>
+    		<#list topUpList as info>			
+	     		 <div class="cardContainer  fleft">
+           			 <a class="card" name = "cardName" price="${info.originalPrice}" realPrice="${info.addPrice}" >
+               			 <p class="price">${info.originalPrice}</p>
+              			  <p class="realPrice" >售价为${info.addPrice}</p>
+           			 </a>
+       			 </div>
+			</#list>
         <div class="clearBoth"></div>
 
     </div>
     <!-- 其他金额-->
     <div class="otherAmount">
-        <span> 其他金额</span>
+        <span> 其他金额 </span>
 
         <div class="fright">
             <input id="amountId" class="standardInputStyle2" type="tel" placeholder="请输入10的整数倍">

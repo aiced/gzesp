@@ -294,12 +294,10 @@ public class OrderController {
     	
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
     	
+    	paramsMap = convertKey(paramsMap);
+    	
     	String orderId = CommonUtil.generateOrderId();
-//    	String originalPrice = paramsMap.get("ORIGINAL_PRICE");
-    	String topayMoney = paramsMap.get("TOPAY_MONEY");
-//    	String goodsId = paramsMap.get("GOODS_ID");
-//    	String phoneNumber = paramsMap.get("PHONE_NUMBER");
-//    	String userId = paramsMap.get("USER_ID");
+    	String topayMoney = paramsMap.get("topayMoney");
     	
     	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney));
     	paramsMap.put("orderId", orderId);
@@ -313,7 +311,7 @@ public class OrderController {
     	//20150703 ximh modify 提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，跳转到不同的支付页面
     	String url = null;
     	if(isInstead){
-    		url = "redirect:/pay/insteadPay/" + paramsMap.get("USER_ID") + "/" + orderId;
+    		url = "redirect:/pay/insteadPay/" + paramsMap.get("userId") + "/" + orderId;
     	}
     	else{
     		url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;

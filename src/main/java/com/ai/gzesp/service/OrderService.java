@@ -272,9 +272,9 @@ public class OrderService {
 
     public void insertRechargeOrder(Map<String, String> paramsMap) {
     	insertOrderRechargeInfo(paramsMap);
-    	cacuCMSPreFee(paramsMap);
-    	insertOrderCMSStateInfo(paramsMap);
-    	insertOrderPreCMSFeeInfo(paramsMap);
+//    	cacuCMSPreFee(paramsMap);
+//    	insertOrderCMSStateInfo(paramsMap);
+//    	insertOrderPreCMSFeeInfo(paramsMap);
     }
     
     private void insertOrderBaseInfo(Map<String, String> paramsMap) {
@@ -576,6 +576,7 @@ public class OrderService {
     	record.setPhoneNumber(phoneNumber);
     	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
     	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney)));
+    	record.setIncomeMoney(0l);
     	record.setOrderState("00");
     	record.setOrderType("3");
     	record.setCreateTime(DateUtil.getNow());

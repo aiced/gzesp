@@ -30,7 +30,6 @@ public List <Map<String, Object>> GetTopUpList() {
 	StringBuffer sb = new StringBuffer();
 	sb.append("select distinct "
 			+ "t1.GOODS_ID as goodsId,"
-			+ "t1.GOODS_NAME as goodsName, "
 			+ "to_char(t2.ORIGINAL_PRICE/1000) as originalPrice, "
 			+ "to_char(t2.ADD_PRICE/1000) as addPrice "
 			);

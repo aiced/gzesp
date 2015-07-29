@@ -3,6 +3,12 @@
  */
 //  一处赋数，多处取值
 var phoneNumalidation =false;
+var ADD_PRICE = null;
+var ORIGINAL_PRICE= null;
+var GOODS_ID= null;
+
+
+
 
 $(function () {
     initBind();
@@ -38,7 +44,7 @@ function initBind() {
             $(this).attr("class","cardSelected");
             //清空输入金额  设置优惠价格
             clearInputNum();
-            refreshTotleAmount($(this).attr('realPrice'));
+            refreshTotleAmount($(this).attr('realPrice'),$(this).attr('originalPrice'),$(this).attr('goodsId'));
         });
     }
 
@@ -69,8 +75,7 @@ function initBind() {
     		return;
     	}
         //金额判断
-    	var preferential =  $("#preferentialId").html();
-    	if(preferential == null && preferential == ""){
+    	if(ADD_PRICE == null && ADD_PRICE == ""){
             alert("输入的金额不能为空");
             return;
     	}
@@ -86,6 +91,15 @@ function initBind() {
         	  return;
           }
     	
+      	var userId = $("#user_id").val();
+      	
+	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID};
+	  	
+	  	$.commonFormSubmit({  
+	        action :$('#baseRoot').val() + "/order/submitRecharge", 
+			data: parms
+	    });
+          
     	// 数据组装，跳转界面
     });
 
@@ -97,6 +111,7 @@ function initBind() {
 
 //    点击交易记录查询绑定
     $("#dealListId").bind("click",function(){
+    	
     	window.location.href='/esp/set/phoneTradRecordSearch';   
     });
 }
@@ -131,9 +146,12 @@ function clearInputNum(){
 }
 
 
-function refreshTotleAmount(realPrice) {
+function refreshTotleAmount(realPrice,originalPrice,goodsId) {
 	var text = "优惠价："+ realPrice;
 	$("#preferentialId").html(text);
+	ADD_PRICE = realPrice;
+	ORIGINAL_PRICE = originalPrice;
+	GOODS_ID = goodsId;
 }
 
 

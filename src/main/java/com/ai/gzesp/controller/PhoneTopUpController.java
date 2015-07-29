@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,11 +41,11 @@ public class PhoneTopUpController {
     TdGdsDINFODao tdGdsDinfoDao;
     
     @Resource 
-    PhoneTopUpSql phoneTopUpSql;
+    PhoneTopUpSql phoneTopUpSql;   
     
-    
-    @RequestMapping("/phoneTopUp")
-    public ModelAndView phoneTopUp(){
+
+    @RequestMapping("/phoneTopUp/{user_id}")
+    public ModelAndView phoneTopUp(@PathVariable("user_id") String user_id){
 //    	Criteria example = new Criteria();
 //    	example.createConditon().andEqualTo("CTLG_CODE", 17);
 //    	List<TdGdsDINFO> list = tdGdsDinfoDao.selectByExample(example);
@@ -52,6 +53,7 @@ public class PhoneTopUpController {
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("topUpList", topUpList);  
     	rspMap.put("title", "手机充值"); 
+    	rspMap.put("user_id", user_id); 
         return new ModelAndView("phoneTopUp.ftl", rspMap);
     }
 }

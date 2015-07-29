@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="${resRoot}/css/phoneTopUp.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="${resRoot}/css/phoneTopUpCards.css" type="text/css" media="screen"/>
     <script type="text/javascript" src="${resRoot}/js/jquery.min.js"></script>
+    <script type="text/javascript" src="${resRoot}/js/formSubmit.js"></script>
     <script type="text/javascript" src="${resRoot}/js/phoneTopUp.js"></script>
 
 </head>
@@ -66,7 +67,7 @@
     <div class="cardsContainer">
     		<#list topUpList as info>			
 	     		 <div class="cardContainer  fleft">
-           			 <a class="card" name = "cardName" price="${info.originalPrice}" realPrice="${info.addPrice}" >
+           			 <a class="card" name = "cardName" originalPrice="${info.originalPrice}" realPrice="${info.addPrice}" goodsId="${info.goodsId}" >
                			 <p class="price">${info.originalPrice}</p>
               			  <p class="realPrice" >售价为${info.addPrice}</p>
            			 </a>

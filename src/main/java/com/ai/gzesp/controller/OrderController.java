@@ -301,7 +301,7 @@ public class OrderController {
 //    	String phoneNumber = paramsMap.get("PHONE_NUMBER");
 //    	String userId = paramsMap.get("USER_ID");
     	
-    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney));
+    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney));
     	paramsMap.put("orderId", orderId);
     	
     	orderService.insertRechargeOrder(paramsMap);

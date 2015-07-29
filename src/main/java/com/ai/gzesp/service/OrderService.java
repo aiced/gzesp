@@ -272,9 +272,9 @@ public class OrderService {
 
     public void insertRechargeOrder(Map<String, String> paramsMap) {
     	insertOrderRechargeInfo(paramsMap);
-//    	cacuCMSPreFee(paramsMap);
-//    	insertOrderCMSStateInfo(paramsMap);
-//    	insertOrderPreCMSFeeInfo(paramsMap);
+    	cacuCMSPreFee(paramsMap);
+    	insertOrderCMSStateInfo(paramsMap);
+    	insertOrderPreCMSFeeInfo(paramsMap);
     }
     
     private void insertOrderBaseInfo(Map<String, String> paramsMap) {
@@ -560,11 +560,11 @@ public class OrderService {
 	
 	public void insertOrderRechargeInfo(Map<String, String> paramsMap) {
 		String orderId = paramsMap.get("orderId");
-		String originalPrice = paramsMap.get("ORIGINAL_PRICE");
-    	String topayMoney = paramsMap.get("TOPAY_MONEY");
-    	String goodsId = paramsMap.get("GOODS_ID");
-    	String phoneNumber = paramsMap.get("PHONE_NUMBER");
-    	String userId = paramsMap.get("USER_ID");
+		String originalPrice = paramsMap.get("originalPrice");
+    	String topayMoney = paramsMap.get("topayMoney");
+    	String goodsId = paramsMap.get("goodsId");
+    	String phoneNumber = paramsMap.get("phoneNumber");
+    	String userId = paramsMap.get("userId");
     	String orderFrom = paramsMap.get("orderFrom");
     	
     	TdOrdDCARDPAY record = new TdOrdDCARDPAY();
@@ -575,7 +575,7 @@ public class OrderService {
     	record.setUserId(CommonUtil.string2Long(userId));
     	record.setPhoneNumber(phoneNumber);
     	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
-    	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney)));
+    	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney)));
     	record.setIncomeMoney(0l);
     	record.setOrderState("00");
     	record.setOrderType("3");

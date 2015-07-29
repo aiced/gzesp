@@ -25,26 +25,19 @@
 	      <!-- 加载列表，点击，分页 -->
 <div class="divContainer">
     <ul>
-        <li class="rel">
-            <p class="title"> 100元手机话费 － 15150697332 </p>
-            <p class="status"> 支付成功 </p>
-            <p class="date"> 2015 － 08 － 21 </p>
-            <span class="abs"> $ 99.25 </span>
-        </li>
-        <li class="rel">
-            <p class="title"> 100元手机话费 － 15150697332 </p>
-            <p class="status"> 支付成功 </p>
-            <p class="date"> 2015 － 08 － 21 </p>
-            <span class="abs"> $ 99.25 </span>
-        </li>
+       		<#list topUpDealList as info>			
+	            <li class="rel">
+           			 <p class="title"> ${info.goodsName} － ${info.phoneNumber} </p>
 
-        <li class="rel">
-            <p class="title"> 100元手机话费 － 15150697332 </p>
-            <p class="status"> 支付成功 </p>
-            <p class="date"> 2015 － 08 － 21 </p>
-            <span class="abs"> $ 99.25 </span>
-        </li>
-
+					<#if (info.orderState =='00')>
+  				        <p class="status"> 支付成功 </p>
+                	<#elseif (info.orderState =='02')>
+			 			 <p class="status"> 未支付 </p> 
+                	</#if>          			 
+           			 <p class="date"> ${info.createTime} </p>
+            		<span class="abs"> ${info.topayMoney} </span>
+       			 </li>
+			</#list>    
     </ul>
 
 </div>

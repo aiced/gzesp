@@ -112,7 +112,7 @@ function initBind() {
 //    点击交易记录查询绑定
     $("#dealListId").bind("click",function(){
     	
-    	window.location.href='/esp/set/phoneTradRecordSearch';   
+    	window.location.href=$('#baseRoot').val() + "/topUp/phoneTradRecordSearch";   
     });
 }
 

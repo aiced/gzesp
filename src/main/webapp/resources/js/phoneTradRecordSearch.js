@@ -14,7 +14,7 @@ function initBind(){
             return;
         }        
 //        跳转界面 传入 inputValue
-    	window.location.href='/esp/set/phoneTradRecordList';       
+    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordList/'+ inputValue;   
     });
 }
 

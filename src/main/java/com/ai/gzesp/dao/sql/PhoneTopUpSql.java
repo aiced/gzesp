@@ -44,6 +44,30 @@ public List <Map<String, Object>> GetTopUpList() {
 
 }
 
+// 得到充值卡交易记录
+public List <Map<String, Object>> GetTopUpDealList(String phoneNum) {
+	
+	StringBuffer sb = new StringBuffer();
+	
+		sb.append("select distinct "
+			+ "t1.GOODS_NAME as goodsName,"
+			+ "t2.PHONE_NUMBER as phoneNumber,"
+			+ "t2.ORDER_STATE as orderState,"
+			+ "t2.CREATE_TIME as createTime,"
+			+ "to_char(t2.TOPAY_MONEY/1000) as topayMoney "
+			);
+	sb.append(" from GDS_D_INFO t1, ORD_D_CARD_PAY t2");
+	sb.append("	where t2.PHONE_NUMBER =" + phoneNum 
+				+ " and t1.GOODS_ID = t2.GOODS_ID"
+				+ " order by createTime");
+		
+	System.out.println(sb.toString());
+	List<Map<String, Object>> topUpList = commonDao.queryForList(sb.toString());
+	return topUpList;
+	
+
+}
+
 
 
 

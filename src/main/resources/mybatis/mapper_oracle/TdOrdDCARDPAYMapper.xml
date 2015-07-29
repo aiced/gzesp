@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDCARDPAYMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDCARDPAY" >
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="GOODS_ID" property="goodsId" jdbcType="DECIMAL" />
+    <result column="PHONE_NUMBER" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="DECIMAL" />
+    <result column="ORDER_FROM" property="orderFrom" jdbcType="CHAR" />
+    <result column="ORIGINAL_PRICE" property="originalPrice" jdbcType="DECIMAL" />
+    <result column="TOPAY_MONEY" property="topayMoney" jdbcType="DECIMAL" />
+    <result column="INCOME_MONEY" property="incomeMoney" jdbcType="DECIMAL" />
+    <result column="ORDER_STATE" property="orderState" jdbcType="CHAR" />
+    <result column="ORDER_TYPE" property="orderType" jdbcType="CHAR" />
+    <result column="VALUES1" property="values1" jdbcType="VARCHAR" />
+    <result column="VALUES2" property="values2" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, PARTITION_ID, GOODS_ID, PHONE_NUMBER, USER_ID, ORDER_FROM, ORIGINAL_PRICE, 
+    TOPAY_MONEY, INCOME_MONEY, ORDER_STATE, ORDER_TYPE, VALUES1, VALUES2, CREATE_TIME, 
+    UPDATE_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_D_CARD_PAY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_D_CARD_PAY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDCARDPAY" >
+    insert into ORD_D_CARD_PAY (ORDER_ID, PARTITION_ID, GOODS_ID, 
+      PHONE_NUMBER, USER_ID, ORDER_FROM, 
+      ORIGINAL_PRICE, TOPAY_MONEY, INCOME_MONEY, 
+      ORDER_STATE, ORDER_TYPE, VALUES1, 
+      VALUES2, CREATE_TIME, UPDATE_TIME
+      )
+    values (#{orderId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{goodsId,jdbcType=DECIMAL}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{userId,jdbcType=DECIMAL}, #{orderFrom,jdbcType=CHAR}, 
+      #{originalPrice,jdbcType=DECIMAL}, #{topayMoney,jdbcType=DECIMAL}, #{incomeMoney,jdbcType=DECIMAL}, 
+      #{orderState,jdbcType=CHAR}, #{orderType,jdbcType=CHAR}, #{values1,jdbcType=VARCHAR}, 
+      #{values2,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDCARDPAY" >
+    insert into ORD_D_CARD_PAY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="goodsId != null" >
+        GOODS_ID,
+      </if>
+      <if test="phoneNumber != null" >
+        PHONE_NUMBER,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="orderFrom != null" >
+        ORDER_FROM,
+      </if>
+      <if test="originalPrice != null" >
+        ORIGINAL_PRICE,
+      </if>
+      <if test="topayMoney != null" >
+        TOPAY_MONEY,
+      </if>
+      <if test="incomeMoney != null" >
+        INCOME_MONEY,
+      </if>
+      <if test="orderState != null" >
+        ORDER_STATE,
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE,
+      </if>
+      <if test="values1 != null" >
+        VALUES1,
+      </if>
+      <if test="values2 != null" >
+        VALUES2,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="orderFrom != null" >
+        #{orderFrom,jdbcType=CHAR},
+      </if>
+      <if test="originalPrice != null" >
+        #{originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="topayMoney != null" >
+        #{topayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="incomeMoney != null" >
+        #{incomeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=CHAR},
+      </if>
+      <if test="orderType != null" >
+        #{orderType,jdbcType=CHAR},
+      </if>
+      <if test="values1 != null" >
+        #{values1,jdbcType=VARCHAR},
+      </if>
+      <if test="values2 != null" >
+        #{values2,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_D_CARD_PAY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_D_CARD_PAY
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsId != null" >
+        GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.phoneNumber != null" >
+        PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderFrom != null" >
+        ORDER_FROM = #{record.orderFrom,jdbcType=CHAR},
+      </if>
+      <if test="record.originalPrice != null" >
+        ORIGINAL_PRICE = #{record.originalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.topayMoney != null" >
+        TOPAY_MONEY = #{record.topayMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.incomeMoney != null" >
+        INCOME_MONEY = #{record.incomeMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderState != null" >
+        ORDER_STATE = #{record.orderState,jdbcType=CHAR},
+      </if>
+      <if test="record.orderType != null" >
+        ORDER_TYPE = #{record.orderType,jdbcType=CHAR},
+      </if>
+      <if test="record.values1 != null" >
+        VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.values2 != null" >
+        VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_D_CARD_PAY
+    set ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      GOODS_ID = #{record.goodsId,jdbcType=DECIMAL},
+      PHONE_NUMBER = #{record.phoneNumber,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=DECIMAL},
+      ORDER_FROM = #{record.orderFrom,jdbcType=CHAR},
+      ORIGINAL_PRICE = #{record.originalPrice,jdbcType=DECIMAL},
+      TOPAY_MONEY = #{record.topayMoney,jdbcType=DECIMAL},
+      INCOME_MONEY = #{record.incomeMoney,jdbcType=DECIMAL},
+      ORDER_STATE = #{record.orderState,jdbcType=CHAR},
+      ORDER_TYPE = #{record.orderType,jdbcType=CHAR},
+      VALUES1 = #{record.values1,jdbcType=VARCHAR},
+      VALUES2 = #{record.values2,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

@@ -287,4 +287,39 @@ public class OrderController {
     		@PathVariable("mediaId") String mediaId){
     	return downloadImgFromWxServer(idCardNum,  mediaId);
     }
+    
+    @RequestMapping("/submitRecharge")
+    public ModelAndView submitRecharge(HttpServletRequest request, @RequestBody String inputParams) throws UnsupportedEncodingException{
+    	boolean isInstead = request.getSession(false).getAttribute("instead") == null ? false : true;
+    	
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
+    	
+    	String orderId = CommonUtil.generateOrderId();
+//    	String originalPrice = paramsMap.get("ORIGINAL_PRICE");
+    	String topayMoney = paramsMap.get("TOPAY_MONEY");
+//    	String goodsId = paramsMap.get("GOODS_ID");
+//    	String phoneNumber = paramsMap.get("PHONE_NUMBER");
+//    	String userId = paramsMap.get("USER_ID");
+    	
+    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney));
+    	paramsMap.put("orderId", orderId);
+    	
+    	orderService.insertRechargeOrder(paramsMap);
+    	
+    	//20150420 ximh add，订单生成成功后需要库存数量-1，销量+1，用于后面判断有货无货
+//    	orderService.updateGoodsAmount(paramsMap.get("goodsId"));
+    	
+    	
+    	//20150703 ximh modify 提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，跳转到不同的支付页面
+    	String url = null;
+    	if(isInstead){
+    		url = "redirect:/pay/insteadPay/" + paramsMap.get("USER_ID") + "/" + orderId;
+    	}
+    	else{
+    		url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
+    	}
+    	
+    	ModelAndView mav = new ModelAndView(url);
+    	return mav;
+    }
 }

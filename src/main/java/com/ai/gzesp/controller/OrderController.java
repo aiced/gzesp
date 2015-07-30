@@ -296,7 +296,7 @@ public class OrderController {
     	
     	paramsMap = convertKey(paramsMap);
     	
-    	String orderId = CommonUtil.generateOrderId();
+    	String orderId = CommonUtil.generateOrderId("2");
     	String topayMoney = paramsMap.get("topayMoney");
     	
     	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney));

@@ -13,14 +13,14 @@ function initBind(){
             alert("搜索内容不能为空");
             return;
         }        
-//        跳转界面 传入 inputValue
-    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordList/'+ inputValue;   
+//        跳转界面 传入 inputValue 存储当前路径
+        var path = "/topUp/phoneTradRecordSearch/"+$("#user_id").val();;
+		 localStorage.setItem("phoneTradRecordListBackPath",path);
+    	 window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordList/'+ inputValue;   
     });
-}
-
-
-function leftClick(param)
-{
-//	点击返回
-//	window.location.href='/esp/shopManage/acct/myAcct/'+$("#user_id").val();
+    
+    $("#top_left").bind("click",function(){
+    	location.href=document.referrer;
+    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTopUp/'+ $("#user_id").val();   
+});
 }

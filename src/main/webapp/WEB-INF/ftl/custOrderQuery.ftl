@@ -51,9 +51,13 @@
     			 submitHandler: function(form) {
     				    var phone = $('#inputMobile').val();
     		        	var passport = $('#inputPassport').val();
+    		        	
     		        	// add by wangxinjun 
-    		        	if($('#inputPassportDiv').hide()){
-    		        	   	location.href = "phoneTradRecordList/"+phone;   		     
+    		        	if($('#inputPassportDiv').hide()){    		        	
+    		        	 var path = "/customer/custOrderQuery";
+						 localStorage.setItem("phoneTradRecordListBackPath",path);     		        	 
+    		        	 location.href = '${base}/topUp/phoneTradRecordList/'+phone;  		     
+    		        	      		        	 		     
     		        	}else{
     		        	   	location.href = "custMyOrder/"+phone+"/"+passport;   		     
     		        	}
@@ -99,13 +103,14 @@
         </div>
 		<div id="dv_clear"></div>
 		<!--top_end-->
-		
 		<!--
-		<div class = "topBar" >
+		
+				<div class = "topBar" >
         		<div id = "regularOrderId" class = "regularOrderSelected" > 普通订单 </div>
         		<div id = "topUpOrderId" class = "topUpOrderUnselected"  > 一卡充订单 </div>
-		</div>
+				</div>
 		-->
+		
 		
 
 		

@@ -132,36 +132,6 @@ public class CustController {
 	        return mav;
 	   }	   
 	   
-	   //add by wangxinjun
-	    @RequestMapping("/phoneTradRecordList/{cust_phone}")
-	    public ModelAndView custMyOrderTopUp(@PathVariable("cust_phone") String cust_phone){
-	        ModelAndView mav = new ModelAndView("phoneTradRecordList.ftl");
-//	    	List custMyOrderList = orderService.getCustMyOrder(cust_phone, null,1);//默认第一页显示4条记录
-//	    	mav.addObject("custMyOrderList", custMyOrderList);
-	    	mav.addObject("cust_phone", cust_phone);
-	        mav.addObject("title", "一卡充订单");
-	        return mav;
-	    }	 
-	    
-	    @RequestMapping("/phoneTradRecordListPagePostData")
-	    public ModelAndView phoneTradRecordListPagePostData(@RequestBody String inputParam){  
-	    	//收支明细
-//			pageNum: 页数，默认第一页
-//			pageSize: 每页返回条目数量
-			Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-			String user_id = paramsMap.get("user_id");
-			String pageNum=paramsMap.get("pageNum");
-			String pageSize=paramsMap.get("pageSize");
-//		    List<Map<String, Object>> acctlogpagelist=myAcctService.queryAcctBalanceLogPage(user_id,Integer.parseInt(type),Integer.parseInt(pageNum),Integer.parseInt(pageSize),monthKey);
-		    
-		    ModelAndView mav = new ModelAndView("acctBalanceSub.ftl");
-//		    if(acctlogpagelist != null && acctlogpagelist.size()>0)
-//		    {
-//	          mav.addObject("acctloglist",acctlogpagelist);
-//		    }
-	    	return mav;
-	    }
-	    
 	    
 	   
 }

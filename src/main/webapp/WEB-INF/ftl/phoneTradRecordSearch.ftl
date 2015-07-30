@@ -16,7 +16,7 @@
 </head>
 <body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
-    <input type="hidden" id="user_id" value="${user_id}"></input>
+    <input type="hidden" id="user_id" value="${user_id}"></input>    
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>

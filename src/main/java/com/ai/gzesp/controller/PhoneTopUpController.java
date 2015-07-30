@@ -53,8 +53,11 @@ public class PhoneTopUpController {
         return new ModelAndView("phoneTopUp.ftl", rspMap);
     }
     
-    @RequestMapping("/phoneTradRecordSearch")
-    public ModelAndView phoneTradRecordSearch(){
+    @RequestMapping("/phoneTradRecordSearch/{user_id}")
+    public ModelAndView phoneTradRecordSearch(@PathVariable("user_id") String user_id){
+    	Map<String, Object> rspMap = new HashMap<String, Object>(); 
+    	rspMap.put("title", "搜索"); 
+    	rspMap.put("user_id", user_id); 
         return new ModelAndView("phoneTradRecordSearch.ftl");
     }
     
@@ -64,13 +67,17 @@ public class PhoneTopUpController {
     	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(phoneNum);
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("topUpDealList", topUpDealList);  
-    	rspMap.put("title", "充值记录");     	
+    	rspMap.put("title", "充值记录");     
         return new ModelAndView("phoneTradRecordList.ftl",rspMap);
     }
     
-   @RequestMapping("/phoneTradRecordDetail")
-    public ModelAndView phoneTradRecordDetail(){
-        return new ModelAndView("phoneTradRecordDetail.ftl");
+   @RequestMapping("/phoneTradRecordDetail/{orderId}")
+    public ModelAndView phoneTradRecordDetail(@PathVariable("orderId") String orderId){
+	   List<Map<String, Object>> topUpDetail = phoneTopUpSql.GetTopUpDealById(orderId);
+	   Map<String, Object> rspMap = new HashMap<String, Object>(); 
+	   rspMap.put("topUpDetail", topUpDetail);  
+	   rspMap.put("title", "充值记录详情");     		   
+       return new ModelAndView("phoneTradRecordDetail.ftl",rspMap);
     }
     
     

@@ -29,8 +29,16 @@ $(function(){
 
 function initBind(){
     $("ul").delegate("li", "click", function(){
-        alert( $(this).index());
-    	window.location.href='/esp/set/phoneTradRecordDetail';       
+    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordDetail/' +  $(this).attr('orderId');   
+    });
+    
+    $("#top_left").bind("click",function(){
+    	
+	  	if(localStorage)
+		 {
+	  		var phoneTradRecordListBackPath=  localStorage.getItem("phoneTradRecordListBackPath");
+	    	window.location.href=$('#baseRoot').val() + phoneTradRecordListBackPath;   
+		 }
     });
 }
 
@@ -48,11 +56,4 @@ function loadMoreData(pageNum)
 		     $('#datagrid').append(data);
 		   }
 		});
-}
-
-
-function leftClick(param)
-{
-//	点击返回
-//	window.location.href='/esp/shopManage/acct/myAcct/'+$("#user_id").val();
 }

@@ -125,7 +125,6 @@ function queryList(type,monthKey,pageNum)
 		   }
 		});
 	
-	
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型

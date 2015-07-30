@@ -70,9 +70,7 @@
 			<span id = "sumNum" class = "list_title_right_text abs">${acctlogtotal}</span>
 		</div>
 		<ul id = "datagrid">			
-		<#if (acctloglist?size == 0) > 
-		   	没有账单
-		<#else>
+		<#if (acctloglist?? && acctloglist?size>0) > 
 			<#list acctloglist as item>
 				<li class = "li_row border_bottom">
 				<div class = "row_left">
@@ -89,6 +87,10 @@
 				<div style="clear:both;"></div> 
 			   </li>			
 			</#list>
+		<#else>
+			 	<div class = "noBill">
+			 		没有账单			
+			 	</div>
 	 	</#if>
 		</ul>		
 	</div>

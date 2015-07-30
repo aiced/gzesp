@@ -1,5 +1,4 @@
-<#if (acctloglist?size == 0) > 
-		<#else>
+		<#if (acctloglist?? && acctloglist?size>0) > 
 			<#list acctloglist as item>
 				<li class = "li_row border_bottom">
 				<div class = "row_left">
@@ -16,4 +15,8 @@
 				<div style="clear:both;"></div> 
 			   </li>			
 			</#list>
+		<#else>
+			 	<div class = "noBill">
+			 		没有账单			
+			 	</div>
 	 	</#if>

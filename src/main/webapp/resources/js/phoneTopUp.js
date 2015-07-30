@@ -83,22 +83,19 @@ function initBind() {
     	  var r=confirm("充值号码: " + $('#phoneNumId').val());
           if (r==true)
           {
-              alert("You pressed OK!");
-//          	window.location.href='/esp/shopManage/weShopHome?userid='+$("#hide_user_id").val();    	
+            	var userId = $("#user_id").val();
+        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID};
+        	  	$.commonFormSubmit({  
+        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
+        			data: parms
+        	    });         
           }
           else
           {
         	  return;
           }
     	
-      	var userId = $("#user_id").val();
-      	
-	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID};
-	  	
-	  	$.commonFormSubmit({  
-	        action :$('#baseRoot').val() + "/order/submitRecharge", 
-			data: parms
-	    });
+
           
     	// 数据组装，跳转界面
     });
@@ -111,8 +108,11 @@ function initBind() {
 
 //    点击交易记录查询绑定
     $("#dealListId").bind("click",function(){
-    	
-    	window.location.href='/esp/set/phoneTradRecordSearch';   
+    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordSearch/' + $("#user_id").val();   
+    });
+    
+    $("#top_left").bind("click",function(){
+    	window.location.href=$('#baseRoot').val() + '/weShop/index/'+$("#user_id").val();   
     });
 }
 

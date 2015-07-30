@@ -24,13 +24,15 @@
 
 <div class="divContainer">
     <div class="detailContainer">
-        <div class="title border_bottom">付款金额
-            <span class="fright sum"> $ 29.25</span>
+        <#list topUpDetail as info>			
+       	<div class="title border_bottom">付款金额
+            <span id = "topayMoney" class="fright sum" topayMoney = ${info.topayMoney} >￥${info.topayMoney}</span>
         </div>
+        
         <ul>
             <li>
                 <span class="li_title">商  品</span>
-                <span class="fright li_content">充值卡充值－15150697332</span>
+                <span id = "phoneNumber" phoneNumber = ${info.phoneNumber}  class="fright li_content">${info.goodsName} － ${info.phoneNumber}</span>
             </li>
 
             <li>
@@ -40,25 +42,38 @@
 
             <li>
                 <span class="li_title">当前状态</span>
-                <span id = "status" class="fright li_content">支付成功</span>
+                	<#if (info.orderState =='00')>
+                		<span id = "status" class="fright li_content">未支付</span>
+                	<#elseif (info.orderState =='02')>
+                		<span id = "status" class="fright li_content">支付成功</span>
+                	</#if>  
             </li>
 
             <li>
                 <span class="li_title">时&nbsp间</span>
-                <span class="fright li_content">2015-08-21 08:34</span>
+                <span class="fright li_content">${info.createTime}</span>
             </li>
 
             <li>
                 <span class="li_title">支付方式</span>
-                <span class="fright li_content">微信支付</span>
+                   	<#if (info.orderFrom =='00')>
+               			 <span class="fright li_content">Web支付</span>
+                	<#elseif (info.orderFrom =='01')>
+                		 <span class="fright li_content">微信支付</span>
+                	</#if>  
             </li>
 
             <li>
                 <span class="li_title">订 单 号</span>
-                <span class="fright li_content">1274928773889283737</span>
+                <span id = "orderId" class="fright li_content">${info.orderId}</span>
             </li>
 
         </ul>
+       			 
+		</#list>  
+    
+    
+        
 
 	<!-- 根据数据判断是否显示 -->
         <ul id = "cardInfo" class=" border_top">

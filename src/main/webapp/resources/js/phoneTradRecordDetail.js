@@ -8,27 +8,27 @@ $(function(){
 });
 
 function initBind(){
-	
+	$("#cardInfo").hide();
+
 	if($("#status").html() == "未支付"){
-		$("#checkDetailId").hide();
 		$("#cardInfo").hide();
+		$("#checkDetailId").hide();		
 				
 	}else if($("#status").html() == "支付成功"){
 		$("#payDivId").hide();
+		$("#checkDetailId").show();		
 	}
     
     $("#payDivId").bind("click",function(){
-    	  alert("payDivId"); 
+      	window.location.href=$('#baseRoot').val() + '/pay/selectPayMode/' + $("#orderId").text()+'/'+ $("#topayMoney").attr('topayMoney')*1000;   
     });
     
     $("#checkDetailId").bind("click",function(){
-    	  alert("checkDetailId"); 
+           	window.location.href=$('#baseRoot').val() + '/customer/custOrderStateDetails/' + $("#orderId").text();   
     });
-}
-
-
-function leftClick(param)
-{
-//	点击返回
-//	window.location.href='/esp/shopManage/acct/myAcct/'+$("#user_id").val();
+    
+    $("#top_left").bind("click",function(){
+    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordList/'+ $("#phoneNumber").attr('phoneNumber');   
+});
+    
 }

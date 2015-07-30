@@ -31,7 +31,7 @@ import com.ai.gzesp.service.WeShopService;
  *
  */
 @Controller
-@RequestMapping("/TopUp")
+@RequestMapping("/topUp")
 public class PhoneTopUpController {
 
     @Autowired
@@ -42,13 +42,9 @@ public class PhoneTopUpController {
     
     @Resource 
     PhoneTopUpSql phoneTopUpSql;   
-    
 
     @RequestMapping("/phoneTopUp/{user_id}")
     public ModelAndView phoneTopUp(@PathVariable("user_id") String user_id){
-//    	Criteria example = new Criteria();
-//    	example.createConditon().andEqualTo("CTLG_CODE", 17);
-//    	List<TdGdsDINFO> list = tdGdsDinfoDao.selectByExample(example);
     	List<Map<String, Object>> topUpList = phoneTopUpSql.GetTopUpList();
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("topUpList", topUpList);  
@@ -56,4 +52,34 @@ public class PhoneTopUpController {
     	rspMap.put("user_id", user_id); 
         return new ModelAndView("phoneTopUp.ftl", rspMap);
     }
+    
+    @RequestMapping("/phoneTradRecordSearch/{user_id}")
+    public ModelAndView phoneTradRecordSearch(@PathVariable("user_id") String user_id){
+    	Map<String, Object> rspMap = new HashMap<String, Object>(); 
+    	rspMap.put("title", "搜索"); 
+    	rspMap.put("user_id", user_id); 
+        return new ModelAndView("phoneTradRecordSearch.ftl");
+    }
+    
+    @RequestMapping("/phoneTradRecordList/{phoneNum}")
+    public ModelAndView phoneTradRecordList(@PathVariable("phoneNum") String phoneNum){
+    	//查询 列表
+    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(phoneNum);
+    	Map<String, Object> rspMap = new HashMap<String, Object>(); 
+    	rspMap.put("topUpDealList", topUpDealList);  
+    	rspMap.put("title", "充值记录");     
+        return new ModelAndView("phoneTradRecordList.ftl",rspMap);
+    }
+    
+   @RequestMapping("/phoneTradRecordDetail/{orderId}")
+    public ModelAndView phoneTradRecordDetail(@PathVariable("orderId") String orderId){
+	   List<Map<String, Object>> topUpDetail = phoneTopUpSql.GetTopUpDealById(orderId);
+	   Map<String, Object> rspMap = new HashMap<String, Object>(); 
+	   rspMap.put("topUpDetail", topUpDetail);  
+	   rspMap.put("title", "充值记录详情");     		   
+       return new ModelAndView("phoneTradRecordDetail.ftl",rspMap);
+    }
+    
+    
+    
 }

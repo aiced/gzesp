@@ -17,6 +17,8 @@
 <body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
+    <input type="hidden" id="parentPath" value="${parentPath}"></input>
+    
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
@@ -25,26 +27,19 @@
 	      <!-- 加载列表，点击，分页 -->
 <div class="divContainer">
     <ul>
-        <li class="rel">
-            <p class="title"> 100元手机话费 － 15150697332 </p>
-            <p class="status"> 支付成功 </p>
-            <p class="date"> 2015 － 08 － 21 </p>
-            <span class="abs"> $ 99.25 </span>
-        </li>
-        <li class="rel">
-            <p class="title"> 100元手机话费 － 15150697332 </p>
-            <p class="status"> 支付成功 </p>
-            <p class="date"> 2015 － 08 － 21 </p>
-            <span class="abs"> $ 99.25 </span>
-        </li>
+       		<#list topUpDealList as info>			
+	            <li class="rel" orderId = "${info.orderId}"}>
+           			 <p class="title"> ${info.goodsName} － ${info.phoneNumber} </p>
 
-        <li class="rel">
-            <p class="title"> 100元手机话费 － 15150697332 </p>
-            <p class="status"> 支付成功 </p>
-            <p class="date"> 2015 － 08 － 21 </p>
-            <span class="abs"> $ 99.25 </span>
-        </li>
-
+					<#if (info.orderState =='00')>
+  				        <p class="status"> 未支付 </p>
+                	<#elseif (info.orderState =='02')>
+			 			 <p class="status"> 支付成功 </p> 
+                	</#if>          			 
+           			 <p class="date"> ${info.createTime} </p>
+            		<span class="abs"> ￥${info.topayMoney} </span>
+       			 </li>
+			</#list>    
     </ul>
 
 </div>

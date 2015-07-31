@@ -77,6 +77,9 @@
 				 case 3: //操作成功
 				 	alert("操作成功");
 					break;
+				default:
+					alert("未知错误");
+					break;
 				 }
 				window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
 			 }

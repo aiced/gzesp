@@ -24,6 +24,7 @@ import com.ai.gzesp.dao.service.TdAurDCOUNTDao;
 import com.ai.gzesp.dao.sql.CommissionSql;
 import com.ai.gzesp.dao.sql.OrdersSql;
 import com.ai.gzesp.dao.sql.ViewSql;
+import com.ai.gzesp.service.MyAcctService;
 import com.ai.gzesp.service.WeShopService;
 
 @Controller
@@ -42,6 +43,10 @@ public class WeShopHomeController {
 	ViewSql viewSql;
 	@Resource 
 	CommissionSql commissionSql;
+	
+    @Autowired
+    private MyAcctService myAcctService;
+	
     @RequestMapping("/weShopHome")
     @ResponseBody
     public ModelAndView index(HttpServletRequest requestinputParams){
@@ -94,6 +99,15 @@ public class WeShopHomeController {
 //        mav.addObject("userimage",requestinputParams.getParameter("userimage"));
         mav.addObject("viewcountlist",ViewCountlist);
         mav.addObject("saleList", SaleList);
+        
+        List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(strUserID);
+
+        if(acctbankinfolist != null && acctbankinfolist.size()>0)
+        {	
+        	mav.addObject("acctbankinfolist",acctbankinfolist);
+        }
+        
+        
         //mav.addObject("commissionList",commissionList); 屏蔽功能
       //mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap); 
         return mav;

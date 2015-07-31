@@ -368,12 +368,13 @@
 <body>
     <div>
     	<!--top_start-->
-        <div id="top">
+<!--         <div id="top">
         	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
         	<div id="top_middle">${title}</div>
         	<div id="top_right"></div>
         </div>
-		<div id="dv_clear"></div>
+		<div id="dv_clear"></div> -->
+
 		<!--top_end-->
         <div  class="order_top">
             <div class="order_top_left"><h5><label>订单时间</label></h5></div>

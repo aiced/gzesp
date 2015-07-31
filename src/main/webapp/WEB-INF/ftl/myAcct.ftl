@@ -72,7 +72,7 @@
                 <a href="#" class="list-group-item"  onclick="isSetPwd(this);">
                     <span class="list_icon">
 						<img src="${resRoot}/image/myacct/daijinquan.png">
-                    	代金券
+                    	代金券（敬请期待～）
                     </span>
                     <span class="list_gou">
 						<img src="${resRoot}/image/myacct/jiantou.png">

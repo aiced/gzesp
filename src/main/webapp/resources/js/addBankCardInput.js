@@ -450,6 +450,7 @@ function nextClick(){
 	 data: parms,
 	 success: function(data){
 		 if (data=="ok") {
+			alert("操作成功！");
 			window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
 		}else {
 			alert(data);

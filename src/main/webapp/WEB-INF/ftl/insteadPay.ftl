@@ -25,7 +25,7 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
 	<script type="text/javascript" src="${resRoot}/js/insteadPay.js?v=${resVer}"></script>
-    
+    <script type="text/javascript" src="${resRoot}/js/JsStringBuilder.js?v=${resVer}"></script>
 </head>
 <body>
     <!--top_start-->
@@ -41,13 +41,21 @@
     </div>
     <div class="div_container_top1">
         <div class="div_container_top2" onclick="doClick(this,1);">
-            <img src="${resRoot}/image/myacct/daijinquan.png" width=16 height=16><span class="sp1">代金券</span><span class="sp2">你有0张优惠券<img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="20"></span>
+            <img src="${resRoot}/image/myacct/daijinquan.png" width=16 height=16 /><span class="sp1">代金券</span><span class="sp2">你有0张优惠券<img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="20"></span>
         </div>
         <div class="dv_clear"></div>
         <div class="div_line"></div>
         <div class="dv_clear"></div>
         <div class="div_container_top2">
-            <img src="${resRoot}/image/myacct/qiandai.png" width=16 height=16><span class="sp1">微账户 <span id="span_balance">可用余额${acctinfo.BALANCE}</span></span><span class="sp2"><img onclick="doClick(this,2);" src="${resRoot}/image/myacct/off.png" width="64" height="31" class="off"></span>
+            <img src="${resRoot}/image/myacct/qiandai.png" width=16 height=16/>
+           	<span class="sp1">微账户 <span id="span_balance">可用余额${acctinfo.BALANCE}</span></span>
+           	
+           	<#if (acctinfo.BALANCE>0)>
+           		<span class="sp2"><img id='imgswitch' onclick="doClick(this,2);" src="${resRoot}/image/myacct/on.png" width="64" height="31" class="on"></span>
+           	<#else>
+           	    <span class="sp2"><img id='imgswitch' onclick="doClick(this,2);" src="${resRoot}/image/myacct/off.png" width="64" height="31" class="off"></span>
+           	</#if>
+
         </div>
     </div>
     <div class="div_container_top">
@@ -62,7 +70,7 @@
 				<option value="数据加载失败">数据加载失败</option>
     		<#else>
 				<#list acctbankinfolist as item>						
-			    	<option value="${item.sign_code}">
+			    	<option value="${item.BANK_NO}">
 						${item.PARAM_VALUE}
 					</option>
 				</#list>
@@ -77,7 +85,7 @@
     </div>
 
     <div class="div_container">
-        <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal">确认支付</button>
+        <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal" onclick="doClick(this,3);">确认支付</button>
     </div>
     <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
     <input type="hidden" id="hide_order_id" name="hide_order_id" value=${order_id}>

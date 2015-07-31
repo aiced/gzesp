@@ -71,7 +71,7 @@
 		sign_code=#{sign_code},
 		priority=#{priority},
 		valid_flag=#{valid_flag},
-		sys_trade_no==#{sys_trade_no}
+		sys_trade_no=#{sys_trade_no}
 		where user_id=#{user_id} and bank_no=#{bank_no}
 	</update>
 	
@@ -226,7 +226,21 @@
 	<select id="queryToPayMoneyByOrderId" resultType="java.util.HashMap">
 		select to_char(topay_money) as topay_money from ord_d_base where order_id=#{order_id}
 	</select>
-
+	<select id="queryToPayMoneyCardByOrderId" resultType="java.util.HashMap">
+		select to_char(topay_money) as topay_money from ord_d_card_pay where order_id=#{order_id}
+	</select>
+	<insert id="insertWidthDrawAuDit">
+		insert into ACT_D_WITHDRAW_AUDIT
+		  (log_id, partition_id, apply_time, user_id, withdraw_fee, audit_state)
+		values
+		  (#{log_id},
+		   #{partition_id},
+		   #{apply_time},
+		   #{user_id}
+		   ${dwithdraw_fee},
+		   #{audit_state}
+		   )
+	</insert>
 	
 	
 </mapper>

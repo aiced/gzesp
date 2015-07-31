@@ -58,7 +58,7 @@ public class GoodSelectController {
             ctlgArray = new String[]{Constants.CTLG_CODE_LLB_8, Constants.CTLG_CODE_LLB_13};
         }
         else if(Constants.GOOD_TYPE_BAND.equals(goodType)){
-            mav = new ModelAndView("bandGoodSelect.ftl"); //宽带续约选择页面
+            mav = new ModelAndView("bandAcctVerify.ftl"); //宽带续约选择页面
             ctlgArray = new String[]{Constants.CTLG_CODE_KD_7, Constants.CTLG_CODE_KD_12};
         }
         else{

@@ -46,7 +46,7 @@
 		<#list acctbankinfolist as item>
 		    <div class="radio">
 		        <div id="lab${item_index}" >
-		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.SIGN_CODE}" onclick="doClick(this);">
+		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.SIGN_CODE}" onclick="doClick(this,1);">
                 	<label for="optionsRadios${item_index}">${item.PARAM_VALUE}
 	                	<span>
 	                	尾号${item.BANK_NO?substring((item.BANK_NO?length)-4,item.BANK_NO?length)}
@@ -100,28 +100,28 @@
                 <br>
                 <div class="pwd_container">
                     <div>
-                        <input type="email" class="form-control" id="1" placeholder="">
+                        <input type="password" class="form-control" id="txt1" placeholder="" maxlength="1" onkeyup="checkPwd(this,txt2);" onfocus="doFocus(this);">
                     </div>
                     <div>
-                        <input type="email" class="form-control" id="2" placeholder="">
+                        <input type="password" class="form-control" id="txt2" placeholder="" maxlength="1" onkeyup="checkPwd(this,txt3);" onfocus="doFocus(this);">
                     </div>
                     <div>
-                        <input type="email" class="form-control" id="3" placeholder="">
+                        <input type="password" class="form-control" id="txt3" placeholder="" maxlength="1" onkeyup="checkPwd(this,txt4);" onfocus="doFocus(this);">
                     </div>
                     <div>
-                        <input type="email" class="form-control" id="4" placeholder="">
+                        <input type="password" class="form-control" id="txt4" placeholder="" maxlength="1" onkeyup="checkPwd(this,txt5);" onfocus="doFocus(this);">
                     </div>
                     <div>
-                        <input type="email" class="form-control" id="5" placeholder="">
+                        <input type="password" class="form-control" id="txt5" placeholder="" maxlength="1" onkeyup="checkPwd(this,txt6);" onfocus="doFocus(this);">
                     </div>
                     <div>
-                        <input type="email" class="form-control" id="6" placeholder="">
+                        <input type="password" class="form-control" id="txt6" placeholder="" maxlength="1" onkeyup="checkPwd(this,btnok);" onfocus="doFocus(this);">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default modal-button" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-warning modal-button">确定</button>
+                   <button type="button" class="btn btn-default modal-button" name="btnclear" id="btnclear" onclick="clearTextVal();">清空</button>
+                   <button type="button" class="btn btn-warning modal-button" name="btnok" id="btnok" onclick="doClick(this,2);">确定</button>
             </div>
         </div>
     </div>

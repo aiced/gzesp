@@ -264,7 +264,7 @@ public class PayController {
     	//ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+"2015000000000000");
         
         
-    	//查询数据库
+    	//查询数据库 获得账户数据
     	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
         
     	if (acctinfo != null && acctinfo.size()>0) {
@@ -274,14 +274,26 @@ public class PayController {
 		}
     
     	
-    	//查询数据库
-    	Map<String, String> topay_money=myAcctService.queryToPayMoneyByOrderId(order_id);
+    	//查询数据库 获得产品实付款
+    	//因为产品分为普通产品和其他产品（比如充值缴费的产品）
+    	//所以这个地方需要用order_id的第一位来去判断是从什么表中查询产品实付款
+    	Map<String, String> topay_money = null;
+    	String strorder_typ=order_id.substring(0, 1);
+    	if (strorder_typ.equals("2"))//充值卡缴费产品
+    	{
+    		topay_money=myAcctService.queryToPayMoneyCardByOrderId(order_id);
+		}
+    	else //普通产品：查询实付款
+    	{
+    		topay_money=myAcctService.queryToPayMoneyByOrderId(order_id);
+		}
+  
     	if (topay_money != null && topay_money.size()>0) {
     		mav.addObject("topay_money", Integer.parseInt(topay_money.get("TOPAY_MONEY"))/1000);
     		dtopaymoney=Double.valueOf(Integer.parseInt(topay_money.get("TOPAY_MONEY"))/1000);
     	}
     	
-    	//查询数据库
+    	//查询数据库 查询账户绑定的银行卡
         List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
 
         if(acctbankinfolist != null && acctbankinfolist.size()>0)
@@ -289,7 +301,8 @@ public class PayController {
         	mav.addObject("acctbankinfolist",acctbankinfolist);
         }
         
-    	mav.addObject("left_money",dtopaymoney-dacctbanlance);
+        //还需支付如果<0 则显示0 如果大于0 则显示还需支付金额
+    	mav.addObject("left_money",(dtopaymoney-dacctbanlance<0)?0:dtopaymoney-dacctbanlance);
     	mav.addObject("user_id",user_id);
         mav.addObject("order_id",order_id);
         return mav;

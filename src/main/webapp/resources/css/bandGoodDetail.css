@@ -3,7 +3,7 @@ body {
   font-family: 'Microsoft Yahei';
 }
 
-td,p {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;font-weight:bold;color: #a9a9a9; line-height:24px; margin:0;padding:1px;} 
+td,p {font-family: Verdana, Arial, Helvetica, sans-serif;font-size: 12px;color: #a9a9a9; line-height:24px; margin:0;padding:1px;} 
 
 /*div内文字水平垂直居中*/
 .div-text-center{

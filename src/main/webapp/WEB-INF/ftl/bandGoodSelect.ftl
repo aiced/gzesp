@@ -41,39 +41,39 @@
       <p>有效期：2014-01-01---2015-01-01</p>	            
     </div>
     
-    <p style="margin:10px;font-size: 15px;">选择产品</p>  
+    <p style="margin:10px;font-size: 15px;font-weight:bold;">选择产品</p>  
          
     <!-- 产品列表 -->
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-left: 20px;">
     	<div class="row">
         <div class="col-xs-4" style="background-color:#9bd8ff;width:60px;height:60px;text-align:center;margin:10px;padding:15px;padding-left:0px;padding-right:0px;">
-        	<p style="color:#ffffff;font-size:20px;font-weight:normal">6M</p>
+        	<p style="color:#ffffff;font-size:18px;font-weight:normal">6M</p>
         </div>
         <div class="col-xs-8" style="padding:15px">
-        	<p style="font-size:20px;font-weight:normal">6M &nbsp; 880元/年</p>
-        	<p style="font-size:20px;font-weight:normal;color:#ff0000">￥880</p>
+        	<p style="font-size:18px;font-weight:normal">6M &nbsp; 880元/年</p>
+        	<p style="font-size:18px;font-weight:normal;color:#ff0000">￥880</p>
+        </div>     		
+      </div>            
+    </div>   
+    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-left: 20px;">
+    	<div class="row">
+        <div class="col-xs-4" style="background-color:#9bd8ff;width:60px;height:60px;text-align:center;margin:10px;padding:15px;padding-left:0px;padding-right:0px;">
+        	<p style="color:#ffffff;font-size:18px;font-weight:normal">6M</p>
+        </div>
+        <div class="col-xs-8" style="padding:15px">
+        	<p style="font-size:18px;font-weight:normal">6M &nbsp; 880元/年</p>
+        	<p style="font-size:18px;font-weight:normal;color:#ff0000">￥880</p>
         </div>     		
       </div>            
     </div>   
     <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-left: 20px;" >
-    	<div class="row" onclick="location.href='http://www.baidu.com';">
+    	<div class="row" onclick="location.href='/esp/weShop/bandGoodDetail';">
         <div class="col-xs-4" style="background-color:#9bd8ff;width:60px;height:60px;text-align:center;margin:10px;padding:15px;padding-left:0px;padding-right:0px;">
-        	<p style="color:#ffffff;font-size:20px;font-weight:normal">6M</p>
+        	<p style="color:#ffffff;font-size:18px;font-weight:normal;">100M</p>
         </div>
         <div class="col-xs-8" style="padding:15px">
-        	<p style="font-size:20px;font-weight:normal">6M &nbsp; 880元/年</p>
-        	<p style="font-size:20px;font-weight:normal;color:#ff0000">￥880</p>
-        </div>     		
-      </div>            
-    </div> 
-    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-left: 20px;" >
-    	<div class="row" onclick="location.href='http://www.baidu.com';">
-        <div class="col-xs-4" style="background-color:#9bd8ff;width:60px;height:60px;text-align:center;margin:10px;padding:15px;padding-left:0px;padding-right:0px;">
-        	<p style="color:#ffffff;font-size:20px;font-weight:normal;">100M</p>
-        </div>
-        <div class="col-xs-8" style="padding:15px">
-        	<p style="font-size:20px;font-weight:normal">100M &nbsp; 880元/年</p>
-        	<p style="font-size:20px;font-weight:normal;color:#ff0000">￥880</p>
+        	<p style="font-size:18px;font-weight:normal">100M &nbsp; 880元/年</p>
+        	<p style="font-size:18px;font-weight:normal;color:#ff0000">￥880</p>
         </div>     		
       </div>            
     </div>             

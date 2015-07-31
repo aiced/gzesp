@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+
+
 public interface OrderDao {
 
     public List<Map<Object, Object>> queryNumberListByPage(@Param("eparchy_code") String eparchy_code,
@@ -57,6 +59,8 @@ public interface OrderDao {
     
     public int updateOrderBaseState(@Param("orderIds") String[] orderIds);
     
+    //edit_by_wenh
     public List<Map<String, Object>> queryOrdersDealLogByOrderId(@Param("order_id") String order_id);
-    
+    //edit_by_wenh
+    public List<Map<String, Object>> queryCZCard(@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("user_id") String user_id,@Param("czcard_no") String czcard_no,@Param("hidepageindex") int hidepageindex);
 }

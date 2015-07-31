@@ -20,10 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
+
+
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdAurDAUTHINFO;
 import com.ai.gzesp.dao.service.TdAurDAUTHINFODao;
 import com.ai.gzesp.dao.sql.OrdersSql;
+import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.sysframe.utils.StringUtil;
 
@@ -38,7 +41,8 @@ public class WeShopOrdersQueryController {
 	OrdersSql ordersSql;
 	@Resource
 	TdAurDAUTHINFODao tdAurDAUTHINFODao;
-
+    @Autowired
+    private OrderService orderService;
     
     @RequestMapping("/ordersQuery")
     public ModelAndView index(@RequestParam(value = "userid", required = true)String strUserID,@RequestParam(value = "fromPage", required = true)String strfromPage){
@@ -47,13 +51,20 @@ public class WeShopOrdersQueryController {
     	List<Map<String, Object>> orderList=ordersSql.getOrdersListbyUserID(strUserID);
     	
     	
-        ModelAndView mav = new ModelAndView("ordersQuery.ftl");
+        ModelAndView mav = new ModelAndView("ordersQueryTab.ftl");
         //从数据库获取信息赋值
         mav.addObject("title", "我的订单");
         mav.addObject("fromPage", strfromPage);
         mav.addObject("hideuserid",strUserID);
         mav.addObject("orderList", orderList);
    
+        
+       	List<Map<String, Object>> czcardlist=orderService.queryCZCard("", "", strUserID, "", 1);
+       	if (czcardlist!=null && czcardlist.size()>0) {
+    	    mav.addObject("czcardlist",czcardlist);
+            
+		}
+
         return mav;
     }
     
@@ -146,41 +157,34 @@ public class WeShopOrdersQueryController {
         //mmap.addAttribute("title", "我的微店");
 		mmap.addAttribute("userid",strUserID);
 		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     
+        return mav;
+    }
+    
+    @RequestMapping("/selectCZCard")
+    public ModelAndView queryCZCard(@RequestBody String strParam)
+    {
+    	Map<String, String> paramsMap = StringUtil.params2Map(strParam);
     	
-//    	//这里从数据库查询数据
-//    	Criteria myCriteria = new Criteria();
-//    	myCriteria.createConditon().andEqualTo("USER_ID", strUserID);
-// 
-//      	List<TdAurDAUTHINFO> list = tdAurDAUTHINFODao.selectByExample(myCriteria);
-//    	ModelMap mmap=null;
-//    	if(list.size() >= 1) 
-//    	{
-//    		//mav = new ModelAndView("weShopHome.ftl");
-//    		mmap=new ModelMap();
-//            //从数据库获取信息赋值
-//    		mmap.addAttribute("title", "我的微店");
-//    		mmap.addAttribute("id", list.get(0).getId());
-//    		mmap.addAttribute("userid",list.get(0).getUserId());
-//    		mmap.addAttribute("name", list.get(0).getUserName());//姓名
-//    		mmap.addAttribute("storename", list.get(0).getStoreName());//姓名
-//    		mmap.addAttribute("phone", list.get(0).getPhoneNumber()); //手机号
-//    		mmap.addAttribute("weixin", list.get(0).getWeixinId()); //微信
-//    		mmap.addAttribute("userimage",list.get(0).getUserImg());
-//    		mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);            
-//    	} 
+    	String startDate=paramsMap.get("startDate");
+    	String endDate=paramsMap.get("endDate");
+    	String czcard_no=paramsMap.get("cardnocz");
+    	String user_id=paramsMap.get("userID");
+    	int hidepageindex=Integer.valueOf(paramsMap.get("hidepageindex"));
     	
-//    	if (strFromPage=="orderFill") 
-//    	{
-//			
-//		}
-    	
-       	//List<Map<String, Object>> orderList=ordersSql.getOrdersList(strUserID,strOrderID,strStartDate,strEndDate);
-    	
-    	
+    	System.out.println(startDate);
+    	System.out.println(endDate);
+    	System.out.println(czcard_no);
+    	System.out.println(user_id);
+    	System.out.println(hidepageindex);
+    	    	
+        ModelAndView mav = new ModelAndView("ordersQueryCardPaySub.ftl");
 
         
-        
-        //mav.addObject("orderList",orderList);
-        return mav;
+       	List<Map<String, Object>> czcardlist=orderService.queryCZCard(startDate, endDate, user_id, czcard_no, hidepageindex);
+
+	    mav.addObject("czcardlist",czcardlist);
+	    System.out.println(czcardlist);
+	    
+	    return mav;    	
     }
 }

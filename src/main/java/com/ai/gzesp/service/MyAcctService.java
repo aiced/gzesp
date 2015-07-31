@@ -30,6 +30,9 @@ public class MyAcctService {
     //插入数据 密码表
     public int insertAcctPwd(String user_id,String user_pwd){
     	return myAcctDao.insertAcctPwd(user_id,user_pwd);
+    	
+    	
+    	
     }
     //更新数据 密码表
     public int updateAcctPwd(String user_id,String user_pwd){
@@ -124,9 +127,55 @@ public class MyAcctService {
     	return myAcctDao.queryAcctBalanceLogPage(user_id,iFlag,page_num,page_size,strDate);
     }
 
-    //通过order_id，查询实付金额
+    //通过order_id，查询实付金额 普通产品
     public Map<String, String> queryToPayMoneyByOrderId(String order_id)
     {
     	return myAcctDao.queryToPayMoneyByOrderId(order_id);
     }
+    //通过order_id，查询实付金额 充值卡缴费查询
+    public Map<String, String> queryToPayMoneyCardByOrderId(String order_id)
+    {
+    	return myAcctDao.queryToPayMoneyCardByOrderId(order_id);
+    }
+    
+    
+    //插入ACT_D_WITHDRAW_AUDIT表
+    public int insertWidthDrawAuDit(String log_id,String partition_id,String apply_time,String user_id,String withdraw_fee,String audit_state)
+    {
+    	Double dwithdraw_fee=Double.valueOf(withdraw_fee)*1000;
+    	
+    	int iRet=-1;
+    	iRet=myAcctDao.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,dwithdraw_fee,audit_state);
+    	
+    	if (iRet<=0) {
+			return iRet;
+		}
+    	//后面是需要以后移植到网盟后台的代码
+    	//注意事务的处理
+    	
+    	
+    	iRet=updateAcct();
+    	if (iRet<=0) {
+			return iRet;
+		}
+    	
+    	iRet=insertAccessLog();
+    	if (iRet<=0) {
+			return iRet;
+		}
+    	return iRet;
+    }
+    
+    //更新账户表 ACT_D_ACCOUNT
+    public int updateAcct()
+    {
+    	return 0;
+    }
+    
+    //插入账户明细表  ACT_D_ACCESS_LOG
+    public int insertAccessLog()
+    {
+    	return 0;
+    }
+    
 }

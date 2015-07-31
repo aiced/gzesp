@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>${detail.GOODS_NAME}</title>
+    <title>产品详情</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -38,7 +38,7 @@
 	  </div>
 	  <div id="top_middle">商品详情</div>
 	  <div id="top_right">
-	    <button class="btn btn-primary btn-sm" style="background-color:#21292c;" data-toggle="modal" data-target="#myModal">分享</button>
+	    <!-- <button class="btn btn-primary btn-sm" style="background-color:#21292c;" data-toggle="modal" data-target="#myModal">分享</button> -->
 	  </div>
 	</div>      
     
@@ -48,7 +48,7 @@
     </div>
     <!-- 生效时间 -->
     <div class="container-fluid" style="background-color:#fff;margin:0px;padding:0px;text-align:center;border:1px solid #b1d85c">
-      <p><font style="font-size: 20px;">生效时间</font> &nbsp;&nbsp;&nbsp;&nbsp; <font style="font-size:20px;color:#b1d85c;font-weight:normal;">2015-01-01</font></p>         
+      <p><font style="font-size: 14px;">生效时间</font> &nbsp;&nbsp;&nbsp;&nbsp; <font style="font-size:14px;color:#b1d85c;font-weight:normal;">2015-01-01</font></p>         
     </div>    
       
          
@@ -57,9 +57,10 @@
       <p>
       	宽带并没有很严格的定义。从一般的角度理解，它是能够满足人们感观所能感受到的各种媒体在网络上传输所需要的带宽，因此它也是一个动态的、发展的概念。
         FCC（Federal Communications Commission，美国联邦通讯委员会）2015年1月7日做了年度宽带进程报告，在报告中现任主席Tom Wheeler对“宽带”进行了重新定义，原定的下行速度4Mbps调整成25Mbps，原定的上行速度1Mbps调整成3Mbps。
-        美国宽带网新标准：25Mbps下行/3Mbps上行
+       	 美国宽带网新标准：25Mbps下行/3Mbps上行
       </p>
-      <button type="button" class="btn btn-lg btn-warning btn-block">确认订购,去支付</button>    
+      <br/>
+      <button type="button" class="btn btn-warning btn-block">确认订购,去支付</button>    
     </div> 
              
   

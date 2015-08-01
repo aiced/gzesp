@@ -2,7 +2,9 @@ package com.ai.gzesp.controller;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +31,7 @@ import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.unionpay.UnionPayUtil;
 import com.ai.gzesp.utils.DESUtil;
 import com.ai.gzesp.utils.MD5Util;
+import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.StringUtil;
 
 @Controller
@@ -93,27 +96,40 @@ public class MyAcctController {
     	mav.addObject("user_id",user_id);
         return mav;
     }
+    
+    //提现功能：输入安全码后点击确定按钮
+    //传入：userid和fee（提现金额——厘）
+    //返回：字符串 给前端页面
+    //插入到 ACT_D_WITHDRAW_AUDIT表中
     @RequestMapping("/acct/withdraw/postData")
     @ResponseBody
     public String withdrawPostData(@RequestBody String inputParam)
     {
-    	//提现
+    	//该处需要特别注意！！！
     	
-//        ModelAndView mav = new ModelAndView("withdraw.ftl");
-//        
-//       	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
-//    	if(acctinfo != null && acctinfo.size()>0)
-//    	{
-//            mav.addObject("acctinfo",acctinfo);
-//            //查询数据库
-//            List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
-//            if(acctbankinfolist != null && acctbankinfolist.size()>0)
-//            {	
-//            	mav.addObject("acctbankinfolist",acctbankinfolist);
-//            }
-//    	}  
-//    	mav.addObject("user_id",user_id);
-//        return mav;
+    	//由于时间紧迫，在本controller处会直接处理
+    	//ACT_D_ACCOUNT做账户金额更新，ACT_D_ACCESS_LOG账户明细查询
+    	//后面这两个表的代码操作需要转移到网盟的后台，请切记，
+    	//所以暂时放到本controller处理
+    	
+    	//直接将审核的状态变成审核中，后续当网盟后台功能添加后，将该状态默认插入未审核
+    	
+    	
+		Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+		String user_id = paramsMap.get("user_id");
+		String withdraw_fee=paramsMap.get("withdraw_fee");
+
+		String log_id=CommonUtil.generateLogId("6");
+		String partition_id=log_id.substring(14,16);
+		
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式		
+		String apply_time=dateFormat.format(now);
+		String audit_state="02"; //后续要修改成为未审核  00
+		
+ 		myAcctService.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,withdraw_fee,audit_state);
+    	
+
     	return "";
     }
     @RequestMapping("/acct/myBankCardList/{user_id}")
@@ -358,10 +374,36 @@ public class MyAcctController {
 
     		String strvalid_flag= acctbankinfo.get("VALID_FLAG").toString();
 
-    		if (strvalid_flag.equals("1")) 
+    		if (strvalid_flag.equals("1"))  //已经绑定的银行卡
     		{
     			return "ok";
 			}
+    		else if(strvalid_flag.equals("3"))//已经绑定过，但是解绑过
+    		{
+    			//只需将状态进行修改为1
+    			
+    			int iRet=myAcctService.updateAcctBank(
+            			acctbankinfo.get("USER_ID").toString(), 
+            			strbank_no,//注意这个地方是加密的银行卡
+            			acctbankinfo.get("CVN2").toString(),
+            			acctbankinfo.get("PHONE").toString(),
+            			acctbankinfo.get("NAME").toString(),
+            			acctbankinfo.get("CERTIFICATE_CODE").toString(),
+            			acctbankinfo.get("EXPIRE_DATE").toString(),
+            			acctbankinfo.get("CARD_TYPE").toString(),
+            			acctbankinfo.get("BANK_TYPE").toString(),
+            			acctbankinfo.get("SIGN_CODE").toString(),
+            			"1",//acctbankinfo.get("VALID_FLAG").toString()
+            			acctbankinfo.get("PRIORITY").toString(),
+            			acctbankinfo.get("SYS_TRADE_NO").toString()
+            			);
+            	if (iRet<0) 
+            	{
+            		return "插入报错～"; //插入报错～
+        		}
+            	return  "ok"; //操作成功
+    			
+    		}
     		else if (strvalid_flag.equals("2") || strvalid_flag.equals("0")) {
 				//1,先更新要素
     			//2.然后调用接口
@@ -400,7 +442,7 @@ public class MyAcctController {
 				}
 			}
 		}
-    	else //没有记录之际插入掉接口 
+    	else //没有记录直接插入掉接口 
     	{
         	int iRet=myAcctService.insertAcctBank(
         			user_id, 
@@ -449,10 +491,6 @@ public class MyAcctController {
     	else {
     		return paramsRet.get("detail").toString();
 		}
-    	
-    	//ModelAndView mav = new ModelAndView("redirect:/shopManage/acct/myBankCardList/"+user_id);
-    	//return mav;
-
     }
 
     public Map<String, String> bindCard(String systradeno,String bank_no,String cvn2,String expire_date,String card_type,String name, String certificate_code,String phone)
@@ -511,7 +549,7 @@ public class MyAcctController {
         	//解绑 直接修改为不可用
         	int iRet=myAcctService.updateAcctBank(
         			acctbankinfo.get("USER_ID").toString(), 
-        			acctbankinfo.get("BANK_NO").toString(),
+        			strbank_no,//注意这个地方是加密的银行卡
         			acctbankinfo.get("CVN2").toString(),
         			acctbankinfo.get("PHONE").toString(),
         			acctbankinfo.get("NAME").toString(),

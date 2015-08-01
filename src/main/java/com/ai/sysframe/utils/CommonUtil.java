@@ -250,13 +250,24 @@ public class CommonUtil {
 //        return map;  
 //    } 
     
+    
     public static String generateOrderId() {
     	String idType = "1";
+    	return generateOrderId(idType);
+    }
+    
+    /**
+     * ordType 1:普通订单； 2：充值卡缴费; 
+     * 
+     * @param ordType
+     * @return
+     */
+    public static String generateOrderId(String ordType) {
     	long time =  System.currentTimeMillis();
     	Random r = new Random();
     	int rint = r.nextInt(99);
     	String rStr = StringUtil.paddingLeft(String.valueOf(rint), '0', 2);
-    	return idType + rStr + time;
+    	return ordType + rStr + time;
     }
     
     /**

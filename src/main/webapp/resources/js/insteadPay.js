@@ -38,41 +38,77 @@
     function goToPay2(){
        var pay_type = "01";
        var pay_mode = "15";
+       var pay_orderindex=0;//默认是0 1 代金券 2 账户 3 银行卡支付
+       var flag="000";//从左往右 第一位代金券是否使用 第二位账户是否使用 第三位银行卡
+       var strcoupon;//记录代金券参数
+       var stracct;//记录账户参数
+       var strorder;//记录银行卡支付参数
+
+		var str=$("#lab_left_money").html();
+		var str_left_money=str.substring(5);
        
-       
-       
-       
-       
-       var param = [
-                     {
-                    	 "pay_order":"3", "pay_type":pay_type, "pay_mode":'10', pay_fee:$("#hide_left_money").val(),bank_no:$('#selBank').val()
-                     },
-                     {
-                    	 "pay_order":"2", "pay_type":pay_type, "pay_mode":'51', pay_fee:$("#hide_balance").val()
-                     }/*,
-                     {
-                    	 "pay_order":"1", "pay_type":pay_type, "pay_mode":'53', pay_fee:"" 代金券
-                     }
-                     */
-                     ]; 
+       var sb = new StringBuilder();
+
+//代金券预留——不要删除
+//       if(是否使用代金券：使用)
+//       {
+//    	   	pay_orderindex=pay_orderindex+1;      
+//       	strcoupon='"pay_order":'+pay_orderindex+', "pay_type":01, "pay_mode":60, pay_fee:1, coupon_id:12345678';
+//       }
+       sb.append("[");
+       if ($("#imgswitch").attr("class")=="on") //使用账户
+       {
+    	   pay_orderindex=pay_orderindex+1;
+    	   if ($("#hide_left_money").val()>0) //账户的钱不足 fee 直接传递账户的数值全部使用
+    	   {
+    		   stracct='"pay_order":"'+pay_orderindex+'", "pay_type":"01", "pay_mode":"51", "pay_fee":"'+$("#hide_balance").val()+'"';
+    		   flag="011"; //不用代金券 用账户 用银行卡
+    		   sb.append("{"+stracct+"}");
+    	   }
+    	   else    //账户的钱足够 fee 直接传递商品的价格
+    	   {
+    		   stracct='"pay_order":"'+pay_orderindex+'", "pay_type":"01", "pay_mode":"51", "pay_fee":"'+$("#hide_topay_money").val()+'"';
+    		   flag="010"; //不用代金券 用账户 不用银行卡
+    		   sb.append("{"+stracct+"}");
+    	   }
+       } 
+       //"pay_order":"3", "pay_type":01, "pay_mode":10, pay_fee:3, bank_no:1234567
+       if (flag=="011") //不用代金券 用账户 用银行卡
+       {
+    	   pay_orderindex=pay_orderindex+1;
+    	   strorder='"pay_order":"'+pay_orderindex+'", "pay_type":"01", "pay_mode":"10", "pay_fee":"'+str_left_money+'", "bank_no":"'+$('#selBank').val()+'"'
+   		   sb.append(",{"+strorder+"}");
+       }
+       else if(flag=="010")//不用代金券 用账户 不用银行卡
+       {
+    	   
+       }
+       else //不用代金券 不用账户 用银行
+       {
+    	   pay_orderindex=pay_orderindex+1;
+    	   strorder='"pay_order":"'+pay_orderindex+'", "pay_type":"01", "pay_mode":"10", "pay_fee":"'+str_left_money+'", "bank_no":"'+$('#selBank').val()+'"'
+   		   sb.append("{"+strorder+"}");
+       }
+       sb.append("]");  
+       alert(sb.toString());
+       var param=sb.toString();
         $.ajax({
 	      type: "POST",
 	      contentType:"application/json", //发送给服务器的内容编码类型
-	      url: '${base}/pay/insteadPay/postData/'+$('#hide_user_id').val()+"/"+$('#hide_order_id').val(), // 支付接口调用前预先工作
+	      url: '/esp/pay/insteadPay/postData/'+$('#hide_user_id').val()+"/"+$('#hide_order_id').val(), // 支付接口调用前预先工作
 	      dataType:"json", //预期服务器返回的数据类型
-	      data: JSON.stringify(param), //服务器只能接收json字符串
+	      data: param, //服务器只能接收json字符串
 	      success: function(data){
-	    	  
 	    	alert(data);
-/*		        if(pay_type == '01'){
-		        	url="${base}/pay/insteadPay/postData/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val()+"/"+$('#selBank').val();
-		        }
-		        else{
-		           url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
-		        }
-		        window.location.href = url;		*/	    
+	        if(pay_type == '01'){
+	        	url="${base}/pay/insteadPay/postData/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val();
+	        }
+	        else{
+	           url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+	        }
+	        window.location.href = url;			    
 	      }
-	    });  
+	    }); 
     } 
 	//
 	//1:代金券点击
@@ -83,27 +119,45 @@
 	{
 		switch(flag)
 		{
-			case 1:
+			case 1: //代金券
 				alert("敬请期待～");
 				break;
-			case 2:
+			case 2://是否使用账户按钮
 				var images = ['/esp/resources/image/myacct/off.png', '/esp/resources/image/myacct/on.png'] 
 				
 				if($(param).attr("class")=="off") //关闭
 				{ 
+					if ($("#hide_balance").val()==0) {
+						alert("您的账户余额为0！");
+						return;
+					}
+					
+					
 					$(param).attr("src",images[1]); 
 					$(param).removeClass(); 
 				
-					$("#lab_left_money").html("还需支付￥"+($("#hide_topay_money").val()-$("#hide_balance").val()));
+					$("#lab_left_money").html("还需支付￥"+(($("#hide_topay_money").val()-$("#hide_balance").val())<0?0:($("#hide_topay_money").val()-$("#hide_balance").val())));
 				}
 				else //打开
 				{ 
 					$(param).attr("src",images[0]); 
+					$(param).removeClass(); 
 					$(param).addClass("off"); 
 					$("#lab_left_money").html("还需支付￥"+$("#hide_topay_money").val());
 				} 
 				break;
 			case 3:
+				var str=$("#lab_left_money").html();
+				var str_left_money=str.substring(5);
+				if ($("#selBank").val() == "请选择开户银行" && str_left_money!=0)
+				{
+					alert("请选择开户银行");
+					$(".div_container button").attr("data-target","");
+				}
+				else
+				{
+					$(".div_container button").attr("data-target","#myModal");
+				}
 				break;
 			case 4: //弹出框 确定按钮
 	    		var txtpwd="";
@@ -130,9 +184,10 @@
 						window.location.href='/esp/pay/insteadPay/'+$("#hide_user_id").val()+"/"+$('#hide_order_id').val();
 						//return 
 					}
-					//goToPay2();
+					goToPay2();
 					//window.location.href='/esp/shopManage/acct/addBankCardInput1/'+$("#hide_user_id").val();
 				 }
-			});
+				});
+				break;
 		}
 	}

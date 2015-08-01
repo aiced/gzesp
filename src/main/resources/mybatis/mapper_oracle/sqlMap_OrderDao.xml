@@ -325,6 +325,25 @@
 	        end current_state_content  
 	   from ord_l_deallog a
        where order_id = ${order_id} order by current_state
-	</select>											
+	</select>		
+										
+	<select id="queryCZCard" resultType="java.util.HashMap">
+		select *
+		  from (select tt.*, ROWNUM as rowno
+		          from (select a.*, goods_name
+		                  from ord_d_card_pay a, gds_d_info b
+		                 where b.goods_id = a.goods_id
+		                 and a.user_id=#{user_id}
+		                 <if test="startDate != null">
+							<![CDATA[and a.CREATE_TIME >=to_date(#{startDate},'yyyy-mm-dd') and a.CREATE_TIME < to_date(#{endDate},'yyyy-mm-dd')+1]]>
+            			 </if>
+		                 <if test="czcard_no != null">
+               				and a.PHONE_NUMBER=#{czcard_no}
+            			 </if>
+		                 ) tt
+		               <![CDATA[where Rownum <= ${hidepageindex}+3) table_alias
+		 where table_alias.rowno >= ${hidepageindex}]]>
+	</select>
+	
 	
 </mapper>

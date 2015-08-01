@@ -91,7 +91,7 @@
     	{
     		iStatusflag='01';
     	}
-    	else if($(obj).text()=="已到帐")
+    	else if($(obj).text()=="待发放")
     	{
     		iStatusflag='02';
     	}
@@ -615,7 +615,7 @@
 								<li role="presentation" class="divider"></li>
 								<li onclick="doStatusClick(this);"><a href="#">结算中</a></li>
 								<li role="presentation" class="divider"></li>
-								<li onclick="doStatusClick(this);"><a href="#">已到帐</a></li>
+								<li onclick="doStatusClick(this);"><a href="#">待发放</a></li>
 								<li role="presentation" class="divider"></li>
 								<li onclick="doStatusClick(this);"><a href="#">已退货</a></li>
 								<li role="presentation" class="divider"></li>
@@ -664,8 +664,8 @@
 							      		<span class="label label-default">未激活</span>
 							      	<#elseif (item.CMS_STATE=='01')><!-- 结算中 -->	
 							      		<span class="label label-primary">结算中</span>
-							      	<#elseif (item.CMS_STATE=='02')><!-- 已到帐 -->
-							      		<span class="label label-success">已到帐</span>
+							      	<#elseif (item.CMS_STATE=='02')><!-- 待发放 -->
+							      		<span class="label label-success">待发放</span>
 							      	<#elseif (item.CMS_STATE=='03')><!-- 已退货-->
 							      		<span class="label label-warning">已退货</span>
 							      	<#elseif (item.CMS_STATE=='04')><!-- 已失效-->

@@ -93,7 +93,7 @@ public class WeShopController {
     public ModelAndView insteadBuy(HttpServletRequest request, @PathVariable("user_id") String user_id){
         //直接session存值也是可以的
     	//request.getSession(false).setAttribute("instead", user_id);
-		
+		      
     	//session存值后直接跳转到店铺首页
 		String url = "redirect:/weShop/index/" + user_id;
     	ModelAndView mav = new ModelAndView(url);

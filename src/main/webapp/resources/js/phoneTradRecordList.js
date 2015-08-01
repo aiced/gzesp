@@ -16,7 +16,7 @@ $(document).ready(function (){
 				var pageNum =null;
 				var rowNum = $("li");
 				if(rowNum.length%pageSize ==0 ){
-					 pageNum = rowNum.length/pageSize +1;
+					 pageNum = rowNum.length/pageSize;
 					 loadMoreData(pageNum);					
 				}				
 		}
@@ -44,12 +44,12 @@ function initBind(){
 
 function loadMoreData(pageNum)
 {	
-	var user_id = $("#user_id").val();
-	var param = {"pageNum":pageNum,"pageSize":pageSize,"user_id":user_id};	
+	var phoneNumber = $("#phoneNumber").val();	
+	var param = {"pageNum":pageNum,"phoneNumber":phoneNumber};	
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/shopManage/acct/acctBalancePagePostData",
+		   url: $('#baseRoot').val() + "/topUp/phoneTradRecordListSub",
 		   data: param, //服务器只能接收json字符串
 		   async: false,
 		   success: function(data){

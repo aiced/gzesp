@@ -153,7 +153,6 @@ public class MyAcctController {
             List<Map<String, Object>> acctloglist=myAcctService.queryAcctBalanceLog(user_id,0,Integer.parseInt(page_num),Integer.parseInt(page_size),"");
             mav.addObject("acctlogtotal", acctloglist.get(0).get("NEW_BALANCE"));
         }
-
     	return mav;
     }
     

@@ -17,7 +17,7 @@
 <body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
-    <input type="hidden" id="parentPath" value="${parentPath}"></input>
+    <input type="hidden" id="phoneNumber" value="${phoneNumber}"></input>
     
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
@@ -26,7 +26,7 @@
 	      
 	      <!-- 加载列表，点击，分页 -->
 <div class="divContainer">
-    <ul>
+    <ul id = "datagrid">
        		<#list topUpDealList as info>			
 	            <li class="rel" orderId = "${info.orderId}"}>
            			 <p class="title"> ${info.goodsName} － ${info.phoneNumber} </p>

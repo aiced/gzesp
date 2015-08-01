@@ -19,11 +19,11 @@
     <input type="hidden" id="user_id" value="${user_id}"></input>    
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
-	        	<div id="top_middle">${title}</div>
+	        	<div id="top_middle">搜索</div>
 	      </div> 
 <div class="divContainer">
     <div class="inputContainer">
-        <input id="inputId" class="standardInputStyle1" type="tel"  placeholder="充值号码/接收充值卡密号码" >
+        <input id="inputId" class="standardInputStyle1" type="tel"  placeholder="输入充值号码" >
     </div>
     <div class="searchContainer">
         <a id="searchId" class="standard_a_Style1" >查询</a>

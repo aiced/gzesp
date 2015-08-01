@@ -3,28 +3,18 @@
  */
 package com.ai.gzesp.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.ai.gzesp.dao.beans.Criteria;
-import com.ai.gzesp.dao.beans.TdGdsDABLEACTIVITY;
-import com.ai.gzesp.dao.beans.TdGdsDABLERCD;
-import com.ai.gzesp.dao.beans.TdGdsDINFO;
-import com.ai.gzesp.dao.service.TdGdsDABLERCDDao;
-import com.ai.gzesp.dao.service.TdGdsDINFODao;
-import com.ai.gzesp.dao.sql.GoodsSql;
 import com.ai.gzesp.dao.sql.PhoneTopUpSql;
-import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.utils.StringUtil;
 
 /**
  * @author xinjunwang
@@ -33,16 +23,10 @@ import com.ai.gzesp.service.WeShopService;
 @Controller
 @RequestMapping("/topUp")
 public class PhoneTopUpController {
-
-    @Autowired
-    private WeShopService weShopService;
-    
-    @Resource 
-    TdGdsDINFODao tdGdsDinfoDao;
     
     @Resource 
     PhoneTopUpSql phoneTopUpSql;   
-
+    
     @RequestMapping("/phoneTopUp/{user_id}")
     public ModelAndView phoneTopUp(@PathVariable("user_id") String user_id){
     	List<Map<String, Object>> topUpList = phoneTopUpSql.GetTopUpList();
@@ -58,17 +42,31 @@ public class PhoneTopUpController {
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("title", "搜索"); 
     	rspMap.put("user_id", user_id); 
-        return new ModelAndView("phoneTradRecordSearch.ftl");
+        return new ModelAndView("phoneTradRecordSearch.ftl",rspMap);
     }
     
-    @RequestMapping("/phoneTradRecordList/{phoneNum}")
-    public ModelAndView phoneTradRecordList(@PathVariable("phoneNum") String phoneNum){
+    @RequestMapping("/phoneTradRecordList/{phoneNumber}")
+    public ModelAndView phoneTradRecordList(@PathVariable("phoneNumber") String phoneNumber){
     	//查询 列表
-    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(phoneNum);
+    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(phoneNumber,0);
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("topUpDealList", topUpDealList);  
     	rspMap.put("title", "充值记录");     
+    	rspMap.put("phoneNumber", phoneNumber);         	
         return new ModelAndView("phoneTradRecordList.ftl",rspMap);
+    }
+    
+    @RequestMapping("/phoneTradRecordListSub")
+    public ModelAndView phoneTradRecordListSub(@RequestBody String inputParam){
+    	
+    	//查询 列表
+		Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+		String phoneNumber = paramsMap.get("phoneNumber");
+		int pageNum= Integer.parseInt(paramsMap.get("pageNum"));
+    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(phoneNumber,pageNum *10);
+    	Map<String, Object> rspMap = new HashMap<String, Object>(); 
+    	rspMap.put("topUpDealList", topUpDealList);  
+        return new ModelAndView("phoneTradRecordListSub.ftl",rspMap);
     }
     
    @RequestMapping("/phoneTradRecordDetail/{orderId}")
@@ -79,7 +77,5 @@ public class PhoneTopUpController {
 	   rspMap.put("title", "充值记录详情");     		   
        return new ModelAndView("phoneTradRecordDetail.ftl",rspMap);
     }
-    
-    
     
 }

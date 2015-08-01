@@ -77,6 +77,7 @@
 
     </div>
     <!-- 其他金额-->
+    <!-- 
     <div class="otherAmount">
         <span> 其他金额 </span>
 
@@ -85,7 +86,8 @@
         </div>
         <div class="clearBoth"></div>
     </div>
-
+    -->
+    
     <div class ="preferential" id = "preferentialId"></div>
 
     <div class="orderContainer">

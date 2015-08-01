@@ -44,7 +44,7 @@
                 <span class="li_title">当前状态</span>
                 	<#if (info.orderState =='00')>
                 		<span id = "status" class="fright li_content">未支付</span>
-                	<#elseif (info.orderState =='02')>
+                	<#elseif (info.orderState =='01' || info.orderState =='02')>
                 		<span id = "status" class="fright li_content">支付成功</span>
                 	</#if>  
             </li>
@@ -60,6 +60,8 @@
                			 <span class="fright li_content">Web支付</span>
                 	<#elseif (info.orderFrom =='01')>
                 		 <span class="fright li_content">微信支付</span>
+                	<#else>
+                		 <span class="fright li_content">未知</span>
                 	</#if>  
             </li>
 

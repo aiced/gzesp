@@ -21,17 +21,16 @@ function initBind() {
     $('#phoneNumId').blur(function ()
     {
     	phoneNumalidation = false;
+    	verificationNum(true);
+    	
 
-    	var phoneNum = $('#phoneNumId').val();
-    	//本地验证请求
-    	phoneNumalidation = isPhoneNum(phoneNum);
-    	if(phoneNumalidation){
-        	queryAccountInfo(phoneNum);
-    	}else{
-    		$('#phoneNumId').val("");
-    		alert("手机号码有误，请重新输入");
-    	}
     });
+    
+    $("#numSelected").change(function(){
+    	phoneNumalidation = false;
+    	verificationNum(false);
+   });
+    
 
 //    点击金额绑定
     var cards=$('[name=cardName]');
@@ -71,7 +70,8 @@ function initBind() {
     $("#topUpId").bind("click",function(){
     	//号码判断
     	if(!phoneNumalidation){
-            alert("输入的号码无效");
+            alert("输入的号码无效,请重新输入！");
+    		$('#phoneNumId').val("");
     		return;
     	}
         //金额判断
@@ -94,9 +94,7 @@ function initBind() {
           {
         	  return;
           }
-    	
 
-          
     	// 数据组装，跳转界面
     });
 
@@ -116,6 +114,49 @@ function initBind() {
     });
 }
 
+function verificationNum(istrue){
+	var phoneNum = $('#phoneNumId').val();
+	var selectedValue =  $("#numSelected").val();
+	
+	if(selectedValue == 1){
+    	//本地验证请求
+    	phoneNumalidation = isPhoneNum(phoneNum);
+    	if(phoneNumalidation){
+        	queryAccountInfo(phoneNum);
+    	}else{
+    		if(istrue == true){
+        		$('#phoneNumId').val("");
+        		alert("手机号码有误，请重新输入");
+    		}
+    	}
+		
+	}else if(selectedValue == 2){
+    	phoneNumalidation = istell(phoneNum);
+    	if(phoneNumalidation){
+        	queryAccountInfo(phoneNum);
+    	}else{
+       		if(istrue == true){
+        		$('#phoneNumId').val("");
+        		alert("固定电话有误，请重新输入");
+    		}
+
+    	}
+
+	}else if(selectedValue == 3){
+    	phoneNumalidation = isBroadband(phoneNum);
+    	if(phoneNumalidation){
+        	queryAccountInfo(phoneNum);
+    	}else{
+      		if(istrue == true){
+        		$('#phoneNumId').val("");
+        		alert("宽带号码有误，请重新输入");
+    		}
+
+    	}		
+	}
+	
+}
+
 
 function phoneDetailId(data){
 	//根据返回数据，判断一下
@@ -126,7 +167,7 @@ function phoneDetailId(data){
 
 	$('#phoneDetailId').show();
 	$('#realTopUpId').html();
-    alert("oooo" + $('#realTopUpId').html() + "oooo"  + $('#creditId').html()+ "oooo"  + $('#balanceId').html());
+//    alert("oooo" + $('#realTopUpId').html() + "oooo"  + $('#creditId').html()+ "oooo"  + $('#balanceId').html());
 	//加载数据
 }
 
@@ -163,6 +204,14 @@ function istell(str)
 	return true;
 }
 
+function isBroadband(str)
+{
+	if(str && str != null && str){
+		var b = /^[0-9a-zA-Z]*$/g;
+		return b.test(str);;
+	}
+	 return false;
+}
 
 function isPhoneNum(strPhoneNum)
 {
@@ -195,12 +244,4 @@ function queryAccountInfo(phoneNum)
 //		});
 	
 	
-}
-
-
-
-function leftClick(param)
-{
-//	点击返回
-//	window.location.href='/esp/shopManage/acct/myAcct/'+$("#user_id").val();
 }

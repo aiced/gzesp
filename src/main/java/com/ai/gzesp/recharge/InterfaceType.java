@@ -12,7 +12,9 @@ public enum InterfaceType {
     //请求
     recharge("010202", "充值接口"),
     rechargeQry("010204", "充值记录查询接口"),
-    rechargeCheck("010201", "充值号码验证接口");
+    rechargeCheck("010201", "充值号码验证接口"),
+    active("010203", "卡激活接口"),
+    check("010205", "充值对账接口");
 
     private String interfaceCode;
     

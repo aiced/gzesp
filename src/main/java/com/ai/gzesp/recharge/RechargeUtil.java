@@ -12,9 +12,10 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
-import com.ai.gzesp.dto.RechargeBodyParam;
+import com.ai.gzesp.dto.RechargeReq;
 import com.ai.gzesp.utils.Base64Utils;
 import com.ai.gzesp.utils.DESUtil;
 
@@ -226,20 +227,21 @@ public class RechargeUtil {
 	
 	
 	/**
-	 * 生成请求包头+包体
+	 * 生成接口请求包头+包体
 	 * 为使连接的双方保证数据的发送和接收的一致性，在所有数据包前增加”@”为包的开始标志，数据包尾加“0x1a”为包的结束标志。
      * 数据包头中的包长字段不包含这两个字符在内
 	 * @param interfaceType
 	 * @param param
 	 */
-	public static String genReq(RechargeBodyParam param, String logId, String interfaceType, String serialNum, String serialNumType, String reqTime){
+	public static String genReq(RechargeReq param, String interfaceType, String serialNum, String serialNumType, String reqTime){
 		//先生成包体，因为包头里需要知道包体的长度
 		String reqBody = genReqBody(interfaceType, param); 
 		//再生成包头
-		String reqHead = genReqHead(reqBody, logId, interfaceType, serialNum, serialNumType, reqTime);
+		String reqHead = genReqHead(reqBody, param.getSerialNum(), interfaceType, serialNum, serialNumType, reqTime);
 		
 		return RechargeCons.prefix + reqHead + reqBody + RechargeCons.Suffix;
 	}
+	
 
 	/**
 	 * 生成请求包头，根据请求接口类型
@@ -247,12 +249,18 @@ public class RechargeUtil {
 	 * @param param
 	 * @return
 	 */
-	public static String genReqBody(String interfaceType, RechargeBodyParam param){
+	public static String genReqBody(String interfaceType, RechargeReq param){
 		//StringBuffer reqBody = new StringBuffer(100);
 		//prependHeadA1(req);
 		String reqBody = null;
 		if(InterfaceType.recharge.getInterfaceCode().equals(interfaceType)){
-			reqBody = genReqBodyOfRecharge(param);
+			reqBody = genReqBodyOfRecharge(param); //充值接口包体
+		}
+		else if(InterfaceType.active.getInterfaceCode().equals(interfaceType)){
+			reqBody = genReqBodyOfActive(param); //激活接口包体
+		}
+		else if(InterfaceType.check.getInterfaceCode().equals(interfaceType)){
+			reqBody = genReqBodyOfCheck(param); //对账接口包体
 		}
 		else{
 			
@@ -269,16 +277,52 @@ public class RechargeUtil {
 	 * @param param
 	 * @return
 	 */
-	public static String genReqBodyOfRecharge(RechargeBodyParam param){
+	public static String genReqBodyOfRecharge(RechargeReq param){
 		StringBuffer reqBody = new StringBuffer(100);
 		reqBody.append(fillNull(String.valueOf(param.getChargeMoney()), 10));
 		reqBody.append(fillNull(String.valueOf(param.getAgentID()), 20));
 		
-		byte[] temp = DESUtil.encryptMode(RechargeCons.desKey.getBytes(), param.getPasword().getBytes());
+		byte[] temp = DESUtil.encryptModeRecharge(RechargeCons.desKey.getBytes(), param.getPasword().getBytes());
 		String target = Base64Utils.encodeStr(temp);
 		reqBody.append(fillNull(target, 32));
 		
 		reqBody.append(fillNull(String.valueOf(param.getSerialNum()), 20));
+		
+		return reqBody.toString();
+	}
+	
+	/**
+	 * 生成激活接口的包体
+	 * CardNum	卡号	20	左对齐、右补空格 当为一卡充充值时，此字段填卡号
+     * Cardpwd	卡密码	32	当为一卡充充值时，此字段填卡密码,且用3DES加密，加密结果base64处理，左对齐、右补空格
+	 * @param param
+	 * @return
+	 */
+	public static String genReqBodyOfActive(RechargeReq param){
+		StringBuffer reqBody = new StringBuffer(100);
+		reqBody.append(fillNull(String.valueOf(param.getAgentID()), 20));
+		
+		byte[] temp = DESUtil.encryptModeRecharge(param.getPasword().getBytes());
+		String target = Base64Utils.encodeStr(temp);
+		reqBody.append(fillNull(target, 32));
+		
+		return reqBody.toString();
+	}	
+	
+	/**
+	 * 生成对账接口的包体
+     * ChargeSerilNum	发起方流水号	20	左对齐、右补空格
+     * AccountNumber 被充值帐号 15  左对齐，右补空格
+     * CardNumber	卡号	20	左对齐、右补空格 当为一卡充充值时，此字段填卡号
+     * 
+	 * @param param
+	 * @return
+	 */
+	public static String genReqBodyOfCheck(RechargeReq param){
+		StringBuffer reqBody = new StringBuffer(100);
+		reqBody.append(fillNull(String.valueOf(param.getChargeSerilNum()), 20));
+		reqBody.append(fillNull(String.valueOf(param.getAccountNumber()), 15));
+		reqBody.append(fillNull(String.valueOf(param.getAgentID()), 20));
 		
 		return reqBody.toString();
 	}
@@ -295,7 +339,7 @@ public class RechargeUtil {
 		appendHeadA4(reqHead, interfaceType);
 		appendHeadA5(reqHead);
 		appendHeadA6(reqHead, interfaceType, serialNum);
-		appendHeadA7(reqHead, serialNumType);
+		appendHeadA7(reqHead, interfaceType, serialNumType);
 		appendHeadA8(reqHead);
 		appendHeadA9(reqHead, reqTime, logId);
 		appendHeadA10(reqHead);
@@ -369,7 +413,7 @@ public class RechargeUtil {
 			a6 = fillNull(serialNum, 20);
 		}
 		else{
-			a6 = "";
+			a6 = fillNull("", 20);
 		}
 		reqHead.append(a6);
 	}
@@ -379,8 +423,17 @@ public class RechargeUtil {
 	 * A7业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。当A4为010203时，此值为空格
 	 * @param reqHead
 	 */
-	private static void appendHeadA7(StringBuffer reqHead, String serialNumType){
-		reqHead.append(serialNumType);
+	private static void appendHeadA7(StringBuffer reqHead, String interfaceType, String serialNumType){
+		String a7 = null;
+		if(InterfaceType.recharge.getInterfaceCode().equals(interfaceType) ||
+				InterfaceType.rechargeCheck.getInterfaceCode().equals(interfaceType)){
+			a7 = fillNull(serialNumType, 1);
+		}
+		else{
+			a7 = fillNull("", 1);
+		}
+		
+		reqHead.append(a7);
 	}
 	
 	/**
@@ -443,17 +496,20 @@ public class RechargeUtil {
 		reqHead.append(reqTime);
 	}
 	
+
     /**
      * 生成16位接口流水号，用于插入 ITF_D_RECHARGE_LOG
+     * interfaceType: 2：充值接口 4：充值记录查询接口 1：充值号码验证接口 3：卡激活接口 5：充值对账接口
+     * @param interfaceType
      * @return
      */
-    public static String generateLogId() {
+    public static String generateLogId(int interfaceType) {
     	StringBuffer sb = new StringBuffer(16);
         Random random = new Random();
+        sb.append(interfaceType); //
         sb.append(System.currentTimeMillis()); //13位
-        sb.append(random.nextInt(9)); //加1位随机整数
-        sb.append(random.nextInt(9)); //加1位随机整数
-        sb.append(random.nextInt(9)); //加1位随机整数 ，总共加3位随机数
+        //加2位随机整数 0-99之间的随机整数，不足2位左补一位随机数
+        sb.append(StringUtils.leftPad(String.valueOf(random.nextInt(100)), 2, String.valueOf(random.nextInt(10)).charAt(0))); 
         return sb.toString();
     }
     
@@ -515,10 +571,20 @@ public class RechargeUtil {
 //        String partition_id = log_id.substring(14, 16);
 //        System.out.println(partition_id);
 		
-		Map<String, String> map1 = null;
-		Map<String, String> map2 = new HashMap<String, String>();
+//		Map<String, String> map1 = null;
+//		Map<String, String> map2 = new HashMap<String, String>();
+//		
+//		System.out.println(MapUtils.isEmpty(map1));
+//		System.out.println(MapUtils.isEmpty(map2));
 		
-		System.out.println(MapUtils.isEmpty(map1));
-		System.out.println(MapUtils.isEmpty(map2));
+		for(int i = 0; i < 100; i++){
+			Random random = new Random();
+			int j = random.nextInt(100);
+			System.out.print(j);
+			System.out.print("|");
+			System.out.print(StringUtils.leftPad(String.valueOf(j), 2, String.valueOf(random.nextInt(10)).charAt(0)));
+			System.out.print("\n");
+			
+		}
 	}
 }

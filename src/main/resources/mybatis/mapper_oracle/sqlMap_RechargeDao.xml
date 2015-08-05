@@ -3,10 +3,11 @@
 <mapper namespace="com.ai.gzesp.dao.RechargeDao">
 
 
-	<update id="updateCardList">
+	<update id="lockCardList">
       update INV_D_RECHARGE_CARD 
          set card_status = '3',
-             order_id = ${order_id}
+             order_id = ${order_id},
+             update_time = sysdate
       where card_status = '1'
         and card_no in
       (
@@ -22,12 +23,48 @@
       )  
 	</update>
 	
+	<update id="lockCard">
+      update INV_D_RECHARGE_CARD 
+         set card_status = '3',
+             order_id = ${order_id},
+             update_time = sysdate
+      where card_status = '1'
+        and card_value= ${card_value}
+        <![CDATA[
+        and rownum <= 1 
+        ]]>
+	</update>	
+	
+	<select id="getUnActiveCardList" resultType="java.util.HashMap">
+	    select card_no, card_value, card_password
+          from INV_D_RECHARGE_CARD
+         where card_status = '0'
+         <if test="card_no != null">
+           and card_no = #{card_no}
+         </if>         
+         <![CDATA[
+           and rownum < 20
+           ]]>
+	</select>
+	
 	<select id="getUseCardList" resultType="java.util.HashMap">
 	    select card_no, card_value, card_password, order_id
           from INV_D_RECHARGE_CARD
          where order_id = ${order_id}
          order by card_value desc
-	</select>		
+	</select>
+	
+	<select id="getRechargeLogList" resultType="java.util.HashMap">
+	    select to_char(log_id) log_id, agent_id card_no, serial_number
+          from itf_d_recharge_log
+         where interface_type = '010202'
+         <if test="log_id != null">
+           and log_id = #{log_id}
+         </if>       
+         <![CDATA[
+           and rownum < 20
+           ]]>
+	</select>					
 	
 	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
 	<select id="insertRechargeLogBatch">
@@ -35,19 +72,73 @@
              (log_id, partition_id, order_id, req_time, interface_type, 
               busi_type, serial_number, serial_number_type, charge_money, agent_id, password)
       <foreach collection="cardList" item="item" index="index" separator="union all">        
-       select ${item.LOG_ID}, ${item.PARTITION_ID}, ${order_id}, #{item.req_time}, #{interface_type}, 
+       select ${item.LOG_ID}, ${item.PARTITION_ID}, ${order_id}, #{req_time}, #{interface_type}, 
               #{busi_type}, #{serial_number}, ${serial_number_type}, ${item.CARD_VALUE}, #{item.CARD_NO}, #{item.CARD_PASSWORD} 
          from dual   
       </foreach>
-	</select>		
+	</select>
+	
+	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
+	<select id="insertActiveLogBatch">
+      insert into ITF_D_RECHARGE_LOG
+             (log_id, partition_id, order_id, req_time, interface_type, 
+              busi_type, serial_number, serial_number_type, charge_money, agent_id, password)
+      <foreach collection="cardList" item="item" index="index" separator="union all">        
+       select ${item.LOG_ID}, ${item.PARTITION_ID}, null, #{req_time}, #{interface_type}, 
+              #{busi_type}, null, null, ${item.CARD_VALUE}, #{item.CARD_NO}, #{item.CARD_PASSWORD} 
+         from dual   
+      </foreach>
+	</select>				
 
 	<update id="updateRechargeLog">
       update ITF_D_RECHARGE_LOG
          set success_flag = #{success_flag},
-             result_code = #{result_code},
-             agent_balance = #{agent_balance},
-             unicon_serial_num = #{unicon_serial_num}
+             result_code = #{result_code}
+            <if test="agent_balance != null">
+              , agent_balance = #{agent_balance}
+            </if>
+            <if test="unicon_serial_num != null">
+              , unicon_serial_num = #{unicon_serial_num}
+            </if>            
+            <if test="check_status != null">
+              , check_status = #{check_status}
+            </if>              
        where log_id = ${log_id}
 	</update>
+	
+	<update id="updateCheckStatus">
+      update ITF_D_RECHARGE_LOG
+         set check_status = #{check_status}
+       where log_id = ${log_id}
+	</update>	
+	
+	<update id="updateRechargeCard">
+      update inv_d_recharge_card
+         set card_status = #{card_status}
+       where card_no = #{card_no}
+	</update>	
+	
+	<select id="getActiveLog" resultType="java.util.HashMap">
+	    select agent_id card_no
+          from itf_d_recharge_log
+         where log_id = #{log_id}
+	</select>
+	
+	<select id="getRechargedCardList" resultType="java.util.LinkedHashMap">
+        select b.card_no, 
+               decode(b.card_status, '3', '1', '0') card_status, 
+               to_char(b.update_time, 'yyyy-mm-dd HH24:mi:ss') update_time
+          from itf_d_recharge_log a,
+               inv_d_recharge_card b
+         where a.req_time like substr(#{req_day}, 3)||'%'
+           and a.interface_type = '010202'   
+           and a.agent_id = b.card_no
+	</select>		
+	
+	<update id="updateCardResultCode">
+      update inv_d_recharge_card
+         set result_code = #{result_code}
+       where card_no = #{card_no}
+	</update>			
 							
 </mapper>

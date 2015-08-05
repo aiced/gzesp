@@ -55,9 +55,19 @@ public class RechargeResp {
 	private String agentBalance;
 	
 	/**
+	 * 充值对账结果
+	 */
+	private String chargeStatus;
+	
+	/**
 	 * 充值平台的流水号
 	 */
 	private String uniconSerilNum;
+	
+	/**
+	 * 发起方充值请求流水号
+	 */
+	private String chargeSerilNum;
 
 	public String getLogId() {
 		return logId;
@@ -140,6 +150,26 @@ public class RechargeResp {
 	public void setUniconSerilNum(String uniconSerilNum) {
 		this.uniconSerilNum = uniconSerilNum;
 	}
+	
+	
+
+	public String getChargeStatus() {
+		return chargeStatus;
+	}
+
+	public void setChargeStatus(String chargeStatus) {
+		this.chargeStatus = chargeStatus;
+	}
+	
+	
+
+	public String getChargeSerilNum() {
+		return chargeSerilNum;
+	}
+
+	public void setChargeSerilNum(String chargeSerilNum) {
+		this.chargeSerilNum = chargeSerilNum;
+	}
 
 	@Override
 	public String toString() {
@@ -154,6 +184,8 @@ public class RechargeResp {
 		sb.append(", reqTime:" + this.reqTime);
 		sb.append(", agentBalance:" + this.agentBalance);
 		sb.append(", uniconSerilNum:" + this.uniconSerilNum);
+		sb.append(", chargeStatus:" + this.chargeStatus);
+		sb.append(", chargeSerilNum:" + this.chargeSerilNum);
 		
 		return sb.toString();
 	}

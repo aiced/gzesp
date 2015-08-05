@@ -39,7 +39,7 @@ public class RechargeCons {
     /**
      * des加密密钥:，密钥长度128位（16个字符）
      */
-    public static String desKey = "e036hlqtculakx38e036hlqt";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
+    public static String desKey = "e036hlqtculakx38";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
 
     /**
      * 心跳发送间隔时间
@@ -80,5 +80,7 @@ public class RechargeCons {
      * 所有数据包前增加”@”为包的开始标志，数据包尾加“0x1a”为包的结束标志
      */
     public static char Suffix = 0x1a;
+    
+    public static char keyPadChar = 0x0;
 
 }

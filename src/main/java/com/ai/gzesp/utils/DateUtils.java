@@ -294,6 +294,24 @@ public class DateUtils {
     public static Date getCurrentDate() {
         return new Date();
     }
+    
+    /**
+     * 获取当天日期字符串 yyyymmdd
+     * @return
+     */
+    public static String getToday() {
+        return format(new Date());
+    }
+    
+    /**
+     * 获取昨天日期字符串 yyyymmdd
+     * @return
+     */
+    public static String getYesterday() {
+    	Calendar cal = Calendar.getInstance();
+    	cal.add(Calendar.DATE, -1);
+        return format(cal.getTime());
+    }
 
 
     /**

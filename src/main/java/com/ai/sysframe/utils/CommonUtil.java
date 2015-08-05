@@ -257,7 +257,7 @@ public class CommonUtil {
     }
     
     /**
-     * ordType 1:普通订单； 2：充值卡缴费; 
+     * ordType 1:普通订单； 2：充值卡缴费; 3:宽带续约
      * 
      * @param ordType
      * @return

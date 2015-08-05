@@ -344,6 +344,11 @@
 		               <![CDATA[where Rownum <= ${hidepageindex}+3) table_alias
 		 where table_alias.rowno >= ${hidepageindex}]]>
 	</select>
-	
-	
+	<select id="queryBandGoodsId" resultType="java.util.HashMap">
+		select goods_id from gds_d_info a where ctlg_code = #{ctlg_code}
+	</select>
+	<select id="queryBandProByOrderId" resultType="java.util.HashMap">
+		select * from ORD_D_BAND_PAY where order_id=#{order_id}
+	</select>	
+
 </mapper>

@@ -734,9 +734,11 @@ public class OrderService {
    
    public List<Map<String, Object>> queryCZCard(String startDate,String endDate,String user_id,String czcard_no,int hidepageindex)
    {
-
-	   
 	   return orderDao.queryCZCard(startDate.isEmpty()?null:startDate,endDate,user_id,czcard_no.isEmpty()?null:czcard_no,hidepageindex);
-
+   }
+   
+   public Map<String, Object> queryBandGoodsId(String ctlg_code)
+   {
+	   return orderDao.queryBandGoodsId(ctlg_code);
    }
 }

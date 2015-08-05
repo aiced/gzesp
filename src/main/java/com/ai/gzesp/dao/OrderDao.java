@@ -63,4 +63,9 @@ public interface OrderDao {
     public List<Map<String, Object>> queryOrdersDealLogByOrderId(@Param("order_id") String order_id);
     //edit_by_wenh
     public List<Map<String, Object>> queryCZCard(@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("user_id") String user_id,@Param("czcard_no") String czcard_no,@Param("hidepageindex") int hidepageindex);
+    //edit_by_wenh
+    public Map<String, Object> queryBandGoodsId(@Param("ctlg_code") String ctlg_code);
+    
+    public Map<String , Object> queryBandProByOrderId(@Param("order_id") String order_id);
+    
 }

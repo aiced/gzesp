@@ -41,34 +41,4 @@ public class BandGoodDetailController {
 
         return mav;
     }
-    
-    @Token(remove=true)
-    @RequestMapping("/bandGoodPostData")
-    public ModelAndView bandGoodPostData(HttpServletRequest request,@RequestBody String inputParam){
-
-    	//20150703 ximh modify 提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，ord_d_base里插订单类型
-    	boolean isInstead = request.getSession(false).getAttribute("instead") == null ? false : true;
-    	
-    	
-    	
-    	//这个地方要进行落订单插入表的操作
-    	
-    	
-    	
-    	
-    	
-    	
-    	//这里，要根据是否是代客下单 跳转到不同的支付页面
-    	//20150703 ximh modify 提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，跳转到不同的支付页面
-    	String url = null;
-    	if(isInstead){
-    		//url = "redirect:/pay/insteadPay/" + paramsMap.get("userId") + "/" + orderId;
-    	}
-    	else{
-    		//url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
-    	}
-    	
-    	ModelAndView mav = new ModelAndView(url);
-    	return mav;
-    }  
 }

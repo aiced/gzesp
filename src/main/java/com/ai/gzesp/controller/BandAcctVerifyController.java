@@ -78,19 +78,15 @@ public class BandAcctVerifyController {
     	String strUrl="";//未来需要填写的url
 		HashMap<String, String> map = new HashMap<String, String>() ;
 		map.put("xmlmsg", packet);
-		String strRet="";//bss返回结果
-//    	//调用Bss接口
-//    	try {
-//			HttpUtils.URLPost(strUrl, map,"string");//第三个参数 标识返回结果为字符串
-//			strRet=URLDecoder.decode(strRet);
-//			System.out.println(strRet);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//			return mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);  
-//		}
-
-    	//解析响应报文
+		
+		
+		
+		String strRet=bssBandService.HttpPost(strUrl,map);//bss返回结果
+    	if (strRet.isEmpty()) {
+    		return mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);  
+		}
+		
+		//解析响应报文
 		UserCheckReq_Res userCheckReq_Res=	bssBandService.ResCheckUserPacket(strRet);
 		
 		//将相关的数据添加到mav里面 展示到页面上

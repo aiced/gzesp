@@ -60,12 +60,14 @@
        	 美国宽带网新标准：25Mbps下行/3Mbps上行
       </p>
       <br/>
-      <button type="button" class="btn btn-warning btn-block">确认订购,去支付</button>    
+      <button type="button" class="btn btn-warning btn-block" onclick="doClick();">确认订购,去支付</button>    
     </div> 
-             
+    <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>        
   
     <!-- Bootstrap core JavaScript -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+ 	<script type="text/javascript" src="${resRoot}/js/bandGoodDetail.js?v=${resVer}"></script>	
+  	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
   </body>
 </html>

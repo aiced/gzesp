@@ -1,5 +1,6 @@
 package com.ai.gzesp.controller;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.common.Constants;
+import com.ai.gzesp.dto.UserCheckReq_Req;
+import com.ai.gzesp.dto.UserCheckReq_Res;
+import com.ai.gzesp.service.BssBandService;
+import com.ai.gzesp.service.UnionPayService2;
 import com.ai.gzesp.service.WeShopService;
 import com.ai.gzesp.utils.HttpUtils;
+import com.ai.gzesp.utils.MD5Util;
 import com.ai.sysframe.utils.StringUtil;
 import com.ai.wx.util.HttpClientUtil;
 
@@ -23,6 +30,11 @@ public class BandAcctVerifyController {
 
     @Autowired
     private WeShopService weShopService;
+    
+    
+    //没有直接使用weShopService是因为不想混淆了。到时候太乱
+    @Autowired
+	BssBandService bssBandService;
     
     /**
      * 三级页面：店铺主页-宽带续费-宽带号验证页面<br>
@@ -47,42 +59,61 @@ public class BandAcctVerifyController {
     
     //
     @RequestMapping("/bandAcctCheck")
-    @ResponseBody
-    public String bandAcctCheck(@RequestBody String inputParam)
+    public ModelAndView bandAcctCheck(@RequestBody String inputParam)
     {
-
-//    	Province	UserCheckReq	1	String	F2	省分
-//    	City	UserCheckReq	1	String	F3	地市
-//    	District	UserCheckReq	1	String	V10	区县
-//    	ChannelID	UserCheckReq	1	String	V20	渠道编码
-//    	NumID	UserCheckReq	1	String	V20	服务号码
-    	
-    	//渠道编号：是固定写死的，是之前就商量好的。
-    	//省份：贵州 ，地市 和区县其实可以根据服务号码来去判断（有类似025 南京这种的区号）
-    	
+    	ModelAndView mav=null;
     	
 		Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-		String user_id = paramsMap.get("user_id");
-		String bandAcct=paramsMap.get("bandAcct");
+		String user_id = paramsMap.get("user_id");	//能人id
+		String bandAcct=paramsMap.get("bandAcct"); //宽带账号
     	
-    	
+		//根据md5key对发送报文进行签名：签名的规则为：NumID=XXX $key=XXX进行MD5加密
+		String strEncrypt="NumID="+bandAcct+"$key="+Constants.md5key_bbs;
+		strEncrypt=MD5Util.md5s2(strEncrypt);
+		
+		//构造bss：校验用户接口报文
+		String packet=bssBandService.ReqCheckUserPacket(bandAcct, strEncrypt);	
+		System.out.println("BSS发送请求的报文："+packet);
+		
     	String strUrl="";//未来需要填写的url
-    	Map<String, Object> map=new HashMap<String, Object>();
-    	map.put("Province", "");
-    	map.put("City", "");
-    	map.put("District", "");
-    	map.put("ChannelID", "");
-    	map.put("NumID", bandAcct);
-    	
-    	//先注释掉
+		HashMap<String, String> map = new HashMap<String, String>() ;
+		map.put("xmlmsg", packet);
+		String strRet="";//bss返回结果
+//    	//调用Bss接口
 //    	try {
-//			HttpUtils.URLPost(strUrl, map);
+//			HttpUtils.URLPost(strUrl, map,"string");//第三个参数 标识返回结果为字符串
+//			strRet=URLDecoder.decode(strRet);
+//			System.out.println(strRet);
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
-//			return "未知错误";
+//			return mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);  
 //		}
-    	//这里调用bss接口
-    	return "0000";
+
+    	//解析响应报文
+		UserCheckReq_Res userCheckReq_Res=	bssBandService.ResCheckUserPacket(strRet);
+		
+		//将相关的数据添加到mav里面 展示到页面上
+		if (userCheckReq_Res!=null) {
+			//插入bss报文请求日志表
+			if (true) //插入成功 
+			{
+	        	mav= new ModelAndView("bandGoodSelect.ftl");
+	        	mav.addObject("user_id", user_id); 	
+	        	mav.addObject("bandAcct",bandAcct);
+	        	mav.addObject("userCheckReq_Res", userCheckReq_Res);
+	        	System.out.println(userCheckReq_Res.getCustName());
+			}
+			else //插入失败 
+			{
+		       	mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);
+			}
+			
+		}
+		else {
+	       	mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);    		
+		}
+        
+        return mav;
     }
 }

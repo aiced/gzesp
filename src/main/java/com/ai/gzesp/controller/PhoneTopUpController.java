@@ -4,6 +4,7 @@
 package com.ai.gzesp.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,19 @@ public class PhoneTopUpController {
     @RequestMapping("/phoneTopUp/{user_id}")
     public ModelAndView phoneTopUp(@PathVariable("user_id") String user_id){
     	List<Map<String, Object>> topUpList = phoneTopUpSql.GetTopUpList();
+    	for (Map<String, Object> m : topUpList)  
+        {  
+            System.out.println( ); 
+            
+            List<Map<String, Object>> avalibleList = phoneTopUpSql.GetAvalibleCardsList(m.get("originalPrice").toString());
+            if(avalibleList != null && avalibleList.size()>0){
+            	m.put("clickAble", "yes");  
+            }else{
+            	m.put("clickAble", "no");  
+            }
+        }  
+    	
+    	
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("topUpList", topUpList);  
     	rspMap.put("title", "手机充值"); 
@@ -45,14 +59,14 @@ public class PhoneTopUpController {
         return new ModelAndView("phoneTradRecordSearch.ftl",rspMap);
     }
     
-    @RequestMapping("/phoneTradRecordList/{phoneNumber}")
-    public ModelAndView phoneTradRecordList(@PathVariable("phoneNumber") String phoneNumber){
+    @RequestMapping("/phoneTradRecordList/{searchNumber}")
+    public ModelAndView phoneTradRecordList(@PathVariable("searchNumber") String searchNumber){
     	//查询 列表
-    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(phoneNumber,0);
+    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(searchNumber,0);
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("topUpDealList", topUpDealList);  
     	rspMap.put("title", "充值记录");     
-    	rspMap.put("phoneNumber", phoneNumber);         	
+    	rspMap.put("searchNumber", searchNumber);         	
         return new ModelAndView("phoneTradRecordList.ftl",rspMap);
     }
     
@@ -61,9 +75,9 @@ public class PhoneTopUpController {
     	
     	//查询 列表
 		Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
-		String phoneNumber = paramsMap.get("phoneNumber");
+		String searchNumber = paramsMap.get("searchNumber");
 		int pageNum= Integer.parseInt(paramsMap.get("pageNum"));
-    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(phoneNumber,pageNum *10);
+    	List<Map<String, Object>> topUpDealList = phoneTopUpSql.GetTopUpDealList(searchNumber,pageNum *10);
     	Map<String, Object> rspMap = new HashMap<String, Object>(); 
     	rspMap.put("topUpDealList", topUpDealList);  
         return new ModelAndView("phoneTradRecordListSub.ftl",rspMap);

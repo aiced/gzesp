@@ -67,7 +67,7 @@
     <div class="cardsContainer">
     		<#list topUpList as info>			
 	     		 <div class="cardContainer  fleft">
-           			 <a class="card" name = "cardName" originalPrice="${info.originalPrice}" realPrice="${info.addPrice}" goodsId="${info.goodsId}" >
+           			 <a class="card" name = "cardName" clickAble = "${info.clickAble}" originalPrice="${info.originalPrice}" realPrice="${info.addPrice}" goodsId="${info.goodsId}" >
                			 <p class="price">${info.originalPrice}</p>
               			  <p class="realPrice" >售价为${info.addPrice}</p>
            			 </a>

@@ -37,14 +37,21 @@ function initBind() {
     for(var i=0;i<cards.length;i++){
         var card = cards[i];
         var $card=$(card);
-        $card.bind("click" , function(){          
-            //清空所有格式
-            clearCardStyle();
-            $(this).attr("class","cardSelected");
-            //清空输入金额  设置优惠价格
-            clearInputNum();
-            refreshTotleAmount($(this).attr('realPrice'),$(this).attr('originalPrice'),$(this).attr('goodsId'));
-        });
+       	if($card.attr('clickAble') == "no"){
+       		$card.css("background-color","#ECECEC");
+       		$card.attr("class","noAvalibleCard");       		
+    	}else{
+            $card.bind("click" , function(){ 
+                //清空所有格式
+                clearCardStyle();
+                $(this).attr("class","cardSelected");
+                //清空输入金额  设置优惠价格
+                clearInputNum();
+                refreshTotleAmount($(this).attr('realPrice'),$(this).attr('originalPrice'),$(this).attr('goodsId'));
+            });
+    	}
+        
+
     }
 
 //    输入金额失焦点 绑定
@@ -178,7 +185,14 @@ function clearCardStyle(){
     for(var i=0;i<cards.length;i++){
         var card = cards[i];
         var $card=$(card);
-        $card.attr("class","card");
+        
+        if($card.attr('clickAble') == "no"){
+       		$card.css("background-color","#ECECEC");
+       		$card.attr("class","noAvalibleCard");       		
+    	}else{
+            $card.attr("class","card");
+    	}
+        
     }
 }
 

@@ -17,7 +17,7 @@ import com.ai.gzesp.dao.service.CommonDao;
  *
  */
 @Service
-public class PhoneTopUpSql {
+public class RenewalSql {
 
 @Resource
 private CommonDao commonDao;
@@ -44,19 +44,6 @@ public List <Map<String, Object>> GetTopUpList() {
 
 }
 
-public List <Map<String, Object>> GetAvalibleCardsList(String cardValue) {
-	
-	StringBuffer sb = new StringBuffer();
-	sb.append("select distinct *");
-	sb.append(" from INV_D_RECHARGE_CARD t1");
-	sb.append("	where t1.CARD_VALUE =" + cardValue 
-			+ " and t1.CARD_STATUS = '1'");
-		
-	System.out.println("################################" + sb.toString());
-	List<Map<String, Object>> topUpList = commonDao.queryForList(sb.toString());
-	return topUpList;
-
-}
 // 得到充值卡交易记录
 public List <Map<String, Object>> GetTopUpDealList(String searchNumber) {
 	

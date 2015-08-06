@@ -49,17 +49,20 @@
  	                //element.parent('div').append(error+"--12313123123");  
  	            },
     			 submitHandler: function(form) {
-    				    var phone = $('#inputMobile').val();
+    				    var searchNum = $('#inputMobile').val();
     		        	var passport = $('#inputPassport').val();
     		        	
     		        	// add by wangxinjun 
     		        	if($('#inputPassportDiv').hide()){    		        	
     		        	 var path = "/customer/custOrderQuery";
-						 localStorage.setItem("phoneTradRecordListBackPath",path);     		        	 
-    		        	 location.href = '${base}/topUp/phoneTradRecordList/'+phone;  		     
-    		        	      		        	 		     
+						 localStorage.setItem("phoneTradRecordListBackPath",path);  						 
+						 if($("#tapIndex").val() == "2"){
+						      location.href = '${base}/topUp/phoneTradRecordList/'+searchNum;  		     
+						 }else if($("#tapIndex").val() == "3"){
+						     location.href = '${base}/renewal/renewalList/'+searchNum;  		     
+						 }	        	 		     
     		        	}else{
-    		        	   	location.href = "custMyOrder/"+phone+"/"+passport;   		     
+    		        	   	location.href = "custMyOrder/"+searchNum+"/"+passport;   		     
     		        	}
     		        	
     				 },
@@ -95,6 +98,8 @@
 </head>
 <body>
     <div>
+        <input type="hidden" id="tapIndex" value="1"></input>
+    
     	<!--top_start-->
         <div id="top">
         	<div id="top_left"></div>
@@ -102,15 +107,15 @@
         	<div id="top_right"></div>
         </div>
 		<div id="dv_clear"></div>
-		<!--top_end-->
-		<!--
-		
+		<!--top_end-->		
 				<div class = "topBar" >
-        		<div id = "regularOrderId" class = "regularOrderSelected" > 普通订单 </div>
-        		<div id = "topUpOrderId" class = "topUpOrderUnselected"  > 一卡充订单 </div>
+        			<div id = "regularOrderId" class = "regularOrderSelected" > 普通订单 </div>
+        			<div id = "topUpOrderId" class = "topUpOrderUnselected"  > 一卡充订单
+        				<div class="line-left"></div>
+        			    <div class="line-right"></div>
+        			 </div>
+        			<div id = "renewalOrderId" class = "renewalUnselected"  > 宽带续约订单 </div>
 				</div>
-		-->
-		
 		
 
 		
@@ -121,7 +126,7 @@
                 <br/>
                 <div class="form-group">
 	                <label for="inputMobile" class="sr-only"></label>
-	                <input type="text"  id="inputMobile" name="inputMobile" class="form-control" placeholder="输入您的手机号"   autofocus>
+	                <input type="text"  id="inputMobile" name="inputMobile" class="form-control" placeholder="请输入查询号码"   autofocus>
                 </div>
                 <br/>
                 <div class="form-group" id = "inputPassportDiv" >

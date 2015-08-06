@@ -51,19 +51,29 @@ public class RechargeService {
     public void activeCardsJob(String card_no){
     	log.debug("【一卡充】激活卡任务开始。。。");
     	int  cards = 0;
-    	while(true){
-    		if(cards >= CARDS_LIMIT){
-    			break; //如果已经超过单次任务的上限了，退出循环
+    	if(StringUtils.isBlank(card_no)){
+    		while(true){
+    			if(cards >= CARDS_LIMIT){
+    				break; //如果已经超过单次任务的上限了，退出循环
+    			}
+    			
+    			List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(card_no); //每次取20张卡
+    			if(CollectionUtils.isEmpty(cardList)){
+    				break; //如果捞不到未激活的卡，退出循环
+    			}
+    			
+    			activeCards(cardList); //激活这批卡
+    			
+    			cards += cardList.size(); 
     		}
-    		
+    	}
+    	else{
     		List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(card_no); //每次取20张卡
-    		if(CollectionUtils.isEmpty(cardList)){
-    			break; //如果捞不到未激活的卡，退出循环
-    		}
-    		
-    		activeCards(cardList); //激活这批卡
-    		
-    		cards += cardList.size(); 
+			if(CollectionUtils.isEmpty(cardList)){
+				return; //如果捞不到未激活的卡，退出
+			}
+			activeCards(cardList); //激活这批卡
+			cards += cardList.size(); 
     	}
     	
     	log.debug("【一卡充】激活卡任务结束。共激活" + cards + "张卡。");

@@ -127,7 +127,7 @@
 	<select id="getRechargedCardList" resultType="java.util.LinkedHashMap">
         select b.card_no, 
                decode(b.card_status, '3', '1', '0') card_status, 
-               to_char(b.update_time, 'yyyy-mm-dd HH24:mi:ss') update_time
+               to_char(b.update_time, 'yyyymmddHH24:mi:ss') update_time
           from itf_d_recharge_log a,
                inv_d_recharge_card b
          where a.req_time like substr(#{req_day}, 3)||'%'

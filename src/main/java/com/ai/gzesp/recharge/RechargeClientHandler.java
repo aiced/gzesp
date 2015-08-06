@@ -3,6 +3,8 @@ package com.ai.gzesp.recharge;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.apache.mina.core.future.ConnectFuture;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -38,9 +40,9 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     @Autowired
     private RechargeDao rechargeDao;
     
-	private NioSocketConnector connector; 
+	private static NioSocketConnector connector; 
 	
-    private ConnectFuture cf;
+    private static ConnectFuture cf;
     
 //    @Autowired
 //    private RechargeClient rechargeClient;
@@ -97,13 +99,17 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     /**
      * 初始化socket连接
      * 启动(在listener中启动是需要新建一个线程来连接Server，否则web容器会阻塞而无法启动。) 
+     * 对象初始化之后执行初始化socket客户端连接
      */
+    @PostConstruct
 	public void initConnector() {
+		log.debug("【一卡充：esp初始化socket客户端连接...】");
 		connector = new NioSocketConnector();
 		connector.getFilterChain().addLast("logger", new LoggingFilter());
 		connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new RechargeCodecFactory()));
 		connector.setHandler(this); //connector.setHandler(new ClientHandler());
-
+		//connector.setHandler(new RechargeClientHandler());
+		
 		// 设置心跳过滤器链
 		ClientKeepAliveFactoryImpl ckafi = new ClientKeepAliveFactoryImpl();
 		KeepAliveFilter kaf = new KeepAliveFilter(ckafi, IdleStatus.BOTH_IDLE, KeepAliveRequestTimeoutHandler.CLOSE);

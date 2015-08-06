@@ -64,7 +64,7 @@ public class BssBandService {
 	TdOrdDBANDPAYDao tdOrdDBANDPAYDao;
     
 	//初始化Bss发送请求协议报文：头部
-	private String InitBssHead(String strPacket)
+	private String InitBssHead(String strPacket,String NumID)
 	{
 		UniBSS uniBSS=new UniBSS();
 		uniBSS.setOrigDomain("ECIP"); //发起方应用域代码
@@ -77,7 +77,7 @@ public class BssBandService {
 		
 		Routing routing=new Routing();
 		routing.setRouteType("01");//路由类型
-		routing.setRouteValue("085800012929");//路由关键值
+		routing.setRouteValue(NumID);//路由关键值
 		uniBSS.setRouting(routing);//路由信息
 		
 		String strproceid=CommonUtil.generateBSSLogId("");
@@ -113,9 +113,9 @@ public class BssBandService {
 	}
 	
 	//返回当前请求的是报文
-	private  String getPacket(String packet)
+	private  String getPacket(String packet,String NumID)
 	{
-		String sendPacket=InitBssHead(packet);
+		String sendPacket=InitBssHead(packet,NumID);
 		return sendPacket;
 	}
 	
@@ -129,16 +129,16 @@ public class BssBandService {
 	    xStream.autodetectAnnotations(true);  
 	    String xml = xStream.toXML(userCheckReq_Req);  
 	    xml="<![CDATA["+Constants.xmlhead+xml+"]]>";
-	    return getPacket(xml);
+	    return getPacket(xml,NumID);
 	}
 	
 	//用户校验及产品查询数据 返回解析
-	public UserCheckReq_Res ResCheckUserPacket(String packet)
+	public UserCheckReq_Res ResCheckUserPacket(String packet,String NumID)
 	{
 		//packet=DelABC();//自己构造的返回报文，以后要删掉
 		packet="<![CDATA["+Constants.xmlhead+packet+"]]>";
 
-		packet=getPacket(packet);
+		packet=getPacket(packet,NumID);
 		
 		System.out.println("下面解析会报错："+packet);
 		
@@ -181,7 +181,7 @@ public class BssBandService {
         xStream.autodetectAnnotations(true);  
         String xml = xStream.toXML(proAndActReq);  
 	    xml="<![CDATA["+Constants.xmlhead+xml+"]]>";
-	    xml= getPacket(xml);
+	    xml= getPacket(xml,map.get("BANDNUMID").toString());
 		
     	String strUrl="";//未来需要填写的url
 		HashMap<String, String> mapxml = new HashMap<String, String>() ;
@@ -189,7 +189,7 @@ public class BssBandService {
 		String strRet=HttpPost(strUrl,mapxml);
 		
 		//解析响应报文
-		ProAndActRsp proAndActRsp=	ResProAndActPacket(strRet);
+		ProAndActRsp proAndActRsp=	ResProAndActPacket(strRet,map.get("BANDNUMID").toString());
 		
 		String finalproinfo="";
 		
@@ -226,12 +226,12 @@ public class BssBandService {
 	}
 	
 	//处理bss接口：产品变更，根据返回的报文做相应的解析处理
-	public ProAndActRsp ResProAndActPacket(String packet)
+	public ProAndActRsp ResProAndActPacket(String packet,String NumID)
 	{
 		packet=DelDEF();//自己构造的返回报文 以后要删掉
 		packet="<![CDATA["+Constants.xmlhead+packet+"]]>";
 
-		packet=getPacket(packet);
+		packet=getPacket(packet,NumID);
 		
 		UniBSS uniBSS= (UniBSS) xStream.fromXML(packet);
 

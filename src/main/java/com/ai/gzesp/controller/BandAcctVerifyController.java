@@ -84,11 +84,11 @@ public class BandAcctVerifyController {
 		
 		String strRet=bssBandService.HttpPost(strUrl,map);//bss返回结果
     	if (strRet.isEmpty()) {
-    		return mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);  
+    		return mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);  
 		}
 		
 		//解析响应报文
-		UserCheckReq_Res userCheckReq_Res=	bssBandService.ResCheckUserPacket(strRet);
+		UserCheckReq_Res userCheckReq_Res=	bssBandService.ResCheckUserPacket(strRet,bandAcct);
 		
 		//将相关的数据添加到mav里面 展示到页面上
 		if (userCheckReq_Res!=null) {
@@ -142,12 +142,12 @@ public class BandAcctVerifyController {
 			}
 			else //插入失败 
 			{
-		       	mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);
+		       	mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);
 			}
 			
 		}
 		else {
-	       	mav=new ModelAndView("redirect:esp/weShop/goodSelect/band/"+user_id);    		
+	       	mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);    		
 		}
         
         return mav;

@@ -1,6 +1,9 @@
 package com.ai.gzesp.recharge;
 
 import java.net.InetSocketAddress;
+import java.util.Arrays;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.future.ConnectFuture;
@@ -17,7 +20,6 @@ import org.springframework.stereotype.Component;
 
 import com.ai.gzesp.dao.RechargeDao;
 import com.ai.gzesp.dto.RechargeResp;
-import com.ai.gzesp.service.RechargeService;
 
 /**
  * 客户端请求端handler<br> 
@@ -38,9 +40,9 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     @Autowired
     private RechargeDao rechargeDao;
     
-	private NioSocketConnector connector; 
+	private static NioSocketConnector connector; 
 	
-    private ConnectFuture cf;
+    private static ConnectFuture cf;
     
 //    @Autowired
 //    private RechargeClient rechargeClient;
@@ -97,13 +99,17 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     /**
      * 初始化socket连接
      * 启动(在listener中启动是需要新建一个线程来连接Server，否则web容器会阻塞而无法启动。) 
+     * 对象初始化之后执行初始化socket客户端连接
      */
+    @PostConstruct
 	public void initConnector() {
+		log.debug("【一卡充：esp初始化socket客户端连接...】");
 		connector = new NioSocketConnector();
 		connector.getFilterChain().addLast("logger", new LoggingFilter());
 		connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new RechargeCodecFactory()));
 		connector.setHandler(this); //connector.setHandler(new ClientHandler());
-
+		//connector.setHandler(new RechargeClientHandler());
+		
 		// 设置心跳过滤器链
 		ClientKeepAliveFactoryImpl ckafi = new ClientKeepAliveFactoryImpl();
 		KeepAliveFilter kaf = new KeepAliveFilter(ckafi, IdleStatus.BOTH_IDLE, KeepAliveRequestTimeoutHandler.CLOSE);
@@ -177,13 +183,13 @@ public class RechargeClientHandler extends IoHandlerAdapter {
      * @param msg
      */
     private void recvMsg(byte[] msg){
-        //如果收到的是心跳报文0000,则返回 0000响应,心跳报文银联也不需要我返回
-          if(msg.length == 0){
-              log.debug("【一卡充：收到一卡充报文 长度=0, 是心跳响应报文】");
-              return;
-          }
           
-          //截取报文里固定位数的byte，转换成string，赋值给bean的属性，位数参考接口文档
+  		  if(Arrays.equals(msg, (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes())){
+  			log.debug("【一卡充：esp收到数据包， recvMsg里判断是响应心跳包】");
+  			return;
+  		  }
+          
+          //下面是响应报文包头部分，截取报文里固定位数的byte，转换成string，赋值给bean的属性，位数参考接口文档
           //int len = msg.length;
           byte [] logId = new byte[20];
           System.arraycopy(msg, 5, logId, 0, 20); //获取响应报文logId部分
@@ -211,12 +217,6 @@ public class RechargeClientHandler extends IoHandlerAdapter {
           byte [] reqTime = new byte[12];
           System.arraycopy(msg, 5+20+1+6+2+20+1+3+32+5+1+5, reqTime, 0, 12); //获取响应报文reqTime部分
           
-          byte [] agentBalance = new byte[10];
-          System.arraycopy(msg, 5+20+1+6+2+20+1+3+32+5+1+5+12, agentBalance, 0, 10); //获取响应报文agentBalance部分
-          
-          byte [] uniconSerilNum = new byte[20];
-          System.arraycopy(msg, 5+20+1+6+2+20+1+3+32+5+1+5+12+10, uniconSerilNum, 0, 20); //获取响应报文uniconSerilNum部分
-          
           RechargeResp resp = new RechargeResp();
           resp.setLogId(new String(logId).trim());
           resp.setSuccessFlag(new String(successFlag));
@@ -226,17 +226,19 @@ public class RechargeClientHandler extends IoHandlerAdapter {
           resp.setSerialNumType(new String(serialNumType));
           resp.setResultCode(new String(resultCode));
           resp.setReqTime(new String(reqTime));
-          resp.setAgentBalance(new String(agentBalance).trim());
-          resp.setUniconSerilNum(new String(uniconSerilNum).trim());
           
           log.debug("【一卡充：收到的响应报文转换成bean," + resp.toString() +" 】");
+          
+          //因为不同接口的响应包体不一样，包头是固定的，所以包体部分放各自的响应处理类里面去处理
+          //根据resp里交易类型进行业务处理
+          RespHandler.handlerResp(resp, msg);
           
           //更新ITF_D_RECHARGE_LOG日志记录里的结果
 //          rechargeService.updateRechargeLog(resp.getLogId(), resp.getSuccessFlag(), resp.getResultCode(),
 //        		  resp.getAgentBalance(), resp.getUniconSerilNum());
           
-          rechargeDao.updateRechargeLog(resp.getLogId(), resp.getSuccessFlag(), resp.getResultCode(),
-        		  resp.getAgentBalance(), resp.getUniconSerilNum());
+//          rechargeDao.updateRechargeLog(resp.getLogId(), resp.getSuccessFlag(), resp.getResultCode(),
+//        		  resp.getAgentBalance(), resp.getUniconSerilNum());
       }
     
     

@@ -79,5 +79,6 @@
   <!--mina自带的心跳必须设置响应超时时间，但银联不返回报文，所以只能搞个线程循环维持心跳  -->
   <!-- <bean id="heartBeat" class="com.ai.gzesp.unionpay.HeartBeatThread" init-method="init"/>   -->
   
+  
 </beans>
 

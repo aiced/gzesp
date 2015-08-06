@@ -60,12 +60,20 @@
        	 美国宽带网新标准：25Mbps下行/3Mbps上行
       </p>
       <br/>
-      <button type="button" class="btn btn-warning btn-block">确认订购,去支付</button>    
+      <button type="button" class="btn btn-warning btn-block" onclick="doClick();">确认订购,去支付</button>    
     </div> 
-             
-  
+    <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>        
+    <input type="hidden" id="hide_num_id" name="hide_num_id" value=${num_id}>
+    <input type="hidden" id="hide_productcode" name="hide_productcode" value=${productcode}>
+    <input type="hidden" id="hide_origfee" name="hide_origfee" value=${origfee}>
+    <input type="hidden" id="hide_realfee" name="hide_realfee" value=${realfee}>
+    <input type="hidden" id="hide_goodsid" name="hide_goodsid" value=${goods_id}>
+	<input type="hidden" id="hide_oldproductcode" name="hide_oldproductcode" value=${oldproductcode}>    
+    
     <!-- Bootstrap core JavaScript -->
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
+ 	<script type="text/javascript" src="${resRoot}/js/bandGoodDetail.js?v=${resVer}"></script>	
+  	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
   </body>
 </html>

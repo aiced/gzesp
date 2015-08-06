@@ -4,6 +4,8 @@ import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.ai.gzesp.recharge.RechargeCons;
 import com.ai.gzesp.unionpay.UnionPayCons;
 
@@ -67,11 +69,13 @@ public class DESUtil {
 
     /**
      * 一卡充接口用的加密
+     * 一卡充给的16位秘钥，不足24位的 右补足 0x0
      * @param src
      * @return
      */
     public static byte[] encryptModeRecharge(byte[] src) {
-        return encryptMode(RechargeCons.desKey.getBytes(), src);
+    	String newKey = StringUtils.rightPad(RechargeCons.desKey, 24, RechargeCons.keyPadChar); //
+        return encryptModeRecharge(newKey.getBytes(), src);
     }
     
     /**
@@ -84,7 +88,7 @@ public class DESUtil {
     public static byte[] encryptModeRecharge(byte[] keybyte, byte[] src) {
         try {
             // 生成密钥
-            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm2); //  "DESede"
+            SecretKey deskey = new SecretKeySpec(keybyte, Algorithm); //  "DESede"
 
             // 加密
             Cipher c1 = Cipher.getInstance(Algorithm2);
@@ -206,15 +210,27 @@ public class DESUtil {
         byte[] srcBytes = decryptMode(UnionPayCons.desKey.getBytes(), encoded);
         System.out.println("解密后的字符串:" + (new String(srcBytes)));*/
     	
+//        String szSrc = "1234567890123456";
+//
+//        System.out.println("加密前的字符串:" + szSrc);
+//
+//        byte[] encoded = encryptMode(UnionPayCons.desKey.getBytes(), szSrc.getBytes());
+//        System.out.println("加密后的字符串:" + new String(encoded));
+//
+//        byte[] srcBytes = decryptMode(UnionPayCons.desKey.getBytes(), encoded);
+//        System.out.println("解密后的字符串:" + (new String(srcBytes)));
+    	
         String szSrc = "1234567890123456";
 
         System.out.println("加密前的字符串:" + szSrc);
 
-        byte[] encoded = encryptMode(UnionPayCons.desKey.getBytes(), szSrc.getBytes());
+        byte[] encoded = encryptModeRecharge(szSrc.getBytes());
         System.out.println("加密后的字符串:" + new String(encoded));
 
-        byte[] srcBytes = decryptMode(UnionPayCons.desKey.getBytes(), encoded);
+        byte[] srcBytes = encryptModeRecharge(encoded);
         System.out.println("解密后的字符串:" + (new String(srcBytes)));
+        
+        
     }
 
     //byte[] 转 字符串 

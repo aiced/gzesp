@@ -2,6 +2,7 @@ package com.ai.gzesp.recharge;
 
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.buffer.IoBuffer;
@@ -121,9 +122,8 @@ public class RechargeDecoder extends CumulativeProtocolDecoder {
 		//先判断是否是心跳报文
 		//byte[] heartBytes = new byte[heartBytesLen]; 
 		in.get(heartBytes); //获取心跳包相同长度+前后缀长度的内容，判断下是否是心跳包
-		String heart = new String(heartBytes).trim();
-		if(heart.equals(RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix)){
-			log.debug("【一卡充：esp收到数据包解码， 是响应心跳包" + heart + "】");
+		if(Arrays.equals(heartBytes, (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes())){
+			log.debug("【一卡充：esp收到数据包解码， 解码后是响应心跳包。】");
 			return true;
 		}
 		else{

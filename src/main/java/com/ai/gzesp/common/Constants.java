@@ -112,4 +112,8 @@ public class Constants {
     //银行卡-卡号 加密key
     public static final String desKey = "e036wlqtcueakxn8tjwhu9gs";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
     
+    //宽带续约，md5加密用到的key
+    public static final String md5key_bbs="gzecsts20141016223600";
+    //宽带续约，BSS接口xml头
+    public static final String xmlhead="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 }

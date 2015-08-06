@@ -28,16 +28,16 @@ public class RechargeClient {
 //	
 //    private ConnectFuture cf;
     
-    @Autowired
+/*    @Autowired
     private RechargeClientHandler rechargeClientHandler;
 	
-	/**
+	*//**
 	 * RechargeClient对象初始化之后执行初始化socket客户端连接
-	 */
+	 *//*
 	@PostConstruct
 	public void init(){
 		rechargeClientHandler.initConnector();
-	}
+	}*/
 	
 //    /**
 //     * 初始化socket连接

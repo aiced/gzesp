@@ -32,7 +32,7 @@
     <div class="container">
       <form class="form-signin">
         <label for="bandAcct" class="sr-only">band acct</label>
-        <input type="text" id="bandAcct" name='bandAcct' class="form-control" placeholder="固网账户" required autofocus>
+        <input type="text" id="bandAcct" name='bandAcct' class="form-control" placeholder="固网账户" autofocus>
         <br/>
         <button class="btn btn-lg btn-warning btn-block" type="button" onclick="doCheckClick(this);">验证</button>
 		<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
@@ -44,5 +44,6 @@
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
     <script type="text/javascript" src="${resRoot}/js/bandAcctVerify.js?v=${resVer}"></script>	
+  	<script src="${resRoot}/js/formSubmit.js?v=${resVer}"></script>
   </body>
 </html>

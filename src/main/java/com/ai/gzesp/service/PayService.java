@@ -658,7 +658,7 @@ public class PayService {
      * @return
      */
     private int insertAcctAccessLog(String acct_id, String order_id, String trade_type, int balanceOld, int pay_fee, int balanceNew) {
-        String log_id = RechargeUtil.generateLogId();
+        String log_id = CommonUtil.generateLogId("6");
         String partition_id = log_id.substring(14, 16);
         //String trade_type = "22"; //22：账户支付(现金可提)(钱为负值)
     	return payDao.insertAcctAccessLog(log_id, partition_id, acct_id, order_id, trade_type, balanceOld, pay_fee, balanceNew);

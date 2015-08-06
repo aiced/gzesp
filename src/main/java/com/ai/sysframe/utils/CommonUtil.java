@@ -257,7 +257,7 @@ public class CommonUtil {
     }
     
     /**
-     * ordType 1:普通订单； 2：充值卡缴费; 
+     * ordType 1:普通订单； 2：充值卡缴费; 3:宽带续约
      * 
      * @param ordType
      * @return
@@ -272,7 +272,9 @@ public class CommonUtil {
     
     /**
      * payType 2:微信支付； 3：银联; 4：沃支付； 5：deal_log_id
-     * 
+     * edit_by_wenh
+     * 7:bss 调用日志表
+     * 6:ACT_D_ACCESS_LOG调用日志表
      * @param payType
      * @return
      */
@@ -385,4 +387,16 @@ public class CommonUtil {
     	  return false; 
 	  }
     }
+    
+    //BSS接口调用需要使用13位的流水号
+    public static String generateBSSLogId(String payType) {
+//    	String idType = "2";
+    	long time =  System.currentTimeMillis();
+    	Random r = new Random();
+    	int rint = r.nextInt(99);
+    	String rStr = StringUtil.paddingLeft(String.valueOf(rint), '0', 2);
+    	//return payType + rStr + time;
+    	String strlogid=String.valueOf(time);
+    	return strlogid;
+    }    
 }

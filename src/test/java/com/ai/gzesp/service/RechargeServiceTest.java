@@ -1,7 +1,11 @@
 package com.ai.gzesp.service;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ai.gzesp.recharge.RechargeCons;
+import com.ai.gzesp.utils.DESUtil;
 
 public class RechargeServiceTest extends BaseTest {
 	
@@ -32,5 +36,46 @@ public class RechargeServiceTest extends BaseTest {
 //		rechargeService.recharge(200000);
 //		rechargeService.recharge(210000);
 //		rechargeService.rechargeTx(310000);
+	}
+	
+	@Test
+	public void test2(){
+		rechargeService.syncCardStatus2BssJob();
+	}
+	
+	@Test
+	public void test3(){
+		rechargeService.syncCardStatus2BssRespJob();
+	}
+	
+	@Test
+	public void test4(){
+		System.out.println(StringUtils.rightPad(RechargeCons.desKey, 24, RechargeCons.keyPadChar));
+		//rechargeService.syncCardStatus2BssRespJob();
+	}
+	
+	@Test
+	public void test5(){
+		rechargeService.activeCardsJob(null);
+	}
+	
+	@Test
+	public void test9(){
+		rechargeService.activeCardsJob("");
+	}
+	
+	@Test
+	public void test6(){
+		rechargeService.recharge("12345", "18651885060", "3", 1);
+	}
+	
+	@Test
+	public void test7(){
+		rechargeService.checkBillJob(null);
+	}
+	
+	@Test
+	public void test8(){
+		rechargeService.checkBillJob("");
 	}
 }

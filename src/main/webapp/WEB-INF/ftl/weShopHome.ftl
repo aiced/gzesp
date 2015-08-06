@@ -294,18 +294,13 @@
 	        	<!-- edit_by_wenh_2015_6_8 -->
 	        	<#if (usertype=='1')>
 
- 	  	            <a href="acct/myAcct/${userid}" class="list-group-item">我的账户<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
+					<a href="acct/myAcct/${userid}" class="list-group-item">我的账户<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	  	           	<#if (acctbankinfolist?exists)>
 	  	           		<a href="${base}/weShop/insteadBuy/${userid}" class="list-group-item">代客下单<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	  	           	<#else>
 	  	           		<a href="#" class="list-group-item">代客下单<span style="font-size:12px;">(请先到[我的账户]-绑定银行卡)</span><span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	  	           	</#if>
 	  	           	<a href="goodsManageRecommend?userid=${userid}" class="list-group-item">商品管理<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
-
- 	  	            <!--<a href="acct/myAcct/${userid}" class="list-group-item">我的账户<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
-	  	            <a href="${base}/weShop/insteadBuy/${userid}" class="list-group-item">代客下单<span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>-->
-	  	            
-		            
 		            <a href="ordersQuery?userid=${userid}&fromPage=shopHome" class="list-group-item">订单查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 		            <a href="commissionQuery?userid=${userid}" class="list-group-item">收益查询 <span class="list_gou"><img src="${resRoot}/image/shopHome/jiantou.png" width="9" height="15"></span></a>
 	        	<#elseif (usertype='2')>

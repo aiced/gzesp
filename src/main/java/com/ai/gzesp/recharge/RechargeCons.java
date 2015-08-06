@@ -13,12 +13,12 @@ public class RechargeCons {
     /**
      * 一卡充系统 主接入服务器ip
      */
-    public static String SERVER_1_HOST = "127.0.0.1"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
+    public static String SERVER_1_HOST = "135.33.3.180"; // 测试：135.33.3.180  正式：135.33.3.180 本机：127.0.0.1
     
     /**
      * 一卡充系统 主接入服务器端口
      */
-    public static int SERVER_1_PORT = 10012; //测试：10004 正式(任选一个连接)：10012 10013
+    public static int SERVER_1_PORT = 8003; //测试：8003 正式：8001 
     
     /**
      * 一卡充系统 备接入服务器ip
@@ -33,13 +33,13 @@ public class RechargeCons {
     /**
      * 接入ID
      */
-    public static String ID = "123"; //测试：1000000000009904 正式：584520148120004   
+    public static String ID = "011"; //测试：011 正式：011   
     
     
     /**
      * des加密密钥:，密钥长度128位（16个字符）
      */
-    public static String desKey = "e036hlqtculakx38e036hlqt";  //测试：yvo0sovt414fakqwvchs70b3 正式：e036hlqtculakx38tjw2u9gs
+    public static String desKey = "1234567890123456";  //测试：1234567890123456 正式：e036hlqtculakx38tjw2u9gs
 
     /**
      * 心跳发送间隔时间
@@ -80,5 +80,7 @@ public class RechargeCons {
      * 所有数据包前增加”@”为包的开始标志，数据包尾加“0x1a”为包的结束标志
      */
     public static char Suffix = 0x1a;
+    
+    public static char keyPadChar = 0x0;
 
 }

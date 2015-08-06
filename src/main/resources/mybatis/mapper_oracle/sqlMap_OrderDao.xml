@@ -348,7 +348,60 @@
 		select goods_id from gds_d_info a where ctlg_code = #{ctlg_code}
 	</select>
 	<select id="queryBandProByOrderId" resultType="java.util.HashMap">
-		select * from ORD_D_BAND_PAY where order_id=#{order_id}
+		select order_id,partition_id,goods_id,user_id,order_from,bandnumid,product_id,topay_money,nvl(income_money,'0') income_money,order_state,order_type,values1,values2,create_time,update_time,original_price from ORD_D_BAND_PAY where order_id=#{order_id}
 	</select>	
-
+	
+	<insert id="insertBSSLog">
+       insert into BSS_B_LOG
+              (
+				log_id,			
+				partition_id,	
+				interfacename,
+				create_time,
+				result_code,
+				user_id,
+				band_numid,
+				user_name,
+				actprovince,
+				actcity,
+				nettype,
+				paytype,
+				userstatus,
+				usertype,
+				currproinfo,
+				proinfo,
+				finalproinfo,
+				order_id
+              )
+       values(
+				#{log_id},			
+				#{partition_id},	
+				#{interfacename},
+				to_date(#{create_time},'yyyymmddhh24miss'),
+				#{result_code},
+				#{user_id},
+				#{band_numid},
+				#{user_name},
+				#{actprovince},
+				#{actcity},
+				#{nettype},
+				#{paytype},
+				#{userstatus},
+				#{usertype},
+				#{curproinfo},
+				#{proinfo},
+				#{finalproinfo},
+				#{order_id}
+       )	
+	</insert>
+	
+	<select id="queryBandOrderByDate" resultType="java.util.HashMap">
+		select a.order_id,
+		       a.bandnumid,
+		       decode(a.order_state, '02', '1', '0') order_state,
+		       a.create_time
+		  from ORD_D_BAND_PAY a, BSS_B_LOG b
+		 where a.order_id = b.order_id
+		 and a.create_time like substr(#{req_day}, 3)||'%'
+	</select>
 </mapper>

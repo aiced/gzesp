@@ -3,6 +3,7 @@ package com.ai.gzesp.controller;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,7 @@ public class BandAcctVerifyController {
 		String packet=bssBandService.ReqCheckUserPacket(bandAcct, strEncrypt);	
 		System.out.println("BSS发送请求的报文："+packet);
 		
-    	String strUrl="";//未来需要填写的url
+    	String strUrl="http://130.85.50.34:7772/XMLReceiver";//未来需要填写的url
 		HashMap<String, String> map = new HashMap<String, String>() ;
 		map.put("xmlmsg", packet);
 		
@@ -91,8 +92,47 @@ public class BandAcctVerifyController {
 		
 		//将相关的数据添加到mav里面 展示到页面上
 		if (userCheckReq_Res!=null) {
+			
+			String curproinfo="";
+			for (int i = 0; i < userCheckReq_Res.getCurrProductList().size(); i++) {
+				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductCode();
+				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductName();
+				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductType();
+				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductActiveTime();
+				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductInActiveTime()+",";
+			}
+			
+			String proinfo="";
+			for (int i = 0; i < userCheckReq_Res.getProductList().size(); i++) {
+				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductCode();
+				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductFee();
+				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductName();
+				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductRate();
+				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductType();
+				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntType();
+				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntValue()+",";
+			}
+			
+			
 			//插入bss报文请求日志表
-			if (true) //插入成功 
+			int iRet=bssBandService.insertBSSLog(
+					"宽带账号校验", 
+					userCheckReq_Res.getRespCode()+userCheckReq_Res.getRespDesc(), 
+					user_id, 
+					bandAcct, 
+					userCheckReq_Res.getCustName(), 
+					userCheckReq_Res.getProvinceCode(), 
+					userCheckReq_Res.getCityCode(),
+					userCheckReq_Res.getNetType(),
+					userCheckReq_Res.getPayType(),
+					userCheckReq_Res.getUserStatus(),
+					userCheckReq_Res.getUserType(),
+					curproinfo, 
+					proinfo, 
+					"", 
+					"");
+			
+			if (iRet>0) //插入成功 
 			{
 	        	mav= new ModelAndView("bandGoodSelect.ftl");
 	        	mav.addObject("user_id", user_id); 	

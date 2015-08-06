@@ -9,7 +9,7 @@ function doClick(productcode,origfee,realfee,oldproductcode)
 			'productcode':productcode,
 			'origfee':origfee,
 			'realfee':realfee,
-			'hide_oldproductcode':oldproductcode};
+			'oldproductcode':oldproductcode};
 	$.commonFormSubmit({
 	 type: "POST",
 	 action: '/esp/weShop/bandAcctPostData',

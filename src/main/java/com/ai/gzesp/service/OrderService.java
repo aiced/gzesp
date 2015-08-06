@@ -604,9 +604,10 @@ public class OrderService {
 		String goodsId = paramsMap.get("goodsId");
 		String userId = paramsMap.get("userId");
 		String orderFrom = paramsMap.get("orderFrom");
-		String bandnumid = paramsMap.get("bandnumid");
+		String bandnumid = paramsMap.get("BANDNUMID");
 		String productId = paramsMap.get("productId");
 		String orderType = paramsMap.get("orderType");
+		String oldproductId = paramsMap.get("VALUES1");//旧的产品id
 		
 		TdOrdDBANDPAY record = new TdOrdDBANDPAY();
 		record.setOrderId(CommonUtil.string2Long(orderId));
@@ -621,6 +622,8 @@ public class OrderService {
 		record.setOrderState("00");
 		record.setOrderType(orderType);
 		record.setCreateTime(DateUtil.getNow());
+		record.setValues1(oldproductId);
+		record.setUpdateTime(DateUtil.getNow());
 		
 		tdOrdDBandDao.insertSelective(record);
 	}

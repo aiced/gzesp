@@ -69,8 +69,7 @@ public class WeShopCustRefundController {
 	   {
 	    	System.out.println(inputParams);
 	    	Map<String, String> paramsMap = StringUtil.params2Map(inputParams);
-	    	
-	    	
+
 	    	String strname=paramsMap.get("txtname");
 	    	String strphone=paramsMap.get("txtphone");
 	    	String strreason=paramsMap.get("txtreason");

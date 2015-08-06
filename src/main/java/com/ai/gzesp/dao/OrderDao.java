@@ -1,9 +1,12 @@
 package com.ai.gzesp.dao;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
+
+import com.ai.gzesp.utils.DateUtils;
 
 
 
@@ -59,13 +62,35 @@ public interface OrderDao {
     
     public int updateOrderBaseState(@Param("orderIds") String[] orderIds);
     
-    //edit_by_wenh
+    //edit_by_wenh//订单透明化
     public List<Map<String, Object>> queryOrdersDealLogByOrderId(@Param("order_id") String order_id);
-    //edit_by_wenh
+    //edit_by_wenh 充值卡查询
     public List<Map<String, Object>> queryCZCard(@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("user_id") String user_id,@Param("czcard_no") String czcard_no,@Param("hidepageindex") int hidepageindex);
-    //edit_by_wenh
+    //edit_by_wenh 查询宽带续约产品id
     public Map<String, Object> queryBandGoodsId(@Param("ctlg_code") String ctlg_code);
-    
+    //edit_by_wenh 查询宽带续约产品信息
     public Map<String , Object> queryBandProByOrderId(@Param("order_id") String order_id);
-    
+    //edit_by_wenh 插入BSSlog日志表
+    public int insertBSSLog(	
+    		@Param("log_id") String log_id,			//logid
+    		@Param("partition_id") String partition_id,	//分区id
+    		@Param("interfacename") String interfacename,	//接口名称
+    		@Param("create_time") String create_time,
+    		@Param("result_code") String result_code,
+    		@Param("user_id") String user_id,
+    		@Param("band_numid") String band_numid,
+    		@Param("user_name") String user_name,
+    		@Param("actprovince") String actprovince,
+    		@Param("actcity") String actcity,
+    		@Param("nettype") String nettype,
+    		@Param("paytype") String paytype,
+    		@Param("userstatus") String userstatus,
+    		@Param("usertype") String usertype,
+    		@Param("curproinfo") String curproinfo,
+    		@Param("proinfo") String proinfo,
+    		@Param("finalproinfo") String finalproinfo,
+    		@Param("order_id") String order_id
+    		);
+    public List<LinkedHashMap<String, String>> queryBandOrderByDate(@Param("req_day") String req_day);
+
 }

@@ -16,7 +16,7 @@ import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.RechargeDao;
 import com.ai.gzesp.dto.RechargeResp;
@@ -29,7 +29,7 @@ import com.ai.gzesp.dto.RechargeResp;
  * @see [相关类/方法]（可选）
  * @since [产品/模块版本] （可选）
  */
-@Component
+@Service
 public class RechargeClientHandler extends IoHandlerAdapter {
     
     private static Logger log = Logger.getLogger(RechargeClientHandler.class); 

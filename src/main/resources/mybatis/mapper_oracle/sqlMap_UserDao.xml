@@ -9,16 +9,16 @@
 	</select>
 	
 	<select id="getUserInfoByPhonePassword" resultType="java.util.HashMap">
-       select user_id, user_name, phone_number, weixin_id, user_password
-         from AUR_D_AUTHINFO
-        where phone_number = #{phone_number}
-          and user_password = #{password}
+       select a.user_id, a.user_name, a.phone_number, a.weixin_id, a.user_password,	to_char(nvl(b.mch_id,0)) mch_id
+         from AUR_D_AUTHINFO a left join WLT_L_USR_MCH b on a.user_id=b.user_id
+        where a.phone_number = #{phone_number}
+          and a.user_password = #{password}
 	</select>	
 
 	<select id="getUserInfoByOpenId" resultType="java.util.HashMap">
-       select user_id, user_name, phone_number, weixin_id, user_password
-         from AUR_D_AUTHINFO
-        where wxopen_id = #{open_id}
+       select a.user_id, a.user_name, a.phone_number, a.weixin_id, a.user_password,	to_char(nvl(b.mch_id,0)) mch_id
+         from AUR_D_AUTHINFO a left join WLT_L_USR_MCH b on a.user_id=b.user_id
+        where a.wxopen_id = #{open_id}
 	</select>	
 
 </mapper>

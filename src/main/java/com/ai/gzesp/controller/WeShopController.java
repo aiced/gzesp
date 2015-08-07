@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +42,11 @@ public class WeShopController {
      */
     @RequestMapping("/index/{user_id}")
     public ModelAndView index(HttpServletRequest request, @PathVariable("user_id") String user_id){
+    	
+    	Subject subject = SecurityUtils.getSubject();
+		org.apache.shiro.session.Session session = subject.getSession(true);
+		String mchId = (String)session.getAttribute("mchId");
+		 
         ModelAndView mav = new ModelAndView("weShopIndex.ftl");
         //根据shopId获取 能人信息 店铺名称 手机 微信
         Map<Object, Object> developer = weShopService.getDevloperInfo(user_id);
@@ -50,21 +57,21 @@ public class WeShopController {
         mav.addObject("banners", banners);
         
         //获取店长推荐 热销前4的商品 
-        List<Map<Object, Object>> dztj = weShopService.getDztj(user_id);
+        List<Map<Object, Object>> dztj = weShopService.getDztj(user_id, mchId);
         mav.addObject("dztj", dztj);
         
         //获取热销合约商品
-        List<Map<Object, Object>> rxhy = weShopService.getRxhy();
+        List<Map<Object, Object>> rxhy = weShopService.getRxhy(mchId);
         mav.addObject("rxhy", rxhy);
         
         //获取热销套餐商品
-        List<Map<Object, Object>> rxtc = weShopService.getRxtc();
+        List<Map<Object, Object>> rxtc = weShopService.getRxtc(mchId);
         mav.addObject("rxtc", rxtc);
         
         
         
         //获取热销网卡商品
-        List<Map<Object, Object>> rxwk = weShopService.getRxwk();
+        List<Map<Object, Object>> rxwk = weShopService.getRxwk(mchId);
         mav.addObject("rxwk", rxwk);
         
         //edit_by_wenh_2015_4_18

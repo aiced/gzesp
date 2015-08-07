@@ -22,7 +22,7 @@
 	</select>	
 	
 	<select id="getDztj" resultType="java.util.HashMap">
-	<![CDATA[
+<!-- 	<![CDATA[ -->
           select a.user_id user_id,  
                  a.goods_id  goods_id, 
                  b.ctlg_code ctlg_code, 
@@ -42,9 +42,12 @@
              and a.goods_id = d.goods_id
              and d.amount_type = '2' 
              and b.album_id = f.album_id
+             <if test="mchId != null">
+            and b.MERCHANT_ID = #{mchId}
+            </if>
              and f.default_tag = '0'  
            order by a.seq_num 
-     ]]>
+<!--      ]]> -->
 	</select>
 
 	<select id="getRxhyRest" resultType="java.util.HashMap">
@@ -64,6 +67,9 @@
             and a.goods_id = b.goods_id
             and b.goods_state = '1'
             and b.ctlg_code in (4, 9) 
+            <if test="mchId != null">
+            and b.MERCHANT_ID = #{mchId}
+            </if>
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0' 
@@ -82,7 +88,7 @@
 	</select>
 	
 	<select id="getRxhySpecial" resultType="java.util.HashMap">
-	<![CDATA[
+<!-- 	<![CDATA[ -->
         select *
         from (
          select a.PARAM_VALUE  goods_id, 
@@ -101,6 +107,9 @@
             and a.PARAM_VALUE = b.goods_id
             and b.goods_state = '1'
             and b.ctlg_code in (4, 9) 
+            <if test="mchId != null">
+            and b.MERCHANT_ID = #{mchId}
+            </if>
             and a.PARAM_VALUE = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0'  
@@ -108,12 +117,13 @@
             and a.PARAM_VALUE = e.goods_id
           order by a.PARAM_CODE 
           ) m
+    <![CDATA[
         where rownum <= 4
      ]]>
 	</select>	
 	
 	<select id="getRxtcSpecial" resultType="java.util.HashMap">
-	<![CDATA[
+<!-- 	<![CDATA[ -->
         select *
         from (
          select a.PARAM_VALUE  goods_id, 
@@ -132,6 +142,9 @@
             and a.PARAM_VALUE = b.goods_id
             and b.goods_state = '1'
             and b.ctlg_code in (5, 10) 
+            <if test="mchId != null">
+            and b.MERCHANT_ID = #{mchId}
+            </if>
             and a.PARAM_VALUE = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0'  
@@ -139,6 +152,7 @@
             and a.PARAM_VALUE = e.goods_id
           order by a.PARAM_CODE 
           ) m
+     <![CDATA[
         where rownum <= 4
      ]]>
 	</select>
@@ -160,6 +174,9 @@
             and a.goods_id = b.goods_id
             and b.goods_state = '1'
             and b.ctlg_code in (5, 10) 
+           <if test="mchId != null">
+            and b.MERCHANT_ID = #{mchId}
+            </if>
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0'  
@@ -178,7 +195,7 @@
 	</select>
 		
 	<select id="getRxwkSpecial" resultType="java.util.HashMap">
-	<![CDATA[
+<!-- 	<![CDATA[ -->
         select *
         from (
          select a.PARAM_VALUE  goods_id, 
@@ -197,6 +214,9 @@
             and a.PARAM_VALUE = b.goods_id
             and b.goods_state = '1'
             and b.ctlg_code in (6, 11)  
+            <if test="mchId != null">
+            and b.MERCHANT_ID = #{mchId}
+            </if>
             and a.PARAM_VALUE = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0'  
@@ -204,6 +224,7 @@
             and a.PARAM_VALUE = e.goods_id
           order by a.PARAM_CODE
           ) m
+     <![CDATA[
         where rownum <= 4       
      ]]>
 	</select>
@@ -225,6 +246,9 @@
             and a.goods_id = b.goods_id
             and b.goods_state = '1'
             and b.ctlg_code in (6, 11) 
+            <if test="mchId != null">
+            and b.MERCHANT_ID = #{mchId}
+            </if>
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
             and f.default_tag = '0'  
@@ -356,6 +380,9 @@
             </if>
             and a.goods_state = '1'
             and a.goods_id = b.goods_id
+            <if test="mchId != null">
+            and a.MERCHANT_ID = #{mchId}
+            </if>
             and b.amount_type = '2' 
             and a.goods_id = c.goods_id
             and a.album_id = f.album_id

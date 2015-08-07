@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +68,7 @@ public class GoodsSql {
 	/*
 	 * 获取商品列表
 	 */
-	public List getGoodsList() {
+	public List getGoodsList(String mchId) {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("select distinct "
@@ -82,14 +83,17 @@ public class GoodsSql {
 				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
-				+ " and t1.GOODS_STATE = '1'"
-				+ " order by t1.GOODS_ID");
+				+ " and t1.GOODS_STATE = '1'");
+		if(StringUtils.isNotEmpty(mchId)) {
+			sb.append( " and t1.MERCHANT_ID ='"+mchId+"'");
+		}
+		sb.append( " order by t1.GOODS_ID");
 		
 		List goodsList = commonDao.queryForList(sb.toString());
 		return goodsList;
 	}
 	
-	public List getGoodsListNotIn(String sbStr) {
+	public List getGoodsListNotIn(String sbStr, String mchId) {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("select distinct "
@@ -105,8 +109,12 @@ public class GoodsSql {
 				+ " and t1.ALBUM_ID = t4.ALBUM_ID"
 				+ " and t4.DEFAULT_TAG = '0'"
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
-				+ " and t1.GOODS_STATE = '1'"
-				+ " order by t1.GOODS_ID");
+				+ " and t1.GOODS_STATE = '1'");
+				
+		if(StringUtils.isNotEmpty(mchId)) {
+			sb.append( " and t1.MERCHANT_ID ='"+mchId+"'");
+		}
+		sb.append( " order by t1.GOODS_ID");
 		
 		List goodsList = commonDao.queryForList(sb.toString());
 		return goodsList;
@@ -255,12 +263,17 @@ public class GoodsSql {
 				+ "	and a.res_id = b.res_id "
 				+ " and b.attr_code = 'NUMBERS'" );
 
-		Map<String, Object> info = commonDao.queryForMap(sb.toString());
-		Object obj = info.get("RES_ID");
+		List<Map<String, Object>> list = commonDao.queryForList(sb.toString());
 		String resId = "-1";
-		if(obj != null ) {
-			resId = String.valueOf(obj);
+		if(list.size()>0) {
+			resId = String.valueOf(list.get(0).get("RES_ID"));
 		}
+		
+//		Object obj = info.get("RES_ID");
+//		String resId = "-1";
+//		if(obj != null ) {
+//			resId = String.valueOf(obj);
+//		}
 		return resId;
 	}
 	

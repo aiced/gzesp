@@ -3,6 +3,8 @@ package com.ai.gzesp.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +41,10 @@ public class GoodSelectController {
      */
     @RequestMapping("/goodSelect/{good_type}/{user_id}")
     public ModelAndView goodSelect(@PathVariable("good_type") String goodType, @PathVariable("user_id") String user_id){
+    	Subject subject = SecurityUtils.getSubject();
+		org.apache.shiro.session.Session session = subject.getSession(true);
+		String mchId = (String)session.getAttribute("mchId");
+		
         ModelAndView mav = null;
         String[] ctlgArray = null;
         if(Constants.GOOD_TYPE_PLAN.equals(goodType)){
@@ -66,7 +72,7 @@ public class GoodSelectController {
         
         //从数据库按分页查询，默认第一页,一页10个
         //如果第四个参数传null，出来的排序rownum跟下面ajax函数出来的不一致，导致下拉刷新出现重复的商品
-        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 10, "", null, null); 
+        List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, 1, 10, "", null, null, mchId); 
         mav.addObject("goodList", goodList);
 
         mav.addObject("good_type", goodType); //good_type是给ajax查询用的
@@ -84,6 +90,10 @@ public class GoodSelectController {
      */
     @RequestMapping("/queryGoodListAjax")
     public ModelAndView queryGoodListAjax(@RequestBody GoodSelectQueryCon con){
+    	Subject subject = SecurityUtils.getSubject();
+		org.apache.shiro.session.Session session = subject.getSession(true);
+		String mchId = (String)session.getAttribute("mchId");
+		
         //返回数据表格子页面
         ModelAndView mav = null;
         String[] ctlgArray = null;
@@ -112,7 +122,7 @@ public class GoodSelectController {
         
         //从数据库按分页查询，默认第一页,一页5个 注意参数转成了小写
         List<Map<Object, Object>> goodList = weShopService.queryGoodListByPage(ctlgArray, con.getPageNum(),
-                con.getPageSize(), con.getKeyword().toLowerCase(), con.getSort(), con.getSortCol());
+                con.getPageSize(), con.getKeyword().toLowerCase(), con.getSort(), con.getSortCol(), mchId);
         mav.addObject("goodList", goodList);
 
         return mav;

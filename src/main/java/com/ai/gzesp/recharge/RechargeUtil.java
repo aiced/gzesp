@@ -253,7 +253,10 @@ public class RechargeUtil {
 		//StringBuffer reqBody = new StringBuffer(100);
 		//prependHeadA1(req);
 		String reqBody = null;
-		if(InterfaceType.recharge.getInterfaceCode().equals(interfaceType)){
+		if(InterfaceType.rechargeCheck.getInterfaceCode().equals(interfaceType)){
+			reqBody = genReqBodyOfRechargeCheck(param); //充值号验证接口包体
+		}
+		else if(InterfaceType.recharge.getInterfaceCode().equals(interfaceType)){
 			reqBody = genReqBodyOfRecharge(param); //充值接口包体
 		}
 		else if(InterfaceType.active.getInterfaceCode().equals(interfaceType)){
@@ -266,6 +269,16 @@ public class RechargeUtil {
 			
 		}
 		return reqBody;
+	}
+	
+	/**
+	 * 生成充值号验证接口包体
+	 * 无包体
+	 * @param param
+	 * @return
+	 */
+	public static String genReqBodyOfRechargeCheck(RechargeReq param){
+		return "";
 	}
 	
 	/**
@@ -283,7 +296,7 @@ public class RechargeUtil {
 		reqBody.append(fillNull(String.valueOf(param.getAgentID()), 20));
 		
 		byte[] temp = DESUtil.encryptModeRecharge(RechargeCons.desKey.getBytes(), param.getPasword().getBytes());
-		String target = Base64Utils.encodeStr(temp);
+		String target = Base64Utils.encode(temp);
 		reqBody.append(fillNull(target, 32));
 		
 		reqBody.append(fillNull(String.valueOf(param.getSerialNum()), 20));
@@ -301,11 +314,14 @@ public class RechargeUtil {
 	public static String genReqBodyOfActive(RechargeReq param){
 		StringBuffer reqBody = new StringBuffer(100);
 		reqBody.append(fillNull(String.valueOf(param.getAgentID()), 20));
+		//log.debug("【一卡充】激活卡,reqBody包体长度：" + reqBody.toString().getBytes().length);		
 		
 		byte[] temp = DESUtil.encryptModeRecharge(param.getPasword().getBytes());
-		String target = Base64Utils.encodeStr(temp);
+		String target = Base64Utils.encode(temp);
+		//log.debug("【一卡充】激活卡,reqBody包体长度target：" + target.getBytes().length);
 		reqBody.append(fillNull(target, 32));
 		
+		//log.debug("【一卡充】激活卡,reqBody包体长度：" + reqBody.toString().getBytes().length);
 		return reqBody.toString();
 	}	
 	
@@ -337,7 +353,7 @@ public class RechargeUtil {
 		appendHeadA2(reqHead, logId);
 		appendHeadA3(reqHead);
 		appendHeadA4(reqHead, interfaceType);
-		appendHeadA5(reqHead);
+		appendHeadA5(reqHead, interfaceType);
 		appendHeadA6(reqHead, interfaceType, serialNum);
 		appendHeadA7(reqHead, interfaceType, serialNumType);
 		appendHeadA8(reqHead);
@@ -393,11 +409,17 @@ public class RechargeUtil {
 	
 	/**
 	 * A5业务类型（2位）：00-99 标志各种业务。00为空中充值，01为一卡充业务。目前只填01
+	 * 充值号验证接口 填00
 	 * @param reqHead
 	 * @param interfaceType
 	 */
-	private static void appendHeadA5(StringBuffer reqHead){
-		reqHead.append("01");
+	private static void appendHeadA5(StringBuffer reqHead, String interfaceType){
+		if(InterfaceType.rechargeCheck.getInterfaceCode().equals(interfaceType)){
+			reqHead.append("00");
+		}
+		else{
+			reqHead.append("01");
+		}
 	}
 	
 	/**
@@ -457,7 +479,7 @@ public class RechargeUtil {
 		src.append(RechargeCons.ID);
 		src.append(fillNull(logId, 20).substring(12));
 		byte[] temp = DESUtil.encryptModeRecharge(src.toString().getBytes());
-		String target = Base64Utils.encodeStr(temp);
+		String target = Base64Utils.encode(temp);
 		
 		reqHead.append(target);
 	}
@@ -577,7 +599,7 @@ public class RechargeUtil {
 //		System.out.println(MapUtils.isEmpty(map1));
 //		System.out.println(MapUtils.isEmpty(map2));
 		
-		for(int i = 0; i < 100; i++){
+/*		for(int i = 0; i < 100; i++){
 			Random random = new Random();
 			int j = random.nextInt(100);
 			System.out.print(j);
@@ -585,6 +607,20 @@ public class RechargeUtil {
 			System.out.print(StringUtils.leftPad(String.valueOf(j), 2, String.valueOf(random.nextInt(10)).charAt(0)));
 			System.out.print("\n");
 			
-		}
+		}*/
+		
+		StringBuffer reqBody = new StringBuffer(100);
+		reqBody.append(fillNull("850800000000037", 20));
+		System.out.println(reqBody.toString().getBytes().length);
+		
+		byte[] temp = DESUtil.encryptModeRecharge("8508888888800000037".getBytes());
+		System.out.println("temp：" + temp.length);
+		
+		String target = Base64Utils.encode(temp);
+		System.out.println("target：" + target.getBytes().length);
+		
+		System.out.println("target：" + fillNull(target, 32).getBytes().length);
+		//reqBody.append(fillNull(target, 32));
+		
 	}
 }

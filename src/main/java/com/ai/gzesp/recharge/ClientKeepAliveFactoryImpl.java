@@ -48,6 +48,7 @@ public class ClientKeepAliveFactoryImpl implements KeepAliveMessageFactory {
 
     @Override
     public boolean isResponse(IoSession session, Object message) {
+    	//esp客户端关注一卡充的心跳反馈，以此判断mesaage是否是反馈包
     	//判断发送信息是否是心跳数据包此判断影响 KeepAliveRequestTimeoutHandler实现类,判断是否心跳包发送超时
         return isHeart((byte[])message);
     }

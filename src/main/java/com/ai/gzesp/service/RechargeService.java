@@ -1,5 +1,6 @@
 package com.ai.gzesp.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -14,10 +15,14 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.ai.gzesp.dao.RechargeDao;
 import com.ai.gzesp.dto.RechargeReq;
+import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.recharge.FileUtils;
 import com.ai.gzesp.recharge.InterfaceType;
 import com.ai.gzesp.recharge.RechargeClientHandler;
+import com.ai.gzesp.recharge.RechargeCons;
 import com.ai.gzesp.recharge.RechargeUtil;
+import com.ai.gzesp.recharge.ResultCode;
+import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.utils.DateUtils;
 
 /**
@@ -37,6 +42,73 @@ public class RechargeService {
     
     @Autowired
     private RechargeClientHandler rechargeClientHandler;
+    
+    /**
+     * 充值前，验证充值号码是否可以被充值
+     * @param serial_number
+     * @param serial_number_type
+     * @return
+     */
+    public Map<String, String> rechargeCheck(String serial_number, String serial_number_type){
+    	log.debug("【一卡充】充值号码验证：" + serial_number);
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	String reqTime = RechargeUtil.getCurentTime();
+		String logId = RechargeUtil.generateLogId(1); //每张卡插的记录logid不一致
+		String partitionId = logId.substring(14, 16);
+		//调接口前插日志
+		int n1 = insertRechargeCheckLog(logId, partitionId, serial_number, serial_number_type, reqTime);
+		
+		//拼接口参数，发送请求
+    	RechargeReq param = new RechargeReq();
+		param.setAccountNumber(serial_number);
+		param.setSerialNum(logId);
+		
+    	//生成请求报文
+		String req = RechargeUtil.genReq(param, InterfaceType.rechargeCheck.getInterfaceCode(), 
+				serial_number, serial_number_type, reqTime); 
+		
+		log.debug("【一卡充】充值号码验证最终请求报文：" + req);
+		//发送报文
+		rechargeClientHandler.sendMsg(req.getBytes());
+		
+		waitForRechargeCheckResp(logId, result);
+		
+		return result;
+    }
+    
+    /**
+     * 发送充值号码验证接口后等待响应返回
+     * @param log_id
+     * @param result
+     * @return
+     */
+    public void waitForRechargeCheckResp(String log_id, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        int timeout = 0;
+        while(true){
+            if(timeout >= RechargeCons.WAIT_TIMEOUT){
+                result.put("status", "E99");
+                result.put("detail", "支付失败！发送充值号码验证接口报文后未接收到一卡充响应");
+                break;
+            }
+            try {
+                Thread.sleep(RechargeCons.SLEEP_INTERVAL_RECHARGE);
+                timeout += RechargeCons.SLEEP_INTERVAL_RECHARGE;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } //每次轮询等待1秒钟
+            Map<String, String> row = rechargeDao.queryRechargeChecklog(log_id); //查询日志表里是否已经有返回的结果
+            if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
+                result.put("status", row.get("RESULT_CODE"));
+                result.put("detail", ResultCode.find(row.get("RESULT_CODE")));
+                break;
+            }
+        }
+        
+        //return result;
+    } 
+    
     
     /**
      * 激活卡 任务调度方法
@@ -231,6 +303,28 @@ public class RechargeService {
 		//发送报文
 		rechargeClientHandler.sendMsg(req.getBytes()); 
     }
+    
+	/**
+	 * 批量插激活接口日志
+	 * @param cardList
+	 * @param interfaceCode
+	 * @param order_id
+	 * @param reqTime
+	 * @param serial_number
+	 * @param serial_number_type
+	 */
+	private int insertRechargeCheckLog(String log_id, String partition_id, String serial_number, String serial_number_type, String reqTime){
+		
+		//调用一卡充接口前先插入接口日志表，状态等待响应返回再更新
+		return rechargeDao.insertRechargeCheckLog(
+				log_id,
+				partition_id,
+				reqTime, 
+				InterfaceType.rechargeCheck.getInterfaceCode(),
+				serial_number,
+				serial_number_type
+				);
+	}
 	
 	/**
 	 * 批量插充值接口日志
@@ -336,10 +430,7 @@ public class RechargeService {
 		return rechargeDao.getActiveLog(log_id);
 	}	
 	
-    /**
-     * 对账定时任务入口
-     * 每次取20条未对账的充值记录进行对账，循环获取直到全部充值记录对账完成。
-     */
+
     /**
      * 对账定时任务入口
      * 如果log_id为null，全部对账，每次取20条未对账的充值记录进行对账，循环获取直到全部充值记录对账完成。
@@ -440,7 +531,7 @@ public class RechargeService {
     }
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws UnsupportedEncodingException {
 		int total_fee = 1000;
 	    int[] array = {1000, 500, 300, 100};
 	    
@@ -448,7 +539,19 @@ public class RechargeService {
 	    
 	    compute(total_fee, 0, groups);*/
 		
-		System.out.println(Math.floor(total_fee/array[0]));
+/*		System.out.println(Math.floor(total_fee/array[0]));
 		System.out.println((int)Math.floor(total_fee/array[0]));
+		
+		System.out.println(ResultCode.find("01026"));*/
+	    
+	    char Suffix = 0x1a;
+	    StringBuffer sb = new StringBuffer();
+	    sb.append("abcd");
+	    sb.append(Suffix);
+	    
+	    System.out.println(Suffix);
+	    System.out.println(sb.append(Suffix));
+	    System.out.println(sb.toString().getBytes());
+	    System.out.println(sb.toString().getBytes("utf-8"));
 	}
 }

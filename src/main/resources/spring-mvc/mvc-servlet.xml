@@ -12,12 +12,15 @@
     <aop:aspectj-autoproxy proxy-target-class="true"/>  
     
     <!-- 激活spring的注解. -->  
-    <context:annotation-config />  
+    <!-- <context:annotation-config />   -->
   
     <!-- 配置注解驱动的Spring MVC Controller 的编程模型.注:次标签只在 Servlet MVC工作! -->  
 <!--     <mvc:annotation-driven /> -->
     
-    <!-- <context:component-scan base-package="com.ai" /> -->
+    <!-- use-default-filter默认是true,还是会扫描@Repository、@Service，设置成false就可以只扫描include-filter里的。 -->
+     <context:component-scan base-package="com.ai" use-default-filters="false">
+	   <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+     </context:component-scan>
 
 <!--     <bean id="clientHandler" class="com.ai.gzesp.unionpay.ClientHandler" />   -->
     

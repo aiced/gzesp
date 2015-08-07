@@ -64,14 +64,14 @@ public class BssBandService {
 	TdOrdDBANDPAYDao tdOrdDBANDPAYDao;
     
 	//初始化Bss发送请求协议报文：头部
-	private String InitBssHead(String strPacket,String NumID)
+	private String InitBssHead(String strPacket,String NumID,String BIPCode,String ActivityCode)
 	{
 		UniBSS uniBSS=new UniBSS();
 		uniBSS.setOrigDomain("ECIP"); //发起方应用域代码
 		uniBSS.setHomeDomain("UCRM");//归属方应用域代码
-		uniBSS.setBIPCode("BIP85001");//业务功能代码
+		uniBSS.setBIPCode(BIPCode);//业务功能代码
 		uniBSS.setBIPVer("0100"); //业务流程版本号
-		uniBSS.setActivityCode("T2014081");//交易代码
+		uniBSS.setActivityCode(ActivityCode);//交易代码
 		uniBSS.setActionCode("0");//交易动作代码
 		uniBSS.setActionRelation("0"); //交易关联性
 		
@@ -86,8 +86,9 @@ public class BssBandService {
 		String transid=CommonUtil.generateBSSLogId("");
 		transid="transid"+transid;
 		uniBSS.setTransIDO(transid);//发起方交易流水号
-		String strprocesstime=CommonUtil.generateBSSLogId("");
+		String strprocesstime=DateUtils.getCurentTime();
 		uniBSS.setProcessTime(strprocesstime);//处理时间
+		//uniBSS.setTransIDH("");
 //		SPReserve spreserve=new SPReserve();
 //		spreserve.setTransIDC("");//一级枢纽交易流水
 //		spreserve.setCutOffDay("");//逻辑交易日
@@ -113,9 +114,9 @@ public class BssBandService {
 	}
 	
 	//返回当前请求的是报文
-	private  String getPacket(String packet,String NumID)
+	private  String getPacket(String packet,String NumID,String BIPCode,String ActivityCode)
 	{
-		String sendPacket=InitBssHead(packet,NumID);
+		String sendPacket=InitBssHead(packet,NumID,BIPCode,ActivityCode);
 		return sendPacket;
 	}
 	
@@ -129,24 +130,26 @@ public class BssBandService {
 	    xStream.autodetectAnnotations(true);  
 	    String xml = xStream.toXML(userCheckReq_Req);  
 	    xml="<![CDATA["+Constants.xmlhead+xml+"]]>";
-	    return getPacket(xml,NumID);
+	    return getPacket(xml,NumID,"BIP85001","T2014081");
 	}
 	
 	//用户校验及产品查询数据 返回解析
 	public UserCheckReq_Res ResCheckUserPacket(String packet,String NumID)
 	{
-		//packet=DelABC();//自己构造的返回报文，以后要删掉
-		packet="<![CDATA["+Constants.xmlhead+packet+"]]>";
-
-		packet=getPacket(packet,NumID);
-		
+//		packet=DelABC();//自己构造的返回报文，以后要删掉
+//		packet="<![CDATA["+Constants.xmlhead+packet+"]]>";
+//
+//		packet=getPacket(packet,NumID);
+//		
 		System.out.println("下面解析会报错："+packet);
 		
 		UniBSS uniBSS= (UniBSS) xStream.fromXML(packet);
 
 		//去掉返回报文头的xml
 		System.out.println("去掉返回报文头的xml:"+uniBSS.getSvcCont());
-		UserCheckReq_Res userCheckReq_Res=(UserCheckReq_Res) xStream.fromXML(uniBSS.getSvcCont());
+		//指定指定class解析annotations
+		xStream.processAnnotations(UserCheckReq_Res.class);
+		UserCheckReq_Res userCheckReq_Res=(UserCheckReq_Res)xStream.fromXML(uniBSS.getSvcCont());
 
 		return userCheckReq_Res;
 
@@ -164,9 +167,11 @@ public class BssBandService {
 		
 		
 		//根据md5key对发送报文进行签名：签名的规则为：NumID=XXX$ProductCode=XXX$OrigFee=XXX$RealFee=XXX$optTime=XXX$OldProductCode=XXX$key=XXX
-		String strEncrypt="NumID="+map.get("BANDNUMID").toString()+"$ProductCode="+map.get("PRODUCT_ID").toString()+"$OrigFee="+map.get("ORIGINAL_PRICE").toString()+"$RealFee="+map.get("INCOME_MONEY").toString()+"$optTime"+map.get("CREATE_TIME").toString()+"$OldProductCode="+map.get("VALUES1").toString()+"$key="+Constants.md5key_bbs;
-		strEncrypt=MD5Util.md5s2(strEncrypt);
+		String strEncrypt="NumID="+map.get("BANDNUMID").toString()+"$ProductCode="+map.get("PRODUCT_ID").toString()+"$OrigFee="+map.get("ORIGINAL_PRICE").toString()+"$RealFee="+map.get("INCOME_MONEY").toString()+"$optTime="+map.get("CREATE_TIME").toString()+"$OldProductCode="+map.get("VALUES1").toString()+"$key="+Constants.md5key_bbs;
+		System.out.println("产品变更明文："+strEncrypt);
 		
+		strEncrypt=MD5Util.md5s2(strEncrypt);
+		System.out.println("产品变更密文："+strEncrypt);
 		ProAndActReq proAndActReq=new ProAndActReq();
 		
 		proAndActReq.setNumID(map.get("BANDNUMID").toString());
@@ -181,9 +186,9 @@ public class BssBandService {
         xStream.autodetectAnnotations(true);  
         String xml = xStream.toXML(proAndActReq);  
 	    xml="<![CDATA["+Constants.xmlhead+xml+"]]>";
-	    xml= getPacket(xml,map.get("BANDNUMID").toString());
-		
-    	String strUrl="";//未来需要填写的url
+	    xml= getPacket(xml,map.get("BANDNUMID").toString(),"BIP85002","T2014082");
+		System.out.println("产品变更发送的报文："+xml);
+    	String strUrl=Constants.BSS_SERVERURL;;//未来需要填写的url
 		HashMap<String, String> mapxml = new HashMap<String, String>() ;
 		mapxml.put("xmlmsg", xml);
 		String strRet=HttpPost(strUrl,mapxml);
@@ -228,16 +233,17 @@ public class BssBandService {
 	//处理bss接口：产品变更，根据返回的报文做相应的解析处理
 	public ProAndActRsp ResProAndActPacket(String packet,String NumID)
 	{
-		packet=DelDEF();//自己构造的返回报文 以后要删掉
-		packet="<![CDATA["+Constants.xmlhead+packet+"]]>";
-
-		packet=getPacket(packet,NumID);
-		
+//		packet=DelDEF();//自己构造的返回报文 以后要删掉
+//		packet="<![CDATA["+Constants.xmlhead+packet+"]]>";
+//
+//		packet=getPacket(packet,NumID,"BIP85002","T2014082");
+//		
 		UniBSS uniBSS= (UniBSS) xStream.fromXML(packet);
 
 		//去掉返回报文头的xml
 		System.out.println("去掉返回报文头的xml:"+uniBSS.getSvcCont());
-		ProAndActRsp proAndActRsp=(ProAndActRsp) xStream.fromXML(uniBSS.getSvcCont());
+		xStream.processAnnotations(ProAndActRsp.class);
+		ProAndActRsp proAndActRsp=(ProAndActRsp)xStream.fromXML(uniBSS.getSvcCont());
 
 		return proAndActRsp;
 	}
@@ -250,9 +256,9 @@ public class BssBandService {
 		String strRet="";//bss返回结果
     	//调用Bss接口
     	try {
-			HttpUtils.URLPost(strUrl, map,"string");//第三个参数 标识返回结果为字符串
+    		strRet=HttpUtils.URLPost(strUrl, map,"string");//第三个参数 标识返回结果为字符串
 			strRet=URLDecoder.decode(strRet);
-			System.out.println(strRet);
+			System.out.println("我是返回的结果："+strRet);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -385,6 +391,48 @@ public class BssBandService {
     	
     }
     
+    //宽带续约 用户查询接口：根据不同的返回值显示不同的错误提示，主要用于在界面上展示错误信息
+    public String CheckReqCode(String repcode)
+    {
+//    	0000 成功
+//    	0001 用户欠费
+//    	0002 用户是黑名单
+//    	0003 用户不存在
+//    	0004 签名非法
+//    	0005 用户产品变更后不能续约
+//    	0006 用户有未正式提交工单，请半小时后再操作
+//    	9999 其它错误
+    	
+		if(repcode.equals("0001"))
+		{
+			return "用户欠费";
+		}
+		else if(repcode.equals("0002"))
+		{
+			return "用户是黑名单";
+		}
+		else if(repcode.equals("0003"))
+		{
+			 return "用户不存在";
+		}
+		else if(repcode.equals("0004"))
+		{
+			return "签名非法";
+		}
+		else if(repcode.equals("0005"))
+		{
+			return "用户产品变更后不能续约";
+		}	
+		else if(repcode.equals("0006"))
+		{
+			return "用户有未正式提交工单，请半小时后再操作";
+		}		
+		else if(repcode.equals("9999"))
+		{
+			 return "其它错误";
+		}
+    	return "";
+    }
     
     //插入Bsslog日志表
     public int insertBSSLog(String interfacename,

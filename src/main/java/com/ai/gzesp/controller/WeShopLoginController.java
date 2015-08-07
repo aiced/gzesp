@@ -111,7 +111,6 @@ public class WeShopLoginController {
         ModelAndView mav = null;
         ModelMap mmap=null;
         
-        
 		try {
 			//手机号密码校验放这边了，其实应该放 EspRealm里面
 			Map<Object, Object> userMap = userService.getUserInfoByPhonePassword(strPhoneNum, strPwd);
@@ -125,6 +124,9 @@ public class WeShopLoginController {
 				//如果验证成功
 				if (subject.isAuthenticated()) {
 					//mav = new ModelAndView("weShopHome.ftl");
+					org.apache.shiro.session.Session session = subject.getSession(true);
+					session.setAttribute("mchId", userMap.get("MCH_ID"));
+					
 					mmap=new ModelMap();
 	    		    mmap.addAttribute("userid", userMap.get("USER_ID"));
 					mav=new ModelAndView("redirect:/shopManage/weShopHome",mmap);     

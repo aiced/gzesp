@@ -2,6 +2,7 @@ package com.ai.gzesp.utils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -121,59 +122,115 @@ public class HttpUtils {
 	 * @return String
 	 * @throws Exception
 	 */
-	public static String URLPost(String url, Map map,String flag) throws Exception {
-		URL sendurl = new URL(url);
-
-		HttpURLConnection httpURLConnection = (HttpURLConnection) sendurl
-				.openConnection();
-		httpURLConnection.setRequestMethod("POST");
-		httpURLConnection.setDoInput(true);
-		httpURLConnection.setDoOutput(true);
-		httpURLConnection.setUseCaches(false);
-		httpURLConnection.setRequestProperty("Content-Type",
-				"application/x-www-form-urlencoded;charset="
-						+ ConfigInfo.input_charset);
-
-		StringBuffer sb = new StringBuffer();
-
-		Iterator it = map.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pairs = (Map.Entry) it.next();
-			sb.append(pairs.getKey()).append("=").append(
-					URLEncoder.encode(pairs.getValue().toString(),
-							ConfigInfo.input_charset)).append("&");
+	public static String URLPost(String urlAddress, Map<String, String> paramMap,String flag) throws Exception {
+		if (paramMap == null) {
+			paramMap = new HashMap<String, String>();
 		}
-		if (sb.length() > 0)// delete last & char
-		{
-			sb.setLength(sb.length() - 1);
+		String[] params = new String[paramMap.size()];
+		int i = 0;
+		for (String paramKey : paramMap.keySet()) {
+			String param = paramKey + "=" + paramMap.get(paramKey);
+			params[i] = param;
+			i++;
 		}
-
-		// send data
-		String sendData = sb.toString();
-
-		OutputStream out = httpURLConnection.getOutputStream();
-		out.write(sendData.getBytes("iso8859-1"));
-		out.flush();
-		out.close();
-
-		InputStream in = httpURLConnection.getInputStream();
-
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in,
-				ConfigInfo.input_charset));
-
+		
+		URL url = null;
+		HttpURLConnection con = null;
+		BufferedReader in = null;
 		StringBuffer result = new StringBuffer();
-		while (true) {
-			String line = reader.readLine();
-			if (line == null) {
-				break;
-			} else {
-				result.append(line);
+		try {
+			url = new URL(urlAddress);
+			con = (HttpURLConnection) url.openConnection();
+			con.setUseCaches(false);
+			con.setDoOutput(true);
+			con.setRequestMethod("POST");
+			String paramsTemp = "";
+			for (String param : params) {
+				if (param != null && !"".equals(param.trim())) {
+					paramsTemp += "&" + param;
+				}
+			}
+			byte[] b = paramsTemp.getBytes();
+			con.getOutputStream().write(b, 0, b.length);
+			con.getOutputStream().flush();
+			con.getOutputStream().close();
+			in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			while (true) {
+				String line = in.readLine();
+				if (line == null) {
+					break;
+				} else {
+					result.append(line);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (in != null) {
+					in.close();
+				}
+				if (con != null) {
+					con.disconnect();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-
-		reader.close();
-		in.close();
 		return result.toString();
+		
+//		URL sendurl = new URL(url);
+//
+//		HttpURLConnection httpURLConnection = (HttpURLConnection) sendurl
+//				.openConnection();
+//		httpURLConnection.setRequestMethod("POST");
+////		httpURLConnection.setDoInput(true);
+////		httpURLConnection.setDoOutput(true);
+////		httpURLConnection.setUseCaches(false);
+////		httpURLConnection.setRequestProperty("Content-Type",
+////				"application/x-www-form-urlencoded;charset="
+////						+ ConfigInfo.input_charset);
+//
+//		StringBuffer sb = new StringBuffer();
+//
+//		Iterator it = map.entrySet().iterator();
+//		while (it.hasNext()) {
+//			Map.Entry pairs = (Map.Entry) it.next();
+//			sb.append(pairs.getKey()).append("=").append(
+//					URLEncoder.encode(pairs.getValue().toString(),
+//							ConfigInfo.input_charset)).append("&");
+//		}
+//		if (sb.length() > 0)// delete last & char
+//		{
+//			sb.setLength(sb.length() - 1);
+//		}
+//
+//		// send data
+//		String sendData = sb.toString();
+//
+//		OutputStream out = httpURLConnection.getOutputStream();
+//		out.write(sendData.getBytes("iso8859-1"));
+//		out.flush();
+//		out.close();
+//
+//		InputStream in = httpURLConnection.getInputStream();
+//
+//		BufferedReader reader = new BufferedReader(new InputStreamReader(in,
+//				ConfigInfo.input_charset));
+//
+//		StringBuffer result = new StringBuffer();
+//		while (true) {
+//			String line = reader.readLine();
+//			if (line == null) {
+//				break;
+//			} else {
+//				result.append(line);
+//			}
+//		}
+//
+//		reader.close();
+//		in.close();
+//		return result.toString();
 	}
 	/**
 	 * HTTPS 协议 

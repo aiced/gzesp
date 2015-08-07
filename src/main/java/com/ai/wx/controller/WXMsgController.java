@@ -142,12 +142,16 @@ public class WXMsgController {
     		 
     		 //用户已注册，免登录，根据state值跳页面
     		 if( userMap != null) {
+    			 Subject subject = SecurityUtils.getSubject();
+    			 org.apache.shiro.session.Session session = subject.getSession(true);
     			 if("weShopIndex".equals(state)) {
         			 mav=new ModelAndView("redirect:/weShop/index/"+ userMap.get("USER_ID"));    
+        			 session.setAttribute("mchId", userMap.get("MCH_ID"));
         		 } else if("weShopHome".equals(state)) {
         			//调用shiro校验身份，EspRealm.doGetAuthenticationInfo(AuthenticationToken token)
      				UsernamePasswordToken token = new UsernamePasswordToken((String)userMap.get("PHONE_NUMBER"), (String)userMap.get("USER_PASSWORD"));
-     				Subject subject = SecurityUtils.getSubject();
+//     				Subject subject = SecurityUtils.getSubject();
+     				session.setAttribute("mchId", userMap.get("MCH_ID"));
      				subject.login(token);
      				
         			 mav=new ModelAndView("redirect:/shopManage/weShopHome?userid="+ userMap.get("USER_ID"));    

@@ -63,7 +63,7 @@ public class BandAcctVerifyController {
     public ModelAndView bandAcctCheck(@RequestBody String inputParam)
     {
     	ModelAndView mav=null;
-    	
+    	String errorcontent = "";
 		Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
 		String user_id = paramsMap.get("user_id");	//能人id
 		String bandAcct=paramsMap.get("bandAcct"); //宽带账号
@@ -76,65 +76,89 @@ public class BandAcctVerifyController {
 		String packet=bssBandService.ReqCheckUserPacket(bandAcct, strEncrypt);	
 		System.out.println("BSS发送请求的报文："+packet);
 		
-    	String strUrl="http://130.85.50.34:7772/XMLReceiver";//未来需要填写的url
+    	String strUrl=Constants.BSS_SERVERURL;//未来需要填写的url
 		HashMap<String, String> map = new HashMap<String, String>() ;
 		map.put("xmlmsg", packet);
-		
-		
-		
+
 		String strRet=bssBandService.HttpPost(strUrl,map);//bss返回结果
     	if (strRet.isEmpty()) {
     		return mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);  
 		}
-		
 		//解析响应报文
 		UserCheckReq_Res userCheckReq_Res=	bssBandService.ResCheckUserPacket(strRet,bandAcct);
 		
 		//将相关的数据添加到mav里面 展示到页面上
 		if (userCheckReq_Res!=null) {
-			
+		
+			int iRet=0;
 			String curproinfo="";
-			for (int i = 0; i < userCheckReq_Res.getCurrProductList().size(); i++) {
-				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductCode();
-				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductName();
-				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductType();
-				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductActiveTime();
-				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductInActiveTime()+",";
-			}
-			
 			String proinfo="";
-			for (int i = 0; i < userCheckReq_Res.getProductList().size(); i++) {
-				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductCode();
-				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductFee();
-				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductName();
-				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductRate();
-				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductType();
-				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntType();
-				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntValue()+",";
+	    	strRet=bssBandService.CheckReqCode(userCheckReq_Res.getRespCode().toString());
+	    	//判断报文返回的code
+	    	if (!strRet.isEmpty()) {
+				errorcontent=strRet;
+				
+		    	//插入bss报文请求日志表
+				iRet=bssBandService.insertBSSLog(
+						"宽带账号校验", 
+						userCheckReq_Res.getRespCode()+userCheckReq_Res.getRespDesc(), 
+						user_id, 
+						bandAcct, 
+						"", 
+						"", 
+						"",
+						"",
+						"",
+						"",
+						"",
+						"", 
+						"", 
+						"", 
+						"");
+				
 			}
-			
-			
-			//插入bss报文请求日志表
-			int iRet=bssBandService.insertBSSLog(
-					"宽带账号校验", 
-					userCheckReq_Res.getRespCode()+userCheckReq_Res.getRespDesc(), 
-					user_id, 
-					bandAcct, 
-					userCheckReq_Res.getCustName(), 
-					userCheckReq_Res.getProvinceCode(), 
-					userCheckReq_Res.getCityCode(),
-					userCheckReq_Res.getNetType(),
-					userCheckReq_Res.getPayType(),
-					userCheckReq_Res.getUserStatus(),
-					userCheckReq_Res.getUserType(),
-					curproinfo, 
-					proinfo, 
-					"", 
-					"");
-			
+	    	else {
+				for (int i = 0; i < userCheckReq_Res.getCurrProductList().size(); i++) {
+					curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductCode();
+					curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductName();
+					curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductType();
+					curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductActiveTime();
+					curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductInActiveTime()+",";
+				}
+				for (int i = 0; i < userCheckReq_Res.getProductList().size(); i++) {
+					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductCode();
+					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductFee();
+					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductName();
+					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductRate();
+					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductType();
+					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntType();
+					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntValue()+",";
+				}
+		    	//插入bss报文请求日志表
+				iRet=bssBandService.insertBSSLog(
+						"宽带账号校验", 
+						userCheckReq_Res.getRespCode()+userCheckReq_Res.getRespDesc(), 
+						user_id, 
+						bandAcct, 
+						userCheckReq_Res.getCustName(), 
+						userCheckReq_Res.getProvinceCode(), 
+						userCheckReq_Res.getCityCode(),
+						userCheckReq_Res.getNetType(),
+						userCheckReq_Res.getPayType(),
+						userCheckReq_Res.getUserStatus(),
+						userCheckReq_Res.getUserType(),
+						curproinfo, 
+						proinfo, 
+						"", 
+						"");
+				
+				
+			}
+
 			if (iRet>0) //插入成功 
 			{
 	        	mav= new ModelAndView("bandGoodSelect.ftl");
+	        	mav.addObject("errorcontent", errorcontent);
 	        	mav.addObject("user_id", user_id); 	
 	        	mav.addObject("bandAcct",bandAcct);
 	        	mav.addObject("userCheckReq_Res", userCheckReq_Res);
@@ -143,13 +167,78 @@ public class BandAcctVerifyController {
 			else //插入失败 
 			{
 		       	mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);
-			}
-			
+			}	
 		}
 		else {
-	       	mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);    		
+	       	mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);    	
 		}
-        
         return mav;
+
+		
+//		
+//		//将相关的数据添加到mav里面 展示到页面上
+//		if (userCheckReq_Res!=null) {
+//			
+//			String curproinfo="";
+//			for (int i = 0; i < userCheckReq_Res.getCurrProductList().size(); i++) {
+//				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductCode();
+//				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductName();
+//				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getCurrProductType();
+//				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductActiveTime();
+//				curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductInActiveTime()+",";
+//			}
+//			
+//			String proinfo="";
+//			for (int i = 0; i < userCheckReq_Res.getProductList().size(); i++) {
+//				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductCode();
+//				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductFee();
+//				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductName();
+//				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductRate();
+//				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductType();
+//				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntType();
+//				proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntValue()+",";
+//			}
+//			
+//			
+//			//插入bss报文请求日志表
+//			int iRet=bssBandService.insertBSSLog(
+//					"宽带账号校验", 
+//					userCheckReq_Res.getRespCode()+userCheckReq_Res.getRespDesc(), 
+//					user_id, 
+//					bandAcct, 
+//					userCheckReq_Res.getCustName(), 
+//					userCheckReq_Res.getProvinceCode(), 
+//					userCheckReq_Res.getCityCode(),
+//					userCheckReq_Res.getNetType(),
+//					userCheckReq_Res.getPayType(),
+//					userCheckReq_Res.getUserStatus(),
+//					userCheckReq_Res.getUserType(),
+//					curproinfo, 
+//					proinfo, 
+//					"", 
+//					"");
+//			
+//			if (iRet>0) //插入成功 
+//			{
+//	        	mav= new ModelAndView("bandGoodSelect.ftl");
+//				
+//
+//				
+//	        	mav.addObject("user_id", user_id); 	
+//	        	mav.addObject("bandAcct",bandAcct);
+//	        	mav.addObject("userCheckReq_Res", userCheckReq_Res);
+//	        	System.out.println(userCheckReq_Res.getCustName());
+//			}
+//			else //插入失败 
+//			{
+//		       	mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);
+//			}
+//			
+//		}
+//		else {
+//	       	mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);    		
+//		}
+//        
+//        return mav;
     }
 }

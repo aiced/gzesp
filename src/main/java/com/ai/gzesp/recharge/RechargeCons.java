@@ -18,12 +18,12 @@ public class RechargeCons {
     /**
      * 一卡充系统 主接入服务器端口
      */
-    public static int SERVER_1_PORT = 8003; //测试：8003 正式：8001 
+    public static int SERVER_1_PORT = 8001; //测试：8003 正式：8001 
     
     /**
      * 一卡充系统 备接入服务器ip
      */
-    public static String SERVER_2_HOST = "144.180.70.53"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
+    public static String SERVER_2_HOST = "127.0.0.1"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
     
     /**
      * 一卡充系统 备接入服务器端口
@@ -44,7 +44,7 @@ public class RechargeCons {
     /**
      * 心跳发送间隔时间
      */
-    public static int HEART_INTERVAL = 120*1000;
+    public static int HEART_INTERVAL = 20*1000;
     
     /**
      * 心跳包请求后 等待反馈超时时间

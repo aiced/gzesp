@@ -60,12 +60,13 @@ public class RechargeController {
     
     /**
      * 充值验证入口
+     * A7业务号码类型：1 GSM；2 固话；3 宽带；4 小灵通或大灵通
      * @param serial_number
      * @return
      */
     @RequestMapping("/rechargeCheck/{serial_number}/{serial_number_type}")
     @ResponseBody
-    public Map<String, String> recharge(@PathVariable("serial_number") String serial_number,
+    public Map<String, String> rechargeCheck(@PathVariable("serial_number") String serial_number,
     		@PathVariable("serial_number_type") String serial_number_type){
     	
     	Map<String, String> result = rechargeService.rechargeCheck(serial_number, serial_number_type); 

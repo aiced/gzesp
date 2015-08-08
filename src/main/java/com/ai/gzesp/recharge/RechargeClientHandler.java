@@ -40,9 +40,9 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     @Autowired
     private RechargeDao rechargeDao;
     
-	private static NioSocketConnector connector; 
+	private NioSocketConnector connector; 
 	
-    private static ConnectFuture cf;
+    private ConnectFuture cf;
     
 //    @Autowired
 //    private RechargeClient rechargeClient;
@@ -112,7 +112,7 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 		
 		// 设置心跳过滤器链
 		ClientKeepAliveFactoryImpl ckafi = new ClientKeepAliveFactoryImpl();
-		KeepAliveFilter kaf = new KeepAliveFilter(ckafi, IdleStatus.BOTH_IDLE, KeepAliveRequestTimeoutHandler.CLOSE);
+		KeepAliveFilter kaf = new KeepAliveFilter(ckafi, IdleStatus.WRITER_IDLE, KeepAliveRequestTimeoutHandler.DEAF_SPEAKER);
 		kaf.setForwardEvent(true); // 继续调用 IoHandlerAdapter 中的 sessionIdle时间
 		kaf.setRequestInterval(RechargeCons.HEART_INTERVAL); // 设置当连接的读取通道空闲的时候，心跳包请求时间间隔
 		kaf.setRequestTimeout(RechargeCons.HEART_TIMEOUT); // 设置心跳包请求后 等待反馈超时时间

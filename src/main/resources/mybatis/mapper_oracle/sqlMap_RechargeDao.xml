@@ -66,13 +66,13 @@
            ]]>
 	</select>		
 	
-	<select id="insertRechargeCheckLog">
+	<insert id="insertRechargeCheckLog">
       insert into ITF_D_RECHARGE_LOG
              (log_id, partition_id, order_id, req_time, interface_type, 
               busi_type, serial_number, serial_number_type, charge_money, agent_id, password)
        values(${log_id}, ${partition_id}, null, #{req_time}, #{interface_type}, 
               null, #{serial_number}, ${serial_number_type}, null, null, null )
-	</select>				
+	</insert>				
 	
 	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
 	<select id="insertRechargeLogBatch">

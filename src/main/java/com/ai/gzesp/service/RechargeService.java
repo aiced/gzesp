@@ -89,7 +89,7 @@ public class RechargeService {
         while(true){
             if(timeout >= RechargeCons.WAIT_TIMEOUT){
                 result.put("status", "E99");
-                result.put("detail", "支付失败！发送充值号码验证接口报文后未接收到一卡充响应");
+                result.put("detail", "验证失败！发送充值号码验证接口报文后未接收到一卡充响应");
                 break;
             }
             try {

@@ -21,7 +21,14 @@
             set order_state = #{order_state} ,
                 income_money = ${income_money}
           where order_id = ${order_id}
-	</update>			
+	</update>	
+	
+	<update id="updateBandPayStateAndIncomeMoney">
+         update ord_d_band_pay
+            set order_state = #{order_state} ,
+                income_money = ${income_money}
+          where order_id = ${order_id}
+	</update>				
 	
 	<insert id="insertDealLog">
       insert into ORD_L_DEALLOG
@@ -161,19 +168,19 @@
 	
 	<insert id="insertAcctAccessLog">
       insert into act_d_access_log
-             (log_id, partition_id, acct_id, order_id, trade_type, old_balance, fee, new_balance, update_time)
+             (log_id, partition_id, acct_id, order_id, trade_type, old_balance, fee, new_balance, update_time, cancel_tag)
       <choose>
         <when test="order_id != null">
-          values(${log_id}, ${partition_id}, #{acct_id}, ${order_id}, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate)
+          values(${log_id}, ${partition_id}, #{acct_id}, ${order_id}, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate, '0')
         </when> 
         <otherwise>
-          values(${log_id}, ${partition_id}, #{acct_id}, null, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate)
+          values(${log_id}, ${partition_id}, #{acct_id}, null, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate, '0')
         </otherwise>
       </choose>
 	</insert>
 	
 	<select id="queryOrderCardPayInfo" resultType="java.util.HashMap">
-        select original_price, topay_money
+        select original_price, topay_money, phone_number serial_number, values1 serial_number_type 
           from ord_d_card_pay
          where order_id = ${order_id}
 	</select>			

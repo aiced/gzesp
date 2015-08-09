@@ -65,5 +65,7 @@ public interface RechargeDao {
     public int updateCardResultCode(@Param("card_no") String card_no,
     		@Param("result_code") String result_code); 
     
-    public Map<String, String> queryRechargeChecklog(@Param("log_id") String log_id);   
+    public Map<String, String> queryRechargelogResultByLogId(@Param("log_id") String log_id);   
+    
+    public Map<String, String> queryRechargelogResultByOrderId(@Param("order_id") String order_id);   
 }

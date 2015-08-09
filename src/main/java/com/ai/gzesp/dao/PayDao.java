@@ -22,7 +22,9 @@ public interface PayDao {
     
     public int updatePayStateAndIncomeMoney(@Param("order_id") String order_id, @Param("order_state") String order_state, @Param("income_money") int income_money);  
     
-    public int updateCardPayStateAndIncomeMoney(@Param("order_id") String order_id, @Param("order_state") String order_state, @Param("income_money") int income_money);    
+    public int updateCardPayStateAndIncomeMoney(@Param("order_id") String order_id, @Param("order_state") String order_state, @Param("income_money") int income_money);  
+    
+    public int updateBandPayStateAndIncomeMoney(@Param("order_id") String order_id, @Param("order_state") String order_state, @Param("income_money") int income_money);    
    
     public int insertDealLog(@Param("operate_logid") String operate_logid, @Param("order_id") String order_id, @Param("partition_id") String partition_id, 
     		@Param("deal_content") String deal_content, @Param("result_code") String result_code, @Param("result_info") String result_info,

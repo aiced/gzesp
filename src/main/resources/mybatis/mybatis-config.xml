@@ -42,7 +42,9 @@
     	<mapper resource="mybatis/mapper_oracle/sqlMap_PayDao.xml" />    	
     	<mapper resource="mybatis/mapper_oracle/sqlMap_UnionPayDao.xml" />
     	<mapper resource="mybatis/mapper_oracle/sqlMap_UserDao.xml" /> 
-    	<mapper resource="mybatis/mapper_oracle/sqlMap_RechargeDao.xml" />        	    	
+    	<mapper resource="mybatis/mapper_oracle/sqlMap_RechargeDao.xml" />        
+    	<mapper resource="mybatis/mapper_oracle/TdActDACCESSLOGMapper.xml" />  
+    	<mapper resource="mybatis/mapper_oracle/TdActDACCOUNTMapper.xml" />  	    	
     	<mapper resource="mybatis/mapper_oracle/TdAurDAUTHINFOMapper.xml" /> 
         <mapper resource="mybatis/mapper_oracle/TdAurDBASEINFOMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdAurDRELINFOMapper.xml" /> 
@@ -74,6 +76,7 @@
     	<mapper resource="mybatis/mapper_oracle/TdOrdDREFUNDMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDCARDPAYMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdOrdDBANDPAYMapper.xml" /> 
+    	<mapper resource="mybatis/mapper_oracle/TdOrdDBANDBALANCEMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdOrdLDEALLOGMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdRelGOODSRESMapper.xml" /> 
     	<mapper resource="mybatis/mapper_oracle/TdResDATTRMapper.xml" /> 
@@ -106,7 +109,7 @@
     	<mapper resource="mybatis/mapper_oracle/TdITFDWEIXINLOGMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdPayDWEIXINLOGMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdPayDWOPAYLOGMapper.xml" />  
-    	
+
     	
     		 		
     </mappers>

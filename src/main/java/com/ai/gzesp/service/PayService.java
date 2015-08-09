@@ -12,6 +12,14 @@ import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.PayDao;
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdActDACCESSLOG;
+import com.ai.gzesp.dao.beans.TdActDACCOUNT;
+import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
+import com.ai.gzesp.dao.service.TdActDACCESSLOGDao;
+import com.ai.gzesp.dao.service.TdActDACCOUNTDao;
+import com.ai.gzesp.dao.service.TdCmsDDAILYDao;
+import com.ai.gzesp.dao.service.TdOrdDCMSSTATEDao;
 import com.ai.gzesp.dto.OrderDPay;
 import com.ai.gzesp.dto.PayInfo;
 import com.ai.gzesp.dto.UnionPayParam;
@@ -47,6 +55,18 @@ public class PayService {
     
     @Autowired
     private MyAcctService myAcctService;
+    
+    @Autowired
+    private TdActDACCESSLOGDao actDACCESSLOGDao;
+    
+    @Autowired
+    private TdActDACCOUNTDao actDACCOUNTDao;
+    
+    @Autowired
+    private TdOrdDCMSSTATEDao ordDCMSSTATEDao;
+    
+    @Autowired
+    private TdCmsDDAILYDao cmsDDAILYDao;
     
     /**
      * 根据orderid查询能人店铺id
@@ -264,6 +284,8 @@ public class PayService {
     	if(isSuccess){
     		//String pay_state = isSuccess ? "5";
     		int r3 = updateOrdDPayRefund(orderId, "5");
+    		
+    		// TODO
     	}
     	
     	//不管退款成功失败 则新增一条 ORD_L_DEALLOG 处理日志
@@ -274,6 +296,71 @@ public class PayService {
         //退款成功发短信
 
     }
+    
+    /**
+     * 
+     * @param orderId
+     */
+    public void reverseCmsBySingleOrder(String orderId) {
+   	 do {
+   		 	TdActDACCOUNT actInfo = actDACCOUNTDao.selectAccountInfoByOrderId(orderId);
+			if(actInfo == null) {
+//				logger.warn("****can't find actInfo by orderId:{}***", orderId);
+				return;
+			}
+			
+			String version = actInfo.getVersion();
+			Long oldBalance = actInfo.getBalance();
+			String acctId = actInfo.getAcctId();
+//			logger.info("***oldBalance:{},acctId:{},version:{}***", oldBalance,	acctId, version);
+			int index = actDACCOUNTDao.updateAcctVersion(actInfo);
+			if (index >= 1) {
+				TdActDACCESSLOG record = new TdActDACCESSLOG();
+				long logId = System.currentTimeMillis();
+				String logIDStr = String.valueOf(logId);
+				short partitionId = Short.parseShort(logIDStr.substring(logIDStr.length() - 2));
+				record.setLogId(logId);
+				record.setPartitionId(partitionId);
+				record.setOrderId(Long.parseLong(orderId));
+				record.setOldBalance(oldBalance);
+
+				// act_d_access_log 返销 本订单产生的记录
+				int reVerseIndex = actDACCESSLOGDao.insertReverseAccessLog(record);
+
+//				logger.info("***reVerseIndex:{}***", reVerseIndex);
+				if (reVerseIndex == 0) {
+					return;
+				}
+
+				// act_d_account 返销
+				actDACCOUNTDao.updateReverseAcct(acctId, orderId);
+
+				// 改act_d_access_log原记录状态
+				actDACCESSLOGDao.updateReverseAccessLog(orderId);
+
+				// ord_d_cmsstate 状态
+				TdOrdDCMSSTATE ordCmsStateRecord = new TdOrdDCMSSTATE();
+//				ordCmsStateRecord.setOrderId(Long.parseLong(orderId));
+				ordCmsStateRecord.setCmsState("00");
+				Criteria example = new Criteria();
+				example.createConditon().andEqualTo("ORDER_ID", orderId);
+				ordDCMSSTATEDao.updateByExampleSelective(ordCmsStateRecord, example);
+
+				// cms_d_daily 删本订单记录
+				example.clear();
+				example.createConditon().andEqualTo("ORDER_ID", orderId);
+				cmsDDAILYDao.deleteByExample(example);
+
+				break;
+			} else {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		} while (true);
+   }
     
     /**
      * 支付收到响应后更新订单基本表里订单状态 和 实收金额

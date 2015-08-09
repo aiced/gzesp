@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdActDACCOUNTMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdActDACCOUNT" >
+    <id column="ACCT_ID" property="acctId" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="BALANCE" property="balance" jdbcType="DECIMAL" />
+    <result column="ACCT_TYPE" property="acctType" jdbcType="VARCHAR" />
+    <result column="ACCT_STATUS" property="acctStatus" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ACCT_ID, USER_ID, BALANCE, ACCT_TYPE, ACCT_STATUS, VERSION
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ACT_D_ACCOUNT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ACT_D_ACCOUNT
+    where ACCT_ID = #{acctId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ACT_D_ACCOUNT
+    where ACCT_ID = #{acctId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ACT_D_ACCOUNT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdActDACCOUNT" >
+    insert into ACT_D_ACCOUNT (ACCT_ID, USER_ID, BALANCE, 
+      ACCT_TYPE, ACCT_STATUS, VERSION
+      )
+    values (#{acctId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{balance,jdbcType=DECIMAL}, 
+      #{acctType,jdbcType=VARCHAR}, #{acctStatus,jdbcType=VARCHAR}, #{version,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdActDACCOUNT" >
+    insert into ACT_D_ACCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="acctId != null" >
+        ACCT_ID,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="balance != null" >
+        BALANCE,
+      </if>
+      <if test="acctType != null" >
+        ACCT_TYPE,
+      </if>
+      <if test="acctStatus != null" >
+        ACCT_STATUS,
+      </if>
+      <if test="version != null" >
+        VERSION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="acctId != null" >
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="acctType != null" >
+        #{acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="acctStatus != null" >
+        #{acctStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ACT_D_ACCOUNT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ACT_D_ACCOUNT
+    <set >
+      <if test="record.acctId != null" >
+        ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balance != null" >
+        BALANCE = #{record.balance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.acctType != null" >
+        ACCT_TYPE = #{record.acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acctStatus != null" >
+        ACCT_STATUS = #{record.acctStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ACT_D_ACCOUNT
+    set ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR},
+      BALANCE = #{record.balance,jdbcType=DECIMAL},
+      ACCT_TYPE = #{record.acctType,jdbcType=VARCHAR},
+      ACCT_STATUS = #{record.acctStatus,jdbcType=VARCHAR},
+      VERSION = #{record.version,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdActDACCOUNT" >
+    update ACT_D_ACCOUNT
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null" >
+        BALANCE = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="acctType != null" >
+        ACCT_TYPE = #{acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="acctStatus != null" >
+        ACCT_STATUS = #{acctStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ACCT_ID = #{acctId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdActDACCOUNT" >
+    update ACT_D_ACCOUNT
+    set USER_ID = #{userId,jdbcType=VARCHAR},
+      BALANCE = #{balance,jdbcType=DECIMAL},
+      ACCT_TYPE = #{acctType,jdbcType=VARCHAR},
+      ACCT_STATUS = #{acctStatus,jdbcType=VARCHAR},
+      VERSION = #{version,jdbcType=VARCHAR}
+    where ACCT_ID = #{acctId,jdbcType=VARCHAR}
+  </update>
+  
+  <update id="updateAcctVersion" parameterType="com.ai.gzesp.dao.beans.TdActDACCOUNT">
+    update ACT_D_ACCOUNT
+    <set>
+      <if test="balance != null">
+        BALANCE = #{balance,jdbcType=DECIMAL},
+      </if>
+        VERSION = lpad(VERSION + 1, 8, '0'),
+    </set>
+    where ACCT_ID = #{acctId,jdbcType=VARCHAR}
+    and VERSION = #{version,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAccountInfoByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+	SELECT 
+	<include refid="Base_Column_List" />
+ 	FROM ACT_D_ACCOUNT A
+	WHERE EXISTS
+	(SELECT 1 FROM ACT_D_ACCESS_LOG B WHERE A.ACCT_ID=B.ACCT_ID AND B.ORDER_ID=#{orderId,jdbcType=DECIMAL})
+	</select>
+	
+	
+	<update id="updateReverseAcct" parameterType="java.lang.String">
+		UPDATE ACT_D_ACCOUNT T2 
+         SET T2.BALANCE=        
+         (with T3 as ( SELECT T1.ACCT_ID,T1.ORDER_ID,sum(T1.FEE) FEE FROM ACT_D_ACCESS_LOG T1
+				WHERE T1.TRADE_TYPE IN ('11','12') AND CANCEL_TAG = '0' AND T1.ORDER_ID = #{orderId,jdbcType=DECIMAL}
+				group by T1.ACCT_ID,T1.ORDER_ID)
+			SELECT T2.BALANCE-T3.FEE FROM T3)
+         where T2.ACCT_ID =  #{acctId,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -22,6 +22,10 @@ public class FileUtils {
 	
 	private static String CARD_RESP_FIlE_PRIFIX = "esp_day_card_resp_";
 	
+	private static String BAND_REQ_FIlE_PRIFIX = "esp_day_band_req_";
+	
+	private static String BAND_RESP_FIlE_PRIFIX = "esp_day_band_resp_";
+	
 	/**
 	 * 根据day日期yyyymmdd，找到回执txt文件，并读取内容到 list
 	 * @param day
@@ -45,12 +49,90 @@ public class FileUtils {
 	}
 	
 	/**
+	 * 根据day日期yyyymmdd，找到回执txt文件，并读取内容到 list
+	 * @param day
+	 * @return
+	 */
+	public static List<String[]> readBandRespFile(String day){
+		String filePath = getBandRespFilePath(day);
+		Resource res = new FileSystemResource(filePath); 
+		List<String[]> result = null;
+		try {
+			if(res.exists()){
+				InputStream in = res.getInputStream();
+				result = getListFromInputStream(in); //finally会关闭in 和 br
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+
+		return result;
+	}
+	
+	/**
 	 * 根据day日期yyyymmdd，创建新txt文件，根据结果集list，写文件内容
 	 * @param day
 	 * @param list
 	 */
 	public static void writeCardReqFile(String day, List<LinkedHashMap<String, String>> list) {
 		String filePath = getCardReqFilePath(day);
+		FileSystemResource res = new FileSystemResource(filePath);
+		File file = null;
+		OutputStream os = null;
+		BufferedWriter bw = null;
+		try {
+			// 创建txt文件
+			file = res.getFile();
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			// 写文件内容
+			os = res.getOutputStream();
+			bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+			for(int i = 0; i < list.size(); i++){
+				LinkedHashMap<String, String> map = list.get(i);
+				int num2 = map.entrySet().size();
+				int j = 1;
+				for (Map.Entry<String, String> me : map.entrySet()) {
+					bw.write(me.getValue());
+					if(j < num2){
+						bw.write(",");
+					}
+					j++;
+				}
+				if(i < list.size()-1){
+					bw.newLine(); // 换行
+				}
+			}
+			bw.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (bw != null) {
+					bw.close();
+				}
+				if (os != null) {
+					os.close();
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+	
+	/**
+	 * 根据day日期yyyymmdd，创建新txt文件，根据结果集list，写文件内容
+	 * @param day
+	 * @param list
+	 */
+	public static void writeBandReqFile(String day, List<LinkedHashMap<String, String>> list) {
+		String filePath = getBandReqFilePath(day);
 		FileSystemResource res = new FileSystemResource(filePath);
 		File file = null;
 		OutputStream os = null;
@@ -170,6 +252,48 @@ public class FileUtils {
 		sb.append("resp");
 		sb.append(File.separator);
 		sb.append(CARD_RESP_FIlE_PRIFIX);
+		sb.append(day);
+		sb.append(".txt");
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * 根据日期yyyymmdd，拼出沃掌柜给bss 宽带续约对账同步文件的完全路径
+	 * 如：传入20150801 返回 /home/webapp/app/interface/band/req/esp_day_card_req_20150801.txt
+	 * @param day
+	 * @return
+	 */
+	public static String getBandReqFilePath(String day){
+		StringBuilder sb = new StringBuilder();
+		sb.append(getParentPath()); 
+		sb.append(File.separator);
+		sb.append("band");
+		sb.append(File.separator);
+		sb.append("req");
+		sb.append(File.separator);
+		sb.append(BAND_REQ_FIlE_PRIFIX);
+		sb.append(day);
+		sb.append(".txt");
+		
+		return sb.toString();
+	}
+	
+	/**
+	 * 根据日期yyyymmdd，拼出bss给沃掌柜宽带续约对账回执文件的完全路径
+	 * 如：传入20150801 返回 /home/webapp/app/interface/band/resp/esp_day_card_resp_20150801.txt
+	 * @param day
+	 * @return
+	 */
+	public static String getBandRespFilePath(String day){
+		StringBuilder sb = new StringBuilder();
+		sb.append(getParentPath()); 
+		sb.append(File.separator);
+		sb.append("band");
+		sb.append(File.separator);
+		sb.append("resp");
+		sb.append(File.separator);
+		sb.append(BAND_RESP_FIlE_PRIFIX);
 		sb.append(day);
 		sb.append(".txt");
 		

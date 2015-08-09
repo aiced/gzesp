@@ -1,9 +1,11 @@
 package com.ai.gzesp.dao.persistence;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 /**
  * @ClassName: TdOrdDCMSSTATEMapper
@@ -89,4 +91,5 @@ public interface TdOrdDCMSSTATEMapper {
     * @return int 更新记录数
      */
     int updateByExample(@Param("record") TdOrdDCMSSTATE record, @Param("example") Criteria criteria);
+    
 }

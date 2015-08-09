@@ -14,7 +14,14 @@
             set order_state = #{order_state} ,
                 income_money = ${income_money}
           where order_id = ${order_id}
-	</update>	
+	</update>
+	
+	<update id="updateCardPayStateAndIncomeMoney">
+         update ord_d_card_pay
+            set order_state = #{order_state} ,
+                income_money = ${income_money}
+          where order_id = ${order_id}
+	</update>			
 	
 	<insert id="insertDealLog">
       insert into ORD_L_DEALLOG

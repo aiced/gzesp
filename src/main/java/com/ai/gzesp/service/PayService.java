@@ -320,10 +320,42 @@ public class PayService {
     /**
      * 如果是充值订单，支付完成后走特殊的流程
      * @param isSuccess
-     * @param order_id
+     * @param orderId
      */
-    public void afterPayRecharge(boolean isSuccess, String order_id){
+    public void afterPayRecharge(boolean isSuccess, String orderId){
     	//Map<String, String> result = rechargeService.recharge(order_id, serial_number, serial_number_type, total_fee);
+    	
+//    	//更新一卡充订单表ord_d_card_pay里的 订单状态 和 实收总金额 INCOME_MONEY
+//    	if(isSuccess){
+//    	   int r1 = updateCardPayStateAndIncomeMoney(isSuccess, orderId, orderFee);
+//    	}
+//    	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
+//    	if(isSuccess){
+//    		int r2 = insertDealLogAfterPaySuccess(orderId, orderFee);
+//    	}
+//    	
+//    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
+//    	String pay_state = isSuccess ? "1" : "2" ;
+//    	int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
+//    	
+//    	//先根据返回报文里的order_id 获取到订单当时是否有选择号码
+//    	Map<Object, Object> numberRow = getNumberByOrderId(orderId);
+//    	//如果有号码而且返回响应是成功的则删掉号码预占表信息
+//        if(MapUtils.isNotEmpty(numberRow) && isSuccess){
+//        	//号码预占表删掉号码记录
+//        	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
+//        	int r4 = deleteNumberReserve(numbers);
+//        }
+//        
+//        //支付成功发短信
+//        if(isSuccess){
+//        	Map<String, String> phone = payDao.queryPhoneByOrderId(orderId);
+//        	Map<String, String> goods = payDao.queryGoodsNameByOrderId(orderId);
+//        	if(MapUtils.isNotEmpty(phone)){
+//        		String strRet = SmsUtils.doSendMessage(phone.get("PHONE_NUMBER"), "MB-2015052754", "@1@=" + goods.get("GOODS_NAME"));
+//        	}
+//    	}
+    
     }
     
     /**
@@ -407,6 +439,28 @@ public class PayService {
      * @return
      */
     private int updatePayStateAndIncomeMoney(boolean isSuccess, String orderId, int fee) {
+    	int r2 = 0;
+        if(isSuccess){
+        	//20150702 ximh 修改，要跳过外呼步骤，所以支付成功直接改成 02: 待处理状态
+        	//String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
+        	String order_state = "02";
+        	int income_money = fee; //银联是分，表里是厘
+        	//20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
+        	//String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
+        	//r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
+        	r2 = payDao.updatePayStateAndIncomeMoney(orderId, order_state, income_money);
+        }
+        return r2;
+    }
+    
+    /**
+     * 支付收到响应后更新一卡充订单表ord_d_card_pay里订单状态 和 实收金额
+     * @param isSuccess
+     * @param orderId
+     * @param fee
+     * @return
+     */
+    private int updateCardPayStateAndIncomeMoney(boolean isSuccess, String orderId, int fee) {
     	int r2 = 0;
         if(isSuccess){
         	//20150702 ximh 修改，要跳过外呼步骤，所以支付成功直接改成 02: 待处理状态
@@ -870,7 +924,7 @@ public class PayService {
      * @param order_id
      * @return
      */
-    private Map<String, String> acctChangeAndAccessLog(String log_tip, String trade_type, String acct_id, int pay_fee, String order_id) {
+    public Map<String, String> acctChangeAndAccessLog(String log_tip, String trade_type, String acct_id, int pay_fee, String order_id) {
     	Map<String, String> result = new HashMap<String, String>();
     	
     	//String acct_id = user_id + "2"; //默认现金可提账户是user_id||'2' ;

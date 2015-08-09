@@ -82,7 +82,8 @@
     <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal" onclick="doSubmit(this);">确认转出</button>
 </div>
     <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
-    <input type="hidden" id="hide_balance" name="hide_balance" value=${acctinfo.BALANCE}>        
+    <input type="hidden" id="hide_balance" name="hide_balance" value=${acctinfo.BALANCE}>
+    <input type="hidden" id="hide_acctid" name="hide_acctid" value=${acctinfo.ACCT_ID}>       
    	<#else>
 		<center>您还没有绑定银行卡</center>
 		<center><a href="/esp/shopManage/acct/myBankCardList/${acctinfo.USER_ID}">现在去绑定</a></center>

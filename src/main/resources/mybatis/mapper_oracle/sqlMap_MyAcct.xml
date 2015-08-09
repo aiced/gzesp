@@ -235,8 +235,8 @@
 		values
 		  (#{log_id},
 		   #{partition_id},
-		   #{apply_time},
-		   #{user_id}
+		   to_date(#{apply_time},'yyyy/MM/dd  HH24:mi:SS'),
+		   #{user_id},
 		   ${dwithdraw_fee},
 		   #{audit_state}
 		   )

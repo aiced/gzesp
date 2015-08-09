@@ -118,7 +118,7 @@ public class MyAcctController {
 		Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
 		String user_id = paramsMap.get("user_id");
 		String withdraw_fee=paramsMap.get("withdraw_fee");
-
+		String hide_acctid=paramsMap.get("hide_acctid");
 		String log_id=CommonUtil.generateLogId("6");
 		String partition_id=log_id.substring(14,16);
 		
@@ -127,10 +127,10 @@ public class MyAcctController {
 		String apply_time=dateFormat.format(now);
 		String audit_state="02"; //后续要修改成为未审核  00
 		
- 		myAcctService.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,withdraw_fee,audit_state);
-    	
+ 		String strRet=myAcctService.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,withdraw_fee,audit_state,hide_acctid);
+ 		return strRet;
 
-    	return "";
+
     }
     @RequestMapping("/acct/myBankCardList/{user_id}")
     public ModelAndView initMyBankCardList(@PathVariable("user_id") String user_id)

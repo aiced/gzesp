@@ -28,7 +28,9 @@
       </div>      
     </div> 
     <#if (errorcontent?exists)>
-    	${errorcontent}
+    	您当前的状态为：${errorcontent}，不能继续进行宽带续约的相关业务
+    	<p/>
+    	详细情况请电话咨询：10010
     <#else>
 	    <!-- 账户基本信息 -->
 	    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-top: 10px;">

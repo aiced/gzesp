@@ -93,4 +93,5 @@ public interface OrderDao {
     		);
     public List<LinkedHashMap<String, String>> queryBandOrderByDate(@Param("req_day") String req_day);
 
+    public int updateOrdBandPay(@Param("order_id") String order_id,@Param("order_state") String order_state);
 }

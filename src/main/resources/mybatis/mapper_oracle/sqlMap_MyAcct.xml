@@ -137,7 +137,15 @@
 	         else
 	           '未知'
 	       end audit_state,
-	       T2.apply_time
+	       T2.apply_time,
+	       case 
+	         when T1.cancel_tag ='0' then
+	           ''
+	         when T1.cancel_tag='1' then
+	            '返销'
+	          else
+	            '未知'
+	         end cancel_tag
 	  from T1, T2
 	 where T1.user_id = T2.user_id(+)
 	 order by T1.update_time desc
@@ -199,7 +207,15 @@
 		                         else
 		                           '未知'
 		                       end audit_state,
-		                       T2.apply_time
+		                       T2.apply_time,
+		                       case 
+		                         when T1.cancel_tag ='0' then
+		                           ''
+		                         when T1.cancel_tag='1' then
+		                            '返销'
+		                          else
+		                            '未知'
+		                         end cancel_tag
 		                  from T1, T2
 		                 where T1.user_id = T2.user_id(+)
 		                 order by T1.update_time desc
@@ -235,8 +251,8 @@
 		values
 		  (#{log_id},
 		   #{partition_id},
-		   #{apply_time},
-		   #{user_id}
+		   to_date(#{apply_time},'yyyy/MM/dd  HH24:mi:SS'),
+		   #{user_id},
 		   ${dwithdraw_fee},
 		   #{audit_state}
 		   )

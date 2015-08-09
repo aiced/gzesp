@@ -6,7 +6,7 @@
 }
 
 .regularOrderSelected{
-	width:50%;
+	width:33.33%;
 	height:40px;
 	float:left;
 	line-height:40px;
@@ -15,7 +15,7 @@
 	
 }
 .regularOrderUnselected{
-	width:50%;
+	width:33.33%;
 	height:40px;
 	float:left;
 	line-height:40px;
@@ -24,8 +24,51 @@
 	
 }
 
+
 .topUpOrderSelected{
-	width:50%;
+	width:33.33%;
+	height:40px;
+	float:left;
+	line-height:40px;
+	text-align:center;
+	border-bottom: 2px solid #EEA319;
+    position: relative;		
+}
+
+
+
+.topUpOrderUnselected{
+	width:33.33%;
+	height:40px;
+	float:left;
+	line-height:40px;
+	text-align:center;
+	border-bottom: 0px solid #EEA319;	
+    position: relative;
+	
+}
+
+
+.line-left{
+	background-color: gray;
+	width:1px;
+	height: 15px;
+    left: -1px;
+    top: 12px;
+	position: absolute;
+}
+.line-right{
+	background-color: gray;
+    width:1px;
+    height: 15px;
+    right: -1px;
+    top: 12px;
+    position: absolute;
+}
+
+
+.renewalSelected{
+	width:33.33%;
 	height:40px;
 	float:left;
 	line-height:40px;
@@ -34,8 +77,8 @@
 }
 
 
-.topUpOrderUnselected{
-	width:50%;
+.renewalUnselected{
+	width:33.33%;
 	height:40px;
 	float:left;
 	line-height:40px;

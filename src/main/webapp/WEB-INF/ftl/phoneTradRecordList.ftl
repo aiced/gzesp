@@ -17,7 +17,8 @@
 <body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
-    <input type="hidden" id="phoneNumber" value="${phoneNumber}"></input>
+    <input type="hidden" id="searchNumber" value="${searchNumber}"></input>
+    <input type="hidden" id="from" value="${from}"></input>
     
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
@@ -29,12 +30,20 @@
     <ul id = "datagrid">
        		<#list topUpDealList as info>			
 	            <li class="rel" orderId = "${info.orderId}"}>
-           			 <p class="title"> ${info.goodsName} － ${info.phoneNumber} </p>
+	          	 	<#if ('${from}' =='renewal')>
+	            	    <p class="title"> ${info.goodsName}</p>
+	            	<#else>
+	            		 <p class="title"> ${info.goodsName} － ${info.searchNumber} </p>
+	            	</#if>              	
 
 					<#if (info.orderState =='00')>
   				        <p class="status"> 未支付 </p>
-                	<#elseif (info.orderState =='02')>
+                	<#elseif (info.orderState =='01')>
 			 			 <p class="status"> 支付成功 </p> 
+			 		<#elseif (info.orderState =='02')>
+			 			 <p class="status"> 支付成功待充值 </p> 
+			 		<#elseif (info.orderState =='99')>
+			 			 <p class="status"> 取消 </p> 
                 	</#if>          			 
            			 <p class="date"> ${info.createTime} </p>
             		<span class="abs"> ￥${info.topayMoney} </span>

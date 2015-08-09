@@ -17,6 +17,8 @@
 <body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
+    <input type="hidden" id="from" value="${from}"></input>
+    
    		  <div id="top">
 	        	<div id="top_left"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
@@ -32,7 +34,7 @@
         <ul>
             <li>
                 <span class="li_title">商  品</span>
-                <span id = "phoneNumber" phoneNumber = ${info.phoneNumber}  class="fright li_content">${info.goodsName} － ${info.phoneNumber}</span>
+                <span id = "searchNumber" searchNumber = ${info.searchNumber}  class="fright li_content">${info.goodsName} － ${info.searchNumber}</span>
             </li>
 
             <li>

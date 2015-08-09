@@ -26,7 +26,6 @@
     border: 1px solid #ADADAD;
 }
 
-
 .card .price{
     font-size: 14px;
     text-align:center;
@@ -68,6 +67,36 @@
     margin-top: -2px;
     text-align:center;
 }
+
+
+.noAvalibleCard{
+    display: block;
+    width: 80%;
+    height: 40px;
+    margin: 5px auto;
+    background:#ECECEC;
+    border: 1px solid #ADADAD;
+    /*background:*/
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
+    background-position:bottom right;
+}
+
+.noAvalibleCard .price{
+    font-size: 13px;
+    color: #3C3C3C;
+    text-align:center;
+    margin-top: 6px;
+}
+
+.noAvalibleCard .realPrice{
+    font-size: 9px;
+    color: #A0A0A0;
+    margin-top: -2px;
+    text-align:center;
+}
+
+
 
 .buyInfo{
      padding: 25px 20px 15px;

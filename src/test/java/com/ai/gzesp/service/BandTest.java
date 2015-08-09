@@ -16,5 +16,14 @@ public class BandTest  extends BaseTest {
 		String strRet=bssBandService.ReqProAndActPacket(order_id);
 
 	}
-	
+	@Test
+	public void test2()
+	{
+		bssBandService.syncBandStatus2BssJob();
+	}
+	@Test
+	public void test3()
+	{
+		bssBandService.syncBandStatus2BssRespJob();
+	}
 }

@@ -17,6 +17,9 @@ public class MyAcctService {
 
     @Autowired
     private MyAcctDao myAcctDao;
+    
+    @Autowired
+    private PayService payService;
 	//通过userid 获得账户信息
     public Map<String, Object> queryAcctByUserId(String user_id) {
         return myAcctDao.queryAcctByUserId(user_id);
@@ -140,42 +143,42 @@ public class MyAcctService {
     
     
     //插入ACT_D_WITHDRAW_AUDIT表
-    public int insertWidthDrawAuDit(String log_id,String partition_id,String apply_time,String user_id,String withdraw_fee,String audit_state)
+    public String insertWidthDrawAuDit(String log_id,String partition_id,String apply_time,String user_id,String withdraw_fee,String audit_state,String hide_acctid)
     {
-    	Double dwithdraw_fee=Double.valueOf(withdraw_fee)*1000;
+    	//注意提现的地方，金额为负数
+    	double dwithdraw_fee=-Double.valueOf(withdraw_fee)*1000;
+
     	
     	int iRet=-1;
     	iRet=myAcctDao.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,dwithdraw_fee,audit_state);
-    	
+
     	if (iRet<=0) {
-			return iRet;
+			return "操作失败";
 		}
     	//后面是需要以后移植到网盟后台的代码
     	//注意事务的处理
-    	
-    	
-    	iRet=updateAcct();
-    	if (iRet<=0) {
-			return iRet;
+
+    	//String log_tip, String trade_type, String acct_id, int pay_fee, String order_id
+    	 Map<String, String> map=payService.acctChangeAndAccessLog("账户提现","60",hide_acctid,(int)dwithdraw_fee,null);
+    	if (map!=null && map.size()>0) {
+    		 return map.get("detail");
 		}
-    	
-    	iRet=insertAccessLog();
-    	if (iRet<=0) {
-			return iRet;
+    	else {
+    		return "操作成功";
 		}
-    	return iRet;
+
     }
     
-    //更新账户表 ACT_D_ACCOUNT
-    public int updateAcct()
-    {
-    	return 0;
-    }
-    
-    //插入账户明细表  ACT_D_ACCESS_LOG
-    public int insertAccessLog()
-    {
-    	return 0;
-    }
+//    //更新账户表 ACT_D_ACCOUNT
+//    public int updateAcct()
+//    {
+//    	return 0;
+//    }
+//    
+//    //插入账户明细表  ACT_D_ACCESS_LOG
+//    public int insertAccessLog()
+//    {
+//    	return 0;
+//    }
     
 }

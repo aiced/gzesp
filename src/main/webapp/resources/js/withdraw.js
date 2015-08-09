@@ -6,17 +6,15 @@
     //ajax调用后台controller
     function insertWithdraw()
     {
-		var parms = {'user_id':$('#hide_user_id').val(),'withdraw_fee':$('#txtbalance').val()};
+		var parms = {'user_id':$('#hide_user_id').val(),'withdraw_fee':$('#txtbalance').val(),'hide_acctid':$('#hide_acctid').val()};
 		$.ajax({
 		 type: "POST",
 		 url: '/esp/shopManage/acct/withdraw/postData',
 		 data: parms,
-		 success: function(data){
-			if(!data)
-			{
-				alert(data);
-				window.location.href='/esp/shopManage/acct/withdraw/'+$("#hide_user_id").val();
-			}
+		 success: function(data){			 
+			alert(data);
+			window.location.href='/esp/shopManage/acct/withdraw/'+$("#hide_user_id").val();
+			
 		 }
 		});
     }

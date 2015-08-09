@@ -28,7 +28,12 @@ function initBind(){
     });
     
     $("#top_left").bind("click",function(){
-    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordList/'+ $("#phoneNumber").attr('phoneNumber');   
+    	if($("#from").val() == "renewal"){
+        	window.location.href=$('#baseRoot').val() + '/renewal/renewalList/' + $("#searchNumber").attr('searchNumber');
+    	}else{
+        	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordList/'+ $("#searchNumber").attr('searchNumber');   
+    	}
+    	
 });
     
 }

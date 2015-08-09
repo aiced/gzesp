@@ -29,7 +29,11 @@ $(function(){
 
 function initBind(){
     $("ul").delegate("li", "click", function(){
-    	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordDetail/' +  $(this).attr('orderId');   
+    	if($("#from").val() == "renewal"){
+        	window.location.href=$('#baseRoot').val() + '/renewal/renewalDetail/' +  $(this).attr('orderId');   
+    	}else{
+        	window.location.href=$('#baseRoot').val() + '/topUp/phoneTradRecordDetail/' +  $(this).attr('orderId');   
+    	}    	
     });
     
     $("#top_left").bind("click",function(){
@@ -44,12 +48,19 @@ function initBind(){
 
 function loadMoreData(pageNum)
 {	
-	var phoneNumber = $("#phoneNumber").val();	
-	var param = {"pageNum":pageNum,"phoneNumber":phoneNumber};	
+	var searchNumber = $("#searchNumber").val();	
+	var path = null;
+	var param = {"pageNum":pageNum,"searchNumber":searchNumber};	
+	if($("#from").val() == "renewal"){
+		path ="/renewal/renewalListSub"; 
+	}else{
+		path="/topUp/phoneTradRecordListSub";   
+	}
+	
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型
-		   url: $('#baseRoot').val() + "/topUp/phoneTradRecordListSub",
+		   url: $('#baseRoot').val() + path,
 		   data: param, //服务器只能接收json字符串
 		   async: false,
 		   success: function(data){

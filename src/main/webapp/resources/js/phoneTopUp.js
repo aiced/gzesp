@@ -17,34 +17,40 @@ $(function () {
 function initBind() {
 //    输入号码失焦点 绑定
 	$('#phoneDetailId').hide();
+	$("#rotateG_01").hide();
 	
     $('#phoneNumId').blur(function ()
     {
     	phoneNumalidation = false;
-    	verificationNum(true);
-    	
-
+    	verificationNum(true);    	
     });
     
     $("#numSelected").change(function(){
     	phoneNumalidation = false;
+		$('#phoneNumId').val("");
     	verificationNum(false);
    });
-    
 
 //    点击金额绑定
     var cards=$('[name=cardName]');
     for(var i=0;i<cards.length;i++){
         var card = cards[i];
         var $card=$(card);
-        $card.bind("click" , function(){          
-            //清空所有格式
-            clearCardStyle();
-            $(this).attr("class","cardSelected");
-            //清空输入金额  设置优惠价格
-            clearInputNum();
-            refreshTotleAmount($(this).attr('realPrice'),$(this).attr('originalPrice'),$(this).attr('goodsId'));
-        });
+       	if($card.attr('clickAble') == "no"){
+       		$card.css("background-color","#ECECEC");
+       		$card.attr("class","noAvalibleCard");       		
+    	}else{
+            $card.bind("click" , function(){ 
+                //清空所有格式
+                clearCardStyle();
+                $(this).attr("class","cardSelected");
+                //清空输入金额  设置优惠价格
+                clearInputNum();
+                refreshTotleAmount($(this).attr('realPrice'),$(this).attr('originalPrice'),$(this).attr('goodsId'));
+            });
+    	}
+        
+
     }
 
 //    输入金额失焦点 绑定
@@ -68,6 +74,10 @@ function initBind() {
     });
 //    点击充值 绑定
     $("#topUpId").bind("click",function(){
+       	if(!$("#rotateG_01").is(":hidden")){
+    		return;
+    	}
+       	
     	//号码判断
     	if(!phoneNumalidation){
             alert("输入的号码无效,请重新输入！");
@@ -75,29 +85,66 @@ function initBind() {
     		return;
     	}
         //金额判断
-    	if(ADD_PRICE == null && ADD_PRICE == ""){
+    	if(ADD_PRICE == null || ADD_PRICE == ""){
             alert("输入的金额不能为空");
             return;
     	}
+    	// 判断号码的有效 bss
+    	$("#rotateG_01").show();
+    	var path ="/recharge/rechargeCheck/" + $('#phoneNumId').val() + "/"  +  $("#numSelected").val();
+    	var param = {"serial_number":$('#phoneNumId').val(),"serial_number_type":$("#numSelected").val()};	
+    	$.ajax({
+ 		   type: "POST",
+ 		   contentType:"application/json", //发送给服务器的内容编码类型
+ 		   url: $('#baseRoot').val() + path,
+ 		   data: param, //服务器只能接收json字符串
+ 		   async: false,
+ 		   success: function(data){
+ 		    	$("#rotateG_01").hide();
+//			     * 返回 json 成功：{"status":"00000", "detail":"成功"}， 失败 {"status":"xxx", "detail":"失败原因"}
+// 			   var obj = eval(data);    			   
+// 			   if(obj.status == "00000"){
+//  			  	  var r=confirm("充值号码: " + $('#phoneNumId').val());
+// 		          if (r==true)
+// 		          {
+// 		            	var userId = $("#user_id").val();
+// 		        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID,'NUMBER_TYPE':$("#numSelected").val()};
+// 		        	  	$.commonFormSubmit({  
+// 		        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
+// 		        			data: parms
+// 		        	    });         
+// 		          }
+// 		          else
+// 		          {
+// 		        	  return;
+// 		          }     
+// 			   }else {
+//     			   alert(obj.detail);    
+//		           return;
+// 			   }
+ 		    	
+ 		    	var r=confirm("充值号码: " + $('#phoneNumId').val());
+		          if (r==true)
+		          {
+		            	var userId = $("#user_id").val();
+		        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID,'NUMBER_TYPE':$("#numSelected").val()};
+		        	  	$.commonFormSubmit({  
+		        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
+		        			data: parms
+		        	    });         
+		          }
+		          else
+		          {
+		        	  return;
+		          }    
+// 			     			      			   
+ 		     }
+ 		});
+
     	
-    	  var r=confirm("充值号码: " + $('#phoneNumId').val());
-          if (r==true)
-          {
-            	var userId = $("#user_id").val();
-        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID};
-        	  	$.commonFormSubmit({  
-        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
-        			data: parms
-        	    });         
-          }
-          else
-          {
-        	  return;
-          }
 
     	// 数据组装，跳转界面
     });
-
 //    点击购买充值卡绑定
     $("#buyCardId").bind("click",function(){
     	alert("敬请期待！");
@@ -178,7 +225,14 @@ function clearCardStyle(){
     for(var i=0;i<cards.length;i++){
         var card = cards[i];
         var $card=$(card);
-        $card.attr("class","card");
+        
+        if($card.attr('clickAble') == "no"){
+       		$card.css("background-color","#ECECEC");
+       		$card.attr("class","noAvalibleCard");       		
+    	}else{
+            $card.attr("class","card");
+    	}
+        
     }
 }
 

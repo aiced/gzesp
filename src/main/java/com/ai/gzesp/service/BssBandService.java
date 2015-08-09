@@ -18,10 +18,12 @@ import org.springframework.stereotype.Service;
 import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dao.OrderDao;
 import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdOrdDBANDBALANCE;
 import com.ai.gzesp.dao.beans.TdOrdDBANDPAY;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
 import com.ai.gzesp.dao.beans.TdOrdDREFUND;
 import com.ai.gzesp.dao.beans.TdOrdLDEALLOG;
+import com.ai.gzesp.dao.service.TdOrdDBANDBALANCEDao;
 import com.ai.gzesp.dao.service.TdOrdDBANDPAYDao;
 import com.ai.gzesp.dao.service.TdOrdDBASEDao;
 import com.ai.gzesp.dao.service.TdOrdDREFUNDDao;
@@ -62,6 +64,10 @@ public class BssBandService {
     
     @Resource
 	TdOrdDBANDPAYDao tdOrdDBANDPAYDao;
+    @Resource
+    TdOrdDBANDBALANCEDao tdOrdDBANDBALANCEDao;
+    
+    
     
 	//初始化Bss发送请求协议报文：头部
 	private String InitBssHead(String strPacket,String NumID,String BIPCode,String ActivityCode)
@@ -222,7 +228,12 @@ public class BssBandService {
 					);
 			if (iRet>0) //插入成功
 			{
-				proAndActRsp.getRespDesc();
+				//更新宽带续约订单表ord_d_band_pay的 order_state
+				//02状态固定写死
+				iRet=updateOrdBandPay(order_id,"02");
+				if (iRet>0) {
+					return 	proAndActRsp.getRespDesc();
+				}
 			}
 		}
 		
@@ -252,7 +263,6 @@ public class BssBandService {
 	//改方法只负责用http工具类发送请求
 	public String HttpPost(String strUrl,Map<String, String> map)
 	{
-
 		String strRet="";//bss返回结果
     	//调用Bss接口
     	try {
@@ -278,7 +288,8 @@ public class BssBandService {
     	String req_day = DateUtils.getYesterday();
     	List<LinkedHashMap<String, String>> bandList = orderDao.queryBandOrderByDate(req_day);
     	//调用奚总的写文件接口
-    	//FileUtils.writeCardReqFile(req_day, cardList);
+    	FileUtils.writeBandReqFile(req_day,bandList);
+
     }
     
     /**
@@ -289,7 +300,7 @@ public class BssBandService {
     public void syncBandStatus2BssRespJob(){
     	String req_day = DateUtils.getYesterday();
     	//调用奚总的读文件接口
-    	List<String[]> result = FileUtils.readCardRespFile(req_day);
+    	List<String[]> result = FileUtils.readBandRespFile(req_day);
     	//这边list数量不固定，就不用 动态sql 一次更新了，怕in太多
     	for(String[] array : result){
     		//array[0];//订单号
@@ -303,8 +314,7 @@ public class BssBandService {
     		//插入退单表
 			//插入ord_l_deallog
 			//添加对账日志表
-			Insert_refund_log_blance(refundList);
-
+			Insert_refund_log_blance(refundList,array[4]);
     	}
     }
 	
@@ -313,9 +323,10 @@ public class BssBandService {
     //插入退单表
     //插入ord_l_deallog
     //更新bss宽带续约对账表
-    private void Insert_refund_log_blance(Map<String, Object> map)
+    private void Insert_refund_log_blance(Map<String, Object> map,String strResult)
     {
-    	String strname=map.get("BANDNUMID").toString();
+    	
+      	String strname=map.get("BANDNUMID").toString();
     	String strphone=map.get("BANDNUMID").toString();
     	String strreason="对账发现错误退款";
     	
@@ -329,7 +340,7 @@ public class BssBandService {
     	String order_state=map.get("ORDER_STATE").toString();
     	String REFUND_TYPE="09";//固定写死订单处理退单：09客户拒收退单：10
     	String REFUND_STATE="11";
-
+    	
     	System.out.println(Partition_Id);
     	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	Date date_create_time=DateUtil.getNow();
@@ -340,52 +351,69 @@ public class BssBandService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	//插入退单表
-    	TdOrdDREFUND record_orddrefund=new TdOrdDREFUND();
-    	record_orddrefund.setOrderId(Long.valueOf(order_id));
-    	record_orddrefund.setPartitionId(Short.valueOf(Partition_Id));
-    	record_orddrefund.setOrderNo(order_no);
-    	record_orddrefund.setCreateTime(date_create_time);
-    	record_orddrefund.setOrderFrom(order_from);
-    	record_orddrefund.setOrderTime(date_order_time);
-    	record_orddrefund.setCustName(strname);
-    	record_orddrefund.setPhoneNumber(strphone);
-    	record_orddrefund.setTxnAmt(Long.valueOf(unit_price));
-    	record_orddrefund.setOrderState(order_state);
-    	record_orddrefund.setRefundType(REFUND_TYPE);
-    	record_orddrefund.setRefundReason(strreason);
-    	record_orddrefund.setRefundState(REFUND_STATE);
-    	
-    	tdOrdDREFUNDDao.insertSelective(record_orddrefund);
-    	
-    	
-    	Criteria example = new Criteria();
-    	example.createConditon().andEqualTo("ORDER_ID", order_id);
-    	//修改订单基本表
-    	TdOrdDBANDPAY record_ordbandpay=new TdOrdDBANDPAY();
-    	record_ordbandpay.setOrderState(REFUND_STATE);
-    	tdOrdDBANDPAYDao.updateByExampleSelective(record_ordbandpay, example);
-    	
-		String logId = CommonUtil.generateLogId("4");
-    	
-    	//插入状态流程日志表
-    	TdOrdLDEALLOG record_deallog=new TdOrdLDEALLOG();
-    	record_deallog.setOperateLogid(CommonUtil.string2Long(logId));
-    	record_deallog.setOrderId(Long.valueOf(order_id));
-    	record_deallog.setPartitionId(Short.valueOf(Partition_Id));
-    	record_deallog.setOperateTime(date_order_time);
-    	record_deallog.setOperatorId(strphone);
-    	record_deallog.setOperatorName(strphone);
-    	record_deallog.setDealContent("用户发生退单");
-    	record_deallog.setResultCode("0");
-    	record_deallog.setResultInfo("成功");
-    	record_deallog.setOriginalState(order_state);
-    	record_deallog.setCurrentState(REFUND_STATE);
+		
+    	if (strResult.equals("0")) {
 
-    	tdOrdLDEALLOGDao.insertSelective(record_deallog);
+        	
+        	//插入退单表
+        	TdOrdDREFUND record_orddrefund=new TdOrdDREFUND();
+        	record_orddrefund.setOrderId(Long.valueOf(order_id));
+        	record_orddrefund.setPartitionId(Short.valueOf(Partition_Id));
+        	record_orddrefund.setOrderNo(order_no);
+        	record_orddrefund.setCreateTime(date_create_time);
+        	record_orddrefund.setOrderFrom(order_from);
+        	record_orddrefund.setOrderTime(date_order_time);
+        	record_orddrefund.setCustName(strname);
+        	record_orddrefund.setPhoneNumber(strphone);
+        	record_orddrefund.setTxnAmt(Long.valueOf(unit_price));
+        	record_orddrefund.setOrderState(order_state);
+        	record_orddrefund.setRefundType(REFUND_TYPE);
+        	record_orddrefund.setRefundReason(strreason);
+        	record_orddrefund.setRefundState(REFUND_STATE);
+        	
+        	tdOrdDREFUNDDao.insertSelective(record_orddrefund);
+        	
+        	
+           	Criteria example = new Criteria();
+        	example.createConditon().andEqualTo("ORDER_ID", order_id);
+        	//修改订单基本表
+        	TdOrdDBANDPAY record_ordbandpay=new TdOrdDBANDPAY();
+        	record_ordbandpay.setOrderState(REFUND_STATE);
+        	tdOrdDBANDPAYDao.updateByExampleSelective(record_ordbandpay, example);
+        	
+    		String logId = CommonUtil.generateLogId("4");
+        	
+        	//插入状态流程日志表
+        	TdOrdLDEALLOG record_deallog=new TdOrdLDEALLOG();
+        	record_deallog.setOperateLogid(CommonUtil.string2Long(logId));
+        	record_deallog.setOrderId(Long.valueOf(order_id));
+        	record_deallog.setPartitionId(Short.valueOf(Partition_Id));
+        	record_deallog.setOperateTime(date_order_time);
+        	record_deallog.setOperatorId(strphone);
+        	record_deallog.setOperatorName(strphone);
+        	record_deallog.setDealContent("宽带续约：用户发生退单");
+        	record_deallog.setResultCode("0");
+        	record_deallog.setResultInfo("成功");
+        	record_deallog.setOriginalState(order_state);
+        	record_deallog.setCurrentState(REFUND_STATE);
+
+        	tdOrdLDEALLOGDao.insertSelective(record_deallog);
+        	
+        	
+		}
+ 
     	
     	//插入对账日志表
+    	TdOrdDBANDBALANCE record_bandbalance=new TdOrdDBANDBALANCE();
+    	record_bandbalance.setBandnumid(map.get("BANDNUMID").toString());
+    	record_bandbalance.setCreatetime(DateUtil.getNow());
+    	record_bandbalance.setLogId(CommonUtil.generateLogId("8"));
+    	record_bandbalance.setOrderId(order_id);
+    	record_bandbalance.setResult(strResult);
+    	
+    	tdOrdDBANDBALANCEDao.insertSelective(record_bandbalance);
+    	
+    	
     	
     	
     	
@@ -481,168 +509,176 @@ public class BssBandService {
 		return iRet;
     }
     
+    //徐总落订单以后 调用奚总支付的接口，之后奚总调用我的产品变更接口，调用成功后修改该订单的状态为02 续约成功
+    public int updateOrdBandPay(String order_id,String order_state)
+    {
+    	int iRet=orderDao.updateOrdBandPay(order_id,order_state);
+    	
+    	return iRet;
+    }
     
     
+    
 	
-	private String DelABC()
-	{
-		 CurrProduct currProduct=new CurrProduct();
-		 currProduct.setCurrProductCode("1");
-		 currProduct.setCurrProductName("我自己当前的产品1");
-		 currProduct.setCurrProductType("当前生效产品");
-		 currProduct.setProductActiveTime("20150804");
-		 currProduct.setProductInActiveTime("20160804");
-		 
-		 List<CurrProduct> currProductList=new ArrayList<CurrProduct>();
-		 
-		 currProductList.add(currProduct);
-		 
-		 Product product1=new Product();
-		 product1.setProductCode("1");
-		 product1.setProductFee("2000");
-		 product1.setProductName("我是产品1");
-		 product1.setProductRate("100M");
-		 product1.setProductType("1年产品");
-		 
-		 DiscntReq discntReq1=new DiscntReq();
-		 discntReq1.setDiscntType("折扣");
-		 discntReq1.setDiscntValue("1000");
-		 product1.setDiscntReq(discntReq1);
-		 
-		 
-		 Product product2=new Product(); 
-		 product2.setProductCode("2");
-		 product2.setProductFee("3000");
-		 product2.setProductName("我是产品2");
-		 product2.setProductRate("200M");
-		 product2.setProductType("2年产品");
-		 DiscntReq discntReq2=new DiscntReq();
-		 discntReq2.setDiscntType("赠送");
-		 discntReq2.setDiscntValue("2000");
-		 product2.setDiscntReq(discntReq2);
-		 
-		 
-		 Product product3=new Product();
-		 product3.setProductCode("3");
-		 product3.setProductFee("4000");
-		 product3.setProductName("我是产品3");
-		 product3.setProductRate("300M");
-		 product3.setProductType("3年产品");	 
-		 DiscntReq discntReq3=new DiscntReq();
-		 discntReq3.setDiscntType("折扣");
-		 discntReq3.setDiscntValue("3000");
-		 product3.setDiscntReq(discntReq3);
-		 
-		 Product product4=new Product();
-		 product4.setProductCode("4");
-		 product4.setProductFee("5000");
-		 product4.setProductName("我是产品4");
-		 product4.setProductRate("400M");
-		 product4.setProductType("4年产品");		 
-		 DiscntReq discntReq4=new DiscntReq();
-		 discntReq4.setDiscntType("赠送");
-		 discntReq4.setDiscntValue("4000");
-		 product4.setDiscntReq(discntReq4);	 
-		 
-		 Product product5=new Product();
-		 product5.setProductCode("5");
-		 product5.setProductFee("5000");
-		 product5.setProductName("我是产品5");
-		 product5.setProductRate("500M");
-		 product5.setProductType("5年产品"); 
-		 DiscntReq discntReq5=new DiscntReq();
-		 discntReq5.setDiscntType("折扣");
-		 discntReq5.setDiscntValue("5000");
-		 product5.setDiscntReq(discntReq5);		 
-		 
-		 Product product6=new Product();
-		 product6.setProductCode("6");
-		 product6.setProductFee("6000");
-		 product6.setProductName("我是产品6");
-		 product6.setProductRate("600M");
-		 product6.setProductType("6年产品");
-		 DiscntReq discntReq6=new DiscntReq();
-		 discntReq6.setDiscntType("赠送");
-		 discntReq6.setDiscntValue("6000");
-		 product6.setDiscntReq(discntReq6);
-		 
-		 Product product7=new Product();
-		 product7.setProductCode("7");
-		 product7.setProductFee("7000");
-		 product7.setProductName("我是产品7");
-		 product7.setProductRate("700M");
-		 product7.setProductType("7年产品");
-		 DiscntReq discntReq7=new DiscntReq();
-		 discntReq7.setDiscntType("赠送");
-		 discntReq7.setDiscntValue("7000");
-
-		 product7.setDiscntReq(discntReq7);		 
-		 
-		 
-		 
-		 
-		 Product product8=new Product();
-		 product8.setProductCode("8");
-		 product8.setProductFee("8000");
-		 product8.setProductName("我是产品8");
-		 product8.setProductRate("800M");
-		 product8.setProductType("8年产品");
-		 DiscntReq discntReq8=new DiscntReq();
-		 discntReq8.setDiscntType("折扣");
-		 discntReq8.setDiscntValue("8000");
-		 product8.setDiscntReq(discntReq8);
-		 
-		 
-		 List<Product> productList=new ArrayList<Product>();
-		 productList.add(product1);
-		 productList.add(product2);
-		 productList.add(product3);
-		 productList.add(product4);
-		 productList.add(product5);
-		 productList.add(product6);
-		 productList.add(product7);
-		 productList.add(product8);
-		 
-		 
-		 
-		 UserCheckReq_Res bandAcctInfo=new UserCheckReq_Res();
-		 
-		 bandAcctInfo.setRespCode("0000");
-		 bandAcctInfo.setRespDesc("ok");
-		 bandAcctInfo.setCustName("张三");
-		 bandAcctInfo.setProvinceCode("江苏");
-		 bandAcctInfo.setCityCode("南京");
-		 bandAcctInfo.setNetType("04");
-		 bandAcctInfo.setPayType("0");
-		 bandAcctInfo.setUserStatus("01");
-		 bandAcctInfo.setUserType("0");
-		 bandAcctInfo.setCurrProductList(currProductList);
-		 bandAcctInfo.setProductList(productList);
-		 
-		 
-		 //XStream xStream = new XStream();  
-        xStream.autodetectAnnotations(true);  
-        String xml = xStream.toXML(bandAcctInfo);  
-        return xml;
-		 
-		
-	}
+//	private String DelABC()
+//	{
+//		 CurrProduct currProduct=new CurrProduct();
+//		 currProduct.setCurrProductCode("1");
+//		 currProduct.setCurrProductName("我自己当前的产品1");
+//		 currProduct.setCurrProductType("当前生效产品");
+//		 currProduct.setProductActiveTime("20150804");
+//		 currProduct.setProductInActiveTime("20160804");
+//		 
+//		 List<CurrProduct> currProductList=new ArrayList<CurrProduct>();
+//		 
+//		 currProductList.add(currProduct);
+//		 
+//		 Product product1=new Product();
+//		 product1.setProductCode("1");
+//		 product1.setProductFee("2000");
+//		 product1.setProductName("我是产品1");
+//		 product1.setProductRate("100M");
+//		 product1.setProductType("1年产品");
+//		 
+//		 DiscntReq discntReq1=new DiscntReq();
+//		 discntReq1.setDiscntType("折扣");
+//		 discntReq1.setDiscntValue("1000");
+//		 product1.setDiscntReq(discntReq1);
+//		 
+//		 
+//		 Product product2=new Product(); 
+//		 product2.setProductCode("2");
+//		 product2.setProductFee("3000");
+//		 product2.setProductName("我是产品2");
+//		 product2.setProductRate("200M");
+//		 product2.setProductType("2年产品");
+//		 DiscntReq discntReq2=new DiscntReq();
+//		 discntReq2.setDiscntType("赠送");
+//		 discntReq2.setDiscntValue("2000");
+//		 product2.setDiscntReq(discntReq2);
+//		 
+//		 
+//		 Product product3=new Product();
+//		 product3.setProductCode("3");
+//		 product3.setProductFee("4000");
+//		 product3.setProductName("我是产品3");
+//		 product3.setProductRate("300M");
+//		 product3.setProductType("3年产品");	 
+//		 DiscntReq discntReq3=new DiscntReq();
+//		 discntReq3.setDiscntType("折扣");
+//		 discntReq3.setDiscntValue("3000");
+//		 product3.setDiscntReq(discntReq3);
+//		 
+//		 Product product4=new Product();
+//		 product4.setProductCode("4");
+//		 product4.setProductFee("5000");
+//		 product4.setProductName("我是产品4");
+//		 product4.setProductRate("400M");
+//		 product4.setProductType("4年产品");		 
+//		 DiscntReq discntReq4=new DiscntReq();
+//		 discntReq4.setDiscntType("赠送");
+//		 discntReq4.setDiscntValue("4000");
+//		 product4.setDiscntReq(discntReq4);	 
+//		 
+//		 Product product5=new Product();
+//		 product5.setProductCode("5");
+//		 product5.setProductFee("5000");
+//		 product5.setProductName("我是产品5");
+//		 product5.setProductRate("500M");
+//		 product5.setProductType("5年产品"); 
+//		 DiscntReq discntReq5=new DiscntReq();
+//		 discntReq5.setDiscntType("折扣");
+//		 discntReq5.setDiscntValue("5000");
+//		 product5.setDiscntReq(discntReq5);		 
+//		 
+//		 Product product6=new Product();
+//		 product6.setProductCode("6");
+//		 product6.setProductFee("6000");
+//		 product6.setProductName("我是产品6");
+//		 product6.setProductRate("600M");
+//		 product6.setProductType("6年产品");
+//		 DiscntReq discntReq6=new DiscntReq();
+//		 discntReq6.setDiscntType("赠送");
+//		 discntReq6.setDiscntValue("6000");
+//		 product6.setDiscntReq(discntReq6);
+//		 
+//		 Product product7=new Product();
+//		 product7.setProductCode("7");
+//		 product7.setProductFee("7000");
+//		 product7.setProductName("我是产品7");
+//		 product7.setProductRate("700M");
+//		 product7.setProductType("7年产品");
+//		 DiscntReq discntReq7=new DiscntReq();
+//		 discntReq7.setDiscntType("赠送");
+//		 discntReq7.setDiscntValue("7000");
+//
+//		 product7.setDiscntReq(discntReq7);		 
+//		 
+//		 
+//		 
+//		 
+//		 Product product8=new Product();
+//		 product8.setProductCode("8");
+//		 product8.setProductFee("8000");
+//		 product8.setProductName("我是产品8");
+//		 product8.setProductRate("800M");
+//		 product8.setProductType("8年产品");
+//		 DiscntReq discntReq8=new DiscntReq();
+//		 discntReq8.setDiscntType("折扣");
+//		 discntReq8.setDiscntValue("8000");
+//		 product8.setDiscntReq(discntReq8);
+//		 
+//		 
+//		 List<Product> productList=new ArrayList<Product>();
+//		 productList.add(product1);
+//		 productList.add(product2);
+//		 productList.add(product3);
+//		 productList.add(product4);
+//		 productList.add(product5);
+//		 productList.add(product6);
+//		 productList.add(product7);
+//		 productList.add(product8);
+//		 
+//		 
+//		 
+//		 UserCheckReq_Res bandAcctInfo=new UserCheckReq_Res();
+//		 
+//		 bandAcctInfo.setRespCode("0000");
+//		 bandAcctInfo.setRespDesc("ok");
+//		 bandAcctInfo.setCustName("张三");
+//		 bandAcctInfo.setProvinceCode("江苏");
+//		 bandAcctInfo.setCityCode("南京");
+//		 bandAcctInfo.setNetType("04");
+//		 bandAcctInfo.setPayType("0");
+//		 bandAcctInfo.setUserStatus("01");
+//		 bandAcctInfo.setUserType("0");
+//		 bandAcctInfo.setCurrProductList(currProductList);
+//		 bandAcctInfo.setProductList(productList);
+//		 
+//		 
+//		 //XStream xStream = new XStream();  
+//        xStream.autodetectAnnotations(true);  
+//        String xml = xStream.toXML(bandAcctInfo);  
+//        return xml;
+//		 
+//		
+//	}
 	
 	
-	public String DelDEF()
-	{
-		ProAndActRsp proAndActRsp=new ProAndActRsp();
-		
-		proAndActRsp.setRespCode("0000");
-		proAndActRsp.setRespDesc("ok");
-		proAndActRsp.setProductActiveTime("20150805");
-		proAndActRsp.setProductInActiveTime("20150905");
-		
-        xStream.autodetectAnnotations(true);  
-        String xml = xStream.toXML(proAndActRsp);  
-        return xml;
-
-	}
+//	public String DelDEF()
+//	{
+//		ProAndActRsp proAndActRsp=new ProAndActRsp();
+//		
+//		proAndActRsp.setRespCode("0000");
+//		proAndActRsp.setRespDesc("ok");
+//		proAndActRsp.setProductActiveTime("20150805");
+//		proAndActRsp.setProductInActiveTime("20150905");
+//		
+//        xStream.autodetectAnnotations(true);  
+//        String xml = xStream.toXML(proAndActRsp);  
+//        return xml;
+//
+//	}
 	
 	
 }

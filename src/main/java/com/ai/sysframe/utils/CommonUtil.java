@@ -275,6 +275,7 @@ public class CommonUtil {
      * edit_by_wenh
      * 7:bss 调用日志表
      * 6:ACT_D_ACCESS_LOG调用日志表
+     * 8:宽带续约对账日志表log
      * @param payType
      * @return
      */

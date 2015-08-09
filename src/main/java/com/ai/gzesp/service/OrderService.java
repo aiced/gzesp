@@ -579,6 +579,7 @@ public class OrderService {
     	String userId = paramsMap.get("userId");
     	String orderFrom = paramsMap.get("orderFrom");
     	String orderType = paramsMap.get("orderType");
+    	String numberType = paramsMap.get("numberType");
     	
     	TdOrdDCARDPAY record = new TdOrdDCARDPAY();
     	record.setOrderId(CommonUtil.string2Long(orderId));
@@ -592,6 +593,7 @@ public class OrderService {
     	record.setIncomeMoney(0l);
     	record.setOrderState("00");
     	record.setOrderType(orderType);
+    	record.setValues1(numberType);
     	record.setCreateTime(DateUtil.getNow());
     	
     	tdOrdDCARDPAYDao.insertSelective(record);

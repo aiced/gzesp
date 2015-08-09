@@ -74,7 +74,7 @@ public class RechargeService {
 			//发送报文
 			rechargeClientHandler.sendMsg(req.getBytes());
 			
-			waitForRechargeCheckResp(logId, result);
+			waitForRechargeCheckResp(logId, "充值号码验证", result);
 		} catch (Exception e) {
 			e.printStackTrace();
 			result.put("status", "E98");
@@ -90,13 +90,13 @@ public class RechargeService {
      * @param result
      * @return
      */
-    public void waitForRechargeCheckResp(String log_id, Map<String, String> result){
+    public void waitForRechargeCheckResp(String log_id, String log_tip, Map<String, String> result){
         //Map<String, String> result = new HashMap<String, String>();
         int timeout = 0;
         while(true){
             if(timeout >= RechargeCons.WAIT_TIMEOUT){
                 result.put("status", "E99");
-                result.put("detail", "验证失败！发送充值号码验证接口报文后未接收到一卡充响应");
+                result.put("detail", "接口调用失败！发送" + log_tip + "报文后未接收到一卡充响应");
                 break;
             }
             try {
@@ -105,7 +105,7 @@ public class RechargeService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } //每次轮询等待1秒钟
-            Map<String, String> row = rechargeDao.queryRechargeChecklog(log_id); //查询日志表里是否已经有返回的结果
+            Map<String, String> row = rechargeDao.queryRechargelogResultByLogId(log_id); //查询日志表里是否已经有返回的结果
             if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
                 result.put("status", row.get("RESULT_CODE"));
                 result.put("detail", ResultCode.find(row.get("RESULT_CODE")));
@@ -115,6 +115,38 @@ public class RechargeService {
         
         //return result;
     } 
+    
+    /**
+     * 发送充值接口后等待响应返回
+     * @param order_id
+     * @param result
+     * @return
+     */
+    public void waitForRechargeResp(String order_id, String log_tip, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        int timeout = 0;
+        while(true){
+            if(timeout >= RechargeCons.WAIT_TIMEOUT){
+                result.put("status", "E99");
+                result.put("detail", "接口调用失败！发送" + log_tip + "报文后未接收到一卡充响应");
+                break;
+            }
+            try {
+                Thread.sleep(RechargeCons.SLEEP_INTERVAL_RECHARGE);
+                timeout += RechargeCons.SLEEP_INTERVAL_RECHARGE;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } //每次轮询等待1秒钟
+            Map<String, String> row = rechargeDao.queryRechargelogResultByOrderId(order_id); //查询日志表里是否已经有返回的结果
+            if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
+                result.put("status", row.get("RESULT_CODE"));
+                result.put("detail", ResultCode.find(row.get("RESULT_CODE")));
+                break;
+            }
+        }
+        
+        //return result;
+    }     
     
     
     /**
@@ -229,8 +261,9 @@ public class RechargeService {
 				//调用充值接口
 				rechargeCards(cardList, serial_number, serial_number_type);
 				
-				result.put("status", "SUCCESS");
-				result.put("detail", "充值成功！");
+				//等待一卡充响应结果
+				waitForRechargeCheckResp(order_id, "充值接口", result);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				result.put("status", "FAIL");

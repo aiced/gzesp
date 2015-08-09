@@ -149,10 +149,17 @@
        where card_no = #{card_no}
 	</update>	
 	
-	<select id="queryRechargeChecklog" resultType="java.util.HashMap">
+	<select id="queryRechargelogResultByLogId" resultType="java.util.HashMap">
 	    select log_id, result_code
           from itf_d_recharge_log
          where log_id = ${log_id}
+	</select>		
+	
+	<select id="queryRechargelogResultByOrderId" resultType="java.util.HashMap">
+	    select log_id, result_code
+          from itf_d_recharge_log
+         where order_id = ${order_id}
+           and interface_type = '010202'
 	</select>			
 							
 </mapper>

@@ -72,6 +72,9 @@ public class PayService {
     @Autowired
     private RechargeService rechargeService;
     
+    @Autowired
+    private BssBandService bssBandService;
+    
     /**
      * 根据orderid查询能人店铺id
      * @param order_id
@@ -175,31 +178,31 @@ public class PayService {
      * @param pay_mode
      * @param isSuccess
      * @param orderId
-     * @param orderFee
+     * @param incomeFee
      * @return
      */
-    public void afterPaySuccess(String pay_mode, boolean isSuccess, String orderId, int orderFee){
+    public void afterPaySuccess(String pay_mode, boolean isSuccess, String orderId, int incomeFee){
     	//如果是充值订单，支付完成后走特殊的流程
     	boolean isRecharge = StringUtils.startsWith(orderId, "2") ? true : false; 
     	if(isRecharge){
-    		afterPayRecharge(isSuccess, orderId);
+    		afterPayRecharge(pay_mode, isSuccess, orderId, incomeFee);
 		    return;
     	}
     	
     	//如果是宽带续约订单，支付完成后走特殊的流程
     	boolean isBand = StringUtils.startsWith(orderId, "3") ? true : false; 
-    	if(isRecharge){
-			//Map<String, String> result = rechargeService.recharge(order_id, serial_number, serial_number_type, total_fee);
+    	if(isBand){
+    		afterPayBand(pay_mode, isSuccess, orderId, incomeFee);
 		    return;
     	}
     	
     	//更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
     	if(isSuccess){
-    	   int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, orderFee);
+    	   int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, incomeFee);
     	}
     	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
     	if(isSuccess){
-    		int r2 = insertDealLogAfterPaySuccess(orderId, orderFee);
+    		int r2 = insertDealLogAfterPaySuccess(orderId, incomeFee);
     	}
     	
     	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
@@ -243,6 +246,21 @@ public class PayService {
      * @param incomeFee
      */
     public void afterInsteadPaySuccess(String pay_mode, boolean isSuccess, String orderId, int orderFee, int incomeFee){
+    	//如果是充值订单，支付完成后走特殊的流程
+    	boolean isRecharge = StringUtils.startsWith(orderId, "2") ? true : false; 
+    	if(isRecharge){
+    		afterPayRecharge(pay_mode, isSuccess, orderId, incomeFee);
+		    return;
+    	}
+    	
+    	//如果是宽带续约订单，支付完成后走特殊的流程
+    	boolean isBand = StringUtils.startsWith(orderId, "3") ? true : false; 
+    	if(isBand){
+    		afterPayBand(pay_mode, isSuccess, orderId, incomeFee);
+		    return;
+    	}
+    	
+    	
     	//更新订单基本表里的 订单状态 和 实收总金额 INCOME_MONEY
     	if(isSuccess){
     	   int r1 = updatePayStateAndIncomeMoney(isSuccess, orderId, incomeFee);
@@ -320,51 +338,68 @@ public class PayService {
 
     /**
      * 如果是充值订单，支付完成后走特殊的流程
+     * @param pay_mode
      * @param isSuccess
      * @param orderId
+     * @param incomeFee
      */
-    public void afterPayRecharge(boolean isSuccess, String orderId){
+    public void afterPayRecharge(String pay_mode, boolean isSuccess, String orderId, int incomeFee){
     	//Map<String, String> result = rechargeService.recharge(order_id, serial_number, serial_number_type, total_fee);
+
+    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
+    	//10表示代客下单的，在dealInsteadPay里已经先update过了
+    	if("10".equals(pay_mode)){
+    		String pay_state = isSuccess ? "1" : "2" ;
+    		int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
+    	}
     	
-//    	//更新一卡充订单表ord_d_card_pay里的 订单状态 和 实收总金额 INCOME_MONEY
-//    	if(isSuccess){
-//    	   int r1 = updateCardPayStateAndIncomeMoney(isSuccess, orderId, orderFee);
-//    	}
-//    	//如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
-//    	if(isSuccess){
-//    		int r2 = insertDealLogAfterPaySuccess(orderId, orderFee);
-//    	}
-//    	
-//    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
-//    	String pay_state = isSuccess ? "1" : "2" ;
-//    	int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
-//    	
-//    	//先根据返回报文里的order_id 获取到订单当时是否有选择号码
-//    	Map<Object, Object> numberRow = getNumberByOrderId(orderId);
-//    	//如果有号码而且返回响应是成功的则删掉号码预占表信息
-//        if(MapUtils.isNotEmpty(numberRow) && isSuccess){
-//        	//号码预占表删掉号码记录
-//        	String[] numbers = {(String) numberRow.get("SERIAL_NUMBER")}; 
-//        	int r4 = deleteNumberReserve(numbers);
-//        }
-//        
-//        //支付成功发短信
-//        if(isSuccess){
-//        	Map<String, String> phone = payDao.queryPhoneByOrderId(orderId);
-//        	Map<String, String> goods = payDao.queryGoodsNameByOrderId(orderId);
-//        	if(MapUtils.isNotEmpty(phone)){
-//        		String strRet = SmsUtils.doSendMessage(phone.get("PHONE_NUMBER"), "MB-2015052754", "@1@=" + goods.get("GOODS_NAME"));
-//        	}
-//    	}
-    
+    	//如果支付成功
+    	if(isSuccess){
+        	//先查出订单原价和应收，原价就是充值卡面额，后面调接口要用到
+        	Map<String, String> info = payDao.queryOrderCardPayInfo(orderId);
+        	//如果支付成功 更新一卡充订单表ord_d_card_pay里的 订单状态 和 实收总金额 INCOME_MONEY
+    	    int r1 = updateCardPayStateAndIncomeMoney(isSuccess, orderId, incomeFee);
+    	    //如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
+    	    int r2 = insertDealLogAfterPaySuccess(orderId, incomeFee);
+    	    
+    	    //如果支付成功，调用一卡充接口充值
+    	    Map<String, String> result = rechargeService.recharge(orderId, info.get("SERIAL_NUMBER"), info.get("SERIAL_NUMBER_TYPE"), Integer.parseInt(info.get("ORIGINAL_PRICE")));
+    	
+    	    //支付成功发短信
+    	    String strRet = SmsUtils.doSendMessage(info.get("SERIAL_NUMBER"), "MB-2015052754", "@1@=" + info.get("ORIGINAL_PRICE"));
+    	}
+
     }
     
     /**
      * 如果是宽带续约订单，支付完成后走特殊的流程
-     * @param order_id
+     * @param pay_mode
+     * @param isSuccess
+     * @param orderId
+     * @param incomeFee
      */
-    public void afterPayBand(String order_id){
+    public void afterPayBand(String pay_mode, boolean isSuccess, String orderId, int incomeFee){
+    	//Map<String, String> result = rechargeService.recharge(order_id, serial_number, serial_number_type, total_fee);
+
+    	//如果收到响应，不管成功失败 都要更新ord_d_pay 里的状态,1 成功，2失败
+    	//10表示代客下单的，在dealInsteadPay里已经先update过了
+    	if("10".equals(pay_mode)){
+    		String pay_state = isSuccess ? "1" : "2" ;
+    		int r3 = updateOrdDPay(orderId, pay_state, pay_mode);
+    	}
     	
+    	//如果支付成功
+    	if(isSuccess){
+        	//如果支付成功 更新宽带续约订单表ord_d_band_pay里的 订单状态 和 实收总金额 INCOME_MONEY
+    	    int r1 = updateBandPayStateAndIncomeMoney(isSuccess, orderId, incomeFee);
+    	    //如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
+    	    int r2 = insertDealLogAfterPaySuccess(orderId, incomeFee);
+    	    
+    	    //如果支付成功，调用一卡充接口充值
+    	    String result = bssBandService.ReqProAndActPacket(orderId);
+    	}
+
+    	//宽带续约没有留存手机号，支付成功不发短信
     }
     
     /**
@@ -385,6 +420,13 @@ public class PayService {
 //			logger.info("***oldBalance:{},acctId:{},version:{}***", oldBalance,	acctId, version);
 			int index = actDACCOUNTDao.updateAcctVersion(actInfo);
 			if (index >= 1) {
+				// ord_d_cmsstate 状态
+				TdOrdDCMSSTATE ordCmsStateRecord = new TdOrdDCMSSTATE();
+				ordCmsStateRecord.setCmsState("03");
+				Criteria example = new Criteria();
+				example.createConditon().andEqualTo("ORDER_ID", orderId);
+				ordDCMSSTATEDao.updateByExampleSelective(ordCmsStateRecord, example);
+				
 				TdActDACCESSLOG record = new TdActDACCESSLOG();
 				long logId = System.currentTimeMillis();
 				String logIDStr = String.valueOf(logId);
@@ -408,12 +450,6 @@ public class PayService {
 				// 改act_d_access_log原记录状态
 				actDACCESSLOGDao.updateReverseAccessLog(orderId);
 
-				// ord_d_cmsstate 状态
-				TdOrdDCMSSTATE ordCmsStateRecord = new TdOrdDCMSSTATE();
-				ordCmsStateRecord.setCmsState("03");
-				Criteria example = new Criteria();
-				example.createConditon().andEqualTo("ORDER_ID", orderId);
-				ordDCMSSTATEDao.updateByExampleSelective(ordCmsStateRecord, example);
 
 				// cms_d_daily 删本订单记录
 				example.clear();
@@ -470,10 +506,32 @@ public class PayService {
         	//20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
         	//String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
         	//r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
-        	r2 = payDao.updatePayStateAndIncomeMoney(orderId, order_state, income_money);
+        	r2 = payDao.updateCardPayStateAndIncomeMoney(orderId, order_state, income_money);
         }
         return r2;
     }
+    
+    /**
+     * 支付收到响应后更新宽带续约订单表ord_d_band_pay里订单状态 和 实收金额
+     * @param isSuccess
+     * @param orderId
+     * @param fee
+     * @return
+     */
+    private int updateBandPayStateAndIncomeMoney(boolean isSuccess, String orderId, int fee) {
+    	int r2 = 0;
+        if(isSuccess){
+        	//20150702 ximh 修改，要跳过外呼步骤，所以支付成功直接改成 02: 待处理状态
+        	//String order_state = "01"; //下单时是00，支付成功改成01，支付失败则不更新还是00
+        	String order_state = "01"; //文辉在收到bss宽带续约响应后，如果成功再把01改成02
+        	int income_money = fee; //银联是分，表里是厘
+        	//20150522修改，发给银联的是真实的orderId+sysTradeNo的最后2位
+        	//String realOrderId = UnionPayUtil.newOrderId2OrderId(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.sysTradeNo));
+        	//r2 = unionPayDao.updatePayStateAndIncomeMoney(respMap.get(UnionPayAttrs.orderId), order_state, income_money);
+        	r2 = payDao.updateBandPayStateAndIncomeMoney(orderId, order_state, income_money);
+        }
+        return r2;
+    }    
 
     
     /**

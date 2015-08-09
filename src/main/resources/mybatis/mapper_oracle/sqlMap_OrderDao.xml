@@ -395,13 +395,20 @@
        )	
 	</insert>
 	
-	<select id="queryBandOrderByDate" resultType="java.util.HashMap">
-		select a.order_id,
+	<select id="queryBandOrderByDate" resultType="java.util.LinkedHashMap">
+		select distinct to_char(a.order_id) order_id,
 		       a.bandnumid,
 		       decode(a.order_state, '02', '1', '0') order_state,
-		       a.create_time
+		       to_char(a.create_time,'yyyy/MM/dd  HH24:mi:SS') create_time
 		  from ORD_D_BAND_PAY a, BSS_B_LOG b
 		 where a.order_id = b.order_id
-		 and a.create_time like substr(#{req_day}, 3)||'%'
+		 <![CDATA[
+		 and a.create_time>=to_date(to_date('2015/8/7 13:48:50','yyyy/MM/dd  HH24:mi:SS'))
+     	 and a.create_time<to_date(to_date('2015/8/7 13:48:50','yyyy/MM/dd  HH24:mi:SS')+1)
+     	]]>
 	</select>
+	
+	<update id="updateOrdBandPay">
+		update ord_d_band_pay set order_state=#{order_state},update_time=sysdate where order_id=#{order_id}
+	</update>
 </mapper>

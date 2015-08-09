@@ -56,23 +56,30 @@ public class RechargeService {
     	String reqTime = RechargeUtil.getCurentTime();
 		String logId = RechargeUtil.generateLogId(1); //每张卡插的记录logid不一致
 		String partitionId = logId.substring(14, 16);
-		//调接口前插日志
-		int n1 = insertRechargeCheckLog(logId, partitionId, serial_number, serial_number_type, reqTime);
 		
-		//拼接口参数，发送请求
-    	RechargeReq param = new RechargeReq();
-		param.setAccountNumber(serial_number);
-		param.setSerialNum(logId);
-		
-    	//生成请求报文
-		String req = RechargeUtil.genReq(param, InterfaceType.rechargeCheck.getInterfaceCode(), 
-				serial_number, serial_number_type, reqTime); 
-		
-		log.debug("【一卡充】充值号码验证最终请求报文：" + req);
-		//发送报文
-		rechargeClientHandler.sendMsg(req.getBytes());
-		
-		waitForRechargeCheckResp(logId, result);
+		try {
+			//调接口前插日志
+			int n1 = insertRechargeCheckLog(logId, partitionId, serial_number, serial_number_type, reqTime);
+			
+			//拼接口参数，发送请求
+			RechargeReq param = new RechargeReq();
+			param.setAccountNumber(serial_number);
+			param.setSerialNum(logId);
+			
+			//生成请求报文
+			String req = RechargeUtil.genReq(param, InterfaceType.rechargeCheck.getInterfaceCode(), 
+					serial_number, serial_number_type, reqTime); 
+			
+			log.debug("【一卡充】充值号码验证最终请求报文：" + req);
+			//发送报文
+			rechargeClientHandler.sendMsg(req.getBytes());
+			
+			waitForRechargeCheckResp(logId, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "E98");
+            result.put("detail", "校验失败！其他异常");
+		}
 		
 		return result;
     }
@@ -214,15 +221,21 @@ public class RechargeService {
 		//锁定对应面额的卡，如果锁定成功了再继续调用充值接口
 		boolean lockSuccess = lockCard(total_fee, order_id);
 		if(lockSuccess){
-			//获取刚刚update占用的卡号的组合
-			List<Map<String, String>> cardList = rechargeDao.getUseCardList(order_id);
-			//调接口前批量插日志
-			insertRechargeLogBatch(cardList, order_id, reqTime, serial_number, serial_number_type);
-			//调用充值接口
-			rechargeCards(cardList, serial_number, serial_number_type);
-			
-			result.put("status", "SUCCESS");
-            result.put("detail", "充值成功！");
+			try {
+				//获取刚刚update占用的卡号的组合
+				List<Map<String, String>> cardList = rechargeDao.getUseCardList(order_id);
+				//调接口前批量插日志
+				insertRechargeLogBatch(cardList, order_id, reqTime, serial_number, serial_number_type);
+				//调用充值接口
+				rechargeCards(cardList, serial_number, serial_number_type);
+				
+				result.put("status", "SUCCESS");
+				result.put("detail", "充值成功！");
+			} catch (Exception e) {
+				e.printStackTrace();
+				result.put("status", "FAIL");
+	            result.put("detail", "充值失败！记录日志失败或调用一卡充系统接口失败");
+			}
 		}
 		else{
 			result.put("status", "FAIL");

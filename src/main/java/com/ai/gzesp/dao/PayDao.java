@@ -64,4 +64,6 @@ public interface PayDao {
     		@Param("fee") int fee, @Param("new_balance") int new_balance);
     
     public int updateOrdDPayStateBatch(@Param("order_id") String order_id, @Param("stateList") List<Map<String, String>> stateList);    
+    
+    public Map<String, String> queryOrderCardPayInfo(@Param("order_id") String order_id);
 }

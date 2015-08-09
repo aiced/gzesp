@@ -162,7 +162,20 @@
 	<insert id="insertAcctAccessLog">
       insert into act_d_access_log
              (log_id, partition_id, acct_id, order_id, trade_type, old_balance, fee, new_balance, update_time)
-       values(${log_id}, ${partition_id}, #{acct_id}, ${order_id}, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate)
-	</insert>	
+      <choose>
+        <when test="order_id != null">
+          values(${log_id}, ${partition_id}, #{acct_id}, ${order_id}, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate)
+        </when> 
+        <otherwise>
+          values(${log_id}, ${partition_id}, #{acct_id}, null, #{trade_type}, ${old_balance}, ${fee}, ${new_balance}, sysdate)
+        </otherwise>
+      </choose>
+	</insert>
+	
+	<select id="queryOrderCardPayInfo" resultType="java.util.HashMap">
+        select original_price, topay_money
+          from ord_d_card_pay
+         where order_id = ${order_id}
+	</select>			
 								
 </mapper>

@@ -23,7 +23,9 @@ public class UserCheckReq_Res extends BSSBaseResp {
 	String PayType;
 	String UserStatus;
 	String UserType;
+	@XStreamImplicit(itemFieldName="CurrProductList")
 	List<CurrProduct> CurrProductList;
+	@XStreamImplicit(itemFieldName="ProductList")
 	List<Product> ProductList;
 	
 	public String getCustName() {

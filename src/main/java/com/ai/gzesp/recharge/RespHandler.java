@@ -38,6 +38,9 @@ public class RespHandler implements ApplicationContextAware{
         if(InterfaceType.active.getInterfaceCode().equals(resp.getInterfaceType())){
             respHanler = (IDealRechargeResp) ctx.getBean("respActiveHandler");
         }
+        else if(InterfaceType.rechargeCheck.getInterfaceCode().equals(resp.getInterfaceType())){
+            respHanler = (IDealRechargeResp) ctx.getBean("respRechargeCheckHandler");
+        }
         else if(InterfaceType.recharge.getInterfaceCode().equals(resp.getInterfaceType())){
             respHanler = (IDealRechargeResp) ctx.getBean("respRechargeHandler");
         }

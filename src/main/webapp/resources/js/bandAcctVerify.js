@@ -23,12 +23,12 @@ function doCheckClick(param)
 		iRet=11;
   		return opReturn(iRet);
 	}
-	var reg = /^\d*$/;
-	if(!reg.test($("#bandAcct").val()))
-	{
-		iRet=12;
-  		return opReturn(iRet);
-	}
+//	var reg = /^\d*$/;
+//	if(!reg.test($("#bandAcct").val()))
+//	{
+//		iRet=12;
+//  		return opReturn(iRet);
+//	}
 	
 	
 	var parms = {'user_id':$('#hide_user_id').val(),'bandAcct':$('#bandAcct').val()};

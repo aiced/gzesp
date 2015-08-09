@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ai.gzesp.recharge.RechargeCons;
-import com.ai.gzesp.utils.DESUtil;
 
 public class RechargeServiceTest extends BaseTest {
 	
@@ -61,7 +60,7 @@ public class RechargeServiceTest extends BaseTest {
 	
 	@Test
 	public void test9(){
-		rechargeService.activeCardsJob("");
+		rechargeService.activeCardsJob("850800000000037");
 	}
 	
 	@Test

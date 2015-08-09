@@ -64,7 +64,15 @@
          <![CDATA[
            and rownum < 20
            ]]>
-	</select>					
+	</select>		
+	
+	<insert id="insertRechargeCheckLog">
+      insert into ITF_D_RECHARGE_LOG
+             (log_id, partition_id, order_id, req_time, interface_type, 
+              busi_type, serial_number, serial_number_type, charge_money, agent_id, password)
+       values(${log_id}, ${partition_id}, null, #{req_time}, #{interface_type}, 
+              null, #{serial_number}, ${serial_number_type}, null, null, null )
+	</insert>				
 	
 	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
 	<select id="insertRechargeLogBatch">
@@ -139,6 +147,12 @@
       update inv_d_recharge_card
          set result_code = #{result_code}
        where card_no = #{card_no}
-	</update>			
+	</update>	
+	
+	<select id="queryRechargeChecklog" resultType="java.util.HashMap">
+	    select log_id, result_code
+          from itf_d_recharge_log
+         where log_id = ${log_id}
+	</select>			
 							
 </mapper>

@@ -11,19 +11,35 @@
     <link rel="stylesheet" href="${resRoot}/css/base.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="${resRoot}/css/phoneTopUp.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="${resRoot}/css/phoneTopUpCards.css" type="text/css" media="screen"/>
-    <script type="text/javascript" src="${resRoot}/js/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="${resRoot}/js/jquery-1.8.1.min.js"></script>
+    <script type="text/javascript" src="${resRoot}/js/spin.js"></script>
+    <script type="text/javascript" src="${resRoot}/js/jquery.spin.js"></script>
+   
     <script type="text/javascript" src="${resRoot}/js/formSubmit.js"></script>
     <script type="text/javascript" src="${resRoot}/js/phoneTopUp.js"></script>
+
+   <script type="text/javascript" >
+        $(function(){
+            $("#rotateG_01").spin('large', 'black');
+        });
+    </script>
+
 
 </head>
 
 <body style="background-color:transparent">
     <input type="hidden" id="baseRoot" value="${base}"></input>
     <input type="hidden" id="user_id" value="${user_id}"></input>
+        
    		  <div id="top">
        			<div id="top_left" onclick="leftClick(this);"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span></div>
 	        	<div id="top_middle">${title}</div>
 	      </div> 
+	      
+    <div class="blockG" id="rotateG_01">
+
+    </div>
 <div class="divContainer">
     <div class="phoneNumContainer">
         <div class="top-upNumber">

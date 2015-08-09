@@ -69,9 +69,8 @@ public class RechargeController {
     @ResponseBody
     public Map<String, String> rechargeCheck(@PathVariable("serial_number") String serial_number,
     		@PathVariable("serial_number_type") String serial_number_type){
-    	
     	Map<String, String> result = rechargeService.rechargeCheck(serial_number, serial_number_type); 
-        return result;
+    	return result;
     }
     
     /**

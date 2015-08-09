@@ -2,7 +2,7 @@
 			<#list acctloglist as item>
 				<li class = "li_row border_bottom">
 				<div class = "row_left">
-					<p class = "row_left_title">${item.TRADE_TYPE} </p>
+					<p class = "row_left_title">${item.TRADE_TYPE}</p>
 					<#if (item.ORDER_ID) > 
 						<span class = "row_left_order"> (订单号：${item.ORDER_ID}) </span>
 					</#if>

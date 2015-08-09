@@ -196,7 +196,7 @@ public class RechargeService {
     }
 	
 	/**
-	 * 充值接口，事务控制
+	 * 充值接口
 	 * 入参total_fee单位元
 	 * 返回map 
      * {"result_code":"SUCCESS", "result_desc":"充值请求成功"}

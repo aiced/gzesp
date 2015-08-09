@@ -304,7 +304,8 @@ public class PayService {
     		//String pay_state = isSuccess ? "5";
     		int r3 = updateOrdDPayRefund(orderId, "5");
     		
-    		// TODO
+    		// TODO to be test 退佣金
+    		reverseCmsBySingleOrder(orderId);
     	}
     	
     	//不管退款成功失败 则新增一条 ORD_L_DEALLOG 处理日志
@@ -367,7 +368,7 @@ public class PayService {
     }
     
     /**
-     * 
+     * 退佣金
      * @param orderId
      */
     public void reverseCmsBySingleOrder(String orderId) {
@@ -409,8 +410,7 @@ public class PayService {
 
 				// ord_d_cmsstate 状态
 				TdOrdDCMSSTATE ordCmsStateRecord = new TdOrdDCMSSTATE();
-//				ordCmsStateRecord.setOrderId(Long.parseLong(orderId));
-				ordCmsStateRecord.setCmsState("00");
+				ordCmsStateRecord.setCmsState("03");
 				Criteria example = new Criteria();
 				example.createConditon().andEqualTo("ORDER_ID", orderId);
 				ordDCMSSTATEDao.updateByExampleSelective(ordCmsStateRecord, example);

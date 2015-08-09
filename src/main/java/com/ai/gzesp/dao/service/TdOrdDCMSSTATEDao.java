@@ -1,13 +1,16 @@
 package com.ai.gzesp.dao.service;
 
-import com.ai.gzesp.dao.beans.Criteria;
-import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
-import com.ai.gzesp.dao.persistence.TdOrdDCMSSTATEMapper;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+
+import com.ai.gzesp.dao.beans.Criteria;
+import com.ai.gzesp.dao.beans.TdOrdDCMSSTATE;
+import com.ai.gzesp.dao.persistence.TdOrdDCMSSTATEMapper;
 
 /**
  * @ClassName: TdOrdDCMSSTATEDao
@@ -100,4 +103,5 @@ public class TdOrdDCMSSTATEDao extends ITableDao {
     public int insertSelective(TdOrdDCMSSTATE record) {
         return this.tdOrdDCMSSTATEMapper.insertSelective(record);
     }
+    
 }

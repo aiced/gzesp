@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdOrdDBANDBALANCEMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdOrdDBANDBALANCE" >
+    <id column="LOG_ID" property="logId" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+    <result column="BANDNUMID" property="bandnumid" jdbcType="VARCHAR" />
+    <result column="RESULT" property="result" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOG_ID, ORDER_ID, BANDNUMID, RESULT, CREATETIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ORD_D_BANDBALANCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ORD_D_BANDBALANCE
+    where LOG_ID = #{logId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ORD_D_BANDBALANCE
+    where LOG_ID = #{logId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ORD_D_BANDBALANCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdOrdDBANDBALANCE" >
+    insert into ORD_D_BANDBALANCE (LOG_ID, ORDER_ID, BANDNUMID, 
+      RESULT, CREATETIME)
+    values (#{logId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{bandnumid,jdbcType=VARCHAR}, 
+      #{result,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDBANDBALANCE" >
+    insert into ORD_D_BANDBALANCE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        LOG_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="bandnumid != null" >
+        BANDNUMID,
+      </if>
+      <if test="result != null" >
+        RESULT,
+      </if>
+      <if test="createtime != null" >
+        CREATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="bandnumid != null" >
+        #{bandnumid,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ORD_D_BANDBALANCE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ORD_D_BANDBALANCE
+    <set >
+      <if test="record.logId != null" >
+        LOG_ID = #{record.logId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bandnumid != null" >
+        BANDNUMID = #{record.bandnumid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.result != null" >
+        RESULT = #{record.result,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        CREATETIME = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ORD_D_BANDBALANCE
+    set LOG_ID = #{record.logId,jdbcType=VARCHAR},
+      ORDER_ID = #{record.orderId,jdbcType=VARCHAR},
+      BANDNUMID = #{record.bandnumid,jdbcType=VARCHAR},
+      RESULT = #{record.result,jdbcType=VARCHAR},
+      CREATETIME = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdOrdDBANDBALANCE" >
+    update ORD_D_BANDBALANCE
+    <set >
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="bandnumid != null" >
+        BANDNUMID = #{bandnumid,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        RESULT = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdOrdDBANDBALANCE" >
+    update ORD_D_BANDBALANCE
+    set ORDER_ID = #{orderId,jdbcType=VARCHAR},
+      BANDNUMID = #{bandnumid,jdbcType=VARCHAR},
+      RESULT = #{result,jdbcType=VARCHAR},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP}
+    where LOG_ID = #{logId,jdbcType=VARCHAR}
+  </update>
+</mapper>

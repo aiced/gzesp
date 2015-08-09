@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ai.gzesp.dao.persistence.TdActDACCESSLOGMapper" >
+  <resultMap id="BaseResultMap" type="com.ai.gzesp.dao.beans.TdActDACCESSLOG" >
+    <id column="LOG_ID" property="logId" jdbcType="DECIMAL" />
+    <result column="PARTITION_ID" property="partitionId" jdbcType="DECIMAL" />
+    <result column="ACCT_ID" property="acctId" jdbcType="VARCHAR" />
+    <result column="ORDER_ID" property="orderId" jdbcType="DECIMAL" />
+    <result column="TRADE_TYPE" property="tradeType" jdbcType="VARCHAR" />
+    <result column="OLD_BALANCE" property="oldBalance" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="NEW_BALANCE" property="newBalance" jdbcType="DECIMAL" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CANCEL_TAG" property="cancelTag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="condition" separator="or" >
+        <if test="condition.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="condition.criterions" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+                <when test="criterion.dateValue" >
+                  and ${criterion.condition} #{criterion.value,jdbcType=TIMESTAMP}
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LOG_ID, PARTITION_ID, ACCT_ID, ORDER_ID, TRADE_TYPE, OLD_BALANCE, FEE, NEW_BALANCE, 
+    UPDATE_TIME, CANCEL_TAG
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    <include refid="common.Oracle_Pagination_Head" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ACT_D_ACCESS_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Oracle_Pagination_Tail" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ACT_D_ACCESS_LOG
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ACT_D_ACCESS_LOG
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" >
+    delete from ACT_D_ACCESS_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG" >
+    insert into ACT_D_ACCESS_LOG (LOG_ID, PARTITION_ID, ACCT_ID, 
+      ORDER_ID, TRADE_TYPE, OLD_BALANCE, 
+      FEE, NEW_BALANCE, UPDATE_TIME, 
+      CANCEL_TAG)
+    values (#{logId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{acctId,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=DECIMAL}, #{tradeType,jdbcType=VARCHAR}, #{oldBalance,jdbcType=DECIMAL}, 
+      #{fee,jdbcType=DECIMAL}, #{newBalance,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{cancelTag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG" >
+    insert into ACT_D_ACCESS_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        LOG_ID,
+      </if>
+      <if test="partitionId != null" >
+        PARTITION_ID,
+      </if>
+      <if test="acctId != null" >
+        ACCT_ID,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE,
+      </if>
+      <if test="oldBalance != null" >
+        OLD_BALANCE,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="newBalance != null" >
+        NEW_BALANCE,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="cancelTag != null" >
+        CANCEL_TAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="logId != null" >
+        #{logId,jdbcType=DECIMAL},
+      </if>
+      <if test="partitionId != null" >
+        #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="acctId != null" >
+        #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="oldBalance != null" >
+        #{oldBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="newBalance != null" >
+        #{newBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cancelTag != null" >
+        #{cancelTag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ai.gzesp.dao.beans.Criteria" resultType="java.lang.Integer" >
+    select count(*) from ACT_D_ACCESS_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ACT_D_ACCESS_LOG
+    <set >
+      <if test="record.logId != null" >
+        LOG_ID = #{record.logId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.partitionId != null" >
+        PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.acctId != null" >
+        ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.tradeType != null" >
+        TRADE_TYPE = #{record.tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldBalance != null" >
+        OLD_BALANCE = #{record.oldBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fee != null" >
+        FEE = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.newBalance != null" >
+        NEW_BALANCE = #{record.newBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cancelTag != null" >
+        CANCEL_TAG = #{record.cancelTag,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ACT_D_ACCESS_LOG
+    set LOG_ID = #{record.logId,jdbcType=DECIMAL},
+      PARTITION_ID = #{record.partitionId,jdbcType=DECIMAL},
+      ACCT_ID = #{record.acctId,jdbcType=VARCHAR},
+      ORDER_ID = #{record.orderId,jdbcType=DECIMAL},
+      TRADE_TYPE = #{record.tradeType,jdbcType=VARCHAR},
+      OLD_BALANCE = #{record.oldBalance,jdbcType=DECIMAL},
+      FEE = #{record.fee,jdbcType=DECIMAL},
+      NEW_BALANCE = #{record.newBalance,jdbcType=DECIMAL},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CANCEL_TAG = #{record.cancelTag,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG" >
+    update ACT_D_ACCESS_LOG
+    <set >
+      <if test="partitionId != null" >
+        PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      </if>
+      <if test="acctId != null" >
+        ACCT_ID = #{acctId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      </if>
+      <if test="tradeType != null" >
+        TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="oldBalance != null" >
+        OLD_BALANCE = #{oldBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="newBalance != null" >
+        NEW_BALANCE = #{newBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cancelTag != null" >
+        CANCEL_TAG = #{cancelTag,jdbcType=CHAR},
+      </if>
+    </set>
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG" >
+    update ACT_D_ACCESS_LOG
+    set PARTITION_ID = #{partitionId,jdbcType=DECIMAL},
+      ACCT_ID = #{acctId,jdbcType=VARCHAR},
+      ORDER_ID = #{orderId,jdbcType=DECIMAL},
+      TRADE_TYPE = #{tradeType,jdbcType=VARCHAR},
+      OLD_BALANCE = #{oldBalance,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      NEW_BALANCE = #{newBalance,jdbcType=DECIMAL},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CANCEL_TAG = #{cancelTag,jdbcType=CHAR}
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </update>
+  
+  <insert id="insertReverseAccessLog" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG">
+	INSERT INTO  ACT_D_ACCESS_LOG
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        LOG_ID,
+        PARTITION_ID,
+        ACCT_ID,
+        ORDER_ID,
+        TRADE_TYPE,
+        OLD_BALANCE,
+        NEW_BALANCE,
+        FEE,
+        CANCEL_TAG,
+        UPDATE_TIME
+    </trim>
+    <trim prefix=" select " suffixOverrides=",">
+<!-- 	      to_char(SYSTIMESTAMP,'YYYYMMDDHH24MISS')||rownum, -->
+<!-- 	      to_char(sysdate,'MM'), -->
+ 		#{logId,jdbcType=DECIMAL},
+        #{partitionId,jdbcType=DECIMAL},
+       		T2.ACCT_ID,
+        	T2.ORDER_ID,
+       		'53',
+        #{oldBalance,jdbcType=DECIMAL},
+        to_char(#{oldBalance,jdbcType=DECIMAL}-T2.FEE),
+        	'-'||T2.FEE,
+        	'0',
+      		sysdate
+    </trim>
+    from (SELECT T1.ACCT_ID,T1.ORDER_ID,sum(T1.FEE) FEE FROM ACT_D_ACCESS_LOG T1
+	WHERE T1.TRADE_TYPE IN ('11','12') AND CANCEL_TAG = '0' AND T1.ORDER_ID = #{orderId,jdbcType=DECIMAL}
+	group by T1.ACCT_ID,T1.ORDER_ID) T2
+     </insert>
+     
+      <update id="updateReverseAccessLog" parameterType="java.lang.String">
+    update ACT_D_ACCESS_LOG
+    set
+      CANCEL_TAG = '1',
+      UPDATE_TIME = sysdate
+    where ORDER_ID = #{orderId,jdbcType=DECIMAL}
+    and TRADE_TYPE IN ('11','12') and CANCEL_TAG = '0'
+  </update>
+</mapper>

@@ -15,6 +15,7 @@ public class UniBSS {
 	String ProcID;
 	String TransIDO;
 	String ProcIDO;
+	String TransIDH;
 	String ProcessTime;
 	SPReserve SPReserve;
 	String TestFlag;
@@ -22,6 +23,7 @@ public class UniBSS {
 	String MsgReceiver;
 	String SvcContVer;
 	String SvcCont;
+	Response Response;
 	public String getOrigDomain() {
 		return OrigDomain;
 	}
@@ -131,6 +133,18 @@ public class UniBSS {
 	}
 	public void setSvcCont(String svcCont) {
 		SvcCont = svcCont;
+	}
+	public String getTransIDH() {
+		return TransIDH;
+	}
+	public void setTransIDH(String transIDH) {
+		TransIDH = transIDH;
+	}
+	public Response getResponse() {
+		return Response;
+	}
+	public void setResponse(Response response) {
+		Response = response;
 	}
 
 }

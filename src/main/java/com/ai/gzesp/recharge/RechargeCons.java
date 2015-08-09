@@ -18,12 +18,12 @@ public class RechargeCons {
     /**
      * 一卡充系统 主接入服务器端口
      */
-    public static int SERVER_1_PORT = 8003; //测试：8003 正式：8001 
+    public static int SERVER_1_PORT = 8001; //测试：8003 正式：8001 
     
     /**
      * 一卡充系统 备接入服务器ip
      */
-    public static String SERVER_2_HOST = "144.180.70.53"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
+    public static String SERVER_2_HOST = "127.0.0.1"; // 测试：58.16.16.10  正式：144.180.70.53 本机：127.0.0.1
     
     /**
      * 一卡充系统 备接入服务器端口
@@ -44,12 +44,12 @@ public class RechargeCons {
     /**
      * 心跳发送间隔时间
      */
-    public static int HEART_INTERVAL = 120*1000;
+    public static int HEART_INTERVAL = 50*1000;
     
     /**
      * 心跳包请求后 等待反馈超时时间
      */
-    public static int HEART_TIMEOUT = 30*1000;
+    public static int HEART_TIMEOUT = 50*1000;
     
     /**
      * 请求端心跳包内容 
@@ -82,5 +82,15 @@ public class RechargeCons {
     public static char Suffix = 0x1a;
     
     public static char keyPadChar = 0x0;
+    
+    /**
+     * 一卡充接口请求发出后，轮询等待结果的超时时间 毫秒，一卡充约定60秒超时
+     */
+    public static int WAIT_TIMEOUT = 60*1000;
+    
+    /**
+     * 一卡充接口请求发出后，轮询等待结果的间隔时间 毫秒，
+     */
+    public static int SLEEP_INTERVAL_RECHARGE = 1000;
 
 }

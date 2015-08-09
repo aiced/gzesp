@@ -24,7 +24,15 @@ public interface RechargeDao {
     
     public List<Map<String, String>> getUnActiveCardList(@Param("card_no") String card_no); 
     
-    public List<Map<String, String>> getRechargeLogList(@Param("log_id") String log_id);  
+    public List<Map<String, String>> getRechargeLogList(@Param("log_id") String log_id); 
+    
+    public int insertRechargeCheckLog(
+    		@Param("log_id") String log_id,
+    		@Param("partition_id") String partition_id,
+    		@Param("req_time") String req_time, 
+    		@Param("interface_type") String interface_type,
+    		@Param("serial_number") String serial_number,
+    		@Param("serial_number_type") String serial_number_type); 
     
     public Map<String, String> insertRechargeLogBatch(
     		@Param("order_id") String order_id, 
@@ -56,4 +64,6 @@ public interface RechargeDao {
     
     public int updateCardResultCode(@Param("card_no") String card_no,
     		@Param("result_code") String result_code); 
+    
+    public Map<String, String> queryRechargeChecklog(@Param("log_id") String log_id);   
 }

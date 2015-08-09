@@ -68,6 +68,11 @@ public class RechargeResp {
 	 * 发起方充值请求流水号
 	 */
 	private String chargeSerilNum;
+	
+	/**
+	 * 地区代码
+	 */
+	private String areaNum;
 
 	public String getLogId() {
 		return logId;
@@ -170,6 +175,16 @@ public class RechargeResp {
 	public void setChargeSerilNum(String chargeSerilNum) {
 		this.chargeSerilNum = chargeSerilNum;
 	}
+	
+	
+
+	public String getAreaNum() {
+		return areaNum;
+	}
+
+	public void setAreaNum(String areaNum) {
+		this.areaNum = areaNum;
+	}
 
 	@Override
 	public String toString() {
@@ -186,6 +201,7 @@ public class RechargeResp {
 		sb.append(", uniconSerilNum:" + this.uniconSerilNum);
 		sb.append(", chargeStatus:" + this.chargeStatus);
 		sb.append(", chargeSerilNum:" + this.chargeSerilNum);
+		sb.append(", areaNum:" + this.areaNum);
 		
 		return sb.toString();
 	}

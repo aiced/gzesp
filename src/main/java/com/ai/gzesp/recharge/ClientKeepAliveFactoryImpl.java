@@ -1,12 +1,14 @@
 package com.ai.gzesp.recharge;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 
 /**
+ * 此类作废，测试时发现并没有按间隔时间发送心跳，可能是和银联同时使用mina发送心跳有关系，没有时间验证，另外写了心跳线程了
  * 客户端心跳请求实现类<br> 
  * 客户端会定时发送心跳请求（注意定时时间必须小于，服务器端的IDLE监控时间）,
  * 同时需要监听心跳反馈，以此来判断是否与服务器丢失连接。对于服务器的心跳请求不给与反馈。
@@ -22,18 +24,14 @@ public class ClientKeepAliveFactoryImpl implements KeepAliveMessageFactory {
     
     @Override
     public Object getRequest(IoSession session) {
+    	log.debug("【一卡充：esp发送心跳getRequest...】");
         // 返回给对方的心跳包数据
-        try {
-            return (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes(RechargeCons.charCode);
-        } catch (UnsupportedEncodingException e) {
-            log.debug("【一卡充：客户端心跳GWHEARTBEATTEST转换byte异常 sessionId： " + session.getId()  + "】");
-            e.printStackTrace();
-            return null;
-        }
+    	return (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes();
     }
 
     @Override
     public Object getResponse(IoSession session, Object request) {
+    	log.debug("【一卡充：esp返回心跳getResponse...】" + new String((byte[])request));
     	//接受到对方的数据包
         // 一卡充服务器给esp客户端发送心跳请求，esp客户端不用反馈  该方法返回null
         return null;
@@ -41,6 +39,7 @@ public class ClientKeepAliveFactoryImpl implements KeepAliveMessageFactory {
 
     @Override
     public boolean isRequest(IoSession session, Object message) {
+    	log.debug("【一卡充：isRequest报文：】"  + new String((byte[])message));
     	//判断是否是对方发送来的的心跳包此判断影响 KeepAliveRequestTimeoutHandler实现类，判断是否心跳包发送超时
         // esp发送心跳后，一卡充服务器会给esp客户端返回相同的心跳包
 	    return isHeart((byte[])message);
@@ -48,6 +47,8 @@ public class ClientKeepAliveFactoryImpl implements KeepAliveMessageFactory {
 
     @Override
     public boolean isResponse(IoSession session, Object message) {
+    	log.debug("【一卡充：isResponse报文:】" + new String((byte[])message));
+    	//esp客户端关注一卡充的心跳反馈，以此判断mesaage是否是反馈包
     	//判断发送信息是否是心跳数据包此判断影响 KeepAliveRequestTimeoutHandler实现类,判断是否心跳包发送超时
         return isHeart((byte[])message);
     }
@@ -60,8 +61,8 @@ public class ClientKeepAliveFactoryImpl implements KeepAliveMessageFactory {
      * @return
      */
     private boolean isHeart(byte[] message){
-        String heart = new String(message).trim();
-		if(heart.equals(RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix)){
+    	
+		if(Arrays.equals(message, (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes())){
 			return true;
 		}
 		else{

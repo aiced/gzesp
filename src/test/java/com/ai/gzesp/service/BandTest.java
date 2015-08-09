@@ -12,7 +12,7 @@ public class BandTest  extends BaseTest {
 	
 	@Test
 	public void test1(){
-		String order_id="3981438849124645";
+		String order_id="3181438926530413";
 		String strRet=bssBandService.ReqProAndActPacket(order_id);
 
 	}

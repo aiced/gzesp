@@ -40,6 +40,15 @@ public enum InterfaceType {
 	public void setInterfaceName(String interfaceName) {
 		this.interfaceName = interfaceName;
 	}
+	
+	  // 普通方法
+	public static String find(int interfaceCode) {
+		for (InterfaceType i : InterfaceType.values()) {
+			if (i.interfaceCode.equals(interfaceCode)) {
+				return i.interfaceName;
+			}
+		}
+		return "未定义编码";
+	}
 
-    
 }

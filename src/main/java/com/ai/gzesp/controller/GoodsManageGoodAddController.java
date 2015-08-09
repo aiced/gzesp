@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +44,10 @@ public class GoodsManageGoodAddController {
     public ModelAndView goodsManageGoodAdd(@RequestBody String inputParam){
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String strUserID = paramsMap.get("userId");
+    	
+    	Subject subject = SecurityUtils.getSubject();
+		org.apache.shiro.session.Session session = subject.getSession(true);
+		String mchId = (String)session.getAttribute("mchId");
 
     	rcdlist = goodsSql.GetRcdList(strUserID); //根据能人id 查询店长推荐的列表
     	List<Map<String, Object>> goodsList = null;
@@ -60,9 +66,9 @@ public class GoodsManageGoodAddController {
 	        }
 			sb.append(")");
 			sb.deleteCharAt(1);
-			goodsNotInRcdList = goodsSql.getGoodsListNotIn(sb.toString());   
+			goodsNotInRcdList = goodsSql.getGoodsListNotIn(sb.toString(), mchId);   
 		}else{
-			goodsNotInRcdList = goodsSql.getGoodsList();   			
+			goodsNotInRcdList = goodsSql.getGoodsList(mchId);   			
 		}
 
     	Map rspMap = new HashMap(); 

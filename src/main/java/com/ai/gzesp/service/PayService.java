@@ -385,6 +385,13 @@ public class PayService {
 //			logger.info("***oldBalance:{},acctId:{},version:{}***", oldBalance,	acctId, version);
 			int index = actDACCOUNTDao.updateAcctVersion(actInfo);
 			if (index >= 1) {
+				// ord_d_cmsstate 状态
+				TdOrdDCMSSTATE ordCmsStateRecord = new TdOrdDCMSSTATE();
+				ordCmsStateRecord.setCmsState("03");
+				Criteria example = new Criteria();
+				example.createConditon().andEqualTo("ORDER_ID", orderId);
+				ordDCMSSTATEDao.updateByExampleSelective(ordCmsStateRecord, example);
+				
 				TdActDACCESSLOG record = new TdActDACCESSLOG();
 				long logId = System.currentTimeMillis();
 				String logIDStr = String.valueOf(logId);
@@ -408,12 +415,6 @@ public class PayService {
 				// 改act_d_access_log原记录状态
 				actDACCESSLOGDao.updateReverseAccessLog(orderId);
 
-				// ord_d_cmsstate 状态
-				TdOrdDCMSSTATE ordCmsStateRecord = new TdOrdDCMSSTATE();
-				ordCmsStateRecord.setCmsState("03");
-				Criteria example = new Criteria();
-				example.createConditon().andEqualTo("ORDER_ID", orderId);
-				ordDCMSSTATEDao.updateByExampleSelective(ordCmsStateRecord, example);
 
 				// cms_d_daily 删本订单记录
 				example.clear();

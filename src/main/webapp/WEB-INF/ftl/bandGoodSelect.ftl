@@ -71,7 +71,7 @@
 		        	<p style="color:#ffffff;font-size:18px;font-weight:normal">${item.productRate}M</p>
 		        </div>
 		        <div class="col-xs-8" style="padding:15px">
-		        	<p style="font-size:18px;font-weight:normal">${item.productRate}M&nbsp; ${(item.productFee)}元/年</p>
+		        	<p style="font-size:18px;font-weight:normal">${item.productRate}M&nbsp;${item.productFee?number} ${(item.productFee)}元/年</p>
 		        	<p style="font-size:18px;font-weight:normal;color:#ff0000">￥${(item.productFee)}</p>
 		        </div>     		
 		      </div>            

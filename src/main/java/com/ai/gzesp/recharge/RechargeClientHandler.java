@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 import java.util.Arrays;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.apache.mina.core.future.ConnectFuture;
@@ -16,10 +17,12 @@ import org.apache.mina.filter.keepalive.KeepAliveRequestTimeoutHandler;
 import org.apache.mina.filter.logging.LoggingFilter;
 import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.RechargeDao;
 import com.ai.gzesp.dto.RechargeResp;
+import com.ai.gzesp.unionpay.HeartBeatThread;
 
 /**
  * 客户端请求端handler<br> 
@@ -44,6 +47,8 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 	
     private ConnectFuture cf;
     
+    private RechargeHeartBeatThread rechargeHeartBeatThread; //当前的心跳线程
+    
 //    @Autowired
 //    private RechargeClient rechargeClient;
 
@@ -59,8 +64,10 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 	public void sessionClosed(IoSession session) throws Exception {
 		log.debug("【一卡充：客户端链接关闭 sessionId： " + session.getId() + "】");
 
+		stopHeartBeat();  //停止原有socket链接的心跳线程
 		disconnect(); // 断开原有socket连接，并释放资源
 		initConnector(); // esp客户端如果断链了要重连
+		startHeartBeat(); //开启新socket链接的心跳线程
 		super.sessionClosed(session);
 	}
 
@@ -96,12 +103,21 @@ public class RechargeClientHandler extends IoHandlerAdapter {
         log.debug("【一卡充：捕捉到异常 sessionId： " + session.getId() + cause.toString() + "】");
     }
 
+
+    /**
+     * 初始化函数，初始化socket，启动心跳线程
+     */
+    @PostConstruct
+    public void init(){
+    	initConnector();
+    	startHeartBeat();
+    }
+    
     /**
      * 初始化socket连接
      * 启动(在listener中启动是需要新建一个线程来连接Server，否则web容器会阻塞而无法启动。) 
      * 对象初始化之后执行初始化socket客户端连接
-     */
-    @PostConstruct
+     */    
 	public void initConnector() {
 		log.debug("【一卡充：esp初始化socket客户端连接...】");
 		connector = new NioSocketConnector();
@@ -111,12 +127,13 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 		//connector.setHandler(new RechargeClientHandler());
 		
 		// 设置心跳过滤器链
-		ClientKeepAliveFactoryImpl ckafi = new ClientKeepAliveFactoryImpl();
-		KeepAliveFilter kaf = new KeepAliveFilter(ckafi, IdleStatus.WRITER_IDLE, KeepAliveRequestTimeoutHandler.DEAF_SPEAKER);
-		kaf.setForwardEvent(true); // 继续调用 IoHandlerAdapter 中的 sessionIdle时间
-		kaf.setRequestInterval(RechargeCons.HEART_INTERVAL); // 设置当连接的读取通道空闲的时候，心跳包请求时间间隔
-		kaf.setRequestTimeout(RechargeCons.HEART_TIMEOUT); // 设置心跳包请求后 等待反馈超时时间
-		connector.getFilterChain().addLast("heart", kaf); // 设置心跳
+		//测试时发现并没有按间隔时间发送心跳，可能是和银联同时使用mina发送心跳有关系，没有时间验证，另外写了心跳线程了
+		//ClientKeepAliveFactoryImpl ckafi = new ClientKeepAliveFactoryImpl();
+		//KeepAliveFilter kaf = new KeepAliveFilter(ckafi, IdleStatus.WRITER_IDLE, KeepAliveRequestTimeoutHandler.DEAF_SPEAKER);
+		//kaf.setForwardEvent(true); // 继续调用 IoHandlerAdapter 中的 sessionIdle时间
+		//kaf.setRequestInterval(RechargeCons.HEART_INTERVAL); // 设置当连接的读取通道空闲的时候，心跳包请求时间间隔
+		//kaf.setRequestTimeout(RechargeCons.HEART_TIMEOUT); // 设置心跳包请求后 等待反馈超时时间
+		//connector.getFilterChain().addLast("heart", kaf); // 设置心跳
 
 		cf = connector.connect(new InetSocketAddress(RechargeCons.SERVER_1_HOST, RechargeCons.SERVER_1_PORT));
 		cf.awaitUninterruptibly();
@@ -241,6 +258,96 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 //        		  resp.getAgentBalance(), resp.getUniconSerilNum());
       }
     
+    /**
+     * 开启心跳线程
+     */
+	private void startHeartBeat() {
+		rechargeHeartBeatThread = new RechargeHeartBeatThread();
+		Thread t = new Thread(rechargeHeartBeatThread);
+		t.start();
+		log.debug("【一卡充：esp开启新socket链接的心跳线程】");
+	}
+
+    /**
+     * 停止原有socket连接的心跳线程
+     */
+    private void stopHeartBeat() {
+    	rechargeHeartBeatThread.stopHeartBeat(); 
+    	log.debug("【一卡充：esp停止原有socket链接的心跳线程】");
+    }
+    
+    
+    /**
+     * 心跳线程
+     * 用内部类的原因：
+     * 如果放到外面，需要注入RechargeClientHandler，而RechargeClientHandler里又要注入RechargeHeartBeatThread，循环依赖了
+     * 可替代方案：
+     * RechargeHeartBeatThread 放外面，implements ApplicationContextAware，可以不用注入RechargeClientHandler
+     * 或者使用spring 的lazy-init
+     * @author xmh
+     *
+     */
+    class RechargeHeartBeatThread implements Runnable {
+        
+        private boolean isStop = false; //线程是否需要终止标志
+        
+        public void run()
+        {
+          log.debug("【一卡充：esp维持长连接，线程启动，初始化开始。。。】");
+
+          String tip = "循环中。。。";
+          int times = 0;
+
+          while (!isStop)
+          {
+            try
+            {
+              log.debug("【一卡充：esp维持长连接...isStop=" + isStop + "】");
+
+              byte[] heart = (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes();
+
+              //发送报文
+      		  sendMsg(heart); 
+              log.debug("【一卡充：esp维持长连接，发送心跳报文GWHEARTBEATTEST成功，" + RechargeCons.HEART_INTERVAL/1000 + "秒钟后again】");
+              Thread.sleep(RechargeCons.HEART_INTERVAL);
+            } 
+            catch (InterruptedException e) {
+              log.debug("【一卡充：ERROR！！！esp维持长连接，发送心跳报文异常，5分钟后retry重新尝试连接！！！】");
+              e.printStackTrace();
+              try {
+                Thread.sleep(300000L);
+              } catch (InterruptedException e1) {
+                e1.printStackTrace();
+              }
+              times++; 
+              tip = "重试次数 " + times;
+            }
+            catch (Exception e) {
+              log.debug("【一卡充：ERROR！！！esp维持长连接，其他异常，5分钟后retry重新尝试连接！！！】");
+              e.printStackTrace();
+              try {
+                Thread.sleep(300000L);
+              } catch (InterruptedException e1) {
+                e1.printStackTrace();
+              }
+              times++; 
+              tip = "重试次数 " + times;
+            }
+          }
+        }
+
+    	public boolean isStop() {
+    		return isStop;
+    	}
+
+    	/**
+    	 * 停止心跳线程
+    	 */
+    	public void stopHeartBeat() {
+    		this.isStop = true;
+    	}
+
+    }    
     
     public static void main(String[] args) {
     	RechargeResp resp = new RechargeResp();

@@ -44,12 +44,12 @@ public class RechargeCons {
     /**
      * 心跳发送间隔时间
      */
-    public static int HEART_INTERVAL = 20*1000;
+    public static int HEART_INTERVAL = 50*1000;
     
     /**
      * 心跳包请求后 等待反馈超时时间
      */
-    public static int HEART_TIMEOUT = 30*1000;
+    public static int HEART_TIMEOUT = 50*1000;
     
     /**
      * 请求端心跳包内容 

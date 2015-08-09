@@ -61,6 +61,7 @@ public class RechargeController {
     /**
      * 充值验证入口
      * A7业务号码类型：1 GSM；2 固话；3 宽带；4 小灵通或大灵通
+     * 返回 json 成功：{"status":"00000", "detail":"成功"}， 失败 {"status":"xxx", "detail":"失败原因"}
      * @param serial_number
      * @return
      */

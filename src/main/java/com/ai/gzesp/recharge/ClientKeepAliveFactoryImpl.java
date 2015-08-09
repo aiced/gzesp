@@ -8,6 +8,7 @@ import org.apache.mina.core.session.IoSession;
 import org.apache.mina.filter.keepalive.KeepAliveMessageFactory;
 
 /**
+ * 此类作废，测试时发现并没有按间隔时间发送心跳，可能是和银联同时使用mina发送心跳有关系，没有时间验证，另外写了心跳线程了
  * 客户端心跳请求实现类<br> 
  * 客户端会定时发送心跳请求（注意定时时间必须小于，服务器端的IDLE监控时间）,
  * 同时需要监听心跳反馈，以此来判断是否与服务器丢失连接。对于服务器的心跳请求不给与反馈。

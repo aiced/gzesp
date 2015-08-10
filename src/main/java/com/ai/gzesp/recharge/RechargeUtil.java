@@ -295,7 +295,7 @@ public class RechargeUtil {
 		reqBody.append(fillNull(String.valueOf(param.getChargeMoney()), 10));
 		reqBody.append(fillNull(String.valueOf(param.getAgentID()), 20));
 		
-		byte[] temp = DESUtil.encryptModeRecharge(RechargeCons.desKey.getBytes(), param.getPasword().getBytes());
+		byte[] temp = DESUtil.encryptModeRecharge(param.getPasword().getBytes());
 		String target = Base64Utils.encode(temp);
 		reqBody.append(fillNull(target, 32));
 		

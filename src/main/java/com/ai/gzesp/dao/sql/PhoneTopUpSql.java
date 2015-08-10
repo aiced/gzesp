@@ -71,7 +71,7 @@ public List <Map<String, Object>> GetTopUpDealList(String searchNumber) {
 			+ "to_char(t2.TOPAY_MONEY/1000) as topayMoney "
 			);
 	sb.append(" from GDS_D_INFO t1, ORD_D_CARD_PAY t2");
-	sb.append("	where t2.PHONE_NUMBER =" + searchNumber 
+	sb.append("	where t2.PHONE_NUMBER ='" + searchNumber +"'"
 				+ " and t1.GOODS_ID = t2.GOODS_ID"
 				+ " and t2.ORDER_STATE  !='99'"
 				+ " order by createTime DESC");
@@ -96,7 +96,7 @@ public List<Map<String, Object>> GetTopUpDealList(String searchNumber,int iHideP
 			+ "to_char(t2.TOPAY_MONEY/1000) as topayMoney "
 			);
 	sb.append(" from GDS_D_INFO t1, ORD_D_CARD_PAY t2");
-	sb.append("	where t2.PHONE_NUMBER =" + searchNumber 
+	sb.append("	where t2.PHONE_NUMBER ='" + searchNumber +"'"
 				+ " and t1.GOODS_ID = t2.GOODS_ID"
 				+ " and t2.ORDER_STATE  !='99'"
 				+ " order by createTime DESC");

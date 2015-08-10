@@ -102,41 +102,41 @@ function initBind() {
  		   success: function(data){
  		    	$("#rotateG_01").hide();
 //			     * 返回 json 成功：{"status":"00000", "detail":"成功"}， 失败 {"status":"xxx", "detail":"失败原因"}
-// 			   var obj = eval(data);    			   
-// 			   if(obj.status == "00000"){
-//  			  	  var r=confirm("充值号码: " + $('#phoneNumId').val());
-// 		          if (r==true)
-// 		          {
-// 		            	var userId = $("#user_id").val();
-// 		        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID,'NUMBER_TYPE':$("#numSelected").val()};
-// 		        	  	$.commonFormSubmit({  
-// 		        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
-// 		        			data: parms
-// 		        	    });         
-// 		          }
-// 		          else
-// 		          {
-// 		        	  return;
-// 		          }     
-// 			   }else {
-//     			   alert(obj.detail);    
-//		           return;
-// 			   }
- 		    	
- 		    	var r=confirm("充值号码: " + $('#phoneNumId').val());
-		          if (r==true)
-		          {
-		            	var userId = $("#user_id").val();
-		        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID,'NUMBER_TYPE':$("#numSelected").val()};
-		        	  	$.commonFormSubmit({  
-		        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
-		        			data: parms
-		        	    });         
-		          }
-		          else
-		          {
-		        	  return;
-		          }    
+ 			   var obj = eval(data);    			   
+ 			   if(obj.status == "00000"){
+  			  	  var r=confirm("充值号码: " + $('#phoneNumId').val());
+ 		          if (r==true)
+ 		          {
+ 		            	var userId = $("#user_id").val();
+ 		        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID,'NUMBER_TYPE':$("#numSelected").val()};
+ 		        	  	$.commonFormSubmit({  
+ 		        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
+ 		        			data: parms
+ 		        	    });         
+ 		          }
+ 		          else
+ 		          {
+ 		        	  return;
+ 		          }     
+ 			   }else {
+     			   alert(obj.detail);    
+		           return;
+ 			   }
+// 		    	
+// 		    	var r=confirm("充值号码: " + $('#phoneNumId').val());
+//		          if (r==true)
+//		          {
+//		            	var userId = $("#user_id").val();
+//		        	  	var parms = {'USER_ID':userId,'PHONE_NUMBER':$('#phoneNumId').val(),'TOPAY_MONEY':ADD_PRICE,'ORIGINAL_PRICE':ORIGINAL_PRICE,'ORDER_FROM':'01','GOODS_ID':GOODS_ID,'NUMBER_TYPE':$("#numSelected").val()};
+//		        	  	$.commonFormSubmit({  
+//		        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
+//		        			data: parms
+//		        	    });         
+//		          }
+//		          else
+//		          {
+//		        	  return;
+//		          }    
 // 			     			      			   
  		     }
  		});
@@ -198,7 +198,6 @@ function verificationNum(istrue){
         		$('#phoneNumId').val("");
         		alert("宽带号码有误，请重新输入");
     		}
-
     	}		
 	}
 	

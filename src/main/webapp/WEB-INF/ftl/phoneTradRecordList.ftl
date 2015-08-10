@@ -30,11 +30,14 @@
     <ul id = "datagrid">
        		<#list topUpDealList as info>			
 	            <li class="rel" orderId = "${info.orderId}"}>
-	          	 	<#if ('${from}' =='renewal')>
+	            	 <p class="title"> ${info.goodsName} － ${info.searchNumber} </p>
+	            	      <!-- 
+	            	<#if ('${from}' =='renewal')>
 	            	    <p class="title"> ${info.goodsName}</p>
 	            	<#else>
-	            		 <p class="title"> ${info.goodsName} － ${info.searchNumber} </p>
 	            	</#if>              	
+	            	       -->
+	            
 
 					<#if (info.orderState =='00')>
   				        <p class="status"> 未支付 </p>

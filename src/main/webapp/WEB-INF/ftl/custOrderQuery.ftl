@@ -53,7 +53,7 @@
     		        	var passport = $('#inputPassport').val();
     		        	
     		        	// add by wangxinjun 
-    		        	if($('#inputPassportDiv').hide()){    		        	
+    		        	if($('#inputPassportDiv').is(":hidden")){    		        	
     		        	 var path = "/customer/custOrderQuery";
 						 localStorage.setItem("phoneTradRecordListBackPath",path);  						 
 						 if($("#tapIndex").val() == "2"){

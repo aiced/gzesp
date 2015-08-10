@@ -52,7 +52,7 @@
                 <option value="3">宽带 </option>>
             </select>
              <div class="fright">
-                <input id="phoneNumId" type="tel" placeholder="只限贵州地区号码">
+                <input id="phoneNumId" type="email" placeholder="只限贵州地区号码">
             </div>
         </div>
 

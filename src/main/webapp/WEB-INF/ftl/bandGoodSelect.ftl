@@ -27,10 +27,10 @@
     	</div>
       </div>      
     </div> 
-    <#if (errorcontent?exists)>
-    	您当前的状态为：${errorcontent}，不能继续进行宽带续约的相关业务
+    <#if (errorcontent!="")>
+    	<center>您当前的状态为：${errorcontent}，不能继续进行宽带续约的相关业务
     	<p/>
-    	详细情况请电话咨询：10010
+    	详细情况请电话咨询：10010</center>
     <#else>
 	    <!-- 账户基本信息 -->
 	    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-top: 10px;">
@@ -71,8 +71,8 @@
 		        	<p style="color:#ffffff;font-size:18px;font-weight:normal">${item.productRate}M</p>
 		        </div>
 		        <div class="col-xs-8" style="padding:15px">
-		        	<p style="font-size:18px;font-weight:normal">${item.productRate}M&nbsp;${item.productFee?number} ${(item.productFee)}元/年</p>
-		        	<p style="font-size:18px;font-weight:normal;color:#ff0000">￥${(item.productFee)}</p>
+		        	<p style="font-size:18px;font-weight:normal">${item.productRate}M&nbsp;${(item.productFee?number)/100}元/年</p>
+		        	<p style="font-size:18px;font-weight:normal;color:#ff0000">￥${(item.productFee?number)/100}</p>
 		        </div>     		
 		      </div>            
 		    </div>

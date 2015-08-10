@@ -291,7 +291,7 @@ function queryAccountInfo(phoneNum)
 //		   async: false,
 //		   success: function(data){
 //			//			  取数值
-//		    alert(data);	
+//		    alert(data);	    
 //	    	phoneDetailId(data);
 //		   }
 //		});

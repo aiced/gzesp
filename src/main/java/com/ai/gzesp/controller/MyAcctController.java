@@ -348,7 +348,13 @@ public class MyAcctController {
     	Map<String, String> paramsRet=null;
     	String user_id =paramsMap.get("user_id");
     	
+    	
+    	//注意这个地方
+    	//银行卡的绑定状态
+    	//2015_08_10 因为要暂时去掉绑定银行卡的功能（调银联接口），所以这个地方直接插入绑定成功的状态标志
     	String valid_flag=paramsMap.get("valid_flag");
+    	valid_flag="1";//先暂时写死，绑定成功 edit_by_wenh_2015_8_10
+    	
     	String priority=paramsMap.get("priority");
     	String card_type=paramsMap.get("card_type");
     	String bank_type=paramsMap.get("bank_type");
@@ -426,16 +432,18 @@ public class MyAcctController {
     					);
                 if (iRet > 0)
                 {
-                	paramsRet=bindCard(
-                			systradeno,
-                			paramsMap.get("bank_no"),
-                			cvn2,
-                			expire_date,
-                			card_type,
-                			name, 
-                			certificate_code,
-                			phone
-                			);
+                	//调用奚总的绑定接口，暂时先注释掉
+                	return "ok";
+//                	paramsRet=bindCard(
+//                			systradeno,
+//                			paramsMap.get("bank_no"),
+//                			cvn2,
+//                			expire_date,
+//                			card_type,
+//                			name, 
+//                			certificate_code,
+//                			phone
+//                			);
                 }
                 else {
     				return "插入报错～";
@@ -462,22 +470,28 @@ public class MyAcctController {
         	
             if (iRet > 0)
             {
+            	
+            	//这个地方暂时注释掉，直接返回绑定成功就可以
             	//只需要调用奚总绑定接口_ximh_todo
+//            	
+//            	paramsRet=bindCard(
+//            			systradeno,
+//            			paramsMap.get("bank_no"),
+//            			cvn2,
+//            			expire_date,
+//            			card_type,
+//            			name, 
+//            			certificate_code,
+//            			phone
+//            			);
+//            	
+//            	System.out.println(paramsRet);
+////            	result.put("status", "E01");
+////                result.put("detail", "支付失败！绑定日志插入失败");
             	
-            	paramsRet=bindCard(
-            			systradeno,
-            			paramsMap.get("bank_no"),
-            			cvn2,
-            			expire_date,
-            			card_type,
-            			name, 
-            			certificate_code,
-            			phone
-            			);
-            	
-            	System.out.println(paramsRet);
-//            	result.put("status", "E01");
-//                result.put("detail", "支付失败！绑定日志插入失败");
+            	paramsRet=new HashMap<String, String>();
+            	paramsRet.put("status", "00");
+            	paramsRet.put("detail", "操作成功");
             }
             else {
 				return "插入报错～";
@@ -571,4 +585,48 @@ public class MyAcctController {
     	return 2;
     }
 
+    //隐藏接口，主要用于银行卡解密操作
+    @RequestMapping("/acct/bankCardDecode/{user_id}/{bank_no}")
+    @ResponseBody
+    public Map<String, Object> bankCardDecode(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
+    {
+    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
+    	return acctbankinfo;
+    }
+    //隐藏接口，主要用于账户银行卡的更新操作。同上，其实主要是为了防止用户输入错误的银行后由程序进行更新操作
+    @RequestMapping("/acct/bankCardUpdate/{user_id}/{bank_no}")
+    @ResponseBody
+    public int bankCardUpdate(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
+    {    	
+    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,bank_no);
+    	
+    	byte[] bbank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),bank_no.getBytes());
+    	String strbank_no=DESUtil.Bytes2HexString(bbank_no);
+    	
+    	if (acctbankinfo != null && acctbankinfo.size()>0) //有数据
+    	{
+        	//解绑 直接修改为不可用
+        	int iRet=myAcctService.updateAcctBank(
+        			acctbankinfo.get("USER_ID").toString(), 
+        			strbank_no,//注意这个地方是加密的银行卡
+        			acctbankinfo.get("CVN2").toString(),
+        			acctbankinfo.get("PHONE").toString(),
+        			acctbankinfo.get("NAME").toString(),
+        			acctbankinfo.get("CERTIFICATE_CODE").toString(),
+        			acctbankinfo.get("EXPIRE_DATE").toString(),
+        			acctbankinfo.get("CARD_TYPE").toString(),
+        			acctbankinfo.get("BANK_TYPE").toString(),
+        			acctbankinfo.get("SIGN_CODE").toString(),
+        			"1",//acctbankinfo.get("VALID_FLAG").toString()
+        			acctbankinfo.get("PRIORITY").toString(),
+        			acctbankinfo.get("SYS_TRADE_NO").toString()
+        			);
+        	if (iRet<0) 
+        	{
+        		return 0; //操作失败
+    		}
+        	return  1; //操作成功
+    	}
+    	return 0;//操作失败
+    }    
 }

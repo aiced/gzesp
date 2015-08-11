@@ -202,7 +202,7 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     private void recvMsg(byte[] msg){
           
   		  if(Arrays.equals(msg, (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes())){
-  			log.debug("【一卡充：esp收到数据包， recvMsg里判断是响应心跳包】");
+  			//log.debug("【一卡充：esp收到数据包， recvMsg里判断是响应心跳包】");
   			return;
   		  }
           

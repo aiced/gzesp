@@ -35,7 +35,7 @@ public class RechargeService {
 	
     private static final Logger log = Logger.getLogger(RechargeService.class); 
     
-    private static int CARDS_LIMIT= 200; //每次定时任务激活卡的张数上限，避免一次任务执行时间过长
+    private static int CARDS_LIMIT= 100; //每次定时任务激活卡的张数上限，避免一次任务执行时间过长
     
     @Autowired
     private RechargeDao rechargeDao;
@@ -151,7 +151,7 @@ public class RechargeService {
     
     /**
      * 激活卡 任务调度方法
-     * 一次激活全部卡且<=200张
+     * 一次激活全部卡且<=100张
      */
     public void activeCardsJob(){
     	log.debug("【一卡充】激活卡任务开始。。。");
@@ -342,7 +342,7 @@ public class RechargeService {
      * @param param
      */
     private void rechargeCard(RechargeReq param, String serial_number, String serial_number_type){
-    	log.debug("【一卡充】充值,用户号码:" + param.getAccountNumber() + ",充值卡号:" + param.getAgentID() + "充值金额:" + param.getChargeMoney());
+    	log.debug("【一卡充】充值,用户号码:" + serial_number + ",充值卡号:" + param.getAgentID() + "充值金额:" + param.getChargeMoney());
     	
     	String reqTime = RechargeUtil.getCurentTime();
 		//生成请求报文

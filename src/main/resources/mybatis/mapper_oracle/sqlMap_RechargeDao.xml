@@ -5,7 +5,7 @@
 
 	<update id="lockCardList">
       update INV_D_RECHARGE_CARD 
-         set card_status = '3',
+         set card_status = 'L',
              order_id = ${order_id},
              update_time = sysdate
       where card_status = '1'
@@ -25,7 +25,7 @@
 	
 	<update id="lockCard">
       update INV_D_RECHARGE_CARD 
-         set card_status = '3',
+         set card_status = 'L',
              order_id = ${order_id},
              update_time = sysdate
       where card_status = '1'
@@ -58,6 +58,7 @@
 	    select to_char(log_id) log_id, agent_id card_no, serial_number
           from itf_d_recharge_log
          where interface_type = '010202'
+           and check_status is null
          <if test="log_id != null">
            and log_id = #{log_id}
          </if>       

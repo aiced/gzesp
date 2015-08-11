@@ -25,15 +25,17 @@ public class RespRechargeHandler implements IDealRechargeResp {
 
 	public void dealResp(RechargeResp resp, byte[] msg) {
 		//读取包体部分并加到 resp 里面
-        byte [] agentBalance = new byte[10];
-        System.arraycopy(msg, 5+20+1+6+2+20+1+3+32+5+1+5+12, agentBalance, 0, 10); //获取响应报文agentBalance部分
-        
-        byte [] uniconSerilNum = new byte[20];
-        System.arraycopy(msg, 5+20+1+6+2+20+1+3+32+5+1+5+12+10, uniconSerilNum, 0, 20); //获取响应报文uniconSerilNum部分
-        
-        resp.setAgentBalance(new String(agentBalance).trim());
-        resp.setUniconSerilNum(new String(uniconSerilNum).trim());
-        
+		//只有响应头里是成功标志的活着错误码是00000的才会有包体
+		if(resp.getSuccessFlag().equals("1")){
+			byte [] agentBalance = new byte[10];
+			System.arraycopy(msg, 5+20+1+6+2+20+1+3+32+5+1+5+12, agentBalance, 0, 10); //获取响应报文agentBalance部分
+			
+			byte [] uniconSerilNum = new byte[20];
+			System.arraycopy(msg, 5+20+1+6+2+20+1+3+32+5+1+5+12+10, uniconSerilNum, 0, 20); //获取响应报文uniconSerilNum部分
+			
+			resp.setAgentBalance(new String(agentBalance).trim());
+			resp.setUniconSerilNum(new String(uniconSerilNum).trim());
+		}
         
 		//根据包头里成功标志更新接口日志表 itf_d_recharge_log 里的响应结果
 		int n1 = rechargeService.updateRechargeLog(resp.getLogId(), resp.getSuccessFlag(), resp.getResultCode(), resp.getAgentBalance(), resp.getUniconSerilNum(), null);
@@ -47,5 +49,6 @@ public class RespRechargeHandler implements IDealRechargeResp {
         int n2 = rechargeService.updateRechargeCard(card.get("CARD_NO"), card_status);
 
 	}
+	
 
 }

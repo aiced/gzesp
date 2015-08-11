@@ -54,6 +54,6 @@ public interface MyAcctDao {
 	public Map<String, String> queryToPayMoneyByOrderId(@Param("order_id") String order_id);
 	public Map<String, String> queryToPayMoneyCardByOrderId(@Param("order_id") String order_id);	
 	
-	public int insertWidthDrawAuDit(@Param("log_id") String log_id,@Param("partition_id") String partition_id,@Param("apply_time") String apply_time,@Param("user_id") String user_id,@Param("dwithdraw_fee") Double dwithdraw_fee,@Param("audit_state") String audit_state);
+	public int insertWidthDrawAuDit(@Param("log_id") String log_id,@Param("partition_id") String partition_id,@Param("apply_time") String apply_time,@Param("user_id") String user_id,@Param("dwithdraw_fee") Double dwithdraw_fee,@Param("audit_state") String audit_state,@Param("bank_no") String bank_no,@Param("bank_type") String bank_type);
 	
 }

@@ -145,7 +145,15 @@
 	            '返销'
 	          else
 	            '未知'
-	         end cancel_tag
+	         end cancel_tag,
+          	case 
+	           when T2.operate_tag='1' then
+	             '打款成功'
+	           when T2.operate_tag='2' then
+	             '打款失败'
+	           else
+	             '未打款'
+	         end operate_tag
 	  from T1, T2
 	 where T1.user_id = T2.user_id(+)
 	 order by T1.update_time desc
@@ -215,7 +223,15 @@
 		                            '返销'
 		                          else
 		                            '未知'
-		                         end cancel_tag
+		                         end cancel_tag,
+					           case 
+						           when T2.operate_tag='1' then
+						             '打款成功'
+						           when T2.operate_tag='2' then
+						             '打款失败'
+						           else
+						             '未打款'
+						         end operate_tag
 		                  from T1, T2
 		                 where T1.user_id = T2.user_id(+)
 		                 order by T1.update_time desc
@@ -247,14 +263,16 @@
 	</select>
 	<insert id="insertWidthDrawAuDit">
 		insert into ACT_D_WITHDRAW_AUDIT
-		  (log_id, partition_id, apply_time, user_id, withdraw_fee, audit_state)
+		  (log_id, partition_id, apply_time, user_id, withdraw_fee, audit_state,bank_no,bank_type)
 		values
 		  (#{log_id},
 		   #{partition_id},
 		   to_date(#{apply_time},'yyyy/MM/dd  HH24:mi:SS'),
 		   #{user_id},
 		   ${dwithdraw_fee},
-		   #{audit_state}
+		   #{audit_state},
+		   #{bank_no},
+		   #{bank_type}
 		   )
 	</insert>
 	

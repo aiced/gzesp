@@ -167,8 +167,8 @@
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
-    	<#--onclick="Tishi();"  -->
-    	  <a href="${base}/weShop/goodSelect/band/${user_id}" > 
+    	<#--${base}/weShop/goodSelect/band/${user_id}  -->
+    	  <a href="#" onclick="Tishi();"> 
     	    <img src="${resRoot}/image/weShop/kdxy4.png" alt="" class="img-rounded img-responsive" />  
     	  </a>  
     	</div>

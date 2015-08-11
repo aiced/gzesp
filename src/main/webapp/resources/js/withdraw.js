@@ -6,7 +6,13 @@
     //ajax调用后台controller
     function insertWithdraw()
     {
-		var parms = {'user_id':$('#hide_user_id').val(),'withdraw_fee':$('#txtbalance').val(),'hide_acctid':$('#hide_acctid').val()};
+		var parms = {
+				'user_id':$('#hide_user_id').val(),
+				'withdraw_fee':$('#txtbalance').val(),
+				'hide_acctid':$('#hide_acctid').val(),
+				'hide_bank_no':$("#hide_bankno").val(),
+				'hide_bank_type':$("#hide_banktype").val()
+				};
 		$.ajax({
 		 type: "POST",
 		 url: '/esp/shopManage/acct/withdraw/postData',
@@ -17,6 +23,21 @@
 			
 		 }
 		});
+    }
+    
+    
+    function doRadClick(param1,bank_no,bank_type)
+    {
+		var txt=$("input[name='optionsRadios']:checked").next("label").text();
+		if (txt.indexOf("信用卡") > 0 ) {
+			alert("不支持信用卡提现，如没有绑定其他储蓄卡，请先绑定储蓄卡再次进行提现！");
+			return;
+		}
+		
+		$("#span_modal").html($("input[name='optionsRadios']:checked").next("label").text());
+		$("#hide_bankno").val(bank_no);
+		$("#hide_banktype").val(bank_type);
+		
     }
     
     

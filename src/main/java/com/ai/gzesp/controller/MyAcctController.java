@@ -121,13 +121,17 @@ public class MyAcctController {
 		String hide_acctid=paramsMap.get("hide_acctid");
 		String log_id=CommonUtil.generateLogId("6");
 		String partition_id=log_id.substring(14,16);
+		String hide_bank_no=paramsMap.get("hide_bank_no");
+		String hide_bank_type=paramsMap.get("hide_bank_type");
+		
+		
 		
 		Date now = new Date(); 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式		
 		String apply_time=dateFormat.format(now);
 		String audit_state="02"; //后续要修改成为未审核  00
 		
- 		String strRet=myAcctService.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,withdraw_fee,audit_state,hide_acctid);
+ 		String strRet=myAcctService.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,withdraw_fee,audit_state,hide_acctid,hide_bank_no,hide_bank_type);
  		return strRet;
 
 

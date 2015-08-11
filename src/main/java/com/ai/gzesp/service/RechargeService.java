@@ -151,41 +151,43 @@ public class RechargeService {
     
     /**
      * 激活卡 任务调度方法
-     * 
+     * 一次激活全部卡且<=200张
      */
+    public void activeCardsJob(){
+    	log.debug("【一卡充】激活卡任务开始。。。");
+    	int  cards = 0;
+		while(true){
+			if(cards >= CARDS_LIMIT){
+				break; //如果已经超过单次任务的上限了，退出循环
+			}
+			
+			List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(null); //每次取20张卡
+			if(CollectionUtils.isEmpty(cardList)){
+				break; //如果捞不到未激活的卡，退出循环
+			}
+			
+			activeCards(cardList); //激活这批卡
+			
+			cards += cardList.size(); 
+		}
+    	
+    	log.debug("【一卡充】激活卡任务结束。共激活" + cards + "张卡。");
+    }
+    
     /**
-     * 激活卡 任务调度方法
-     * card_no为null时，一次激活全部卡且<=200张，
+     * 激活单张卡 任务
      * card_no不为空时，支持激活单张卡
      * @param card_no
      */
-    public void activeCardsJob(String card_no){
+    public void activeCard(String card_no){
     	log.debug("【一卡充】激活卡任务开始。。。");
     	int  cards = 0;
-    	if(StringUtils.isBlank(card_no)){
-    		while(true){
-    			if(cards >= CARDS_LIMIT){
-    				break; //如果已经超过单次任务的上限了，退出循环
-    			}
-    			
-    			List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(card_no); //每次取20张卡
-    			if(CollectionUtils.isEmpty(cardList)){
-    				break; //如果捞不到未激活的卡，退出循环
-    			}
-    			
-    			activeCards(cardList); //激活这批卡
-    			
-    			cards += cardList.size(); 
-    		}
-    	}
-    	else{
-    		List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(card_no); //每次取20张卡
-			if(CollectionUtils.isEmpty(cardList)){
-				return; //如果捞不到未激活的卡，退出
-			}
-			activeCards(cardList); //激活这批卡
-			cards += cardList.size(); 
-    	}
+    	List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(card_no); //每次取20张卡
+		if(CollectionUtils.isEmpty(cardList)){
+			return; //如果捞不到未激活的卡，退出
+		}
+		activeCards(cardList); //激活这批卡
+		cards += cardList.size(); 
     	
     	log.debug("【一卡充】激活卡任务结束。共激活" + cards + "张卡。");
     }
@@ -480,33 +482,39 @@ public class RechargeService {
     /**
      * 对账定时任务入口
      * 如果log_id为null，全部对账，每次取20条未对账的充值记录进行对账，循环获取直到全部充值记录对账完成。
+     */
+    public void checkBillJob(){
+    	log.debug("【一卡充】对账任务开始。。。");
+    	int  num = 0;
+		while(true){
+			
+			List<Map<String, String>> logList = rechargeDao.getRechargeLogList(null); //每次取20张卡
+			if(CollectionUtils.isEmpty(logList)){
+				break; //如果捞不到未对账的卡，退出循环
+			}
+			
+			checkRechargeLogs(logList); //对账
+			
+			num += logList.size(); 
+		}
+    	
+    	log.debug("【一卡充】对账任务结束。共对账" + num + "条充值记录。");
+    }
+    
+    /**
+     * 对账定时任务入口
      * 如果log_id不为null，则只对账这一条充值记录
      * @param log_id
      */
-    public void checkBillJob(String log_id){
+    public void checkBill(String log_id){
     	log.debug("【一卡充】对账任务开始。。。");
     	int  num = 0;
-    	if(StringUtils.isBlank(log_id)){
-    		while(true){
-    			
-    			List<Map<String, String>> logList = rechargeDao.getRechargeLogList(log_id); //每次取20张卡
-    			if(CollectionUtils.isEmpty(logList)){
-    				break; //如果捞不到未对账的卡，退出循环
-    			}
-    			
-    			checkRechargeLogs(logList); //对账
-    			
-    			num += logList.size(); 
-    		}
-    	}
-    	else{
-    		List<Map<String, String>> logList = rechargeDao.getRechargeLogList(log_id); //每次取20张卡
-			if(CollectionUtils.isEmpty(logList)){
-				return; //如果捞不到未对账的卡，退出
-			}
-			checkRechargeLogs(logList); //对账
-			num += logList.size(); 
-    	}
+		List<Map<String, String>> logList = rechargeDao.getRechargeLogList(log_id); //每次取20张卡
+		if(CollectionUtils.isEmpty(logList)){
+			return; //如果捞不到未对账的卡，退出
+		}
+		checkRechargeLogs(logList); //对账
+		num += logList.size(); 
     	
     	log.debug("【一卡充】对账任务结束。共对账" + num + "条充值记录。");
     }
@@ -571,8 +579,10 @@ public class RechargeService {
     	String req_day = DateUtils.getYesterday();
     	List<String[]> result = FileUtils.readCardRespFile(req_day);
     	//这边list数量不固定，就不用 动态sql 一次更新了，怕in太多
-    	for(String[] array : result){
-    		rechargeDao.updateCardResultCode(array[0], array[3]);
+    	if(result != null){
+    		for(String[] array : result){
+    			rechargeDao.updateCardResultCode(array[0], array[3]);
+    		}
     	}
     }
 	

@@ -48,7 +48,7 @@
 	</select>
 	
 	<select id="getUseCardList" resultType="java.util.HashMap">
-	    select card_no, card_value, card_password, order_id
+	    select card_no, to_char(card_value) card_value, card_password, to_char(order_id) order_id
           from INV_D_RECHARGE_CARD
          where order_id = ${order_id}
          order by card_value desc

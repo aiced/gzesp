@@ -112,7 +112,7 @@ function initBind() {
  		        	  	$.commonFormSubmit({  
  		        	        action :$('#baseRoot').val() + "/order/submitRecharge", 
  		        			data: parms
- 		        	    });         
+ 		        	    });          
  		          }
  		          else
  		          {

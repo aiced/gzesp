@@ -88,7 +88,7 @@
 				</div>
 				<div class = "row_right">
 					<p class = "row_right_num_normal" name ="row_right_num">#{item.FEE;m1M2}</p>
-					<p class = "row_right_audit" name = "row_right_audit">${item.AUDIT_STATE}</p>
+					<p class = "row_right_audit" name = "row_right_audit">${item.OPERATE_TAG}</p>
 				</div>
 				<div style="clear:both;"></div> 
 			   </li>			

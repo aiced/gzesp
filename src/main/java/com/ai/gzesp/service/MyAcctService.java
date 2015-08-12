@@ -143,14 +143,14 @@ public class MyAcctService {
     
     
     //插入ACT_D_WITHDRAW_AUDIT表
-    public String insertWidthDrawAuDit(String log_id,String partition_id,String apply_time,String user_id,String withdraw_fee,String audit_state,String hide_acctid)
+    public String insertWidthDrawAuDit(String log_id,String partition_id,String apply_time,String user_id,String withdraw_fee,String audit_state,String hide_acctid,String hide_bank_no,String hide_bank_type)
     {
     	//注意提现的地方，金额为负数
     	double dwithdraw_fee=-Double.valueOf(withdraw_fee)*1000;
 
     	
     	int iRet=-1;
-    	iRet=myAcctDao.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,dwithdraw_fee,audit_state);
+    	iRet=myAcctDao.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,dwithdraw_fee,audit_state,hide_bank_no,hide_bank_type);
 
     	if (iRet<=0) {
 			return "操作失败";
@@ -159,7 +159,7 @@ public class MyAcctService {
     	//注意事务的处理
 
     	//String log_tip, String trade_type, String acct_id, int pay_fee, String order_id
-    	 Map<String, String> map=payService.acctChangeAndAccessLog("账户提现","60",hide_acctid,(int)dwithdraw_fee,null);
+    	Map<String, String> map=payService.acctChangeAndAccessLog("账户提现","60",hide_acctid,(int)dwithdraw_fee,null);
     	if (map!=null && map.size()>0) {
     		 return map.get("detail");
 		}

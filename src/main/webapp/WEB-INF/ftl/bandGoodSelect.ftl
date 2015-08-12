@@ -71,8 +71,22 @@
 		        	<p style="color:#ffffff;font-size:18px;font-weight:normal">${item.productRate}M</p>
 		        </div>
 		        <div class="col-xs-8" style="padding:15px">
-		        	<p style="font-size:18px;font-weight:normal">${item.productRate}M&nbsp;${(item.productFee?number)/100}元/年</p>
-		        	<p style="font-size:18px;font-weight:normal;color:#ff0000">￥${(item.productFee?number)/100}</p>
+		        	<p style="font-size:18px;font-weight:normal">${item.productName}</p>
+		        	<p style="font-size:18px;font-weight:normal;color:#000000">
+		        		<s>￥${(item.productFee?number)/100}</s>
+		        		<#if (item.discntReq.discntType == "01")>
+		        			(折扣)
+		        		<#elseif (item.discntReq.discntType == "02")>
+		        			(赠送)
+		        		<#else>
+		        			(未知)
+		        		</#if>
+		        		
+		        	</p>
+		        	<p style="font-size:18px;font-weight:normal;color:#ff0000">
+		        		￥${(item.discntReq.discntValue?number)/100}
+		        	</p>
+		        	
 		        </div>     		
 		      </div>            
 		    </div>

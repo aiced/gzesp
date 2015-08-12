@@ -46,7 +46,7 @@
 		<#list acctbankinfolist as item>
 		    <div class="radio">
 		        <div id="lab${item_index}" >
-		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.SIGN_CODE}" onclick="doClick(this,1);">
+		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.SIGN_CODE}" onclick="doRadClick(this,${item.BANK_NO},${item.BANK_TYPE});">
                 	<label for="optionsRadios${item_index}">${item.PARAM_VALUE}
 	                	<span>
 	                	尾号${item.BANK_NO?substring((item.BANK_NO?length)-4,item.BANK_NO?length)}
@@ -62,7 +62,6 @@
     	</#list>
 
 </div>
-<input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
 <br>
 <div class="div_container_mid form-group" >
     <span>转出金额
@@ -84,6 +83,9 @@
     <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
     <input type="hidden" id="hide_balance" name="hide_balance" value=${acctinfo.BALANCE}>
     <input type="hidden" id="hide_acctid" name="hide_acctid" value=${acctinfo.ACCT_ID}>       
+   	<input type="hidden" id="hide_bankno" name="hide_bankno" value="">       
+   	<input type="hidden" id="hide_banktype" name="hide_banktype" value="">       
+   	
    	<#else>
 		<center>您还没有绑定银行卡</center>
 		<center><a href="/esp/shopManage/acct/myBankCardList/${acctinfo.USER_ID}">现在去绑定</a></center>

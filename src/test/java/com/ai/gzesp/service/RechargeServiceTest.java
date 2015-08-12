@@ -55,12 +55,12 @@ public class RechargeServiceTest extends BaseTest {
 	
 	@Test
 	public void test5(){
-		rechargeService.activeCardsJob(null);
+		rechargeService.activeCardsJob();
 	}
 	
 	@Test
 	public void test9(){
-		rechargeService.activeCardsJob("850800000000037");
+		rechargeService.activeCard("850800000000037");
 	}
 	
 	@Test
@@ -70,11 +70,11 @@ public class RechargeServiceTest extends BaseTest {
 	
 	@Test
 	public void test7(){
-		rechargeService.checkBillJob(null);
+		rechargeService.checkBillJob();
 	}
 	
 	@Test
 	public void test8(){
-		rechargeService.checkBillJob("");
+		rechargeService.checkBill("");
 	}
 }

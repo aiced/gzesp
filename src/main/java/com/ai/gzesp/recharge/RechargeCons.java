@@ -84,9 +84,9 @@ public class RechargeCons {
     public static char keyPadChar = 0x0;
     
     /**
-     * 一卡充接口请求发出后，轮询等待结果的超时时间 毫秒，一卡充约定60秒超时
+     * 一卡充接口请求发出后，轮询等待结果的超时时间 毫秒，一卡充约定10秒超时
      */
-    public static int WAIT_TIMEOUT = 60*1000;
+    public static int WAIT_TIMEOUT = 10*1000;
     
     /**
      * 一卡充接口请求发出后，轮询等待结果的间隔时间 毫秒，

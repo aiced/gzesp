@@ -34,7 +34,7 @@ public class RechargeController {
     public Map<String, String> active(){
     	Map<String, String> result = new HashMap<String, String>();
     	
-    	rechargeService.activeCardsJob(null); 
+    	rechargeService.activeCardsJob(); 
     	
 		result.put("status", "SUCCESS");
         result.put("detail", "请求成功！");
@@ -51,7 +51,7 @@ public class RechargeController {
     public Map<String, String> active(@PathVariable("card_no") String card_no){
     	Map<String, String> result = new HashMap<String, String>();
     	
-    	rechargeService.activeCardsJob(card_no); 
+    	rechargeService.activeCard(card_no); 
     	
 		result.put("status", "SUCCESS");
         result.put("detail", "请求成功！");
@@ -96,7 +96,7 @@ public class RechargeController {
     public Map<String, String> check(){
     	Map<String, String> result = new HashMap<String, String>();
     	
-    	rechargeService.checkBillJob(null);
+    	rechargeService.checkBillJob();
     	
 		result.put("status", "SUCCESS");
         result.put("detail", "请求成功！");
@@ -113,7 +113,7 @@ public class RechargeController {
     public Map<String, String> check(@PathVariable("log_id") String log_id){
     	Map<String, String> result = new HashMap<String, String>();
     	
-    	rechargeService.checkBillJob(log_id);
+    	rechargeService.checkBill(log_id);
     	
 		result.put("status", "SUCCESS");
         result.put("detail", "请求成功！");

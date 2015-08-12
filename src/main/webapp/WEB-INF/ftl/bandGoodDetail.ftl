@@ -48,8 +48,9 @@
     </div>
     <!-- 生效时间 -->
     <div class="container-fluid" style="background-color:#fff;margin:0px;padding:0px;text-align:center;border:1px solid #b1d85c">
-      <p><font style="font-size: 14px;">生效时间</font> &nbsp;&nbsp;&nbsp;&nbsp; <font style="font-size:14px;color:#b1d85c;font-weight:normal;">2015-01-01</font></p>         
-    </div>    
+<!--       <p><font style="font-size: 14px;">生效时间</font> &nbsp;&nbsp;&nbsp;&nbsp; <font style="font-size:14px;color:#b1d85c;font-weight:normal;">2015-01-01</font></p>         
+ -->    
+ 	</div>    
       
          
     <!-- 详细文字描述 -->

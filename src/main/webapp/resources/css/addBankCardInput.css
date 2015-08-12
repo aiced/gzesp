@@ -63,9 +63,9 @@ em{
 #next{
 	background-color:#FD980B;
 	color:#fff;
-	margin:50px 10px 50px ;
+	margin:50px 10px 100px ;
     display:block;
-    height:50px;
+    height:40px;
 	line-height:50px;
     text-align: center;
 }
@@ -73,9 +73,9 @@ em{
 #save{
 	background-color:#FD980B;
 	color:#fff;
-	margin:50px 10px 50px ;
+	margin:50px 10px 100px ;
     display:block;
-    height:50px;
+    height:40px;
 	line-height:50px;
     text-align: center;
 }

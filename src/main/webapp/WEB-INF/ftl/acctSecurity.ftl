@@ -22,11 +22,14 @@
 		<div class = "divContainer">
 			<a id = "row" class = "rel">
 				<em class = "title">安全密码</em>
+							<img class="arrow fright"
+			src="${resRoot}/image/goodsManager/goodSelectArrow.png"> 
 				<#if (!acctinfo.UPDATE_TIME)>
 					<em id= "subTitle" class = "fright">设置</em>
 				<#else>
 					<em id= "subTitle" class = "fright">重置</em>
 				</#if>
+
 			</a>
 			<p class = "footer">资金账户变动，绑定／解除银行卡时需要输入的密码</p>		
 		</div>

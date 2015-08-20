@@ -184,6 +184,12 @@ function doBlur(param)
 			iRet=61;
 			return opReturn(iRet);
 		}
+		var reg = /^\d*$/;
+		if(!reg.test($("#txtverify").val()))
+		{
+			iRet=64;
+	  		return opReturn(iRet);
+		}	
 		if($("#txtverify").val()!=code)
 		{
 			iRet=62;
@@ -320,6 +326,12 @@ function checkData()
 		iRet=61;
 		return opReturn(iRet);
 	}
+	var reg = /^\d*$/;
+	if(!reg.test($("#txtverify").val()))
+	{
+		iRet=64;
+  		return opReturn(iRet);
+	}	
 	if($("#txtverify").val()!=code)
 	{
 		iRet=62;
@@ -359,6 +371,7 @@ function checkData()
 //61:请输入验证码
 //62:验证码不正确
 //63:验证码超时
+//64:验证吗必须为数字
 //71:请勾选同意用户协议
 
 var bRet=-1;
@@ -414,6 +427,9 @@ function opReturn(iRet)
 		return false;
 	case 63:
 		alert("验证码超时");
+		return false;
+	case 64:
+		alert("验证码必须为数字");
 		return false;
 	case 71:
 		alert("请勾选同意用户协议");

@@ -20,10 +20,16 @@ function doBlur(param)
 {
 	var iRet=-1;
 	var id=$(param).attr("id");
+	var reg = /^\d*$/;
 	if (id == "txtpwd") {
 		if (!$("#txtpwd").val()) {
 			iRet=11;
 			return opReturn(iRet);
+		}
+		if(!reg.test($("#txtpwd").val()))
+		{
+			iRet=16;
+	  		return opReturn(iRet);
 		}
 		if ($("#txtpwd").val().length!=6) {
 			iRet=14;
@@ -35,6 +41,11 @@ function doBlur(param)
 		if (!$("#txtrepwd").val()) {
 			iRet=12;
 			return opReturn(iRet);
+		}
+		if(!reg.test($("#txtrepwd").val()))
+		{
+			iRet=16;
+	  		return opReturn(iRet);
 		}
 		if ($("#txtrepwd").val().length!=6) {
 			iRet=15;
@@ -58,6 +69,12 @@ function checkData()
 		iRet=11;
 		return opReturn(iRet);
 	}
+	var reg = /^\d*$/;
+	if(!reg.test($("#txtpwd").val()))
+	{
+		iRet=16;
+  		return opReturn(iRet);
+	}
 	if ($("#txtpwd").val().length!=6) {
 		iRet=14;
 		return opReturn(iRet);
@@ -66,6 +83,11 @@ function checkData()
 		iRet=12;
 		return opReturn(iRet);
 	}
+	if(!reg.test($("#txtrepwd").val()))
+	{
+		iRet=16;
+  		return opReturn(iRet);
+	}	
 	if ($("#txtrepwd").val().length!=6) {
 		iRet=15;
 		return opReturn(iRet);
@@ -86,6 +108,7 @@ function checkData()
 //13：新密码和确认密码不相同
 //14：新密码长度必须等于6
 //15：确认密码长度必须等于6
+//16:密码必须为数字
 var bRet=-1;
 function opReturn(iRet)
 {
@@ -107,6 +130,9 @@ function opReturn(iRet)
 		return false;
 	case 15:
 		alert("长度必须等于6");
+		return false;
+	case 16:
+		alert("密码必须为数字");
 		return false;
 	default:
 		return false;

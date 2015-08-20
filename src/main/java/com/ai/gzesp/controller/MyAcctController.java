@@ -393,19 +393,19 @@ public class MyAcctController {
     			//只需将状态进行修改为1
     			
     			int iRet=myAcctService.updateAcctBank(
-            			acctbankinfo.get("USER_ID").toString(), 
+    					user_id,
             			strbank_no,//注意这个地方是加密的银行卡
-            			acctbankinfo.get("CVN2").toString(),
-            			acctbankinfo.get("PHONE").toString(),
-            			acctbankinfo.get("NAME").toString(),
-            			acctbankinfo.get("CERTIFICATE_CODE").toString(),
-            			acctbankinfo.get("EXPIRE_DATE").toString(),
-            			acctbankinfo.get("CARD_TYPE").toString(),
-            			acctbankinfo.get("BANK_TYPE").toString(),
+            			cvn2,
+            			phone,
+            			name,
+            			certificate_code,
+            			expire_date,
+            			card_type,
+            			bank_type,
             			acctbankinfo.get("SIGN_CODE").toString(),
             			"1",//acctbankinfo.get("VALID_FLAG").toString()
-            			acctbankinfo.get("PRIORITY").toString(),
-            			acctbankinfo.get("SYS_TRADE_NO").toString()
+            			priority,
+            			systradeno
             			);
             	if (iRet<0) 
             	{

@@ -59,18 +59,25 @@
 			
 			break;
 		case 2: //弹出框确定按
-    		var txtpwd="";
-    		for (var i = 1; i < 7; i++) {
-    			txtpwd=txtpwd+$("#txt"+i).val();
-			}
-    		if (txtpwd.length!=6)
+//    		var txtpwd="";
+//    		for (var i = 1; i < 7; i++) {
+//    			txtpwd=txtpwd+$("#txt"+i).val();
+//			}
+			$(param1).attr('disabled',"true");
+    		if ($('#txtsecuritypwd').val().length!=6)
     		{
-    			alert("请输入6位支付密码！");
+    			alert("请输入6位安全密码！");
+    			$(param1).removeAttr("disabled");
     			return;
     		}
-
+    		else if ($('#txtbalance').val()==0) {
+    			alert("不能提取0元！");
+    			clearTextVal();
+    			$(param1).removeAttr("disabled");
+    			return true;
+			}
     		//判断输入的密码是否正确
-			var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':txtpwd};
+			var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':$('#txtsecuritypwd').val()};
 			$.ajax({
 			 type: "POST",
 			 url: '/esp/shopManage/acct/myBankCardList/checkPwd',
@@ -81,7 +88,7 @@
 					alert("输入密码有误，请重新输入！");
 					clearTextVal();
 					window.location.href='/esp/shopManage/acct/withdraw/'+$("#hide_user_id").val();
-					//return 
+					return;//这个千万别注释掉
 				}
 				//调用插入
 				insertWithdraw();
@@ -93,9 +100,10 @@
 	}
 	function clearTextVal()
 	{
-		for (var i = 1; i < 7; i++) {
-    		$("#txt"+i).val("");
-		}
+//		for (var i = 1; i < 7; i++) {
+//    		$("#txt"+i).val("");
+//		}
+		$("#txtsecuritypwd").val("");
 	}
 	
 	function doFocus(param)
@@ -108,7 +116,7 @@
 			iRet=11;
 	  		return opReturn(iRet);
 		}
-		var reg = /^\d*$/;
+		var reg = /^[0-9]+([.]\d{1,2})?$/;
 		if(!reg.test($(param).val()))
 		{
 			iRet=12;
@@ -132,9 +140,10 @@
 			$(param1).val("");
 			return false;
 		}
-		else
-		{
+		else if ($(param1).val().length==6) {
 			$(param2).focus();
+			$(param1).select();
+			param1.setSelectionRange(0,0);
 			return true;
 		}
 	}
@@ -147,7 +156,7 @@
 	  		return opReturn(iRet);
 		}
 		
-		var reg = /^\d*$/;
+		var reg = /^[0-9]+([.]\d{1,2})?$/;
 		if(!reg.test($("#txtbalance").val()))
 		{
 			iRet=12;
@@ -188,7 +197,7 @@
 			alert("提现金额不能为空!");
 			return false;			
 		case 12:
-			alert("金额必须是数字!");
+			alert("请输入数字(例:0.00),最高保留两位小数!");
 			$("#txtbalance").val("");
 			return false;
 		case 13:

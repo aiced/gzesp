@@ -37,28 +37,31 @@
     			$(param1).val("");
     			return false;
     		}
-    		else
-    		{
+    		else if ($(param1).val().length==6) {
     			$(param2).focus();
+    			$(param1).select();
+    			param1.setSelectionRange(0,0);
     			return true;
-    		}
+			}
     	}
     	
     	function doClick()
     	{
     		//ajax请求
     		
-    		var txtpwd="";
+/*     		var txtpwd="";
     		for (var i = 1; i < 7; i++) {
     			txtpwd=txtpwd+$("#txt"+i).val();
-			}
-    		if (txtpwd.length!=6)
+			} */
+			$("#btnok").attr('disabled',"true");
+    		if ($('#txtsecuritypwd').val().length!=6)
     		{
-    			alert("请输入6位支付密码！");
+    			alert("请输入6位安全密码！");
+    			$("#btnok").removeAttr("disabled");
     			return;
     		}
     		
-			var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':txtpwd,'bank_no':$('#hide_bank_no').val()};
+			var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':$('#txtsecuritypwd').val(),'bank_no':$('#hide_bank_no').val()};
 			$.ajax({
 			 type: "POST",
 			 url: '/esp/shopManage/acct/bankCardDetail/undindingBankCard',
@@ -88,9 +91,10 @@
     	 
     	function clearTextVal()
     	{
-    		for (var i = 1; i < 7; i++) {
+/*     		for (var i = 1; i < 7; i++) {
         		$("#txt"+i).val("");
-			}
+			} */
+    		$('#txtsecuritypwd').val("");
     	}
     	function doFocus(param)
     	{
@@ -169,7 +173,10 @@
                     
                     <br>
                     <div class="pwd_container">
-                        <div>
+                    	<div>
+                     		<input type="password" value="" name="txtsecuritypwd" id="txtsecuritypwd" maxlength="6" size="6" class="form-control" onkeyup="checkData(this,btnok);" >
+                        </div>
+<!--                         <div>
                             <input type="password" class="form-control" id="txt1" placeholder="" onkeyup="checkData(this,txt2);" onfocus="doFocus(this);">
                         </div>
                         <div>
@@ -186,7 +193,7 @@
                         </div>
                         <div>
                             <input type="password" class="form-control" id="txt6" placeholder="" onkeyup="checkData(this,btnok);" onfocus="doFocus(this);">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">

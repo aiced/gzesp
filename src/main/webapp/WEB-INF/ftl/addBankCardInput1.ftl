@@ -100,7 +100,7 @@
 			
 			<li class = "border_bottom">
 				<em class = "em_normal"> 验证码 </em>	
-				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify" onfocus="doFocus(this);">				
+				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify" onfocus="doFocus(this);" onblur="doBlur(this);">				
 				<a id = "validation" class = "fright" onclick="getCode();" onblur="doBlur(this);"> 输入验证码 </a	>		
 			</li>
 		</ul>

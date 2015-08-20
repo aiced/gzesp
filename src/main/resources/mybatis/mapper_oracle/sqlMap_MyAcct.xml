@@ -59,7 +59,7 @@
 	</insert>
 	<update id="updateAcctBank">
 		update ACT_D_BANKCARD set 
-		user_id=#{valid_flag},
+		user_id=#{user_id},
 		bank_no=#{bank_no},
 		cvn2=#{cvn2},
 		phone=#{phone},

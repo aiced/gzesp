@@ -105,7 +105,7 @@ public class RechargeController {
     
     /**
      * 单条充值记录对账
-     * @param card_no
+     * @param log_id
      * @return
      */
     @RequestMapping("/check/{log_id}")
@@ -117,6 +117,32 @@ public class RechargeController {
     	
 		result.put("status", "SUCCESS");
         result.put("detail", "请求成功！");
+        return result;
+    }
+    
+    /**
+     * 单条充值记录查询
+     * @param log_id
+     * @return
+     */
+    @RequestMapping("/rechargeQry/{log_id}")
+    @ResponseBody
+    public Map<String, String> rechargeQry(@PathVariable("log_id") String log_id){
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	try {
+    		//发送查询接口请求
+			rechargeService.rechargeQry(log_id);
+			//等待一卡充响应结果
+			rechargeService.waitForRechargeRqyResp(log_id, result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("status", "FAIL");
+            result.put("detail", "充值查询未知异常！");
+		}
+   	
+//		result.put("status", "SUCCESS");
+//        result.put("detail", "请求成功！");
         return result;
     }
 }

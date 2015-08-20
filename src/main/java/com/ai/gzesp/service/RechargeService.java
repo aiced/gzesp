@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +91,7 @@ public class RechargeService {
      * @param result
      * @return
      */
-    public void waitForRechargeCheckResp(String log_id, String log_tip, Map<String, String> result){
+    public void waitForRechargeCheckResp(String order_id, String log_tip, Map<String, String> result){
         //Map<String, String> result = new HashMap<String, String>();
         int timeout = 0;
         while(true){
@@ -105,7 +106,7 @@ public class RechargeService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } //每次轮询等待1秒钟
-            Map<String, String> row = rechargeDao.queryRechargelogResultByLogId(log_id); //查询日志表里是否已经有返回的结果
+            Map<String, String> row = rechargeDao.queryRechargelogResultByOrderId(order_id); //查询日志表里是否已经有返回的结果
             if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
                 result.put("status", row.get("RESULT_CODE"));
                 result.put("detail", ResultCode.find(row.get("RESULT_CODE")));
@@ -115,6 +116,39 @@ public class RechargeService {
         
         //return result;
     } 
+    
+    /**
+     * 发送充值查询接口后等待响应返回
+     * 根据原充值流水号查询
+     * @param log_id
+     * @param result
+     * @return
+     */
+    public void waitForRechargeRqyResp(String log_id, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        int timeout = 0;
+        while(true){
+            if(timeout >= RechargeCons.WAIT_TIMEOUT){
+                result.put("status", "E99");
+                result.put("detail", "接口调用失败！发送充值查询接口报文后未接收到一卡充响应");
+                break;
+            }
+            try {
+                Thread.sleep(RechargeCons.SLEEP_INTERVAL_RECHARGE);
+                timeout += RechargeCons.SLEEP_INTERVAL_RECHARGE;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } //每次轮询等待1秒钟
+            Map<String, String> row = rechargeDao.queryRechargeRqyResultByLogId(log_id); //查询日志表里是否已经有返回的结果
+            if(row != null && StringUtils.isNotBlank(row.get("CHARGE_RESULT"))){
+                result.put("status", row.get("CHARGE_RESULT"));
+                result.put("detail", row.get("CHARGE_VALUE"));
+                break;
+            }
+        }
+        
+        //return result;
+    }     
     
     /**
      * 发送充值接口后等待响应返回
@@ -375,6 +409,29 @@ public class RechargeService {
 	}
 	
 	/**
+	 * 批量插激活接口日志
+	 * @param cardList
+	 * @param interfaceCode
+	 * @param order_id
+	 * @param reqTime
+	 * @param serial_number
+	 * @param serial_number_type
+	 */
+	private int insertRechargeQryLog(String log_id, String partition_id, String serial_number, String serial_number_type, String reqTime, String charge_serial_num){
+		
+		//调用一卡充接口前先插入接口日志表，状态等待响应返回再更新
+		return rechargeDao.insertRechargeQryLog(
+				log_id,
+				partition_id,
+				reqTime, 
+				InterfaceType.rechargeQry.getInterfaceCode(),
+				serial_number,
+				serial_number_type,
+				charge_serial_num
+				);
+	}
+	
+	/**
 	 * 批量插充值接口日志
 	 * @param cardList
 	 * @param interfaceCode
@@ -446,6 +503,10 @@ public class RechargeService {
 			String agent_balance, String unicon_serial_num, String charge_status){
 		return rechargeDao.updateRechargeLog(log_id, success_flag, result_code,
 				agent_balance, unicon_serial_num, charge_status);
+	}
+	
+	public int updateRechargeRqyLog(String log_id, String charge_result, String charge_value){
+		return rechargeDao.updateRechargeRqyLog(log_id, charge_result, charge_value);
 	}
 	
 	/**
@@ -584,6 +645,40 @@ public class RechargeService {
     			rechargeDao.updateCardResultCode(array[0], array[3]);
     		}
     	}
+    }
+    
+    /**
+     * 根据原充值流水号查询充值结果
+     * @param log_id
+     */
+    public void rechargeQry(String log_id){
+    	log.debug("【一卡充】充值记录查询开始。。。");
+    	
+    	//根据原接口调用流水号查出充值卡号，手机号，密码
+    	Map<String, String> map = rechargeDao.getRechargeLog(log_id);
+    	
+    	if(MapUtils.isNotEmpty(map)){
+    		String logId = RechargeUtil.generateLogId(4); //接口调用流水号
+    		//String partitionId = logId.substring(14, 16);
+        	String reqTime = RechargeUtil.getCurentTime();
+    		
+    		//调接口前不插日志
+			//int n1 = insertRechargeCheckLog(logId, partitionId, serial_number, serial_number_type, reqTime);
+    		
+    		RechargeReq param = new RechargeReq();
+    		param.setAgentID(map.get("CARD_NO"));
+    		param.setPasword(" "); //查询接口文档里写密码暂时填空格
+    		param.setChargeSerilNum(log_id); //原充值流水号
+    		param.setSerialNum(logId); //接口调用流水号
+
+    		//生成请求报文
+    		String req = RechargeUtil.genReq(param, InterfaceType.rechargeQry.getInterfaceCode(), 
+    				map.get("SERIAL_NUMBER"), map.get("SERIAL_NUMBER_TYPE"), reqTime);
+    		//发送报文
+    		rechargeClientHandler.sendMsg(req.getBytes());     		
+    	}
+    	
+    	log.debug("【一卡充】充值记录查询发送请求结束。");
     }
 	
 	

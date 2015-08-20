@@ -26,6 +26,8 @@ public interface RechargeDao {
     
     public List<Map<String, String>> getRechargeLogList(@Param("log_id") String log_id); 
     
+    public Map<String, String> getRechargeLog(@Param("log_id") String log_id); 
+    
     public int insertRechargeCheckLog(
     		@Param("log_id") String log_id,
     		@Param("partition_id") String partition_id,
@@ -33,6 +35,15 @@ public interface RechargeDao {
     		@Param("interface_type") String interface_type,
     		@Param("serial_number") String serial_number,
     		@Param("serial_number_type") String serial_number_type); 
+    
+    public int insertRechargeQryLog(
+    		@Param("log_id") String log_id,
+    		@Param("partition_id") String partition_id,
+    		@Param("req_time") String req_time, 
+    		@Param("interface_type") String interface_type,
+    		@Param("serial_number") String serial_number,
+    		@Param("serial_number_type") String serial_number_type,
+    		@Param("charge_serial_num") String charge_serial_num); 
     
     public Map<String, String> insertRechargeLogBatch(
     		@Param("order_id") String order_id, 
@@ -53,6 +64,9 @@ public interface RechargeDao {
     		@Param("result_code") String result_code, @Param("agent_balance") String agent_balance, 
     		@Param("unicon_serial_num") String unicon_serial_num, @Param("check_status") String check_status); 
     
+    public int updateRechargeRqyLog(@Param("log_id") String log_id, @Param("charge_result") String charge_result,
+    		@Param("charge_value") String charge_value);  
+    
     public int updateRechargeCard(@Param("card_no") String card_no,
     		@Param("card_status") String card_status); 
     
@@ -68,4 +82,6 @@ public interface RechargeDao {
     public Map<String, String> queryRechargelogResultByLogId(@Param("log_id") String log_id);   
     
     public Map<String, String> queryRechargelogResultByOrderId(@Param("order_id") String order_id);   
+    
+    public Map<String, String> queryRechargeRqyResultByLogId(@Param("log_id") String log_id);   
 }

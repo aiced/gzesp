@@ -26,32 +26,27 @@ public class RechargeServerHandler extends IoHandlerAdapter {
     
     private static Logger log = Logger.getLogger(RechargeServerHandler.class); 
     
-    @Autowired //写在配置文件里了
-    private UnionPayService unionPayService;
-    
-    private HashMap<String, IoSession> sessionMap = new HashMap();
-    
     @Override
     public void sessionCreated(IoSession session) throws Exception {
-        log.debug("【银联支付：服务端esp sessionCreated sessionId： " + session.getId() + "】");
+//        log.debug("【银联支付：服务端esp sessionCreated sessionId： " + session.getId() + "】");
         // Empty handler
     }
 
     @Override   
     public void sessionOpened(IoSession session) throws Exception {
-        log.debug("【银联支付：服务端esp sessionOpened sessionId： " + session.getId() + "，sessionMap里原来有" + sessionMap.entrySet().size() + "个；链接】");
-        for (Map.Entry entry : this.sessionMap.entrySet()) {
-            IoSession s = ((IoSession) entry.getValue());
-            log.debug("【银联支付：服务端esp sessionMap里原来有IoSession的id: " + s.getId() +"】");
-            s.close(true);
-        }
-        this.sessionMap.clear();
-        this.sessionMap.put(String.valueOf(session.getId()), session);
+//        log.debug("【银联支付：服务端esp sessionOpened sessionId： " + session.getId() + "，sessionMap里原来有" + sessionMap.entrySet().size() + "个；链接】");
+//        for (Map.Entry entry : this.sessionMap.entrySet()) {
+//            IoSession s = ((IoSession) entry.getValue());
+//            log.debug("【银联支付：服务端esp sessionMap里原来有IoSession的id: " + s.getId() +"】");
+//            s.close(true);
+//        }
+//        this.sessionMap.clear();
+//        this.sessionMap.put(String.valueOf(session.getId()), session);
     }
     
     @Override
     public void sessionClosed(IoSession session) throws Exception {
-        log.debug("【银联支付：服务端esp关闭链接 sessionId： " + session.getId() + "】");
+//        log.debug("【银联支付：服务端esp关闭链接 sessionId： " + session.getId() + "】");
       super.sessionClosed(session);
     }
 
@@ -96,19 +91,14 @@ public class RechargeServerHandler extends IoHandlerAdapter {
     @Override
     public void messageReceived(IoSession session, Object message) throws Exception {
         log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "】");
-        byte[] msg = (byte[])message;
-        //String msgStr = new String(msg);
-        log.debug("【银联支付：服务端esp收到消息 sessionId： " + session.getId() + "， message：" + new String(msg) + "】");
-        //recvMsg(m); //处理响应报文
+        //生成请求报文
+      		String reqOld = "113  3143979769268015    001020301                     011eXe70DIgwCkhqlx+uZ0reG/U/kGlR77Q00001121003150817154812";
+      		String req = (RechargeCons.prefix + reqOld + RechargeCons.Suffix);
+      		
+      		//发送报文
+      		session.write(req.getBytes());
     }
 
-    public UnionPayService getUnionPayService() {
-        return unionPayService;
-    }
-
-    public void setUnionPayService(UnionPayService unionPayService) {
-        this.unionPayService = unionPayService;
-    }
     
     /**
      * 客户端向银联服务端发送心跳维持长连接<br>

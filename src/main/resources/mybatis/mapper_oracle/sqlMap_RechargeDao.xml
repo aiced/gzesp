@@ -65,6 +65,12 @@
          <![CDATA[
            and rownum < 20
            ]]>
+	</select>	
+	
+	<select id="getRechargeLog" resultType="java.util.HashMap">
+	    select to_char(log_id) log_id, agent_id card_no, password, serial_number, serial_number_type
+          from itf_d_recharge_log
+         where log_id = #{log_id}
 	</select>		
 	
 	<insert id="insertRechargeCheckLog">
@@ -73,7 +79,15 @@
               busi_type, serial_number, serial_number_type, charge_money, agent_id, password)
        values(${log_id}, ${partition_id}, null, #{req_time}, #{interface_type}, 
               null, #{serial_number}, ${serial_number_type}, null, null, null )
-	</insert>				
+	</insert>
+	
+	<insert id="insertRechargeQryLog">
+      insert into ITF_D_RECHARGE_LOG
+             (log_id, partition_id, order_id, req_time, interface_type, 
+              busi_type, serial_number, serial_number_type, charge_money, agent_id, password, charge_serial_num)
+       values(${log_id}, ${partition_id}, null, #{req_time}, #{interface_type}, 
+              null, #{serial_number}, ${serial_number_type}, null, null, null, #{charge_serial_num} )
+	</insert>						
 	
 	<!-- 一定得是SELECT,不能是INSERT或者UPDATE,否则就要报错。。  -->
 	<select id="insertRechargeLogBatch">
@@ -115,6 +129,13 @@
        where log_id = ${log_id}
 	</update>
 	
+	<update id="updateRechargeRqyLog">
+      update ITF_D_RECHARGE_LOG
+         set charge_result = #{charge_result},
+             charge_value = #{charge_value}
+       where log_id = ${log_id}
+	</update>	
+	
 	<update id="updateCheckStatus">
       update ITF_D_RECHARGE_LOG
          set check_status = #{check_status}
@@ -151,16 +172,22 @@
 	</update>	
 	
 	<select id="queryRechargelogResultByLogId" resultType="java.util.HashMap">
-	    select log_id, result_code
+	    select to_char(log_id) log_id, result_code
           from itf_d_recharge_log
          where log_id = ${log_id}
 	</select>		
 	
 	<select id="queryRechargelogResultByOrderId" resultType="java.util.HashMap">
-	    select log_id, result_code
+	    select to_char(log_id) log_id, result_code
           from itf_d_recharge_log
          where order_id = ${order_id}
            and interface_type = '010202'
-	</select>			
+	</select>
+	
+	<select id="queryRechargeRqyResultByLogId" resultType="java.util.HashMap">
+	    select to_char(log_id) log_id, charge_result, to_char(charge_value) charge_value
+          from itf_d_recharge_log
+         where log_id = ${log_id}
+	</select>				
 							
 </mapper>

@@ -53,7 +53,7 @@
     </bean>
      
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="globalSessionTimeout" value="1800000"/>
+        <property name="globalSessionTimeout" value="-1800000"/>
         <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>
         <property name="sessionValidationSchedulerEnabled" value="true"/>
     </bean>

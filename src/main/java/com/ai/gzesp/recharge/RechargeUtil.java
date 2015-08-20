@@ -236,7 +236,7 @@ public class RechargeUtil {
 	public static String genReq(RechargeReq param, String interfaceType, String serialNum, String serialNumType, String reqTime){
 		//先生成包体，因为包头里需要知道包体的长度
 		String reqBody = genReqBody(interfaceType, param); 
-		//再生成包头
+		//再生成包头 , param.getSerialNum() 请求的流水号，serialNum 手机号
 		String reqHead = genReqHead(reqBody, param.getSerialNum(), interfaceType, serialNum, serialNumType, reqTime);
 		
 		return RechargeCons.prefix + reqHead + reqBody + RechargeCons.Suffix;
@@ -264,6 +264,9 @@ public class RechargeUtil {
 		}
 		else if(InterfaceType.check.getInterfaceCode().equals(interfaceType)){
 			reqBody = genReqBodyOfCheck(param); //对账接口包体
+		}
+		else if(InterfaceType.rechargeQry.getInterfaceCode().equals(interfaceType)){
+			reqBody = genReqBodyOfRechargeQry(param); //充值查询接口包体
 		}
 		else{
 			
@@ -300,6 +303,23 @@ public class RechargeUtil {
 		reqBody.append(fillNull(target, 32));
 		
 		reqBody.append(fillNull(String.valueOf(param.getSerialNum()), 20));
+		
+		return reqBody.toString();
+	}
+	
+	/**
+	 * 生成充值查询接口的包体
+	 * AgentID	卡号	20	左对齐、右补空格 当为一卡充充值时，此字段填卡号
+     * Password	卡密码	32	此字段暂时填空格。左对齐、右补空格
+     * ChargeSerilNum	充值流水号(原发起方流水号)	20	左对齐、右补空格
+	 * @param param
+	 * @return
+	 */
+	public static String genReqBodyOfRechargeQry(RechargeReq param){
+		StringBuffer reqBody = new StringBuffer(100);
+		reqBody.append(fillNull(param.getAgentID(), 20));
+		reqBody.append(fillNull(param.getPasword(), 32));
+		reqBody.append(fillNull(param.getChargeSerilNum(), 20));
 		
 		return reqBody.toString();
 	}

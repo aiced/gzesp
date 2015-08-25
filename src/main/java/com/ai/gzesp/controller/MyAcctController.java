@@ -342,6 +342,12 @@ public class MyAcctController {
         
         mav.addObject("bankList", bankList);
         
+    	//获取省份下拉框结果集
+    	List<Map<String, String>> provinceList = myAcctService.getProvinceList(null);
+    	mav.addObject("provinceList", provinceList);
+    	//获取地市下拉框初始结果集, 默认空，等后面省份下拉级联刷新
+    	//获取区县下拉框初始结果集，默认空，等待地市级联刷新才去获取
+        
     	return mav;
     }
     @RequestMapping("/acct/addBankCardInput1/postData")
@@ -365,6 +371,11 @@ public class MyAcctController {
     	String certificate_code=paramsMap.get("certificate_code");
     	String phone=paramsMap.get("phone");
     	String name=paramsMap.get("name");
+    	
+    	String bank_branch=paramsMap.get("bank_branch");
+    	String province_code=paramsMap.get("province_code");
+    	String eparchy_code=paramsMap.get("eparchy_code");
+    	String city_code=paramsMap.get("city_code");
     	
     	String systradeno = UnionPayUtil.genSysTradeNo(TradeType.bind.getTradeType()); //系统跟踪号
 
@@ -405,7 +416,11 @@ public class MyAcctController {
             			acctbankinfo.get("SIGN_CODE").toString(),
             			"1",//acctbankinfo.get("VALID_FLAG").toString()
             			priority,
-            			systradeno
+            			systradeno,
+            			bank_branch,
+            			province_code,
+            			eparchy_code,
+            			city_code
             			);
             	if (iRet<0) 
             	{
@@ -432,7 +447,11 @@ public class MyAcctController {
 	            			"",//固定写死，奚总后面会有更新的操作，签约号
 	            			valid_flag, 
 	            			priority,
-	            			systradeno
+	            			systradeno,
+	            			bank_branch,
+	            			province_code,
+	            			eparchy_code,
+	            			city_code
     					);
                 if (iRet > 0)
                 {
@@ -469,7 +488,11 @@ public class MyAcctController {
         			"",//固定写死，奚总后面会有更新的操作，签约号
         			valid_flag, 
         			priority,
-        			systradeno
+        			systradeno,
+        			bank_branch,
+        			province_code,
+        			eparchy_code,
+        			city_code
         			);
         	
             if (iRet > 0)
@@ -529,10 +552,11 @@ public class MyAcctController {
     
     
     @RequestMapping("/acct/bankCardDetail/{user_id}/{bank_no}")
-    public ModelAndView initBankCardDetail(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
+    public ModelAndView BankCardDetail(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
     {
     	//银行卡详情 解绑银行卡
-    	ModelAndView mav = new ModelAndView("bankCardDetail.ftl");
+    	//ModelAndView mav = new ModelAndView("bankCardDetail.ftl");
+    	ModelAndView mav = new ModelAndView("bankCardDetailEdit.ftl"); //20150824 ximh modify
     	
     	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
     	
@@ -541,8 +565,29 @@ public class MyAcctController {
 		}
     	mav.addObject("title",acctbankinfo.get("PARAM_VALUE"));
     	mav.addObject("user_id",acctbankinfo.get("USER_ID"));
+    	
+    	//获取省份下拉框结果集
+    	List<Map<String, String>> provinceList = myAcctService.getProvinceList(null);
+    	mav.addObject("provinceList", provinceList);
+    	//获取地市下拉框初始结果集, 如果开始省市区县都没选，则不去获取，等后面省份下拉级联刷新
+    	if(acctbankinfo.get("PROVINCE_CODE") != null){
+    		List<Map<String, String>> eparchyList = myAcctService.geteEparchyList((String)acctbankinfo.get("PROVINCE_CODE"));
+    		mav.addObject("eparchyList", eparchyList);
+    	}
+    	//获取区县下拉框初始结果集，默认没有，等待地市级联刷新才去获取
+    	if(acctbankinfo.get("EPARCHY_CODE") != null){
+    		List<Map<String, String>> cityList = myAcctService.geteCityList((String)acctbankinfo.get("EPARCHY_CODE"));
+    		mav.addObject("cityList", cityList);		
+    	}
+    	
+    	//获取银行下拉列表
+        List<Map<String, Object>> bankList=registSql.getBankList("BANK_TYPE");
+        mav.addObject("bankList", bankList);
+    	
     	return mav;
     }
+    
+    
     @RequestMapping("/acct/bankCardDetail/undindingBankCard")
     @ResponseBody
     public int UndindingBankCard(@RequestBody String inputParam)
@@ -565,20 +610,10 @@ public class MyAcctController {
     	if (acctbankinfo != null && acctbankinfo.size()>0) //有数据
     	{
         	//解绑 直接修改为不可用
-        	int iRet=myAcctService.updateAcctBank(
+        	int iRet=myAcctService.updateAcctBankState(
         			acctbankinfo.get("USER_ID").toString(), 
         			strbank_no,//注意这个地方是加密的银行卡
-        			acctbankinfo.get("CVN2").toString(),
-        			acctbankinfo.get("PHONE").toString(),
-        			acctbankinfo.get("NAME").toString(),
-        			acctbankinfo.get("CERTIFICATE_CODE").toString(),
-        			acctbankinfo.get("EXPIRE_DATE").toString(),
-        			acctbankinfo.get("CARD_TYPE").toString(),
-        			acctbankinfo.get("BANK_TYPE").toString(),
-        			acctbankinfo.get("SIGN_CODE").toString(),
-        			"3",//acctbankinfo.get("VALID_FLAG").toString()
-        			acctbankinfo.get("PRIORITY").toString(),
-        			acctbankinfo.get("SYS_TRADE_NO").toString()
+        			"3"//acctbankinfo.get("VALID_FLAG").toString()
         			);
         	if (iRet<0) 
         	{
@@ -587,6 +622,38 @@ public class MyAcctController {
         	return  3; //操作成功
     	}
     	return 2;
+    }
+    
+    /**
+     * 保存 银行卡信息修改
+     * @param inputParam
+     * @return
+     */
+    @RequestMapping("/acct/bankCardDetail/saveBankCardInfo")
+    @ResponseBody
+    public String saveBankCardInfo(@RequestBody String inputParam)
+    {
+    	//1：密码错误 2:删除失败 3：操作成功
+    	Boolean bRet=checkPwdPostData(inputParam);
+    	
+    	if (!bRet) {
+			return "密码错误";//密码错误
+		}
+    	
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String user_id = paramsMap.get("user_id");
+    	
+    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
+    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
+    	paramsMap.put("bank_no_hex", strbank_no); //表里存放的是加密的卡号，下面更新时要根据user_id 和加密的卡号来更新
+    	
+    	int n1 = myAcctService.saveBankCardInfo(paramsMap);
+    	
+    	if(n1>0){
+    		return "ok";
+    	}
+    	
+    	return "未找到银行卡记录";
     }
 
     //隐藏接口，主要用于银行卡解密操作
@@ -598,39 +665,70 @@ public class MyAcctController {
     	return acctbankinfo;
     }
     //隐藏接口，主要用于账户银行卡的更新操作。同上，其实主要是为了防止用户输入错误的银行后由程序进行更新操作
-    @RequestMapping("/acct/bankCardUpdate/{user_id}/{bank_no}")
-    @ResponseBody
-    public int bankCardUpdate(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
-    {    	
-    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,bank_no);
+    //没看懂这个方法 有什么用，所以注释掉 20150825 ximh
+//    @RequestMapping("/acct/bankCardUpdate/{user_id}/{bank_no}")
+//    @ResponseBody
+//    public int bankCardUpdate(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
+//    {    	
+//    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,bank_no);
+//    	
+//    	byte[] bbank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),bank_no.getBytes());
+//    	String strbank_no=DESUtil.Bytes2HexString(bbank_no);
+//    	
+//    	if (acctbankinfo != null && acctbankinfo.size()>0) //有数据
+//    	{
+//        	//解绑 直接修改为不可用
+//        	int iRet=myAcctService.updateAcctBank(
+//        			acctbankinfo.get("USER_ID").toString(), 
+//        			strbank_no,//注意这个地方是加密的银行卡
+//        			acctbankinfo.get("CVN2").toString(),
+//        			acctbankinfo.get("PHONE").toString(),
+//        			acctbankinfo.get("NAME").toString(),
+//        			acctbankinfo.get("CERTIFICATE_CODE").toString(),
+//        			acctbankinfo.get("EXPIRE_DATE").toString(),
+//        			acctbankinfo.get("CARD_TYPE").toString(),
+//        			acctbankinfo.get("BANK_TYPE").toString(),
+//        			acctbankinfo.get("SIGN_CODE").toString(),
+//        			"1",//acctbankinfo.get("VALID_FLAG").toString()
+//        			acctbankinfo.get("PRIORITY").toString(),
+//        			acctbankinfo.get("SYS_TRADE_NO").toString()
+//        			);
+//        	if (iRet<0) 
+//        	{
+//        		return 0; //操作失败
+//    		}
+//        	return  1; //操作成功
+//    	}
+//    	return 0;//操作失败
+//    }    
+    
+    @RequestMapping("/changeProvince")
+    public ModelAndView changeProvince(@RequestBody String inputParam)
+    {
+    	ModelAndView mav = new ModelAndView("optionSub.ftl");
+
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String province_code = paramsMap.get("province_code");
     	
-    	byte[] bbank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),bank_no.getBytes());
-    	String strbank_no=DESUtil.Bytes2HexString(bbank_no);
+    	//根据省份编码查询地市结果集
+    	List<Map<String, String>> eparchyList = myAcctService.geteEparchyList(province_code);
+    	mav.addObject("eparchyList", eparchyList);
     	
-    	if (acctbankinfo != null && acctbankinfo.size()>0) //有数据
-    	{
-        	//解绑 直接修改为不可用
-        	int iRet=myAcctService.updateAcctBank(
-        			acctbankinfo.get("USER_ID").toString(), 
-        			strbank_no,//注意这个地方是加密的银行卡
-        			acctbankinfo.get("CVN2").toString(),
-        			acctbankinfo.get("PHONE").toString(),
-        			acctbankinfo.get("NAME").toString(),
-        			acctbankinfo.get("CERTIFICATE_CODE").toString(),
-        			acctbankinfo.get("EXPIRE_DATE").toString(),
-        			acctbankinfo.get("CARD_TYPE").toString(),
-        			acctbankinfo.get("BANK_TYPE").toString(),
-        			acctbankinfo.get("SIGN_CODE").toString(),
-        			"1",//acctbankinfo.get("VALID_FLAG").toString()
-        			acctbankinfo.get("PRIORITY").toString(),
-        			acctbankinfo.get("SYS_TRADE_NO").toString()
-        			);
-        	if (iRet<0) 
-        	{
-        		return 0; //操作失败
-    		}
-        	return  1; //操作成功
-    	}
-    	return 0;//操作失败
-    }    
+    	return mav;
+    }
+    
+    @RequestMapping("/changeEparchy")
+    public ModelAndView changeEparchy(@RequestBody String inputParam)
+    {
+    	ModelAndView mav = new ModelAndView("optionSub.ftl");
+    	
+    	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
+    	String eparchy_code = paramsMap.get("eparchy_code");
+    	
+    	//根据地市编码查询区县结果集
+    	List<Map<String, String>> cityList = myAcctService.geteCityList(eparchy_code);
+    	mav.addObject("cityList", cityList);
+    	
+    	return mav;
+    }
 }

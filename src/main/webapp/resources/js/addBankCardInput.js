@@ -346,7 +346,27 @@ function checkData()
 	{
 		iRet=71;
 		return opReturn(iRet);
+	}
+	if(!$("#bank_branch").val())
+	{
+		iRet=81;
+		return opReturn(iRet);
 	}	
+	if($("#province_select").val()=="开户银行省份")
+	{
+		iRet=82;
+  		return opReturn(iRet);
+	}
+	if($("#eparchy_select").val()=="开户银行地市")
+	{
+		iRet=83;
+  		return opReturn(iRet);
+	}
+	if($("#city_select").val()=="开户银行区县")
+	{
+		iRet=84;
+  		return opReturn(iRet);
+	}		
 	iRet=00;
 	return opReturn(iRet);
 }
@@ -373,6 +393,11 @@ function checkData()
 //63:验证码超时
 //64:验证吗必须为数字
 //71:请勾选同意用户协议
+
+//81:请填写银行卡开户支行
+//82:请选择银行卡开户省份
+//83:请选择银行卡开户地市
+//84:请选择银行卡开户区县
 
 var bRet=-1;
 function opReturn(iRet)
@@ -434,6 +459,18 @@ function opReturn(iRet)
 	case 71:
 		alert("请勾选同意用户协议");
 		return false;
+	case 81:
+		alert("请填写银行卡开户支行");
+		return false;
+	case 82:
+		alert("请选择银行卡开户省份");
+		return false;
+	case 83:
+		alert("请选择银行卡开户地市");
+		return false;
+	case 84:
+		alert("请选择银行卡开户区县");
+		return false;		
 	default:
 		return false;
 	}
@@ -446,6 +483,10 @@ function nextClick(){
 		return;
 	}
 	
+	//月份控件出来的值是 2015-08，传到后台需要 1508
+	var expire_date = $('#date_select').val();
+	var expire_date_new = expire_date.substr(2, 2) + expire_date.substr(5, 2);
+	
 	var parms = {
 			'user_id':$('#hide_user_id').val(),
 			'bank_no':$('#txtcardno').val(),
@@ -453,11 +494,15 @@ function nextClick(){
 			'phone':$('#txtphone').val(),
 			'name':$('#txtusername').val(),
 			'certificate_code':$('#txtpersonalid').val(),
-			'expire_date':$('#date_select').val(),
+			'expire_date':expire_date_new, //转换后的月份
 			'valid_flag':"0",
 			'priority':"1",
 			'card_type':$('#cardType_select').val(),
-			'bank_type':$('#band_select').val()
+			'bank_type':$('#band_select').val(),
+			'bank_branch':$('#bank_branch').val(),
+			'province_code':$('#province_select').val(),
+			'eparchy_code':$('#eparchy_select').val(),
+			'city_code':$('#city_select').val()
 	};
 	
 	$.ajax({
@@ -476,5 +521,92 @@ function nextClick(){
 	 }
 	});
 }
+	
+
+//修改银行卡信息
+function saveBankCardInfo(){
+	
+	if (!checkData()) {
+		return;
+	}
+	
+	var parms = {
+			'user_id':$('#hide_user_id').val(),
+			'bank_no':$('#txtcardno').val(),
+			'cvn2':$('#txtcord').val(),
+			'phone':$('#txtphone').val(),
+			'name':$('#txtusername').val(),
+			'certificate_code':$('#txtpersonalid').val(),
+			'expire_date':$('#date_select').val(),
+			'valid_flag':"1", 
+			'priority':"1",
+			'card_type':$('#cardType_select').val(),
+			'bank_type':$('#band_select').val(),
+			'bank_branch':$('#bank_branch').val(),
+			'province_code':$('#province_select').val(),
+			'eparchy_code':$('#eparchy_select').val(),
+			'city_code':$('#city_select').val(),
+			'user_pwd':$('#txtsecuritypwd').val()
+	};
+	
+	$.ajax({
+	 type: "POST",
+	 url: '/esp/shopManage/acct/bankCardDetail/saveBankCardInfo',
+	 data: parms,
+	 success: function(data){
+		 if (data=="ok") {
+			alert("操作成功！");
+			window.location.href='/esp/shopManage/acct/myBankCardList/'+$("#hide_user_id").val();
+		}else {
+			alert(data);
+		}
+		 
+	  	 return;
+	 }
+	});
+}
+	
+//省份下拉框onchagen事件触发 ajax级联刷新 地市下拉框结果集	
+function changeProvince()
+{
+	var province_code = $('#province_select').val();
+	if(province_code == '开户银行省份'){
+		return;
+	}
+	var parms = {'province_code':province_code};
+	
+	$.ajax({
+	 type: "POST",
+	 url: '/esp/shopManage/changeProvince',
+	 data: parms,
+	 success: function(data){
+		 $('#eparchy_select').html(data); //级联刷新 地市 下拉框
+	 }
+	});	
+	
+	//同时将区县下拉框 清空
+	$('#city_select').html("");
+}
+
+//地市下拉框onchagen事件触发 ajax级联刷新 区县下拉框结果集	
+function changeEparchy()
+{
+	var eparchy_code = $('#eparchy_select').val();
+	if(eparchy_code == '开户银行地市'){
+		return;
+	}	
+	var parms = {'eparchy_code':eparchy_code};
+	
+	$.ajax({
+	 type: "POST",
+	 url: '/esp/shopManage/changeEparchy',
+	 data: parms,
+	 success: function(data){
+		 $('#city_select').html(data); //级联刷新 区县 下拉框
+	 }
+	});	
+}
+
+
 
 

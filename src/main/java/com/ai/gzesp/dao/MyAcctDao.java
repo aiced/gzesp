@@ -28,7 +28,11 @@ public interface MyAcctDao {
 			@Param("sign_code") String sign_code,
 			@Param("valid_flag") String valid_flag,
 			@Param("priority") String priority,
-			@Param("sys_trade_no") String sys_trade_no
+			@Param("sys_trade_no") String sys_trade_no,
+			@Param("bank_branch") String bank_branch, 
+			@Param("province_code") String province_code, 
+			@Param("eparchy_code") String eparchy_code, 
+			@Param("city_code") String city_code
 			);
 	
 	public int updateAcctBank(
@@ -44,7 +48,17 @@ public interface MyAcctDao {
 			@Param("sign_code") String sign_code,
 			@Param("valid_flag") String valid_flag,
 			@Param("priority") String priority,
-			@Param("sys_trade_no") String sys_trade_no
+			@Param("sys_trade_no") String sys_trade_no,
+			@Param("bank_branch") String bank_branch, 
+			@Param("province_code") String province_code, 
+			@Param("eparchy_code") String eparchy_code, 
+			@Param("city_code") String city_code
+			);
+
+	public int updateAcctBankState(
+			@Param("user_id") String user_id,
+			@Param("bank_no") String bank_no,
+			@Param("valid_flag") String valid_flag
 			);
 	
 	public Map<String,Object> queryAcctBankDetail(@Param("user_id") String user_id,@Param("bank_no") String bank_no);
@@ -56,4 +70,11 @@ public interface MyAcctDao {
 	
 	public int insertWidthDrawAuDit(@Param("log_id") String log_id,@Param("partition_id") String partition_id,@Param("apply_time") String apply_time,@Param("user_id") String user_id,@Param("dwithdraw_fee") Double dwithdraw_fee,@Param("audit_state") String audit_state,@Param("bank_no") String bank_no,@Param("bank_type") String bank_type);
 	
+	public List<Map<String, String>> getProvinceList(@Param("province_code") String province_code);
+	
+	public List<Map<String, String>> geteEparchyList(@Param("province_code") String province_code);
+	
+	public List<Map<String, String>> geteCityList(@Param("eparchy_code") String eparchy_code);
+	
+	public int saveBankCardInfo(Map<String, String> paramsMap);
 }

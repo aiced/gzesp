@@ -40,7 +40,8 @@
 	</select>
 	<insert id="insertAcctBank">
 		insert into ACT_D_BANKCARD
-		  (user_id, bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,priority,valid_flag,sys_trade_no)
+		  (user_id, bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,priority,valid_flag,sys_trade_no,
+		   bank_branch, province_code, String eparchy_code, String city_code)
 		values
 		  (
 		   #{user_id},
@@ -55,25 +56,51 @@
 		   #{sign_code},
 		   #{priority},
 		   #{valid_flag},
-		   #{sys_trade_no})
+		   #{sys_trade_no},
+		   #{bank_branch},
+		   #{province_code},
+		   #{eparchy_code},
+		   #{city_code})
 	</insert>
 	<update id="updateAcctBank">
-		update ACT_D_BANKCARD set 
-		user_id=#{user_id},
-		bank_no=#{bank_no},
-		cvn2=#{cvn2},
-		phone=#{phone},
-		name=#{name},
-		certificate_code=#{certificate_code},
-		expire_date=#{expire_date},
-		card_type=#{card_type},
-		bank_type=#{bank_type},
-		sign_code=#{sign_code},
-		priority=#{priority},
-		valid_flag=#{valid_flag},
-		sys_trade_no=#{sys_trade_no}
-		where user_id=#{user_id} and bank_no=#{bank_no}
+		update ACT_D_BANKCARD 
+		   set <if test="cvn2 != null and cvn2 != ''">
+		         cvn2=#{cvn2},
+	           </if>
+		       <if test="expire_date != null and expire_date != ''">
+		         expire_date=#{expire_date},
+	           </if>
+		         phone=#{phone},
+		         name=#{name},
+		         certificate_code=#{certificate_code},
+		         card_type=#{card_type},
+		         bank_type=#{bank_type},
+	           <if test="sign_code != null and sign_code != ''">
+		         sign_code=#{sign_code},
+	           </if>
+	           <if test="priority != null and priority != ''">
+		         priority=#{priority},
+	           </if>
+	           <if test="valid_flag != null and valid_flag != ''">
+		         valid_flag=#{valid_flag},
+	           </if>
+	           <if test="sys_trade_no != null and sys_trade_no != ''">
+		         sys_trade_no=#{sys_trade_no},
+	           </if>
+		         bank_branch=#{bank_branch},
+		         province_code=#{province_code},
+		         eparchy_code=#{eparchy_code},
+		         city_code=#{city_code}
+		 where user_id=#{user_id} 
+		   and bank_no=#{bank_no}
 	</update>
+	
+	<update id="updateAcctBankState">
+		update ACT_D_BANKCARD 
+		   set valid_flag=#{valid_flag}
+		 where user_id=#{user_id} 
+		   and bank_no=#{bank_no}
+	</update>	
 	
 	<select id="queryAcctBankDetail" resultType="java.util.HashMap">
 		select a.*, b.param_value
@@ -276,5 +303,64 @@
 		   )
 	</insert>
 	
+	<select id="getProvinceList" resultType="java.util.HashMap">
+     select ess_province_code province_code, province_name 
+       from sys_p_web_province 
+      <if test="province_code != null">
+		 where ess_province_code = #{province_code}
+	  </if>
+       order by order_number
+	</select>
 	
+	<select id="geteEparchyList" resultType="java.util.HashMap">
+     select ess_city_code eparchy_code, city_name eparchy_name 
+       from sys_p_web_city
+      <if test="province_code != null">
+		 where ess_province_code = #{province_code}
+	  </if>
+      order by order_number
+	</select>
+	
+	<select id="geteCityList" resultType="java.util.HashMap">
+     select district_code city_code, district_name city_name
+       from sys_p_web_district
+      <if test="eparchy_code != null">
+		 where ess_city_code = #{eparchy_code}
+	  </if>  
+      order by order_number
+	</select>		
+		
+	<update id="saveBankCardInfo" parameterType="map" >
+		update ACT_D_BANKCARD 
+		   set <if test="cvn2 != null and cvn2 != ''">
+		         cvn2=#{cvn2},
+	           </if>
+		       <if test="expire_date != null and expire_date != ''">
+		         expire_date=#{expire_date},
+	           </if>
+		         phone=#{phone},
+		         name=#{name},
+		         certificate_code=#{certificate_code},
+		         card_type=#{card_type},
+		         bank_type=#{bank_type},
+	           <if test="sign_code != null and sign_code != ''">
+		         sign_code=#{sign_code},
+	           </if>
+	           <if test="priority != null and priority != ''">
+		         priority=#{priority},
+	           </if>
+	           <if test="valid_flag != null and valid_flag != ''">
+		         valid_flag=#{valid_flag},
+	           </if>
+	           <if test="sys_trade_no != null and sys_trade_no != ''">
+		         sys_trade_no=#{sys_trade_no},
+	           </if>
+		         bank_branch=#{bank_branch},
+		         province_code=#{province_code},
+		         eparchy_code=#{eparchy_code},
+		         city_code=#{city_code}
+		 where user_id=#{user_id} 
+		   and bank_no=#{bank_no_hex}
+	</update>
+			
 </mapper>

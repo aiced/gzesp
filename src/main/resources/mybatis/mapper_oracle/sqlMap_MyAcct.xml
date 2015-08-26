@@ -41,7 +41,7 @@
 	<insert id="insertAcctBank">
 		insert into ACT_D_BANKCARD
 		  (user_id, bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,priority,valid_flag,sys_trade_no,
-		   bank_branch, province_code, String eparchy_code, String city_code)
+		   bank_branch, province_code, eparchy_code, city_code)
 		values
 		  (
 		   #{user_id},

@@ -395,7 +395,7 @@ public class CoreService {
 	        buffer.append("3.  收益规则").append("\n");  
 	        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=203639832&idx=1&sn=96e317490b1a5d186600646487921312#rd\" >☞点这立即查看！</a>").append("\n").append("\n");  
 	        buffer.append("4.  收益发放").append("\n");  
-	        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=204322183&idx=1&sn=cba85430b9e9ef22634dd95992c4d8f6#rd\" >☞点这立即了解！</a>").append("\n").append("\n");  
+	        buffer.append("<a href=\"http://mp.weixin.qq.com/s?__biz=MzAwMDMwNzg1OA==&mid=206747126&idx=1&sn=dbac7a644e852a10e2baeadc247cf371#rd\" >☞点这立即了解！</a>").append("\n").append("\n");  
 	    
 	        buffer.append("5.  更多咨询，请直接回复【提问：“问题描述”】").append("\n");  
      

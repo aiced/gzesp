@@ -5,9 +5,9 @@
 }
 .pwd_container>div
 {
-    float: left;
+/*     float: left;
     width: 16%;
-    margin: 10px auto;
+    margin: 10px auto; */
 
 }
 .modal-body
@@ -26,4 +26,16 @@
 .modal-button
 {
     width:100px;
+}
+#txtsecuritypwd
+{
+   width: 250px;
+   background: url('../image/myacct/pwdbg.png')  no-repeat;
+   background-size:cover;
+   text-align:justify;
+   letter-spacing: 36px;
+   text-indent: 5px;
+   margin-left: auto;
+   margin-right: auto;
+   padding: 0px;
 }

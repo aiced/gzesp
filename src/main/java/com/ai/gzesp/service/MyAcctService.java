@@ -77,15 +77,20 @@ public class MyAcctService {
     }
 
     //通过uiserid插入账户银行关系表：ACT_D_BANKCARD
-    public int insertAcctBank(String user_id,String bank_no,String cvn2,String phone,String name,String certificate_code,String expire_date,String card_type,String bank_type,String sign_code,String valid_flag,String priority,String systradeno)
+    public int insertAcctBank(String user_id,String bank_no,String cvn2,String phone,String name,String certificate_code,String expire_date,String card_type,String bank_type,String sign_code,String valid_flag,String priority,String systradeno, String bank_branch, String province_code, String eparchy_code, String city_code)
     {
-    	return myAcctDao.insertAcctBank(user_id,bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,valid_flag,priority,systradeno);
+    	return myAcctDao.insertAcctBank(user_id,bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,valid_flag,priority,systradeno,bank_branch,province_code,eparchy_code,city_code);
     }
     //通过userid和银行卡号来
-    public int updateAcctBank(String user_id,String bank_no,String cvn2,String phone,String name,String certificate_code,String expire_date,String card_type,String bank_type,String sign_code,String valid_flag,String priority,String systradeno)
+    public int updateAcctBank(String user_id,String bank_no,String cvn2,String phone,String name,String certificate_code,String expire_date,String card_type,String bank_type,String sign_code,String valid_flag,String priority,String systradeno, String bank_branch, String province_code, String eparchy_code, String city_code)
     {
-    	return myAcctDao.updateAcctBank(user_id,bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,valid_flag,priority,systradeno);
+    	return myAcctDao.updateAcctBank(user_id,bank_no,cvn2,phone,name,certificate_code,expire_date,card_type,bank_type,sign_code,valid_flag,priority,systradeno,bank_branch,province_code,eparchy_code,city_code);
     }
+    //通过userid和银行卡号来解绑
+    public int updateAcctBankState(String user_id,String bank_no,String valid_flag)
+    {
+    	return myAcctDao.updateAcctBankState(user_id,bank_no,valid_flag);
+    }    
     //通过userid和银行卡卡号 获得银行详细信息
     public Map<String, Object> queryAcctBankDetail(String user_id,String bank_no)
     {
@@ -169,6 +174,33 @@ public class MyAcctService {
 
     }
     
+    /**
+     * 获取省份下拉框结果集
+     * @return
+     */
+    public List<Map<String, String>> getProvinceList(String province_code)
+    {
+    	return myAcctDao.getProvinceList(province_code);
+    }
+    
+    /**
+     * 获取地市下拉框结果集，根据省份编码
+     * @return
+     */
+    public List<Map<String, String>> geteEparchyList(String province_code)
+    {
+    	return myAcctDao.geteEparchyList(province_code);
+    }
+    
+    /**
+     * 获取区县下拉框结果集，根据地市编码
+     * @return
+     */
+    public List<Map<String, String>> geteCityList(String eparchy_code)
+    {
+    	return myAcctDao.geteCityList(eparchy_code);
+    }
+    
 //    //更新账户表 ACT_D_ACCOUNT
 //    public int updateAcct()
 //    {
@@ -180,5 +212,16 @@ public class MyAcctService {
 //    {
 //    	return 0;
 //    }
+    
+    
+    /**
+     * 保存 银行卡信息修改
+     * @param paramsMap
+     * @return
+     */
+    public int saveBankCardInfo(Map<String, String> paramsMap)
+    {
+    	return myAcctDao.saveBankCardInfo(paramsMap);
+    }
     
 }

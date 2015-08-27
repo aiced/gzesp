@@ -47,6 +47,9 @@ public class RespHandler implements ApplicationContextAware{
         else if(InterfaceType.check.getInterfaceCode().equals(resp.getInterfaceType())){
             respHanler = (IDealRechargeResp) ctx.getBean("respCheckHandler"); //全要素支付接口的处理函数和 老的支付接口 业务逻辑一致
         }
+        else if(InterfaceType.rechargeQry.getInterfaceCode().equals(resp.getInterfaceType())){
+            respHanler = (IDealRechargeResp) ctx.getBean("respRechargeRqyHandler");
+        }
         else{
             
         }

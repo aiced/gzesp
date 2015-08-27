@@ -91,6 +91,12 @@ function doBlur(param)
 			iRet=31;
 			return opReturn(iRet);
 		}
+		var reg = /^\d*$/;
+		if(!reg.test($("#txtpwd").val()))
+		{
+			iRet=61;
+	  		return opReturn(iRet);
+		}
 		if ($("#txtpwd").val().length!=6) {
 			iRet=32;
 			return opReturn(iRet);
@@ -102,6 +108,12 @@ function doBlur(param)
 			iRet=41;
 			return opReturn(iRet);
 		}
+		var reg = /^\d*$/;
+		if(!reg.test($("#txtrepwd").val()))
+		{
+			iRet=61;
+	  		return opReturn(iRet);
+		}		
 		if ($("#txtrepwd").val().length!=6) {
 			iRet=42;
 			return opReturn(iRet);
@@ -188,6 +200,12 @@ function checkData()
 		iRet=31;
 		return opReturn(iRet);
 	}
+	var reg = /^\d*$/;
+	if(!reg.test($("#txtpwd").val()))
+	{
+		iRet=61;
+  		return opReturn(iRet);
+	}	
 	if ($("#txtpwd").val().length!=6) {
 		iRet=32;
 		return opReturn(iRet);
@@ -195,6 +213,11 @@ function checkData()
 	if (!$("#txtrepwd").val()) {
 		iRet=41;
 		return opReturn(iRet);
+	}
+	if(!reg.test($("#txtrepwd").val()))
+	{
+		iRet=61;
+  		return opReturn(iRet);
 	}
 	if ($("#txtrepwd").val().length!=6) {
 		iRet=42;
@@ -223,7 +246,7 @@ function checkData()
 //41：确认密码不能为空
 //42:确认密码等于6
 //51：密码和确认密码不一致
-
+//61:密码必须为数字
 var bRet=-1;
 function opReturn(iRet)
 {
@@ -263,6 +286,9 @@ function opReturn(iRet)
 		return false;
 	case 51:
 		alert("密码和确认密码不一致！");
+		return false;
+	case 61:
+		alert("密码必须为数字");
 		return false;
 	default:
 		return false;

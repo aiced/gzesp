@@ -73,6 +73,16 @@ public class RechargeResp {
 	 * 地区代码
 	 */
 	private String areaNum;
+	
+	/**
+	 * 充值结果
+	 */
+	private String chargeResult;
+	
+	/**
+	 * 充值金额
+	 */
+	private String chargeValue;
 
 	public String getLogId() {
 		return logId;
@@ -184,6 +194,24 @@ public class RechargeResp {
 
 	public void setAreaNum(String areaNum) {
 		this.areaNum = areaNum;
+	}
+	
+	
+
+	public String getChargeResult() {
+		return chargeResult;
+	}
+
+	public void setChargeResult(String chargeResult) {
+		this.chargeResult = chargeResult;
+	}
+
+	public String getChargeValue() {
+		return chargeValue;
+	}
+
+	public void setChargeValue(String chargeValue) {
+		this.chargeValue = chargeValue;
 	}
 
 	@Override

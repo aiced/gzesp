@@ -49,6 +49,8 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     
     private RechargeHeartBeatThread rechargeHeartBeatThread; //当前的心跳线程
     
+    private long last_resp_time; //最后一次收到一卡充响应的时间戳毫秒
+    
 //    @Autowired
 //    private RechargeClient rechargeClient;
 
@@ -110,6 +112,8 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     @PostConstruct
     public void init(){
     	initConnector();
+    	//初始化时更新最新响应时间戳，initConnector()建立连接有一定耗时，所以放他后面，以后哪怕断链重连也不再初始化这个值
+		last_resp_time = System.currentTimeMillis(); 
     	startHeartBeat();
     }
     
@@ -139,6 +143,7 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 		cf.awaitUninterruptibly();
 
 		log.debug("【一卡充：esp创建连接成功】");
+		
 	}
 	
 
@@ -155,16 +160,48 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 
     /**
      * 检查socket连接是否正常，如果断掉了需要重连
+     * 联通机房网络配置有问题，实际一卡充主机监听服务没起，telnet或者socket都能显示连接成功，netstat 也显示连接建立
+     * 其实是假象，发送报文后会收不到响应
+     * 所以判断时不光要判断连接是否active，还要判断上一次收到响应是否超过规定时间
      */
     private void checkConnector()
     {
-      if (!connector.isActive()) {
-        log.debug("【一卡充：connector.isActive()=false,断开原有连接重新创建连接】");
-        disconnect();
-        initConnector();
-      } else {
-        log.debug("【一卡充：connector.isActive()=true,连接状态活跃】");
-      }
+//      if (!connector.isActive()) {
+//        log.debug("【一卡充：connector.isActive()=false,断开原有连接重新创建连接】");
+//        disconnect();
+//        initConnector();
+//      } else {
+//        log.debug("【一卡充：connector.isActive()=true,连接状态活跃】");
+//      }
+    	long interval = System.currentTimeMillis() - last_resp_time; //算出现在和上一次收到一卡充响应的时间间隔
+        if (!connector.isActive()) {
+            log.debug("【一卡充：connector.isActive()=false,断开原有连接重新创建连接】");
+            disconnect();
+            initConnector();
+          } 
+        else if(interval > RechargeCons.HEART_INTERVAL){
+            log.debug("【一卡充：上一次收到响应的时间间隔超过"+ RechargeCons.HEART_INTERVAL +"毫秒,断开原有连接重新创建连接】");
+            disconnect();
+            initConnector();
+        }
+        else {
+            log.debug("【一卡充：connector.isActive()=true而且上一次收到响应的时间未超时,连接状态活跃】");
+          }
+    }
+    
+    /**
+     * 判断当前一卡充socket是否正常，响应是否正常
+     * 此方法给沃掌柜界面一卡充入口调用，如果不正常，不允许点击进入一卡充界面，防止连接异常情况下用户还充值
+     * 其实此方法也不准确，在RechargeCons.HEART_INTERVAL时间内如果一卡充系统停服务，这边判断不出来
+     * 最准确的应该是每次发请求前，都发一次心跳测试，有响应表示
+     * @return
+     */
+    public boolean isActive(){
+    	long interval = System.currentTimeMillis() - last_resp_time; //算出现在和上一次收到一卡充响应的时间间隔
+    	if (!connector.isActive() || interval > RechargeCons.HEART_INTERVAL) {
+    		return false;
+    	}
+    	return true;
     }
     
     /**
@@ -201,7 +238,9 @@ public class RechargeClientHandler extends IoHandlerAdapter {
      */
     private void recvMsg(byte[] msg){
           
-  		  if(Arrays.equals(msg, (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes())){
+    	  last_resp_time = System.currentTimeMillis(); //收到一卡充响应则更新最新响应时间戳
+  		  
+    	  if(Arrays.equals(msg, (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes())){
   			//log.debug("【一卡充：esp收到数据包， recvMsg里判断是响应心跳包】");
   			return;
   		  }
@@ -349,9 +388,22 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 
     }    
     
-    public static void main(String[] args) {
-    	RechargeResp resp = new RechargeResp();
-		System.out.println(resp.toString());
+
+	public static void main(String[] args) {
+//    	RechargeResp resp = new RechargeResp();
+//		System.out.println(resp.toString());
+		
+		long last_heart_resp = System.currentTimeMillis();
+		long now;
+		try {
+			Thread.currentThread().sleep(12345);
+			now = System.currentTimeMillis();
+			long interval = now - last_heart_resp;
+			System.out.println(interval);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
     
 }

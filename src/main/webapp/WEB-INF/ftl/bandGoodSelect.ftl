@@ -81,7 +81,6 @@
 		        		<#else>
 		        			(未知)
 		        		</#if>
-		        		
 		        	</p>
 		        	<p style="font-size:18px;font-weight:normal;color:#ff0000">
 		        		￥${(item.discntReq.discntValue?number)/100}

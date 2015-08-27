@@ -65,7 +65,7 @@
 <br>
 <div class="div_container_mid form-group" >
     <span>转出金额
-    	<input type="text" class="input" id="txtbalance" placeholder="当前可提现金额${acctinfo.BALANCE}元" onblur="doBlur(this);">
+    	<input type="text" class="input" id="txtbalance" placeholder="当前可提现金额${acctinfo.BALANCE?string('#.##')}元" onblur="doBlur(this);">
 	</span>
 </div>
 <div class="div_container_bottom">
@@ -81,7 +81,7 @@
     <button class="btn btn-warning btn-block " type="submit" data-toggle="modal" data-target="#myModal" onclick="doSubmit(this);">确认转出</button>
 </div>
     <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>
-    <input type="hidden" id="hide_balance" name="hide_balance" value=${acctinfo.BALANCE}>
+    <input type="hidden" id="hide_balance" name="hide_balance" value=${acctinfo.BALANCE?string('#.##')}>
     <input type="hidden" id="hide_acctid" name="hide_acctid" value=${acctinfo.ACCT_ID}>       
    	<input type="hidden" id="hide_bankno" name="hide_bankno" value="">       
    	<input type="hidden" id="hide_banktype" name="hide_banktype" value="">       
@@ -102,7 +102,10 @@
                 <span id='span_modal'></span>
                 <br>
                 <div class="pwd_container">
-                    <div>
+                   	<div>
+                    	<input type="password" value="" name="txtsecuritypwd" id="txtsecuritypwd" maxlength="6" size="6" class="form-control" onkeyup="checkPwd(this,btnok);" >
+                    </div>
+                    <!-- <div>
                         <input type="password" class="form-control" id="txt1" placeholder="" maxlength="1" onkeyup="checkPwd(this,txt2);" onfocus="doFocus(this);">
                     </div>
                     <div>
@@ -119,7 +122,7 @@
                     </div>
                     <div>
                         <input type="password" class="form-control" id="txt6" placeholder="" maxlength="1" onkeyup="checkPwd(this,btnok);" onfocus="doFocus(this);">
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="modal-footer">

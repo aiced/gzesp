@@ -56,7 +56,7 @@
                 </tr>
                 <tr>
                     <td class="td02">
-	                    ¥${(acctinfo.BALANCE)}
+	                    ¥${(acctinfo.BALANCE?string("#.##"))}
                     </td>
                 </tr>
             </table>

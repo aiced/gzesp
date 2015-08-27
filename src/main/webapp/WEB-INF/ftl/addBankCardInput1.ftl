@@ -67,7 +67,53 @@
 		 			</#if>
                 </select>
 			</li>
+
+			<li class = "border_bottom">
+				<em> 开户支行 </em>			
+                <input class="input_normal" type="text"  placeholder="如：中国建设银行贵阳市南明支行" id="bank_branch" />
+			</li>	
 			
+			<li class = "border_bottom">
+				<em>银行省份</em>			
+                <select name="province_select" id="province_select" tabindex="1" onchange="changeProvince();">
+                   <option value="开户银行省份">开户银行省份</option>
+                   <#if provinceList??>
+						<#list provinceList as item>						
+						    <option value="${item.PROVINCE_CODE}" >
+							${item.PROVINCE_NAME}
+							</option>
+						</#list>
+				   </#if>
+                </select>
+			</li>	
+
+			<li class = "border_bottom">
+				<em>银行地市</em>			
+                <select  name="eparchy_select" id="eparchy_select" tabindex="1" onchange="changeEparchy();">
+                    <option value="开户银行地市">开户银行地市</option>
+		      		<#if eparchyList??>
+						<#list eparchyList as item>						
+						    <option value="${item.EPARCHY_CODE}">
+							${item.EPARCHY_NAME}
+							</option>
+						</#list>
+		 			</#if>
+                </select>
+			</li>
+			
+			<li class = "border_bottom">
+				<em>银行区县</em>			
+                <select  name="city_select" id="city_select" tabindex="1">
+                    <option value="开户银行区县">开户银行区县</option>
+		      		<#if cityList??>
+						<#list cityList as item>						
+						    <option value="${item.CITY_CODE}" >
+							${item.CITY_NAME}
+							</option>
+						</#list>
+		 			</#if>
+                </select>                                  
+			</li>											
 			
 			<li class = "border_bottom">
 				<em> 卡类型 </em>	
@@ -100,7 +146,7 @@
 			
 			<li class = "border_bottom">
 				<em class = "em_normal"> 验证码 </em>	
-				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify" onfocus="doFocus(this);">				
+				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify" onfocus="doFocus(this);" onblur="doBlur(this);">				
 				<a id = "validation" class = "fright" onclick="getCode();" onblur="doBlur(this);"> 输入验证码 </a	>		
 			</li>
 		</ul>

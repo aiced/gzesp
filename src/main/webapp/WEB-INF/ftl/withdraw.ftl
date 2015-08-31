@@ -46,7 +46,7 @@
 		<#list acctbankinfolist as item>
 		    <div class="radio">
 		        <div id="lab${item_index}" >
-		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.SIGN_CODE}" onclick="doRadClick(this,${item.BANK_NO},${item.BANK_TYPE});">
+		            <input type="radio" name="optionsRadios" id="optionsRadios${item_index}" value="${item.SIGN_CODE}" onclick="doRadClick(this,'${item.BANK_NO}',${item.BANK_TYPE});">
                 	<label for="optionsRadios${item_index}">${item.PARAM_VALUE}
 	                	<span>
 	                	尾号${item.BANK_NO?substring((item.BANK_NO?length)-4,item.BANK_NO?length)}

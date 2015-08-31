@@ -275,10 +275,10 @@ function checkData()
 		iRet=14;
   		return opReturn(iRet);
 	}
-	if ($("#cardType_select").val()=="借记卡") {
+	if ($("#cardType_select").val()=="02") {
 		
 	}
-	else if($("#cardType_select").val()=="信用卡")
+	else if($("#cardType_select").val()=="01")
 	{
 		if(!$("#date_select").val())
 		{
@@ -306,6 +306,28 @@ function checkData()
 		iRet=42;
 		return opReturn(iRet);
 	}
+	
+	if(!$("#bank_branch").val())
+	{
+		iRet=81;
+		return opReturn(iRet);
+	}	
+	if($("#province_select").val()=="开户银行省份")
+	{
+		iRet=82;
+  		return opReturn(iRet);
+	}
+	if($("#eparchy_select").val()=="开户银行地市")
+	{
+		iRet=83;
+  		return opReturn(iRet);
+	}
+	if($("#city_select").val()=="开户银行区县")
+	{
+		iRet=84;
+  		return opReturn(iRet);
+	}			
+	
   	if(!$("#txtphone").val())
   	{
 		iRet=51;
@@ -347,26 +369,7 @@ function checkData()
 		iRet=71;
 		return opReturn(iRet);
 	}
-	if(!$("#bank_branch").val())
-	{
-		iRet=81;
-		return opReturn(iRet);
-	}	
-	if($("#province_select").val()=="开户银行省份")
-	{
-		iRet=82;
-  		return opReturn(iRet);
-	}
-	if($("#eparchy_select").val()=="开户银行地市")
-	{
-		iRet=83;
-  		return opReturn(iRet);
-	}
-	if($("#city_select").val()=="开户银行区县")
-	{
-		iRet=84;
-  		return opReturn(iRet);
-	}		
+
 	iRet=00;
 	return opReturn(iRet);
 }

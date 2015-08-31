@@ -235,12 +235,12 @@
 				</select> 			
 			</li>
 			
-			<li id = "validity_li" class = "border_bottom" style="display : none">
+			<li id = "validity_li" class = "border_bottom" <#if acctbankinfo.CARD_TYPE=='02'>  style="display : none" </#if> >
 				<em class = "em_normal"> 有效期 </em>	
-				<input value="" class="" readonly="readonly" name="date_select" id="date_select" type="text" value="${acctbankinfo.EXPIRE_DATE}" />
+				<input value="${acctbankinfo.EXPIRE_DATE}" class="" readonly="readonly" name="date_select" id="date_select" type="text" value="${acctbankinfo.EXPIRE_DATE}" />
 			</li>
 			
-			<li id = "CVN2_li" class = "border_bottom"  style="display : none">
+			<li id = "CVN2_li" class = "border_bottom"  <#if acctbankinfo.CARD_TYPE=='02'>  style="display : none" </#if> >
 				<em class = "em_long"> CVN2 <em>(卡背后三位)</em> </em>	
 				<input  class= "input_normal input_validation" type="text"  placeholder="" id="txtcord" name="txtcord" value="${acctbankinfo.CVN2}" />				
 			</li>
@@ -258,7 +258,7 @@
 			<li class = "border_bottom">
 				<em class = "em_normal"> 验证码 </em>	
 				<input class= "input_normal input_validation" type="text"  placeholder="输入验证码" id="txtverify" onfocus="doFocus(this);" onblur="doBlur(this);" />				
-				<a id = "validation" class = "fright" onclick="getCode();" onblur="doBlur(this);"> 输入验证码 </a	>		
+				<a id = "validation" class = "fright" onclick="getCode();" onblur="doBlur(this);"> 获取验证码 </a	>		
 			</li>
 		</ul>
 		

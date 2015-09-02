@@ -172,10 +172,10 @@ function doBlur(param)
 			iRet=52;
 			return opReturn(iRet);
 		}
-		if (checkPhoneNum_New($("#txtPhone").val())){
-			iRet=53;
-			return opReturn(iRet);
-		}
+//		if (checkPhoneNum_New($("#txtPhone").val())){
+//			iRet=53;
+//			return opReturn(iRet);
+//		}
 	}	
 	else if(id=="txtverify")
 	{
@@ -227,10 +227,10 @@ function checkCode()
 		iRet=62;
 		return opReturn(iRet);
 	}
-	if (checkPhoneNum_New($("#txtphone").val())){
-		iRet=63;
-		return opReturn(iRet);
-	}
+//	if (checkPhoneNum_New($("#txtphone").val())){
+//		iRet=63;
+//		return opReturn(iRet);
+//	}
 
 	iRet=00;
 	return opReturn(iRet);	
@@ -338,10 +338,10 @@ function checkData()
 		iRet=52;
 		return opReturn(iRet);
 	}
-	if (checkPhoneNum_New($("#txtPhone").val())){
-		iRet=53;
-		return opReturn(iRet);
-	}
+//	if (checkPhoneNum_New($("#txtPhone").val())){
+//		iRet=53;
+//		return opReturn(iRet);
+//	}
 	
 	if(!$("#txtverify").val())
 	{

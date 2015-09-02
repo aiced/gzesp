@@ -117,5 +117,5 @@ public class Constants {
     //宽带续约，BSS接口xml头
     public static final String xmlhead="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     //宽带续约，BSS调用接口——测试服
-    public static final String BSS_SERVERURL="http://130.85.50.77 7088/XMLReceiver";
+    public static final String BSS_SERVERURL="http://130.85.50.77:7088/XMLReceiver";
 }

@@ -55,7 +55,7 @@ public class TdGdsDINFO extends TdGdsDINFOKey implements Serializable {
     /**
      * @Fields GDS_D_INFO.MERCHANT_ID :商户标识
      */
-    private Integer merchantId;
+    private String merchantId;
 
     /**
      * 生成时间
@@ -243,7 +243,7 @@ public class TdGdsDINFO extends TdGdsDINFOKey implements Serializable {
     /**
      * @return GDS_D_INFO.MERCHANT_ID : 返回 商户标识
      */
-    public Integer getMerchantId() {
+    public String getMerchantId() {
         return merchantId;
     }
 
@@ -254,7 +254,7 @@ public class TdGdsDINFO extends TdGdsDINFOKey implements Serializable {
     /**
      * @param merchantId of GDS_D_INFO : 设置 商户标识
      */
-    public void setMerchantId(Integer merchantId) {
+    public void setMerchantId(String merchantId) {
         this.merchantId = merchantId;
     }
 

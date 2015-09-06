@@ -8,7 +8,7 @@
     <result column="GOODS_NAME" property="goodsName" jdbcType="VARCHAR" />
     <result column="ALBUM_ID" property="albumId" jdbcType="DECIMAL" />
     <result column="VER_NO" property="verNo" jdbcType="DECIMAL" />
-    <result column="MERCHANT_ID" property="merchantId" jdbcType="DECIMAL" />
+    <result column="MERCHANT_ID" property="merchantId" jdbcType="VARCHAR" />
     <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
     <result column="CREATE_STAFF_ID" property="createStaffId" jdbcType="DECIMAL" />
     <result column="GOODS_STATE" property="goodsState" jdbcType="CHAR" />
@@ -159,7 +159,7 @@
       )
     values (#{goodsId,jdbcType=DECIMAL}, #{partitionId,jdbcType=DECIMAL}, #{ctlgCode,jdbcType=DECIMAL}, 
       #{goodsName,jdbcType=VARCHAR}, #{albumId,jdbcType=DECIMAL}, #{verNo,jdbcType=DECIMAL}, 
-      #{merchantId,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{createStaffId,jdbcType=DECIMAL}, 
+      #{merchantId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createStaffId,jdbcType=DECIMAL}, 
       #{goodsState,jdbcType=CHAR}, #{recomTag,jdbcType=CHAR}, #{priceRule,jdbcType=CHAR}, 
       #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{simpDesc,jdbcType=VARCHAR}, 
       #{values1,jdbcType=VARCHAR}, #{values2,jdbcType=VARCHAR}, #{content,jdbcType=BLOB}
@@ -243,7 +243,7 @@
         #{verNo,jdbcType=DECIMAL},
       </if>
       <if test="merchantId != null" >
-        #{merchantId,jdbcType=DECIMAL},
+        #{merchantId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
@@ -308,7 +308,7 @@
         VER_NO = #{record.verNo,jdbcType=DECIMAL},
       </if>
       <if test="record.merchantId != null" >
-        MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+        MERCHANT_ID = #{record.merchantId,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null" >
         CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
@@ -356,7 +356,7 @@
       GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
       ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
       VER_NO = #{record.verNo,jdbcType=DECIMAL},
-      MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      MERCHANT_ID = #{record.merchantId,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       CREATE_STAFF_ID = #{record.createStaffId,jdbcType=DECIMAL},
       GOODS_STATE = #{record.goodsState,jdbcType=CHAR},
@@ -380,7 +380,7 @@
       GOODS_NAME = #{record.goodsName,jdbcType=VARCHAR},
       ALBUM_ID = #{record.albumId,jdbcType=DECIMAL},
       VER_NO = #{record.verNo,jdbcType=DECIMAL},
-      MERCHANT_ID = #{record.merchantId,jdbcType=DECIMAL},
+      MERCHANT_ID = #{record.merchantId,jdbcType=VARCHAR},
       CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
       CREATE_STAFF_ID = #{record.createStaffId,jdbcType=DECIMAL},
       GOODS_STATE = #{record.goodsState,jdbcType=CHAR},
@@ -411,7 +411,7 @@
         VER_NO = #{verNo,jdbcType=DECIMAL},
       </if>
       <if test="merchantId != null" >
-        MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+        MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null" >
         CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
@@ -456,7 +456,7 @@
       GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
       ALBUM_ID = #{albumId,jdbcType=DECIMAL},
       VER_NO = #{verNo,jdbcType=DECIMAL},
-      MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+      MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       CREATE_STAFF_ID = #{createStaffId,jdbcType=DECIMAL},
       GOODS_STATE = #{goodsState,jdbcType=CHAR},
@@ -477,7 +477,7 @@
       GOODS_NAME = #{goodsName,jdbcType=VARCHAR},
       ALBUM_ID = #{albumId,jdbcType=DECIMAL},
       VER_NO = #{verNo,jdbcType=DECIMAL},
-      MERCHANT_ID = #{merchantId,jdbcType=DECIMAL},
+      MERCHANT_ID = #{merchantId,jdbcType=VARCHAR},
       CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
       CREATE_STAFF_ID = #{createStaffId,jdbcType=DECIMAL},
       GOODS_STATE = #{goodsState,jdbcType=CHAR},

@@ -51,6 +51,13 @@ public class WeShopRegist1Controller {
         if (stropenId==null) {
         	stropenId="";
 		}
+        
+        //在进来的时候就要去判断openid是否是已经注册过的
+        //edit_by_wenh_2015_09_06
+        int icount=registSql.IsRegByOpenId(stropenId);
+        if (icount!=0) {
+        	mav.addObject("isreg", "1");
+		}
         System.out.println("openid="+stropenId);
         mav.addObject("openid", stropenId);
         return mav;

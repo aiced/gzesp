@@ -38,5 +38,17 @@ public class RegistSql {
 
 		return bankList;
 	}
+	//通过openid来判断该账号是否注册过
+	public int IsRegByOpenId(String strOpenId)
+	{
+		StringBuffer sb=new StringBuffer();
+		sb.append("select count(*) count from AUR_D_AUTHINFO where WXOPEN_ID='"+strOpenId+"'");
+		System.out.println(sb.toString());
+		Map<String, Object> map =commonDao.queryForMap(sb.toString());
+		if (map!=null) {
+			return Integer.valueOf(map.get("count").toString());
+		}
+		return 0;
+	}
 
 }

@@ -85,7 +85,7 @@ public class GoodsSql {
 				+ " and t1.CTLG_CODE = t5.GOODS_CTLG_CODE"
 				+ " and t1.GOODS_STATE = '1'");
 		if(StringUtils.isNotEmpty(mchId)) {
-			sb.append( " and t1.MERCHANT_ID ='"+mchId+"'");
+			sb.append( " and t1.MERCHANT_ID like '%"+mchId+"%'");
 		}
 		sb.append( " order by t1.GOODS_ID");
 		
@@ -112,7 +112,7 @@ public class GoodsSql {
 				+ " and t1.GOODS_STATE = '1'");
 				
 		if(StringUtils.isNotEmpty(mchId)) {
-			sb.append( " and t1.MERCHANT_ID ='"+mchId+"'");
+			sb.append( " and t1.MERCHANT_ID like '%"+mchId+"%'");
 		}
 		sb.append( " order by t1.GOODS_ID");
 		

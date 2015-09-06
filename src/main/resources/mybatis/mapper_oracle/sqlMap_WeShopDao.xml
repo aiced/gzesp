@@ -43,7 +43,7 @@
              and d.amount_type = '2' 
              and b.album_id = f.album_id
              <if test="mchId != null">
-            and b.MERCHANT_ID = #{mchId}
+            and b.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
              and f.default_tag = '0'  
            order by a.seq_num 
@@ -68,7 +68,7 @@
             and b.goods_state = '1'
             and b.ctlg_code in (4, 9) 
             <if test="mchId != null">
-            and b.MERCHANT_ID = #{mchId}
+            and b.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
@@ -108,7 +108,7 @@
             and b.goods_state = '1'
             and b.ctlg_code in (4, 9) 
             <if test="mchId != null">
-            and b.MERCHANT_ID = #{mchId}
+            and b.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
             and a.PARAM_VALUE = c.goods_id
             and b.album_id = f.album_id
@@ -143,7 +143,7 @@
             and b.goods_state = '1'
             and b.ctlg_code in (5, 10) 
             <if test="mchId != null">
-            and b.MERCHANT_ID = #{mchId}
+            and b.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
             and a.PARAM_VALUE = c.goods_id
             and b.album_id = f.album_id
@@ -175,7 +175,7 @@
             and b.goods_state = '1'
             and b.ctlg_code in (5, 10) 
            <if test="mchId != null">
-            and b.MERCHANT_ID = #{mchId}
+            and b.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
@@ -215,7 +215,7 @@
             and b.goods_state = '1'
             and b.ctlg_code in (6, 11)  
             <if test="mchId != null">
-            and b.MERCHANT_ID = #{mchId}
+            and b.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
             and a.PARAM_VALUE = c.goods_id
             and b.album_id = f.album_id
@@ -247,7 +247,7 @@
             and b.goods_state = '1'
             and b.ctlg_code in (6, 11) 
             <if test="mchId != null">
-            and b.MERCHANT_ID = #{mchId}
+            and b.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
             and a.goods_id = c.goods_id
             and b.album_id = f.album_id
@@ -381,7 +381,7 @@
             and a.goods_state = '1'
             and a.goods_id = b.goods_id
             <if test="mchId != null">
-            and a.MERCHANT_ID = #{mchId}
+            and a.MERCHANT_ID like '%'||#{mchId}||'%'
             </if>
             and b.amount_type = '2' 
             and a.goods_id = c.goods_id

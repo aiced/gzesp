@@ -266,8 +266,13 @@ public class BssBandService {
 		String strRet="";//bss返回结果
     	//调用Bss接口
     	try {
+    		System.out.println("开始发送BSS请求");
     		strRet=HttpUtils.URLPost(strUrl, map,"string");//第三个参数 标识返回结果为字符串
-			strRet=URLDecoder.decode(strRet);
+    		//下面这行代码主要是对返回的报文进行转义其主要原因是% 在URL中是特殊字符，需要特殊转义一下，
+    		System.out.println("得到Bss的返回报文（未解码）："+strRet);
+    		//strRet="%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%0A%3CUniBSS%3E%0A++++%3COrigDomain%3EECIP%3C%2FOrigDomain%3E%0A++++%3CHomeDomain%3EUCRM%3C%2FHomeDomain%3E%0A++++%3CBIPCode%3EBIP85001%3C%2FBIPCode%3E%0A++++%3CBIPVer%3E0100%3C%2FBIPVer%3E%0A++++%3CActivityCode%3ET2014081%3C%2FActivityCode%3E%0A++++%3CActionCode%3E1%3C%2FActionCode%3E%0A++++%3CActionRelation%3E0%3C%2FActionRelation%3E%0A++++%3CRouting%3E%0A++++++++%3CRouteType%3E01%3C%2FRouteType%3E%0A++++++++%3CRouteValue%3E085100386097%3C%2FRouteValue%3E%0A++++%3C%2FRouting%3E%0A++++%3CProcID%3Eprocid1441785525025%3C%2FProcID%3E%0A++++%3CTransIDO%3Etransid1441785525025%3C%2FTransIDO%3E%0A++++%3CTransIDH%3E2015090916524602590829%3C%2FTransIDH%3E%0A++++%3CProcessTime%3E20150909164514%3C%2FProcessTime%3E%0A++++%3CResponse%3E%0A++++++++%3CRspType%3E2%3C%2FRspType%3E%0A++++++++%3CRspCode%3E2990%3C%2FRspCode%3E%0A++++++++%3CRspDesc%3E%25E5%2586%2585%25E9%2583%25A8%25E9%2594%2599%25E8%25AF%25AF%3C%2FRspDesc%3E%0A++++%3C%2FResponse%3E%0A++++%3CTestFlag%3E0%3C%2FTestFlag%3E%0A++++%3CMsgSender%3E8500%3C%2FMsgSender%3E%0A++++%3CMsgReceiver%3E8500%3C%2FMsgReceiver%3E%0A++++%3CSvcContVer%3E0100%3C%2FSvcContVer%3E%0A++++%3CSvcCont%3E%3C%21%5BCDATA%5B%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%0A%3CUserCheckReq%3E%0A++++%3CRespCode%3E0003%3C%2FRespCode%3E%0A++++%3CRespDesc%3E%E7%94%A8%E6%88%B7%E4%B8%8D%E5%AD%98%E5%9C%A8%3C%2FRespDesc%3E%0A++++%3CProvinceCode%3E85%3C%2FProvinceCode%3E%0A++++%3CCityCode%3E850%3C%2FCityCode%3E%0A%3C%2FUserCheckReq%3E%0A%5D%5D%3E%3C%2FSvcCont%3E%0A%3C%2FUniBSS%3E%0A";
+    		strRet = strRet.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+    		strRet=URLDecoder.decode(strRet,"UTF-8");
 			System.out.println("我是返回的结果："+strRet);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

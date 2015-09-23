@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,22 +52,25 @@ public class MyAcctService {
         {
         	return null;
         }
-    	acctbankinfolist=new ArrayList<Map<String,Object>>();
-    	for (int i = 0; i < acctbankinfo_temp.size(); i++) {
-    		Map<String, Object> acctbankinfo=new HashMap<String, Object>();
-			for (String key : acctbankinfo_temp.get(i).keySet()) {
-				if (key.equalsIgnoreCase("bank_no")){
-					byte[] srcBytes=DESUtil.HexString2Bytes(acctbankinfo_temp.get(i).get(key).toString());
-        			byte[] bank_no=DESUtil.decryptMode(Constants.desKey.getBytes(),srcBytes);
-        			acctbankinfo.put(key, new String(bank_no));
-				}
-				else {
-					acctbankinfo.put(key, acctbankinfo_temp.get(i).get(key));	
-				}
-			}
-			acctbankinfolist.add(acctbankinfo);
-		}
-        return acctbankinfolist;        
+        return acctbankinfo_temp;  
+        
+    	//银行卡加密,暂时先去掉，因为在提现的地方，需要知道明文的银行卡卡号，所以把之前密文的地方全部修改了。edit_by_wenh_2015_09_14
+//    	acctbankinfolist=new ArrayList<Map<String,Object>>();
+//    	for (int i = 0; i < acctbankinfo_temp.size(); i++) {
+//    		Map<String, Object> acctbankinfo=new HashMap<String, Object>();
+//			for (String key : acctbankinfo_temp.get(i).keySet()) {
+//				if (key.equalsIgnoreCase("bank_no")){
+//					byte[] srcBytes=DESUtil.HexString2Bytes(acctbankinfo_temp.get(i).get(key).toString());
+//        			byte[] bank_no=DESUtil.decryptMode(Constants.desKey.getBytes(),srcBytes);
+//        			acctbankinfo.put(key, new String(bank_no));
+//				}
+//				else {
+//					acctbankinfo.put(key, acctbankinfo_temp.get(i).get(key));	
+//				}
+//			}
+//			acctbankinfolist.add(acctbankinfo);
+//		}
+//        return acctbankinfolist;        
 
     }
     
@@ -94,30 +98,72 @@ public class MyAcctService {
     //通过userid和银行卡卡号 获得银行详细信息
     public Map<String, Object> queryAcctBankDetail(String user_id,String bank_no)
     {
-    	byte[] bank_no_temp=DESUtil.encryptMode(Constants.desKey.getBytes(),bank_no.getBytes());
-    	String strbank_no=DESUtil.Bytes2HexString(bank_no_temp);
-    	
-    	Map<String, Object> acctbankinfo_temp=myAcctDao.queryAcctBankDetail(user_id,strbank_no);
+    	//银行卡加密,暂时先去掉，因为在提现的地方，需要知道明文的银行卡卡号，所以把之前密文的地方全部修改了。edit_by_wenh_2015_09_14
+    	//
+//    	byte[] bank_no_temp=DESUtil.encryptMode(Constants.desKey.getBytes(),bank_no.getBytes());
+//    	String strbank_no=DESUtil.Bytes2HexString(bank_no_temp);  	
+//    	Map<String, Object> acctbankinfo_temp=myAcctDao.queryAcctBankDetail(user_id,strbank_no);
+    	Map<String, Object> acctbankinfo_temp=myAcctDao.queryAcctBankDetail(user_id,bank_no);
     	
     	if(acctbankinfo_temp ==null)
     	{
         	return null;
     	}
     	
-		Map<String, Object> acctbankinfo=new HashMap<String, Object>();
-		for (String key : acctbankinfo_temp.keySet()) {
-			if (key.equalsIgnoreCase("bank_no")){
-				byte[] srcBytes=DESUtil.HexString2Bytes(acctbankinfo_temp.get(key).toString());
-    			byte[] bank_no_bak=DESUtil.decryptMode(Constants.desKey.getBytes(),srcBytes);
-    			acctbankinfo.put(key, new String(bank_no_bak));
-			}
-			else {
-				acctbankinfo.put(key, acctbankinfo_temp.get(key));	
+    	//银行卡加密,暂时先去掉，因为在提现的地方，需要知道明文的银行卡卡号，所以把之前密文的地方全部修改了。edit_by_wenh_2015_09_14
+//		Map<String, Object> acctbankinfo=new HashMap<String, Object>();
+//		for (String key : acctbankinfo_temp.keySet()) {
+//			if (key.equalsIgnoreCase("bank_no")){
+//				byte[] srcBytes=DESUtil.HexString2Bytes(acctbankinfo_temp.get(key).toString());
+//    			byte[] bank_no_bak=DESUtil.decryptMode(Constants.desKey.getBytes(),srcBytes);
+//    			acctbankinfo.put(key, new String(bank_no_bak));
+//			}
+//			else {
+//				acctbankinfo.put(key, acctbankinfo_temp.get(key));	
+//			}
+//		}
+    	return acctbankinfo_temp;
+    }
+    //隐藏接口用到的service方法，改方法将act_d_bankcard表中所有银行卡的密文查询出来，然后做一下解密操作。之后在更新成为明文。
+    public List<Map<Integer, Object>> queryEnCodeCardNo()
+    {
+    	List<Map<String, Object>> listacctbankinfo=myAcctDao.queryEnCodeCardNo();
+    	List<Map<Integer, Object>> listRet=new ArrayList<Map<Integer,Object>>();
+    	
+    	for (int i = 0; i < listacctbankinfo.size(); i++) {
+			Map<String, Object> mapacctbankinfo=listacctbankinfo.get(i);
+			for (String key : mapacctbankinfo.keySet()) {
+				if (key.equalsIgnoreCase("bank_no"))
+				{
+					if (mapacctbankinfo.get(key).toString().length()<30) {
+						continue;
+					}
+					
+					byte[] srcBytes=DESUtil.HexString2Bytes(mapacctbankinfo.get(key).toString());
+	    			byte[] bank_no_bak=DESUtil.decryptMode(Constants.desKey.getBytes(),srcBytes);
+	    			String strdecodebankno=new String(bank_no_bak);
+	    			
+	    			int iRet=updateDeCodeCardNo(strdecodebankno,mapacctbankinfo.get(key).toString());
+				
+	    			Map<Integer, Object> map=new HashMap<Integer, Object>();
+	    			map.put(i, iRet);
+	    			listRet.add(map);
+				}
 			}
 		}
-    	return acctbankinfo;
+    	return listRet;
     }
-    
+    //隐藏接口用到的Serverce方法，改方法将得到的明文，更新act_d_bankcard中的银行卡卡号字段
+    /**
+     * 
+     * @param bank_no_decode 解密后的银行卡号
+     * @param bank_no_encode 加密后的银行卡号
+     * @return 更新成功的条目数
+     */
+    public int updateDeCodeCardNo(String bank_no_decode,String bank_no_encode)
+    {
+    	return myAcctDao.updateDeCodeCardNo(bank_no_decode,bank_no_encode);
+    }
     //通过userid和银行卡卡号 删除绑定银行卡
     public int delAcctBankDetail(String user_id,String bank_no)
     {

@@ -50,9 +50,7 @@ public class MyAcctController {
 	public ModelAndView initAcct(@PathVariable("user_id") String user_id)
 	{
     	//我的账户
-    	
         ModelAndView mav = new ModelAndView("myAcct.ftl");
-    	
     	//查询数据库
     	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
     	if(acctinfo != null)
@@ -79,7 +77,6 @@ public class MyAcctController {
     public ModelAndView initWithdraw(@PathVariable("user_id") String user_id)
     {
     	//提现
-    	
         ModelAndView mav = new ModelAndView("withdraw.ftl");
         
        	Map<String, Object> acctinfo =myAcctService.queryAcctByUserId(user_id);
@@ -114,6 +111,10 @@ public class MyAcctController {
     	
     	//直接将审核的状态变成审核中，后续当网盟后台功能添加后，将该状态默认插入未审核
     	
+
+    	
+    	
+    	
     	
 		Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
 		String user_id = paramsMap.get("user_id");
@@ -123,26 +124,60 @@ public class MyAcctController {
 		String partition_id=log_id.substring(14,16);
 		String hide_bank_no=paramsMap.get("hide_bank_no");
 		String hide_bank_type=paramsMap.get("hide_bank_type");
-		
-		
-		
+
 		Date now = new Date(); 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");//可以方便地修改日期格式		
 		String apply_time=dateFormat.format(now);
 		String audit_state="02"; //后续要修改成为未审核  00
 		
- 		String strRet=myAcctService.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,withdraw_fee,audit_state,hide_acctid,hide_bank_no,hide_bank_type);
+    	//在做提现操作之前，需要检查该用户银行卡绑定处的信息比如银行卡号，银行名称等是否有填写。
+    	//至于这些信息的有效性无法判断。edit_by_wenh_2015_09_17
+		Boolean bRet=checkBankInfo(user_id,hide_bank_no);
+		if (!bRet) {
+			return "请确认您的信用卡或借记卡等相关信息已经填写完整？请到【我的账户】-【我的银行卡】进行确认，谢谢～";
+		}
+
+		String strRet=myAcctService.insertWidthDrawAuDit(log_id,partition_id,apply_time,user_id,withdraw_fee,audit_state,hide_acctid,hide_bank_no,hide_bank_type);
  		return strRet;
 
-
     }
+    
+    //检查该用户银行卡绑定处的信息比如银行卡号，银行名称等是否有填写。
+    public Boolean checkBankInfo(String user_id,String hide_bank_no)
+    {
+    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, hide_bank_no);
+    	Boolean bRet=false;//记录该用户的绑定银行卡信息是否齐全，默认为不齐全false;
+    	if (acctbankinfo !=null && acctbankinfo.size()>0) {
+    		
+    		if (
+					!(acctbankinfo.get("BANK_BRANCH").toString().isEmpty() || 
+					acctbankinfo.get("PROVINCE_CODE").toString().isEmpty() || 
+					acctbankinfo.get("EPARCHY_CODE").toString().isEmpty() || 
+					acctbankinfo.get("CITY_CODE").toString().isEmpty())
+    				) 
+    		{
+    			bRet=true;
+			}
+    		//这个地方其实不需要加这个判断，因为在前端，已经判断了，信用卡是不允许提现的。
+    		//不排除有其他情况的代码跑到这里的情况。留着吧。影响不大。edit_by_wenh_2015_9_17
+    		if (acctbankinfo.get("CARD_TYPE").toString().equals("01")) //信用卡
+    		{
+    			if (    			
+    					!(acctbankinfo.get("EXPIRE_DATE").toString().isEmpty() || 
+    	    			acctbankinfo.get("CVN2").toString().isEmpty())) 
+    			{
+    				bRet=true;
+				}
+			};
+		}
+    	return bRet;
+    }
+    
     @RequestMapping("/acct/myBankCardList/{user_id}")
     public ModelAndView initMyBankCardList(@PathVariable("user_id") String user_id)
     {
     	//我的银行卡
-    	
         ModelAndView mav = new ModelAndView("myBankCardList.ftl");
-        
         //查询数据库
         List<Map<String, Object>> acctbankinfolist =myAcctService.queryAcctBankByUserId(user_id);
 
@@ -384,9 +419,10 @@ public class MyAcctController {
 		String cvn2=paramsMap.get("cvn2");
 		String expire_date=paramsMap.get("expire_date");
     	
-    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
-    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
-
+		//银行卡加密,暂时先去掉，因为在提现的地方，需要知道明文的银行卡卡号，所以把之前密文的地方全部修改了。edit_by_wenh_2015_09_14
+//    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
+//    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
+		String strbank_no=paramsMap.get("bank_no");
 
     	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,paramsMap.get("bank_no"));
     	
@@ -602,8 +638,9 @@ public class MyAcctController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String user_id = paramsMap.get("user_id");
     	
-    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
-    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
+		//银行卡加密,暂时先去掉，因为在提现的地方，需要知道明文的银行卡卡号，所以把之前密文的地方全部修改了。edit_by_wenh_2015_09_14
+//    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
+//    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
     	
     	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id,paramsMap.get("bank_no"));
     	
@@ -612,7 +649,7 @@ public class MyAcctController {
         	//解绑 直接修改为不可用
         	int iRet=myAcctService.updateAcctBankState(
         			acctbankinfo.get("USER_ID").toString(), 
-        			strbank_no,//注意这个地方是加密的银行卡
+        			paramsMap.get("bank_no").toString(),//注意这个地方是加密的银行卡
         			"3"//acctbankinfo.get("VALID_FLAG").toString()
         			);
         	if (iRet<0) 
@@ -643,10 +680,13 @@ public class MyAcctController {
     	Map<String, String> paramsMap = StringUtil.params2Map(inputParam);
     	String user_id = paramsMap.get("user_id");
     	
-    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
-    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
-    	paramsMap.put("bank_no_hex", strbank_no); //表里存放的是加密的卡号，下面更新时要根据user_id 和加密的卡号来更新
+		//银行卡加密,暂时先去掉，因为在提现的地方，需要知道明文的银行卡卡号，所以把之前密文的地方全部修改了。edit_by_wenh_2015_09_14
+//    	byte[] bank_no=DESUtil.encryptMode(Constants.desKey.getBytes(),paramsMap.get("bank_no").getBytes());
+//    	String strbank_no=DESUtil.Bytes2HexString(bank_no);
+//    	paramsMap.put("bank_no_hex", strbank_no); //表里存放的是加密的卡号，下面更新时要根据user_id 和加密的卡号来更新
+//    	
     	
+    	paramsMap.put("bank_no_hex", paramsMap.get("bank_no").toString());
     	int n1 = myAcctService.saveBankCardInfo(paramsMap);
     	
     	if(n1>0){
@@ -657,15 +697,22 @@ public class MyAcctController {
     }
 
     //隐藏接口，主要用于银行卡解密操作
-    @RequestMapping("/acct/bankCardDecode/{user_id}/{bank_no}")
+    @RequestMapping("/acct/bankCardDecode")
     @ResponseBody
-    public Map<String, Object> bankCardDecode(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)
+    public int bankCardDecode()
     {
-    	Map<String, Object> acctbankinfo=myAcctService.queryAcctBankDetail(user_id, bank_no);
-    	return acctbankinfo;
+    	List<Map<Integer, Object>> listRet=myAcctService.queryEnCodeCardNo();
+    	for (int i = 0; i < listRet.size(); i++) {
+    		Map<Integer, Object> mapRet=listRet.get(i);
+    		for (Integer key : mapRet.keySet()) {
+    			System.out.println(mapRet.get(key));
+    		}
+    	}
+    	return 0;
     }
     //隐藏接口，主要用于账户银行卡的更新操作。同上，其实主要是为了防止用户输入错误的银行后由程序进行更新操作
     //没看懂这个方法 有什么用，所以注释掉 20150825 ximh
+    //我表示我也没看懂，忘记做什么用的了。注释就注释掉吧。貌似没有什么作用，20150915 wenh
 //    @RequestMapping("/acct/bankCardUpdate/{user_id}/{bank_no}")
 //    @ResponseBody
 //    public int bankCardUpdate(@PathVariable("user_id") String user_id,@PathVariable("bank_no") String bank_no)

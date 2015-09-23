@@ -537,9 +537,11 @@
 	});
 	
         function unionPayPay(card_type){
-        	
+        	$("#btnXYSubmit").attr('disabled',true);//设置disabled属性为true，按钮不可用
+        	//$('#btnXYSubmit‘).removeattr("disabled"); //移除disabled属性
         	if (!checkData())
         	{
+         		$("#btnXYSubmit").attr('disabled',false);//设置disabled属性为true，按钮不可用
         		return;
         	}
             //01信用卡 02 储蓄卡

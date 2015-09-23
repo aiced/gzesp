@@ -362,5 +362,13 @@
 		 where user_id=#{user_id} 
 		   and bank_no=#{bank_no_hex}
 	</update>
-			
+	<select id="queryEnCodeCardNo" resultType="java.util.HashMap">
+		select bank_no from act_d_bankcard
+	</select>	
+	<update id="updateDeCodeCardNo" parameterType="map" >
+		update act_d_bankcard 
+		set	
+		bank_no=#{bank_no_decode} 
+		where bank_no=#{bank_no_encode} 
+	</update>	
 </mapper>

@@ -77,4 +77,7 @@ public interface MyAcctDao {
 	public List<Map<String, String>> geteCityList(@Param("eparchy_code") String eparchy_code);
 	
 	public int saveBankCardInfo(Map<String, String> paramsMap);
+	
+	public List<Map<String, Object>> queryEnCodeCardNo();
+	public int updateDeCodeCardNo(@Param("bank_no_decode") String bank_no_decode,@Param("bank_no_encode") String bank_no_encode);
 }

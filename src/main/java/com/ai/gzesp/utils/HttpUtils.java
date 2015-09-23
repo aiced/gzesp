@@ -141,9 +141,12 @@ public class HttpUtils {
 		try {
 			url = new URL(urlAddress);
 			con = (HttpURLConnection) url.openConnection();
-			con.setUseCaches(false);
-			con.setDoOutput(true);
 			con.setRequestMethod("POST");
+			con.setDoInput(true);
+			con.setDoOutput(true);
+			con.setUseCaches(false);
+			con.setRequestProperty("Content-Type",
+					"application/x-www-form-urlencoded;charset=UTF-8");
 			String paramsTemp = "";
 			for (String param : params) {
 				if (param != null && !"".equals(param.trim())) {

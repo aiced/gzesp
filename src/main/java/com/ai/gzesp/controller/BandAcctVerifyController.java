@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +22,9 @@ import com.ai.gzesp.dto.UserCheckReq_Res;
 import com.ai.gzesp.service.BssBandService;
 import com.ai.gzesp.service.UnionPayService2;
 import com.ai.gzesp.service.WeShopService;
-import com.ai.gzesp.utils.HttpUtils;
 import com.ai.gzesp.utils.MD5Util;
 import com.ai.sysframe.utils.StringUtil;
-import com.ai.wx.util.HttpClientUtil;
+
 
 @Controller
 @RequestMapping("/weShop")
@@ -79,9 +80,10 @@ public class BandAcctVerifyController {
     	String strUrl=Constants.BSS_SERVERURL;//未来需要填写的url
 		HashMap<String, String> map = new HashMap<String, String>() ;
 		map.put("xmlmsg", packet);
-
+		System.out.println("IPaddress:"+strUrl);
 		String strRet=bssBandService.HttpPost(strUrl,map);//bss返回结果
-    	if (strRet.isEmpty()) {
+		
+		if (strRet.isEmpty()) {
     		return mav=new ModelAndView("redirect:/weShop/goodSelect/band/"+user_id);  
 		}
 		//解析响应报文

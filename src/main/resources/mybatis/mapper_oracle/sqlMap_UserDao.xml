@@ -20,5 +20,14 @@
          from AUR_D_AUTHINFO a left join WLT_L_USR_MCH b on a.user_id=b.user_id
         where a.wxopen_id = #{open_id}
 	</select>	
+	
+	<select id="getBusiInfo" resultType="java.util.HashMap">
+       select a.user_id, a.store_name, a.phone_number, b.bss_login_code, b.bss_login_pwd, b.cbss_login_code, b.cbss_login_pwd
+         from aur_d_authinfo a, 
+              aur_d_busiinfo b
+        where a.phone_number = b.phone_number
+          and b.phone_number = #{phone_number}
+	</select>	
+	
 
 </mapper>

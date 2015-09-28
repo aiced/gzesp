@@ -411,4 +411,90 @@
 	<update id="updateOrdBandPay">
 		update ord_d_band_pay set order_state=#{order_state},update_time=sysdate where order_id=#{order_id}
 	</update>
+	
+	
+	<select id="queryOfflineOrders" resultType="java.util.HashMap">
+       select *
+         from 
+         (
+          select m.*, rownum row_num
+            from 
+            (
+              select to_char(a.order_id) order_id,
+                     to_char(a.create_time, 'yyy-mm-dd hh24:mi:ss') create_time,
+                     case when b.pspt_no is null then 0 else 1 end is_ok,
+                     'http://res.woboss.gz186.com'||f.photo_links photo_links,
+                     c.goods_name,
+                     to_char(a.income_money/1000) income_money,
+                     g.res_attr_val serial_number,
+                     c.goods_id,
+                     c.ctlg_code,
+                     (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'NETTYPE') net_type,
+                     (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'PACKRES') package,
+                     (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'FMONTHD') first_month,
+                     (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'PAGERES') months,
+                     (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'SAVEMEY') save_money
+                from ord_d_base a ,
+                     ord_d_cust b,
+                     ord_d_prod c,
+                     ord_d_deal d,
+                     gds_d_info e,
+                     gds_d_photo f,
+                     (select * from ord_d_res where res_attr_code = 'NUMBERS') g
+               where a.order_id = b.order_id
+               	<![CDATA[
+                 and a.create_time >= to_date(#{start_day}, 'yyyy-mm-dd')
+                 and a.create_time < to_date(#{end_day}, 'yyyy-mm-dd')+1
+                 and a.income_money > 0
+                ]]>
+               <choose>
+		         <when test="is_ok == 0">
+			       b.pspt_no is null
+			     </when>
+			     <when test="is_ok == 1">
+			       b.pspt_no is not null
+			     </when>  
+		         <otherwise>
+		         
+		         </otherwise>
+	           </choose>                       
+                 and a.order_id = c.order_id
+                 and c.goods_id = e.goods_id
+                 and e.album_id = f.album_id
+                 and a.order_id = d.order_id
+                 and d.user_id = #{user_id}
+                 and a.order_id = g.order_id
+                 <if test="phone_number != null">
+                   and g.res_attr_val like '%'||#{phone_number}||'%'
+                 </if>
+               order by a.create_time
+             ) m
+          )
+	<![CDATA[
+        where row_num > (${pageNum}-1)*${pageSize}
+          and row_num <= ${pageNum}*${pageSize}       
+     ]]>          
+	</select>
+
+	<update id="updateOrderPsptNo">
+		update ord_d_cust 
+		   set pspt_no = #{pspt_no},
+		       cust_name = #{cust_name}
+		 where order_id = #{order_id}
+	</update>
+	
+	<update id="updateOrderCustName">
+		update ord_d_post 
+		   set receiver_name = #{cust_name}
+		 where order_id = #{order_id}
+	</update>	
+	
+	<select id="queryAllPke" resultType="java.util.HashMap">
+		select a.goods_id, a.package, a.first_month, save_money, months, pke, product_id, product_name
+		  from rel_gds_ord_pke a
+		 <if test="goods_id != null">
+         where a.goods_id like = #{goods_id}
+         </if>
+	</select>
+			
 </mapper>

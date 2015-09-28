@@ -94,4 +94,19 @@ public interface OrderDao {
     public List<LinkedHashMap<String, String>> queryBandOrderByDate(@Param("req_day") String req_day);
 
     public int updateOrdBandPay(@Param("order_id") String order_id,@Param("order_state") String order_state);
+    
+    public List<Map<String, String>> queryOfflineOrders(@Param("user_id") String user_id, 
+    		@Param("is_ok") String is_ok,
+    		@Param("phone_number") String phone_number, 
+    		@Param("start_day") String start_day,
+    		@Param("end_day") String end_day,
+    		@Param("pageNum") String pageNum, 
+    		@Param("pageSize") String pageSize
+    		);
+    
+    public int updateOrderPsptNo(@Param("order_id") String order_id,@Param("pspt_no") String pspt_no,@Param("cust_name") String cust_name);
+    
+    public int updateOrderCustName(@Param("order_id") String order_id, @Param("cust_name") String cust_name);
+    
+    public List<Map<String, String>> queryAllPke();
 }

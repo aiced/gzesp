@@ -79,7 +79,7 @@
 	        <ul class="list-group lableFontSize">
 	            <!--入网资料-->
 	            <a id="netInfoTab" href="#" class="list-group-item">
-	                <label>入网资料（必填）</label>
+	                <label>入网资料 <#if (offline_flag=0)>（必填）<#else>（有二代证读卡器可后续补录身份证）</#if> </label>
 	                <span class="list_gou">
 	                	<img src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
                 	</span>
@@ -109,7 +109,7 @@
 	            
 	            <!--收获信息-->
 	            <a id="receiveInfoTab" href="#" class="list-group-item">
-	                <label>收货信息（必填）</label>
+	                <label>收货信息<#if (offline_flag=0)>（必填）<#else>（现场写卡的可不填）</#if> </label>
 	                 <span class="list_gou">
 	                	<img  src="${resRoot}/image/fillOrderMain/jiantou2.png" width="9" height="18">
                 	</span>
@@ -197,6 +197,7 @@
 	    <input type="hidden" id="beginTime" value="${beginTime}"></input>
 	    <input type="hidden" id="endTime"  value="${endTime}"></input>
 	    <input type="hidden" id="simpDesc" value="${simpDesc}"></input>
+	    <input type="hidden" id="offline_flag" value="${offline_flag}"></input>
 	    
 	    <#if showFMonthD?exists && showFMonthD>
 	   		<input type="hidden" id="fMonthDResId" value="${fMonthDResId}">

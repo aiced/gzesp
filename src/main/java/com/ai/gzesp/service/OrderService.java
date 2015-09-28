@@ -1,17 +1,16 @@
 package com.ai.gzesp.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.collections.Predicate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +50,6 @@ import com.ai.gzesp.utils.DateUtils;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
 import com.ai.sysframe.utils.RegexUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 
 @Service
 public class OrderService {
@@ -708,16 +704,16 @@ public class OrderService {
         return list;
     }
     
-    public static void main(String[] args) {
-        	String resAttrStr = "3415041400000014|PACKRES|校园沃派16元套餐|校园沃派16元套餐";
-        	
-        	String[] col = resAttrStr.split("\\|", -1);
-        	String resAttrCode = col[1];
-    		String resAttrVal = col[2];
-        	String money = RegexUtil.getMoney(resAttrVal);
-			System.out.println(money);
-        	System.out.println("bb");
-	}
+//    public static void main(String[] args) {
+//        	String resAttrStr = "3415041400000014|PACKRES|校园沃派16元套餐|校园沃派16元套餐";
+//        	
+//        	String[] col = resAttrStr.split("\\|", -1);
+//        	String resAttrCode = col[1];
+//    		String resAttrVal = col[2];
+//        	String money = RegexUtil.getMoney(resAttrVal);
+//			System.out.println(money);
+//        	System.out.println("bb");
+//	}
     	
     
     /**
@@ -746,4 +742,126 @@ public class OrderService {
    {
 	   return orderDao.queryBandGoodsId(ctlg_code);
    }
+   
+   
+   
+	/**
+	 * 需要线下当场开卡时，下的订单没有传身份证照片，根据user_id 查询出订单，用于后面绑定身份证号
+	 * @param user_id
+	 * @param phone_number
+	 * @param start_day
+	 * @param end_day
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public List<Map<String, String>> queryOfflineOrders(String user_id, String is_ok,
+			String phone_number, String start_day, String end_day, String pageNum,
+			String pageSize) {
+		//订单集合orders
+		List<Map<String, String>> orders = orderDao.queryOfflineOrders(user_id, is_ok, phone_number, start_day,
+				end_day, pageNum, pageSize);
+
+		//pke参数pkes
+		List<Map<String, String>> pkes = orderDao.queryAllPke();
+		
+		//oracle查询出的结果集 列名 都是大写，需要转换成小写给前台，方便前台统一
+		//遍历orders,根据 套餐月资费，首月资费，合约期限，存费送费，4个因素 从pkes里匹配出唯一的记录
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>(); 
+		for(final Map<String, String> order : orders){
+			
+			//过滤器
+			Predicate predicate = new Predicate() {
+	             public boolean evaluate(Object object) {
+	            	 Map<String, String> pke = (Map<String, String>) object;
+	            	 boolean flag1 = order.get("GOODS_ID").equals(pke.get("GOODS_ID")); //先过滤下 商品id
+	            	 boolean flag2 = RegexUtil.getMoney(order.get("PACKAGE")).equals(pke.get("PACKAGE")); //过滤 套餐月费
+	            	 boolean flag3 = order.get("FIRST_MONTH").equals(pke.get("FIRST_MONTH")); //过滤 首月资费
+	            	 
+	            	 boolean flag4 = RegexUtil.getMoney(order.get("SAVE_MONEY")).equals(pke.get("SAVE_MONEY")); //预存话费
+	            	 boolean flag5 = RegexUtil.getMoney(order.get("MONTHS")).equals(pke.get("MONTHS")); //合约期限
+	            	
+	            	 //如果是新号入网，不需要匹配合约期限
+	            	 if(order.get("CTLG_CODE").equals("5") || order.get("CTLG_CODE").equals("10")){
+	            		 return flag1 && flag2 && flag3 && flag4;
+	            	 }
+	            	 //如果是合约购机，不需要匹配预存话费
+	            	 else if(order.get("CTLG_CODE").equals("4") || order.get("CTLG_CODE").equals("9")){
+	            		 return flag1 && flag2 && flag3 && flag5;
+	            	 }
+	            	 else{
+	            		 return false;//默认找不到
+	            	 }
+	             }
+	         };
+	         Map<String, String> temp = (Map<String, String>) CollectionUtils.find(pkes, predicate); //找到的结果
+	         
+	         Map<String, String> row = new HashMap<String, String>();
+	         row.put("order_id", order.get("ORDER_ID"));
+	         row.put("create_time", order.get("CREATE_TIME"));
+	         row.put("is_ok", order.get("IS_OK"));
+	         row.put("photo_links", order.get("PHOTO_LINKS"));
+	         row.put("goods_name", order.get("GOODS_NAME"));
+	         row.put("income_money", order.get("INCOME_MONEY"));
+	         row.put("serial_number", order.get("SERIAL_NUMBER"));
+	         row.put("fee_mode", order.get("FIRST_MONTH").equals("次月生效") ? "01" : (order.get("FIRST_MONTH").equals("立即生效") ? "02" : "03"));
+	         row.put("sys_code", order.get("NET_TYPE").equals("4G") ? "CBS" : "3G");
+	         
+	         //可能没匹配到，则为空字符串
+	         row.put("product_id", MapUtils.isNotEmpty(temp) ? temp.get("PRODUCT_ID") : "");
+	         row.put("product_name", MapUtils.isNotEmpty(temp) ? temp.get("PRODUCT_NAME") : "");
+	         row.put("product_group", MapUtils.isNotEmpty(temp) ? temp.get("PKE") : "");
+	         
+			result.add(row);
+		}//for end
+		
+		return result;
+	}
+	
+	/**
+	 * 根据订单号，补录读卡器读出的身份证号码
+	 * @param order_id
+	 * @param pspt_no
+	 * @param cust_name
+	 * @return
+	 */
+	public int updateOrderPsptNo(String order_id, String pspt_no, String cust_name) {
+		return orderDao.updateOrderPsptNo(order_id, pspt_no, cust_name);
+	}
+	
+	/**
+	 * 根据订单号，补录读卡器读出的身份证号码
+	 * @param order_id
+	 * @param cust_name
+	 * @return
+	 */
+	public int updateOrderCustName(String order_id, String cust_name) {
+		return orderDao.updateOrderCustName(order_id, cust_name);
+	}
+	
+	public static void main(String[] args) {
+		
+		List<String> list1 = new ArrayList<String>();
+		list1.add("111");
+		list1.add("222");
+		list1.add("333");
+		
+		List<String> list2 = new ArrayList<String>();
+		list2.add("123");
+		list2.add("222");
+		list2.add("321");
+		
+		for(final String s: list1){
+			
+			//过滤器
+			Predicate predicate = new Predicate() {
+				public boolean evaluate(Object object) {
+					
+					return s.equals(object);
+				}
+			};
+			String result = (String) CollectionUtils.find(list2, predicate);
+			System.out.println(result);
+		}
+	}
 }

@@ -18,14 +18,7 @@ public class OrderMainController {
     @Autowired
     private OrderService orderService;
     
-    /**
-     * 三级页面：订单主页面(商品详情页面) <br>
-     * 〈功能详细描述〉
-     *
-     * @return
-     * @see [相关类/方法](可选)
-     * @since [产品/模块版本](可选)
-     */
+
     @RequestMapping("/orderMain")
     public ModelAndView selectNumber(){
         ModelAndView mav = new ModelAndView("orderMain.ftl");

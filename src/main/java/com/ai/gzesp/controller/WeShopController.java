@@ -104,6 +104,7 @@ public class WeShopController {
     	//session存值后直接跳转到店铺首页
 		String url = "redirect:/weShop/index/" + user_id;
     	ModelAndView mav = new ModelAndView(url);
+    	
         return mav;
     }
   

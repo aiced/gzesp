@@ -178,6 +178,12 @@ public class OrderController {
     		mav.addAllObjects(signInfo);
         }
         
+    	//根据session里是否有 instead属性，来区分是代客下单或者普通用户下单
+    	boolean isInstead = req.getSession(false).getAttribute("instead") == null ? false : true;
+    	//代客下单时，身份证，物流等信息允许不填，
+    	//因为集客需求，要支持线下当场写卡，不用快递，所以允许下单时身份证不必传，由另外app读卡器读二代证，再补身份证信息
+    	mav.addObject("offline_flag", isInstead ? "1" : "0"); //允许线下写卡补录标志1允许 0不允许
+        
         return mav;
     }
     

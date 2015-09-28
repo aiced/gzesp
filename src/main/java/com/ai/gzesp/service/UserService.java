@@ -2,8 +2,13 @@ package com.ai.gzesp.service;
 
 import java.util.Map;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.dao.UserDao;
 
@@ -42,6 +47,13 @@ public class UserService {
         return userDao.getUserInfoByOpenId(open_id);
     }
     
-
+    /**
+     * 根据能人手机号码，查询出绑定的bss工号密码和cbss工号密码，以及店铺昵称
+     * @param phone_number
+     * @return
+     */
+    public Map<String, String> getBusiInfo(String phone_number){
+        return userDao.getBusiInfo(phone_number);
+    }
 
 }

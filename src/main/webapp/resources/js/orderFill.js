@@ -550,14 +550,21 @@ function uploadPic(btn){
 
 function nextPage() {
 	
-	if(orderStat.netInfoStat==0) {
-		alert('请完整入网资料');
-		return;
+	//20150923 ximh 修改
+	//代客下单时，身份证，物流等信息允许不填，
+	//因为集客需求，要支持线下当场写卡，不用快递，所以允许下单时身份证不必传，由另外app读卡器读二代证，再补身份证信息
+	var offline_flag = $('#offline_flag').val(); //允许线下写卡补录标志1允许 0不允许
+	if(offline_flag != '1'){
+		if(orderStat.netInfoStat==0) {
+			alert('请完整入网资料');
+			return;
+		}
+		if(orderStat.receiveInfoStat==0) {
+			alert('请完整收货信息');
+			return;
+		}
 	}
-	if(orderStat.receiveInfoStat==0) {
-		alert('请完整收货信息');
-		return;
-	}
+	
 //	if(orderStat.payInfoStat==0) {
 //		alert('请完整支付信息');
 //		return;

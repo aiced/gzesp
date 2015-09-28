@@ -12,4 +12,6 @@ public interface UserDao {
 	
 	public Map<Object, Object> getUserInfoByOpenId(@Param("open_id") String open_id);
 	
+	public Map<String, String> getBusiInfo(@Param("phone_number") String phone_number);
+	
 }

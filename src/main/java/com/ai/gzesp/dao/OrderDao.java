@@ -108,5 +108,7 @@ public interface OrderDao {
     
     public int updateOrderCustName(@Param("order_id") String order_id, @Param("cust_name") String cust_name);
     
+    public int updateOrderState(@Param("order_id") String order_id);
+    
     public List<Map<String, String>> queryAllPke();
 }

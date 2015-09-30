@@ -830,6 +830,16 @@ public class OrderService {
 	}
 	
 	/**
+	 * 根据订单号，更新ord_d_base 里的order_state 状态为 07 待归档，
+	 * 因为这些订单线下当场已经写卡拿走，不改状态的话，生产中心可能会重复操作此订单
+	 * @param order_id
+	 * @return
+	 */
+	public int updateOrderState(String order_id) {
+		return orderDao.updateOrderState(order_id);
+	}
+	
+	/**
 	 * 根据订单号，补录读卡器读出的身份证号码
 	 * @param order_id
 	 * @param cust_name
@@ -837,7 +847,7 @@ public class OrderService {
 	 */
 	public int updateOrderCustName(String order_id, String cust_name) {
 		return orderDao.updateOrderCustName(order_id, cust_name);
-	}
+	}	
 	
 	public static void main(String[] args) {
 		

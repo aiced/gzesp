@@ -48,7 +48,9 @@ public interface PayDao {
     
     public int updatePayRefundState(@Param("order_id") String order_id, @Param("refund_state") String refund_state);    
     
-    public int updatePayState(@Param("order_id") String order_id, @Param("order_state") String order_state);    
+    public int updatePayState(@Param("order_id") String order_id, @Param("order_state") String order_state);   
+    
+    public int updatePayStateBand(@Param("order_id") String order_id, @Param("order_state") String order_state); 
     
     public Map<String, String> queryRefundInfoByOrderId(@Param("order_id") String order_id);
     

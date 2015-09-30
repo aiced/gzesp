@@ -122,7 +122,13 @@
          update ord_d_base
             set order_state = #{order_state}
           where order_id = ${order_id}
-	</update>	
+	</update>
+	
+	<update id="updatePayStateBand">
+         update ord_d_band_pay
+            set order_state = #{order_state}
+          where order_id = ${order_id}
+	</update>		
 
 	<select id="queryRefundInfoByOrderId" resultType="java.util.HashMap">
         select order_id, order_state

@@ -136,6 +136,7 @@ public class AppController {
      * 能人app通过读卡器读二代证信息后，将身份证号，姓名，订单号回传沃掌柜
      * 1.更新ord_d_cust 里的 pspt_no,cust_name
      * 2.更新ord_d_post 里的 receiver_name 
+     * 3.更新ord_d_base 里的order_state 状态为 07 待归档
      * 
      * app传参json：{"order_id":"12345", //订单id
      *               "pspt_no":"320282198401162411",  //身份证号
@@ -157,7 +158,8 @@ public class AppController {
     	
 		int n1 = orderService.updateOrderPsptNo(order_id, pspt_no, cust_name);
 		int n2 = orderService.updateOrderCustName(order_id, cust_name);
-		if(n1 > 0 && n2 > 0){
+		int n3 = orderService.updateOrderState(order_id);
+		if(n1 > 0 && n2 > 0 && n3 > 0){
 			result.put("result_code", "00");
 			result.put("result_desc", "更新身份证成功");
 			//再加上录单请求需要传给沃易登的数据

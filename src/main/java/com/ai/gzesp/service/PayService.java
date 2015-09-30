@@ -315,7 +315,13 @@ public class PayService {
     	int r1 = updatePayRefundState(orderId, order_state);
     	
     	//不管成功与否 都要 更新订单基本表 ord_d_base 里的  ORDER_STATE 
-    	int r2 = updatePayState(orderId, order_state);
+    	//宽带续约订单表是单独的ord_d_band_pay，所以退款的时候也得更新这张表
+    	if(orderId.startsWith("3")){
+    		int r2 = updatePayStateBand(orderId, order_state);
+    	}
+    	else{
+    		int r2 = updatePayState(orderId, order_state);
+    	}
     	
     	//如果退款请求成功 更新ord_d_pay 里的状态 5 已退款
     	if(isSuccess){
@@ -643,6 +649,16 @@ public class PayService {
      */
     private int updatePayState(String order_id, String order_state) {
         return payDao.updatePayState(order_id, order_state);
+    }
+    
+    /**
+     * 退款请求收到响应后更新宽带续约订单表ord_d_band_pay里订单状态 order_state
+     * @param order_id
+     * @param order_state
+     * @return
+     */
+    private int updatePayStateBand(String order_id, String order_state) {
+        return payDao.updatePayStateBand(order_id, order_state);
     }
     
     /**

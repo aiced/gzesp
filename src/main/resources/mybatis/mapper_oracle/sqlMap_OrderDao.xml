@@ -487,7 +487,16 @@
 		update ord_d_post 
 		   set receiver_name = #{cust_name}
 		 where order_id = #{order_id}
-	</update>	
+	</update>
+	
+	<update id="updateOrderState">
+		update ord_d_base 
+		   set order_state = '07'
+		 where order_id = #{order_id}
+		 <![CDATA[
+		   and order_state <> '07'
+		  ]]>     
+	</update>		
 	
 	<select id="queryAllPke" resultType="java.util.HashMap">
 		select a.goods_id, a.package, a.first_month, save_money, months, pke, product_id, product_name

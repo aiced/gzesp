@@ -184,9 +184,9 @@ public class BssBandService {
 		proAndActReq.setNumID(map.get("BANDNUMID").toString());
 		proAndActReq.setOldProductCode(map.get("VALUES1").toString());
 		proAndActReq.setOptTime(map.get("CREATE_TIME").toString());
-		proAndActReq.setOrigFee(map.get("ORIGINAL_PRICE").toString());
+		proAndActReq.setOrigFee(String.valueOf((Integer.valueOf(map.get("ORIGINAL_PRICE").toString())/10)));
 		proAndActReq.setProductCode(map.get("PRODUCT_ID").toString());
-		proAndActReq.setRealFee(map.get("INCOME_MONEY").toString());
+		proAndActReq.setRealFee(String.valueOf((Integer.valueOf(map.get("INCOME_MONEY").toString().toString())/10)));
 		proAndActReq.setSignMsg(strEncrypt);
 
 		//构造产品变更报文

@@ -422,13 +422,13 @@
             (
               select to_char(a.order_id) order_id,
                      to_char(a.create_time, 'yyy-mm-dd hh24:mi:ss') create_time,
-                     case when b.pspt_no is null then 0 else 1 end is_ok,
+                     case when b.pspt_no is null then '0' else '1' end is_ok,
                      'http://res.woboss.gz186.com'||f.photo_links photo_links,
                      c.goods_name,
                      to_char(a.income_money/1000) income_money,
                      g.res_attr_val serial_number,
-                     c.goods_id,
-                     c.ctlg_code,
+                     to_char(c.goods_id) goods_id,
+                     to_char(c.ctlg_code) ctlg_code,
                      (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'NETTYPE') net_type,
                      (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'PACKRES') package,
                      (select res_attr_val from ord_d_res where order_id = a.order_id and res_attr_code = 'FMONTHD') first_month,
@@ -448,11 +448,11 @@
                  and a.income_money > 0
                 ]]>
                <choose>
-		         <when test="is_ok == 0">
-			       b.pspt_no is null
+		         <when test="is_ok == '0'">
+			       and b.pspt_no is null
 			     </when>
-			     <when test="is_ok == 1">
-			       b.pspt_no is not null
+			     <when test="is_ok == '1'">
+			       and b.pspt_no is not null
 			     </when>  
 		         <otherwise>
 		         
@@ -499,8 +499,11 @@
 	</update>		
 	
 	<select id="queryAllPke" resultType="java.util.HashMap">
-		select a.goods_id, a.package, a.first_month, save_money, months, pke, product_id, product_name
-		  from rel_gds_ord_pke a
+		select to_char(a.goods_id) goods_id, to_char(a.ctlg_code) ctlg_code, a.goods_name, a.package, a.first_month, a.save_money, a.months, 
+		       a.pre_fee, a.pke, a.product_id, a.product_name,
+		       a.package_id, a.package_name, a.element_id, a.element_name, 
+		       a.activity_type, a.activity_id, a.activity_name
+		  from gds_d_pke a
 		 <if test="goods_id != null">
          where a.goods_id like = #{goods_id}
          </if>

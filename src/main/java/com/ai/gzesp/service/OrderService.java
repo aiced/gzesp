@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -768,54 +769,129 @@ public class OrderService {
 		//oracle查询出的结果集 列名 都是大写，需要转换成小写给前台，方便前台统一
 		//遍历orders,根据 套餐月资费，首月资费，合约期限，存费送费，4个因素 从pkes里匹配出唯一的记录
 		List<Map<String, String>> result = new ArrayList<Map<String, String>>(); 
-		for(final Map<String, String> order : orders){
+		for(Map<String, String> order : orders){
 			
-			//过滤器
-			Predicate predicate = new Predicate() {
-	             public boolean evaluate(Object object) {
-	            	 Map<String, String> pke = (Map<String, String>) object;
-	            	 boolean flag1 = order.get("GOODS_ID").equals(pke.get("GOODS_ID")); //先过滤下 商品id
-	            	 boolean flag2 = RegexUtil.getMoney(order.get("PACKAGE")).equals(pke.get("PACKAGE")); //过滤 套餐月费
-	            	 boolean flag3 = order.get("FIRST_MONTH").equals(pke.get("FIRST_MONTH")); //过滤 首月资费
-	            	 
-	            	 boolean flag4 = RegexUtil.getMoney(order.get("SAVE_MONEY")).equals(pke.get("SAVE_MONEY")); //预存话费
-	            	 boolean flag5 = RegexUtil.getMoney(order.get("MONTHS")).equals(pke.get("MONTHS")); //合约期限
-	            	
-	            	 //如果是新号入网，不需要匹配合约期限
-	            	 if(order.get("CTLG_CODE").equals("5") || order.get("CTLG_CODE").equals("10")){
-	            		 return flag1 && flag2 && flag3 && flag4;
-	            	 }
-	            	 //如果是合约购机，不需要匹配预存话费
-	            	 else if(order.get("CTLG_CODE").equals("4") || order.get("CTLG_CODE").equals("9")){
-	            		 return flag1 && flag2 && flag3 && flag5;
-	            	 }
-	            	 else{
-	            		 return false;//默认找不到
-	            	 }
-	             }
-	         };
-	         Map<String, String> temp = (Map<String, String>) CollectionUtils.find(pkes, predicate); //找到的结果
-	         
-	         Map<String, String> row = new HashMap<String, String>();
-	         row.put("order_id", order.get("ORDER_ID"));
-	         row.put("create_time", order.get("CREATE_TIME"));
-	         row.put("is_ok", order.get("IS_OK"));
-	         row.put("photo_links", order.get("PHOTO_LINKS"));
-	         row.put("goods_name", order.get("GOODS_NAME"));
-	         row.put("income_money", order.get("INCOME_MONEY"));
-	         row.put("serial_number", order.get("SERIAL_NUMBER"));
-	         row.put("fee_mode", order.get("FIRST_MONTH").equals("次月生效") ? "01" : (order.get("FIRST_MONTH").equals("立即生效") ? "02" : "03"));
-	         row.put("sys_code", order.get("NET_TYPE").equals("4G") ? "CBS" : "3G");
-	         
-	         //可能没匹配到，则为空字符串
-	         row.put("product_id", MapUtils.isNotEmpty(temp) ? temp.get("PRODUCT_ID") : "");
-	         row.put("product_name", MapUtils.isNotEmpty(temp) ? temp.get("PRODUCT_NAME") : "");
-	         row.put("product_group", MapUtils.isNotEmpty(temp) ? temp.get("PKE") : "");
+			Map<String, String> temp = findPkeByOrder(pkes, order); //根据订单信息过滤查找对应的cbss系统里的pke参数等信息
+			Map<String, String> row = buildNewOrderInfo(order, temp);
 	         
 			result.add(row);
 		}//for end
 		
 		return result;
+	}
+	
+	/**
+	 * 根据订单信息过滤查找对应的cbss系统里的pke参数等信息
+	 * @param pkes
+	 * @param order
+	 * @return
+	 */
+	private Map<String, String> findPkeByOrder(List<Map<String, String>> pkes, final Map<String, String> order){
+		String goods_id = order.get("GOODS_ID");
+		String pkg = RegexUtil.getMoney(order.get("PACKAGE"));
+		String first_month = order.get("FIRST_MONTH");
+		String save_money = RegexUtil.getMoney(order.get("SAVE_MONEY"));
+		String months = RegexUtil.getMoney(order.get("MONTHS"));
+		
+		//过滤器
+		Predicate predicate = new Predicate() {
+             public boolean evaluate(Object object) {
+            	 Map<String, String> pke = (Map<String, String>) object;
+            	 //这三个属性是沃掌柜里每个商品都有的
+            	 boolean flag1 = order.get("GOODS_ID").equals(pke.get("GOODS_ID")); //先过滤下 商品id
+            	 //logger.debug(order.get("GOODS_ID"));
+            	 //logger.debug(pke.get("GOODS_ID"));
+            	 boolean flag2 = RegexUtil.getMoney(order.get("PACKAGE")).equals(pke.get("PACKAGE")); //过滤 套餐月费
+            	 //logger.debug(RegexUtil.getMoney(order.get("PACKAGE")));
+            	 //logger.debug(pke.get("PACKAGE"));
+            	 boolean flag3 = order.get("FIRST_MONTH").equals(pke.get("FIRST_MONTH")); //过滤 首月资费
+            	 //logger.debug(order.get("FIRST_MONTH"));
+            	 //logger.debug(pke.get("FIRST_MONTH"));
+            	 //这2个不是所有商品都有
+            	 boolean flag4 = RegexUtil.getMoney(order.get("SAVE_MONEY")).equals(pke.get("SAVE_MONEY")); //预存话费
+            	 //logger.debug(RegexUtil.getMoney(order.get("SAVE_MONEY")));
+            	 //logger.debug(pke.get("SAVE_MONEY"));
+            	 boolean flag5 = RegexUtil.getMoney(order.get("MONTHS")).equals(pke.get("MONTHS")); //合约期限
+            	 //logger.debug(RegexUtil.getMoney(order.get("MONTHS")));
+            	 //logger.debug(pke.get("MONTHS"));
+            	 
+            	 //logger.debug(order.get("CTLG_CODE"));
+            	 //如果是新号入网，不需要匹配合约期限
+            	 if(order.get("CTLG_CODE").equals("5") || order.get("CTLG_CODE").equals("10")){
+            		 logger.debug("过滤order_id=" + order.get("ORDER_ID") + ":" + String.valueOf(flag1) + "|" + String.valueOf(flag2) + "|" + String.valueOf(flag3) + "|" + String.valueOf(flag4));
+            		 return flag1 && flag2 && flag3 && flag4;
+            	 }
+            	 //如果是合约购机，不需要匹配预存话费
+            	 else if(order.get("CTLG_CODE").equals("4") || order.get("CTLG_CODE").equals("9")){
+            		 logger.debug("过滤order_id=" + order.get("ORDER_ID") + ":" + String.valueOf(flag1) + "|" + String.valueOf(flag2) + "|" + String.valueOf(flag3) + "|" + String.valueOf(flag5));
+            		 return flag1 && flag2 && flag3 && flag5;
+            	 }
+            	 else{
+            		 return false;//默认找不到
+            	 }
+             }
+         };
+         
+         return (Map<String, String>) CollectionUtils.find(pkes, predicate); //找到的结果
+	}
+	
+	/**
+	 * 根据原始的订单信息，加上pke等机器人和同一门需要的参数，组成新的订单信息
+	 * @param oldOrder
+	 * @param temp
+	 * @return
+	 */
+	private Map<String, String> buildNewOrderInfo(Map<String, String> oldOrder, Map<String, String> temp){
+        Map<String, String> row = new HashMap<String, String>();
+        
+        //这些属性是沃掌柜系统订单本来有的属性
+        row.put("order_id", oldOrder.get("ORDER_ID"));
+        row.put("create_time", oldOrder.get("CREATE_TIME"));
+        row.put("is_ok", oldOrder.get("IS_OK"));
+        row.put("photo_links", oldOrder.get("PHOTO_LINKS"));
+        row.put("goods_name", oldOrder.get("GOODS_NAME"));
+        row.put("income_money", oldOrder.get("INCOME_MONEY"));
+        row.put("serial_number", oldOrder.get("SERIAL_NUMBER"));
+        row.put("fee_mode", oldOrder.get("FIRST_MONTH").equals("次月生效") ? "01" : (oldOrder.get("FIRST_MONTH").equals("立即生效") ? "02" : "03"));
+        row.put("sys_code", oldOrder.get("NET_TYPE").equals("4G") ? "CBS" : "BSS");
+        row.put("ctlg_code", oldOrder.get("CTLG_CODE"));
+        
+        //下面这些属性是机器人，统一门户系统需要的pke等参数
+        //pke可能没匹配到，则为空字符串
+        if(MapUtils.isNotEmpty(temp)){
+       	 row.put("product_id", temp.get("PRODUCT_ID"));
+       	 row.put("product_name", temp.get("PRODUCT_NAME"));
+       	 row.put("product_group", temp.get("PKE"));
+       	 row.put("is_terminal", "1");
+       	 row.put("is_selfmachine", "1");
+       	 //ACTIVITY_TYPE空表示不参加活动，目前沃掌柜只有 存费送费，存费购机 2种活动
+       	 row.put("is_joinactivity", StringUtils.isEmpty(temp.get("ACTIVITY_TYPE")) ? "0" : "1"); 
+       	 row.put("activity_type", temp.get("ACTIVITY_TYPE")); 
+       	 row.put("assure_type", "4"); 
+       	 row.put("activity_id", temp.get("ACTIVITY_ID")); 
+       	 row.put("activity_name", temp.get("ACTIVITY_NAME")); 
+       	 row.put("activity_detail", "");
+       	 row.put("terminal_type", "01"); //目前机器人不支持上网卡开户，所以这边终端类型 写死01
+       	 row.put("pre_fee", temp.get("PRE_FEE")); 
+        }
+        else{
+       	 row.put("product_id", "");
+       	 row.put("product_name", "");
+       	 row.put("product_group", "");
+       	 row.put("is_terminal", "");
+       	 row.put("is_selfmachine", "");
+       	 //ACTIVITY_TYPE空表示不参加活动，目前沃掌柜只有 存费送费，存费购机 2种活动
+       	 row.put("is_joinactivity", ""); 
+       	 row.put("activity_type", ""); 
+       	 row.put("assure_type", ""); 
+       	 row.put("activity_id", ""); 
+       	 row.put("activity_name", ""); 
+       	 row.put("activity_detail", "");
+       	 row.put("terminal_type", ""); //目前机器人不支持上网卡开户，所以这边终端类型 写死01
+       	 row.put("pre_fee", ""); 	 
+        }
+        
+        return row;
 	}
 	
 	/**
@@ -851,26 +927,38 @@ public class OrderService {
 	
 	public static void main(String[] args) {
 		
-		List<String> list1 = new ArrayList<String>();
-		list1.add("111");
-		list1.add("222");
-		list1.add("333");
+		List<Map<String, String>> list1 = new ArrayList<Map<String, String>>();
+		Map<String, String> row1 = new HashMap<String, String>();
+		row1.put("a", "111");
+		list1.add(row1);
+		Map<String, String> row2 = new HashMap<String, String>();
+		row2.put("a", "222");
+		list1.add(row2);
+		Map<String, String> row3 = new HashMap<String, String>();
+		row3.put("a", "333");
+		list1.add(row3);
 		
-		List<String> list2 = new ArrayList<String>();
-		list2.add("123");
-		list2.add("222");
-		list2.add("321");
+		List<Map<String, String>> list2 = new ArrayList<Map<String, String>>();
+		Map<String, String> row11 = new HashMap<String, String>();
+		row11.put("b", "123");
+		list2.add(row11);
+		Map<String, String> row12 = new HashMap<String, String>();
+		row12.put("b", "222");
+		list2.add(row12);
+		Map<String, String> row13 = new HashMap<String, String>();
+		row13.put("b", "321");
+		list2.add(row13);
 		
-		for(final String s: list1){
+		for(final Map<String, String> row: list1){
 			
 			//过滤器
 			Predicate predicate = new Predicate() {
 				public boolean evaluate(Object object) {
-					
-					return s.equals(object);
+					Map<String, String> t = (Map<String, String>) object;
+					return row.get("a").equals(t.get("b"));
 				}
 			};
-			String result = (String) CollectionUtils.find(list2, predicate);
+			Map<String, String> result = (Map<String, String>) CollectionUtils.find(list2, predicate);
 			System.out.println(result);
 		}
 	}

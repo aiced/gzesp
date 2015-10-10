@@ -50,7 +50,11 @@ public class AppController {
      *            "bss_login_code":"", 
      *            "bss_login_pwd":"", 
      *            "cbss_login_code":"", 
-     *            "cbss_login_pwd":""
+     *            "cbss_login_pwd":"",
+     *            "develop_code":"",
+     *            "develop_name":"",
+     *            "channel_code":"",
+     *            "channel_name":""
      *            }
      * @param param
      * @return
@@ -110,7 +114,18 @@ public class AppController {
      *            "sys_code":"CBS",
      *            "product_id":"99999830", //product_id 找不到的时候为空字符串""
      *            "product_name":"4G全国套餐-76元套餐", // 找不到的时候为空字符串""
-     *            "product_group":"up99999830k59999792&cp99999830k59999790e*&cp89000100" //找不到的时候为空字符串""
+     *            "product_group":"up99999830k59999792&cp99999830k59999790e*&cp89000100", //找不到的时候为空字符串""
+     *            "is_terminal": "1",
+     *            "is_selfmachine": "1",
+     *            "is_joinactivity": "1", 
+     *            "activity_type": "CFSF001", 
+     *            "assure_type": "4", 
+     *            "activity_id": "89000100", 
+     *            "activity_name": "存费送费合约存120元送240元(12个月", 
+     *            "activity_detail": "",
+     *            "terminal_type": "01", //目前机器人不支持上网卡开户，所以这边终端类型 写死01
+     *            "pre_fee": "50",
+     *            "ctlg_code": "5" 
      *            }]
      * @param param
      * @return

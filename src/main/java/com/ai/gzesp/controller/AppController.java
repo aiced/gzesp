@@ -59,7 +59,7 @@ public class AppController {
      * @param param
      * @return
      */
-    @RequestMapping(value="/login", method = RequestMethod.POST, consumes="application/octet-stream", produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/login", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(@RequestBody Map<String, String> param){
         Map<String, Object> result = new HashMap<String, Object>();

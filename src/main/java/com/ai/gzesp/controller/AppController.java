@@ -59,7 +59,7 @@ public class AppController {
      * @param param
      * @return
      */
-    @RequestMapping(value="/login", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/login", method = RequestMethod.POST, consumes="application/octet-stream", produces="application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, Object> login(@RequestBody Map<String, String> param){
         Map<String, Object> result = new HashMap<String, Object>();
@@ -130,7 +130,7 @@ public class AppController {
      * @param param
      * @return
      */
-    @RequestMapping(value="/queryOfflineOrders", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/queryOfflineOrders", method = RequestMethod.POST, consumes="application/octet-stream", produces="application/json;charset=UTF-8")
     @ResponseBody
     public List<Map<String, String>> queryOfflineOrders(@RequestBody Map<String, String> param){
     	String user_id = param.get("user_id");
@@ -163,7 +163,7 @@ public class AppController {
      * @param param
      * @return
      */
-    @RequestMapping(value="/updateOrderPsptNo", method = RequestMethod.POST, produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/updateOrderPsptNo", method = RequestMethod.POST, consumes="application/octet-stream", produces="application/json;charset=UTF-8")
     @ResponseBody
     public Map<String, String> updateOrderPsptNo(@RequestBody Map<String, String> param){
     	HashMap<String, String> result = new HashMap<String, String>();

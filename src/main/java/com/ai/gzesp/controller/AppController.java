@@ -49,8 +49,8 @@ public class AppController {
      *            "bss_login_pwd":"", 
      *            "cbss_login_code":"", 
      *            "cbss_login_pwd":"",
-     *            "develop_code":"",
-     *            "develop_name":"",
+     *            "developer_code":"",
+     *            "developer_name":"",
      *            "channel_code":"",
      *            "channel_name":""
      *            }
@@ -83,6 +83,10 @@ public class AppController {
 			result.put("bss_login_pwd", busiInfo.get("BSS_LOGIN_PWD"));
 			result.put("cbss_login_code", busiInfo.get("CBSS_LOGIN_CODE"));
 			result.put("cbss_login_pwd", busiInfo.get("CBSS_LOGIN_PWD"));
+			result.put("developer_code", busiInfo.get("DEVELOPER_CODE"));
+			result.put("developer_name", busiInfo.get("DEVELOPER_NAME"));
+			result.put("channel_code", busiInfo.get("CHANNEL_CODE"));
+			result.put("channel_name", busiInfo.get("CHANNEL_NAME"));
 		}
 		else{
 			result.put("result_code", "01");
@@ -131,7 +135,7 @@ public class AppController {
      * @param param
      * @return
      */
-    @RequestMapping(value="/queryOfflineOrders", method = RequestMethod.POST, consumes="application/octet-stream", produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/queryOfflineOrders", method = RequestMethod.POST)
     @ResponseBody
     public List<Map<String, String>> queryOfflineOrders(@RequestBody Map<String, String> param){
     	String user_id = param.get("user_id");
@@ -164,7 +168,7 @@ public class AppController {
      * @param param
      * @return
      */
-    @RequestMapping(value="/updateOrderPsptNo", method = RequestMethod.POST, consumes="application/octet-stream", produces="application/json;charset=UTF-8")
+    @RequestMapping(value="/updateOrderPsptNo", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> updateOrderPsptNo(@RequestBody Map<String, String> param){
     	HashMap<String, String> result = new HashMap<String, String>();

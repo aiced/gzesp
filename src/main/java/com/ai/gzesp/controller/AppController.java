@@ -1,18 +1,16 @@
 package com.ai.gzesp.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.UserService;
@@ -61,11 +59,14 @@ public class AppController {
      */
     @RequestMapping(value="/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> login(@RequestBody Map<String, String> param){
+    public Map<String, Object> login(/*@RequestBody Map<String, String> param*/@RequestParam("inputMobile") String inputMobile, @RequestParam("inputPassword") String inputPassword){
         Map<String, Object> result = new HashMap<String, Object>();
         
-    	String strPhoneNum = param.get("inputMobile");
-    	String strPwd = MD5Util.md5s2(param.get("inputPassword")); //md5加密
+    	//String strPhoneNum = param.get("inputMobile");
+    	//String strPwd = MD5Util.md5s2(param.get("inputPassword")); //md5加密
+        
+        String strPhoneNum = inputMobile;
+    	String strPwd = MD5Util.md5s2(inputPassword); //md5加密
     	
     	//登陆验证 参考 WeShopLoginController.checkLogin()
 		Map<Object, Object> userMap = userService.getUserInfoByPhonePassword(strPhoneNum, strPwd);

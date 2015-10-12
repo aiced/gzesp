@@ -59,14 +59,14 @@ public class AppController {
      */
     @RequestMapping(value="/login", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> login(/*@RequestBody Map<String, String> param*/@RequestParam("inputMobile") String inputMobile, @RequestParam("inputPassword") String inputPassword){
+    public Map<String, Object> login(@RequestBody Map<String, String> param){
         Map<String, Object> result = new HashMap<String, Object>();
         
-    	//String strPhoneNum = param.get("inputMobile");
-    	//String strPwd = MD5Util.md5s2(param.get("inputPassword")); //md5加密
+    	String strPhoneNum = param.get("inputMobile");
+    	String strPwd = MD5Util.md5s2(param.get("inputPassword")); //md5加密
         
-        String strPhoneNum = inputMobile;
-    	String strPwd = MD5Util.md5s2(inputPassword); //md5加密
+        //String strPhoneNum = inputMobile;
+    	//String strPwd = MD5Util.md5s2(inputPassword); //md5加密
     	
     	//登陆验证 参考 WeShopLoginController.checkLogin()
 		Map<Object, Object> userMap = userService.getUserInfoByPhonePassword(strPhoneNum, strPwd);

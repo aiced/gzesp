@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.MapUtils;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -295,6 +296,21 @@ public class WeShopService {
      */
     public List<Map<Object, Object>> queryGoodListById(String[] goods_list){
     	return weShopDao.queryGoodListById(goods_list);
+    }
+    
+    /**
+     * 检查该商品是否上架可卖
+     * @param goods_id
+     * @return
+     */
+    public boolean isGoodCanSell(String goods_id){
+    	Map<String, String> goods = weShopDao.getGoodInfoById(goods_id);
+    	if(MapUtils.isEmpty(goods)){
+    		return false;
+    	}
+    	else{
+    		return true;
+    	}
     }
     
 }

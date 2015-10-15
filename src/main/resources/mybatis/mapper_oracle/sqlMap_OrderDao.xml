@@ -421,7 +421,7 @@
             from 
             (
               select to_char(a.order_id) order_id,
-                     to_char(a.create_time, 'yyy-mm-dd hh24:mi:ss') create_time,
+                     to_char(a.create_time, 'yyyy-mm-dd hh24:mi:ss') create_time,
                      case when b.pspt_no is null then '0' else '1' end is_ok,
                      'http://res.woboss.gz186.com'||f.photo_links photo_links,
                      c.goods_name,
@@ -442,11 +442,17 @@
                      gds_d_photo f,
                      (select * from ord_d_res where res_attr_code = 'NUMBERS') g
                where a.order_id = b.order_id
+               <if test="start_day != null and start_day != ''">
                	<![CDATA[
                  and a.create_time >= to_date(#{start_day}, 'yyyy-mm-dd')
-                 and a.create_time < to_date(#{end_day}, 'yyyy-mm-dd')+1
-                 and a.income_money > 0
                 ]]>
+               </if> 
+               <if test="end_day != null and end_day != ''">
+               	<![CDATA[ 
+                 and a.create_time < to_date(#{end_day}, 'yyyy-mm-dd')+1
+                 ]]>
+               </if>
+                 and a.income_money > 0
                <choose>
 		         <when test="is_ok == '0'">
 			       and b.pspt_no is null
@@ -461,11 +467,15 @@
                  and a.order_id = c.order_id
                  and c.goods_id = e.goods_id
                  and e.album_id = f.album_id
+                 and f.default_tag = '0'
                  and a.order_id = d.order_id
                  and d.user_id = #{user_id}
                  and a.order_id = g.order_id
                  <if test="phone_number != null">
                    and g.res_attr_val like '%'||#{phone_number}||'%'
+                 </if>
+                 <if test="order_id != null">
+                   and a.order_id like '%'||#{order_id}||'%'
                  </if>
                order by a.create_time
              ) m
@@ -493,9 +503,7 @@
 		update ord_d_base 
 		   set order_state = '07'
 		 where order_id = #{order_id}
-		 <![CDATA[
-		   and order_state <> '07'
-		  ]]>     
+		    
 	</update>		
 	
 	<select id="queryAllPke" resultType="java.util.HashMap">

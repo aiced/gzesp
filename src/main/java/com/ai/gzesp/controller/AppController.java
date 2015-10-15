@@ -101,6 +101,7 @@ public class AppController {
      * 根据user_id 查询出未绑定身份证的订单，用于后面绑定身份证号
      * 需要线下当场开卡时，下的订单没有传身份证照片
      * app传参json：{"user_id":"12345", //能人id
+     *               "order_id":"123456",  //订单id
      *               "phone_number":"18651885060",  //订单选中的手机号码
      *               "is_ok":"1",  // 1身份证已经补录，0身份证未补录，“”表示全部
      *               "start_day":"2015-09-01", //订单开始日期
@@ -139,6 +140,7 @@ public class AppController {
     @ResponseBody
     public List<Map<String, String>> queryOfflineOrders(@RequestBody Map<String, String> param){
     	String user_id = param.get("user_id");
+    	String order_id = param.get("order_id");
     	String phone_number = param.get("phone_number");
     	String is_ok = param.get("is_ok"); // 1身份证已经补录，0身份证未补录，“”表示全部
     	String start_day = param.get("start_day");
@@ -147,7 +149,7 @@ public class AppController {
     	String pageSize = param.get("pageSize");
     	
 		return orderService.queryOfflineOrders(
-				user_id, is_ok, phone_number, start_day, end_day, pageNum,
+				user_id, is_ok, order_id, phone_number, start_day, end_day, pageNum,
 				pageSize);
     }
     

@@ -745,10 +745,11 @@ public class OrderService {
    }
    
    
-   
 	/**
 	 * 需要线下当场开卡时，下的订单没有传身份证照片，根据user_id 查询出订单，用于后面绑定身份证号
 	 * @param user_id
+	 * @param is_ok
+	 * @param order_id
 	 * @param phone_number
 	 * @param start_day
 	 * @param end_day
@@ -757,10 +758,10 @@ public class OrderService {
 	 * @return
 	 */
 	public List<Map<String, String>> queryOfflineOrders(String user_id, String is_ok,
-			String phone_number, String start_day, String end_day, String pageNum,
+			String order_id, String phone_number, String start_day, String end_day, String pageNum,
 			String pageSize) {
 		//订单集合orders
-		List<Map<String, String>> orders = orderDao.queryOfflineOrders(user_id, is_ok, phone_number, start_day,
+		List<Map<String, String>> orders = orderDao.queryOfflineOrders(user_id, is_ok, order_id, phone_number, start_day,
 				end_day, pageNum, pageSize);
 
 		//pke参数pkes

@@ -47,4 +47,6 @@ public interface WeShopDao {
     public Map<String, String> getCtlgCode(@Param("goods_id") String goods_id);
     
     public List<Map<Object, Object>> queryGoodListById(@Param("goods_list") String[] goods_list);
+    
+    public Map<String, String> getGoodInfoById(@Param("goods_id") String goods_id);
 }

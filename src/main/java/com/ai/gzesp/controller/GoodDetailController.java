@@ -40,6 +40,12 @@ public class GoodDetailController {
     @Token(save=true)
     @RequestMapping("/goodDetail/{user_id}/{ctlg_code}/{goods_id}")
     public ModelAndView goodDetail(@PathVariable("user_id") String user_id, @PathVariable("ctlg_code") String ctlg_code, @PathVariable("goods_id") String goods_id){
+    	//先检查商品是否上架可卖，下架的话直接跳转到能人店铺首页
+    	if(!weShopService.isGoodCanSell(goods_id)){
+    		ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+user_id);
+    		return mav;
+    	}
+    	
     	//调用公共业务逻辑获取各种信息
     	ModelAndView mav = getGoodDetailPublic(user_id, ctlg_code, goods_id);
 
@@ -60,7 +66,14 @@ public class GoodDetailController {
     @RequestMapping("/bannerGoodDetail/{goods_id}/{user_id}")
     public ModelAndView bannerGoodDetail(@PathVariable("goods_id") String goods_id, @PathVariable("user_id") String user_id){
     	ModelAndView mav = null;
-        //先根据商品id获取商品类目
+        
+    	//先检查商品是否上架可卖，下架的话直接跳转到能人店铺首页
+    	if(!weShopService.isGoodCanSell(goods_id)){
+    	    mav = new ModelAndView("redirect:/weShop/index/"+user_id);
+    		return mav;
+    	}
+    	
+    	//先根据商品id获取商品类目
         Map<String, String> ctlg = weShopService.getCtlgCode(goods_id);
         //如果根据商品id没捞到商品类目，则返回首页
         if(ctlg == null || ctlg.isEmpty()){

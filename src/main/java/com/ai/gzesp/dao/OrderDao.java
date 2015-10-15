@@ -97,6 +97,7 @@ public interface OrderDao {
     
     public List<Map<String, String>> queryOfflineOrders(@Param("user_id") String user_id, 
     		@Param("is_ok") String is_ok,
+    		@Param("order_id") String order_id,
     		@Param("phone_number") String phone_number, 
     		@Param("start_day") String start_day,
     		@Param("end_day") String end_day,

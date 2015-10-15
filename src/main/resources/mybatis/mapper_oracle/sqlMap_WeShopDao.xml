@@ -459,5 +459,12 @@
             and f.default_tag = '0'  
           order by a.goods_name
 	</select>		
-	
+
+	<select id="getGoodInfoById" resultType="java.util.HashMap">
+	    select goods_id 
+	      from gds_d_info 
+	     where goods_id = ${goods_id}
+	       and goods_state = '1'
+	</select>
+		
 </mapper>

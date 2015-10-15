@@ -15,7 +15,7 @@ public class OrderServiceTest extends BaseTest {
 	
 	@Test
 	public void test2(){
-    	String user_id = "2015051408084496";
+/*    	String user_id = "2015051408084496";
     	String phone_number = ""; //18685249827
     	String is_ok = ""; // 1身份证已经补录，0身份证未补录，“”表示全部
     	String start_day = "2015-01-01";
@@ -27,7 +27,7 @@ public class OrderServiceTest extends BaseTest {
 				user_id, is_ok, phone_number, start_day, end_day, pageNum,
 				pageSize);
     	
-		System.out.println(list);
+		System.out.println(list);*/
 	}
 	
 	@Test

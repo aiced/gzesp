@@ -170,9 +170,10 @@ public class OrderService {
     	String originalPrice = paramsMap.get("originalPrice");
     	String cmsRule = commissionSql.getCmsRuleByGoodsId(goodsId);
     	logger.debug("cmsRule:"+cmsRule);
+    	String ableRule = cmsRule.split("\\|")[0];
     	// no need to check con for pre Fee
     	// SAVEMEY( 4G组合套餐，还是ORD_D_RES表中  	这个商品去取RES_ATTR_CODE='SAVEMEY'),PACKMEY(ORD_D_RES表中套餐面值),PRODMEY(上网卡的价格,是直接取商品价格还是说需要配置一个物品属性,需要确认)
-    	String[] result = RegexUtil.getCMSRule(cmsRule);
+    	String[] result = RegexUtil.getCMSRule(ableRule);
     	if(result != null) {
     		String money = "";
     		if("SAVEMEY".equals(result[0]) ) {

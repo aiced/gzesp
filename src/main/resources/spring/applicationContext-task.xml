@@ -75,17 +75,92 @@
         <property name="jobDetail" ref="reverseGoodsAmountJob" />  
 		<property name="startDelay" value="120000"/><!-- 应用启动后延迟2分钟开始调度 -->  
 		<property name="repeatInterval" value="1800000" /><!-- 每半小时 30*60*1000毫秒调度一次 -->  
-    </bean>  	 	
+    </bean> 
+
+    <!-- esp和一卡充系统 卡激活 ， 定时任务 esp循环调用激活接口，将系统未激活的卡激活，每天凌晨4点执行一次 -->    
+	<bean id="activeCardsJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="rechargeService"/>
+		<property name="targetMethod" value="activeCardsJob"/>
+	</bean>
+	
+	<bean id="activeCardsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="activeCardsJob" />  
+		<property name="cronExpression" value="0 0 4 * * ?" /><!-- 每天凌晨4点执行一次 --> 
+    </bean> 
+        
+    <!-- esp和一卡充系统 充值对账 ， 定时任务 esp循环调用对账接口，每天凌晨3点执行一次 -->    
+	<bean id="checkBillJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="rechargeService"/>
+		<property name="targetMethod" value="checkBillJob"/>
+	</bean>
+	
+	<bean id="checkBillTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="checkBillJob" />  
+		<property name="cronExpression" value="0 0 3 * * ?" /><!-- 每天凌晨3点执行一次 --> 
+    </bean> 	
+    
+    <!-- 一卡充充值 和bss系统状态同步， 定时任务1 esp主动放req文件，每天凌晨1点执行一次 -->    
+	<bean id="syncCardStatus2BssJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="rechargeService"/>
+		<property name="targetMethod" value="syncCardStatus2BssJob"/>
+	</bean>
+	
+	<bean id="syncCardStatus2BssTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="syncCardStatus2BssJob" />  
+		<property name="cronExpression" value="0 0 1 * * ?" /><!-- 每天凌晨1点执行一次 --> 
+    </bean>
+    
+    <!-- 一卡充充值 和bss系统状态同步， 定时任务2 bss给回执后esp读取resp文件，每天凌晨2点执行一次 -->    
+	<bean id="syncCardStatus2BssRespJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="rechargeService"/>
+		<property name="targetMethod" value="syncCardStatus2BssRespJob"/>
+	</bean>
+	
+	<bean id="syncCardStatus2BssRespTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="syncCardStatus2BssRespJob" />  
+		<property name="cronExpression" value="0 0 2 * * ?" /><!-- 每天凌晨2点执行一次 --> 
+    </bean>    
+    
+    <!-- 宽带续约 和bss对账， 定时任务1 esp主动放req文件，每天凌晨1点执行一次 -->    
+	<bean id="syncBandStatus2BssJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bssBandService"/>
+		<property name="targetMethod" value="syncBandStatus2BssJob"/>
+	</bean>
+	
+	<bean id="syncBandStatus2BssTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="syncBandStatus2BssJob" />  
+		<property name="cronExpression" value="0 0 1 * * ?" /><!-- 每天凌晨1点执行一次 --> 
+    </bean>
+    
+    <!-- 宽带续约 和bss对账， 定时任务2 bss给回执后esp读取resp文件，每天凌晨2点执行一次 -->    
+	<bean id="syncBandStatus2BssRespJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="bssBandService"/>
+		<property name="targetMethod" value="syncBandStatus2BssRespJob"/>
+	</bean>
+	
+	<bean id="syncBandStatus2BssRespTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">  
+        <property name="jobDetail" ref="syncBandStatus2BssRespJob" />  
+		<property name="cronExpression" value="0 0 2 * * ?" /><!-- 每天凌晨2点执行一次 --> 
+    </bean>               	
 		
  	 <!-- 定时列表 -->
 	<bean id="myScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-<!-- 				<ref bean="OneTimeTask"/>
+				<ref bean="OneTimeTask"/>
 				<ref bean="RepeatTask"/>
 				<ref bean="RepeatTask2"/>
 				<ref bean="releaseNumberTrigger"/>
-				<ref bean="reverseGoodsAmountTrigger"/> -->
+				<ref bean="reverseGoodsAmountTrigger"/>
+				
+				
+<!-- 				<ref bean="activeCardsTrigger"/>
+				<ref bean="checkBillTrigger"/>
+				
+				<ref bean="syncCardStatus2BssTrigger"/>
+				<ref bean="syncCardStatus2BssRespTrigger"/>
+				<ref bean="syncBandStatus2BssTrigger"/>
+				<ref bean="syncBandStatus2BssRespTrigger"/> -->
 			</list>
 		</property>
 	</bean>

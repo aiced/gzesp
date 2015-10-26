@@ -86,7 +86,7 @@
          update ord_d_pay
             set pay_state = 
                 (
-                  <foreach collection="stateList" item="item" index="index" open="case " close=" else 0 end" separator=" ">
+                  <foreach collection="stateList" item="item" index="index" open="case " close=" else '0' end" separator=" ">
                     when pay_mode=#{item.pay_mode} then #{item.pay_state}
                   </foreach>
                 ),

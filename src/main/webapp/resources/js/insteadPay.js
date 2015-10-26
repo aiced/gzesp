@@ -100,12 +100,12 @@
 	      dataType:"json", //预期服务器返回的数据类型
 	      data: param, //服务器只能接收json字符串
 	      success: function(data){
-	    	alert(data);
+	    	alert(data.detail);
 	        if(pay_type == '01'){
-	        	url="${base}/pay/insteadPay/postData/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val();
+	        	url="/esp/pay/insteadPay/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val();
 	        }
 	        else{
-	           url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+	           url ='/esp/pay/unionPay/input/${order_id}/${fee}'; //货到付款
 	        }
 	        window.location.href = url;			    
 	      }

@@ -1,6 +1,6 @@
 package com.ai.gzesp.service;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Test;
@@ -18,5 +18,7 @@ public class UserServiceTest extends BaseTest {
 		Map<String, String> busiInfo = userService.getBusiInfo("18651885060");
 		System.out.println(busiInfo);
 	}
+	
+
 
 }

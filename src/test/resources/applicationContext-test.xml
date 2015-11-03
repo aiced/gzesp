@@ -46,8 +46,8 @@
 	 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
-		<!-- <property name="url" value="jdbc:oracle:thin:@132.224.44.23:1521:ngcrmdev" /> -->
-		<property name="url" value="jdbc:oracle:thin:@10.81.3.1:1521:ngstatst" />
+		<property name="url" value="jdbc:oracle:thin:@132.224.44.23:1521:ngcrmdev" />
+		<!-- <property name="url" value="jdbc:oracle:thin:@10.81.3.1:1521:ngstatst" /> -->
 		<property name="username" value="ucr_gz" />
 		<property name="password" value="ucr_gz" />
 		<property name="initialSize" value="60" />

@@ -865,7 +865,7 @@ public class OrderService {
        	 row.put("product_name", temp.get("PRODUCT_NAME"));
        	 row.put("product_group", temp.get("PKE"));
        	 row.put("is_terminal", "1");
-       	 row.put("is_selfmachine", "1");
+       	 row.put("is_selfmachine", "0"); //刘庆福说4G的写死0
        	 //ACTIVITY_TYPE空表示不参加活动，目前沃掌柜只有 存费送费，存费购机 2种活动
        	 row.put("is_joinactivity", StringUtils.isEmpty(temp.get("ACTIVITY_TYPE")) ? "0" : "1"); 
        	 row.put("activity_type", temp.get("ACTIVITY_TYPE")); 
@@ -873,7 +873,7 @@ public class OrderService {
        	 row.put("activity_id", temp.get("ACTIVITY_ID")); 
        	 row.put("activity_name", temp.get("ACTIVITY_NAME")); 
        	 row.put("activity_detail", "");
-       	 row.put("terminal_type", "01"); //目前机器人不支持上网卡开户，所以这边终端类型 写死01
+       	 row.put("terminal_type", "0"); //目前机器人不支持上网卡开户，所以这边终端类型 写死01，//刘庆福说4G的写死0
        	 row.put("pre_fee", temp.get("PRE_FEE")); 
         }
         else{

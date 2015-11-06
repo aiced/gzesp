@@ -1,5 +1,8 @@
 package com.ai.gzesp.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -8,6 +11,9 @@ import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayUtil;
 
 public class UnionPayService2Test extends BaseTest {
+	
+    @Autowired
+    private UnionPayService unionPayService;
 	
 	@Autowired
 	private UnionPayService2 unionPayService2;
@@ -36,6 +42,24 @@ public class UnionPayService2Test extends BaseTest {
         param.setSign_code("abcdqwertyuiopasdfghj"); //签约号要解密过的32位的
     	
     	unionPayService2.unionPayPay(param);
+	}
+	
+	@Test
+	public void test2(){
+		Map<String, String> resp = new HashMap<String, String>();
+		resp.put("orderId", "1241442214665648");
+		resp.put("resultCode", "00");
+		resp.put("resultDesc", "success");
+		resp.put("timeStamp", "20151103000000");
+		
+		int r1 = unionPayService.updateUnionPaylogAfterQry(resp);
+	}
+	
+	@Test
+	public void test3(){
+
+		Map<String, String> row = unionPayService.queryRealOrderId("1241442214665648");
+		System.out.println(row);
 	}
 
 }

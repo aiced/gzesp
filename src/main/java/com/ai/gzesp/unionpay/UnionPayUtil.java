@@ -546,6 +546,32 @@ public class UnionPayUtil {
     }
     
     /**
+     * 银联接口：生成 支付结果查询接口 发送报文<br>
+     *
+     * @param param
+     * @see [相关类/方法](可选)
+     * @since [产品/模块版本](可选)
+     */
+    public static Map<String, String> genPayQryReq(UnionPayParam param){
+        log.debug("【银联支付：创建payQry请求原始数据map】");
+       
+        //原始请求报文map
+        Map<String, String> xmlMap = new LinkedHashMap<String, String>();
+        xmlMap.put(UnionPayAttrs.charCode, UnionPayCons.charCode);
+        xmlMap.put(UnionPayAttrs.Version, UnionPayCons.Version);
+        xmlMap.put(UnionPayAttrs.TradeType, param.getPay_trade_type()); //交易类型 支付查询（0300）
+        xmlMap.put(UnionPayAttrs.ChannelID, UnionPayCons.ChannelID); // 发送渠道号
+        xmlMap.put(UnionPayAttrs.MerType, UnionPayCons.MerType); //商户类型（填01表示直连，填02表示转接）
+        xmlMap.put(UnionPayAttrs.bmMerId, UnionPayCons.bmMerId); // 前置平台获批后分配的商户身份ID
+        xmlMap.put(UnionPayAttrs.timeStamp, param.getPay_time_stamp()); //时间戳，当前接口调用时间，yyyyMMddHHmmss
+        xmlMap.put(UnionPayAttrs.sysTradeNo, param.getPay_sys_trade_no());//受卡方系统跟踪号，作为对应请求交易的编号
+        xmlMap.put(UnionPayAttrs.orderId, param.getOrder_id_vir()); //20150602修改
+        
+        //return genByteReq(xmlMap);
+        return xmlMap;
+    }
+    
+    /**
      * 根据请求参数的map 生成对应的请求 byte[]报文<br>
      * 〈功能详细描述〉
      *

@@ -34,7 +34,7 @@ public enum TradeType {
     bindCancelRsp("0160", "银行卡绑定关系撤销响应"),
     
     bindQryRsp("0110", "银行卡绑定关系查询响应"),
-    payQryRsp("0210", "支付结果查询响应"),
+    payQryRsp("0310", "支付结果查询响应"),
     payProxyQryRsp("0380", "代付结果查询响应"),
     payCancelQryRsp("0330", "支付撤消(指当日交易撤消)结果查询响应"),
     payRefundQryRsp("0360", "支付退款(非当日交易)结果查询响应");

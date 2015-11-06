@@ -212,7 +212,7 @@ public class OrderController {
     		paramsMap.put("cardPic2", pic2Url);
     	}
     	
-    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney));
+    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney));
     	paramsMap.put("orderId", orderId);
 //    	paramsMap.put("payLogId", payLogId);
     	
@@ -363,4 +363,8 @@ public class OrderController {
     	ModelAndView mav = new ModelAndView(url);
     	return mav;
     }
+    
+    public static void main(String[] args) {
+		System.out.println(CommonUtil.string2Float(".01"));
+	}
 }

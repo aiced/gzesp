@@ -201,7 +201,7 @@
 	</update>	
 	
 	<select id="queryRealOrderId" resultType="java.util.HashMap">
-         select real_order_id
+         select to_char(real_order_id) real_order_id
            from PAY_D_UNIONPAY_LOG
           where order_id = ${orderIdVir}
 	</select>			

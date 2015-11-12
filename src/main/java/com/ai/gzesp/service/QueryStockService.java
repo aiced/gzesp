@@ -21,34 +21,30 @@ public class QueryStockService {
 private QueryStockDao qsdao;
 
 	public  void  querystock(){
-   List<HashMap<Object, Object>>  qslist= qsdao.querystock();//
+   List<HashMap<Object, Object>>  qslist= qsdao.querystock();
+   List<HashMap<Object, Object>> qslinkman=qsdao.queryLinkman();
    Iterator it=qslist.iterator();
-   StringBuffer sb=new StringBuffer();
    for(int i=0;i<qslist.size();i++){
    Map<Object,Object> map=qslist.get(i);   
    Set<Object> keys=map.keySet();
    //遍历List中的每一个Map集合
    for(Object key:keys){
-	   if(key.equals("CARD_VALUE")){//当键值为库存时再调用if，否则会判断两次，equals("CONUT(*)"也可以)
+	 if(key.equals("CARD_VALUE")){//当键值为库存时再调用if，否则会判断两次，equals("CONUT(*)"也可以)
 	   if(Integer.parseInt(map.get("COUNT(*)").toString())<3){
-		   sb.append("面额为"+map.get("CARD_VALUE")+"剩余"+map.get("COUNT(*)").toString()+"张");
-	       sb.append("    ********    ");
+		 System.out.println("面额为"+map.get("CARD_VALUE")+"剩余"+map.get("COUNT(*)").toString()+"张");
+		   for(int j=0;j<qslinkman.size();j++){
+			   Map<Object, Object> map2=qslinkman.get(j);
+			   Set<Object> keys2=map2.keySet();
+			   //遍历List中的每一个Map集合
+			   for(Object key2:keys2){//遍历集合，找出号码
+		   SmsUtils.doSendMessage(map2.get("PARAM_VALUE").toString(), "MB-2015111119", "@1@=" + map.get("CARD_VALUE") + ",@2@=" + map.get("COUNT(*)").toString());//发送库存不足短信
+			   }
+		   }
 	   }
 	   }
-   }
-   }
-   List<HashMap<Object, Object>> qslinkman=qsdao.queryLinkman();
-   System.out.println("++++++++++++"+qslinkman.size()+"++++++++++++");
-   for(int i=0;i<qslinkman.size();i++){
-	   Map<Object, Object> map2=qslinkman.get(i);
-	   Set<Object> keys=map2.keySet();
-	   //遍历List中的每一个Map集合
-	   for(Object key:keys){//遍历集合，找出号码
-		   SmsUtils.doSendMessage(map2.get(key).toString(), "MB-2015052754", "@1@="+sb);//发送库存不足短信
-	   }
+   }//for循环结束
    }
    
- //  SmsUtils.doSendMessage("13655169732", "MB-2015052754", "@1@="+"我也是醉了");
      System.out.println("===end===");
 	}
 }

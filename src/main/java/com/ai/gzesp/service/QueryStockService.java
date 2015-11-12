@@ -16,7 +16,7 @@ import com.ai.gzesp.utils.SmsUtils;
 
 /**
  * @author dwj
- *@function 查询库存
+ *@function 查询库存 
  */
 @Service
 public class QueryStockService {
@@ -35,7 +35,7 @@ public class QueryStockService {
 				if (entry.getKey().equals("CARD_VALUE")) {//加上此条件是为了不让短信发送两次
 					if (Integer.parseInt(map.get("NUM").toString()) < 10) {//当判断每个面值的库存
 						for (int j = 0; j < qslinkman.size(); j++) {
-							Map<Object, Object> map2 = qslinkman.get(j);
+							Map<Object, Object> map2 = qslinkman.get(j);//遍历取出每条联系人记录
 							for (Map.Entry<Object, Object> entry2 : map2
 									.entrySet()) {
 								SmsUtils.doSendMessage(entry2.getValue().toString()

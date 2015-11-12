@@ -109,7 +109,7 @@
     	<mapper resource="mybatis/mapper_oracle/TdITFDWEIXINLOGMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdPayDWEIXINLOGMapper.xml" />  
     	<mapper resource="mybatis/mapper_oracle/TdPayDWOPAYLOGMapper.xml" />  
-
+         <mapper resource="mybatis/mapper_oracle/sqlMap_queryStock.xml" />  
     	
     		 		
     </mappers>

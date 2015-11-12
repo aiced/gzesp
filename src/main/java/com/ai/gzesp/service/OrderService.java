@@ -304,11 +304,11 @@ public class OrderService {
     	record.setCreateTime(DateUtil.getNow());
     	record.setOrderFrom(orderFrom);
     	record.setOrderTime(DateUtil.getNow());
-    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
-    	record.setCouponMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(couponMoney)));
-    	record.setManMadeMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(manMadeMoney)));
+    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Float(originalPrice)));
+    	record.setCouponMoney(CommonUtil.toDbPrice(CommonUtil.string2Float(couponMoney)));
+    	record.setManMadeMoney(CommonUtil.toDbPrice(CommonUtil.string2Float(manMadeMoney)));
     	record.setPostFee(0l);
-    	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney)));
+    	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney)));
     	record.setIncomeMoney(0l);
     	record.setOrderState("00");
     	record.setCustRemark(custRemark);
@@ -453,16 +453,16 @@ public class OrderService {
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
     	record.setGoodsId(CommonUtil.string2Long(goodsId));
     	record.setGoodsName(goodsName);
-    	record.setUnitPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(unitPrice)));
+    	record.setUnitPrice(CommonUtil.toDbPrice(CommonUtil.string2Float(unitPrice)));
     	record.setSaleNum(CommonUtil.string2Int(saleNum));
-    	record.setTopayFee(CommonUtil.toDbPrice(CommonUtil.string2Long(topayFee)));
-    	record.setDerateFee(CommonUtil.toDbPrice(CommonUtil.string2Long(derateFee)));
+    	record.setTopayFee(CommonUtil.toDbPrice(CommonUtil.string2Float(topayFee)));
+    	record.setDerateFee(CommonUtil.toDbPrice(CommonUtil.string2Float(derateFee)));
     	record.setDerateReason(derateReason);
-    	record.setRecvFee(CommonUtil.toDbPrice(CommonUtil.string2Long(recvFee)));
+    	record.setRecvFee(CommonUtil.toDbPrice(CommonUtil.string2Float(recvFee)));
     	record.setResInfo(goodsDisc);
     	
     	record.setCtlgCode(CommonUtil.string2Long(ctlgCode));
-    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
+    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Float(originalPrice)));
     	record.setAlbumId(CommonUtil.string2Long(albumId));
     	record.setVerNo(Short.parseShort(verNo));
     	record.setMerchantId(CommonUtil.string2Int(merchantId));
@@ -521,7 +521,7 @@ public class OrderService {
     	TdOrdDREFUND record = new TdOrdDREFUND();
     	record.setOrderId(CommonUtil.string2Long(orderId));
     	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
-    	record.setTxnAmt(CommonUtil.toDbPrice(CommonUtil.string2Long(topayFee)));
+    	record.setTxnAmt(CommonUtil.toDbPrice(CommonUtil.string2Float(topayFee)));
     	
     	tdOrdDREFUNDDao.insertSelective(record);
 	}
@@ -586,7 +586,7 @@ public class OrderService {
     	record.setGoodsId(CommonUtil.string2Long(goodsId));
     	record.setUserId(CommonUtil.string2Long(userId));
     	record.setPhoneNumber(phoneNumber);
-    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
+    	record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Float(originalPrice)));
     	record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney)));
     	record.setIncomeMoney(0l);
     	record.setOrderState("00");
@@ -617,7 +617,7 @@ public class OrderService {
 		record.setUserId(CommonUtil.string2Long(userId));
 		record.setBandnumid(bandnumid);
 		record.setProductId(productId);
-		record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Long(originalPrice)));
+		record.setOriginalPrice(CommonUtil.toDbPrice(CommonUtil.string2Float(originalPrice)));
 		record.setTopayMoney(CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney)));
 		record.setOrderState("00");
 		record.setOrderType(orderType);

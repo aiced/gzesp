@@ -91,7 +91,7 @@ public class RechargeService {
      * @param result
      * @return
      */
-    public void waitForRechargeCheckResp(String order_id, String log_tip, Map<String, String> result){
+    public void waitForRechargeCheckResp(String log_id, String log_tip, Map<String, String> result){
         //Map<String, String> result = new HashMap<String, String>();
         int timeout = 0;
         while(true){
@@ -106,7 +106,7 @@ public class RechargeService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } //每次轮询等待1秒钟
-            Map<String, String> row = rechargeDao.queryRechargelogResultByOrderId(order_id); //查询日志表里是否已经有返回的结果
+            Map<String, String> row = rechargeDao.queryRechargeResult(log_id, InterfaceType.rechargeCheck.getInterfaceCode()); //查询日志表里是否已经有返回的结果
             if(row != null && StringUtils.isNotBlank(row.get("RESULT_CODE"))){
                 result.put("status", row.get("RESULT_CODE"));
                 result.put("detail", ResultCode.find(row.get("RESULT_CODE")));
@@ -141,8 +141,8 @@ public class RechargeService {
             } //每次轮询等待1秒钟
             Map<String, String> row = rechargeDao.queryRechargeRqyResultByLogId(log_id); //查询日志表里是否已经有返回的结果
             if(row != null && StringUtils.isNotBlank(row.get("CHARGE_RESULT"))){
-                result.put("status", row.get("CHARGE_RESULT"));
-                result.put("detail", row.get("CHARGE_VALUE"));
+                result.put("CHARGE_RESULT", row.get("CHARGE_RESULT"));
+                result.put("CHARGE_VALUE", row.get("CHARGE_VALUE"));
                 break;
             }
         }
@@ -190,7 +190,7 @@ public class RechargeService {
     public void activeCardsJob(){
     	log.debug("【一卡充】激活卡任务开始。。。");
     	int  cards = 0;
-		while(true){
+    	while(true){
 			if(cards >= CARDS_LIMIT){
 				break; //如果已经超过单次任务的上限了，退出循环
 			}
@@ -203,6 +203,13 @@ public class RechargeService {
 			activeCards(cardList); //激活这批卡
 			
 			cards += cardList.size(); 
+			
+			try {
+				//等待30秒，保证这次20张卡都收到响应并更新了卡状态后再执行下次循环
+				Thread.sleep(30*1000); 
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
     	
     	log.debug("【一卡充】激活卡任务结束。共激活" + cards + "张卡。");
@@ -298,7 +305,7 @@ public class RechargeService {
 				rechargeCards(cardList, serial_number, serial_number_type);
 				
 				//等待一卡充响应结果
-				waitForRechargeCheckResp(order_id, "充值接口", result);
+				waitForRechargeResp(order_id, "充值接口", result);
 				
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -472,10 +479,11 @@ public class RechargeService {
 	 */
 	private void insertActiveLogBatch(List<Map<String, String>> cardList, String reqTime){
 		//String reqTime = RechargeUtil.getCurentTime();
+		String logId = RechargeUtil.generateLogId(3); //logid开始初始值，下面每张+1
 		
 		for(Map<String, String> card : cardList){
-			String logId = RechargeUtil.generateLogId(3); //每张卡插的记录logid不一致
-			card.put("LOG_ID", logId);
+			logId = String.valueOf(Long.parseLong(logId) + 1);//RechargeUtil.generateLogId(3); //每张卡插的记录logid不一致
+			card.put("LOG_ID", logId); //每张+1
 			card.put("PARTITION_ID", logId.substring(14, 16));
 		}
 		
@@ -557,6 +565,13 @@ public class RechargeService {
 			checkRechargeLogs(logList); //对账
 			
 			num += logList.size(); 
+			
+			try {
+				//等待30秒，保证这次20张卡都收到响应并更新了数据库表对账结果后再执行下次循环
+				Thread.sleep(30*1000); 
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
     	
     	log.debug("【一卡充】对账任务结束。共对账" + num + "条充值记录。");
@@ -588,8 +603,9 @@ public class RechargeService {
     	String reqTime = RechargeUtil.getCurentTime();
         //调对账接口前，不插接口日志记录，直接等响应回来更新充值记录的check_status字段
     	//insertActiveLogBatch(cardList, reqTime);
+    	String logId = RechargeUtil.generateLogId(5); //每张卡插的记录logid不一致,下面每张+1
 		for(Map<String, String> log : logList){
-			String logId = RechargeUtil.generateLogId(5); //每张卡插的记录logid不一致
+			logId = String.valueOf(Long.parseLong(logId) + 1);
 			log.put("NEW_LOG_ID", logId);
 			//log.put("PARTITION_ID", logId.substring(14, 16));
 		}
@@ -695,7 +711,7 @@ public class RechargeService {
 		
 		System.out.println(ResultCode.find("01026"));*/
 	    
-	    char Suffix = 0x1a;
+/*	    char Suffix = 0x1a;
 	    StringBuffer sb = new StringBuffer();
 	    sb.append("abcd");
 	    sb.append(Suffix);
@@ -703,6 +719,13 @@ public class RechargeService {
 	    System.out.println(Suffix);
 	    System.out.println(sb.append(Suffix));
 	    System.out.println(sb.toString().getBytes());
-	    System.out.println(sb.toString().getBytes("utf-8"));
+	    System.out.println(sb.toString().getBytes("utf-8"));*/
+	    
+	    String logId = RechargeUtil.generateLogId(3);
+	    for(int i = 0; i<100; i++){
+	    	
+	    	logId = String.valueOf(Long.parseLong(logId) + 1);
+	    	System.out.println(logId);
+	    }
 	}
 }

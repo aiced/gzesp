@@ -81,7 +81,9 @@ public interface RechargeDao {
     
     public Map<String, String> queryRechargelogResultByLogId(@Param("log_id") String log_id);   
     
-    public Map<String, String> queryRechargelogResultByOrderId(@Param("order_id") String order_id);   
+    public Map<String, String> queryRechargelogResultByOrderId(@Param("order_id") String order_id);
+    
+    public Map<String, String> queryRechargeResult(@Param("log_id") String log_id, @Param("interface_type") String interface_type);
     
     public Map<String, String> queryRechargeRqyResultByLogId(@Param("log_id") String log_id);   
 }

@@ -87,6 +87,11 @@ public class FileUtils {
 			if (!file.exists()) {
 				file.createNewFile();
 			}
+			//设置744权限
+			Runtime.getRuntime().exec("chmod 744 " + filePath);   
+//			file.setReadable(true);
+//			file.setWritable(true, true);
+//			file.setExecutable(true, true); 
 			// 写文件内容
 			os = res.getOutputStream();
 			bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
@@ -143,6 +148,11 @@ public class FileUtils {
 			if (!file.exists()) {
 				file.createNewFile();
 			}
+			//设置744权限
+			Runtime.getRuntime().exec("chmod 744 " + filePath);   
+//			file.setReadable(true, false); //设置用户，用户组，的可以，其他用户的，设置不了
+//			file.setWritable(true, true);
+//			file.setExecutable(true, true); 
 			// 写文件内容
 			os = res.getOutputStream();
 			bw = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));

@@ -44,10 +44,22 @@
 					//alert(res.err_code + res.err_desc + res.err_msg);
 		            if(res.err_msg == "get_brand_wcpay_request:ok"){  
 		                //alert("微信支付成功!");  
+		            	 $('.modal-title').html('支付成功');
+					      $('#btn_other').hide();
+					      $('#btn_qry').show();
+					      $('#btn_home').show();
 		            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
 		                //alert("用户取消支付!");
+		            	$('.modal-title').html('取消支付');
+					      $('#btn_other').show();
+					      $('#btn_qry').hide();
+					      $('#btn_home').hide();
 		            }else{
 		               //alert("支付失败!");
+		            	 $('.modal-title').html('支付失败');
+					      $('#btn_other').show();
+					      $('#btn_qry').hide();
+					      $('#btn_home').hide();
 		            }  
 				})
 			}
@@ -56,5 +68,26 @@
   </head>
 
   <body>
+   <!-- 支付结果弹出框 -->    
+    <div id="payResult" class="modal fadebs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">支付结果</h4>
+          </div>
+          <div class="modal-body">
+            <p id="payOrderInfo">订单编号：${order_id}，金额：${(fee?number/1000)?string('#.##')}元</p>
+            <p id="payResultDetail" ></p>
+            <#-- <p id="payResultTip" style="color:red"></p> -->
+          </div>
+          <div class="modal-footer">
+            <a id="btn_other" class="btn btn-warning" href="${base}/pay/selectPayMode/${order_id}/${fee}" role="button">选择其他支付方式</a>
+            <#--<a id="btn_other" class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">重新购买</a>-->
+            <a id="btn_qry" class="btn btn-warning" href="${base}/customer/custOrderQuery" role="button">订单查询</a>
+            <a id="btn_home" class="btn btn-warning" href="${base}/pay/goToWeShopIndex/${order_id}" role="button">再去逛逛</a>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->   
   </body>
 </html>

@@ -102,6 +102,8 @@ public class PayWXController {
 				UnifiedOrderResultListener resultListener = new UnifiedOrderResultListener(result);
 				WXPay.doUnifiedOrderBusiness(reqData, resultListener);
 				mav.addAllObjects(result);
+				mav.addObject("order_id", order_id);
+				mav.addObject("fee", fee);
 			}
 		}
 		return mav;

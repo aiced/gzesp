@@ -111,10 +111,10 @@ public class RechargeClientHandler extends IoHandlerAdapter {
      */
     @PostConstruct
     public void init(){
-//    	initConnector();
+    	initConnector();
 //    	//初始化时更新最新响应时间戳，initConnector()建立连接有一定耗时，所以放他后面，以后哪怕断链重连也不再初始化这个值
 //		last_resp_time = System.currentTimeMillis(); 
-//    	startHeartBeat();
+    	startHeartBeat();
     }
     
     /**
@@ -143,6 +143,9 @@ public class RechargeClientHandler extends IoHandlerAdapter {
 		cf.awaitUninterruptibly();
 
 		log.debug("【一卡充：esp创建连接成功】");
+		
+    	//初始化时更新最新响应时间戳，initConnector()建立连接有一定耗时，所以放他后面，断链重连再初始化这个值
+		last_resp_time = System.currentTimeMillis(); 
 		
 	}
 	
@@ -176,13 +179,21 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     	long interval = System.currentTimeMillis() - last_resp_time; //算出现在和上一次收到一卡充响应的时间间隔
         if (!connector.isActive()) {
             log.debug("【一卡充：connector.isActive()=false,断开原有连接重新创建连接】");
-            disconnect();
-            initConnector();
+//            disconnect();
+//            initConnector();
+    		stopHeartBeat();  //停止原有socket链接的心跳线程
+    		disconnect(); // 断开原有socket连接，并释放资源
+    		initConnector(); // esp客户端如果断链了要重连
+    		startHeartBeat(); //开启新socket链接的心跳线程
           } 
         else if(interval > RechargeCons.HEART_INTERVAL){
             log.debug("【一卡充：上一次收到响应的时间间隔超过"+ RechargeCons.HEART_INTERVAL +"毫秒,断开原有连接重新创建连接】");
-            disconnect();
-            initConnector();
+//            disconnect();
+//            initConnector();
+    		stopHeartBeat();  //停止原有socket链接的心跳线程
+    		disconnect(); // 断开原有socket连接，并释放资源
+    		initConnector(); // esp客户端如果断链了要重连
+    		startHeartBeat(); //开启新socket链接的心跳线程
         }
         else {
             log.debug("【一卡充：connector.isActive()=true而且上一次收到响应的时间未超时,连接状态活跃】");
@@ -215,7 +226,7 @@ public class RechargeClientHandler extends IoHandlerAdapter {
     }
     
     /**
-     * 发送报文
+     * 发送报文 作废
      * @param xmlSend
      */
     public void sendMsg(String xmlSend) {
@@ -229,6 +240,15 @@ public class RechargeClientHandler extends IoHandlerAdapter {
      */
     public void sendMsg(byte[] xmlSend) {
         checkConnector();
+        cf.getSession().write(xmlSend);
+      }
+    
+    /**
+     * 发送报文 ,发送前不检查连接是否正常
+     * @param xmlSend
+     */
+    public void sendMsgNoCheck(byte[] xmlSend) {
+        //checkConnector();
         cf.getSession().write(xmlSend);
       }
 
@@ -301,10 +321,16 @@ public class RechargeClientHandler extends IoHandlerAdapter {
      * 开启心跳线程
      */
 	private void startHeartBeat() {
-		rechargeHeartBeatThread = new RechargeHeartBeatThread();
-		Thread t = new Thread(rechargeHeartBeatThread);
-		t.start();
-		log.debug("【一卡充：esp开启新socket链接的心跳线程】");
+		//如果连接正常才开启心跳线程
+		if (connector.isActive()){
+			rechargeHeartBeatThread = new RechargeHeartBeatThread();
+			Thread t = new Thread(rechargeHeartBeatThread);
+			t.start();
+			log.debug("【一卡充：esp开启新socket链接的心跳线程】");
+		}
+		else{
+			log.debug("【一卡充：connector.isActive()=false, esp不开启心跳线程】");
+		}
 	}
 
     /**
@@ -346,7 +372,8 @@ public class RechargeClientHandler extends IoHandlerAdapter {
               byte[] heart = (RechargeCons.prefix + RechargeCons.HEARTBEAT_REQ + RechargeCons.Suffix).getBytes();
 
               //发送报文
-      		  sendMsg(heart); 
+      		  //sendMsg(heart); 
+              sendMsgNoCheck(heart); //不做检查，因为每次检查里都会停止心跳线程，重启心跳线程
               log.debug("【一卡充：esp维持长连接，发送心跳报文GWHEARTBEATTEST成功，" + RechargeCons.HEART_INTERVAL/1000 + "秒钟后again】");
               Thread.sleep(RechargeCons.HEART_INTERVAL);
             } 

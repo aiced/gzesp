@@ -36,7 +36,7 @@ public List <Map<String, Object>> GetTopUpList() {
 	sb.append(" from GDS_D_INFO t1, GDS_D_PRICE t2");
 	sb.append("	where t1.GOODS_ID = t2.GOODS_ID "
 			+ " and t1.CTLG_CODE = '17'"
-			+ " order by addPrice");
+			+ " order by goodsId");
 		
 	System.out.println("################################" + sb.toString());
 	List<Map<String, Object>> topUpList = commonDao.queryForList(sb.toString());

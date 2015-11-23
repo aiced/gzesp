@@ -544,7 +544,17 @@ public class UnionPayService {
         return unionPayDao.updateUnionPaylog(respMap.get(UnionPayAttrs.TradeType), respMap.get(UnionPayAttrs.resultCode),
                 respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp),
                  respMap.get(UnionPayAttrs.sysTradeNo));
-    }     
+    }
+    
+    /**
+     * 根据支付查询接口 获得的结果 更新PAY_D_UNIONPAY_LOG日志表
+     * @param respMap
+     * @return
+     */
+    public int updateUnionPaylogAfterQry(Map<String, String> respMap) {
+        return unionPayDao.updateUnionPaylogAfterQry(respMap.get(UnionPayAttrs.orderId), respMap.get(UnionPayAttrs.resultCode),
+                respMap.get(UnionPayAttrs.resultDesc), respMap.get(UnionPayAttrs.timeStamp));
+    } 
     
     /**
      * 支付收到响应后更新订单基本表里订单状态
@@ -977,5 +987,43 @@ public class UnionPayService {
     	
     	return result;
     }  
+    
+    /**
+     * 发送支付结果查询接口请求
+     * @param param
+     * @param result
+     * @return
+     */
+    public void sendPayQryReq(UnionPayParam param, Map<String, String> result){
+        //Map<String, String> result = new HashMap<String, String>();
+        boolean isSuccess = false;
+            //银行卡支付接口 参数封装成map,转换层xml，生成md5摘要，3des加密,生成可发送的报文
+            Map<String, String> xmlMap = UnionPayUtil.genPayQryReq(param); 
+            byte[] xmlSend = UnionPayUtil.genByteReq(xmlMap);
+            //调用mina客户端发送报文
+            if(xmlSend != null){
+                isSuccess = UnionPayUtil.sendMsg(xmlSend);
+            	//isSuccess = ClientHandler.sendMsg(xmlSend);
+            }    
+            
+            if(!isSuccess){
+            	result.put("status", "E05");
+            	result.put("detail", "支付查询失败！发送支付查询接口报文失败");
+            	//return result; //直接返回
+            }
+            
+        //return result;
+    } 
+    
+    /**
+     * 根据虚拟的orderId 到 pay_d_unionpay_log 查出真实orderId
+     * @param orderIdVir
+     * @return
+     */
+    public Map<String, String> queryRealOrderId(String orderIdVir) {
+        //
+        Map<String, String> reealOrderId = unionPayDao.queryRealOrderId(orderIdVir);
+        return reealOrderId;
+    }
     
 }

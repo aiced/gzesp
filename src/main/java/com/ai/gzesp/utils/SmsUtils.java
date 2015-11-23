@@ -3,6 +3,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -213,24 +214,28 @@ public class SmsUtils {
 	 * 短信内容：strContent
 	 * 返回值 String类型 具体参考sdk返回码
 	 */
-	public static String  doSendMessage(String strMobile,String strTempid,String strContent)
+	public static String  doSendMessage(String strMobile,String strTempid,String strContent) 
 	{
 		String strRet = "";
-		StringBuffer strurl=new StringBuffer();
-		//http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?content=%401%40%3D701447&username=JSMB260920&tempid=MB-2013102300&scode=593483&mobile=18551855717
-		strurl.append("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?");
-		strurl.append("content=");
-		strurl.append(strContent); //URLEncoder.encode(strContent, "utf-8")
-		strurl.append("&username=JSMB260920");
-		strurl.append("&tempid=");
-		strurl.append(strTempid);
-		strurl.append("&scode=593483");
-		strurl.append("&mobile=");
-		strurl.append(strMobile);
-		System.out.println("url:" + strurl);//
-		//strRet = SmsUtils.doGet(strurl.toString() , "utf-8");
-		strRet = httpclientGet(strurl.toString() , "utf-8");
-		System.out.println("值:" + strRet);//此处为短信发送的返回值
+		try {
+			StringBuffer strurl=new StringBuffer();
+			//http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?content=%401%40%3D701447&username=JSMB260920&tempid=MB-2013102300&scode=593483&mobile=18551855717
+			strurl.append("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?");
+			strurl.append("content=");
+			strurl.append(URLEncoder.encode(strContent, "gbk")); //URLEncoder.encode(strContent, "utf-8")
+			strurl.append("&username=JSMB260920");
+			strurl.append("&tempid=");
+			strurl.append(strTempid);
+			strurl.append("&scode=593483");
+			strurl.append("&mobile=");
+			strurl.append(strMobile);
+			System.out.println("url:" + strurl);//
+			//strRet = SmsUtils.doGet(strurl.toString() , "utf-8");
+			strRet = httpclientGet(strurl.toString() , "utf-8");
+			System.out.println("值:" + strRet);//此处为短信发送的返回值
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		
 		return strRet;
 	}

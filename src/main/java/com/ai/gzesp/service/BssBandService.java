@@ -172,9 +172,9 @@ public class BssBandService {
 		//为了后面调用产品变更接口
 		Map<String, Object> map=orderDao.queryBandProByOrderId(order_id);
 		
-		
+		//注意如果要修改里面传递的参数的话一定要注意传递的加密签名也要做对应的修改 --edit_by_wenh_2015_10_21
 		//根据md5key对发送报文进行签名：签名的规则为：NumID=XXX$ProductCode=XXX$OrigFee=XXX$RealFee=XXX$optTime=XXX$OldProductCode=XXX$key=XXX
-		String strEncrypt="NumID="+map.get("BANDNUMID").toString()+"$ProductCode="+map.get("PRODUCT_ID").toString()+"$OrigFee="+map.get("ORIGINAL_PRICE").toString()+"$RealFee="+map.get("INCOME_MONEY").toString()+"$optTime="+map.get("CREATE_TIME").toString()+"$OldProductCode="+map.get("VALUES1").toString()+"$key="+Constants.md5key_bbs;
+		String strEncrypt="NumID="+map.get("BANDNUMID").toString()+"$ProductCode="+map.get("PRODUCT_ID").toString()+"$OrigFee="+String.valueOf((Integer.valueOf(map.get("ORIGINAL_PRICE").toString())/10))+"$RealFee="+String.valueOf((Integer.valueOf(map.get("INCOME_MONEY").toString().toString())/10))+"$optTime="+map.get("CREATE_TIME").toString()+"$OldProductCode="+map.get("VALUES1").toString()+"$key="+Constants.md5key_bbs;
 		System.out.println("产品变更明文："+strEncrypt);
 		
 		strEncrypt=MD5Util.md5s2(strEncrypt);

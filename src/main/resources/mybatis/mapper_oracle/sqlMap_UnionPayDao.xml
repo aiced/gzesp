@@ -138,7 +138,9 @@
                 result_desc = #{result_desc},
                 resp_time = #{resp_time}
           where sys_trade_no = #{sys_trade_no}
-	</update>			
+	</update>
+	
+				
 
 	<update id="updatePayStateAndIncomeMoney">
          update ord_d_base
@@ -189,6 +191,19 @@
                #{orig_timestamp}, #{orig_sys_trade_no}, ${orig_order_id}, ${orig_txn_amt}
               )		
 	</insert>
+
+	<update id="updateUnionPaylogAfterQry">
+         update PAY_D_UNIONPAY_LOG
+            set result_code = #{result_code},
+                result_desc = #{result_desc},
+                resp_time = #{resp_time}
+          where order_id = #{orderId}
+	</update>	
 	
+	<select id="queryRealOrderId" resultType="java.util.HashMap">
+         select to_char(real_order_id) real_order_id
+           from PAY_D_UNIONPAY_LOG
+          where order_id = ${orderIdVir}
+	</select>			
 	
 </mapper>

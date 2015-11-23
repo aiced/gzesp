@@ -77,7 +77,8 @@
 		           </div><!-- order_middle_end -->
 					<#if (item.ORDER_TYPE=='2' && item.ORDER_STATE=='00')>
                        <div class="order_line"></div>
-			           <div style="color:green;text-align: right;padding-bottom: 5px;"><u><a href="/esp/pay/insteadPay/${hideuserid}/${item.ORDER_ID}">去支付>>></a></u></div>
+			           <!-- <div style="color:green;text-align: right;padding-bottom: 5px;"><u><a href="/esp/pay/insteadPay/${hideuserid}/${item.ORDER_ID}">去支付>>></a></u></div> -->
+                    	<div style="color:green;text-align: right;padding-bottom: 5px;"><u><a href="/esp/pay/selectPayMode/${item.ORDER_ID}/${(item.TOPAY_FEE)}">去支付>>></a></u></div>
                     </#if>
 				</div>
 				</#list>

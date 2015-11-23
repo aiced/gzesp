@@ -145,4 +145,36 @@ public class RechargeController {
 //        result.put("detail", "请求成功！");
         return result;
     }
+    
+    /**
+     * 沃掌柜和bss系统 同步一卡充状态 ,手工调用
+     * @return
+     */
+    @RequestMapping("/syncCardStatus2Bss")
+    @ResponseBody
+    public Map<String, String> syncCardStatus2Bss(){
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	rechargeService.syncCardStatus2BssJob();
+    	
+		result.put("status", "SUCCESS");
+        result.put("detail", "请求成功！");
+        return result;
+    }
+    
+    /**
+     * bss系统给沃掌柜的回执文件 ,手工调用
+     * @return
+     */
+    @RequestMapping("/syncCardStatus2BssResp")
+    @ResponseBody
+    public Map<String, String> syncCardStatus2BssRespJob(){
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	rechargeService.syncCardStatus2BssRespJob();
+    	
+		result.put("status", "SUCCESS");
+        result.put("detail", "请求成功！");
+        return result;
+    }
 }

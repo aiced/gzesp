@@ -102,7 +102,7 @@ function initBind() {
  		   success: function(data){
  		    	$("#rotateG_01").hide();
 //			     * 返回 json 成功：{"status":"00000", "detail":"成功"}， 失败 {"status":"xxx", "detail":"失败原因"}
- 			   var obj = eval(data);    			   
+ 			   var obj = eval(data);   
  			   if(obj.status == "00000"){
   			  	  var r=confirm("充值号码: " + $('#phoneNumId').val());
  		          if (r==true)

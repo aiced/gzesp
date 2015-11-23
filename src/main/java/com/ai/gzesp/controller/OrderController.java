@@ -212,7 +212,7 @@ public class OrderController {
     		paramsMap.put("cardPic2", pic2Url);
     	}
     	
-    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Long(topayMoney));
+    	long fee  = CommonUtil.toDbPrice(CommonUtil.string2Float(topayMoney));
     	paramsMap.put("orderId", orderId);
 //    	paramsMap.put("payLogId", payLogId);
     	
@@ -229,7 +229,8 @@ public class OrderController {
     	//20150703 ximh modify 提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，跳转到不同的支付页面
     	String url = null;
     	if(isInstead){
-    		url = "redirect:/pay/insteadPay/" + paramsMap.get("userId") + "/" + orderId;
+    		//url = "redirect:/pay/insteadPay/" + paramsMap.get("userId") + "/" + orderId;
+    		url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee; //20151026 临时修改 集客线下需求，银联快捷支付走不通
     	}
     	else{
     		url = "redirect:/pay/selectPayMode/"+orderId+"/"+fee;
@@ -362,4 +363,8 @@ public class OrderController {
     	ModelAndView mav = new ModelAndView(url);
     	return mav;
     }
+    
+    public static void main(String[] args) {
+		System.out.println(CommonUtil.string2Float(".01"));
+	}
 }

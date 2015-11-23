@@ -105,10 +105,10 @@
 <!--                     <span>交通银行<span>尾号2878储蓄卡</span></span>
                     <br> -->
                     <div class="pwd_container">
-                        <div>
-                            <input type="password" class="form-control" id="txt1" placeholder="" maxlength="1" onkeyup="checkData(this,txt2);" onfocus="doFocus(this);">
+                    	<div>
+                     		<input type="password" value="" name="txtsecuritypwd" id="txtsecuritypwd" maxlength="6" size="6" class="form-control" onkeyup="checkData(this,btnok);" >
                         </div>
-                        <div>
+                        <!-- <div>
                             <input type="password" class="form-control" id="txt2" placeholder="" maxlength="1" onkeyup="checkData(this,txt3);" onfocus="doFocus(this);">
                         </div>
                         <div>
@@ -122,7 +122,7 @@
                         </div>
                         <div>
                             <input type="password" class="form-control" id="txt6" placeholder="" maxlength="1" onkeyup="checkData(this,btnok);" onfocus="doFocus(this);">
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">

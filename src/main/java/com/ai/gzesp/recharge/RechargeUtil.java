@@ -300,7 +300,9 @@ public class RechargeUtil {
 		
 		byte[] temp = DESUtil.encryptModeRecharge(param.getPasword().getBytes());
 		String target = Base64Utils.encode(temp);
-		reqBody.append(fillNull(target, 32));
+		//原来密码是明文，再des加密，64位处理，生成32位的
+		//后来密码是密文的，des加密，64位处理后，56位的了 20151109
+		reqBody.append(fillNull(target, 56));  //reqBody.append(fillNull(target, 32)); 
 		
 		reqBody.append(fillNull(String.valueOf(param.getSerialNum()), 20));
 		
@@ -318,7 +320,9 @@ public class RechargeUtil {
 	public static String genReqBodyOfRechargeQry(RechargeReq param){
 		StringBuffer reqBody = new StringBuffer(100);
 		reqBody.append(fillNull(param.getAgentID(), 20));
-		reqBody.append(fillNull(param.getPasword(), 32));
+		//原来密码是明文，再des加密，64位处理，生成32位的
+		//后来密码是密文的，des加密，64位处理后，56位的了 20151109
+		reqBody.append(fillNull(param.getPasword(), 56)); //reqBody.append(fillNull(param.getPasword(), 32));
 		reqBody.append(fillNull(param.getChargeSerilNum(), 20));
 		
 		return reqBody.toString();
@@ -339,7 +343,9 @@ public class RechargeUtil {
 		byte[] temp = DESUtil.encryptModeRecharge(param.getPasword().getBytes());
 		String target = Base64Utils.encode(temp);
 		//log.debug("【一卡充】激活卡,reqBody包体长度target：" + target.getBytes().length);
-		reqBody.append(fillNull(target, 32));
+		//原来密码是明文，再des加密，64位处理，生成32位的
+		//后来密码是密文的，des加密，64位处理后，56位的了 20151109
+		reqBody.append(fillNull(target, 56));  //reqBody.append(fillNull(target, 32)); 
 		
 		//log.debug("【一卡充】激活卡,reqBody包体长度：" + reqBody.toString().getBytes().length);
 		return reqBody.toString();

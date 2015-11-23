@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gzesp.dao.QueryStockDao">
+	<select id="querystock" resultType="java.util.HashMap">
+		select count(*)  num, card_value
+		from inv_d_recharge_card
+		where card_status='1' or card_status='0'
+		group
+		by card_value 
+	</select>
+	<select id="queryLinkman" resultType="java.util.HashMap">
+		select param_value
+		from
+		sys_d_espparam
+		where param_type='Link_Man'
+	</select>
+</mapper>

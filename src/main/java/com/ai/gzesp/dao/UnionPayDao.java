@@ -83,6 +83,10 @@ public interface UnionPayDao {
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
             @Param("resp_time") String resp_time, @Param("sys_trade_no") String sys_trade_no ); 
     
+    public int updateUnionPaylogAfterQry(@Param("orderId") String orderId,
+            @Param("result_code") String result_code, @Param("result_desc") String result_desc,
+            @Param("resp_time") String resp_time); 
+    
     public int updateBindCancellog(@Param("resp_trade_type") String resp_trade_type,
             @Param("result_code") String result_code, @Param("result_desc") String result_desc,
             @Param("resp_time") String resp_time, 
@@ -136,5 +140,8 @@ public interface UnionPayDao {
     
     
     public Map<String, String> queryBindResultRow(@Param("sys_trade_no") String sys_trade_no);
+    
+
+    public Map<String, String> queryRealOrderId(@Param("orderIdVir") String orderIdVir);
 
 }

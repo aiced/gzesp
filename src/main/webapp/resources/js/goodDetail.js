@@ -163,8 +163,9 @@ function afterUpdateNumber(data){
 		$('#phone_number').attr('attr_val',  $('#phone_number').attr('attr_val') + data.serial_number + '|' + data.serial_number);//修改号码的属性
 		
 		$('#nice_fee').val(data.nice_fee); //靓号预存款
-		$('#total_price').val( parseInt($('#goods_price').val()) + parseInt($('#nice_fee').val()) ); //订单总价=商品价格+靓号预存款
-
+		
+		$('#total_price').val( parseFloat($('#goods_price').val()) + parseFloat($('#nice_fee').val()) ); //订单总价=商品价格+靓号预存款
+		//$('#total_price').val( $('#goods_price').val() + $('#nice_fee').val() ); 
 		$('#current_price').html($('#total_price').val()); //商品的总价格也要跟着改变
 		back2Main(); //回到主页面 隐藏子页面
 	}

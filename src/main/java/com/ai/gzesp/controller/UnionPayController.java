@@ -475,6 +475,43 @@ public class UnionPayController {
         
     }*/
     
+    /**
+     * 支付结果查询接口， order_id 是原支付接口里虚拟的订单id，orderIdVir
+     * @param order_id
+     * @return
+     */
+    @RequestMapping("/unionPay/payQry/{order_id}")
+    @ResponseBody
+    public Map<String, String> unionPayQry(@PathVariable("order_id") String order_id){
+        Map<String, String> result = new HashMap<String, String>();
+        
+        UnionPayParam param = new UnionPayParam();
+        String sysTradeNo = UnionPayUtil.genSysTradeNo(TradeType.payQry.getTradeType()); //系统跟踪号
+        param.setPay_sys_trade_no(sysTradeNo);
+        String timeStamp = DateUtils.getCurentTime(); //当前请求时间戳
+        param.setPay_time_stamp(timeStamp);
+        String tradeType = TradeType.payQry.getTradeType(); //业务类型
+        param.setPay_trade_type(tradeType);
+        //String orderIdVir = UnionPayUtil.orderId2newOrderId(param.getOrder_id(), param.getPay_sys_trade_no()); //虚拟订单号，每次支付不重复
+        param.setOrder_id_vir(order_id);
+        
+        try {
+			unionPayService.sendPayQryReq(param, result); //新的方法
+			if(!result.isEmpty()){
+				return result; 
+			}
+			
+            result.put("status", UnionPayCons.RESULT_CODE_SUCCESS);
+            result.put("detail", "支付查询成功！");
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			result.put("status", "E12");
+            result.put("detail", "支付查询失败！");
+		}      
+        
+        return result;
+    }
+    
     @RequestMapping("/unionPay/test3")
     public ModelAndView test3(){
         ModelAndView mav = new ModelAndView("unionPayInput.ftl");

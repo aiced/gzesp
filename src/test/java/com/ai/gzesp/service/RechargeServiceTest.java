@@ -1,5 +1,7 @@
 package com.ai.gzesp.service;
 
+import java.io.UnsupportedEncodingException;
+
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ public class RechargeServiceTest extends BaseTest {
 	
 	@Autowired
 	private RechargeService rechargeService;
+	
+	@Autowired
+	private TestService testService;
 
 	@Test
 	public void test1(){
@@ -76,5 +81,10 @@ public class RechargeServiceTest extends BaseTest {
 	@Test
 	public void test8(){
 		rechargeService.checkBill("");
+	}
+	
+	@Test
+	public void sendMsg() throws UnsupportedEncodingException{
+		testService.sendMsg();
 	}
 }

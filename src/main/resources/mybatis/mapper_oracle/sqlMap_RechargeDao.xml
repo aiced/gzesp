@@ -43,7 +43,7 @@
            and card_no = #{card_no}
          </if>         
          <![CDATA[
-           and rownum < 20
+           and rownum <= 20
            ]]>
 	</select>
 	
@@ -157,7 +157,7 @@
 	<select id="getRechargedCardList" resultType="java.util.LinkedHashMap">
         select b.card_no, 
                decode(b.card_status, '3', '1', '0') card_status, 
-               to_char(b.update_time, 'yyyymmddHH24:mi:ss') update_time
+               to_char(b.update_time, 'yyyymmddHH24miss') update_time
           from itf_d_recharge_log a,
                inv_d_recharge_card b
          where a.req_time like substr(#{req_day}, 3)||'%'
@@ -183,6 +183,13 @@
          where order_id = ${order_id}
            and interface_type = '010202'
 	</select>
+	
+	<select id="queryRechargeResult" resultType="java.util.HashMap">
+	    select to_char(log_id) log_id, result_code
+          from itf_d_recharge_log
+         where log_id = ${log_id}
+           and interface_type = #{interface_type}
+	</select>	
 	
 	<select id="queryRechargeRqyResultByLogId" resultType="java.util.HashMap">
 	    select to_char(log_id) log_id, charge_result, to_char(charge_value) charge_value

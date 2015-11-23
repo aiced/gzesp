@@ -12,9 +12,10 @@
 			$(param1).val("");
 			return false;
 		}
-		else
-		{
+		else if ($(param1).val().length==6) {
 			$(param2).focus();
+			$(param1).select();
+			param1.setSelectionRange(0,0);
 			return true;
 		}
 	}
@@ -90,7 +91,7 @@
    		   sb.append("{"+strorder+"}");
        }
        sb.append("]");  
-       alert(sb.toString());
+       console.log(sb.toString());
        var param=sb.toString();
         $.ajax({
 	      type: "POST",
@@ -99,12 +100,12 @@
 	      dataType:"json", //预期服务器返回的数据类型
 	      data: param, //服务器只能接收json字符串
 	      success: function(data){
-	    	alert(data);
+	    	alert(data.detail);
 	        if(pay_type == '01'){
-	        	url="${base}/pay/insteadPay/postData/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val();
+	        	url="/esp/pay/insteadPay/"+$('#hide_user_id').val()+"/"+$('#hide_order_id').val();
 	        }
 	        else{
-	           url = '${base}/pay/unionPay/input/${order_id}/${fee}'; //货到付款
+	           url ='/esp/pay/unionPay/input/${order_id}/${fee}'; //货到付款
 	        }
 	        window.location.href = url;			    
 	      }
@@ -160,18 +161,16 @@
 				}
 				break;
 			case 4: //弹出框 确定按钮
-	    		var txtpwd="";
-	    		for (var i = 1; i < 7; i++) {
-	    			txtpwd=txtpwd+$("#txt"+i).val();
-				}
-	    		if (txtpwd.length!=6)
+				$("#btnok").attr('disabled',"true");
+	    		if ($('#txtsecuritypwd').val().length!=6)
 	    		{
-	    			alert("请输入6位支付密码！");
+	    			alert("请输入6位安全密码！");
+	    			$("#btnok").removeAttr("disabled");
 	    			return;
 	    		}
 
 	    		//判断输入的密码是否正确
-				var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':txtpwd};
+				var parms = {'user_id':$('#hide_user_id').val(),'user_pwd':$('#txtsecuritypwd').val()};
 				$.ajax({
 				 type: "POST",
 				 url: '/esp/shopManage/acct/myBankCardList/checkPwd',
@@ -181,6 +180,7 @@
 					{
 						alert("输入密码有误，请重新输入！");
 						clearTextVal();
+						$("#btnok").removeAttr("disabled");
 						window.location.href='/esp/pay/insteadPay/'+$("#hide_user_id").val()+"/"+$('#hide_order_id').val();
 						//return 
 					}

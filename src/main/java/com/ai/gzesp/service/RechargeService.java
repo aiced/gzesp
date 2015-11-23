@@ -195,7 +195,39 @@ public class RechargeService {
 				break; //如果已经超过单次任务的上限了，退出循环
 			}
 			
-			List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(null); //每次取20张卡
+			List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(null, null); //每次取20张卡
+			if(CollectionUtils.isEmpty(cardList)){
+				break; //如果捞不到未激活的卡，退出循环
+			}
+			
+			activeCards(cardList); //激活这批卡
+			
+			cards += cardList.size(); 
+			
+			try {
+				//等待30秒，保证这次20张卡都收到响应并更新了卡状态后再执行下次循环
+				Thread.sleep(30*1000); 
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+    	
+    	log.debug("【一卡充】激活卡任务结束。共激活" + cards + "张卡。");
+    }
+    
+    /**
+     * 激活某一面值的卡，比如20面值的没有了，需要激活部分20面值的卡
+     * 一次激活全部卡且<=100张
+     */
+    public void activeCards(String card_value){
+    	log.debug("【一卡充】激活面值" + card_value + "元卡开始。。。");
+    	int  cards = 0;
+    	while(true){
+			if(cards >= CARDS_LIMIT){
+				break; //如果已经超过单次任务的上限了，退出循环
+			}
+			
+			List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(card_value, null); //每次取20张卡
 			if(CollectionUtils.isEmpty(cardList)){
 				break; //如果捞不到未激活的卡，退出循环
 			}
@@ -223,7 +255,7 @@ public class RechargeService {
     public void activeCard(String card_no){
     	log.debug("【一卡充】激活卡任务开始。。。");
     	int  cards = 0;
-    	List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(card_no); //每次取20张卡
+    	List<Map<String, String>> cardList = rechargeDao.getUnActiveCardList(null ,card_no); //每次取20张卡
 		if(CollectionUtils.isEmpty(cardList)){
 			return; //如果捞不到未激活的卡，退出
 		}
@@ -643,7 +675,7 @@ public class RechargeService {
      */
     public void syncCardStatus2BssJob(){
     	String req_day = DateUtils.getYesterday();
-    	List<LinkedHashMap<String, String>> cardList = rechargeDao.getRechargedCardList(req_day);
+    	List<LinkedHashMap<String, String>> cardList = rechargeDao.getRechargedCardList();
     	FileUtils.writeCardReqFile(req_day, cardList);
     }
     

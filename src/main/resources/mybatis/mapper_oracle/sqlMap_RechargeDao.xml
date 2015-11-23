@@ -39,6 +39,9 @@
 	    select card_no, card_value, card_password
           from INV_D_RECHARGE_CARD
          where card_status = '0'
+         <if test="card_value != null">
+           and card_value = ${card_value}
+         </if>           
          <if test="card_no != null">
            and card_no = #{card_no}
          </if>         
@@ -160,10 +163,10 @@
                to_char(b.update_time, 'yyyymmddHH24miss') update_time
           from itf_d_recharge_log a,
                inv_d_recharge_card b
-         where a.req_time like substr(#{req_day}, 3)||'%'
-           and a.interface_type = '010202'   
+         where a.interface_type = '010202'  
            and a.agent_id = b.card_no
-	</select>		
+           and b.result_code is null
+	</select>				
 	
 	<update id="updateCardResultCode">
       update inv_d_recharge_card

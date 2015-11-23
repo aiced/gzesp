@@ -26,7 +26,6 @@ public class RechargeController {
 
     /**
      * 激活全部卡，启动激活卡的job调度
-     * @param card_no
      * @return
      */
     @RequestMapping("/active")
@@ -40,6 +39,23 @@ public class RechargeController {
         result.put("detail", "请求成功！");
         return result;
     }
+    
+    /**
+     * 激活某一面值的卡，比如20面值的没有了，需要激活部分20面值的卡，不启动激活卡的job调度
+     * @param card_value
+     * @return
+     */
+    @RequestMapping("/activeCards/{card_value}")
+    @ResponseBody
+    public Map<String, String> activeCards(@PathVariable("card_value") String card_value){
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	rechargeService.activeCards(card_value); 
+    	
+		result.put("status", "SUCCESS");
+        result.put("detail", "请求成功！");
+        return result;
+    }    
     
     /**
      * 激活全部卡，启动激活卡的job调度

@@ -12,12 +12,14 @@
     <link href="${resRoot}/css/baseStyle.css?v=${resVer}" rel="stylesheet">
     
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>   
+    <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>
      <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
      
      
     <script type="text/javascript">
     
 	    $(function(){
+	    	
 	    	if (typeof WeixinJSBridge == "undefined"){
 	    		   if( document.addEventListener ){
 	    		       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
@@ -61,6 +63,12 @@
 					      $('#btn_qry').hide();
 					      $('#btn_home').hide();
 		            }  
+		            
+		          //弹出支付结果框
+				    $('#payResult').modal({
+	                  keyboard: false,
+	                  backdrop: 'static'
+	                });
 				})
 			}
   </script>
@@ -77,8 +85,6 @@
           </div>
           <div class="modal-body">
             <p id="payOrderInfo">订单编号：${order_id}，金额：${(fee?number/1000)?string('#.##')}元</p>
-            <p id="payResultDetail" ></p>
-            <#-- <p id="payResultTip" style="color:red"></p> -->
           </div>
           <div class="modal-footer">
             <a id="btn_other" class="btn btn-warning" href="${base}/pay/selectPayMode/${order_id}/${fee}" role="button">选择其他支付方式</a>

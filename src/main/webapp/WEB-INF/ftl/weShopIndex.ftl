@@ -173,9 +173,14 @@
     	  </a>  
     	</div>
     	<div class="col-xs-4" style="padding:2px">
+    	  <!--
     	  <a href="#" onclick="Tishi();">
     	    <img src="${resRoot}/image/weShop/sjpj4.png" alt="" class="img-rounded img-responsive" />
     	  </a>    
+    	  -->
+    	  <a href="${base}/topUp/phoneTopUp/${user_id}"> 
+    	    <img src="${resRoot}/image/weShop/czjf.png" alt="" class="img-rounded img-responsive" />  
+    	  </a>     	  
     	</div>
       </div> 
     </div>    
@@ -335,11 +340,12 @@
       </#if>           	            
     </div>
     <!-- 充值缴费入口按钮 -->
+    <!--
       <div class = "top-up-div">
     	<a href="${base}/topUp/phoneTopUp/${user_id}">    	
     	</a>
-      </div>     
-
+      </div> 
+    -->
 
     <script src="${resRoot}/js/jquery.min.js?v=${resVer}"></script>
     <script src="${resRoot}/bootstrap/js/bootstrap.min.js?v=${resVer}"></script>

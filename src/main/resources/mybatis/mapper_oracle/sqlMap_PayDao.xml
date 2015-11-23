@@ -186,7 +186,7 @@
 	</insert>
 	
 	<select id="queryOrderCardPayInfo" resultType="java.util.HashMap">
-        select original_price, topay_money, phone_number serial_number, values1 serial_number_type 
+        select to_char(original_price) original_price, to_char(topay_money) topay_money, phone_number serial_number, values1 serial_number_type 
           from ord_d_card_pay
          where order_id = ${order_id}
 	</select>			

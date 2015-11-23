@@ -368,11 +368,11 @@ public class PayService {
     	    //如果支付成功 则新增一条 ORD_L_DEALLOG 处理日志
     	    int r2 = insertDealLogAfterPaySuccess(orderId, incomeFee);
     	    
-    	    //如果支付成功，调用一卡充接口充值
-    	    Map<String, String> result = rechargeService.recharge(orderId, info.get("SERIAL_NUMBER"), info.get("SERIAL_NUMBER_TYPE"), Integer.parseInt(info.get("ORIGINAL_PRICE")));
+    	    //如果支付成功，调用一卡充接口充值, ord_d_card_pay表里单位是厘，充值要元，除1000
+    	    Map<String, String> result = rechargeService.recharge(orderId, info.get("SERIAL_NUMBER"), info.get("SERIAL_NUMBER_TYPE"), Integer.parseInt(info.get("ORIGINAL_PRICE"))/1000);
     	
     	    //支付成功发短信
-    	    String strRet = SmsUtils.doSendMessage(info.get("SERIAL_NUMBER"), "MB-2015052754", "@1@=" + info.get("ORIGINAL_PRICE"));
+    	    String strRet = SmsUtils.doSendMessage(info.get("SERIAL_NUMBER"), "MB-2015112314", "@1@=" + info.get("SERIAL_NUMBER") + ",@2@=" + Integer.parseInt(info.get("ORIGINAL_PRICE"))/1000);
     	}
 
     }

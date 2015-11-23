@@ -22,7 +22,7 @@ public interface RechargeDao {
     
     public List<Map<String, String>> getUseCardList(@Param("order_id") String order_id); 
     
-    public List<Map<String, String>> getUnActiveCardList(@Param("card_no") String card_no); 
+    public List<Map<String, String>> getUnActiveCardList(@Param("card_value") String card_value, @Param("card_no") String card_no); 
     
     public List<Map<String, String>> getRechargeLogList(@Param("log_id") String log_id); 
     
@@ -74,7 +74,7 @@ public interface RechargeDao {
     
     public int updateCheckStatus(@Param("log_id") String log_id, @Param("check_status") String check_status); 
     
-    public List<LinkedHashMap<String, String>> getRechargedCardList(@Param("req_day") String req_day); 
+    public List<LinkedHashMap<String, String>> getRechargedCardList(); 
     
     public int updateCardResultCode(@Param("card_no") String card_no,
     		@Param("result_code") String result_code); 

@@ -372,7 +372,7 @@ public class PayService {
     	    Map<String, String> result = rechargeService.recharge(orderId, info.get("SERIAL_NUMBER"), info.get("SERIAL_NUMBER_TYPE"), Integer.parseInt(info.get("ORIGINAL_PRICE"))/1000);
     	
     	    //支付成功发短信
-    	    String strRet = SmsUtils.doSendMessage(info.get("SERIAL_NUMBER"), "MB-2015052754", "@1@=" + info.get("ORIGINAL_PRICE"));
+    	    String strRet = SmsUtils.doSendMessage(info.get("SERIAL_NUMBER"), "MB-2015112314", "@1@=" + info.get("SERIAL_NUMBER") + ",@2@=" + Integer.parseInt(info.get("ORIGINAL_PRICE"))/1000);
     	}
 
     }

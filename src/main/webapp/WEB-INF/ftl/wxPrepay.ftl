@@ -52,7 +52,7 @@
 					      $('#btn_home').show();
 		            }else if(res.err_msg == "get_brand_wcpay_request:cancel"){  
 		                //alert("用户取消支付!");
-		            	$('.modal-title').html('取消支付');
+		            	$('.modal-title').html('支付取消');
 					      $('#btn_other').show();
 					      $('#btn_qry').hide();
 					      $('#btn_home').hide();

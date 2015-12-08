@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -199,7 +200,8 @@ public class FileUtils {
 	 */
 	public static List<String[]> getListFromInputStream(InputStream in) {
 		List<String[]> result = new ArrayList<String[]>();
-		BufferedReader br = new BufferedReader(new InputStreamReader(in));
+		Reader read = new InputStreamReader(in);
+		BufferedReader br = new BufferedReader(read);
 		String line;
 		try {
 			while ((line = br.readLine()) != null) {
@@ -213,6 +215,9 @@ public class FileUtils {
 			try {
 				if (br != null) {
 					br.close();
+				}
+				if (read != null) {
+					read.close();
 				}
 				if (in != null) {
 					in.close();

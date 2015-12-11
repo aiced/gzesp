@@ -506,6 +506,13 @@
 		    
 	</update>		
 	
+	<update id="updateOrderArchive">
+		update ord_d_base 
+		   set order_state = '08'
+		 where order_id = #{order_id}
+		    
+	</update>		
+	
 	<select id="queryAllPke" resultType="java.util.HashMap">
 		select to_char(a.goods_id) goods_id, to_char(a.ctlg_code) ctlg_code, a.goods_name, a.package, a.first_month, a.save_money, a.months, 
 		       a.pre_fee, a.pke, a.product_id, a.product_name,

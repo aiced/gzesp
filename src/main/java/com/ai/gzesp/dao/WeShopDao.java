@@ -33,6 +33,8 @@ public interface WeShopDao {
     public GoodsDetailResult getGoodDetail(@Param("goods_id") String goods_id, @Param("user_id") String user_id);
 
     public List<Map<Object, Object>> getCitys();
+    
+    public List<Map<Object, Object>> getCityByUser(@Param("user_id") String user_id);
 
     public List<Map<Object, Object>> getAttrs(@Param("goods_id") String goods_id);
 

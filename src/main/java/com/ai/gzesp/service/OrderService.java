@@ -918,6 +918,15 @@ public class OrderService {
 	}
 	
 	/**
+	 * 根据订单号，更新ord_d_base 里的order_state 状态为 08 成功关闭(归档)，
+	 * @param order_id
+	 * @return
+	 */
+	public int updateOrderArchive(String order_id) {
+		return orderDao.updateOrderArchive(order_id);
+	}
+	
+	/**
 	 * 根据订单号，补录读卡器读出的身份证号码
 	 * @param order_id
 	 * @param cust_name

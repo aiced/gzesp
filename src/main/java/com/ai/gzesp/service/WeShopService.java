@@ -193,6 +193,9 @@ public class WeShopService {
     public List<Map<Object, Object>> getCitys(){
         return weShopDao.getCitys();
     }
+    public List<Map<Object, Object>> getCityByUser(String user_id){
+    	return weShopDao.getCityByUser(user_id);
+    }
     
 
     /**

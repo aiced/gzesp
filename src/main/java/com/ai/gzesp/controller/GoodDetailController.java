@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,7 +41,7 @@ public class GoodDetailController {
      */
     @Token(save=true)
     @RequestMapping("/goodDetail/{user_id}/{ctlg_code}/{goods_id}")
-    public ModelAndView goodDetail(@PathVariable("user_id") String user_id, @PathVariable("ctlg_code") String ctlg_code, @PathVariable("goods_id") String goods_id){
+    public ModelAndView goodDetail(HttpServletRequest request, @PathVariable("user_id") String user_id, @PathVariable("ctlg_code") String ctlg_code, @PathVariable("goods_id") String goods_id){
     	//先检查商品是否上架可卖，下架的话直接跳转到能人店铺首页
     	if(!weShopService.isGoodCanSell(goods_id)){
     		ModelAndView mav = new ModelAndView("redirect:/weShop/index/"+user_id);
@@ -47,7 +49,7 @@ public class GoodDetailController {
     	}
     	
     	//调用公共业务逻辑获取各种信息
-    	ModelAndView mav = getGoodDetailPublic(user_id, ctlg_code, goods_id);
+    	ModelAndView mav = getGoodDetailPublic(request, user_id, ctlg_code, goods_id);
 
         //edit_by_wenh_2015_4_18
         weShopService.insertVisitLog(user_id);
@@ -64,7 +66,7 @@ public class GoodDetailController {
      */
     @Token(save=true)
     @RequestMapping("/bannerGoodDetail/{goods_id}/{user_id}")
-    public ModelAndView bannerGoodDetail(@PathVariable("goods_id") String goods_id, @PathVariable("user_id") String user_id){
+    public ModelAndView bannerGoodDetail(HttpServletRequest request, @PathVariable("goods_id") String goods_id, @PathVariable("user_id") String user_id){
     	ModelAndView mav = null;
         
     	//先检查商品是否上架可卖，下架的话直接跳转到能人店铺首页
@@ -81,7 +83,7 @@ public class GoodDetailController {
         }
         String ctlg_code = ctlg.get("CTLG_CODE");
         //调用公共业务逻辑获取各种信息
-        mav = getGoodDetailPublic(user_id, ctlg_code, goods_id);
+        mav = getGoodDetailPublic(request, user_id, ctlg_code, goods_id);
         //从banner跳到商品详情页就不记录访问日志了
         return mav;
     }   
@@ -93,7 +95,9 @@ public class GoodDetailController {
      * @param goods_id
      * @return
      */
-    private ModelAndView getGoodDetailPublic(String user_id, String ctlg_code, String goods_id){
+    private ModelAndView getGoodDetailPublic(HttpServletRequest request, String user_id, String ctlg_code, String goods_id){
+    	boolean isInstead = request.getSession(false).getAttribute("instead") == null ? false : true;
+    	
     	ModelAndView mav = null;
         //根据不同商品类目，跳转到不同页面
         if(Constants.CTLG_CODE_XHRW_5.equals(ctlg_code) || Constants.CTLG_CODE_XHRW_10.equals(ctlg_code)){
@@ -125,8 +129,18 @@ public class GoodDetailController {
         
         //商品评价条数  暂不考虑
         
-        //商品归属地市下拉框  
-        List<Map<Object, Object>> citys = weShopService.getCitys();
+        
+        //TODO 代客下单时，只能选择当前掌柜所在地市的号码；
+        List<Map<Object, Object>> citys = null;
+        if(isInstead) {
+        	citys = weShopService.getCityByUser(user_id);
+        } else {
+        	//商品归属地市下拉框  
+        	citys = weShopService.getCitys();
+        }
+        
+        
+        
         //ess_city_code city_code, city_name, ess_province_code province_code
 /*        Map<Object, Object> all = new HashMap<Object, Object>(); //加入全省选项
         all.put("CITY_CODE", "%");

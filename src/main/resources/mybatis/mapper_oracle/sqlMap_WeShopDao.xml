@@ -337,6 +337,16 @@
      ]]>
 	</select>
 	
+	<select id="getCityByUser" resultType="java.util.HashMap">
+	<![CDATA[
+         select t1.ess_city_code city_code, t1.city_name, t1.ess_province_code province_code
+           from sys_p_web_city t1,aur_d_baseinfo t2
+          where ess_province_code='85' 
+          and t2.USER_ID = ${user_id}
+          and t2.EPARCHY_CODE = t1.ESS_CITY_CODE
+     ]]>
+	</select>
+	
 	<select id="getAttrs" parameterType="String" resultType="java.util.HashMap">
 	<![CDATA[
      select a.goods_id ,

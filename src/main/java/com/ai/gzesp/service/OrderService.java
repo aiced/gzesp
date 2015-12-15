@@ -922,8 +922,8 @@ public class OrderService {
 	 * @param order_id
 	 * @return
 	 */
-	public int updateOrderArchive(String order_id) {
-		return orderDao.updateOrderArchive(order_id);
+	public int updateOrderArchive(String phone_number) {
+		return orderDao.updateOrderArchive(phone_number);
 	}
 	
 	/**

@@ -477,7 +477,7 @@
                  <if test="order_id != null">
                    and a.order_id like '%'||#{order_id}||'%'
                  </if>
-               order by a.create_time
+               order by a.create_time desc
              ) m
           )
 	<![CDATA[
@@ -503,14 +503,17 @@
 		update ord_d_base 
 		   set order_state = '07'
 		 where order_id = #{order_id}
-		    
 	</update>		
 	
 	<update id="updateOrderArchive">
-		update ord_d_base 
-		   set order_state = '08'
-		 where order_id = #{order_id}
-		    
+		 update ord_d_base t1
+		 	set order_state = '08'
+		 where t1.ORDER_ID in (
+			 select t2.ORDER_ID from ord_d_res t2
+			 where t2.RES_ATTR_CODE='NUMBERS'
+			 and t2.RES_ATTR_VAL=#{phone_number}
+		 )
+		 and t1.ORDER_STATE in ('02','03','07')
 	</update>		
 	
 	<select id="queryAllPke" resultType="java.util.HashMap">

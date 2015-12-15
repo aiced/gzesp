@@ -127,15 +127,21 @@ public class BandAcctVerifyController {
 					curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductActiveTime();
 					curproinfo=curproinfo+userCheckReq_Res.getCurrProductList().get(i).getProductInActiveTime()+",";
 				}
-				for (int i = 0; i < userCheckReq_Res.getProductList().size(); i++) {
-					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductCode();
-					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductFee();
-					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductName();
-					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductRate();
-					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductType();
-					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntType();
-					proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntValue()+",";
+				//有的宽带账号比较特殊，只有自己当前的产品，通过cb返回的结果看到并没有可以办理的产品，且该账号在网厅上也不能办理。
+				//所以这里直接判断是否存在可以办理的产品即可。后续操作不影响。但要注意前台展示的地方也要做适当的修改。edit_by_wenh_2015_12_14
+				if(userCheckReq_Res.getProductList()!=null)
+				{
+					for (int i = 0; i < userCheckReq_Res.getProductList().size(); i++) {
+						proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductCode();
+						proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductFee();
+						proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductName();
+						proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductRate();
+						proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getProductType();
+						proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntType();
+						proinfo=proinfo+userCheckReq_Res.getProductList().get(i).getDiscntReq().getDiscntValue()+",";
+					}
 				}
+
 		    	//插入bss报文请求日志表
 				iRet=bssBandService.insertBSSLog(
 						"宽带账号校验", 

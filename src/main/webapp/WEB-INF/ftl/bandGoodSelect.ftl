@@ -63,33 +63,36 @@
 	    </div>
 	    
 	    <p style="margin:10px;font-size: 15px;font-weight:bold;">选择产品</p>  
-	 	
-	    <#list userCheckReq_Res.productList as item>
-		    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-left: 20px;" onclick="doClick(${item.productCode},${item.productFee},${item.discntReq.discntValue},$('#hide_oldproductcode').val());">
-		    	<div class="row">
-		        <div class="col-xs-4" style="background-color:#9bd8ff;width:60px;height:60px;text-align:center;margin:10px;padding:15px;padding-left:0px;padding-right:0px;">
-		        	<p style="color:#ffffff;font-size:18px;font-weight:normal">${item.productRate}M</p>
-		        </div>
-		        <div class="col-xs-8" style="padding:15px">
-		        	<p style="font-size:18px;font-weight:normal">${item.productName}</p>
-		        	<p style="font-size:18px;font-weight:normal;color:#000000">
-		        		<s>￥${(item.productFee?number)/100}</s>
-		        		<#if (item.discntReq.discntType == "01")>
-		        			(折扣)
-		        		<#elseif (item.discntReq.discntType == "02")>
-		        			(赠送)
-		        		<#else>
-		        			(未知)
-		        		</#if>
-		        	</p>
-		        	<p style="font-size:18px;font-weight:normal;color:#ff0000">
-		        		￥${(item.discntReq.discntValue?number)/100}
-		        	</p>
-		        	
-		        </div>     		
-		      </div>            
-		    </div>
-	    </#list>
+	 	<#if !((userCheckReq_Res.productList)??)>
+			您没有对应的可选产品
+		<#else>
+		    <#list userCheckReq_Res.productList as item>
+			    <div class="container-fluid" style="background-color:#ffffff;margin:10px;padding-left: 20px;" onclick="doClick(${item.productCode},${item.productFee},${item.discntReq.discntValue},$('#hide_oldproductcode').val());">
+			    	<div class="row">
+			        <div class="col-xs-4" style="background-color:#9bd8ff;width:60px;height:60px;text-align:center;margin:10px;padding:15px;padding-left:0px;padding-right:0px;">
+			        	<p style="color:#ffffff;font-size:18px;font-weight:normal">${item.productRate}M</p>
+			        </div>
+			        <div class="col-xs-8" style="padding:15px">
+			        	<p style="font-size:18px;font-weight:normal">${item.productName}</p>
+			        	<p style="font-size:18px;font-weight:normal;color:#000000">
+			        		<s>￥${(item.productFee?number)/100}</s>
+			        		<#if (item.discntReq.discntType == "01")>
+			        			(折扣)
+			        		<#elseif (item.discntReq.discntType == "02")>
+			        			(赠送)
+			        		<#else>
+			        			(未知)
+			        		</#if>
+			        	</p>
+			        	<p style="font-size:18px;font-weight:normal;color:#ff0000">
+			        		￥${(item.discntReq.discntValue?number)/100}
+			        	</p>
+			        	
+			        </div>     		
+			      </div>            
+			    </div>
+		    </#list>
+		</#if>
 	    <input type="hidden" id="hide_user_id" name="hide_user_id" value=${user_id}>   
 	    <input type="hidden" id="hide_bandAcct" name="hide_bandAcct" value=${bandAcct}>    
     </#if>

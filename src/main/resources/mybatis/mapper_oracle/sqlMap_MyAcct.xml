@@ -14,7 +14,17 @@
 	 where a.ACCT_TYPE = '2' 
 	   and a.user_id = b.user_id(+)
 	   and a.user_id = #{user_id}
-	</select>	
+	</select>
+	<select id="queryAcctByOrderId" resultType="java.util.HashMap">
+    select b.USER_ID,
+	       b.ACCT_ID,
+	       trunc(b.BALANCE/1000,2) as BALANCE
+      from ord_d_deal a,
+           ACT_D_ACCOUNT b
+     where a.order_id = #{order_id}
+       and a.user_id = b.user_id
+       and b.ACCT_TYPE = '2' 
+	</select>		
 	<select id="queryAcctBankByUserId" resultType="java.util.HashMap">
 	select a.*, b.param_value
 	  from ACT_D_BANKCARD a, SYS_D_ESPPARAM b

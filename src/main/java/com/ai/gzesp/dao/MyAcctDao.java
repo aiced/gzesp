@@ -10,11 +10,13 @@ public interface MyAcctDao {
 
 	
 	public Map<String, Object> queryAcctByUserId(@Param("user_id") String user_id);
+	public Map<String, String> queryAcctByOrderId(@Param("order_id") String order_id);
 	public int insertAcctPwd(@Param("user_id") String user_id, @Param("user_pwd") String user_pwd);
 	public int insertAccount(@Param("user_id") String user_id,@Param("acct_id") String acct_id,@Param("balance") String balance,@Param("acct_type") String acct_type,@Param("acct_status") String acct_status,@Param("version") String version);
 	public int updateAcctPwd(@Param("user_id") String user_id, @Param("user_pwd") String user_pwd);
 	public List<Map<String, Object>> queryAcctBankByUserId(@Param("user_id") String user_id);
 	public Map<String, String> queryAcctByUserId_UserPwd(@Param("user_id") String user_id,@Param("user_pwd") String user_pwd);
+	
 	public int insertAcctBank(
 			@Param("user_id") String user_id,
 			@Param("bank_no") String bank_no,

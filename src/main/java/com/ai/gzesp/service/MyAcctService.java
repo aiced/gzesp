@@ -25,6 +25,10 @@ public class MyAcctService {
     public Map<String, Object> queryAcctByUserId(String user_id) {
         return myAcctDao.queryAcctByUserId(user_id);
     }
+	//通过orderId 获得账户信息
+    public Map<String, String> queryAcctByOrderId(String order_id) {
+        return myAcctDao.queryAcctByOrderId(order_id);
+    }
     //插入账号信息表
     public int insertAccount(String user_id,String acct_id,String balance,String acct_type,String acct_status,String version)
     {

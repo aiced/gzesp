@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.log4j.Logger;
@@ -68,7 +70,7 @@ public class PayController {
      * @since [产品/模块版本](可选)
      */
     @RequestMapping("/selectPayMode/{order_id}/{fee}")
-    public ModelAndView selectPayMode(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
+    public ModelAndView selectPayMode(HttpServletRequest request, @PathVariable("order_id") String order_id, @PathVariable("fee") String fee){
         ModelAndView mav = new ModelAndView("selectPayMode.ftl");
         
         mav.addObject("title", "选择支付方式");
@@ -78,6 +80,23 @@ public class PayController {
         //获取商品名称，微信支付和沃支付需要
         Map<String, String> goods = payService.queryGoodsNameByOrderId(order_id);
         mav.addObject("goods_name", MapUtils.isEmpty(goods) ? "" : goods.get("GOODS_NAME"));
+        
+        //应付价格
+        mav.addObject("topay_money", Integer.parseInt(fee)/1000);
+        
+        //20151213 ximh add 如果是代客下单入口进来的，支付选择时把微帐户支付加进来
+    	//提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，ord_d_base里插订单类型
+    	boolean isInstead = request.getSession(false).getAttribute("instead") == null ? false : true;
+    	mav.addObject("isInstead", isInstead);
+    	//如果代客下单才需要去查询账户里钱够不够支付
+    	if(isInstead){
+    		//查询数据库 获得账户数据
+    		Map<String, String> acctinfo =myAcctService.queryAcctByOrderId(order_id);
+    		if (acctinfo != null && acctinfo.size()>0) {
+    			mav.addObject("acctinfo",acctinfo);
+    		}
+    	}
+        
         return mav;
     }
     
@@ -356,7 +375,9 @@ public class PayController {
     }*/
     
     /**
+     * 此方法作废
      * 代客下单支付页面 ，输入支付密码后提交
+     * 
      * post方式传参数paramList:
      * [{"pay_order":"1", "pay_type":01, "pay_mode":60, pay_fee:1, coupon_id:12345678},//代金券
      *  {"pay_order":"2", "pay_type":01, "pay_mode":51, pay_fee:2},	//账户

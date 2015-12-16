@@ -111,7 +111,7 @@ public interface OrderDao {
     
     public int updateOrderState(@Param("order_id") String order_id);
     
-    public int updateOrderArchive(@Param("order_id") String order_id);
+    public int updateOrderArchive(@Param("phone_number") String phone_number);
     
     public List<Map<String, String>> queryAllPke();
 }

@@ -198,7 +198,7 @@ public class AppController {
      * 能人app写卡成功后归档，订单号回传沃掌柜
      * 1.更新ord_d_base 里的order_state 状态为 08 已归档
      * 
-     * app传参json：{"order_id":"12345" //订单id}
+     * app传参json：{"phone_number":"18651885060" //手机号-app端在写卡环节无法获得沃掌柜订单id,因此使用手机号}
      * 返回json：{"result_code":"00", 
      *            "result_desc":"订单归档成功"
      *            }              
@@ -209,9 +209,9 @@ public class AppController {
     @ResponseBody
     public Map<String, String> updateOrderArchive(@RequestBody Map<String, String> param){
     	HashMap<String, String> result = new HashMap<String, String>();
-    	String order_id = param.get("order_id");
+    	String phone_number = param.get("phone_number");
     	
-		int n3 = orderService.updateOrderArchive(order_id);
+		int n3 = orderService.updateOrderArchive(phone_number);
 		if( n3 > 0){
 			result.put("result_code", "00");
 			result.put("result_desc", "订单归档成功");
@@ -219,7 +219,7 @@ public class AppController {
 		}
 		else{
 			result.put("result_code", "01");
-			result.put("result_desc", "订单号" + order_id + "订单归档失败");
+			result.put("result_desc", "手机号:" + phone_number + ",订单归档失败");
 		}
 		
 		return result;

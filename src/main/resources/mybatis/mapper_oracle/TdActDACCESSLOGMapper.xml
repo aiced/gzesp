@@ -297,9 +297,9 @@
     where LOG_ID = #{logId,jdbcType=DECIMAL}
   </update>
   
-  <insert id="insertReverseAccessLog" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG">
+  <insert id="insertReverseAccessLog" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG" useGeneratedKeys="false">
 	INSERT INTO  ACT_D_ACCESS_LOG
-	(
+    <trim prefix="(" suffix=")" suffixOverrides=",">
         LOG_ID,
         PARTITION_ID,
         ACCT_ID,
@@ -310,22 +310,24 @@
         FEE,
         CANCEL_TAG,
         UPDATE_TIME
-    )
-    select 1,
-           2,
-       		 T1.ACCT_ID,
-        	 T1.ORDER_ID,
-       		 '53',
-           3,
-           4,
-        	 -sum(T1.FEE),
-        	 '0',
-      		 sysdate
-     from ACT_D_ACCESS_LOG T1
-	  WHERE T1.TRADE_TYPE IN ('11','12') 
-      AND CANCEL_TAG = '0' 
-      AND T1.ORDER_ID = 5
-	  group by T1.ACCT_ID,T1.ORDER_ID
+    </trim>
+    <trim prefix=" select " suffixOverrides=",">
+<!-- 	      to_char(SYSTIMESTAMP,'YYYYMMDDHH24MISS')||rownum, -->
+<!-- 	      to_char(sysdate,'MM'), -->
+ 		#{logId,jdbcType=DECIMAL},
+        #{partitionId,jdbcType=DECIMAL},
+       		T2.ACCT_ID,
+        	T2.ORDER_ID,
+       		'53',
+        #{oldBalance,jdbcType=DECIMAL},
+        to_char(#{oldBalance,jdbcType=DECIMAL}-T2.FEE),
+        	'-'||T2.FEE,
+        	'0',
+      		sysdate
+    </trim>
+    from (SELECT T1.ACCT_ID,T1.ORDER_ID,sum(T1.FEE) FEE FROM ACT_D_ACCESS_LOG T1
+	WHERE T1.TRADE_TYPE IN ('11','12') AND CANCEL_TAG = '0' AND T1.ORDER_ID = #{orderId,jdbcType=DECIMAL}
+	group by T1.ACCT_ID,T1.ORDER_ID) T2
      </insert>
      
       <update id="updateReverseAccessLog" parameterType="java.lang.String">

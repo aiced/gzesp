@@ -2,6 +2,7 @@ package com.ai.gzesp.service;
 
 import java.util.Map;
 
+import org.apache.commons.collections.MapUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -23,7 +24,7 @@ public class UserService {
      * @param user_id
      * @return
      */
-    public Map<Object, Object> getUserInfoByPhone(String phone_number){
+    public Map<String, String> getUserInfoByPhone(String phone_number){
         return userDao.getUserInfoByPhone(phone_number);
     }
     
@@ -53,7 +54,24 @@ public class UserService {
      * @return
      */
     public Map<String, String> getBusiInfo(String phone_number){
-        return userDao.getBusiInfo(phone_number);
+        //return userDao.getBusiInfo(phone_number);
+    	//先获取userid，店名，地市，区县等基本信息
+    	Map<String, String> userInfo = userDao.getUserInfoByPhone(phone_number);
+    	if(MapUtils.isEmpty(userInfo)){
+    		return null;
+    	}
+    	else{
+    		//先找出该能人店铺是否有特殊的绑定的cb工号
+    		Map<String, String> busiInfo = userDao.getBusiInfo(phone_number);
+    		//如果没有绑定过，那就用该区县默认的参数
+    		if(MapUtils.isEmpty(busiInfo)){
+    			busiInfo = userDao.getDefaultBusiInfo(userInfo.get("EPARCHY_CODE"));//根据地市编码找默认
+    		}
+    		
+    		userInfo.putAll(busiInfo); //合并2个map
+			return userInfo;
+    		
+    	}
     }
 
 }

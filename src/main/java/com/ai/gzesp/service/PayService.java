@@ -222,7 +222,7 @@ public class PayService {
         if(isSuccess){
         	Map<String, String> phone = payDao.queryPhoneByOrderId(orderId);
         	Map<String, String> goods = payDao.queryGoodsNameByOrderId(orderId);
-        	if(MapUtils.isNotEmpty(phone)){
+        	if(MapUtils.isNotEmpty(phone) && StringUtils.isNotEmpty(phone.get("PHONE_NUMBER"))){
         		String strRet = SmsUtils.doSendMessage(phone.get("PHONE_NUMBER"), "MB-2015052754", "@1@=" + goods.get("GOODS_NAME"));
         	}
     	}
@@ -782,7 +782,7 @@ public class PayService {
      * @param pay_mode
      * @return
      */
-    private Map<String, String> insteadPayAcct(String user_id, String pay_fee, String order_id, String pay_mode) {
+    public Map<String, String> insteadPayAcct(String user_id, String pay_fee, String order_id, String pay_mode) {
     	String acct_id = user_id + "2"; //默认现金可提账户是user_id||'2' ;
     	// 22：账户支付(现金可提)(钱为负值)
     	return acctChangeAndAccessLog("代客下单", "22", acct_id, -Integer.parseInt(pay_fee), order_id);
@@ -835,7 +835,10 @@ public class PayService {
      * @return
      */
     public Map<String, String> refundOrderAcct(String order_id) {
+    	//返回结果，默认成功，失败会修改结果值
     	Map<String, String> result = new HashMap<String, String>();
+		result.put("result_code", "SUCCESS");
+    	result.put("result_desc", "微帐户退款成功");
     	
     	//先从act_d_access_log关联act_d_account表查询出订单支付时账户的变动金额和当前账户的余额和版本
     	Map<String, String> AccessLogAndBalance = payDao.queryAccessLogAndBalanceByOrderId(order_id);

@@ -137,8 +137,11 @@
 	</select>
 	
 	<select id="queryAccessLogAndBalanceByOrderId" resultType="java.util.HashMap">
-        select a.acct_id, a.fee, b.balance, b.version
-          from act_d_accesslog a,
+        select to_char(a.acct_id) acct_id, 
+               to_char(a.fee) fee, 
+               to_char(b.balance) balance, 
+               b.version
+          from act_d_access_log a,
                act_d_account b
          where a.order_id = ${order_id}
            and a.trade_type = '22'

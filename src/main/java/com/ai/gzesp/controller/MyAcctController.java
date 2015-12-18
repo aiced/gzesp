@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import com.ai.gzesp.common.Constants;
 import com.ai.gzesp.dao.sql.RegistSql;
 import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.service.MyAcctService;
+import com.ai.gzesp.service.PayService;
 import com.ai.gzesp.service.UnionPayService2;
 import com.ai.gzesp.unionpay.TradeType;
 import com.ai.gzesp.unionpay.UnionPayCons;
@@ -38,6 +40,9 @@ import com.ai.sysframe.utils.StringUtil;
 @RequestMapping("/shopManage")
 public class MyAcctController {
 	
+    @Autowired
+    private PayService payService;
+    
     @Autowired
     private MyAcctService myAcctService;
 	@Resource 
@@ -778,4 +783,71 @@ public class MyAcctController {
     	
     	return mav;
     }
+    
+    /**
+     * 代客下单支付页面 ，选择微帐户支付，输入支付密码后提交
+     * 
+     * post方式传参数paramList:
+     * [
+     *  {"pay_order":"1", "pay_type":01, "pay_mode":51, pay_fee:2}	//账户
+     * ]
+     * 
+     * 返回json 
+     * {"status":"00", "detail":"成功"} 或
+	 * {"status":"非00", "detail":"具体失败原因"}
+	 * 
+     * @param user_id
+     * @param order_id
+     * @param paramList
+     * @return
+     */
+    @RequestMapping("/acctPay/{order_id}/{fee}")
+    @ResponseBody
+    public Map<String, String> acctPay(@PathVariable("order_id") String order_id, @PathVariable("fee") String fee, 
+    		@RequestBody Map<String, String> param)
+    {
+    	//返回map
+    	Map<String, String> result = new HashMap<String, String>();
+    	
+    	//先校验密码是否正确
+    	String user_id = param.get("user_id");
+    	String user_pwd = MD5Util.md5s2(param.get("user_pwd"),Constants.md5key); //md5加密
+ 		
+    	//查询数据库,如果有表示密码正确，继续执行下面支付逻辑，如果没查到，密码错误，直接返回
+    	Map<String, String> acctinfo =myAcctService.queryAcctByUserId_UserPwd(user_id, user_pwd);
+    	if(MapUtils.isEmpty(acctinfo))
+    	{
+    		result.put("status", "E01");
+        	result.put("detail", "支付密码不正确");
+        	return result;
+    	}  
+    	
+    	//先插ord_d_pay表
+    	List<Map<String, String>> paramList = new ArrayList<Map<String, String>>();
+    	paramList.add(param); //param里有冗余的属性，不过用不着也没关系
+    	payService.beforePayReq(order_id, fee, paramList);
+    	
+    	//账户支付
+    	if(param.get("pay_mode").equals("51")){
+    		Map<String, String> resultAcct = payService.insteadPayAcct(user_id, param.get("pay_fee"), order_id, param.get("pay_mode"));
+    		//如果有返回，表示有错误
+    		if(MapUtils.isNotEmpty(resultAcct)){
+				result.put("status", resultAcct.get("status"));
+				result.put("detail", resultAcct.get("detail"));
+				//做统一操作更新相关表
+				payService.afterPaySuccess("51", false, order_id, Integer.parseInt(param.get("pay_fee"))); //单位厘
+				return result;
+			}
+		}
+    	
+        //调用公共service，做后续的统一的操作，走到这边肯定是支付成功的
+        payService.afterPaySuccess("51", true, order_id, Integer.parseInt(param.get("pay_fee"))); //单位厘
+
+    	
+        //以上都无异常才会走到这里
+    	result.put("status", "00");
+    	result.put("detail", "支付成功");
+    	
+    	return result;
+    }    
 }

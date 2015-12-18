@@ -297,7 +297,7 @@
     where LOG_ID = #{logId,jdbcType=DECIMAL}
   </update>
   
-  <insert id="insertReverseAccessLog" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG">
+  <insert id="insertReverseAccessLog" parameterType="com.ai.gzesp.dao.beans.TdActDACCESSLOG" useGeneratedKeys="false">
 	INSERT INTO  ACT_D_ACCESS_LOG
     <trim prefix="(" suffix=")" suffixOverrides=",">
         LOG_ID,

@@ -88,7 +88,12 @@
 	            <div id="deliverInfoTab" class="list-group-item">
 	                <label>配送方式</label>
 	                <div id="deliver-select" class="p-list">
-                        <a id="deliver-select-post" href="javascript:void(0);"  value="01"  class="selected">快递配送</a>
+                        <#if (offline_flag=1)>
+	                        <a id="deliver-select-post" href="javascript:void(0);"  value="01"  >快递配送</a>
+	                        <a href="javascript:void(0);"  value="03" class="selected">现场写卡</a>
+                        <#else>
+                        	<a id="deliver-select-post" href="javascript:void(0);"  value="01"  class="selected">快递配送</a>
+                        </#if>
                         <a href="javascript:void(0);"  value="02" class="disabled" >自提</a>
                     </div>
 <!--                     <div> -->
@@ -96,6 +101,7 @@
 <!--                         <p id="fetch-tip" class="line" style="display: block;">请等待客户经理通知自提</p> -->
 <!--                     </div> -->
 	            </div>
+	            
 	            <!--物流公司-->
 	            <div id="postInfoTab" class="list-group-item">
 	                <label>物流公司</label>

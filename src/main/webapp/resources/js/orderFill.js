@@ -156,6 +156,7 @@ $(function() {
 	});
 	
 	//配送方式
+	/*
 	$('#deliver-select a').find('.selected').bind("click",function(){
   	  $(this).addClass("selected").siblings().removeClass("selected");
 		if($('#deliver-select-post').hasClass("selected")){
@@ -165,6 +166,20 @@ $(function() {
     	}
   	  return false;
     });
+    */
+	$('#deliver-select a').not('.disabled').bind("click",function(){
+	  	  $(this).addClass("selected").siblings().removeClass("selected");
+			if($('#deliver-select-post').hasClass("selected")){
+				$('#postInfoTab').css({ "display":"block" });
+				$('#receiveInfoTab').css({ "display":"block" });
+	    	}else{
+	    		$('#postInfoTab').css({ "display":"none" });
+	    		$('#receiveInfoTab').css({ "display":"none" });
+	    	}
+	  	  return false;
+	    });
+	
+	$('#deliver-select a.selected').eq(0).trigger('click');
 	
 	//物流选择
 	$('#post-select a').bind("click",function(){

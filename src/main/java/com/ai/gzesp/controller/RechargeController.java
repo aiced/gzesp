@@ -25,6 +25,7 @@ public class RechargeController {
 	private RechargeService rechargeService;
 
     /**
+     * 作废，新方案中，esp不需要激活卡，直接从bss导出卡就已经是激活过的了
      * 激活全部卡，启动激活卡的job调度
      * @return
      */
@@ -41,6 +42,7 @@ public class RechargeController {
     }
     
     /**
+     * 作废，新方案中，esp不需要激活卡，直接从bss导出卡就已经是激活过的了
      * 激活某一面值的卡，比如20面值的没有了，需要激活部分20面值的卡，不启动激活卡的job调度
      * @param card_value
      * @return
@@ -58,6 +60,7 @@ public class RechargeController {
     }    
     
     /**
+     * 作废，新方案中，esp不需要激活卡，直接从bss导出卡就已经是激活过的了
      * 激活全部卡，启动激活卡的job调度
      * @param card_no
      * @return

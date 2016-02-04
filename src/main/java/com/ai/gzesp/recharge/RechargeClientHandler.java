@@ -111,10 +111,10 @@ public class RechargeClientHandler extends IoHandlerAdapter {
      */
     @PostConstruct
     public void init(){
-//    	initConnector();
-////    	//初始化时更新最新响应时间戳，initConnector()建立连接有一定耗时，所以放他后面，以后哪怕断链重连也不再初始化这个值
-////		last_resp_time = System.currentTimeMillis(); 
-//    	startHeartBeat();
+    	initConnector();
+//    	//初始化时更新最新响应时间戳，initConnector()建立连接有一定耗时，所以放他后面，以后哪怕断链重连也不再初始化这个值
+//		last_resp_time = System.currentTimeMillis(); 
+    	startHeartBeat();
     }
     
     /**

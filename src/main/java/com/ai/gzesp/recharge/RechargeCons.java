@@ -39,7 +39,7 @@ public class RechargeCons {
     /**
      * des加密密钥:，密钥长度128位（16个字符）
      */
-    public static String desKey = "1234567890123456";  //测试：1234567890123456 正式：2AE22C53C517FC65
+    public static String desKey = "2AE22C53C517FC65";  //测试：1234567890123456 正式：2AE22C53C517FC65
 
     /**
      * 心跳发送间隔时间

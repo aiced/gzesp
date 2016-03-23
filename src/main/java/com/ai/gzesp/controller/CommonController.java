@@ -343,5 +343,30 @@ public class CommonController {
 		}
 
     }
+    
+  //短信接口改造：方便后台调用
+    @RequestMapping("/common/sendWithdrawAckSms")
+    @ResponseBody
+    public String sendWithdrawAckSms(@RequestBody String strParams)
+    {
+    	// strParams------ bankNo=7836&phoneNum=15285775576&withdrawFee=260&applyTime=2015-08-27
+    	Map<String, String> paramsMap = StringUtil.params2Map(strParams);
+    	String phoneNum = (String)paramsMap.get("phoneNum");
+    	String bankNo = (String)paramsMap.get("bankNo");
+    	String withdrawFee = (String)paramsMap.get("withdrawFee");
+    	String applyTime = (String)paramsMap.get("applyTime");
+//    	String strRet=SmsUtils.doSendMessage(phoneNum,"MB-2015052732","");
+//
+//		System.out.println("短信返回值："+strRet);
+//		if (strRet != null && strRet.split("#").length==3)
+//		{
+//			return "1"; //发送成功 值:0#1#1
+//		}
+//		else {
+//	    	return "0";
+//		}
+    	return "1";
+
+    }
 	
 }

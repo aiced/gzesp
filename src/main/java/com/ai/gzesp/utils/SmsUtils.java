@@ -19,6 +19,10 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.ai.gzesp.common.Constants;
+import com.ai.gzesp.dto.SmsResp;
+import com.thoughtworks.xstream.XStream;
+
 
 public class SmsUtils {
 	private static int connectTimeOut = 5000;
@@ -216,28 +220,58 @@ public class SmsUtils {
 	 */
 	public static String  doSendMessage(String strMobile,String strTempid,String strContent) 
 	{
+		
 		String strRet = "";
 		try {
 			StringBuffer strurl=new StringBuffer();
 			//http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?content=%401%40%3D701447&username=JSMB260920&tempid=MB-2013102300&scode=593483&mobile=18551855717
-			strurl.append("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?");
-			strurl.append("content=");
+			strurl.append("http://112.74.76.186:8030/service/httpService/httpInterface.do?");
+			strurl.append("method=sendMsg");
+			strurl.append("&content=");
 			strurl.append(URLEncoder.encode(strContent, "gbk")); //URLEncoder.encode(strContent, "utf-8")
-			strurl.append("&username=JSMB260920");
+			strurl.append("&username=JSM40104");
 			strurl.append("&tempid=");
 			strurl.append(strTempid);
-			strurl.append("&scode=593483");
+			strurl.append("&password=6je0o9gz");
+			strurl.append("&veryCode=canuwdownll9");
+			strurl.append("&msgtype=2");
 			strurl.append("&mobile=");
 			strurl.append(strMobile);
 			System.out.println("url:" + strurl);//
 			//strRet = SmsUtils.doGet(strurl.toString() , "utf-8");
 			strRet = httpclientGet(strurl.toString() , "utf-8");
 			System.out.println("值:" + strRet);//此处为短信发送的返回值
+			strRet=SysXml(strRet);
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		
 		return strRet;
+		
+		//旧版本
+//		String strRet = "";
+//		try {
+//			StringBuffer strurl=new StringBuffer();
+//			//http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?content=%401%40%3D701447&username=JSMB260920&tempid=MB-2013102300&scode=593483&mobile=18551855717
+//			strurl.append("http://mssms.cn:8000/msm/sdk/http/sendsms.jsp?");
+//			strurl.append("content=");
+//			strurl.append(URLEncoder.encode(strContent, "gbk")); //URLEncoder.encode(strContent, "utf-8")
+//			strurl.append("&username=JSMB260920");
+//			strurl.append("&tempid=");
+//			strurl.append(strTempid);
+//			strurl.append("&scode=593483");
+//			strurl.append("&mobile=");
+//			strurl.append(strMobile);
+//			System.out.println("url:" + strurl);//
+//			//strRet = SmsUtils.doGet(strurl.toString() , "utf-8");
+//			strRet = httpclientGet(strurl.toString() , "utf-8");
+//			System.out.println("值:" + strRet);//此处为短信发送的返回值
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+//		
+//		return strRet;
 	}
 	
 	private static String httpclientGet(String reqUrl, String recvEncoding){
@@ -274,6 +308,14 @@ public class SmsUtils {
 
        return content;
 	}
+	
+	public static String SysXml(String strXml){
+		XStream xStream=new XStream(); 
+	    xStream.processAnnotations(SmsResp.class);
+	    SmsResp smsResp=(SmsResp)xStream.fromXML(strXml);
+	    return smsResp.getMt().getStatus();
+	}
+	
 	
 //	public static void main(String[] args) throws UnsupportedEncodingException {
 //		Map<String, String> map = new HashMap<String, String>();

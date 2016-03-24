@@ -217,48 +217,58 @@ public class CommonController {
     	
     	if (strFlag.equals("0"))//注册模板
     	{
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2013102300","@1@="+strcode);//
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0002","@1@="+strcode);//
 		}
     	else if(strFlag.equals("1")) //支付模板
     	{
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015051550","@1@="+strcode);//
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0003","@1@="+strcode);//
     	}
     	else if(strFlag.equals("2"))//支付完成短信通知
     	{
     		String order_name=paramsMap.get("order_name");
     		
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015052754","@1@="+order_name);
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0007","@1@="+order_name);
     	}
     	else if(strFlag.equals("3"))//退款申请短信通知
     	{
     		String order_id=paramsMap.get("order_id");
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015052703","@1@="+order_id);
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0004","@1@="+order_id);
     	}
     	else if(strFlag.equals("4"))//您修改微店登录密码的验证码是：@1@，请在30分钟内完成验证。
     	{
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015060623","@1@="+strcode);
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0008","@1@="+strcode);
     	}
     	else if(strFlag.equals("5"))//您正在设置账户安全码，验证码：@1@，请在30分钟内完成验证。
     	{
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015070602","@1@="+strcode);
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0009","@1@="+strcode);
     	}
     	else if(strFlag.equals("6"))//您正在修改账户安全码，验证码：@1@，请在30分钟内完成验证。
     	{
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015070640","@1@="+strcode);
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0011","@1@="+strcode);
     	}
     	else if(strFlag.equals("7"))//您正在绑定账户银行卡，验证码：@1@，请在30分钟内完成验证。
     	{
-    		strRet=SmsUtils.doSendMessage(strphone,"MB-2015070629","@1@="+strcode);
+    		strRet=SmsUtils.doSendMessage(strphone,"JSM40104-0010","@1@="+strcode);
     	}
     	
 		 System.out.println("短信返回值："+strRet);
-		 if (strRet != null && strRet.split("#").length==3)
+		 if(strRet != null && strRet=="0")
 		 {
-			 return true; //发送成功 值:0#1#1
+			 return true;
 		 }
-		 else {
-	    	 return false;
+		 else 
+		 {
+			 return false;
 		 }
+		 
+		 //旧版 edit_by_wenh_2016_3_23
+//		 if (strRet != null && strRet.split("#").length==3)
+//		 {
+//			 return true; //发送成功 值:0#1#1
+//		 }
+//		 else {
+//	    	 return false;
+//		 }
     	 
 
     	//旧版
@@ -326,25 +336,35 @@ public class CommonController {
     	String strRet="";//返回值
     	if (ischeck.equals("1")) //审核已经通过
     	{
-    		strRet=SmsUtils.doSendMessage(phonenum,"MB-2015052732","");
+    		strRet=SmsUtils.doSendMessage(phonenum,"JSM40104-0006","");
 		}
     	else if(ischeck.equals("2")) //审核未通过
     	{
-        	strRet=SmsUtils.doSendMessage(phonenum,"MB-2015052713","");
+        	strRet=SmsUtils.doSendMessage(phonenum,"JSM40104-0005","");
 		}
 
-		System.out.println("短信返回值："+strRet);
-		if (strRet != null && strRet.split("#").length==3)
-		{
-			return "发送成功"; //发送成功 值:0#1#1
-		}
-		else {
-	    	return "发送失败";
-		}
-
+		 System.out.println("短信返回值："+strRet);
+		 if(strRet != null && strRet=="0")
+		 {
+			 return "发送成功";
+		 }
+		 else 
+		 {
+			 return "发送失败";
+		 }
+    	
+//		System.out.println("短信返回值："+strRet);
+//		if (strRet != null && strRet.split("#").length==3)
+//		{
+//			return "发送成功"; //发送成功 值:0#1#1
+//		}
+//		else {
+//	    	return "发送失败";
+//		}
     }
+	
     
-  //短信接口改造：方便后台调用
+    //edit_by_wenh_2016_3_23 徐总专用
     @RequestMapping("/common/sendWithdrawAckSms")
     @ResponseBody
     public String sendWithdrawAckSms(@RequestBody String strParams)
@@ -355,18 +375,19 @@ public class CommonController {
     	String bankNo = (String)paramsMap.get("bankNo");
     	String withdrawFee = (String)paramsMap.get("withdrawFee");
     	String applyTime = (String)paramsMap.get("applyTime");
-//    	String strRet=SmsUtils.doSendMessage(phoneNum,"MB-2015052732","");
-//
-//		System.out.println("短信返回值："+strRet);
-//		if (strRet != null && strRet.split("#").length==3)
-//		{
-//			return "1"; //发送成功 值:0#1#1
-//		}
-//		else {
-//	    	return "0";
-//		}
-    	return "1";
-
+    	String strRet=SmsUtils.doSendMessage(phoneNum,"JSM40104-0014","@1@="
+		+ applyTime + ",@2@="
+		+ withdrawFee+",@3@="+bankNo);
+    	
+		 if(strRet != null && strRet=="0")
+		 {
+			 return "1";//1成功
+		 }
+		 else 
+		 {
+			 return "0";//0 失败
+		 }    	
     }
-	
+    
 }
+

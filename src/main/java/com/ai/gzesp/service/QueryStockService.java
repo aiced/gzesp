@@ -39,7 +39,7 @@ public class QueryStockService {
 							for (Map.Entry<Object, Object> entry2 : map2
 									.entrySet()) {
 								SmsUtils.doSendMessage(entry2.getValue().toString()
-										, "MB-2015111119", "@1@="
+										, "JSM40104-0012", "@1@="
 										+ map.get("CARD_VALUE") + ",@2@="
 										+ map.get("NUM").toString());// 发送库存不足短信
 							}

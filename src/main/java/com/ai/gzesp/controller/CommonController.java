@@ -252,7 +252,7 @@ public class CommonController {
     	}
     	
 		 System.out.println("短信返回值："+strRet);
-		 if(strRet != null && strRet=="0")
+		 if(strRet != null && strRet.equals("0"))
 		 {
 			 return true;
 		 }
@@ -344,7 +344,7 @@ public class CommonController {
 		}
 
 		 System.out.println("短信返回值："+strRet);
-		 if(strRet != null && strRet=="0")
+		 if(strRet != null && strRet.equals("0"))
 		 {
 			 return "发送成功";
 		 }
@@ -379,7 +379,7 @@ public class CommonController {
 		+ applyTime + ",@2@="
 		+ withdrawFee+",@3@="+bankNo);
     	
-		 if(strRet != null && strRet=="0")
+		 if(strRet != null && strRet.equals("0"))
 		 {
 			 return "1";//1成功
 		 }

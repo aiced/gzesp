@@ -300,7 +300,7 @@
 	</select>
 	<insert id="insertWidthDrawAuDit">
 		insert into ACT_D_WITHDRAW_AUDIT
-		  (log_id, partition_id, apply_time, user_id, withdraw_fee, audit_state,bank_no,bank_type)
+		  (log_id, partition_id, apply_time, user_id, withdraw_fee, audit_state,bank_no,bank_type,operate_tag)
 		values
 		  (#{log_id},
 		   #{partition_id},
@@ -309,7 +309,8 @@
 		   ${dwithdraw_fee},
 		   #{audit_state},
 		   #{bank_no},
-		   #{bank_type}
+		   #{bank_type},
+		   '0'
 		   )
 	</insert>
 	

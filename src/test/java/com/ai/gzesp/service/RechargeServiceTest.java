@@ -1,6 +1,10 @@
 package com.ai.gzesp.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
@@ -86,5 +90,24 @@ public class RechargeServiceTest extends BaseTest {
 	@Test
 	public void sendMsg() throws UnsupportedEncodingException{
 		testService.sendMsg();
+	}
+	
+	@Test
+	public void test10(){
+		Map map = new HashMap();
+
+		map.put("name", "json");
+
+		map.put("bool", Boolean.TRUE);
+
+		map.put("int", new Integer(1));
+
+		map.put("arr", new String[] { "a", "b" });
+
+		map.put("func", "function(i){ return this.arr[i]; }");
+
+		JSONObject json = JSONObject.fromObject(map);
+		
+		System.out.println(json);
 	}
 }

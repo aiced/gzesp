@@ -672,6 +672,8 @@ public class RechargeService {
     /**
      * 每天凌晨1点，沃掌柜和bss系统 同步一卡充状态 任务
      * 每次获取前一整天，充值过的卡记录，生成txt文件，放到/home/webapp/app/interface/card/req目录下
+     * 
+     * 20160607 修改，每天传送上一天销售充值过的卡给bss
      */
     public void syncCardStatus2BssJob(){
     	String req_day = DateUtils.getYesterday();

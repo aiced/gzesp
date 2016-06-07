@@ -156,11 +156,14 @@
 				
 <!-- 				<ref bean="activeCardsTrigger"/>
 				<ref bean="checkBillTrigger"/>
+				 -->
 				
 				<ref bean="syncCardStatus2BssTrigger"/>
 				<ref bean="syncCardStatus2BssRespTrigger"/>
+<!-- 		
 				<ref bean="syncBandStatus2BssTrigger"/>
-				<ref bean="syncBandStatus2BssRespTrigger"/> -->
+				<ref bean="syncBandStatus2BssRespTrigger"/>
+ -->						
 			</list>
 		</property>
 	</bean>

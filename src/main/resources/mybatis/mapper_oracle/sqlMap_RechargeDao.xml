@@ -178,8 +178,10 @@
            and a.agent_id = b.card_no
            and b.result_code is null
            and b.card_status = '3'
+         <![CDATA[  
            and update_time >= to_date(to_char(sysdate-1, 'yyyymmdd'), 'yyyymmdd')
            and update_time < to_date(to_char(sysdate, 'yyyymmdd'), 'yyyymmdd')
+           ]]>
 	</select>					
 	
 	<update id="updateCardResultCode">

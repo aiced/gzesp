@@ -171,17 +171,16 @@
 	<select id="getRechargedCardList" resultType="java.util.LinkedHashMap">
         select b.card_no, 
                decode(b.card_status, '3', '1', '0') card_status, 
-               to_char(b.update_time, 'yyyymmddHH24miss') update_time
+               to_char(b.update_time, 'yyyymmddHH24miss') update_time,
+               to_char(income_money/10) income_money
           from itf_d_recharge_log a,
-               inv_d_recharge_card b
+               inv_d_recharge_card b,
+               ord_d_card_pay c
          where a.interface_type = '010202'  
            and a.agent_id = b.card_no
            and b.result_code is null
            and b.card_status = '3'
-         <![CDATA[  
-           and update_time >= to_date(to_char(sysdate-1, 'yyyymmdd'), 'yyyymmdd')
-           and update_time < to_date(to_char(sysdate, 'yyyymmdd'), 'yyyymmdd')
-           ]]>
+           and a.order_id = c.order_id
 	</select>					
 	
 	<update id="updateCardResultCode">

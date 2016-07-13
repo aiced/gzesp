@@ -24,7 +24,7 @@ public class CallbackBusiness {
     public void run(String responseString, ResultListener resultListener) throws Exception {
 
         //打印回包数据
-        log.i(responseString);
+        log.d("打印回包数据" + responseString);
 
         //将从API返回的XML数据映射到Java对象
         CallbackResData resData = (CallbackResData) Util.getObjectFromXML(responseString, CallbackResData.class);

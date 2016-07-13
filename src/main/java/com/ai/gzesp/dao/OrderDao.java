@@ -114,4 +114,18 @@ public interface OrderDao {
     public int updateOrderArchive(@Param("phone_number") String phone_number);
     
     public List<Map<String, String>> queryAllPke();
+    
+    public List<Map<String, String>> queryBssOrderList(@Param("user_id") String user_id, 
+    		@Param("is_ok") String is_ok,
+    		@Param("order_id") String order_id,
+    		@Param("phone_number") String phone_number, 
+    		@Param("start_day") String start_day,
+    		@Param("end_day") String end_day,
+    		@Param("pageNum") String pageNum, 
+    		@Param("pageSize") String pageSize
+    		);
+    
+	public Map<String, String> getOrderAttr(@Param("order_id") String order_id);
+	
+    public List<String> getOrderAddPcke(@Param("order_id") String order_id);
 }

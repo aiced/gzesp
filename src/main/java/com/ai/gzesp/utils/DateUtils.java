@@ -285,6 +285,15 @@ public class DateUtils {
     public static String getCurentTime(){
         return new SimpleDateFormat("yyyyMMddHHmmss").format(Calendar.getInstance().getTime());
     }
+    
+    /**
+     * 返回指定格式的时间字符串
+     * @param pattern
+     * @return
+     */
+    public static String getCurentTime(String pattern){
+        return new SimpleDateFormat(pattern).format(Calendar.getInstance().getTime());
+    }
 
     /**
      * 获取当前日期

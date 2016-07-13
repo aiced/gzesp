@@ -185,6 +185,14 @@
                   </#if>
                 </#list>
               </#if>
+            <!-- 商品的预付费还是后付费  后付费/预付费-->
+              <#if attrs.SERTYPE??>
+                <#list attrs.SERTYPE as item>
+                  <#if item_index==0>
+                    <span id="ser_type" style="display:none" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_CODE}</span>
+                  </#if>
+                </#list>
+              </#if>              
             <!-- 商品的预存款，应该只有4g商品才会插这个属性，用于按预存款算佣金-->
               <#if attrs.SAVEMEY??>
                 <#list attrs.SAVEMEY as item>
@@ -216,11 +224,11 @@
                       <ul class="tabslist" attr_val="">
                         <#list attrs.PCKPLAN as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" values1="${item.VALUES1}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" values1="${item.VALUES1}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" values1="${item.VALUES1}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" pckplan_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -242,11 +250,11 @@
                       <ul class="tabslist" attr_val="">
                         <#list attrs.PACKRES as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" values1="${item.VALUES1}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" values1="${item.VALUES1}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" values1="${item.VALUES1}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -254,11 +262,50 @@
                         <!--不同 套餐月费 描述 -->
                         <#list attrs.PACKRES as item>
                           <#if item_index==0>
+                            <input id="product_id" type="hidden" name="product_id" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" package_desc="${item.VALUES1}" value="${item.VALUES1}"></input>
                             <p id="package_desc" style="margin-bottom: 0px;color:#999;">${item.VALUES1}</p>                           
                           </#if>
                         </#list>                  
               </li>              
-            </#if>                
+            </#if>
+            <!-- 必选叠加包-->        
+            <#if attrs.MUSTPCK??>
+              <li id="mustPckList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>必选叠加包</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.MUSTPCK as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>            
+            <!-- 可选叠加包-->        
+            <#if attrs.ADDPCKE??>
+              <li id="addPckList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>可选叠加包(可多选)</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.ADDPCKE as item>
+                          <#if item_index==0>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" multi_select="true">${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" multi_select="true">${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" multi_select="true">${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>                             
             <!-- 普通卡/微卡/Nano卡-->        
             <#if attrs.SIMSIZE??>
               <li id="simTypeList" class="num-info-li" >

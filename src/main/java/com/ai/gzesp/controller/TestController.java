@@ -7,18 +7,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ai.gzesp.bssintf.ExistedCustomer;
+import com.ai.gzesp.bssintf.NumInfo;
+import com.ai.gzesp.dto.RespInfo;
+import com.ai.gzesp.service.BssIntfService;
 import com.ai.gzesp.utils.MD5Util;
 import com.ai.wxpay.common.MD5;
 
 @Controller
 @RequestMapping("/test")
-public class Test {
+public class TestController {
+	
+	@Resource
+	private BssIntfService bssIntfService;
 
     @RequestMapping("/test1")
     public ModelAndView test1(){
@@ -128,4 +138,76 @@ public class Test {
       return buf.toString();
     }  
     
+    
+    @RequestMapping("/bssIntfTest")
+    public ModelAndView test4()
+    {
+    	ModelAndView mav = new ModelAndView("bssIntfTest.ftl");
+    	
+    	
+    	return mav;
+    } 
+    
+    @RequestMapping(value="/callIntfCheckCust", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<ExistedCustomer> callIntfCheckCust(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfCheckCust(param);
+    	
+    }
+    
+    @RequestMapping(value="/callIntfUserCheck", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<Map<String, String>> callIntfUserCheck(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfUserCheck(param);
+    	
+    } 
+
+    @RequestMapping(value="/callIntfNumQuery", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<List<NumInfo>> callIntfNumQuery(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfNumQuery(param);
+    	
+    } 
+    
+    @RequestMapping(value="/callIntfCheckRes", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<Map<String, String>> callIntfCheckRes(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfCheckRes(param);
+    	
+    }
+    
+    @RequestMapping(value="/callIntfCheckRule", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<Map<String, String>> callIntfCheckRule(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfCheckRule(param);
+    	
+    }
+    
+    @RequestMapping(value="/callIntfAccount", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<Map<String, String>> callIntfAccount(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfAccount(param);
+    	
+    }
+    
+    @RequestMapping(value="/callIntfOrderSub", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<Map<String, String>> callIntfOrderSub(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfOrderSub(param);
+    	
+    }
+    
+    @RequestMapping(value="/callIntfGetCardData", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<Map<String, String>> callIntfGetCardData(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfGetCardData(param);
+    	
+    }
+    
+    @RequestMapping(value="/callIntfWriteCard", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<Map<String, String>> callIntfWriteCard(@RequestBody Map<String, Object> param){
+    	return bssIntfService.callIntfWriteCard(param);
+    	
+    }     
 }

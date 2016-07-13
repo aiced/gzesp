@@ -2,13 +2,29 @@
        
        //添加tabslist 选项的点击事件
        $('.tabslist li').click(function(){
-         if( $(this).hasClass('tab-on') ){
-           //如果该选项已经被选中，返回
-           return false;
+    	   
+         //特殊判断,如果是可选叠加包,可以多选, 要有multi_select的属性才触发
+         if(typeof($(this).attr('multi_select')) != 'undefined'){  
+             if( $(this).hasClass('tab-on') ){
+                 //如果该选项已经被选中，则取消选中
+            	 $(this).removeClass('tab-on');
+               }
+             else{
+                 //如果没被选中，则更改为选中的样式 ,其他兄弟元素不变
+                 $(this).addClass('tab-on');           	 
+             }
+
          }
-         //如果没被选中，则更改为选中的样式 ,其他兄弟元素更改为没选项中样式 
-         $(this).addClass('tab-on'); 
-         $(this).siblings().removeClass('tab-on');
+         else{
+             if( $(this).hasClass('tab-on') ){
+                 //如果该选项已经被选中，返回
+                 return false;
+               }
+               //如果没被选中，则更改为选中的样式 ,其他兄弟元素更改为没选项中样式 
+               $(this).addClass('tab-on'); 
+               $(this).siblings().removeClass('tab-on');        	 
+         }
+
          
          //如果选择了A/B/C 套餐 还需要展示描述, 要有pckplan_desc的属性才触发
          if(typeof($(this).attr('pckplan_desc')) != 'undefined'){
@@ -20,6 +36,12 @@
          if(typeof($(this).attr('package_desc')) != 'undefined'){
         	 //$('#package_desc').show();
         	 $('#package_desc').html($(this).attr('package_desc'));
+         }  
+         
+         //bss产品如果选择了不同套餐, 要把values1值赋给product_id , 配置物品属性时values1配置的是bss的product_id，
+         //调用bss接口时需要传此参数
+         if(typeof($(this).attr('values1')) != 'undefined'){
+        	 $('#product_id').val($(this).attr('values1'));
          }         
        });
        
@@ -73,20 +95,24 @@ function back2Main(){
 //新号入网 商品详情页面 立即购买 按钮跳转到订单填写页面
 function planGotoOrderMain(){
     var attr_val = getAttrVal(); //获取所有被选中的属性的值，拼串
-   //edit_by_wenh_2015_4_17
-    if($('#phone_number').text()=='请选择号码')
-    {
-    	alert("请选择号码");
-    	return false;
-    }
-    attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
-    if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
-    if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
-	$('#attr_val').val(attr_val); 
-    var goods_disc = getGoodsDisc();
-    $('#goods_disc').val(goods_disc); 	
-	$('#form1').submit();
-	//alert($('#attrs').val());
+    //edit_by_wenh_2015_4_17
+     if($('#phone_number').text()=='请选择号码')
+     {
+     	alert("请选择号码");
+     	return false;
+     }
+     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
+     if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
+     if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
+     if($('#ser_type')){attr_val += '^' + $('#ser_type').attr('attr_val')};//再加上预付费还是后付费20160622
+     //if($('#product_id')){attr_val += '^' + $('#product_id').attr('attr_val')};//再加上bss产品id,20160622
+    
+     $('#attr_val').val(attr_val); 
+     var goods_disc = getGoodsDisc();
+     $('#goods_disc').val(goods_disc); 	
+ 	$('#form1').submit();
+ 	//alert($('#attrs').val());	
+
 }
 
 //合约购机 商品详情页面 新号入网 按钮跳转到订单填写页面
@@ -125,11 +151,31 @@ function cardGotoOrderMain(){
     attr_val += '^' + $('#phone_number').attr('attr_val'); //再加上号码属性
     if($('#net_type')){attr_val += '^' + $('#net_type').attr('attr_val')}; //再加上网络类型 2G/3G/4G/CARD
     if($('#save_money')){attr_val += '^' + $('#save_money').attr('attr_val')}; //再加上预存款
+    if($('#ser_type')){attr_val += '^' + $('#ser_type').attr('attr_val')};//再加上预付费还是后付费20160622
 	$('#attr_val').val(attr_val); 
     var goods_disc = getGoodsDisc();
     $('#goods_disc').val(goods_disc); 	
 	$('#form1').submit();
 	//alert($('#attrs').val());
+}
+
+//提交之前校验下是否有属性没选
+function checkAttrVal(){
+	var flag = true;
+	var desc = "";
+	$('.tabslist').each(function(i){
+		if($(this).find('.tab-on').length == 0){
+			flag = false;
+			desc = $(this).find('li').attr('attr_code') + "未选择！";
+			return false; //退出循环
+		}
+		
+		});	
+	
+	if(!flag){
+		alert(desc);
+	}
+	return flag;	
 }
 
 //获取所有被选中的属性的值，拼串 

@@ -325,6 +325,7 @@ public class CommonController {
 		return mav;
 	} 
 	
+	
 	//短信接口改造：方便后台调用
     @RequestMapping("/common/sendmessage/{phonenum}/{ischeck}")
     @ResponseBody

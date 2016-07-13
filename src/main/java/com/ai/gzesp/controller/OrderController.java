@@ -25,9 +25,13 @@ import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdGdsDINFO;
 import com.ai.gzesp.dao.service.TdGdsDINFODao;
 import com.ai.gzesp.dao.service.TdSysPWEBDISTRICTDao;
+import com.ai.gzesp.dto.RespInfo;
+import com.ai.gzesp.service.AppService;
+import com.ai.gzesp.service.BssIntfService;
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.SelectNumberService;
 import com.ai.gzesp.service.WeShopService;
+import com.ai.sysframe.exception.ReturnCode;
 import com.ai.sysframe.token.Token;
 import com.ai.sysframe.utils.CommonUtil;
 import com.ai.sysframe.utils.DateUtil;
@@ -56,6 +60,12 @@ public class OrderController {
     
 	@Resource
 	MaterialService materialService;
+	
+	@Resource
+	private BssIntfService bssIntfService;
+	
+	@Resource
+	private AppService appService;
     
     @Resource
     TdSysPWEBDISTRICTDao tdSysPWEBDISTRICTDao;
@@ -220,11 +230,55 @@ public class OrderController {
     	//1：普通用户订单 2：店长代客下单 3：充值卡缴费 4：充值卡售卖
     	paramsMap.put("orderType", isInstead ? "2" : "1");
     	
-    	orderService.insertOrder(paramsMap);
+    	//20160622 ximh 修改，支撑bss本地产品，提交订单的时候，要区分待客下单和普通用户下单，开户流程不一样，主要是身份证读取的时间不一样，客户认证这个接口在什么时候调用的区别
+    	//普通下单：1客户资料验证接口，2用户校验接口，3订购信息合法性验证与费用计算接口, 5.开户信息预提交接口， 6.订单提交接口， 4插沃掌柜本地预订单表 ，7.跳转到支付页面
+    	//待客下单：4插沃掌柜本地预订单表 ，7.跳转到支付页面，app端：1客户资料验证接口，2用户校验接口，3订购信息合法性验证与费用计算接口, 5.开户信息预提交接口， 6.订单提交接口
+    	String ctlg_code = paramsMap.get("ctlgCode"); //10省内新号入网 ，11省内上网卡
+    	//20160628 ximh 修改，以后所有上网卡都是省内卡，都需要现场写卡，所以上网卡不管是不是待客下单还是普通下单统一调用bss接口选号占号
+    	if("11".equals(ctlg_code)){
+    		//如果号码查询接口+号码预占接口都成功，需要把号码加到订单提交参数里，后面插沃掌柜订单表需要用到
+    		RespInfo<Map<String, String>> respInfo = bssIntfService.callBssSelectNumAll(paramsMap);
+    		//如果bss接口有一个不成功，则跳转到错误页面，全都成功了才继续下面 沃掌柜插订单的动作
+    		if(!"0000".equals(respInfo.getRespCode())){
+    			String url = "error2.ftl";
+    	    	ModelAndView mav = new ModelAndView(url);
+    	    	mav.addObject("respCode", respInfo.getRespCode());
+    	    	mav.addObject("respDesc", respInfo.getRespDesc());
+    	    	mav.addObject("user_id", paramsMap.get("userId"));
+    	    	return mav; //退出    	
+    		}
+    	}
     	
+    	//插订单表
+    	orderService.insertOrder(paramsMap);
     	//20150420 ximh add，订单生成成功后需要库存数量-1，销量+1，用于后面判断有货无货
     	orderService.updateGoodsAmount(paramsMap.get("goodsId"));
     	
+    	//10省内新号入网 ，11省内上网卡 ,都统一走bss接口提交订单
+    	if("10".equals(ctlg_code) || "11".equals(ctlg_code)){
+    		//如果是普通下单的，表示身份证照片已经上传，就当做实名过，需要调用bss接口走开户流程，最后现场写卡
+        	if(!isInstead){
+        		RespInfo<Map<String, String>> respInfo = bssIntfService.callBssOpenAll(paramsMap);
+        		//如果bss接口有一个不成功，则跳转到错误页面，全都成功了才继续下面 沃掌柜插订单的动作
+        		if(!"0000".equals(respInfo.getRespCode())){
+        			String url = "error2.ftl";
+        	    	ModelAndView mav = new ModelAndView(url);
+        	    	mav.addObject("respCode", respInfo.getRespCode());
+        	    	mav.addObject("respDesc", respInfo.getRespDesc());
+        	    	mav.addObject("user_id", paramsMap.get("userId"));
+        	    	return mav; //退出
+        		}
+        		
+        		//如果是上网卡，且开户成功，修改 订单主表 intf_order_status 字段为0，失败则不更新
+        		if("11".equals(ctlg_code) && "0000".equals(respInfo.getRespCode())){
+        			Map<String, String> param = new HashMap<String, String>();
+        			param.put("phone_number", paramsMap.get("bssSerialNumber"));
+        			param.put("intf_order_status", "0");
+    	    		int i = appService.updateOrderIntfStatus(param);
+        		}
+        	}
+        	//如果是代客下单的，沃掌柜下单未上传身份证，这边不调用bss接口开户，只预定单，后面app读身份证后，调用bss开户
+    	}
     	
     	//20150703 ximh modify 提交订单时根据session里是否有 instead属性，来区分是代客下单或者普通用户下单，跳转到不同的支付页面
     	String url = null;
@@ -367,4 +421,6 @@ public class OrderController {
     public static void main(String[] args) {
 		System.out.println(CommonUtil.string2Float(".01"));
 	}
+    
+
 }

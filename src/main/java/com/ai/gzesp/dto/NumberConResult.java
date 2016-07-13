@@ -24,12 +24,37 @@ public class NumberConResult {
      * 靓号预存
      */
     private String nice_fee;
+    
+    
+    /**
+     * 网络类型
+     */
+    private String netType;  
+    
+    /**
+     * 商品类目
+     */
+    private String ctlg_code;
+    
+    
+    /**
+     * 能人id
+     */
+    private String user_id; 
 
     public String getSerial_number() {
         return serial_number;
     }
 
-    public void setSerial_number(String serial_number) {
+    public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	public void setSerial_number(String serial_number) {
         this.serial_number = serial_number;
     }
 
@@ -48,6 +73,22 @@ public class NumberConResult {
     public void setNice_fee(String nice_fee) {
         this.nice_fee = nice_fee;
     }
+
+	public String getNetType() {
+		return netType;
+	}
+
+	public void setNetType(String netType) {
+		this.netType = netType;
+	}
+
+	public String getCtlg_code() {
+		return ctlg_code;
+	}
+
+	public void setCtlg_code(String ctlg_code) {
+		this.ctlg_code = ctlg_code;
+	}
     
 
 }

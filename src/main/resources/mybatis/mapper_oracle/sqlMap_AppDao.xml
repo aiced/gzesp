@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.gzesp.dao.AppDao">
+
+	
+	<select id="queryLatestVersion" resultType="java.util.HashMap">
+     select *
+       from (
+		SELECT A.* 
+		  FROM TD_M_APPVERSION A
+		 WHERE 1 = 1
+		 <if test="os != null and os != ''">
+		    AND A.os = #{os}
+		 </if>
+		 order by version desc
+         )
+       where rownum = 1
+	</select>	
+
+	<update id="updateOrderIntfStatus" >
+       update ord_d_base a 
+          set a.intf_order_status = #{intf_order_status},
+              a.intf_order_desc = #{intf_order_desc}
+        where exists 
+             (
+              select 1 
+                from ord_d_res b
+               where res_attr_code = 'NUMBERS'
+                 and b.res_attr_val = #{phone_number}
+                 and a.order_id = b.order_id
+              )
+	</update>
+	
+	<update id="updateWriteCardStatus" >
+       update ord_d_base a 
+          set a.write_card_status = #{write_card_status}
+        where exists 
+             (
+              select 1 
+                from ord_d_res b
+               where res_attr_code = 'NUMBERS'
+                 and b.res_attr_val = #{phone_number}
+                 and a.order_id = b.order_id
+              )
+	</update>		
+
+</mapper>

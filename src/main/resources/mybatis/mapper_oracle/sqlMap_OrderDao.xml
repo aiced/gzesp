@@ -422,6 +422,9 @@
             (
               select to_char(a.order_id) order_id,
                      to_char(a.create_time, 'yyyy-mm-dd hh24:mi:ss') create_time,
+                     a.intf_order_status,
+                     a.write_card_status,
+                     a.intf_order_desc,
                      case when b.pspt_no is null then '0' else '1' end is_ok,
                      'http://res.woboss.gz186.com'||f.photo_links photo_links,
                      c.goods_name,
@@ -477,6 +480,7 @@
                  <if test="order_id != null">
                    and a.order_id like '%'||#{order_id}||'%'
                  </if>
+                 and c.ctlg_code not in ('10', '11')
                order by a.create_time desc
              ) m
           )
@@ -526,5 +530,113 @@
          where a.goods_id like = #{goods_id}
          </if>
 	</select>
-			
+	
+	<select id="queryBssOrderList" resultType="java.util.HashMap">
+       select *
+         from 
+         (
+          select m.*, rownum row_num
+            from 
+            (
+              select to_char(a.order_id) order_id,
+                     to_char(a.create_time, 'yyyy-mm-dd hh24:mi:ss') create_time,
+                     a.intf_order_status,
+                     a.write_card_status, 
+                     a.intf_order_desc,                           
+                     case when b.pspt_no is null then '0' else '1' end is_ok,
+                     b.cust_name,
+                     b.pspt_no,
+                     'http://res.woboss.gz186.com'||f.photo_links photo_links,
+                     c.goods_name,
+                     to_char(a.income_money/1000) income_money,
+                     g.res_attr_val phone_number,
+                     to_char(c.goods_id) goods_id,
+                     to_char(c.ctlg_code) ctlg_code,
+                     i.values1 product_id,
+                     decode(j.res_attr_val, '预付费', '00', '01') user_type 
+                from ord_d_base a ,
+                     ord_d_cust b,
+                     ord_d_prod c,
+                     ord_d_deal d,
+                     gds_d_info e,
+                     gds_d_photo f,
+                     (select * from ord_d_res where res_attr_code = 'NUMBERS') g,
+                     (select * from ord_d_res where res_attr_code = 'PACKRES') i,
+                     (select * from ord_d_res where res_attr_code = 'SERTYPE') j
+               where a.order_id = b.order_id
+               <if test="start_day != null and start_day != ''">
+               	<![CDATA[
+                 and a.create_time >= to_date(#{start_day}, 'yyyy-mm-dd')
+                ]]>
+               </if> 
+               <if test="end_day != null and end_day != ''">
+               	<![CDATA[ 
+                 and a.create_time < to_date(#{end_day}, 'yyyy-mm-dd')+1
+                 ]]>
+               </if>
+                 and a.income_money > 0
+               <choose>
+		         <when test="is_ok == '0'">
+			       and b.pspt_no is null
+			     </when>
+			     <when test="is_ok == '1'">
+			       and b.pspt_no is not null
+			     </when>  
+		         <otherwise>
+		         
+		         </otherwise>
+	           </choose>                       
+                 and a.order_id = c.order_id
+                 and c.goods_id = e.goods_id
+                 and e.album_id = f.album_id
+                 and f.default_tag = '0'
+                 and a.order_id = d.order_id
+                 and d.user_id = #{user_id}
+                 and a.order_id = g.order_id
+                 <if test="phone_number != null">
+                   and g.res_attr_val like '%'||#{phone_number}||'%'
+                 </if>
+                 <if test="order_id != null">
+                   and a.order_id like '%'||#{order_id}||'%'
+                 </if>
+                 and c.ctlg_code in ('10', '11')
+                 and a.order_id = i.order_id
+                 and a.order_id = j.order_id
+               order by a.create_time desc
+             ) m
+          )
+	<![CDATA[
+        where row_num > (${pageNum}-1)*${pageSize}
+          and row_num <= ${pageNum}*${pageSize}       
+     ]]>          
+	</select>	
+
+	<select id="getOrderAttr" resultType="java.util.HashMap">
+        select to_char(a.order_id) order_id,
+               b.res_attr_val serial_number,
+               decode(c.res_attr_val, '预付费', '2', '1') ser_type,
+               d.values1 product_id,
+               e.res_attr_val MUSTPCK,
+               decode(c.res_attr_val, '立即生效', '02', '半月生效', '03', '01') FMONTHD 
+          from ord_d_base a ,
+               (select * from ord_d_res where res_attr_code = 'NUMBERS') b,
+               (select * from ord_d_res where res_attr_code = 'SERTYPE') c,
+               (select * from ord_d_res where res_attr_code = 'PACKRES') d,
+               (select * from ord_d_res where res_attr_code = 'MUSTPCK') e,
+               (select * from ord_d_res where res_attr_code = 'FMONTHD') f
+         where a.order_id = b.order_id
+           and a.order_id = c.order_id
+           and a.order_id = d.order_id	
+           and a.order_id = e.order_id(+)	
+           and a.order_id = f.order_id(+)
+           and a.order_id = #{order_id}
+	</select>
+	
+	<select id="getOrderAddPcke" resultType="java.lang.String">
+        select b.res_attr_val ADDPCKE
+          from ord_d_base a ,
+               (select * from ord_d_res where res_attr_code = 'ADDPCKE') b
+         where a.order_id = b.order_id
+           and a.order_id = #{order_id}
+	</select>					
 </mapper>

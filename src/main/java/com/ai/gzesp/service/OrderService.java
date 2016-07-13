@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ai.gzesp.dao.OrderDao;
+import com.ai.gzesp.dao.UserDao;
 import com.ai.gzesp.dao.beans.Criteria;
 import com.ai.gzesp.dao.beans.TdOrdDBANDPAY;
 import com.ai.gzesp.dao.beans.TdOrdDBASE;
@@ -107,6 +108,9 @@ public class OrderService {
     
     @Autowired
     private OrderDao orderDao;
+    
+	@Autowired
+	private UserDao userDao;
     
     public String GetGoodsNumAttr(String goodsId) {
     	return goodsSql.GetGoodsNumAttr(goodsId);
@@ -503,6 +507,11 @@ public class OrderService {
     			values1 = col[3];
     		}
     		
+    		//如果是11省内上网卡，此时resAttrStr是没有号码的，号码在bssSerialNumber 属性里，这里不插，下面补插一条
+    		if("11".equals(paramsMap.get("ctlgCode")) && "NUMBERS".equals(resAttrCode)){
+    			continue;
+    		}
+    		
     		TdOrdDRES record = new TdOrdDRES();
     		record.setOrderId(CommonUtil.string2Long(orderId));
         	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
@@ -510,6 +519,21 @@ public class OrderService {
         	record.setResAttrCode(resAttrCode);
         	record.setResAttrVal(resAttrVal);
         	record.setValues1(values1);
+    		tdOrdDRESDao.insertSelective(record);
+    	}
+    	
+    	//bss产品时选号码是调用的bss接口，以上订单属性里没有号码信息，号码信息在接口返回时callBssSelectNumAll里赋值
+    	if("11".equals(paramsMap.get("ctlgCode")) && paramsMap.containsKey("bssSerialNumber")){
+    		String row = rows[0];
+    		String[] col = row.split("\\|", -1);
+    		String resId = col[0];
+    		TdOrdDRES record = new TdOrdDRES();
+    		record.setOrderId(CommonUtil.string2Long(orderId));
+        	record.setPartitionId(Short.parseShort(CommonUtil.getPartitionId(orderId)));
+        	record.setResId(CommonUtil.string2Long(resId));
+        	record.setResAttrCode("NUMBERS");
+        	record.setResAttrVal(paramsMap.get("bssSerialNumber"));
+        	record.setValues1(paramsMap.get("bssSerialNumber"));
     		tdOrdDRESDao.insertSelective(record);
     	}
     }
@@ -849,6 +873,9 @@ public class OrderService {
         //这些属性是沃掌柜系统订单本来有的属性
         row.put("order_id", oldOrder.get("ORDER_ID"));
         row.put("create_time", oldOrder.get("CREATE_TIME"));
+        row.put("intf_order_status", oldOrder.get("INTF_ORDER_STATUS"));        
+        row.put("write_card_status", oldOrder.get("WRITE_CARD_STATUS"));
+        row.put("intf_order_desc", oldOrder.get("INTF_ORDER_DESC")); 
         row.put("is_ok", oldOrder.get("IS_OK"));
         row.put("photo_links", oldOrder.get("PHOTO_LINKS"));
         row.put("goods_name", oldOrder.get("GOODS_NAME"));
@@ -972,5 +999,58 @@ public class OrderService {
 			Map<String, String> result = (Map<String, String>) CollectionUtils.find(list2, predicate);
 			System.out.println(result);
 		}
+	}
+	
+	/**
+	 * 需要线下当场开卡时，下的订单没有传身份证照片，根据user_id 查询出订单，用于后面绑定身份证号
+	 * @param user_id
+	 * @param is_ok
+	 * @param order_id
+	 * @param phone_number
+	 * @param start_day
+	 * @param end_day
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	public List<Map<String, String>> queryBssOrderList(String user_id, String is_ok,
+			String order_id, String phone_number, String start_day, String end_day, String pageNum,
+			String pageSize) {
+		//订单集合orders
+		List<Map<String, String>> orders = orderDao.queryBssOrderList(user_id, is_ok, order_id, phone_number, start_day,
+				end_day, pageNum, pageSize);
+		//根据user_id 获取该订单对应的  bss开户工号部门等参数
+		Map<String, String> commonParam = userDao.getBssIntfInfo(user_id);
+		
+		List<Map<String, String>> result = new ArrayList<Map<String, String>>(); 
+		
+		for(Map<String, String> oldOrder : orders){
+			Map<String, String> row = new HashMap<String, String>();
+			
+	        row.put("order_id", oldOrder.get("ORDER_ID"));
+	        row.put("create_time", oldOrder.get("CREATE_TIME"));
+	        row.put("intf_order_status", oldOrder.get("INTF_ORDER_STATUS"));
+	        row.put("write_card_status", oldOrder.get("WRITE_CARD_STATUS"));
+	        row.put("intf_order_desc", oldOrder.get("INTF_ORDER_DESC"));
+	        row.put("is_ok", oldOrder.get("IS_OK"));
+	        row.put("cust_name", oldOrder.get("CUST_NAME"));
+	        row.put("pspt_no", oldOrder.get("PSPT_NO"));
+	        row.put("photo_links", oldOrder.get("PHOTO_LINKS"));
+	        row.put("goods_name", oldOrder.get("GOODS_NAME"));
+	        row.put("income_money", oldOrder.get("INCOME_MONEY"));
+	        row.put("phone_number", oldOrder.get("PHONE_NUMBER"));
+	        row.put("ctlg_code", oldOrder.get("CTLG_CODE"));
+	        row.put("product_id", oldOrder.get("PRODUCT_ID"));
+	        row.put("user_type", oldOrder.get("USER_TYPE"));
+	        
+			//以下参数在写卡结果通知接口里 用到
+	        row.put("staff_id", commonParam.get("OPERATE_ID"));
+	        row.put("eparchy_code", commonParam.get("EPARCHY_CODE"));
+	        row.put("depart_id", commonParam.get("CHANNEL_ID"));
+			
+	        result.add(row);
+		}
+
+        return result;
 	}
 }

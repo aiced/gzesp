@@ -114,7 +114,11 @@ function queryNumbersPublic(eparchy_code, nice_rule, nice_fee_start, nice_fee_en
 {
 	var param = {"eparchy_code":eparchy_code, "nice_rule":nice_rule, "nice_fee_start":nice_fee_start, 
 			     "nice_fee_end":nice_fee_end, "pageNum":pageNum, "pageSize":pageSize, 
-			     "keyword":keyword, "sort":sort, "sortCol":sortCol, "netType":netType
+			     "keyword":keyword, "sort":sort, "sortCol":sortCol, "netType":netType,
+			     "user_id":$('#user_id').val(), 
+			     "ser_type": $('#ser_type').html(), 
+			     "product_id":$('#product_id').val(),
+			     "ctlg_code":$('#ctlg_code').val()
 			     };
 	
 	$.ajax({
@@ -135,7 +139,11 @@ function queryNumbersPublicAppend(eparchy_code, nice_rule, nice_fee_start, nice_
 {
 	var param = {"eparchy_code":eparchy_code, "nice_rule":nice_rule, "nice_fee_start":nice_fee_start, 
 			     "nice_fee_end":nice_fee_end, "pageNum":pageNum, "pageSize":pageSize, 
-			     "keyword":keyword, "sort":sort, "sortCol":sortCol, "netType":netType
+			     "keyword":keyword, "sort":sort, "sortCol":sortCol, "netType":netType,
+			     "user_id":$('#user_id').val(), 
+			     "ser_type": $('#ser_type').html(), 
+			     "product_id":$('#product_id').val(),
+			     "ctlg_code":$('#ctlg_code').val()
 			     };
 	
 	$.ajax({
@@ -158,16 +166,21 @@ function clickOneNumber(obj){
    //alert(serial_number);	
    //$('#serial_number').html(serial_number); //赋值给父页面里的某个 标签属性
    
-   updateNumberState(serial_number, nice_fee); //预占号码
+   var net_type = $('#net_type').html(); //网络类型
+   
+   updateNumberState(serial_number, nice_fee, net_type); //预占号码
    //back2Main(); //子页面隐藏，主页面展示
 }
 
 //预占号码 变更号码状态
-function updateNumberState(serial_number, nice_fee){
+function updateNumberState(serial_number, nice_fee, netType){
 	if(serial_number == null || serial_number==''){
 		return false;
 	}
-	var param = {"serial_number":serial_number, "nice_fee":nice_fee}; //号码和 靓号预存款，最后订单价格要加上预存
+	var param = {"serial_number":serial_number, "nice_fee":nice_fee, "netType":netType,
+			     "user_id":$('#user_id').val(),
+			     "ctlg_code":$('#ctlg_code').val()
+	             }; //号码和 靓号预存款，最后订单价格要加上预存
 	$.ajax({
 		   type: "POST",
 		   contentType:"application/json", //发送给服务器的内容编码类型

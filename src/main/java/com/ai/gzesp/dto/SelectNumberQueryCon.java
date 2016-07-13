@@ -60,6 +60,26 @@ public class SelectNumberQueryCon {
      * 网络类型
      */
     private String netType;    
+    
+    /**
+     * 能人id
+     */
+    private String user_id;    
+    
+    /**
+     * 付费类型 预付费/后付费
+     */
+    private String ser_type;  
+    
+    /**
+     * bss 系统里的 product_id
+     */
+    private String product_id;  
+    
+    /**
+     * 商品类目
+     */
+    private String ctlg_code;
 
     
     public String getEparchy_code() {
@@ -158,6 +178,47 @@ public class SelectNumberQueryCon {
 	public void setNetType(String netType) {
 		this.netType = netType;
 	}
+	
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+
+	public String getSer_type() {
+		return ser_type;
+	}
+
+
+	public void setSer_type(String ser_type) {
+		this.ser_type = ser_type;
+	}
+
+
+	public String getProduct_id() {
+		return product_id;
+	}
+
+
+	public void setProduct_id(String product_id) {
+		this.product_id = product_id;
+	}
+
+	
+	public String getCtlg_code() {
+		return ctlg_code;
+	}
+
+
+	public void setCtlg_code(String ctlg_code) {
+		this.ctlg_code = ctlg_code;
+	}
+
 
 	public SelectNumberQueryCon(){
         //空构造，spring转换对象时，进行初始化

@@ -37,7 +37,7 @@ public class SelectNumberService {
 	public List<Map<Object, Object>> queryNumberListByPage(String eparchy_code,
 			String nice_rule, int nice_fee_start, int nice_fee_end,
 			int pageNum, int pageSize, String keyword, String sort,
-			String sortCol, String net_type) {
+			String sortCol, String ctlg_code) {
 		//此处只能写死对应关系 01:3G，02:2G，03 4G，04:CARD。
 		//物品属性表里的 NETTYPE属性的值是 2G/3G/4G/CARD,号码表里的net_type_code是01/02/03/04,
 		//20150423 需求又改，iphone5s可以选3g又可以选4g号码，2g不会有，所以这边只需要在sql里限制排除上网卡号码

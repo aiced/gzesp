@@ -4,16 +4,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.gzesp.dto.RespInfo;
+import com.ai.gzesp.service.AppService;
+import com.ai.gzesp.service.BssIntfService;
 import com.ai.gzesp.service.OrderService;
 import com.ai.gzesp.service.UserService;
+import com.ai.gzesp.utils.BssIntfUtil;
+import com.ai.gzesp.utils.DateUtils;
 import com.ai.gzesp.utils.MD5Util;
 
 /**
@@ -35,6 +42,12 @@ public class AppController {
     
 	@Autowired
 	private UserService userService;
+	
+	@Resource
+	private BssIntfService bssIntfService;
+	
+	@Resource
+	private AppService appService;
     
     /**
      * 登陆验证接口 和 沃掌柜用同一套用户名密码
@@ -110,7 +123,10 @@ public class AppController {
      *               "pageSize":"10", //每页条数
      *               }
      * 返回json：[{"order_id":"1081431679469542", 
-     *            "create_time":"2015-09-01 12:00:01", 
+     *            "create_time":"2015-09-01 12:00:01",
+     *            "intf_order_status":"",
+     *            "write_card_status":"", //0 表示写卡成功，空表示写卡失败
+     *            "intf_order_desc":"阿斯蒂芬",  //外围接口失败描述
      *            "is_ok":"0", 
      *            "photo_links":"http://res.woboss.gz186.com/uploader/goodsimages/201504232158113515701303.png", 
      *            "goods_name":"【一年卡】12GB上网卡 包2GB全国流量 10GB省内流量 直降180元！", 
@@ -224,4 +240,315 @@ public class AppController {
 		
 		return result;
     }
+    
+    /**
+     * 根据user_id 查询出未绑定身份证的订单，用于后面绑定身份证号, 这里只查出bss本地产品的订单
+     * 需要线下当场开卡时，下的订单没有传身份证照片
+     * app传参json：{"user_id":"12345", //能人id
+     *               "order_id":"123456",  //订单id
+     *               "phone_number":"18651885060",  //订单选中的手机号码
+     *               "is_ok":"1",  // 1身份证已经补录，0身份证未补录，“”表示全部
+     *               "start_day":"2015-09-01", //订单开始日期
+     *               "end_day":"2015-09-01",  //订单结束日期
+     *               "pageNum":"1", //页数
+     *               "pageSize":"10", //每页条数
+     *               }
+     * 返回json：[{"order_id":"1081431679469542", 
+     *            "create_time":"2015-09-01 12:00:01", 
+     *            "intf_order_status":"",  //0 表示bss开户成功,其他表示失败
+     *            "write_card_status":"", //0 表示写卡成功，空表示写卡失败
+     *            "intf_order_desc":"阿斯蒂芬",  //外围接口失败描述
+     *            "is_ok":"0", 
+     *            "cust_name":"奚敏辉",
+     *            "pspt_no":"12345678",
+     *            "photo_links":"http://res.woboss.gz186.com/uploader/goodsimages/201504232158113515701303.png", 
+     *            "goods_name":"【一年卡】12GB上网卡 包2GB全国流量 10GB省内流量 直降180元！", 
+     *            "income_money":"220", 
+     *            "phone_number":"13885185322",
+     *            "product_id":"99999830", //product_id 找不到的时候为空字符串""
+     *            "ctlg_code": "5",
+     *            "user_type": "00", //'00''预付费', '01'后付费
+     *            "staff_id":"abcde",
+     *            "eparchy_code":"0541",
+     *            "depart_id":"12345"
+     *            }]
+     * @param param
+     * @return
+     */
+    @RequestMapping(value="/queryBssOrderList", method = RequestMethod.POST)
+    @ResponseBody
+    public List<Map<String, String>> queryBssOrderList(@RequestBody Map<String, String> param){
+    	String user_id = param.get("user_id");
+    	String order_id = param.get("order_id");
+    	String phone_number = param.get("phone_number");
+    	String is_ok = param.get("is_ok"); // 1身份证已经补录，0身份证未补录，“”表示全部
+    	String start_day = param.get("start_day");
+    	String end_day = param.get("end_day");
+    	String pageNum = param.get("pageNum");
+    	String pageSize = param.get("pageSize");
+    	
+    	return orderService.queryBssOrderList(
+				user_id, is_ok, order_id, phone_number, start_day, end_day, pageNum,
+				pageSize);
+    	
+    }    
+    
+    
+    /**
+     * bss 获取写卡数据接口，给文辉app调用
+     * app传参json：{"user_id":"12345", //能人id
+     *               "phone_number":"18651885060",  //订单选中的手机号码
+     *               "iccid":"123456",  // 蓝牙读卡器读出来的sim iccid
+     *               "cust_name":"奚敏辉", //蓝牙读卡器读出来的身份证姓名
+     *               "pspt_id":"32028229840116211",  //蓝牙读卡器读出来的身份证号码
+     *               "product_id":"12345656", //queryBssOrderList接口获取的订单信息里返给app的
+     *               "ctlg_code":"10", //商品类目
+     *               "user_type": "00" //'00''预付费', '01'后付费
+     *               }
+     * 返回json：{"respCode":"0000", //0000 成功，其他表示失败
+     *               "respDesc":"xxx",  //描述
+     *               "data":{"ICCID":"12345", "IMSI":"123455", "ProcId":"12345"}  
+     *               }               
+     * @param param
+     * @return
+     */
+    @RequestMapping("/bssGetCardData")
+    @ResponseBody
+    public RespInfo<Map<String, String>> bssGetCardData(@RequestBody Map<String, Object> param){
+    	
+    	//封装请求参数map，参数名字要转换成接口规范
+    	Map<String, Object> paramsMap = new HashMap<String, Object>();
+    	paramsMap.put("UserNum", (String)param.get("phone_number"));
+    	paramsMap.put("SimCard", (String)param.get("iccid"));
+    	paramsMap.put("CustName", (String)param.get("cust_name"));
+    	paramsMap.put("PsptId", (String)param.get("pspt_id"));
+    	paramsMap.put("ProductId", (String)param.get("product_id"));
+    	paramsMap.put("BusiType", "32");//??“3”，代表3G网络“2”代表新开。
+    	paramsMap.put("ProcId", BssIntfUtil.generateLogId("")); //20位
+    	
+    	//10:省份新号入网 ，11：省份上网卡
+    	if("10".equals(param.get("ctlg_code"))){
+    		paramsMap.put("CardType", "04");  //04	3G本地USIM卡	3G用户开户及本地补换卡
+    	}
+    	else{
+    		paramsMap.put("CardType", "05"); //05	3G无线上网卡	3G无线上网卡开户
+    	}
+    	paramsMap.put("UserType", (String)param.get("user_type"));//00	预付费用户, 01 	后付费用户
+    	
+    	//根据能人id，查出该能人归属地市，然后获取该地市用于bss接口的公用省市区，渠道id，渠道类型信息
+		Map<String, Object> param2 = bssIntfService.addCommonParam((String)param.get("user_id"));
+		paramsMap.put("EparchyCode", param2.get("EparchyCode"));
+		paramsMap.put("StaffId", param2.get("StaffId"));
+		paramsMap.put("DepartId", param2.get("DepartId"));
+    	
+    	RespInfo<Map<String, String>> respInfo = bssIntfService.callIntfGetCardData(paramsMap);
+    	//添加下面3个参数是因为后面写卡结果通知接口需要用到，免的再查一遍数据库
+    	respInfo.getData().put("EparchyCode", (String)param2.get("EparchyCode"));
+    	respInfo.getData().put("StaffId", (String)param2.get("EparchyCode"));
+    	respInfo.getData().put("DepartId", (String)param2.get("EparchyCode"));
+    	return respInfo;
+    }
+    
+    /**
+     * 封装的写卡结果通知接口
+     * 包括：1.沃掌柜订单归档 2.修改订单主表里写卡状态  3.bss写卡结果通知接口  
+     * app传参json：{"phone_number":"18651885060",  //订单选中的手机号码
+     *               "iccid":"123456",  // 蓝牙读卡器读出来的sim iccid
+     *               "imsi":"123456", //
+     *               "EparchyCode":"0850",  //蓝牙读卡器读出来的身份证号码
+     *               "StaffId":"abcd", //queryBssOrderList接口获取的订单信息里返给app的
+     *               "DepartId":"abcde", //商品类目
+     *               "OperRst":"0", //写卡结果:0：写卡成功,非0则由读卡器返回的错误代码
+     *               "ProcId":"12345" // 获取写卡数据接口返回的里面有这个流水id
+     *               }
+     * 返回json：{"respCode":"0000", //0000 成功，其他表示失败
+     *               "respDesc":"xxx"  //描述
+     *               }  
+     * @param param
+     * @return
+     */
+    @RequestMapping("/bssWriteCard")
+    @ResponseBody
+    public RespInfo<Map<String, String>> bssWriteCard(@RequestBody Map<String, String> param){
+    	RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+    	
+    	//封装请求参数map，参数名字要转换成接口规范
+    	Map<String, Object> paramsMap = new HashMap<String, Object>();
+    	paramsMap.put("UserNum", param.get("phone_number"));
+    	paramsMap.put("Iccid", param.get("iccid"));
+    	paramsMap.put("Imsi", param.get("imsi"));
+    	paramsMap.put("EparchyCode", param.get("EparchyCode"));
+    	paramsMap.put("StaffId", param.get("StaffId"));
+    	paramsMap.put("DepartId", param.get("DepartId"));
+    	paramsMap.put("UpdateTime", DateUtils.getCurentTime("yyyy-MM-dd HH:mm:ss"));
+    	paramsMap.put("OperRst", param.get("OperRst")); //写卡结果:0：写卡成功,非0则由读卡器返回的错误代码
+    	paramsMap.put("ProcId2", param.get("ProcId")); //获取写卡数据接口返回的里面有这个流水id
+    	
+    	//如果写卡成功，先把沃掌柜里订单状态改为归档 
+    	//1.更新ord_d_base 里的order_state 状态为 08 已归档
+    	//2.修改订单主表里写卡状态, //0 写卡成功才调用，失败就不用掉此接口
+    	if("0".equals(param.get("OperRst"))){
+    		int n3 = orderService.updateOrderArchive(param.get("phone_number"));
+    		if( n3 > 0){
+    			respInfo.setRespCode("0000");
+    			respInfo.setRespDesc("沃掌柜订单归档成功");
+    			//再加上录单请求需要传给沃易登的数据
+    		}
+    		else{
+    			respInfo.setRespCode("0001");
+    			respInfo.setRespDesc("手机号:" + param.get("phone_number") + ",订单归档失败");
+    			return respInfo;
+    		}
+    		
+    		//
+        	param.put("write_card_status", "0");
+        	int i = appService.updateWriteCardStatus(param);
+    	}
+    	
+
+    	
+    	//3.通知bss 写卡结果
+    	respInfo = bssIntfService.callIntfWriteCard(paramsMap);
+    	return respInfo;
+    }
+    
+    /**
+     * 封装的bss开户接口
+     * 封装了 bss开户 的几个顺序调用的接口：1客户资料验证接口，2用户校验接口，3订购信息合法性验证与费用计算接口, 5.开户信息预提交接口， 6.订单提交接口
+     * app传参json：{"user_id":"12345", //能人id
+     *               "pspt_id":"32028229840116211",  //蓝牙读卡器读出来的身份证号码
+     *               "order_id":"12345656", //queryBssOrderList接口获取的订单信息里返给app的
+     *               "cust_name":"奚敏辉", //蓝牙读卡器读出来的身份证姓名
+     *               "phone_number":"18651885060",  //订单选中的手机号码
+     *            "developer_code":"",
+     *            "developer_name":"",
+     *            "channel_code":"",
+     *            "channel_name":""               
+     *               }
+     * 返回json：{"respCode":"0000", //0000 成功，其他表示失败
+     *               "respDesc":"xxx",  //描述
+     *               }   
+     * @param param
+     * @return
+     */
+    @RequestMapping("/bssOpenAll")
+    @ResponseBody
+    public RespInfo<Map<String, String>> bssOpenAll(@RequestBody Map<String, String> param){
+    	//封装请求参数map，参数名字要转换成接口规范
+    	Map<String, String> paramsMap = new HashMap<String, String>();
+    	paramsMap.put("userId", param.get("user_id"));
+    	paramsMap.put("idCardNum", param.get("pspt_id"));
+    	paramsMap.put("orderId", param.get("order_id"));
+    	paramsMap.put("custName", param.get("cust_name"));
+    	paramsMap.put("phoneNum", param.get("phone_number"));
+
+    	//调用bss接口开户
+    	RespInfo<Map<String, String>> respInfo = bssIntfService.callBssOpenAll(paramsMap);
+    	
+    	//如果开户成功，修改 订单主表 intf_order_status 字段为0，为了返回给app时统一返回值
+    	if("0000".equals(respInfo.getRespCode())){
+    		param.put("intf_order_status", "0");
+    	}
+    	else{
+    		param.put("intf_order_status", respInfo.getRespCode());
+    	}
+		param.put("intf_order_desc", respInfo.getRespDesc());
+		int i = appService.updateOrderIntfStatus(param);
+		
+		
+    	return respInfo;
+    }
+    
+	/**
+	 * 根据android还是ios系统查询当前最新的app版本号和下载地址
+	 * @param inParam
+	 * @return
+	 */
+	@RequestMapping(value = "/queryLatestVersion")
+	@ResponseBody
+	public RespInfo<Map<String, String>> queryLatestVersion(@RequestBody Map<String, String> inParam){
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		
+		if(inParam.containsKey("os")){
+			Map<String, String> row = appService.queryLatestVersion(inParam);
+			
+			if(MapUtils.isNotEmpty(row)){
+				respInfo.setRespCode("0");
+				respInfo.setRespDesc("获取最新版本成功");
+				respInfo.setData(row);
+			}
+			else{
+				respInfo.setRespCode("-1");
+				respInfo.setRespDesc("没有查询到最新版本号");
+			}
+		}
+		else{
+			respInfo.setRespCode("-1");
+			respInfo.setRespDesc("请求中必须有os参数");
+		}
+
+		return respInfo;
+	}
+	
+	/**
+	 * 4G 订单状态同步，app每次查询到统一门户的订单状态，要同时保存到沃掌柜里
+     * app传参json：{"phone_number":"18651885060",  //订单的手机号码
+     *               "intf_order_status":"0" //统一门户系统的订单状态
+     *               "intf_order_desc":"abcd" //统一门户系统的订单错误描述
+     *               }
+     * 返回json：{"respCode":"0", //0 成功，其他表示失败
+     *               "respDesc":"xxx"  //描述
+     *               }  
+	 * @param param
+	 * @return
+	 */
+	@RequestMapping(value = "/updateOrderIntfStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public RespInfo<Map<String, String>> updateOrderIntfStatus(@RequestBody Map<String, String> param){
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		
+		int i = appService.updateOrderIntfStatus(param);
+		
+		if(i > 0){
+			respInfo.setRespCode("0");
+			respInfo.setRespDesc("更新接口订单状态成功");
+		}
+		else{
+			respInfo.setRespCode("-1");
+			respInfo.setRespDesc("更新接口订单状态失败");
+		}
+
+		return respInfo;
+	}
+	
+	/**
+	 * 4G 沃掌柜写卡状态同步，app每次写卡完毕，除了要通知统一门户接口，还要同时保存到沃掌柜里，
+	 * 0 写卡成功才调用，失败就不用掉此接口
+     * app传参json：{"phone_number":"18651885060",  //订单的手机号码
+     *               "write_card_status":"0" //0 写卡成功才调用，失败就不用掉此接口
+     *               }
+     * 返回json：{"respCode":"0", //0 成功，其他表示失败
+     *               "respDesc":"xxx"  //描述
+     *               }  
+	 * @param param
+	 * @return
+	 */
+	@RequestMapping(value = "/updateWriteCardStatus", method = RequestMethod.POST)
+	@ResponseBody
+	public RespInfo<Map<String, String>> updateWriteCardStatus(@RequestBody Map<String, String> param){
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		
+		int i = appService.updateWriteCardStatus(param);
+		
+		if(i > 0){
+			respInfo.setRespCode("0");
+			respInfo.setRespDesc("沃掌柜写卡状态成功");
+		}
+		else{
+			respInfo.setRespCode("-1");
+			respInfo.setRespDesc("沃掌柜写卡状态失败");
+		}
+
+		return respInfo;
+	}	
 }

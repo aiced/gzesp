@@ -41,6 +41,35 @@
               b.developer_code, b.developer_name, b.channel_code, b.channel_name
          from sys_p_busiinfo b
         where b.city_code = #{city_code}
-	</select>		
+	</select>
+	
+	<select id="getBssIntfInfo" resultType="java.util.HashMap">
+       select b.values1 operate_id, 
+              b.values2 province, 
+              b.values3 city, 
+              b.values4 district, 
+              b.values5 channel_id, 
+              b.values6 channel_type,
+              b.values7 eparchy_code
+         from aur_d_baseinfo a,
+              sys_d_espparam b
+        where a.user_id = #{user_id}
+          and a.eparchy_code = b.param_value
+          and b.param_type = 'BSS_INTF_STAFF'
+	</select>	
+	
+	<select id="getBssPkeParam" resultType="java.lang.String">
+      select values3 discount_id
+        from sys_d_espparam
+       where param_type = 'BSS_INTF_PKE'
+         and values1 = #{product_id}
+      <if test="pkeList != null">
+         and values2 in
+         <foreach collection="pkeList" item="item" index="index" open="(" close=")" separator=",">        
+           #{item}  
+         </foreach>
+      </if>   
+
+	</select>			
 
 </mapper>

@@ -208,6 +208,14 @@
                   </#if>
                 </#list>
               </#if>
+            <!-- 商品的预付费还是后付费  后付费/预付费-->
+              <#if attrs.SERTYPE??>
+                <#list attrs.SERTYPE as item>
+                  <#if item_index==0>
+                    <span id="ser_type" style="display:none" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_CODE}</span>
+                  </#if>
+                </#list>
+              </#if>              
             <!-- 商品的预存款，应该只有4g商品才会插这个属性，用于按预存款算佣金-->
               <#if attrs.SAVEMEY??>
                 <#list attrs.SAVEMEY as item>
@@ -224,11 +232,11 @@
                       <ul class="tabslist tabslist-long">
                         <#list attrs.PACKRES as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE} attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%2==1>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE} attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE} attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>

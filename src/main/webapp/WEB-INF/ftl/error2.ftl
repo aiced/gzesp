@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>迷路啦</title>
+    <title>系统错误</title>
 
     <!-- Bootstrap core CSS -->
     <link href="${resRoot}/bootstrap/css/bootstrap.min.css?v=${resVer}" rel="stylesheet">
@@ -19,17 +19,16 @@
 	      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 	    </a>
 	  </div>
-	  <div id="top_middle">迷路啦</div>
-	  <div id="top_middle">${respCode}</div>
-	  <div id="top_right">${respDesc}</div>
 	</div>    
     
          
     <div class="container-fluid" style="background-color:#ffffff;margin:15px;">
       <div>
-        <p>${msg}</p> 
-      </div>
-      <button  class="btn btn-warning btn-block " type="submit" onclick="${action}" >走你</button>
+    	  <p>${respCode}</p>
+	      <p>${respDesc}</p>
+      </div>    
+
+      <a id="btn_home" class="btn btn-warning" href="${base}/weShop/index/${user_id}" role="button">再去逛逛</a>
     </div>
     
     

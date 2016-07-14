@@ -42,7 +42,7 @@ public class BssIntfUtil {
 	private static final String CHINA_TIME_ZONE = "Asia/Shanghai";
 	
     //BSS调用接口——测试：http://130.85.50.34:7772/XMLReceiver 正式：http://130.85.50.77:7008/XMLReceiver
-    public static final String BSS_SERVERURL = "http://130.85.50.34:7772/XMLReceiver";
+    public static final String BSS_SERVERURL = "http://130.85.50.77:7008/XMLReceiver";
 	
     //BSS接口xml头
     public static final String xmlhead="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";

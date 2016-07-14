@@ -485,6 +485,10 @@ public class BssIntfService {
 //		userInfo.setGuarantorType((String)param.get("GuarantorType"));
 //		userInfo.setGuaratorID((String)param.get("GuaratorID"));
 //		userInfo.setGroupFlag((String)param.get("GroupFlag"));
+		userInfo.setRecomDeparID((String)param.get("channelCode"));
+		userInfo.setRecomDeparName((String)param.get("channelName"));
+		userInfo.setRecomPersonID((String)param.get("developerCode"));
+		userInfo.setRecomPersonName((String)param.get("developerName"));
 		userInfo.setBrandID("04"); //(String)param.get("BrandID") 04 沃
 //		userInfo.setUserType((String)param.get("UserType"));
 //		userInfo.setCertExpireDate((String)param.get("CertExpireDate"));
@@ -992,7 +996,11 @@ public class BssIntfService {
 		param.put("CertTag", "02"); //0：实名-二代
 		param.put("RealNameType", "0"); //0-	实名
 		
-		
+		//下面是发展人，发展渠道信息
+		param.put("developerCode", paramsMap.get("developerCode")); //发展渠道
+		param.put("developerName", paramsMap.get("developerName")); //发展渠道姓名
+		param.put("channelCode", paramsMap.get("channelCode")); //发展人id
+		param.put("channelName", paramsMap.get("channelName")); //发展人姓名
 	}
 	
 

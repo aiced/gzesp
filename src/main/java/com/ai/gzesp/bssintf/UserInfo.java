@@ -23,6 +23,13 @@ public class UserInfo {
 	
 	private String GroupFlag;
 	
+	private String RecomDeparID;
+
+	private String RecomDeparName;
+	
+	private String RecomPersonID;
+	
+	private String RecomPersonName;
 	
 	private String BrandID;
 	
@@ -164,6 +171,38 @@ public class UserInfo {
 
 	public void setBillSendType(String billSendType) {
 		BillSendType = billSendType;
+	}
+
+	public String getRecomDeparID() {
+		return RecomDeparID;
+	}
+
+	public String getRecomDeparName() {
+		return RecomDeparName;
+	}
+
+	public String getRecomPersonID() {
+		return RecomPersonID;
+	}
+
+	public String getRecomPersonName() {
+		return RecomPersonName;
+	}
+
+	public void setRecomDeparID(String recomDeparID) {
+		RecomDeparID = recomDeparID;
+	}
+
+	public void setRecomDeparName(String recomDeparName) {
+		RecomDeparName = recomDeparName;
+	}
+
+	public void setRecomPersonID(String recomPersonID) {
+		RecomPersonID = recomPersonID;
+	}
+
+	public void setRecomPersonName(String recomPersonName) {
+		RecomPersonName = recomPersonName;
 	}
 	
 	

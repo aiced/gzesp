@@ -441,6 +441,10 @@ public class AppController {
     	paramsMap.put("orderId", param.get("order_id"));
     	paramsMap.put("custName", param.get("cust_name"));
     	paramsMap.put("phoneNum", param.get("phone_number"));
+    	paramsMap.put("developerCode", param.get("developer_code"));
+    	paramsMap.put("developerName", param.get("developer_name"));
+    	paramsMap.put("channelCode", param.get("channel_code"));
+    	paramsMap.put("channelName", param.get("channel_name"));
 
     	//调用bss接口开户
     	RespInfo<Map<String, String>> respInfo = bssIntfService.callBssOpenAll(paramsMap);

@@ -32,172 +32,98 @@
   <body>
 <textarea id="resp" class="form-control" rows="5"></textarea>
   
-<!-- test7 -->
-<h4>7. callIntfAccount 开户预提交  接口</h4>  
+<!-- test12 -->
+<!-- 
+<h4>12. updateOrderPsptNo 读身份证 接口</h4>  
 <form class="form-horizontal">
   <div class="form-group">
-    <label for="OperatorID" class="col-sm-2 control-label">OperatorID</label>
+    <label for="order_id" class="col-sm-2 control-label">order_id</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="OperatorID" placeholder="OperatorID" value="AGYDZSW5">
+      <input type="text" class="form-control" id="order_id" placeholder="order_id" value="">
     </div>
   </div>
   <div class="form-group">
-    <label for="Province" class="col-sm-2 control-label">Province</label>
+    <label for="pspt_no" class="col-sm-2 control-label">pspt_no</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="Province" placeholder="Province" value="85">
+      <input type="text" class="form-control" id="pspt_no" placeholder="pspt_no" value="320282198401162411">
     </div>
   </div>
   <div class="form-group">
-    <label for="City" class="col-sm-2 control-label">City</label>
+    <label for="cust_name" class="col-sm-2 control-label">cust_name</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="City" placeholder="City" value="850">
+      <input type="text" class="form-control" id="cust_name" placeholder="cust_name" value="奚敏辉">
+    </div>
+  </div>  
+                                 
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-success" onclick="submitForm12()">submit</button>
+    </div>
+  </div>
+</form>
+-->
+<!-- test13 -->
+
+<h4>13. bssOpenAll 开户 接口</h4>  
+<form class="form-horizontal">
+  <div class="form-group">
+    <label for="user_id" class="col-sm-2 control-label">user_id</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="user_id" placeholder="user_id" value="2015051509073611">
     </div>
   </div>
   <div class="form-group">
-    <label for="District" class="col-sm-2 control-label">District</label>
+    <label for="pspt_id" class="col-sm-2 control-label">pspt_id</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="District" placeholder="District" value="850">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="ChannelID" class="col-sm-2 control-label">ChannelID</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="ChannelID" placeholder="ChannelID" value="76D91">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="ChannelType" class="col-sm-2 control-label">ChannelType</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="ChannelType" placeholder="ChannelType" value="1020400">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="AccessType" class="col-sm-2 control-label">AccessType</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="AccessType" placeholder="AccessType" value="03">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="NumID" class="col-sm-2 control-label">NumID
-    </label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="NumID" placeholder="NumID" value="占用的号码">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="CertTag" class="col-sm-2 control-label">CertTag</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="CertTag" placeholder="CertTag" value="0">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="SerType" class="col-sm-2 control-label">SerType 1-后付费 2-预付费
-    </label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="SerType" placeholder="SerType" value="1">
+      <input type="text" class="form-control" id="pspt_id" placeholder="pspt_id" value="320282198401162411">
     </div>
   </div>  
   <div class="form-group">
-    <label for="FirstMonBillMode" class="col-sm-2 control-label">FirstMonBillMode</label>
+    <label for="order_id" class="col-sm-2 control-label">order_id</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="FirstMonBillMode" placeholder="FirstMonBillMode" value="01">
+      <input type="text" class="form-control" id="order_id" placeholder="order_id" value="">
     </div>
   </div>
   <div class="form-group">
-    <label for="RealNameType" class="col-sm-2 control-label">RealNameType</label>
+    <label for="cust_name" class="col-sm-2 control-label">cust_name</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="RealNameType" placeholder="RealNameType" value="0">
+      <input type="text" class="form-control" id="cust_name" placeholder="cust_name" value="奚敏辉">
     </div>
-  </div>
-
+  </div>  
   <div class="form-group">
-    <label for="CustomerID" class="col-sm-2 control-label">CustomerID 客户验证接口返回的id</label>
+    <label for="phone_number" class="col-sm-2 control-label">phone_number</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerID" placeholder="CustomerID" value="">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="CustomerType" class="col-sm-2 control-label">CustomerType</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerType" placeholder="CustomerType" value="01">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label for="CustomerLevel" class="col-sm-2 control-label">CustomerLevel</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerLevel" placeholder="CustomerLevel" value="1">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label for="CustomerLoc" class="col-sm-2 control-label">CustomerLoc</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerLoc" placeholder="CustomerLoc" value="850">
+      <input type="text" class="form-control" id="phone_number" placeholder="phone_number" value="">
     </div>
   </div>
   <div class="form-group">
-    <label for="CertNum" class="col-sm-2 control-label">CertNum</label>
+    <label for="developer_code" class="col-sm-2 control-label">developer_code</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="CertNum" placeholder="CertNum" value="320282198401162411">
-    </div>
-  </div>     
-  <div class="form-group">
-    <label for="CustomerName" class="col-sm-2 control-label">CustomerName</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerName" placeholder="CustomerName" value="奚敏辉">
-    </div>
-  </div>   
-  <div class="form-group">
-    <label for="CustomerName" class="col-sm-2 control-label">CustomerName</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerName" placeholder="CustomerName" value="奚敏辉">
+      <input type="text" class="form-control" id="developer_code" placeholder="developer_code" value="8503473074">
     </div>
   </div>
   <div class="form-group">
-    <label for="CustomerPasswd" class="col-sm-2 control-label">CustomerPasswd</label>
+    <label for="developer_name" class="col-sm-2 control-label">developer_name</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerPasswd" placeholder="CustomerPasswd" value="123456">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label for="ReleOfficeID" class="col-sm-2 control-label">ReleOfficeID</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="ReleOfficeID" placeholder="ReleOfficeID" value="76D91">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label for="CertExpireDate" class="col-sm-2 control-label">CertExpireDate 随便填的</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="CertExpireDate" placeholder="CertExpireDate" value="20251231">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label for="ContactPhone" class="col-sm-2 control-label">ContactPhone</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="ContactPhone" placeholder="ContactPhone" value="18651885060">
+      <input type="text" class="form-control" id="developer_name" placeholder="developer_name" value="aaa">
     </div>
   </div>
   <div class="form-group">
-    <label for="CustomerSex" class="col-sm-2 control-label">CustomerSex 随便填的</label>
+    <label for="channel_code" class="col-sm-2 control-label">channel_code</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="CustomerSex" placeholder="CustomerSex" value="1">
-    </div>
-  </div> 
-  <div class="form-group">
-    <label for="ProductID" class="col-sm-2 control-label">ProductID</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="ProductID" placeholder="ProductID" value="20528022">
-    </div>
-  </div>    
-  <div class="form-group">
-    <label for="orderId" class="col-sm-2 control-label">orderId</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="orderId" placeholder="orderId" value="esp1234567890">
+      <input type="text" class="form-control" id="channel_code" placeholder="channel_code" value="85b0ffi">
     </div>
   </div>
-                                        
+  <div class="form-group">
+    <label for="channel_name" class="col-sm-2 control-label">channel_name</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="channel_name" placeholder="channel_name" value="asdf">
+    </div>
+  </div>      
+                                   
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-success" onclick="submitForm7()">submit</button>
+      <button type="submit" class="btn btn-success" onclick="submitForm13()">submit</button>
     </div>
   </div>
 </form>
@@ -414,6 +340,45 @@
 		      type: "POST",
 		      contentType:"application/json", //发送给服务器的内容编码类型
 		      url: "${base}/test/callIntfWriteCard", 
+		      dataType:"json", //预期服务器返回的数据类型
+		      data: JSON.stringify(param), //服务器只能接收json字符串
+		      success: function(data){
+		          $('#resp').val(data);
+		      }
+			    }) ;            
+	}		
+	
+	function submitForm12()
+	{
+	    var param = {"order_id":$('#order_id').val(), "pspt_no":$('#pspt_no').val(),
+	                 "cust_name":$('#cust_name').val()
+	                 };
+	                                
+        $.ajax({
+		      type: "POST",
+		      contentType:"application/json", //发送给服务器的内容编码类型
+		      url: "${base}/app/offline/updateOrderPsptNo", 
+		      dataType:"json", //预期服务器返回的数据类型
+		      data: JSON.stringify(param), //服务器只能接收json字符串
+		      success: function(data){
+		          $('#resp').val(data);
+		      }
+			    }) ;            
+	}	
+	
+	function submitForm13()
+	{
+	    var param = {"user_id":$('#user_id').val(), "pspt_id":$('#pspt_id').val(),
+	                 "order_id":$('#order_id').val(), "phone_number":$('#phone_number').val(),
+	                 "cust_name":$('#cust_name').val(),
+	                 "developer_code":$('#developer_code').val(), "developer_name":$('#developer_name').val(),
+	                 "channel_code":$('#channel_code').val(), "channel_name":$('#channel_name').val()
+	                 };
+	                                
+        $.ajax({
+		      type: "POST",
+		      contentType:"application/json", //发送给服务器的内容编码类型
+		      url: "${base}/app/offline/bssOpenAll", 
 		      dataType:"json", //预期服务器返回的数据类型
 		      data: JSON.stringify(param), //服务器只能接收json字符串
 		      success: function(data){

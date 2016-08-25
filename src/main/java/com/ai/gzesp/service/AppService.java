@@ -31,7 +31,7 @@ public class AppService {
 	 */
 	public int updateOrderIntfStatus(Map<String, String> param) {
 		return appDao.updateOrderIntfStatus(param.get("phone_number"), param.get("intf_order_status"),
-				param.get("intf_order_desc"));
+				param.get("intf_order_desc"), param.get("prov_order_id"), param.get("orig_total_fee"));
 	}
 	
 	/**

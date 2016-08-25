@@ -13,6 +13,12 @@ public class FeeInfo {
 	
 	private String MaxRelief;
 	
+	private String ReliefFee;
+	
+	private String ReliefResult;
+	
+	private String RealFee;
+	
 	private String OrigFee;
 	
 	private String TotalFee;
@@ -64,6 +70,31 @@ public class FeeInfo {
 	public void setTotalFee(String totalFee) {
 		TotalFee = totalFee;
 	}
+
+	public String getReliefFee() {
+		return ReliefFee;
+	}
+
+	public void setReliefFee(String reliefFee) {
+		ReliefFee = reliefFee;
+	}
+
+	public String getReliefResult() {
+		return ReliefResult;
+	}
+
+	public String getRealFee() {
+		return RealFee;
+	}
+
+	public void setReliefResult(String reliefResult) {
+		ReliefResult = reliefResult;
+	}
+
+	public void setRealFee(String realFee) {
+		RealFee = realFee;
+	}
+	
 	
 	
 }

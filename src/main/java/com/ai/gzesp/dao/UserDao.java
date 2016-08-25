@@ -22,4 +22,5 @@ public interface UserDao {
 	public List<String> getBssPkeParam(@Param("product_id") String product_id,
 			@Param("pkeList") List<String> pkeList);
 	
+	public Map<String, String> getMchId(@Param("user_id") String user_id);
 }

@@ -32,6 +32,12 @@ public class OrderSubReq {
 	
 	private String TaxType;
 	
+	
+	
+	private String OrigTotalFee;
+	
+    private PayInfo PayInfo;
+	
 
 	public String getOperatorID() {
 		return OperatorID;
@@ -121,5 +127,22 @@ public class OrderSubReq {
 		TaxType = taxType;
 	}
 
+	public String getOrigTotalFee() {
+		return OrigTotalFee;
+	}
+
+	public PayInfo getPayInfo() {
+		return PayInfo;
+	}
+
+	public void setOrigTotalFee(String origTotalFee) {
+		OrigTotalFee = origTotalFee;
+	}
+
+	public void setPayInfo(PayInfo payInfo) {
+		PayInfo = payInfo;
+	}
+
+	
 
 }

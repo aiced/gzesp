@@ -8,9 +8,12 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ai.gzesp.dto.RespInfo;
 import com.ai.gzesp.service.RechargeService;
 
 /**
@@ -196,4 +199,24 @@ public class RechargeController {
         result.put("detail", "请求成功！");
         return result;
     }
+    
+    
+    /**
+     * 对外提供接口-充值入口
+     * 请求参数：{"reqParam"："xxxxx"}
+     * 返回参数：{"respInfo"："xxxxx"}
+     * @param card_no
+     * @return
+     */
+//    @RequestMapping(value = "/intf/recharge", method = RequestMethod.POST)
+//    @ResponseBody
+//    public RespInfo<Map<String, String>> intfRecharge(@RequestBody Map<String, String> param){
+//    	
+//    	if(MapUtils.isEmpty(param)){
+//    		
+//    	}
+//    	Map<String, String> result = rechargeService.recharge(order_id, serial_number, serial_number_type, total_fee); 
+//        return result;
+//    }
+    
 }

@@ -20,8 +20,12 @@ import com.ai.gzesp.bssintf.ExistedCustomer;
 import com.ai.gzesp.bssintf.NumInfo;
 import com.ai.gzesp.dto.RespInfo;
 import com.ai.gzesp.service.BssIntfService;
+import com.ai.gzesp.utils.Base64Utils;
+import com.ai.gzesp.utils.EncryptUtil;
+import com.ai.gzesp.utils.HttpXmlClient;
 import com.ai.gzesp.utils.MD5Util;
 import com.ai.wxpay.common.MD5;
+import com.alibaba.fastjson.JSON;
 
 @Controller
 @RequestMapping("/test")
@@ -150,7 +154,7 @@ public class TestController {
     
     @RequestMapping(value="/callIntfCheckCust", method = RequestMethod.POST)
     @ResponseBody
-    public RespInfo<ExistedCustomer> callIntfCheckCust(@RequestBody Map<String, Object> param){
+    public RespInfo<List<ExistedCustomer>> callIntfCheckCust(@RequestBody Map<String, Object> param){
     	return bssIntfService.callIntfCheckCust(param);
     	
     }
@@ -178,7 +182,7 @@ public class TestController {
     
     @RequestMapping(value="/callIntfCheckRule", method = RequestMethod.POST)
     @ResponseBody
-    public RespInfo<Map<String, String>> callIntfCheckRule(@RequestBody Map<String, Object> param){
+    public RespInfo<Map<String, Object>> callIntfCheckRule(@RequestBody Map<String, Object> param){
     	return bssIntfService.callIntfCheckRule(param);
     	
     }
@@ -209,5 +213,55 @@ public class TestController {
     public RespInfo<Map<String, String>> callIntfWriteCard(@RequestBody Map<String, Object> param){
     	return bssIntfService.callIntfWriteCard(param);
     	
-    }     
+    }
+    
+    @RequestMapping(value = "/intf/recharge", method = RequestMethod.GET)
+    @ResponseBody
+    public RespInfo<Map<String, String>> intfRecharge(){
+    	String md5Key = "0aad781d015ca667d6eba25e"; //24位
+    	String desKey = "0aad781d015ca667d6eba25f"; //24位
+    	String intfUrl = "http://localhost:8080/esp/recharge/intf/recharge"; //充值接口url
+    	
+    	//原始业务参数map
+    	Map<String, Object> param = new HashMap<String, Object>();
+    	param.put("phoneNumber", "18651885060");
+    	param.put("fee", "100");
+    	param.put("merId", "1234567890abcdef");
+    	param.put("reqTime", "20160824112200");
+    	param.put("outerOrderId", "1234567890123456");
+    	
+    	//原始业务参数转换成json字符串
+    	String paramJson = JSON.toJSONString(param);
+    	System.out.println("--原始业务参数param--");
+    	System.out.println(paramJson);
+    	
+    	//业务参数json 进行 md5加密，生成摘要
+    	String md5Desc = EncryptUtil.encryptByMd5(md5Key, paramJson);
+    	System.out.println("--原始业务参数json串md5加密--");
+    	System.out.println(md5Desc);
+    	
+    	//再将md5摘要加入到请求参数里
+    	param.put("md5Desc", md5Desc);
+    	
+    	//des加密所有原始业务参数json，加密结果编码方式base64
+    	String paramJson2 = JSON.toJSONString(param);
+    	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
+    	String desBase64Str = Base64Utils.encode(desArray);
+    	System.out.println(desBase64Str);
+    	
+    	//封装最终的post请求参数json
+    	Map<String, String> postParam = new HashMap<String, String>();
+    	postParam.put("reqParam", desBase64Str);
+    	
+    	//httpclient 发送请求获取返回
+    	String respJson = HttpXmlClient.httpSend(intfUrl, postParam);
+    	
+    	//解析返回的json
+    	
+    	
+    	RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		respInfo.setRespCode("0000");
+		respInfo.setRespDesc(desBase64Str);
+    	return respInfo;
+    }  
 }

@@ -1,6 +1,9 @@
 package com.ai.gzesp.bssintf;
 
+import java.util.List;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * 2.6	订购信息合法性验证与费用计算 响应类
@@ -14,7 +17,8 @@ public class CheckRuleRsp {
 	
 	private String RspDesc;
 	
-	private FeeInfo FeeInfo;
+	@XStreamImplicit(itemFieldName="FeeInfo")
+	private List<FeeInfo> listFeeInfo;
 	
 	private String TotalFee;
 	
@@ -36,16 +40,27 @@ public class CheckRuleRsp {
 		RspDesc = rspDesc;
 	}
 
-	public FeeInfo getFeeInfo() {
-		return FeeInfo;
-	}
-
-	public void setFeeInfo(FeeInfo feeInfo) {
-		FeeInfo = feeInfo;
-	}
+//	public FeeInfo getFeeInfo() {
+//		return FeeInfo;
+//	}
+//
+//	public void setFeeInfo(FeeInfo feeInfo) {
+//		FeeInfo = feeInfo;
+//	}
+	
+	
 
 	public String getTotalFee() {
 		return TotalFee;
+	}
+
+
+	public List<FeeInfo> getListFeeInfo() {
+		return listFeeInfo;
+	}
+
+	public void setListFeeInfo(List<FeeInfo> listFeeInfo) {
+		this.listFeeInfo = listFeeInfo;
 	}
 
 	public Para getPara() {

@@ -287,7 +287,8 @@
                   </div>
               </li>              
             </#if>            
-            <!-- 可选叠加包-->        
+            <!-- 可选叠加包-->  
+            <!--      
             <#if attrs.ADDPCKE??>
               <li id="addPckList" class="num-info-li" >
                   <p style="margin-bottom: 0px;"><label>可选叠加包(可多选)</label></p>
@@ -305,7 +306,8 @@
                       </ul>
                   </div>
               </li>              
-            </#if>                             
+            </#if>    
+            -->                         
             <!-- 普通卡/微卡/Nano卡-->        
             <#if attrs.SIMSIZE??>
               <li id="simTypeList" class="num-info-li" >

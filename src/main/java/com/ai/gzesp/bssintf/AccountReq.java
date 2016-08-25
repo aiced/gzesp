@@ -1,6 +1,9 @@
 package com.ai.gzesp.bssintf;
 
+import java.util.List;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * 2.7	开户信息预提交接口
@@ -36,6 +39,8 @@ public class AccountReq {
 	
 	private String RealNameType;
 	
+	private String CustomerID;
+	
 	private NewCustomerInfo NewCustomerInfo;
 	
 	private UserInfo UserInfo;
@@ -45,6 +50,9 @@ public class AccountReq {
 	private ProductInfo ProductInfo;
 	
 	
+//	private FeeInfo FeeInfo;
+	@XStreamImplicit(itemFieldName="FeeInfo")
+	private List<FeeInfo> listFeeInfo;	
 	
 	private String OrigTotalFee;
 	
@@ -201,6 +209,32 @@ public class AccountReq {
 
 	public void setPayInfo(PayInfo payInfo) {
 		PayInfo = payInfo;
+	}
+
+//	public FeeInfo getFeeInfo() {
+//		return FeeInfo;
+//	}
+//
+//	public void setFeeInfo(FeeInfo feeInfo) {
+//		FeeInfo = feeInfo;
+//	}
+	
+	
+
+	public String getCustomerID() {
+		return CustomerID;
+	}
+
+	public List<FeeInfo> getListFeeInfo() {
+		return listFeeInfo;
+	}
+
+	public void setListFeeInfo(List<FeeInfo> listFeeInfo) {
+		this.listFeeInfo = listFeeInfo;
+	}
+
+	public void setCustomerID(String customerID) {
+		CustomerID = customerID;
 	}
 
 

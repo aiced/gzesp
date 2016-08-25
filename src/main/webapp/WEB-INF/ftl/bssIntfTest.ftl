@@ -32,98 +32,68 @@
   <body>
 <textarea id="resp" class="form-control" rows="5"></textarea>
   
-<!-- test12 -->
-<!-- 
-<h4>12. updateOrderPsptNo 读身份证 接口</h4>  
+<!-- test8 -->
+<h4>8. callIntfOrderSub 订单提交  接口</h4>  
 <form class="form-horizontal">
   <div class="form-group">
-    <label for="order_id" class="col-sm-2 control-label">order_id</label>
+    <label for="OperatorID" class="col-sm-2 control-label">OperatorID</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="order_id" placeholder="order_id" value="">
+      <input type="text" class="form-control" id="OperatorID" placeholder="OperatorID" value="AGYDZSW5">
     </div>
   </div>
   <div class="form-group">
-    <label for="pspt_no" class="col-sm-2 control-label">pspt_no</label>
+    <label for="Province" class="col-sm-2 control-label">Province</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="pspt_no" placeholder="pspt_no" value="320282198401162411">
+      <input type="text" class="form-control" id="Province" placeholder="Province" value="85">
     </div>
   </div>
   <div class="form-group">
-    <label for="cust_name" class="col-sm-2 control-label">cust_name</label>
+    <label for="City" class="col-sm-2 control-label">City</label>
     <div class="col-sm-6">
-      <input type="text" class="form-control" id="cust_name" placeholder="cust_name" value="奚敏辉">
+      <input type="text" class="form-control" id="City" placeholder="City" value="850">
     </div>
-  </div>  
-                                 
+  </div>
+  <div class="form-group">
+    <label for="District" class="col-sm-2 control-label">District</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="District" placeholder="District" value="850">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="ChannelID" class="col-sm-2 control-label">ChannelID</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="ChannelID" placeholder="ChannelID" value="76D91">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="ChannelType" class="col-sm-2 control-label">ChannelType</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="ChannelType" placeholder="ChannelType" value="1020400">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="AccessType" class="col-sm-2 control-label">AccessType</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="AccessType" placeholder="AccessType" value="03">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="ProvOrderID" class="col-sm-2 control-label">ProvOrderID
+    </label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="ProvOrderID" placeholder="预提交接口返回的订单id" value="">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="orderID" class="col-sm-2 control-label">orderID</label>
+    <div class="col-sm-6">
+      <input type="text" class="form-control" id="orderID" placeholder="esp订单id" value="">
+    </div>
+  </div>
+                           
   <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-success" onclick="submitForm12()">submit</button>
-    </div>
-  </div>
-</form>
--->
-<!-- test13 -->
-
-<h4>13. bssOpenAll 开户 接口</h4>  
-<form class="form-horizontal">
-  <div class="form-group">
-    <label for="user_id" class="col-sm-2 control-label">user_id</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="user_id" placeholder="user_id" value="2015051509073611">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="pspt_id" class="col-sm-2 control-label">pspt_id</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="pspt_id" placeholder="pspt_id" value="320282198401162411">
-    </div>
-  </div>  
-  <div class="form-group">
-    <label for="order_id" class="col-sm-2 control-label">order_id</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="order_id" placeholder="order_id" value="">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="cust_name" class="col-sm-2 control-label">cust_name</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="cust_name" placeholder="cust_name" value="奚敏辉">
-    </div>
-  </div>  
-  <div class="form-group">
-    <label for="phone_number" class="col-sm-2 control-label">phone_number</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="phone_number" placeholder="phone_number" value="">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="developer_code" class="col-sm-2 control-label">developer_code</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="developer_code" placeholder="developer_code" value="8503473074">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="developer_name" class="col-sm-2 control-label">developer_name</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="developer_name" placeholder="developer_name" value="aaa">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="channel_code" class="col-sm-2 control-label">channel_code</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="channel_code" placeholder="channel_code" value="85b0ffi">
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="channel_name" class="col-sm-2 control-label">channel_name</label>
-    <div class="col-sm-6">
-      <input type="text" class="form-control" id="channel_name" placeholder="channel_name" value="asdf">
-    </div>
-  </div>      
-                                   
-  <div class="form-group">
-    <div class="col-sm-offset-2 col-sm-10">
-      <button type="submit" class="btn btn-success" onclick="submitForm13()">submit</button>
+      <button type="submit" class="btn btn-success" onclick="submitForm8()">submit</button>
     </div>
   </div>
 </form>

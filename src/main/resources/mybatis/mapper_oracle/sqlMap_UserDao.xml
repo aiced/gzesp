@@ -68,8 +68,17 @@
          <foreach collection="pkeList" item="item" index="index" open="(" close=")" separator=",">        
            #{item}  
          </foreach>
-      </if>   
+      </if>
+      <if test="pkeList == null">
+         and 1=2
+      </if>         
 
+	</select>	
+	
+	<select id="getMchId" resultType="java.util.HashMap">
+       select mch_id
+         from WLT_L_USR_MCH 
+        where user_id = #{user_id}
 	</select>			
 
 </mapper>

@@ -19,8 +19,20 @@
 
 	<update id="updateOrderIntfStatus" >
        update ord_d_base a 
-          set a.intf_order_status = #{intf_order_status},
-              a.intf_order_desc = #{intf_order_desc}
+      <set>
+        <if test="intf_order_status != null" >
+          a.intf_order_status = #{intf_order_status},
+        </if>
+        <if test="intf_order_desc != null" >
+          a.intf_order_desc = #{intf_order_desc},
+        </if>
+        <if test="prov_order_id != null" >
+          a.prov_order_id = #{prov_order_id},
+        </if>
+        <if test="orig_total_fee != null" >
+          a.orig_total_fee = #{orig_total_fee},
+        </if>
+      </set>                               
         where exists 
              (
               select 1 

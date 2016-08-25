@@ -258,6 +258,8 @@ public class AppController {
      *            "intf_order_status":"",  //0 表示bss开户成功,其他表示失败
      *            "write_card_status":"", //0 表示写卡成功，空表示写卡失败
      *            "intf_order_desc":"阿斯蒂芬",  //外围接口失败描述
+     *            "prov_order_id":"123456",
+     *            "orig_total_fee":"50000",
      *            "is_ok":"0", 
      *            "cust_name":"奚敏辉",
      *            "pspt_no":"12345678",
@@ -307,7 +309,7 @@ public class AppController {
      *               }
      * 返回json：{"respCode":"0000", //0000 成功，其他表示失败
      *               "respDesc":"xxx",  //描述
-     *               "data":{"ICCID":"12345", "IMSI":"123455", "ProcId":"12345"}  
+     *               "data":{"ICCID":"12345", "IMSI":"123455", "ProcId":"12345", "CardData":"xxx"}  
      *               }               
      * @param param
      * @return
@@ -351,7 +353,8 @@ public class AppController {
     
     /**
      * 封装的写卡结果通知接口
-     * 包括：1.沃掌柜订单归档 2.修改订单主表里写卡状态  3.bss写卡结果通知接口  
+     * 包括：1.沃掌柜订单归档 2.修改订单主表里写卡状态  3.bss写卡结果通知接口   
+     * 新增  4.卡数据同步接口， 5.卡处理结果提交接口
      * app传参json：{"phone_number":"18651885060",  //订单选中的手机号码
      *               "iccid":"123456",  // 蓝牙读卡器读出来的sim iccid
      *               "imsi":"123456", //
@@ -359,7 +362,12 @@ public class AppController {
      *               "StaffId":"abcd", //queryBssOrderList接口获取的订单信息里返给app的
      *               "DepartId":"abcde", //商品类目
      *               "OperRst":"0", //写卡结果:0：写卡成功,非0则由读卡器返回的错误代码
-     *               "ProcId":"12345" // 获取写卡数据接口返回的里面有这个流水id
+     *               "ProcId":"12345", // 获取写卡数据接口返回的里面有这个流水id
+     *               "user_id":"12345", //能人id
+     *               "ProvOrderID":"12345", //省份订单id，queryBssOrderList接口成功后会返回在data节点里
+     *               "order_id":"12345656", //queryBssOrderList接口获取的订单信息里返给app的
+     *               "CardData":"xxx", //获取写卡数据接口返回的
+     *               "OrigTotalFee":"50000" //查询订单列表接口 返回给app
      *               }
      * 返回json：{"respCode":"0000", //0000 成功，其他表示失败
      *               "respDesc":"xxx"  //描述
@@ -408,8 +416,60 @@ public class AppController {
 
     	
     	//3.通知bss 写卡结果
-    	respInfo = bssIntfService.callIntfWriteCard(paramsMap);
-    	return respInfo;
+    	RespInfo<Map<String, String>> respInfo3 = bssIntfService.callIntfWriteCard(paramsMap);
+    	
+    	//写卡通知接口成功了才继续往下走判断
+		if("0000".equals(respInfo3.getRespCode())){
+		}
+		else{
+			respInfo.setRespCode(respInfo3.getRespCode());
+			respInfo.setRespDesc("【写卡结果通知接口】" + respInfo3.getRespDesc()); 
+			return respInfo;
+		}
+		
+    	//0 写卡成功才调用 4,5 两个接口，失败就不用
+    	if("0".equals(param.get("OperRst"))){
+    		//先拼装所有bss请求需要用到的公共参数，比如工号，省市区县
+    		Map<String, Object> param2 = bssIntfService.addCommonParam(param.get("user_id"));
+    		param2.put("OrderID", param.get("order_id"));
+    		param2.put("orderID", param.get("order_id"));
+    		param2.put("ProvOrderID", param.get("ProvOrderID"));
+    		param2.put("NumID", param.get("phone_number"));
+    		param2.put("SimID", param.get("iccid"));
+    		param2.put("IMSI", param.get("imsi"));
+    		param2.put("CardData", param.get("CardData"));
+    		param2.put("OrigTotalFee", param.get("OrigTotalFee"));
+    		//4.卡数据同步接口
+    		RespInfo<Map<String, String>> respInfo4 = bssIntfService.callIntfWriteCardPre(param2);
+
+    		if("0000".equals(respInfo4.getRespCode())){
+    		}
+    		else{
+    			respInfo.setRespCode(respInfo4.getRespCode());
+    			respInfo.setRespDesc("【卡数据同步接口】" + respInfo4.getRespDesc()); 
+    			return respInfo;
+    		}
+    		
+    		//5.卡处理结果提交接口
+			RespInfo<Map<String, String>> respInfo5 = bssIntfService.callIntfOrderSub2(param2);
+    		if("0000".equals(respInfo5.getRespCode())){
+    		}
+    		else{
+    			respInfo.setRespCode(respInfo5.getRespCode());
+    			respInfo.setRespDesc("【卡处理结果提交接口】" + respInfo5.getRespDesc()); 
+    			return respInfo;
+    		}
+    		
+    		//走到这里表示以上接口都成功
+    		respInfo.setRespCode("0000"); 
+    		respInfo.setRespDesc("订单提交到bss成功");
+    		return respInfo;
+    	}
+    	else{
+    		//写卡失败 则直接返回,走到这一步，respInfo3肯定是成功的0000
+    		return respInfo3;	
+    	}
+
     }
     
     /**
@@ -426,7 +486,7 @@ public class AppController {
      *            "channel_name":""               
      *               }
      * 返回json：{"respCode":"0000", //0000 成功，其他表示失败
-     *               "respDesc":"xxx",  //描述
+     *               "respDesc":"xxx"  //描述
      *               }   
      * @param param
      * @return
@@ -452,11 +512,16 @@ public class AppController {
     	//如果开户成功，修改 订单主表 intf_order_status 字段为0，为了返回给app时统一返回值
     	if("0000".equals(respInfo.getRespCode())){
     		param.put("intf_order_status", "0");
+    		param.put("prov_order_id", respInfo.getData().get("ProvOrderID"));
+    		param.put("orig_total_fee", respInfo.getData().get("OrigTotalFee"));
     	}
     	else{
     		param.put("intf_order_status", respInfo.getRespCode());
+    		param.put("prov_order_id", "");
+    		param.put("orig_total_fee", "");
     	}
 		param.put("intf_order_desc", respInfo.getRespDesc());
+		//更新intf_order_status，intf_order_desc，prov_order_id 三个字段
 		int i = appService.updateOrderIntfStatus(param);
 		
 		

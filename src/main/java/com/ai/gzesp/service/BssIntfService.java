@@ -22,6 +22,7 @@ import com.ai.gzesp.bssintf.CheckResRsp;
 import com.ai.gzesp.bssintf.CheckRuleReq;
 import com.ai.gzesp.bssintf.CheckRuleRsp;
 import com.ai.gzesp.bssintf.ExistedCustomer;
+import com.ai.gzesp.bssintf.FeeInfo;
 import com.ai.gzesp.bssintf.GetCardDataReq;
 import com.ai.gzesp.bssintf.GetCardDataRsp;
 import com.ai.gzesp.bssintf.NewCustomerInfo;
@@ -38,6 +39,8 @@ import com.ai.gzesp.bssintf.ResourcesInfo;
 import com.ai.gzesp.bssintf.UserCheckReq;
 import com.ai.gzesp.bssintf.UserCheckRsp;
 import com.ai.gzesp.bssintf.UserInfo;
+import com.ai.gzesp.bssintf.WriteCardPreReq;
+import com.ai.gzesp.bssintf.WriteCardPreRsp;
 import com.ai.gzesp.bssintf.WriteCardReq;
 import com.ai.gzesp.bssintf.WriteCardRsp;
 import com.ai.gzesp.dao.OrderDao;
@@ -47,6 +50,7 @@ import com.ai.gzesp.dto.Routing;
 import com.ai.gzesp.dto.SPReserve;
 import com.ai.gzesp.dto.UniBSS;
 import com.ai.gzesp.utils.BssIntfUtil;
+import com.ai.gzesp.utils.RegexUtil;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -72,7 +76,7 @@ public class BssIntfService {
 	 * @param param
 	 * @return
 	 */
-	public RespInfo<ExistedCustomer> callIntfCheckCust(Map<String, Object> param){
+	public RespInfo<List<ExistedCustomer>> callIntfCheckCust(Map<String, Object> param){
 		
 		//生成请求报文里的 string形式的svcCont节点内容
 		String svcCont = genSvcContCheckCust(param);
@@ -82,10 +86,10 @@ public class BssIntfService {
 		CheckCustRsp checkCustRsp = (CheckCustRsp) xstream.fromXML(svcContResp);
 		
 		//拼装返回
-		RespInfo<ExistedCustomer> respInfo = new RespInfo<ExistedCustomer>();
+		RespInfo<List<ExistedCustomer>> respInfo = new RespInfo<List<ExistedCustomer>>();
 		respInfo.setRespCode(checkCustRsp.getRespCode());
 		respInfo.setRespDesc(checkCustRsp.getRespDesc());
-		respInfo.setData(checkCustRsp.getExistedCustomer());
+		respInfo.setData(checkCustRsp.getListExistedCustomer());
 		return respInfo;
 	}
 	
@@ -313,7 +317,7 @@ public class BssIntfService {
 	 * @param param
 	 * @return
 	 */
-	public RespInfo<Map<String, String>> callIntfCheckRule(Map<String, Object> param){
+	public RespInfo<Map<String, Object>> callIntfCheckRule(Map<String, Object> param){
 		
 		//生成请求报文里的 string形式的svcCont节点内容
 		String svcCont = genSvcContCheckRule(param);
@@ -323,11 +327,12 @@ public class BssIntfService {
 		CheckRuleRsp checkRuleRsp = (CheckRuleRsp) xstream.fromXML(svcContResp);
 		
 		//拼装返回
-		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		RespInfo<Map<String, Object>> respInfo = new RespInfo<Map<String, Object>>();
 		respInfo.setRespCode(checkRuleRsp.getRspCode());
 		respInfo.setRespDesc(checkRuleRsp.getRspDesc());
-		Map<String, String> data = new HashMap<String, String>();
+		Map<String, Object> data = new HashMap<String, Object>();
 		data.put("TotalFee", checkRuleRsp.getTotalFee());
+		data.put("listFeeInfo", checkRuleRsp.getListFeeInfo());
 		respInfo.setData(data);
 		return respInfo;
 	}
@@ -450,7 +455,8 @@ public class BssIntfService {
 		
 		//如果参数里 有CustomerID，表示之前客户验证接口返回了CustomerID，不需要创建新客户
 		if(StringUtils.isNotEmpty((String)param.get("CustomerID"))){
-			accountReq.setSerType((String)param.get("CustomerID"));
+			//accountReq.setSerType((String)param.get("CustomerID"));
+			accountReq.setCustomerID((String)param.get("CustomerID"));
 		}
 		else{
 			NewCustomerInfo newCustomerInfo = new NewCustomerInfo();
@@ -516,14 +522,22 @@ public class BssIntfService {
 		
 		ProductInfo productInfo = new ProductInfo();
 		productInfo.setProductID((String)param.get("ProductID"));
+		
+		//下面这段是资费
 		List<ProCompInfo> list = new ArrayList<ProCompInfo>();
-		List<String> discountList = (List<String>)param.get("discountList");
-		for(String discount : discountList){
-			ProCompInfo proCompInfo = new ProCompInfo();
-			proCompInfo.setProFinanceID(discount);
-			list.add(proCompInfo); 
+		//discountList 如果界面没选必选叠加包和可选叠加包，则为null
+		if(param.get("discountList") != null){
+			List<String> discountList = (List<String>)param.get("discountList");
+			for(String discount : discountList){
+				ProCompInfo proCompInfo = new ProCompInfo();
+				proCompInfo.setProFinanceID(discount);
+				list.add(proCompInfo); 
+			}
 		}
-		productInfo.setProCompInfoList(list);
+		if(CollectionUtils.isNotEmpty(list)){
+			productInfo.setProCompInfoList(list);
+		}
+		
 		accountReq.setProductInfo(productInfo);
 		
 		accountReq.setOrigTotalFee((String)param.get("OrigTotalFee"));
@@ -532,6 +546,29 @@ public class BssIntfService {
 		payInfo.setPayType("10"); //10：现金
 		accountReq.setPayInfo(payInfo);
 		
+//		FeeInfo feeInfo = new FeeInfo();
+//		feeInfo.setFeeID("100056"); //这边写死预存款 存50送100，韩德勇和秦锡娟说以后存100送200也配置成这个
+//		feeInfo.setFeeCategory("2"); //2:预存费用
+//		feeInfo.setOrigFee((String)param.get("OrigTotalFee"));
+//		feeInfo.setReliefFee("0"); //减免金额默认0
+//		feeInfo.setReliefResult("无减免原因");
+//		feeInfo.setRealFee((String)param.get("OrigTotalFee"));
+//		accountReq.setFeeInfo(feeInfo);
+		
+		List<FeeInfo> listFeeInfo = (List<FeeInfo>) param.get("listFeeInfo");
+		List<FeeInfo> newListFeeInfo = new ArrayList<FeeInfo>();
+		for(FeeInfo oldFeeInfo : listFeeInfo){
+			FeeInfo feeInfo = new FeeInfo();
+			feeInfo.setFeeID(oldFeeInfo.getFeeID()); 
+			feeInfo.setFeeCategory("2"); //2:预存费用
+			//feeInfo.setFeeDes(oldFeeInfo.getFeeDes());
+			feeInfo.setOrigFee(oldFeeInfo.getOrigFee()); //应收
+			feeInfo.setReliefFee("0"); //减免金额默认0 
+			feeInfo.setReliefResult("无减免原因");
+			feeInfo.setRealFee(oldFeeInfo.getOrigFee()); //因为减免是0，所以实收=应收
+			newListFeeInfo.add(feeInfo);		
+		}
+		accountReq.setListFeeInfo(newListFeeInfo);
 		
 		return accountReq;
 	}	
@@ -590,6 +627,15 @@ public class BssIntfService {
 		orderSubReq.setEcsOrderID((String)param.get("orderID")); //传esp自己的订单id
 		orderSubReq.setTaxType("3"); //3	不打发票
 		
+		//2.9 订单提交接口 和 2.11	卡处理结果提交接口 都是 orderSubReq，但是 2.9没有下面的节点
+		if(param.containsKey("OrigTotalFee")){
+			orderSubReq.setOrigTotalFee((String)param.get("OrigTotalFee"));
+			
+			PayInfo payInfo = new PayInfo();
+			payInfo.setPayType("10"); //10：现金
+			orderSubReq.setPayInfo(payInfo);
+		}
+		
 		return orderSubReq;
 	}	
 	
@@ -621,6 +667,7 @@ public class BssIntfService {
 		data.put("ICCID", getCardDataRsp.getICCID());
 		data.put("IMSI", getCardDataRsp.getIMSI());
 		data.put("ProcId", getCardDataRsp.getProcId());
+		data.put("CardData", getCardDataRsp.getCardData());
 		respInfo.setData(data);
 		return respInfo;
 	}
@@ -719,6 +766,88 @@ public class BssIntfService {
 	}
 	
 	/**
+	 * 2.10 卡数据同步接口
+	 * 这个接口在 写卡结果通知接口 之后调用，而且是写卡成功才调用，写卡失败不调用
+	 * @param param
+	 * @return
+	 */
+	public RespInfo<Map<String, String>> callIntfWriteCardPre(Map<String, Object> param){
+		
+		//生成请求报文里的 string形式的svcCont节点内容
+		String svcCont = genSvcContWriteCardPre(param);
+		//生成全部请求报文,并调用bss接口，获取返回报文里的 svcCont 节点内容
+		String svcContResp = callIntfCommon("BGZ2F054", "T2000540", svcCont, null);
+		xstream.processAnnotations(WriteCardPreRsp.class);
+		WriteCardPreRsp writeCardPreRsp = (WriteCardPreRsp) xstream.fromXML(svcContResp);
+		
+		//拼装返回
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		respInfo.setRespCode(writeCardPreRsp.getRespCode());
+		respInfo.setRespDesc(writeCardPreRsp.getRespDesc());
+		return respInfo;
+	}
+	
+	/**
+	 * 卡数据同步接口的 SvcCont 节点 报文，string 形式的
+	 * @param param
+	 * @return
+	 */
+	private String genSvcContWriteCardPre(Map<String, Object> param){
+		WriteCardPreReq writeCardPreReq = genWriteCardPreReq(param);
+		xstream.autodetectAnnotations(true);
+		String xml = xstream.toXML(writeCardPreReq);
+		
+		return "<![CDATA[" + BssIntfUtil.xmlhead + xml + "]]>";
+	}
+	
+	/**
+	 * 生成 WriteCardPreReq 节点对应的 bean
+	 * @param param
+	 * @return
+	 */
+	private WriteCardPreReq genWriteCardPreReq(Map<String, Object> param){
+		WriteCardPreReq writeCardPreReq = new WriteCardPreReq();
+		
+		writeCardPreReq.setOperatorID((String)param.get("OperatorID"));
+		writeCardPreReq.setProvince((String)param.get("Province"));
+		writeCardPreReq.setCity((String)param.get("City"));
+		writeCardPreReq.setDistrict((String)param.get("District"));
+		writeCardPreReq.setChannelID((String)param.get("ChannelID"));
+		writeCardPreReq.setChannelType((String)param.get("ChannelType"));
+		writeCardPreReq.setAccessType((String)param.get("AccessType"));
+		writeCardPreReq.setOrderID((String)param.get("OrderID"));
+		writeCardPreReq.setProvOrderID((String)param.get("ProvOrderID"));
+		writeCardPreReq.setNumID((String)param.get("NumID"));
+		writeCardPreReq.setSimID((String)param.get("SimID"));
+		writeCardPreReq.setIMSI((String)param.get("IMSI"));
+		writeCardPreReq.setCardData((String)param.get("CardData"));
+		
+		return writeCardPreReq;
+	}
+	
+	/**
+	 * 2.11	卡处理结果提交接口
+	 * 报文节点和 订单提交接口 一样都是 OrderSubReq
+	 * @param param
+	 * @return
+	 */
+	public RespInfo<Map<String, String>> callIntfOrderSub2(Map<String, Object> param){
+		
+		//生成请求报文里的 string形式的svcCont节点内容
+		String svcCont = genSvcContOrderSub(param);
+		//生成全部请求报文,并调用bss接口，获取返回报文里的 svcCont 节点内容
+		String svcContResp = callIntfCommon("BGZ2F054", "T2000542", svcCont, null);
+		xstream.processAnnotations(OrderSubRsp.class);
+		OrderSubRsp orderSubRsp = (OrderSubRsp) xstream.fromXML(svcContResp);
+		
+		//拼装返回
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		respInfo.setRespCode(orderSubRsp.getRespCode());
+		respInfo.setRespDesc(orderSubRsp.getRespDesc());
+		return respInfo;
+	}
+	
+	/**
 	 * 封装了 bss选号 的2个顺序调用的接口：1移动号码查询接口，2资源操作接口
 	 * @param paramsMap
 	 * @return
@@ -745,9 +874,19 @@ public class BssIntfService {
 			return respInfo;
 		}
 		else{
-        	param.put("ResourcesType", "02"); //02  手机号码
-        	param.put("ResourcesCode", respInfo1.getData().get(0).getNumID());//默认取第一个号码
-        	param.put("OccupiedFlag", "1"); //1	预占
+			for(NumInfo numInfo : respInfo1.getData()){
+				//过滤掉靓号
+				if(RegexUtil.isPhoneNumRule(numInfo.getNumID())){
+					continue;
+				}
+				else{
+		        	param.put("ResourcesType", "02"); //02  手机号码
+		        	param.put("ResourcesCode", numInfo.getNumID());//不是靓号就占用这个号码
+		        	param.put("OccupiedFlag", "1"); //1	预占	
+		        	break;
+				}
+			}
+
 		}
 		
 		//2资源操作接口， 0000可以继续下一步接口，其他的错误得返回页面，终止流程
@@ -756,7 +895,7 @@ public class BssIntfService {
 		if("0000".equals(respInfo2.getRespCode())){
 			//如果号码查询接口+号码预占接口都成功，需要把号码加到订单提交参数里，后面插沃掌柜订单表需要用到
 			//orderService.insertOrderResInfo 方法里会用到
-			paramsMap.put("bssSerialNumber", respInfo1.getData().get(0).getNumID());
+			paramsMap.put("bssSerialNumber", (String) param.get("ResourcesCode"));//占用成功的号码
 		}
 		else{
 			respInfo.setRespCode(respInfo2.getRespCode());
@@ -793,10 +932,20 @@ public class BssIntfService {
 		log.debug("【bss接口】callBssOpenAll,param=" + param);
 		
 		//1客户资料验证接口， 0000和 0001都可以继续下一步接口，其他的错误得返回页面，终止流程
-		RespInfo<ExistedCustomer> respInfo1 = callIntfCheckCust(param);
+		RespInfo<List<ExistedCustomer>> respInfo1 = callIntfCheckCust(param);
 		if("0000".equals(respInfo1.getRespCode())){
-			//如果0000，表示已有此客户资料，后续订单预提交接口只需回传CustomerID
-			param.put("CustomerID", respInfo1.getData().getCustomerID());
+			//如果0000，表示已有此客户资料，后续订单预提交接口只需回传CustomerID,但bss一个身份证会返回多个 客户节点，这边只取第一个
+			param.put("CustomerID", respInfo1.getData().get(0).getCustomerID());
+			
+			param.put("CustomerType", "01");
+			param.put("CustomerLevel", "1");
+			param.put("CustomerLoc", param.get("City")); //？？身份证上没有城市,陈伟说就传工号地市
+			param.put("CustomerName", paramsMap.get("custName"));
+			param.put("CustomerPasswd", "123456"); //默认密码123456
+			param.put("ReleOfficeID", param.get("ChannelID"));  //同ChannelID
+			param.put("CertExpireDate", "20251231"); //？？随便填的固定值，因为普通下单没读取身份证
+			param.put("ContactPhone", paramsMap.get("phoneNum"));
+			param.put("CustomerSex", "1"); //？？女 0 男 1 ，随便填的固定值，因为普通下单没读取身份证
 		}
 		else if("0001".equals(respInfo1.getRespCode())){
 			//如果0001，表示无此客户资料，后续订单预提交接口需要传很多客户字段新建客户
@@ -824,10 +973,11 @@ public class BssIntfService {
 //			return respInfo;
 //		}
 		
-		//3订购信息合法性验证与费用计算接口
-		RespInfo<Map<String, String>> respInfo3 = callIntfCheckRule(param);
+		//3订购信息合法性验证与费用计算接口, 这个接口会返回TotalFee 和 List<FeeInfo>，预提交接口里要用
+		RespInfo<Map<String, Object>> respInfo3 = callIntfCheckRule(param);
 		if("0000".equals(respInfo3.getRespCode())){
 			param.put("OrigTotalFee", respInfo3.getData().get("TotalFee")); //开户预提交接口要用这个金额
+			param.put("listFeeInfo", respInfo3.getData().get("listFeeInfo"));//开户预提交接口要用这个
 		}
 		else{
 			respInfo.setRespCode(respInfo3.getRespCode());
@@ -858,6 +1008,13 @@ public class BssIntfService {
 		//走到这里表示以上接口都成功
 		respInfo.setRespCode("0000"); 
 		respInfo.setRespDesc("订单提交到bss成功");
+		//后期改造，写卡通知接口里需要用到 ProvOrderID，只能这边先返回给app，后面app再传进来
+		//后面 2.11卡处理结果提交接口 要用到实收金额
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("ProvOrderID", respInfo4.getData().get("ProvOrderID")); //
+		data.put("OrigTotalFee", (String) respInfo3.getData().get("TotalFee")); //
+		respInfo.setData(data);
+		
 		return respInfo;
 	}
 	
@@ -993,7 +1150,7 @@ public class BssIntfService {
 		param.put("GuarantorType", "04"); //04 无担保
 		param.put("GuaratorID", "0"); 
 		param.put("GroupFlag", "0"); //0：非集团用户
-		param.put("CertTag", "02"); //0：实名-二代
+		param.put("CertTag", "0"); //0：实名-二代
 		param.put("RealNameType", "0"); //0-	实名
 		
 		//下面是发展人，发展渠道信息
@@ -1142,16 +1299,19 @@ public class BssIntfService {
 	 */
 	public void addBssPkeParam(Map<String, Object> param){
 		String product_id = (String)param.get("ProductID"); 
-		List<String> addpcke = null;
+		List<String> addpcke = new ArrayList<String>();
 		//省内新号入网时，配置商品的物品属性时必须有必选包和可选包，
-		if(param.containsKey("MUSTPCK") || param.containsKey("ADDPCKE")) {
+		if(param.containsKey("MUSTPCK")) {
 			String mustpck = (String)param.get("MUSTPCK"); //必选叠加包名称
-			addpcke = (List<String>)param.get("ADDPCKE"); //可选叠加包名称list
 			addpcke.add(mustpck);
+		}
+		if(param.containsKey("ADDPCKE")) {
+			//addpcke = (List<String>)param.get("ADDPCKE"); //可选叠加包名称list
+			addpcke.addAll((List<String>)param.get("ADDPCKE"));
 		}
 		//省内上网卡时，商品的物品属性里不需要配必选包和可选包，只需要根据产品id来获取pke
 		
-		List<String> discountList = userDao.getBssPkeParam(product_id, addpcke);
+		List<String> discountList = userDao.getBssPkeParam(product_id, CollectionUtils.isEmpty(addpcke) ? null : addpcke);
 		param.put("discountList", discountList);
 	}
 	
@@ -1166,6 +1326,11 @@ public class BssIntfService {
 		List<Map<String, Object>> numbers = new ArrayList<Map<String, Object>>();
 		
 		for(NumInfo numInfo : list){
+			//过滤掉靓号
+			if(RegexUtil.isPhoneNumRule(numInfo.getNumID())){
+				continue;
+			}
+			
 			Map<String, Object> number = new HashMap<String, Object>();
 			number.put("SERIAL_NUMBER", numInfo.getNumID());
 			number.put("NICE_FEE", 0);
@@ -1175,4 +1340,48 @@ public class BssIntfService {
 		return numbers;
 	}
 
+	public static void main(String[] args) {
+//		String svcContResp = "<CheckRuleRsp>    <RspCode>0000</RspCode>    <RspDesc>%E6%88%90%E5%8A%9F</RspDesc>    <FeeInfo>        <FeeID>100000</FeeID>        <FeeCategory>2</FeeCategory>        <FeeDes>[预存]营业厅收入(营业缴费)_普通预存款</FeeDes>        <MaxRelief>0</MaxRelief>        <OrigFee>99990</OrigFee>    </FeeInfo>    <FeeInfo>        <FeeID>100056</FeeID>        <FeeCategory>2</FeeCategory>        <FeeDes>[预存]2014秋季沃派缴费计划预存款不可减免不可清退</FeeDes>        <MaxRelief>0</MaxRelief>        <OrigFee>50000</OrigFee>    </FeeInfo>    <TotalFee>149990</TotalFee>    <Para>        <ParaID>0</ParaID>        <ParaValue>0</ParaValue>    </Para></CheckRuleRsp>";
+//		XStream xstream2 = new XStream();
+//		xstream2.processAnnotations(CheckRuleRsp.class);
+//		CheckRuleRsp checkRuleRsp = (CheckRuleRsp) xstream2.fromXML(svcContResp);
+//		
+//		System.out.println(checkRuleRsp.getRspCode());
+		
+//		AccountReq accountReq = new AccountReq();
+//		
+//		List<FeeInfo> listFeeInfo = new ArrayList<FeeInfo>();
+//		FeeInfo feeInfo1 = new FeeInfo();
+//		feeInfo1.setFeeID("100056"); //这边写死预存款 存50送100，韩德勇和秦锡娟说以后存100送200也配置成这个
+//		feeInfo1.setFeeCategory("2"); //2:预存费用
+//		feeInfo1.setOrigFee("100");
+//		feeInfo1.setReliefFee("0"); //减免金额默认0
+//		feeInfo1.setReliefResult("无减免原因");
+//		feeInfo1.setRealFee("100");
+//		listFeeInfo.add(feeInfo1);
+//		
+//		FeeInfo feeInfo2 = new FeeInfo();
+//		feeInfo2.setFeeID("100056"); //这边写死预存款 存50送100，韩德勇和秦锡娟说以后存100送200也配置成这个
+//		feeInfo2.setFeeCategory("2"); //2:预存费用
+//		feeInfo2.setOrigFee("200");
+//		feeInfo2.setReliefFee("0"); //减免金额默认0
+//		feeInfo2.setReliefResult("无adf原因");
+//		feeInfo2.setRealFee("200");
+//		listFeeInfo.add(feeInfo2);
+//		
+//		accountReq.setListFeeInfo(listFeeInfo);
+//		
+//		XStream xstream3 = new XStream();
+//		xstream3.autodetectAnnotations(true);
+//		String xml = xstream3.toXML(accountReq);
+//		
+//		System.out.println("<![CDATA[" + BssIntfUtil.xmlhead + xml + "]]>");
+		
+		
+		String svcContResp = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CheckCustRsp>    <RespCode>0000</RespCode>    <RespDesc>成功，原联通客户</RespDesc>    <ExistedCustomer>        <CustomerID>9416050558951255</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160519134623</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9416062759354222</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160630090622</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9416062759354136</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160705173222</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9415110357746698</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20151128160216</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer></CheckCustRsp>";
+		XStream xstream4 = new XStream();
+		xstream4.processAnnotations(CheckCustRsp.class);
+		CheckCustRsp checkCustRsp = (CheckCustRsp) xstream4.fromXML(svcContResp);
+		System.out.println(checkCustRsp.getListExistedCustomer().get(0).getCustomerID());
+	}
 }

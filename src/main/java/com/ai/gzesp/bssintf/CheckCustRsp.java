@@ -1,6 +1,9 @@
 package com.ai.gzesp.bssintf;
 
+import java.util.List;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamImplicit;
 
 /**
  * 2.3	客户资料验证接口 响应类
@@ -14,7 +17,8 @@ public class CheckCustRsp {
 	
 	private String RespDesc;
 	
-	private ExistedCustomer ExistedCustomer;
+	@XStreamImplicit(itemFieldName="ExistedCustomer")
+	private List<ExistedCustomer> ListExistedCustomer;
 
 	public String getRespCode() {
 		return RespCode;
@@ -32,13 +36,15 @@ public class CheckCustRsp {
 		RespDesc = respDesc;
 	}
 
-	public ExistedCustomer getExistedCustomer() {
-		return ExistedCustomer;
+	public List<ExistedCustomer> getListExistedCustomer() {
+		return ListExistedCustomer;
 	}
 
-	public void setExistedCustomer(ExistedCustomer existedCustomer) {
-		ExistedCustomer = existedCustomer;
+	public void setListExistedCustomer(List<ExistedCustomer> listExistedCustomer) {
+		ListExistedCustomer = listExistedCustomer;
 	}
+
+
 	
 
 }

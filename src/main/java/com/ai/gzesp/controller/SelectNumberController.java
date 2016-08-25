@@ -82,7 +82,7 @@ public class SelectNumberController {
         
         //20160618 ximh 修改，增加对bss本地产品的支持
         //bss本地产品选号码，开户，资料验证等都需要调用bss接口，沃掌柜原本只支持总部4G产品，通过物品属性里ctlg_code来区分总部和本地产品
-        //10:省份新号入网 ，11省份上网卡
+        //10:省份新号入网 。11省份上网卡在OrderController.submitFilledOrder方法里调用callBssSelectNumAll
         if("10".equals(con.getCtlg_code())){
         	//拼装请求参数
         	Map<String, Object> param = bssIntfService.addCommonParam(con.getUser_id());

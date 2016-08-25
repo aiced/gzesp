@@ -1032,6 +1032,8 @@ public class OrderService {
 	        row.put("intf_order_status", oldOrder.get("INTF_ORDER_STATUS"));
 	        row.put("write_card_status", oldOrder.get("WRITE_CARD_STATUS"));
 	        row.put("intf_order_desc", oldOrder.get("INTF_ORDER_DESC"));
+	        row.put("prov_order_id", oldOrder.get("PROV_ORDER_ID"));
+	        row.put("orig_total_fee", oldOrder.get("ORIG_TOTAL_FEE"));
 	        row.put("is_ok", oldOrder.get("IS_OK"));
 	        row.put("cust_name", oldOrder.get("CUST_NAME"));
 	        row.put("pspt_no", oldOrder.get("PSPT_NO"));

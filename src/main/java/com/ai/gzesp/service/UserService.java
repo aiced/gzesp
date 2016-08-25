@@ -39,6 +39,16 @@ public class UserService {
         return userDao.getUserInfoByPhonePassword(phone_number, password);
     }
     
+
+    /**
+     * 根据user_id 获取 商户号
+     * @param user_id
+     * @return
+     */
+    public Map<String, String> getMchId(String user_id){
+        return userDao.getMchId(user_id);
+    }
+    
     /**
      * 根据openid获取用户信息
      * @param open_id

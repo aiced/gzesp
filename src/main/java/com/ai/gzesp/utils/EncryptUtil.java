@@ -72,15 +72,25 @@ public class EncryptUtil {
         }
         return null;
     }
-    
+
     /**
      * des 解密
-     * @param keybyte
+     * @param key
      * @param src
      * @return
      */
-//    public static byte[] decryptByDes(String keybyte, String src) {
-//    	return decryptModeRecharge(keybyte.getBytes(Charsets.UTF_8), src.getBytes(Charsets.UTF_8));
+    public static String decryptByDes(String key, byte[] src) {
+    	return new String(decryptByDes(key.getBytes(Charsets.UTF_8), src));
+    }
+    
+    /**
+     * des 解密
+     * @param key
+     * @param src
+     * @return
+     */
+//    public static byte[] decryptByDes(String key, byte[] src) {
+//    	return decryptByDes(key.getBytes(Charsets.UTF_8), src);
 //    }
     
     /**

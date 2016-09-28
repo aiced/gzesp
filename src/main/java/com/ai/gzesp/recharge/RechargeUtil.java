@@ -547,7 +547,7 @@ public class RechargeUtil {
 
     /**
      * 生成16位接口流水号，用于插入 ITF_D_RECHARGE_LOG
-     * interfaceType: 2：充值接口 4：充值记录查询接口 1：充值号码验证接口 3：卡激活接口 5：充值对账接口
+     * interfaceType: 2：充值接口 4：充值记录查询接口 1：充值号码验证接口 3：卡激活接口 5：充值对账接口 6:外围系统接口调用日志
      * @param interfaceType
      * @return
      */

@@ -213,6 +213,26 @@
 	    select to_char(log_id) log_id, charge_result, to_char(charge_value) charge_value
           from itf_d_recharge_log
          where log_id = ${log_id}
-	</select>				
+	</select>
+	
+	<insert id="insertIntfRechargeLog">
+      insert into ITF_D_INTF_RECHARGE_LOG
+             (log_id, partition_id, out_trade_id, mer_id, req_time, interface_type, 
+              serial_number, serial_number_type, fee, order_id, 
+              resp_code, resp_desc, orig_out_trade_id)
+       values(${log_id}, ${partition_id}, #{out_trade_id}, #{mer_id}, #{req_time}, #{interface_type}, 
+              #{serial_number}, #{serial_number_type}, ${fee}, #{order_id},
+              #{resp_code}, #{resp_desc}, #{orig_out_trade_id} )
+	</insert>	
+	
+	<select id="getIntfRechargeLog" resultType="java.util.HashMap">
+	    select to_char(b.log_id) log_id, b.check_status, a.req_time, a.serial_number
+          from itf_d_intf_recharge_log a,
+               itf_d_recharge_log b
+         where a.out_trade_id = #{out_trade_id}
+           and a.interface_type = '010202'
+           and a.order_id = b.order_id
+           and b.interface_type = '010202'
+	</select>					
 							
 </mapper>

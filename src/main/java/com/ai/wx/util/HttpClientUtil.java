@@ -359,6 +359,8 @@ public class HttpClientUtil {
         }
         return responseContent;
     }
+    
+    
 
     public static byte[] sendGetSSLRequest(String reqURL) {
     	long responseLength = 0; // 响应长度
@@ -497,5 +499,59 @@ public class HttpClientUtil {
             }
         }
     }
-
+    
+//	public static String sendGetSSLRequest(String reqURL, String decodeCharset) {
+//		long responseLength = 0; // 响应长度
+//		String responseContent = null; // 响应内容
+//		CloseableHttpClient httpClient = HttpClientUtil.createSSLClientDefault();
+//		CloseableHttpResponse response = null;
+//
+//		try {
+//
+//			HttpGet httpGet = new HttpGet(reqURL); // 创建org.apache.http.client.methods.HttpGet
+//			response = httpClient.execute(httpGet); // 执行GET请求
+//			HttpEntity entity = response.getEntity(); // 获取响应实体
+//			if (null != entity) {
+//				responseLength = entity.getContentLength();
+//				responseContent = EntityUtils.toString(entity, decodeCharset == null ? "UTF-8" : decodeCharset);
+//				// EntityUtils.consume(entity); // Consume response content
+//			}
+//			System.out.println("请求地址: " + httpGet.getURI());
+//			System.out.println("响应状态: " + response.getStatusLine());
+//			System.out.println("响应长度: " + responseLength);
+//			System.out.println("响应内容: " + responseContent);
+//		} catch (Exception e) {
+//			logger.error("与[" + reqURL + "]通信过程中发生异常,堆栈信息为", e);
+//		} finally {
+//			if (response != null) {
+//				try {
+//					EntityUtils.consume(response.getEntity());
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return responseContent;
+//	}
+//    
+//    public static CloseableHttpClient createSSLClientDefault(){
+//    	try {
+//    	             SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+//    	                 //信任所有
+//    	                 public boolean isTrusted(X509Certificate[] chain,
+//    	                                 String authType) throws CertificateException {
+//    	                     return true;
+//    	                 }
+//    	             }).build();
+//    	             SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
+//    	             return HttpClients.custom().setSSLSocketFactory(sslsf).build();
+//    	         } catch (KeyManagementException e) {
+//    	             e.printStackTrace();
+//    	         } catch (NoSuchAlgorithmException e) {
+//    	             e.printStackTrace();
+//    	         } catch (KeyStoreException e) {
+//    	             e.printStackTrace();
+//    	         }
+//    	         return  HttpClients.createDefault();
+//    	}
 }

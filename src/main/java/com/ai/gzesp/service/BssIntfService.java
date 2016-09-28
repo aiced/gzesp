@@ -454,11 +454,12 @@ public class BssIntfService {
 		accountReq.setRealNameType((String)param.get("RealNameType"));
 		
 		//如果参数里 有CustomerID，表示之前客户验证接口返回了CustomerID，不需要创建新客户
+		//后来陈伟说，新规范里，不管有没有客户，都需要传最新的客户信息
 		if(StringUtils.isNotEmpty((String)param.get("CustomerID"))){
 			//accountReq.setSerType((String)param.get("CustomerID"));
 			accountReq.setCustomerID((String)param.get("CustomerID"));
 		}
-		else{
+//		else{
 			NewCustomerInfo newCustomerInfo = new NewCustomerInfo();
 			newCustomerInfo.setCustomerType((String)param.get("CustomerType"));
 			newCustomerInfo.setCustomerLevel((String)param.get("CustomerLevel"));
@@ -479,7 +480,7 @@ public class BssIntfService {
 			newCustomerInfo.setCertAddr((String)param.get("CertAddr"));
 			newCustomerInfo.setCustStatus((String)param.get("CustStatus"));
 			accountReq.setNewCustomerInfo(newCustomerInfo);			
-		}
+//		}
 		
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUserName((String)param.get("CustomerName")); //(String)param.get("UserName")
@@ -487,7 +488,7 @@ public class BssIntfService {
 //		userInfo.setCreditVale((String)param.get("CreditVale"));
 //		userInfo.setCheckCreditVale((String)param.get("CheckCreditVale"));
 		userInfo.setPackID((String)param.get("ProductID")); //(String)param.get("PackID")
-		userInfo.setUserAddr("贵州联通"); //(String)param.get("UserAddr")
+		userInfo.setUserAddr((String)param.get("CustomerAddr")); //(String)param.get("UserAddr")
 //		userInfo.setGuarantorType((String)param.get("GuarantorType"));
 //		userInfo.setGuaratorID((String)param.get("GuaratorID"));
 //		userInfo.setGroupFlag((String)param.get("GroupFlag"));
@@ -509,7 +510,7 @@ public class BssIntfService {
 		accountInfo.setAccountPasswd((String)param.get("CustomerPasswd")); //(String)param.get("AccountPasswd")
 		accountInfo.setAccountPayType("10"); //(String)param.get("AccountPayType") 10 现金
 		accountInfo.setAcctType((String)param.get("AcctType")); //(String)param.get("AcctType")
-		accountInfo.setAccountAddr("贵州联通"); //(String)param.get("AccountAddr")
+		accountInfo.setAccountAddr((String)param.get("CustomerAddr")); //(String)param.get("AccountAddr")
 		accountInfo.setAccountZip("550000"); //(String)param.get("AccountZip")
 //		accountInfo.setAccountPhone((String)param.get("AccountPhone"));
 //		accountInfo.setContactPhone((String)param.get("ContactPhone"));
@@ -943,9 +944,11 @@ public class BssIntfService {
 			param.put("CustomerName", paramsMap.get("custName"));
 			param.put("CustomerPasswd", "123456"); //默认密码123456
 			param.put("ReleOfficeID", param.get("ChannelID"));  //同ChannelID
-			param.put("CertExpireDate", "20251231"); //？？随便填的固定值，因为普通下单没读取身份证
+			param.put("CertExpireDate", paramsMap.get("custExpiredate")==null ? "20501231":paramsMap.get("custExpiredate")); //？？随便填的固定值，因为普通下单没读取身份证
 			param.put("ContactPhone", paramsMap.get("phoneNum"));
-			param.put("CustomerSex", "1"); //？？女 0 男 1 ，随便填的固定值，因为普通下单没读取身份证
+			param.put("CustomerSex", paramsMap.get("custSex")==null ? "1":paramsMap.get("custSex")); //？？女 0 男 1 ，随便填的固定值，因为普通下单没读取身份证
+			param.put("CustomerAddr", paramsMap.get("custAddr")); //身份证地址
+			param.put("CustomerBirth", paramsMap.get("custBirth")); //身份证生日
 		}
 		else if("0001".equals(respInfo1.getRespCode())){
 			//如果0001，表示无此客户资料，后续订单预提交接口需要传很多客户字段新建客户
@@ -955,9 +958,11 @@ public class BssIntfService {
 			param.put("CustomerName", paramsMap.get("custName"));
 			param.put("CustomerPasswd", "123456"); //默认密码123456
 			param.put("ReleOfficeID", param.get("ChannelID"));  //同ChannelID
-			param.put("CertExpireDate", "20251231"); //？？随便填的固定值，因为普通下单没读取身份证
+			param.put("CertExpireDate", paramsMap.get("custExpiredate")==null ? "20501231":paramsMap.get("custExpiredate")); //？？随便填的固定值，因为普通下单没读取身份证
 			param.put("ContactPhone", paramsMap.get("phoneNum"));
-			param.put("CustomerSex", "1"); //？？女 0 男 1 ，随便填的固定值，因为普通下单没读取身份证
+			param.put("CustomerSex", paramsMap.get("custSex")==null ? "1":paramsMap.get("custSex")); //？？女 0 男 1 ，随便填的固定值，因为普通下单没读取身份证
+			param.put("CustomerAddr", paramsMap.get("custAddr")); //身份证地址
+			param.put("CustomerBirth", paramsMap.get("custBirth")); //身份证生日
 		}
 		else{
 			respInfo.setRespCode(respInfo1.getRespCode());

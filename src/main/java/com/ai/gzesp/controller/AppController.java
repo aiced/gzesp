@@ -479,6 +479,10 @@ public class AppController {
      *               "pspt_id":"32028229840116211",  //蓝牙读卡器读出来的身份证号码
      *               "order_id":"12345656", //queryBssOrderList接口获取的订单信息里返给app的
      *               "cust_name":"奚敏辉", //蓝牙读卡器读出来的身份证姓名
+     *               "cust_addr":"xxxxx", //蓝牙读卡器读出来的身份证地址
+     *               "cust_birth":"20251231", //蓝牙读卡器读出来的身份证生日
+     *               "cust_expiredate":"20251231", //蓝牙读卡器读出来的身份证有效期
+     *               "cust_sex":"1", //蓝牙读卡器读出来的身份证性别 女：0 男：1
      *               "phone_number":"18651885060",  //订单选中的手机号码
      *            "developer_code":"",
      *            "developer_name":"",
@@ -500,6 +504,10 @@ public class AppController {
     	paramsMap.put("idCardNum", param.get("pspt_id"));
     	paramsMap.put("orderId", param.get("order_id"));
     	paramsMap.put("custName", param.get("cust_name"));
+    	paramsMap.put("custAddr", param.get("cust_addr"));
+    	paramsMap.put("custBirth", param.get("cust_birth"));
+    	paramsMap.put("custExpiredate", param.get("cust_expiredate"));
+    	paramsMap.put("custSex", param.get("cust_sex"));
     	paramsMap.put("phoneNum", param.get("phone_number"));
     	paramsMap.put("developerCode", param.get("developer_code"));
     	paramsMap.put("developerName", param.get("developer_name"));

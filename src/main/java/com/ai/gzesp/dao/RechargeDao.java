@@ -86,4 +86,21 @@ public interface RechargeDao {
     public Map<String, String> queryRechargeResult(@Param("log_id") String log_id, @Param("interface_type") String interface_type);
     
     public Map<String, String> queryRechargeRqyResultByLogId(@Param("log_id") String log_id);   
+    
+    public Map<String, String> insertIntfRechargeLog(
+    		@Param("log_id") String log_id, 
+    		@Param("partition_id") String partition_id, 
+    		@Param("out_trade_id") String out_trade_id, 
+    		@Param("mer_id") String mer_id, 
+    		@Param("req_time") String req_time, 
+    		@Param("interface_type") String interface_type, 
+    		@Param("serial_number") String serial_number, 
+    		@Param("serial_number_type") String serial_number_type,
+    		@Param("fee") String fee,   
+    		@Param("order_id") String order_id,
+    		@Param("resp_code") String resp_code, 
+    		@Param("resp_desc") String resp_desc,
+    		@Param("orig_out_trade_id") String orig_out_trade_id);
+    
+    public Map<String, String> getIntfRechargeLog(@Param("out_trade_id") String out_trade_id); 
 }

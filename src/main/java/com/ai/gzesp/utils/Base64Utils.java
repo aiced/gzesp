@@ -47,6 +47,15 @@ public class Base64Utils {
         String s=new String(b);
         return s;
     }*/
+	
+    /** 
+     * 解密
+     * @param bytes 
+     * @return 
+     */  
+    public static byte[] decode(final String src) {  
+        return Base64.decodeBase64(src.getBytes());  
+    } 
     
     /** 
      * 解密

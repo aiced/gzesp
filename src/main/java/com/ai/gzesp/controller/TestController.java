@@ -215,9 +215,14 @@ public class TestController {
     	
     }
     
+    /**
+     * 测试对外提供的充值接口
+     * @return
+     */
     @RequestMapping(value = "/intf/recharge", method = RequestMethod.GET)
     @ResponseBody
     public RespInfo<Map<String, String>> intfRecharge(){
+    	String merId = "A0001"; //5位
     	String md5Key = "0aad781d015ca667d6eba25e"; //24位
     	String desKey = "0aad781d015ca667d6eba25f"; //24位
     	String intfUrl = "http://localhost:8080/esp/recharge/intf/recharge"; //充值接口url
@@ -226,9 +231,9 @@ public class TestController {
     	Map<String, Object> param = new HashMap<String, Object>();
     	param.put("phoneNumber", "18651885060");
     	param.put("fee", "100");
-    	param.put("merId", "1234567890abcdef");
+    	param.put("merId", merId);
     	param.put("reqTime", "20160824112200");
-    	param.put("outerOrderId", "1234567890123456");
+    	param.put("outOrderId", "1234567890123456");
     	
     	//原始业务参数转换成json字符串
     	String paramJson = JSON.toJSONString(param);
@@ -247,15 +252,22 @@ public class TestController {
     	String paramJson2 = JSON.toJSONString(param);
     	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
     	String desBase64Str = Base64Utils.encode(desArray);
+    	System.out.println("--原始业务参数base64编码完字符串--");
     	System.out.println(desBase64Str);
     	
     	//封装最终的post请求参数json
     	Map<String, String> postParam = new HashMap<String, String>();
     	postParam.put("reqParam", desBase64Str);
+    	postParam.put("merId", merId);
     	
     	//httpclient 发送请求获取返回
     	String respJson = HttpXmlClient.httpSend(intfUrl, postParam);
     	
+    	//下面是服务端接收到入参后的解析
+    	byte[] desArray2 = Base64Utils.decode(desBase64Str);
+    	String paramJson3 = EncryptUtil.decryptByDes(desKey, desArray2);
+    	System.out.println("--请求参数解析完后的字符串--");
+    	System.out.println(paramJson3);
     	//解析返回的json
     	
     	

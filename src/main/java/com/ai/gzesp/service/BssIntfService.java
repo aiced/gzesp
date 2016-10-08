@@ -1157,6 +1157,7 @@ public class BssIntfService {
 		param.put("GroupFlag", "0"); //0：非集团用户
 		param.put("CertTag", "0"); //0：实名-二代
 		param.put("RealNameType", "0"); //0-	实名
+		param.put("CertAddr", paramsMap.get("custAddr")); //证件地址
 		
 		//下面是发展人，发展渠道信息
 		param.put("developerCode", paramsMap.get("developerCode")); //发展渠道

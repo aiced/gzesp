@@ -59,7 +59,16 @@
 	            <br/>
 	            <button class="btn-sm btn-warning btn-block" type="submit" id="btnStep1">下一步</button>
 	        		            <input type="hidden" value='' id="hide_code_date" name="hide_code_date">
+            
 	        </form>
+
+	        	<!--如果是step2跳转过来的会带有修改密码结果-->
+	        	<#if tip??>	
+	        	<div class="form-group">
+	                <h3>${tip}</h3>
+	            </div>
+	        	</#if>
+	        		        
 	    </div> <!-- /container -->
 	</div>
 	

@@ -65,9 +65,13 @@ public class WeShopRetrievePassword2Controller {
     	
     	tdAurDAUTHINFODao.updateByExampleSelective(record, example);
     	//ModelAndView mav = new ModelAndView("weShopLogin.ftl");
-    	ModelAndView mav = new ModelAndView("redirect:/auth/login");
     	
-    	mav.addObject("title", "登录微店账号");
+    	
+    	//20161021 ximh 修改，现场写卡app端加了忘记密码功能，修改密码成功后不让跳转到沃掌柜登录界面
+    	//ModelAndView mav = new ModelAndView("redirect:/auth/login");
+    	ModelAndView mav = new ModelAndView("redirect:/auth/findPassword/step1");
+    	mav.addObject("title", "忘记密码");
+    	mav.addObject("tip", "密码修改成功！请关闭页面");
     	return mav;
     	
     }

@@ -15,6 +15,10 @@
              }
 
          }
+         //如果是必选包里的，所有选项都必须选中不能改
+         else if(typeof($(this).attr('all_must_select')) != 'undefined'){
+        	 return false;
+         }
          else{
              if( $(this).hasClass('tab-on') ){
                  //如果该选项已经被选中，返回

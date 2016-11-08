@@ -276,11 +276,11 @@
                       <ul class="tabslist">
                         <#list attrs.MUSTPCK as item>
                           <#if item_index==0>
-                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" all_must_select="true">${item.ATTR_VAL_NAME}</li>
                           <#elseif item_index%3==2>
-                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="mrg-r-0 tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" all_must_select="true">${item.ATTR_VAL_NAME}</li>
                           <#else>
-                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}">${item.ATTR_VAL_NAME}</li>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" all_must_select="true">${item.ATTR_VAL_NAME}</li>
                           </#if>
                         </#list>
                       </ul>
@@ -288,7 +288,6 @@
               </li>              
             </#if>            
             <!-- 可选叠加包-->  
-            <!--      
             <#if attrs.ADDPCKE??>
               <li id="addPckList" class="num-info-li" >
                   <p style="margin-bottom: 0px;"><label>可选叠加包(可多选)</label></p>
@@ -307,7 +306,25 @@
                   </div>
               </li>              
             </#if>    
-            -->                         
+            <!-- 多选一叠加包-->        
+            <#if attrs.ONEPCKE??>
+              <li id="onePckList" class="num-info-li" >
+                  <p style="margin-bottom: 0px;"><label>多选一叠加包</label></p>
+                  <div class="tabs-box">
+                      <ul class="tabslist">
+                        <#list attrs.ONEPCKE as item>
+                          <#if item_index==0>
+                            <li class="tab-on" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                          <#elseif item_index%3==2>
+                            <li class="mrg-r-0" attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                          <#else>
+                            <li attr_code="${item.ATTR_CODE}" attr_val="${item.RES_ID}|${item.ATTR_CODE}|${item.ATTR_VAL_CODE}|${item.VALUES1}" >${item.ATTR_VAL_NAME}</li>
+                          </#if>
+                        </#list>
+                      </ul>
+                  </div>
+              </li>              
+            </#if>                                     
             <!-- 普通卡/微卡/Nano卡-->        
             <#if attrs.SIMSIZE??>
               <li id="simTypeList" class="num-info-li" >

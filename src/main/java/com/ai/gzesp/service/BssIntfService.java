@@ -1196,20 +1196,18 @@ public class BssIntfService {
     		param.put("SerType", orderAttr.get("SER_TYPE"));
     		param.put("ProductID", orderAttr.get("PRODUCT_ID"));
     		
-    		if(StringUtils.isNotBlank(orderAttr.get("MUSTPCK"))){
-    			param.put("MUSTPCK", orderAttr.get("MUSTPCK"));
-    		}
-    		
-    		//一条订单会插多条ADDPCKE 属性，所以上面sql里不好写，这里单独获取一次
-    		List<String> orderADDPCKE = orderDao.getOrderAddPcke(order_id);
-    		if(CollectionUtils.isNotEmpty(orderADDPCKE)){
-    			param.put("ADDPCKE", orderADDPCKE);
+    		//一条订单可能会插0或多条ADDPCKE，1或多条MUSTPCK，0或一条ONEPCKE 属性，所以上面sql里不好写，这里单独获取一次
+    		//获取必选叠加包,可选叠加包，多选一叠加包的名字
+    		List<String> orderALLPCKE = orderDao.getOrderAllPcke(order_id);
+    		if(CollectionUtils.isNotEmpty(orderALLPCKE)){
+    			param.put("ALLPCKE", orderALLPCKE);
     		}
     		
     		//首月资费，bss预提交接口参数首月付费方式 01:标准资费（免首月月租）02:全月套餐 03:套餐减半
     		param.put("FirstMonBillMode", orderAttr.get("FMONTHD"));
     		
     	}
+    	//下面这个分支废弃无用，可能会报错，因为都是从app进入的
     	else{
         	String[] rows = resAttrStr.split("\\^", -1);
         	for(String row : rows) {
@@ -1299,25 +1297,32 @@ public class BssIntfService {
 //	}
 	
 	/**
-	 * 必选叠加包名称 和 可选叠加包名称list 获取 优惠id的列表
+	 * 必选叠加包名称 和 可选叠加包名称，多选一叠加包 list 获取 优惠id的列表
 	 * @param param
 	 * @return
 	 */
 	public void addBssPkeParam(Map<String, Object> param){
 		String product_id = (String)param.get("ProductID"); 
-		List<String> addpcke = new ArrayList<String>();
-		//省内新号入网时，配置商品的物品属性时必须有必选包和可选包，
-		if(param.containsKey("MUSTPCK")) {
-			String mustpck = (String)param.get("MUSTPCK"); //必选叠加包名称
-			addpcke.add(mustpck);
-		}
-		if(param.containsKey("ADDPCKE")) {
-			//addpcke = (List<String>)param.get("ADDPCKE"); //可选叠加包名称list
-			addpcke.addAll((List<String>)param.get("ADDPCKE"));
+//		List<String> addpcke = new ArrayList<String>();
+//		//省内新号入网时，配置商品的物品属性时必须有必选包，可能有可选包，可能有多选一叠加包，
+//		if(param.containsKey("MUSTPCK")) {
+//			String mustpck = (String)param.get("MUSTPCK"); //必选叠加包名称
+//			addpcke.add(mustpck);
+//		}
+//		if(param.containsKey("ADDPCKE")) {
+//			//addpcke = (List<String>)param.get("ADDPCKE"); //可选叠加包名称list
+//			addpcke.addAll((List<String>)param.get("ADDPCKE"));
+//		}
+		
+		//addParamFromAttr方法里已经把所有叠加包查询出来list了
+		List<String> allpcke = null;
+		if(param.containsKey("ALLPCKE")) {
+			allpcke = (List<String>)param.get("ALLPCKE"); 
 		}
 		//省内上网卡时，商品的物品属性里不需要配必选包和可选包，只需要根据产品id来获取pke
 		
-		List<String> discountList = userDao.getBssPkeParam(product_id, CollectionUtils.isEmpty(addpcke) ? null : addpcke);
+//		List<String> discountList = userDao.getBssPkeParam(product_id, CollectionUtils.isEmpty(addpcke) ? null : addpcke);
+		List<String> discountList = userDao.getBssPkeParam(product_id, allpcke);
 		param.put("discountList", discountList);
 	}
 	

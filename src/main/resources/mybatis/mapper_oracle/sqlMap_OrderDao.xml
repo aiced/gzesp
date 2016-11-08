@@ -618,26 +618,23 @@
                b.res_attr_val serial_number,
                decode(c.res_attr_val, '预付费', '2', '1') ser_type,
                d.values1 product_id,
-               e.res_attr_val MUSTPCK,
                decode(c.res_attr_val, '立即生效', '02', '半月生效', '03', '01') FMONTHD 
           from ord_d_base a ,
                (select * from ord_d_res where res_attr_code = 'NUMBERS') b,
                (select * from ord_d_res where res_attr_code = 'SERTYPE') c,
                (select * from ord_d_res where res_attr_code = 'PACKRES') d,
-               (select * from ord_d_res where res_attr_code = 'MUSTPCK') e,
                (select * from ord_d_res where res_attr_code = 'FMONTHD') f
          where a.order_id = b.order_id
            and a.order_id = c.order_id
            and a.order_id = d.order_id	
-           and a.order_id = e.order_id(+)	
            and a.order_id = f.order_id(+)
            and a.order_id = #{order_id}
 	</select>
 	
-	<select id="getOrderAddPcke" resultType="java.lang.String">
-        select b.res_attr_val ADDPCKE
+	<select id="getOrderAllPcke" resultType="java.lang.String">
+        select b.res_attr_val ALLPCKE
           from ord_d_base a ,
-               (select * from ord_d_res where res_attr_code = 'ADDPCKE') b
+               (select * from ord_d_res where res_attr_code in ('MUSTPCK', 'ADDPCKE', 'ONEPCKE')) b
          where a.order_id = b.order_id
            and a.order_id = #{order_id}
 	</select>					

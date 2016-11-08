@@ -127,5 +127,5 @@ public interface OrderDao {
     
 	public Map<String, String> getOrderAttr(@Param("order_id") String order_id);
 	
-    public List<String> getOrderAddPcke(@Param("order_id") String order_id);
+    public List<String> getOrderAllPcke(@Param("order_id") String order_id);
 }

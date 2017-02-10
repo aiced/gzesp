@@ -16,12 +16,12 @@ public enum RechargeIntfCons {
 	/**
 	 * "A0001"
 	 */
-	A0001("A0001", "0aad781d015ca667d6eba25f", "0aad781d015ca667d6eba25e"),
+	A0001("A0001", "0aad781d015ca667d6eba25f", "0aad781d015ca667d6eba25e60952c23"),
 	
 	/**
 	 * "默认", "0000"
 	 */
-	A9999("A0001", "0aad781d015ca667d6eba25f", "0aad781d015ca667d6eba25e");
+	A9999("0000", "0aad781d015ca667d6eba25f", "0aad781d015ca667d6eba25e60952c23");
 	
     private RechargeIntfCons(String merId, String desKey, String md5Key){
         this.merId = merId;

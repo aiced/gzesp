@@ -16,7 +16,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect  
 public class LogAspect {  
 	Logger logger = LoggerFactory.getLogger(getClass());
-  
+	
 	@Pointcut("execution(* com.ai.gzesp.controller.*.*(..))")  
     private void controllerMethod(){}
 	

@@ -221,8 +221,8 @@
               serial_number, serial_number_type, fee, order_id, 
               resp_code, resp_desc, orig_out_trade_id)
        values(${log_id}, ${partition_id}, #{out_trade_id}, #{mer_id}, #{req_time}, #{interface_type}, 
-              #{serial_number}, #{serial_number_type}, ${fee}, #{order_id},
-              #{resp_code}, #{resp_desc}, #{orig_out_trade_id} )
+              #{serial_number, jdbcType=VARCHAR}, #{serial_number_type}, #{fee, jdbcType=NUMERIC}, #{order_id, jdbcType=VARCHAR},
+              #{resp_code}, #{resp_desc}, #{orig_out_trade_id, jdbcType=VARCHAR} )
 	</insert>	
 	
 	<select id="getIntfRechargeLog" resultType="java.util.HashMap">
@@ -233,6 +233,13 @@
            and a.interface_type = '010202'
            and a.order_id = b.order_id
            and b.interface_type = '010202'
-	</select>					
+	</select>
+	
+	<select id="getIntfRechargeLogBss" resultType="java.util.HashMap">
+	    select to_char(a.log_id) log_id, a.resp_code, a.req_time, a.serial_number, a.fee
+          from itf_d_intf_recharge_log a
+         where a.out_trade_id = #{out_trade_id}
+           and a.interface_type = '010202'
+	</select>						
 							
 </mapper>

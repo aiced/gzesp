@@ -23,6 +23,8 @@ import com.ai.gzesp.bssintf.CheckRuleReq;
 import com.ai.gzesp.bssintf.CheckRuleRsp;
 import com.ai.gzesp.bssintf.ExistedCustomer;
 import com.ai.gzesp.bssintf.FeeInfo;
+import com.ai.gzesp.bssintf.FeeQryReq;
+import com.ai.gzesp.bssintf.FeeQryRsp;
 import com.ai.gzesp.bssintf.GetCardDataReq;
 import com.ai.gzesp.bssintf.GetCardDataRsp;
 import com.ai.gzesp.bssintf.NewCustomerInfo;
@@ -31,11 +33,19 @@ import com.ai.gzesp.bssintf.NumQueryReq;
 import com.ai.gzesp.bssintf.NumQueryRsp;
 import com.ai.gzesp.bssintf.OrderSubReq;
 import com.ai.gzesp.bssintf.OrderSubRsp;
+import com.ai.gzesp.bssintf.PayCommonRsp;
 import com.ai.gzesp.bssintf.PayInfo;
+import com.ai.gzesp.bssintf.PayQryReq;
+import com.ai.gzesp.bssintf.PayQryRsp;
+import com.ai.gzesp.bssintf.PayRecord;
+import com.ai.gzesp.bssintf.PayReq;
+import com.ai.gzesp.bssintf.PayRsp;
 import com.ai.gzesp.bssintf.ProCompInfo;
 import com.ai.gzesp.bssintf.ProductInfo;
 import com.ai.gzesp.bssintf.QueryParas;
 import com.ai.gzesp.bssintf.ResourcesInfo;
+import com.ai.gzesp.bssintf.RouteReq;
+import com.ai.gzesp.bssintf.RouteRsp;
 import com.ai.gzesp.bssintf.UserCheckReq;
 import com.ai.gzesp.bssintf.UserCheckRsp;
 import com.ai.gzesp.bssintf.UserInfo;
@@ -70,6 +80,9 @@ public class BssIntfService {
 	
 	@Autowired
 	private OrderDao orderDao;
+	
+	@Autowired
+	private OsnService osnService;
 	
 	/**
 	 * 2.3	客户资料验证接口
@@ -848,6 +861,243 @@ public class BssIntfService {
 		return respInfo;
 	}
 	
+
+	
+	/**
+	 * 2.12	移网应缴费用查询
+	 * @param param
+	 * @return
+	 */
+	public RespInfo<Map<String, String>> callIntfFeeQry(Map<String, Object> param){
+		
+		//生成请求报文里的 string形式的svcCont节点内容
+		String svcCont = genSvcContFeeQry(param);
+		//生成全部请求报文,并调用bss接口，获取返回报文里的 svcCont 节点内容
+		String svcContResp = callIntfCommon("BAPPA001", "T1000001", svcCont, null);
+//		xstream.processAnnotations(FeeQryRsp.class);
+//		//因为有3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误,这边每次都手动重新映射别名
+//		xstream.alias("Resp", FeeQryRsp.class);
+//		FeeQryRsp feeQryRsp = (FeeQryRsp) xstream.fromXML(svcContResp);
+		
+		//2.12,2.13,2.14三个响应类共用此类，把三个响应类里的属性都加到这里，因为这3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误，
+		xstream.processAnnotations(PayCommonRsp.class);
+		//因为有3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误,这边每次都手动重新映射别名
+		xstream.alias("Resp", PayCommonRsp.class);
+		PayCommonRsp feeQryRsp = (PayCommonRsp) xstream.fromXML(svcContResp);
+		
+		//拼装返回
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		respInfo.setRespCode(feeQryRsp.getRespCode());
+		respInfo.setRespDesc(feeQryRsp.getRespDesc());
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("UserName", feeQryRsp.getUserName());
+		data.put("EparchyCode", feeQryRsp.getEparchyCode());
+		data.put("EparchyNme", feeQryRsp.getEparchyNme());
+		data.put("ProductName", feeQryRsp.getProductName());
+		data.put("Amount", feeQryRsp.getAmount());//实时话费
+		data.put("Balance", feeQryRsp.getBalance());//可用余额（账本余额-实时话费）
+		respInfo.setData(data);
+		return respInfo;
+	}
+	
+	/**
+	 * 生成移网应缴费用查询接口的 SvcCont 节点 报文，string 形式的
+	 * @param param
+	 * @return
+	 */
+	private String genSvcContFeeQry(Map<String, Object> param){
+		FeeQryReq feeQryReq = genFeeQryReq(param);
+		xstream.autodetectAnnotations(true);
+		String xml = xstream.toXML(feeQryReq);
+		
+		return "<![CDATA[" + BssIntfUtil.xmlhead + xml + "]]>";
+	}
+	
+	/**
+	 * 生成 FeeQryReq 节点对应的 bean
+	 * @param param
+	 * @return
+	 */
+	private FeeQryReq genFeeQryReq(Map<String, Object> param){
+		FeeQryReq feeQryReq = new FeeQryReq();
+		
+		feeQryReq.setUserNumber((String)param.get("UserNumber"));
+		
+		return feeQryReq;
+	}	
+	
+	/**
+	 * 2.13	移网缴费
+	 * @param param
+	 * @return
+	 */
+	public RespInfo<Map<String, String>> callIntfPay(Map<String, Object> param){
+		
+		//生成请求报文里的 string形式的svcCont节点内容
+		String svcCont = genSvcContPay(param);
+		//生成全部请求报文,并调用bss接口，获取返回报文里的 svcCont 节点内容
+		String svcContResp = callIntfCommonPay("BAPPA001", "T1001001", svcCont, null, (String)param.get("UserNumber"));
+//		xstream.processAnnotations(PayRsp.class);
+//		//因为有3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误,这边每次都手动重新映射别名
+//		xstream.alias("Resp", PayRsp.class);
+//		PayRsp payRsp = (PayRsp) xstream.fromXML(svcContResp);
+		
+		//2.12,2.13,2.14三个响应类共用此类，把三个响应类里的属性都加到这里，因为这3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误，
+		xstream.processAnnotations(PayCommonRsp.class);
+		//因为有3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误,这边每次都手动重新映射别名
+		xstream.alias("Resp", PayCommonRsp.class);
+		PayCommonRsp payRsp = (PayCommonRsp) xstream.fromXML(svcContResp);
+		
+		//拼装返回
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		respInfo.setRespCode(payRsp.getRespCode());
+		respInfo.setRespDesc(payRsp.getRespDesc());
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("TradeId", payRsp.getTradeId());
+		respInfo.setData(data);
+		return respInfo;
+	}
+	
+	/**
+	 * 生成移网缴费接口的 SvcCont 节点 报文，string 形式的
+	 * @param param
+	 * @return
+	 */
+	private String genSvcContPay(Map<String, Object> param){
+		PayReq payReq = genPayReq(param);
+		xstream.autodetectAnnotations(true);
+		String xml = xstream.toXML(payReq);
+		
+		return "<![CDATA[" + BssIntfUtil.xmlhead + xml + "]]>";
+	}
+	
+	/**
+	 * 生成 FeeQryReq 节点对应的 bean
+	 * @param param
+	 * @return
+	 */
+	private PayReq genPayReq(Map<String, Object> param){
+		PayReq payReq = new PayReq();
+		
+		payReq.setUserNumber((String)param.get("UserNumber"));
+		payReq.setMoney((String)param.get("Money"));
+		
+		return payReq;
+	}	
+	
+	/**
+	 * 2.14	缴费记录查询接口
+	 * @param param
+	 * @return
+	 */
+	public RespInfo<List<PayRecord>> callIntfPayQry(Map<String, Object> param){
+		
+		//生成请求报文里的 string形式的svcCont节点内容
+		String svcCont = genSvcContPayQry(param);
+		//生成全部请求报文,并调用bss接口，获取返回报文里的 svcCont 节点内容
+		String svcContResp = callIntfCommon("BAPPA001", "T1000002", svcCont, null);
+//		xstream.processAnnotations(PayQryRsp.class);
+//		//因为有3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误,这边每次都手动重新映射别名
+//		xstream.alias("Resp", PayQryRsp.class);
+//		PayQryRsp payQryRsp = (PayQryRsp) xstream.fromXML(svcContResp);
+		
+		//2.12,2.13,2.14三个响应类共用此类，把三个响应类里的属性都加到这里，因为这3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误，
+		xstream.processAnnotations(PayCommonRsp.class);
+		//因为有3个接口的resp类都是Resp,测试发现第一个调用成功了，后面的接口会解析错误,这边每次都手动重新映射别名
+		xstream.alias("Resp", PayCommonRsp.class);
+		PayCommonRsp payQryRsp = (PayCommonRsp) xstream.fromXML(svcContResp);
+		
+		//拼装返回
+		RespInfo<List<PayRecord>> respInfo = new RespInfo<List<PayRecord>>();
+		respInfo.setRespCode(payQryRsp.getRespCode());
+		respInfo.setRespDesc(payQryRsp.getRespDesc());
+		respInfo.setData(payQryRsp.getPayRecordList());
+		return respInfo;
+	}
+	
+	/**
+	 * 生成缴费记录查询接口的 SvcCont 节点 报文，string 形式的
+	 * @param param
+	 * @return
+	 */
+	private String genSvcContPayQry(Map<String, Object> param){
+		PayQryReq payQryReq = genPayQryReq(param);
+		xstream.autodetectAnnotations(true);
+		String xml = xstream.toXML(payQryReq);
+		
+		return "<![CDATA[" + BssIntfUtil.xmlhead + xml + "]]>";
+	}
+	
+	/**
+	 * 生成 PayQryReq 节点对应的 bean
+	 * @param param
+	 * @return
+	 */
+	private PayQryReq genPayQryReq(Map<String, Object> param){
+		PayQryReq payQryReq = new PayQryReq();
+		
+		payQryReq.setUserNumber((String)param.get("UserNumber"));
+		payQryReq.setStartDate((String)param.get("StartDate"));//yyyymmdd
+		payQryReq.setEndDate((String)param.get("EndDate"));//yyyymmdd
+		
+		return payQryReq;
+	}
+	
+	/**
+	 * 2.15	路由查询接口
+	 * @param param
+	 * @return
+	 */
+	public RespInfo<Map<String, String>> callIntfRoute(Map<String, Object> param){
+		
+		//生成请求报文里的 string形式的svcCont节点内容
+		String svcCont = genSvcContRoute(param);
+		//生成全部请求报文,并调用bss接口，获取返回报文里的 svcCont 节点内容
+		String svcContResp = callIntfCommon("BIPHB031", "THB00005", svcCont, null);
+		xstream.processAnnotations(RouteRsp.class);
+		RouteRsp routeRsp = (RouteRsp) xstream.fromXML(svcContResp);
+		
+		//拼装返回
+		RespInfo<Map<String, String>> respInfo = new RespInfo<Map<String, String>>();
+		respInfo.setRespCode(routeRsp.getRespCode());
+		respInfo.setRespDesc(routeRsp.getRespDesc());
+		Map<String, String> data = new HashMap<String, String>();
+		data.put("SubsysCode", routeRsp.getSubsysCode());//SubsysCode只有CBS和 BSS
+		data.put("NetType", routeRsp.getNetType());
+		data.put("UserNum", routeRsp.getUserNum());
+		data.put("EparchyCode", routeRsp.getEparchyCode());
+		data.put("UserState", routeRsp.getUserState());
+		
+		respInfo.setData(data);
+		return respInfo;
+	}
+	
+	/**
+	 * 生成路由查询接口的 SvcCont 节点 报文，string 形式的
+	 * @param param
+	 * @return
+	 */
+	private String genSvcContRoute(Map<String, Object> param){
+		RouteReq routeReq = genRouteReq(param);
+		xstream.autodetectAnnotations(true);
+		String xml = xstream.toXML(routeReq);
+		
+		return "<![CDATA[" + BssIntfUtil.xmlhead + xml + "]]>";
+	}
+	
+	/**
+	 * 生成 RouteReq 节点对应的 bean
+	 * @param param
+	 * @return
+	 */
+	private RouteReq genRouteReq(Map<String, Object> param){
+		RouteReq routeReq = new RouteReq();
+		
+		routeReq.setUserNumber((String)param.get("UserNumber"));
+		
+		return routeReq;
+	}	
+	
 	/**
 	 * 封装了 bss选号 的2个顺序调用的接口：1移动号码查询接口，2资源操作接口
 	 * @param paramsMap
@@ -929,6 +1179,14 @@ public class BssIntfService {
 		addParamFromAttr(param, paramsMap.get("resAttr"), paramsMap.get("orderId"));
 		//从必选叠加包 和 可选叠加包list 的中文名称 查出 优惠id
 		addBssPkeParam(param);
+		
+		//20170206 add, 在开户前添加1证5户校验
+		RespInfo<String> respInfo6 = osnService.callIntfOsn(param);
+		if(!"0000".equals(respInfo6.getRespCode())){
+			respInfo.setRespCode(respInfo6.getRespCode());
+			respInfo.setRespDesc("一证五户接口校验失败,已经超过限制,请到沃掌柜申请退款！" + respInfo6.getRespDesc());
+			return respInfo;
+		}
 		
 		log.debug("【bss接口】callBssOpenAll,param=" + param);
 		
@@ -1054,6 +1312,33 @@ public class BssIntfService {
 		return svcContResp;
 	}
 	
+	/**
+	 * 缴费相关的接口 RouteType用01， RouteValue填手机号
+	 * @param BIPCode
+	 * @param ActivityCode
+	 * @param svcCont
+	 * @param procId
+	 * @return
+	 */
+	private String callIntfCommonPay(String BIPCode, String ActivityCode, String svcCont, String procId, String serial_number){
+		//生成全部请求报文
+		String uniBSSReqXml = genUniBSSPay(BIPCode, ActivityCode, svcCont, procId, serial_number);
+		log.debug("【请求报文】" + uniBSSReqXml); 
+		//拼装post参数
+		HashMap<String, String> mapxml = new HashMap<String, String>() ;
+		mapxml.put("xmlmsg", uniBSSReqXml);
+		//发送httpclient请求，并接收响应
+		String respXml = BssIntfUtil.httpSend(BssIntfUtil.BSS_SERVERURL, mapxml);
+		log.debug("【返回报文】" + respXml); 
+		//响应报文xml转UniBSS bean
+		xstream.processAnnotations(UniBSS.class);
+		UniBSS uniBSSResp = (UniBSS) xstream.fromXML(respXml);
+        //获取响应的svccont,并转换成 PerNumRsp
+		String svcContResp = uniBSSResp.getSvcCont();
+		
+		return svcContResp;
+	}
+	
 
 	/**
 	 * 生成完整的请求报文
@@ -1078,6 +1363,56 @@ public class BssIntfService {
 		Routing routing=new Routing();
 		routing.setRouteType("00");//路由类型
 		routing.setRouteValue("85");//路由关键值
+		uniBSS.setRouting(routing);//路由信息
+		
+		if(StringUtils.isNotBlank(procId)){
+			uniBSS.setProcID(procId);//发起方业务流水号，写卡结果通知接口特殊，需要用获取写卡接口里返回的流水
+		}
+		else{
+			uniBSS.setProcID(BssIntfUtil.generateLogId("PROC"));//发起方业务流水号
+		}
+		uniBSS.setTransIDO(BssIntfUtil.generateLogId("TRAN"));//发起方交易流水号
+		uniBSS.setTransIDH(BssIntfUtil.getCurentTime());
+		uniBSS.setProcessTime(BssIntfUtil.getCurentTime());//处理时间
+		
+		SPReserve spreserve=new SPReserve();
+		spreserve.setTransIDC(BssIntfUtil.generateLogId(""));//一级枢纽交易流水
+		spreserve.setCutOffDay(BssIntfUtil.getCurentDay());//逻辑交易日
+		spreserve.setOSNDUNS("0002");//发起方交换节点代码
+		spreserve.setHSNDUNS("8500");//归属方交换节点代码
+		spreserve.setConvID("");//交换中心处理标识
+		uniBSS.setSPReserve(spreserve);
+		
+		uniBSS.setTestFlag("0");//测试标记
+		uniBSS.setMsgSender("9801");//消息发送方代码
+		uniBSS.setMsgReceiver("9800");//消息直接接收方代码
+		uniBSS.setSvcContVer("0100");//业务内容报文的版本号
+		
+		uniBSS.setSvcCont(svcCont);
+		
+		String xml = xstream.toXML(uniBSS);
+		
+	    xml=xml.replaceAll("&lt;", "<");
+	    xml=xml.replaceAll("&gt;", ">");
+	    xml=xml.replaceAll("&quot;", "\"");
+		
+		return xml;
+	}
+	
+	private String genUniBSSPay(String BIPCode, String ActivityCode, String svcCont, String procId, String serial_number){
+		UniBSS uniBSS = new UniBSS();
+		//genUniBSSComm(uniBSS, "BIPHB032", "THB00010", serialNum); //通用的属性节点设置值
+		uniBSS.setOrigDomain("ECIP"); //发起方应用域代码
+		uniBSS.setHomeDomain("UCRM");//归属方应用域代码
+		uniBSS.setBIPCode(BIPCode);//业务功能代码
+		uniBSS.setBIPVer("0100"); //业务流程版本号
+		uniBSS.setActivityCode(ActivityCode);//交易代码
+		uniBSS.setActionCode("0");//交易动作代码
+		uniBSS.setActionRelation("0"); //交易关联性
+		
+		Routing routing=new Routing();
+		routing.setRouteType("01");//路由类型， 缴费相关的用 01
+		routing.setRouteValue(serial_number);//路由关键值, 缴费相关的用 手机号
 		uniBSS.setRouting(routing);//路由信息
 		
 		if(StringUtils.isNotBlank(procId)){
@@ -1150,6 +1485,7 @@ public class BssIntfService {
 		
 		param.put("CertType", "02"); //02	18位身份证
 		param.put("CertNum", paramsMap.get("idCardNum")); //身份证号码
+		param.put("CertName", paramsMap.get("custName")); //身份证名字
 		param.put("ServiceType", "01"); //01:移动业务
 		//param.put("NumID", getParamAttrStr(param, paramsMap.get("resAttr"))); //选中的号码
 		param.put("GuarantorType", "04"); //04 无担保
@@ -1389,10 +1725,23 @@ public class BssIntfService {
 //		System.out.println("<![CDATA[" + BssIntfUtil.xmlhead + xml + "]]>");
 		
 		
-		String svcContResp = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CheckCustRsp>    <RespCode>0000</RespCode>    <RespDesc>成功，原联通客户</RespDesc>    <ExistedCustomer>        <CustomerID>9416050558951255</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160519134623</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9416062759354222</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160630090622</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9416062759354136</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160705173222</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9415110357746698</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20151128160216</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer></CheckCustRsp>";
-		XStream xstream4 = new XStream();
-		xstream4.processAnnotations(CheckCustRsp.class);
-		CheckCustRsp checkCustRsp = (CheckCustRsp) xstream4.fromXML(svcContResp);
-		System.out.println(checkCustRsp.getListExistedCustomer().get(0).getCustomerID());
+//		String svcContResp = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><CheckCustRsp>    <RespCode>0000</RespCode>    <RespDesc>成功，原联通客户</RespDesc>    <ExistedCustomer>        <CustomerID>9416050558951255</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160519134623</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9416062759354222</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160630090622</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9416062759354136</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20160705173222</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer>    <ExistedCustomer>        <CustomerID>9415110357746698</CustomerID>        <BlackListFlag>0</BlackListFlag>        <ArrearageFlag>0</ArrearageFlag>        <CustomerType>01</CustomerType>        <CustomerLoc>0854</CustomerLoc>        <CustomerName>张培浩</CustomerName>        <CustomerAddr>0</CustomerAddr>        <ContactPerson>张培浩</ContactPerson>        <ContactPhone>15685026702</ContactPhone>        <ContactAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</ContactAddr>        <CertType>02</CertType>        <CertNum>532923199501121573</CertNum>        <CertAddr>云南省大理白族自治州祥云县下庄镇老张营村214号</CertAddr>        <CertExpireDate>20230101</CertExpireDate>        <ReleOfficeID>JD00</ReleOfficeID>        <CustomerSex>1</CustomerSex>        <StatusChgTime>20151128160216</StatusChgTime>        <CustLoc>0</CustLoc>    </ExistedCustomer></CheckCustRsp>";
+//		XStream xstream4 = new XStream();
+//		xstream4.processAnnotations(CheckCustRsp.class);
+//		CheckCustRsp checkCustRsp = (CheckCustRsp) xstream4.fromXML(svcContResp);
+//		System.out.println(checkCustRsp.getListExistedCustomer().get(0).getCustomerID());
+		
+		String svcContResp = "<Resp>    <RespCode>0000</RespCode>    <RespDesc>aaa</RespDesc>    <PayRecordList>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>        <PayRecord>            <chargeId>9116122092958282</chargeId>            <acctId>9115010977203547</acctId>            <payName>日</payName>            <channelId>15015</channelId>            <recvFee>500</recvFee>            <recvDepartId>76D91</recvDepartId>            <redvStaffId>AGYDZSW5</redvStaffId>            <cancelTag>0</cancelTag>        </PayRecord>    </PayRecordList></Resp>";
+		XStream xstream5 = new XStream();
+
+		
+		String svcContResp2 = "<Resp>    <RespCode>0000</RespCode>    <RespDesc>成功</RespDesc>    <TradeId>9116123062978990</TradeId></Resp>";
+		xstream5.processAnnotations(PayCommonRsp.class);
+		PayCommonRsp payRsp = (PayCommonRsp) xstream5.fromXML(svcContResp2);
+		System.out.println(payRsp.getTradeId());
+		
+		xstream5.processAnnotations(PayCommonRsp.class);
+		PayCommonRsp payQryRsp = (PayCommonRsp) xstream5.fromXML(svcContResp);
+		System.out.println(payQryRsp.getPayRecordList().size());
 	}
 }

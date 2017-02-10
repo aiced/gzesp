@@ -1,10 +1,13 @@
 package com.ai.gzesp.service;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
@@ -14,10 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import com.ai.gzesp.bssintf.PayRecord;
 import com.ai.gzesp.dao.RechargeDao;
 import com.ai.gzesp.dto.RechargeReq;
 import com.ai.gzesp.dto.RespInfo;
-import com.ai.gzesp.dto.UnionPayParam;
 import com.ai.gzesp.recharge.FileUtils;
 import com.ai.gzesp.recharge.InterfaceType;
 import com.ai.gzesp.recharge.RechargeClientHandler;
@@ -25,7 +28,6 @@ import com.ai.gzesp.recharge.RechargeCons;
 import com.ai.gzesp.recharge.RechargeIntfCons;
 import com.ai.gzesp.recharge.RechargeUtil;
 import com.ai.gzesp.recharge.ResultCode;
-import com.ai.gzesp.unionpay.UnionPayCons;
 import com.ai.gzesp.utils.Base64Utils;
 import com.ai.gzesp.utils.DateUtils;
 import com.ai.gzesp.utils.EncryptUtil;
@@ -49,6 +51,9 @@ public class RechargeService {
     
     @Autowired
     private RechargeClientHandler rechargeClientHandler;
+    
+	@Resource
+	private BssIntfService bssIntfService;
     
     /**
      * 充值前，验证充值号码是否可以被充值
@@ -763,7 +768,7 @@ public class RechargeService {
 	 * @param param
 	 * @return
 	 */
-	public RespInfo<String> intfRecharge(Map<String, String> param){
+	public RespInfo<String> intfRechargeV1(Map<String, String> param){
 		RespInfo<String> respInfo = null; 
 		
     	//初步校验参数
@@ -855,7 +860,7 @@ public class RechargeService {
     				param3.get("intfType"),
     				param3.get("phoneNumber"),
     				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
-    				null, //fee
+    				"", //fee
     				null, //order_id
     				respInfo.getRespCode(),
     				respInfo.getRespDesc(),
@@ -865,7 +870,7 @@ public class RechargeService {
     	if(InterfaceType.recharge.getInterfaceCode().equals(param3.get("intfType"))){
         	//校验fee参数，目前只支持20,30，50,100 四种固定金额充值
     		String fee = param3.get("fee");
-        	if(StringUtils.isBlank(fee) || !("20".equals(fee) || "30".equals(fee) || "50".equals(fee) || "100".equals(fee)) ){
+        	if(StringUtils.isBlank(fee) || !("20".equals(fee) || !("30".equals(fee)) || !("50".equals(fee)) || !("100".equals(fee))) ){
         		respInfo = new RespInfo<String>(); 
         		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2011.getResultCode()); 
         		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2011.getResultName());
@@ -957,7 +962,7 @@ public class RechargeService {
     				param3.get("intfType"),
     				null, //号码
     				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
-    				null, //fee
+    				"", //fee
     				null, //order_id
     				respInfo.getRespCode(),
     				respInfo.getRespDesc(),
@@ -990,6 +995,382 @@ public class RechargeService {
     	//
     	return respInfo;
 	}   
+	
+	
+	/**
+	 * 对外围提供充值系统各种接口，这个方法是业务逻辑的总入口，controller做初步参数校验后，这里再解密后，根据业务参数调用不同业务逻辑
+	 * @param param
+	 * @return
+	 */
+	public RespInfo<String> intfRechargeV2(Map<String, String> param){
+		RespInfo<String> respInfo = null; 
+		
+    	//初步校验参数
+    	respInfo = checkIntfParamCommon(param);
+    	//respInfo == null表示初步校验通过则执行下面业务,验证不通过则直接返回
+    	if(respInfo != null){
+    		return respInfo;
+    	}
+    	
+    	String reqParam = param.get("reqParam");
+        String merId = param.get("merId");
+        String md5Desc = param.get("md5Desc");
+        
+		//通过商户号查找对应的desKey 和md5Key
+		String[] keys = RechargeIntfCons.find(merId);
+		//没匹配到则直接返回
+		if(keys == null){
+			log.info("【充值外围接口】merId=" + merId + ",未找到对应的秘钥");
+			respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2005.getResultCode()); 
+    		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2005.getResultName());
+    		return respInfo;
+		}
+		
+		String desKey = keys[0];
+        String md5Key = keys[1];
+        
+    	String paramJson;
+		try {
+			byte[] desArray = Base64Utils.decode(reqParam); //base64解码
+			paramJson = EncryptUtil.decryptByDes(desKey, desArray); //des解密
+	    	log.info("【充值外围接口】请求参数des解密完reqParam：" + paramJson);
+		} catch (Exception e) {
+			log.info("【充值外围接口】请求参数des解密异常，商户号对应的desKey不正确。");
+			respInfo = new RespInfo<String>(); 
+			respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2006.getResultCode()); 
+    		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2006.getResultName());
+    		return respInfo; //如果解密失败，直接返回错误
+		}
+    	
+    	//校验md5Desc，防篡改
+    	String md5DescMy = EncryptUtil.encryptByMd5(md5Key, paramJson);
+    	if(!md5Desc.equals(md5DescMy)){
+			log.info("【充值外围接口】请求参数reqParam md5校验失败。");
+			respInfo = new RespInfo<String>(); 
+			respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2007.getResultCode()); 
+    		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2007.getResultName());
+    		return respInfo; //如果解密失败，直接返回错误
+    	}
+    	
+    	//防止重放攻击，1.判断流水号是不是重复 2.根据reqTime校验在不在5分钟内
+    	
+    	//检查通用参数有没有
+    	
+    	//json转换成LinkedHashMap
+    	LinkedHashMap<String, String> param3 = JSON.parseObject(paramJson, LinkedHashMap.class);
+		
+    	//校验intfType参数，下面要根据这个来路由调用不同接口业务
+    	if(StringUtils.isBlank(param3.get("intfType"))){
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2008.getResultCode()); 
+    		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2008.getResultName());
+    		return respInfo; //如果intfType为空，直接返回错误
+    	} 
+    	
+    	//插外围接口日志表
+    	
+    	//根据interface_type 确定调用的是什么业务
+    	if(InterfaceType.rechargeCheck.getInterfaceCode().equals(param3.get("intfType"))){
+    		//充值号码验证接口, 
+    		log.info("【充值外围接口】intfType=" + InterfaceType.rechargeCheck.getInterfaceCode() + ",rechargeCheck");
+        	Map<String, Object> paramsMap = new HashMap<String, Object>();
+        	paramsMap.put("UserNumber", param3.get("phoneNumber"));
+        	RespInfo<Map<String, String>> result = bssIntfService.callIntfRoute(paramsMap);
+        	//SubsysCode只有CBS和 BSS,截止12月21日，不支持4g号码充值
+        	if("0000".equals(result.getRespCode())){
+        		if("BSS".equals(result.getData().get("SubsysCode"))){
+            		respInfo = new RespInfo<String>(); 
+            		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.SUC0000.getResultCode()); 
+            		respInfo.setRespDesc(result.getRespDesc());
+            	}
+        		else{
+            		respInfo = new RespInfo<String>(); 
+            		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2016.getResultCode()); 
+            		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2016.getResultName());
+        		}
+        	}
+        	else{
+        		respInfo = new RespInfo<String>(); 
+        		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2016.getResultCode()); 
+        		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2016.getResultName());
+        	}
+        	
+        	//按道理应该上面先插日志，这边执行完业务逻辑更新日志状态，这边省事点，最后执行完再插外围接口日志表
+    		String logId = RechargeUtil.generateLogId(6); //每张卡插的记录logid不一致
+    		rechargeDao.insertIntfRechargeLog(
+    				logId,
+    				logId.substring(14, 16),
+    				param3.get("outTradeId"),
+    				param3.get("merId"),
+    				param3.get("reqTime"), 
+    				param3.get("intfType"),
+    				param3.get("phoneNumber"),
+    				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
+    				null, //fee
+    				null, //order_id
+    				respInfo.getRespCode(),
+    				respInfo.getRespDesc(),
+    				null //orig_out_trade_id
+    				);
+    	}
+    	else if(InterfaceType.feeQry.getInterfaceCode().equals(param3.get("intfType"))){
+    		//应缴费用查询接口, 
+    		log.info("【充值外围接口】intfType=" + InterfaceType.feeQry.getInterfaceCode() + ",feeQry");
+        	Map<String, Object> paramsMap = new HashMap<String, Object>();
+        	paramsMap.put("UserNumber", param3.get("phoneNumber"));
+        	RespInfo<Map<String, String>> result = bssIntfService.callIntfFeeQry(paramsMap);
+        	
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(result.getRespCode()); 
+    		respInfo.setRespDesc(result.getRespDesc());
+        	if("0000".equals(result.getRespCode())){
+            	//添加data返回数据,原充值记录的信息
+            	Map<String, Object> dataMap = new HashMap<String, Object>();
+            	dataMap.put("phoneNumber", param3.get("phoneNumber"));
+            	dataMap.put("userName", result.getData().get("UserName")); 
+            	dataMap.put("eparchyName", result.getData().get("EparchyNme"));
+            	dataMap.put("amount", result.getData().get("Amount"));
+            	dataMap.put("balance", result.getData().get("Balance"));
+            	//des加密所有原始业务参数json，加密结果编码方式base64
+            	String paramJson2 = JSON.toJSONString(dataMap);
+            	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
+            	String desBase64Str = Base64Utils.encode(desArray);
+            	respInfo.setData(desBase64Str);
+        	}
+        	
+        	//按道理应该上面先插日志，这边执行完业务逻辑更新日志状态，这边省事点，最后执行完再插外围接口日志表
+    		String logId = RechargeUtil.generateLogId(6); //每张卡插的记录logid不一致
+    		rechargeDao.insertIntfRechargeLog(
+    				logId,
+    				logId.substring(14, 16),
+    				param3.get("outTradeId"),
+    				param3.get("merId"),
+    				param3.get("reqTime"), 
+    				param3.get("intfType"),
+    				param3.get("phoneNumber"),
+    				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
+    				null, //fee
+    				null, //order_id
+    				respInfo.getRespCode(),
+    				respInfo.getRespDesc(),
+    				null //orig_out_trade_id
+    				);
+    	}
+    	else if(InterfaceType.recharge.getInterfaceCode().equals(param3.get("intfType"))){
+    		//充值接口
+    		log.info("【充值外围接口】intfType=" + InterfaceType.recharge.getInterfaceCode() + ",recharge");
+    		//校验fee参数，是否支持小数
+        	Map<String, Object> paramsMap = new HashMap<String, Object>();
+        	paramsMap.put("UserNumber", param3.get("phoneNumber"));
+        	paramsMap.put("Money", param3.get("fee"));
+        	RespInfo<Map<String, String>> result = bssIntfService.callIntfPay(paramsMap);
+
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(result.getRespCode()); 
+    		respInfo.setRespDesc(result.getRespDesc());
+    		
+    		String order_id = null;
+        	if("0000".equals(result.getRespCode())){
+            	order_id = result.getData().get("TradeId"); //把TradeId 插到order_id字段
+            	//添加data返回数据,原充值记录的信息
+            	Map<String, Object> dataMap = new HashMap<String, Object>();
+            	dataMap.put("tradeId", result.getData().get("TradeId")); 
+            	//des加密所有原始业务参数json，加密结果编码方式base64
+            	String paramJson2 = JSON.toJSONString(dataMap);
+            	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
+            	String desBase64Str = Base64Utils.encode(desArray);
+            	respInfo.setData(desBase64Str);
+        	}
+        	
+        	//按道理应该上面先插日志，这边执行完业务逻辑更新日志状态，这边省事点，最后执行完再插外围接口日志表
+    		String logId = RechargeUtil.generateLogId(6); //每张卡插的记录logid不一致
+    		rechargeDao.insertIntfRechargeLog(
+    				logId,
+    				logId.substring(14, 16),
+    				param3.get("outTradeId"),
+    				param3.get("merId"),
+    				param3.get("reqTime"), 
+    				param3.get("intfType"),
+    				param3.get("phoneNumber"),
+    				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
+    				param3.get("fee"),
+    				order_id,
+    				respInfo.getRespCode(),
+    				respInfo.getRespDesc(),
+    				null //orig_out_trade_id
+    				);
+    	}
+    	else if(InterfaceType.rechargeQry.getInterfaceCode().equals(param3.get("intfType"))){
+    		//充值记录查询接口
+    		log.info("【充值外围接口】intfType=" + InterfaceType.rechargeQry.getInterfaceCode() + ",rechargeQry");
+    		String origOutTradeId = param3.get("origOutTradeId");
+        	//根据原外围系统接口调用流水号origOutTradeId, 查找原充值记录沃掌柜系统里的记录
+        	Map<String, String> logMap = rechargeDao.getIntfRechargeLogBss(origOutTradeId);
+        	if(MapUtils.isEmpty(logMap)){
+        		respInfo = new RespInfo<String>(); 
+        		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2014.getResultCode()); 
+        		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2014.getResultName());
+        		return respInfo; //如果outTradeId未找到充值记录直接返回错误
+        	}
+        	
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.SUC0000.getResultCode()); 
+    		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.SUC0000.getResultName());
+        	
+        	//添加data返回数据,原充值记录的信息
+        	Map<String, Object> dataMap = new HashMap<String, Object>();
+        	dataMap.put("chargeResult", logMap.get("RESP_CODE")); //RESP_CODE是充值接口响应码
+        	dataMap.put("reqTime", logMap.get("REQ_TIME"));
+        	dataMap.put("outTradeId", origOutTradeId);
+        	dataMap.put("phoneNumber", logMap.get("SERIAL_NUMBER"));
+        	dataMap.put("fee", logMap.get("FEE"));
+        	
+        	//des加密所有原始业务参数json，加密结果编码方式base64
+        	String paramJson2 = JSON.toJSONString(dataMap);
+        	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
+        	String desBase64Str = Base64Utils.encode(desArray);
+        	respInfo.setData(desBase64Str);
+        	
+        	//按道理应该上面先插日志，这边执行完业务逻辑更新日志状态，这边省事点，最后执行完再插外围接口日志表
+    		String logId = RechargeUtil.generateLogId(6); //每张卡插的记录logid不一致
+    		rechargeDao.insertIntfRechargeLog(
+    				logId,
+    				logId.substring(14, 16),
+    				param3.get("outTradeId"),
+    				param3.get("merId"),
+    				param3.get("reqTime"), 
+    				param3.get("intfType"),
+    				null, //号码
+    				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
+    				null, //fee
+    				null, //order_id
+    				respInfo.getRespCode(),
+    				respInfo.getRespDesc(),
+    				origOutTradeId //orig_out_trade_id
+    				);
+    	}
+    	else if(InterfaceType.rechargeQryByDate.getInterfaceCode().equals(param3.get("intfType"))){
+    		//充值记录按开始结束日期查询接口,此接口暂时没考虑周全返回
+    		log.info("【充值外围接口】intfType=" + InterfaceType.rechargeQryByDate.getInterfaceCode() + ",rechargeQryByDate");
+        	Map<String, Object> paramsMap = new HashMap<String, Object>();
+        	paramsMap.put("UserNumber", param3.get("phoneNumber"));
+        	paramsMap.put("StartDate", param3.get("startDay"));
+        	paramsMap.put("EndDate", param3.get("endDay"));
+        	RespInfo<List<PayRecord>> result = bssIntfService.callIntfPayQry(paramsMap);
+
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(result.getRespCode()); 
+    		respInfo.setRespDesc(result.getRespDesc());
+    		
+        	if("0000".equals(result.getRespCode())){
+        		List<PayRecord> list = result.getData();
+        		List<Map<String, Object>> list2 = new ArrayList<Map<String, Object>>();
+				for (PayRecord payRecord : list) {
+					// 添加data返回数据,原充值记录的信息
+					Map<String, Object> dataMap = new HashMap<String, Object>();
+					dataMap.put("chargeResult",
+							payRecord.getCancelTag().equals("0") ? com.ai.gzesp.dto.ResultCode.SUC0000.getResultCode()
+									: (payRecord.getCancelTag().equals("1")
+											? com.ai.gzesp.dto.ResultCode.ERR2017.getResultCode()
+											: com.ai.gzesp.dto.ResultCode.ERR2018.getResultCode())); // RESP_CODE是充值接口响应码
+					dataMap.put("reqTime", payRecord.getRecvTime()); 
+					//dataMap.put("outTradeId", payRecord.getChargeId()); //bss返回没这个，这个是沃掌柜的流水号
+					dataMap.put("tradeId", payRecord.getChargeId());
+					dataMap.put("phoneNumber", param3.get("phoneNumber"));
+					dataMap.put("fee", payRecord.getRecvFee());
+					//dataMap.put("cancelTag", payRecord.getCancelTag());
+					
+					list2.add(dataMap);
+				}
+        		
+        		//des加密所有原始业务参数json，加密结果编码方式base64
+            	String paramJson2 = JSON.toJSONString(list2);
+            	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
+            	String desBase64Str = Base64Utils.encode(desArray);
+            	respInfo.setData(desBase64Str);
+        	}
+        	
+        	//按道理应该上面先插日志，这边执行完业务逻辑更新日志状态，这边省事点，最后执行完再插外围接口日志表
+    		String logId = RechargeUtil.generateLogId(6); //每张卡插的记录logid不一致
+    		rechargeDao.insertIntfRechargeLog(
+    				logId,
+    				logId.substring(14, 16),
+    				param3.get("outTradeId"),
+    				param3.get("merId"),
+    				param3.get("reqTime"), 
+    				param3.get("intfType"),
+    				null, //号码
+    				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
+    				null, //fee
+    				null, //order_id
+    				respInfo.getRespCode(),
+    				respInfo.getRespDesc(),
+    				null //orig_out_trade_id
+    				);
+    	}    	
+    	else if(InterfaceType.check.getInterfaceCode().equals(param3.get("intfType"))){
+    		//充值对账接口, 截止12月20日，bss不支持对账接口，暂时写成和查询接口一样
+    		log.info("【充值外围接口】intfType=" + InterfaceType.check.getInterfaceCode() + ",check");
+    		String origOutTradeId = param3.get("origOutTradeId");
+        	//根据原外围系统接口调用流水号origOutTradeId, 查找原充值记录沃掌柜系统里的流水号 log_id
+        	Map<String, String> logMap = rechargeDao.getIntfRechargeLogBss(origOutTradeId);
+        	if(MapUtils.isEmpty(logMap)){
+        		respInfo = new RespInfo<String>(); 
+        		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2014.getResultCode()); 
+        		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2014.getResultName());
+        		return respInfo; //如果outTradeId未找到充值记录直接返回错误
+        	}
+        	
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.SUC0000.getResultCode()); 
+    		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.SUC0000.getResultName());
+        	
+        	//添加data返回数据,原充值记录的信息
+        	Map<String, Object> dataMap = new HashMap<String, Object>();
+        	dataMap.put("chargeResult", logMap.get("RESP_CODE")); //RESP_CODE是充值接口响应码
+        	dataMap.put("reqTime", logMap.get("REQ_TIME"));
+        	dataMap.put("outTradeId", origOutTradeId);
+        	dataMap.put("phoneNumber", logMap.get("SERIAL_NUMBER"));
+        	dataMap.put("fee", logMap.get("FEE"));
+        	
+        	//des加密所有原始业务参数json，加密结果编码方式base64
+        	String paramJson2 = JSON.toJSONString(dataMap);
+        	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
+        	String desBase64Str = Base64Utils.encode(desArray);
+        	respInfo.setData(desBase64Str);
+        	
+        	//按道理应该上面先插日志，这边执行完业务逻辑更新日志状态，这边省事点，最后执行完再插外围接口日志表
+    		String logId = RechargeUtil.generateLogId(6); //每张卡插的记录logid不一致
+    		rechargeDao.insertIntfRechargeLog(
+    				logId,
+    				logId.substring(14, 16),
+    				param3.get("outTradeId"),
+    				param3.get("merId"),
+    				param3.get("reqTime"), 
+    				param3.get("intfType"),
+    				null, //号码
+    				"1",   //业务号码类型(1位)： 1 GSM；2 固话；3 宽带；4 小灵通或大灵通。
+    				"", //fee
+    				null, //order_id
+    				respInfo.getRespCode(),
+    				respInfo.getRespDesc(),
+    				origOutTradeId //orig_out_trade_id
+    				);
+    	}
+    	else{
+    		log.info("【充值外围接口】intfType= " + param3.get("intfType") + " not find");
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(com.ai.gzesp.dto.ResultCode.ERR2009.getResultCode()); 
+    		respInfo.setRespDesc(com.ai.gzesp.dto.ResultCode.ERR2009.getResultName());
+    		//return respInfo; //如果intfType未匹配到，直接返回错误
+    	}
+    	
+
+    	//
+    	log.info("【充值外围接口】 return respInfo:" + JSON.toJSONString(respInfo));
+    	return respInfo;
+	}
 	
     /**
      * 请求入参校验
@@ -1080,6 +1461,7 @@ public class RechargeService {
     	
     	return respInfo;
 	}
+
 	
 	
 	public static void main(String[] args) throws UnsupportedEncodingException {
@@ -1113,17 +1495,38 @@ public class RechargeService {
 //	    }
 	    
     	String merId = "A0001"; //5位
-    	String md5Key = "0aad781d015ca667d6eba25e"; //24位
+    	String md5Key = "0aad781d015ca667d6eba25e60952c23"; //32位
     	String desKey = "0aad781d015ca667d6eba25f"; //24位
     	String intfUrl = "http://localhost:8080/esp/recharge/intf/recharge"; //充值接口url
     	
     	//原始业务参数map,注意用LinkedHashMap
     	Map<String, String> param = new LinkedHashMap<String, String>();
-    	param.put("phoneNumber", "18651885060");
-    	param.put("fee", "100");
+//    	param.put("intfType", "010201");
+//    	param.put("merId", merId);
+//    	param.put("reqTime", "20160824112200");
+//    	param.put("outTradeId", "1234567890123456");
+//    	param.put("phoneNumber", "18508505402");
+    	
+//    	param.put("intfType", "010206");
+//    	param.put("merId", merId);
+//    	param.put("reqTime", "20160824112200");
+//    	param.put("outTradeId", "1234567890123457");
+//    	param.put("phoneNumber", "18508505402");
+    	
+//    	param.put("intfType", "010202");
+//    	param.put("merId", merId);
+//    	param.put("reqTime", "20160824112200");
+//    	param.put("outTradeId", "1234567890123457");
+//    	param.put("phoneNumber", "18508505402");
+//    	param.put("fee", "100");
+    	
+    	param.put("intfType", "010207");
     	param.put("merId", merId);
     	param.put("reqTime", "20160824112200");
-    	param.put("outOrderId", "1234567890123456");
+    	param.put("outTradeId", "1234567890123457");
+    	param.put("phoneNumber", "18508505402");
+    	param.put("startDay", "20170101");
+    	param.put("endDay", "20171229");
     	
     	//原始业务参数转换成json字符串
     	String paramJson = JSON.toJSONString(param);
@@ -1132,14 +1535,14 @@ public class RechargeService {
     	
     	//业务参数json 进行 md5加密，生成摘要
     	String md5Desc = EncryptUtil.encryptByMd5(md5Key, paramJson);
-    	System.out.println("--原始业务参数json串md5加密--");
+    	System.out.println("--原始业务参数json串md5加密摘要--");
     	System.out.println(md5Desc);
     	
     	//des加密所有原始业务参数json，加密结果编码方式base64
     	String paramJson2 = JSON.toJSONString(param);
     	byte[] desArray = EncryptUtil.encryptByDes(desKey, paramJson2);
     	String desBase64Str = Base64Utils.encode(desArray);
-    	System.out.println("--原始业务参数base64编码完字符串--");
+    	System.out.println("--原始业务参数des加密后base64编码完字符串--");
     	System.out.println(desBase64Str);
     	
     	//封装最终的post请求参数json
@@ -1168,6 +1571,8 @@ public class RechargeService {
     		System.out.println("md5校验失败");
     	}
     	
-    	
+    	String paramJson4 = "{\"intfType\":\"010201\",\"merId\":\"A0001\",\"reqTime\":\"20161230152716\",\"outTradeId\":\"161107071792\",\"phoneNumber\":\"15519786997\"}";
+    	String md5Desc4 = EncryptUtil.encryptByMd5(md5Key, paramJson4);
+    	System.out.println(md5Desc4);
 	}
 }

@@ -1,6 +1,7 @@
 package com.ai.gzesp.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -159,8 +160,7 @@ public class EncryptUtil {
       }
 
       return buf.toString();
-    }    
-    
+    }  
     
     
     public static void main(String[] args) {

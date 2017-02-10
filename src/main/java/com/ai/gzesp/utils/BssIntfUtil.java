@@ -41,12 +41,16 @@ public class BssIntfUtil {
 	private static final String CHINA_TIME_ZONE = "Asia/Shanghai";
 	
     //BSS调用接口——测试：http://130.85.50.34:7772/XMLReceiver 
-	//正式：http://130.85.50.77:7008/XMLReceiver http://135.40.32.36:7156/XMLReceiver
 	//正式：http://130.85.50.53:7008/XMLReceiver http://130.85.50.54:7008/XMLReceiver
     public static final String BSS_SERVERURL = "http://130.85.50.53:7008/XMLReceiver";
 	
     //BSS接口xml头
     public static final String xmlhead="<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+    
+    //总部osn webservice接口地址
+    //测试地址: http://132.33.35.59:8001/OSN/services/OneCardFiveUserSer?wsdl
+    //生产地址: http://10.162.20.177:8001/OSN/services/OneCardFiveUserSer?wsdl
+    public static final String OSN_SERVERURL = "http://132.33.35.59:8001/OSN/services/OneCardFiveUserSer?wsdl";
     
 	/** GBK编码 */
     public static final String GBK = "GBK";

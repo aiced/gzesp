@@ -144,7 +144,7 @@ public class TestController {
     
     
     @RequestMapping("/bssIntfTest")
-    public ModelAndView test4()
+    public ModelAndView bssIntfTest()
     {
     	ModelAndView mav = new ModelAndView("bssIntfTest.ftl");
     	

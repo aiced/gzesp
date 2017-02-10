@@ -30,9 +30,19 @@
   </head>
 
   <body>
+<form class="form-horizontal">  
+请求url:
+<textarea id="reqUrl" class="form-control" rows="1"></textarea>  
+请求参数json, 可以用RechargeService的main方法获取加密的reqParam字符串：
+<textarea id="reqJson" class="form-control" rows="5"></textarea>
+返回：  
 <textarea id="resp" class="form-control" rows="5"></textarea>
+
+<button type="button" class="btn btn-success" onclick="submitForm()">submit</button>
+</form>
   
 <!-- test8 -->
+<!--
 <h4>8. callIntfOrderSub 订单提交  接口</h4>  
 <form class="form-horizontal">
   <div class="form-group">
@@ -97,8 +107,26 @@
     </div>
   </div>
 </form>
+-->
 
 <script type="text/javascript">
+	function submitForm()
+	{
+	    var url = $('#reqUrl').val();
+	    var param = $('#reqJson').val();  
+	       
+        $.ajax({
+		      type: "POST",
+		      contentType:"application/json", //发送给服务器的内容编码类型
+		      url: url, 
+		      dataType:"json", //预期服务器返回的数据类型
+		      data: param, //JSON.stringify(param), //服务器只能接收json字符串
+		      success: function(data){
+		         $('#resp').val(JSON.stringify(data));
+		      }
+			    }) ;            
+	}
+
 	function submitForm1()
 	{
 	    var param = {"user_id":$('#user_id').val(), "order_id":$('#order_id').val(),

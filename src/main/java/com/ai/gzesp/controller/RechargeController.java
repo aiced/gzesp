@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ai.gzesp.dto.RespInfo;
 import com.ai.gzesp.dto.ResultCode;
+import com.ai.gzesp.service.BssIntfService;
 import com.ai.gzesp.service.RechargeService;
 
 /**
@@ -30,11 +31,20 @@ public class RechargeController {
 	@Resource
 	private RechargeService rechargeService;
 	
+//	@Resource
+//	private BssIntfService bssIntfService;
+	
 	/**
-	 * 对外围提供接口，开关
+	 * 沃掌柜系统 用 一卡充平台  对外围提供充值接口，开关
 	 */
-	@Value("${intf.recharge.open}")
-	private String intf_recharge_open;
+	@Value("${intf.rechargeV1.open}")
+	private String intf_recharge_v1_open;
+	
+	/**
+	 * 沃掌柜系统 用 bss充值缴费系统 对外围提供接口，开关
+	 */
+	@Value("${intf.rechargeV2.open}")
+	private String intf_recharge_v2_open;
 
     /**
      * 作废，新方案中，esp不需要激活卡，直接从bss导出卡就已经是激活过的了
@@ -197,7 +207,8 @@ public class RechargeController {
     
     
     /**
-     * 对外提供接口的总入口，根据intfType参数来判断不同的业务类型
+     * 对外提供接口的总入口，根据intfType参数来判断不同的业务类型,
+     * v1版本是用充值卡调用的一卡充卡系统充值，只能支持固定面额20，30,50,100
      * 请求参数：{"reqParam":"xxxxx", "merId":"A0001", "md5Desc":"e12976e48620f97682d2dd251ddd2cde"}
      *  其中reqParam为des加密后base64编码的字符串，加密前原参数json如下：
      *  号码校验接口：{"intfType":"010201", "merId":"A0001", "reqTime":"20160824112200", "outTradeId":"1234567890123456", "phoneNumber":"18651885060"}
@@ -208,15 +219,50 @@ public class RechargeController {
      * @param card_no
      * @return
      */
-    @RequestMapping(value = "/intf/recharge", method = RequestMethod.POST)
+    @RequestMapping(value = "/intf/recharge/v1", method = RequestMethod.POST)
     @ResponseBody
-    public RespInfo<String> intfRecharge(@RequestBody Map<String, String> param){
+    public RespInfo<String> intfRechargeV1(@RequestBody Map<String, String> param){
     	RespInfo<String> respInfo = null; 
     	
     	//如果接口开关为true，才可以往下调用，否则直接返回错误
-    	boolean open_flag = Boolean.parseBoolean(intf_recharge_open);
+    	boolean open_flag = Boolean.parseBoolean(intf_recharge_v1_open);
     	if(open_flag){
-    		respInfo = rechargeService.intfRecharge(param); 
+    		respInfo = rechargeService.intfRechargeV1(param); 
+    	}
+    	else{
+    		respInfo = new RespInfo<String>(); 
+    		respInfo.setRespCode(ResultCode.ERR2000.getResultCode()); 
+    		respInfo.setRespDesc(ResultCode.ERR2000.getResultName());
+    	}
+
+        return respInfo;
+    }
+    
+    /**
+     * 对外提供接口的总入口，根据intfType参数来判断不同的业务类型,
+     * v2版本是调用的bss充值系统，可支持随意金额
+     * v1和v2 一卡充系统 和 bss充值系统 接口入参尽量保持一致
+     * 请求参数：{"reqParam":"xxxxx", "merId":"A0001", "md5Desc":"e12976e48620f97682d2dd251ddd2cde"}
+     *  其中reqParam为des加密后base64编码的字符串，加密前原参数json如下：
+     *  号码校验接口：{"intfType":"010201", "merId":"A0001", "reqTime":"20160824112200", "outTradeId":"1234567890123456", "phoneNumber":"18651885060"}
+     *  应缴费用查询接口：{"intfType":"010206", "merId":"A0001", "reqTime":"20160824112200", "outTradeId":"1234567890123456", "phoneNumber":"18651885060"}
+     *  充值接口：{"intfType":"010202", "merId":"A0001", "reqTime":"20160824112200", "outTradeId":"1234567890123456", "phoneNumber":"18651885060", "fee":"100"}
+     *  充值单条查询接口：{"intfType":"010204", "merId":"A0001", "reqTime":"20160824112200", "outTradeId":"1234567890123456", "origOutTradeId":"1234567890123456"}
+     *  充值按开始结束日期查询接口：{"intfType":"010207", "merId":"A0001", "reqTime":"20160824112200", "outTradeId":"1234567890123456", "phoneNumber":"18651885060", "startDay":"20161201", "endDay":"20161202"}
+     *  充值对账接口：{"intfType":"010205", "merId":"A0001", "reqTime":"20160824112200", "outTradeId":"1234567890123456", "origOutTradeId":"1234567890123456"}
+     * 返回参数：{"respCode":"0000", "respDesc":"充值成功", "data"："xxxxx"}, data是加密过的
+     * @param param
+     * @return
+     */
+    @RequestMapping(value = "/intf/recharge/v2", method = RequestMethod.POST)
+    @ResponseBody
+    public RespInfo<String> intfRechargeV2(@RequestBody Map<String, String> param){
+    	RespInfo<String> respInfo = null; 
+    	
+    	//如果接口开关为true，才可以往下调用，否则直接返回错误
+    	boolean open_flag = Boolean.parseBoolean(intf_recharge_v2_open);
+    	if(open_flag){
+    		respInfo = rechargeService.intfRechargeV2(param); 
     	}
     	else{
     		respInfo = new RespInfo<String>(); 
